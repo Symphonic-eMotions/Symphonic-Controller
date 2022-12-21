@@ -1,0 +1,124 @@
+//
+//  SidebarSetsView.swift
+//  Symphonic eMotions
+//
+//  Created by Çağatay Emekci on 17.03.2022.
+//
+
+import SwiftUI
+
+struct SideBarSetsViewState {
+    let setCollections: Sets
+    let currentInstrumentsSetName: String
+    let currentInstrumentSet: InstrumentsSet
+    var buildSettings: BuildSettings
+}
+
+class SideBarSetsViewModel: ObservableObject {
+    
+    @Published var state: SideBarSetsViewState
+    let rowSelected: (InstrumentsSet) -> ()
+    
+    init(
+        state: SideBarSetsViewState,
+        rowSelected: @escaping (InstrumentsSet) -> ()
+    ) {
+        self.state = state
+        self.rowSelected = rowSelected
+    }
+    
+    func tapSetRow(selectedCollection: Set) {
+        if selectedCollection.name != state.currentInstrumentsSetName{
+            
+            let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)
+            rowSelected(instrumentSet)
+        }
+    }
+    
+    func tapSavedRow(fileName: String) {
+        
+        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
+        rowSelected(instrumentSet!)
+    }
+}
+
+struct SidebarSetsView: View {
+    
+    @ObservedObject var sideBarSetsViewModel: SideBarSetsViewModel
+//    @StateObject var fileController = FileController()
+    @EnvironmentObject var fileController: FileController
+    
+    var body: some View {
+        
+        //Pass Documents folder URL for saved versions
+//        let documentsFolder = fileController.directoryURL
+//        let _ = print(documentsFolder.description)
+        
+        VStack(alignment: .leading) {
+            Text("Sets")
+                .font(.largeTitle)
+            
+            ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
+                
+                SidebarSetCollectionView(
+                    currentInstrumentsSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
+                    setCollection: setCollection
+                ).onTapGesture {
+                    sideBarSetsViewModel.tapSetRow(selectedCollection: setCollection)
+                }
+                if sideBarSetsViewModel.state.currentInstrumentsSetName == setCollection.name {
+                    SavedSettingsView(
+                        sideBarSetsViewModel: sideBarSetsViewModel,
+                        currenSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
+                        setCollection: setCollection
+                    ).environmentObject(fileController)
+                }
+            }
+        }
+    }
+}
+
+struct SidebarSetCollectionView: View {
+    
+    let currentInstrumentsSetName: String
+    let setCollection: Set
+    
+    var isSelected: Bool {
+        currentInstrumentsSetName == setCollection.name
+    }
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Spacer()
+                Text(setCollection.name)
+                    .foregroundColor(isSelected ? .white : .primary)
+                    .font(.headline)
+                    .padding(.trailing)
+                Spacer()
+            }
+            Spacer()
+        }
+        .padding(.vertical, 4.0)
+        .padding(.leading, 4.0)
+        .background(isSelected ? Color.accentColor : .secondary)
+        .cornerRadius(10.0)
+    }
+}
+
+struct ReloadSetButtton: View {
+    
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName: "arrow.clockwise.circle")
+                    .frame(width: 24.0, height: 24.0)
+                    .background(RoundedRectangle(cornerRadius: 4.0).fill(Color.accentColor.opacity(0)))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal)
+        }
+    }
+}

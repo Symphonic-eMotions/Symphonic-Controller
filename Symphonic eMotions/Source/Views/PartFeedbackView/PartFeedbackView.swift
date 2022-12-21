@@ -1,0 +1,347 @@
+//
+//  PartFeedbackView.swift
+//  Symphonic eMotions
+//
+//  Created by Frans-Jan Wind on 28/05/2022.
+//
+
+import SwiftUI
+
+struct PartFeedbackView: View {
+    
+    @ObservedObject var playViewModel: PlayViewModel
+    
+    @EnvironmentObject var fileController: FileController
+    
+    @State var currentTrackID: String
+    @State var currentPartID: String
+    
+    @State var rampUp: Float
+    @State var rampDown: Float
+    @State var volume: Float
+    
+    var setSettings: SetSettings
+    
+    init(playViewModel: PlayViewModel ){
+        
+        self.playViewModel = playViewModel
+        
+        //Set Settings for building interface
+        self.setSettings = playViewModel.setSettings
+        
+        //Set the first track active in the editor
+        self.currentTrackID = setSettings.settingsCurrentTrackID
+        playViewModel.partFeedback.currentTrackID.value = setSettings.settingsCurrentTrackID
+
+        self.currentPartID = setSettings.settingsCurrentPartID
+        playViewModel.partFeedback.currentPartID.value = setSettings.settingsCurrentPartID
+        
+        self.rampUp = Float(setSettings.settingsRampUp)
+        self.rampDown = Float(setSettings.settingsRampDown)
+        self.volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(setSettings.settingsVolume)))
+    }
+    
+    var body: some View {
+        
+        VStack {
+            
+            //Select Track and select Part Pickers
+            VStack {
+                Picker(
+                    "Tracks",
+                    selection: Binding(get: {
+//                        playViewModel.partFeedback.currentTrackID.value
+                        currentTrackID
+                        
+                    }, set: { value in
+                        
+                        currentTrackID = value
+                        playViewModel.partFeedback.currentTrackID.send(value)
+                        playViewModel.setSettings.settingsCurrentTrackID = currentTrackID
+                        
+                        let settingsVolume = setSettings.tracks[value]!.instrumentVolume
+                        volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(settingsVolume)))
+                        playViewModel.setSettings.settingsVolume = settingsVolume
+                            
+                        
+                        
+                        currentPartID = setSettings.tracks[currentTrackID]!.parts.keys.first!
+                        playViewModel.partFeedback.currentPartID.send(currentPartID)
+                        playViewModel.setSettings.settingsCurrentPartID = currentPartID
+                        
+                        
+                        let settingRampUp  = setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp
+                        rampUp = Float(settingRampUp)
+                        playViewModel.setSettings.settingsRampUp = settingRampUp
+                        
+                        let settingsRampDown = setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown
+                        rampDown = Float(settingsRampDown)
+                        playViewModel.setSettings.settingsRampDown = settingsRampDown
+                        
+                        playViewModel.playViewState.updateEditView += 1
+                    }),
+                    content: {
+                        
+                        ForEach(setSettings.tracks.keys, id: \.self) { key in
+                            Text(setSettings.tracks[key]!.trackName).tag(key)
+                        }
+                    }
+                )
+                .pickerStyle(SegmentedPickerStyle())
+                .foregroundColor(.red)
+                .accentColor(.blue)
+                
+                HStack {
+                    //Select part of track
+                    Picker(
+                        "Parts",
+                        selection: Binding(get: {
+//                            playViewModel.partFeedback.currentPartID.value
+                            currentPartID
+                            
+                        }, set: { value in
+                            
+                            currentPartID = value
+                            playViewModel.partFeedback.currentPartID.send(value)
+                            playViewModel.setSettings.settingsCurrentPartID = currentPartID
+                            
+                            let settingRampUp  = setSettings.tracks[currentTrackID]!.parts[value]!.rampUp
+                            rampUp = Float(settingRampUp)
+                            playViewModel.setSettings.settingsRampUp = settingRampUp
+                            
+                            let settingsRampDown = setSettings.tracks[currentTrackID]!.parts[value]!.rampDown
+                            rampDown = Float(settingsRampDown)
+                            playViewModel.setSettings.settingsRampDown = settingsRampDown
+                            
+                            playViewModel.playViewState.updateEditView += 1
+                        }),
+                        content: {
+                            let track = setSettings.tracks[currentTrackID] ?? nil
+                            if track != nil {
+                                let parts = track!.parts
+                                ForEach( parts.keys, id: \.self ) { key in
+                                    Text( parts[key]!.partName).tag(parts[key]!.id)
+                                }
+                            }
+                        }
+                    )
+                    .pickerStyle(SegmentedPickerStyle())
+                    .foregroundColor(.red)
+                    .accentColor(.blue)
+                }
+            }
+            //Visual feedback Ramped value
+            //Volume slider
+            //Ramp sliders
+            //ColorPickerTack
+            //Write button
+            VStack( alignment: .trailing ) {
+                
+                HStack {
+                    
+                    VStack{
+                        //Ramped value feedback
+                        ValueFeedback(value: .init(
+                            get: {
+                                let currentBarLevel = Float(max(0, playViewModel.partFeedbackState.ramped))
+                                return max(0, min(1, currentBarLevel))
+                            },
+                            set: {
+                                _ in
+                            }), title: "Ramped value" )
+                        .frame(height: 28.0)
+                        
+                        //Volume / Amplitude
+                        RampSliderView(
+                            label: "Volume",
+                            value: Binding(
+                                get: { self.volume },
+                                set: { (newVal) in
+                                    //Set State var for slider itself
+                                    self.volume = newVal
+                                    //Change value within audio engine
+                                    playViewModel.conductor.forwardInstrumment(
+                                        value: Double(newVal),
+                                        on: currentTrackID,
+                                        for: "amplitude"
+                                    )
+                                    let ranged = RangeConverter.valueToRange(range: [-90,12], value: Double(newVal))
+                                    //Store value in class entity for storing
+                                    setSettings.tracks[currentTrackID]!.instrumentVolume = Float(ranged)
+                                }
+                            ),
+                            maxValue: 1.0,
+                            displayRange: [-90,12],
+                            specifier: "%.2f",
+                            showsLabel: true,
+                            isActive: (currentTrackID != "")
+                        )
+                    }
+                    
+                    //Ramp speed adjustment sliders
+                    VStack{
+                        //
+                        RampSliderView(
+                            label: "Ramp up",
+                            value: Binding(
+                                get: { self.rampUp },
+                                set: { (newVal) in
+                                    self.rampUp = newVal
+
+                                    playViewModel.conductor.rampUp[currentPartID] = Double(newVal)
+                                    playViewModel.conductor.setSamplerIdRamp(
+                                        rampType: "rampUp",
+                                        currentTrackID: currentTrackID,
+                                        value: Double(newVal)
+                                    )
+                                    setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = Double(newVal)
+                                }
+                            ),
+                            showsLabel: true,
+                            isActive: (currentPartID != "")
+                        )
+
+                        RampSliderView(
+                            label: "Ramp down",
+                            value: Binding(
+                                get: { self.rampDown },
+                                set: { (newVal) in
+                                    self.rampDown = newVal
+
+                                    playViewModel.conductor.rampDown[currentPartID] = Double(newVal)
+                                    playViewModel.conductor.setSamplerIdRamp(
+                                        rampType: "rampDown",
+                                        currentTrackID: currentTrackID,
+                                        value: Double(newVal)
+                                    )
+                                    setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = Double(newVal)
+                                }
+                            ),
+                            showsLabel: true,
+                            isActive: (currentPartID != "")
+                        )
+                    }
+                }
+                
+                if currentTrackID != "" {
+                    
+                    HStack {
+                        InsrtumentColorPicker(
+                            playViewModel: playViewModel
+                        )
+                        
+                        EMButton(
+                            action: {
+                                
+                                let fileName = AppUtils.createWorkingFile(
+                                    setSettings: setSettings,
+                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                    duplicateLastTrack: true
+                                )
+                                fileController.addSetFileURLToController(fileName: fileName)
+                                
+                                
+                                
+                            }, color: .primary, isSolid: false, maxWidth: 35, height: 35
+                        ){
+                            Image(systemName: "doc.on.doc.fill")
+                        }.frame(width: 80)
+                        
+                        EMButton(
+                            action: {
+                                
+                                let fileName = AppUtils.createWorkingFile(
+                                    setSettings: setSettings,
+                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                    duplicateLastTrack: false
+                                )
+                                fileController.addSetFileURLToController(fileName: fileName)
+                                
+                                
+                            }, color: .red, isSolid: true, maxWidth: 80, height: 35
+                        ){
+                            Text("write")
+                        }.frame(width: 80)
+                    }
+                }
+            }
+        }
+    }
+}
+
+//Graphical display value in slider
+struct ValueFeedback: View {
+    
+    @Binding var value: Float
+    var title: String
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle().frame(width: geometry.size.width , height: geometry.size.height)
+                    .opacity(0.3)
+                    .foregroundColor(.secondary)
+                
+                Rectangle().frame(width: min(CGFloat(self.value) * geometry.size.width, geometry.size.width), height: geometry.size.height)
+                    .foregroundColor(.primary)
+                
+                Text(title).foregroundColor(.accentColor).padding(.leading)
+            }.cornerRadius(45.0)
+        }
+    }
+}
+
+struct RampSliderView: View {
+    
+    var label: String
+    @Binding var value: Float
+    var minValue: Float = 0
+    var maxValue: Float = 0.2
+    var displayRange: [Double]
+    var specifier: String
+    var showsLabel: Bool
+    var isActive: Bool
+    
+    init(
+        label: String,
+        value: Binding<Float>,
+        minValue: Float = 0,
+        maxValue: Float = 0.2,
+        displayRange: [Double] = [0,1],
+        specifier: String = "%.4f",
+        showsLabel: Bool = true,
+        isActive: Bool = true
+    ) {
+        self.label = label
+        _value = value
+        self.maxValue = minValue
+        self.maxValue = maxValue
+        self.displayRange = displayRange
+        self.specifier = specifier
+        self.showsLabel = showsLabel
+        self.isActive = isActive
+    }
+    
+    var body: some View {
+        GeometryReader { geometry in
+                
+            ZStack{
+                if showsLabel { Text(label)}
+                HStack {
+                    Slider(value: $value, in: minValue...maxValue)
+                        .foregroundColor(.accentColor)
+                        .frame(width: geometry.size.width * 0.8)
+                        .disabled(!isActive)
+                        .id(isActive)
+//                    let valueInRange = RangeConverter.valueToRange(range: range, value: Double(value))
+                    let displayRange = Float(RangeConverter.valueToRange(range: displayRange, value: Double(value)))
+                    Text("\(displayRange, specifier: "\(specifier)")")
+                        .foregroundColor(.white)
+                        .font(.subheadline)
+                        .frame(width: geometry.size.width * 0.2)
+                }
+            }
+        }
+        .frame(height: 40.0)
+    }
+}

@@ -1,0 +1,50 @@
+{
+  "pins" : [
+    {
+      "identity" : "audiokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/AudioKit.git",
+      "state" : {
+        "revision" : "fca2966f95440760c6264aa6368dfb5bf829b2dd",
+        "version" : "5.2.2"
+      }
+    },
+    {
+      "identity" : "kissfft",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/KissFFT",
+      "state" : {
+        "revision" : "dd0636e151724b8ba2e0908eba4d99a6ff24d00c",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "soundpipeaudiokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/SoundpipeAudioKit",
+      "state" : {
+        "revision" : "dd8106ff8a768613623eb6cf40b5e1cc00b12eeb",
+        "version" : "5.2.1"
+      }
+    },
+    {
+      "identity" : "sporthaudiokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/SporthAudioKit.git",
+      "state" : {
+        "revision" : "dd63ddb2c961cf838f68fb96bd99638503439115",
+        "version" : "5.2.1"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "f504716c27d2e5d4144fa4794b12129301d17729",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
+}
