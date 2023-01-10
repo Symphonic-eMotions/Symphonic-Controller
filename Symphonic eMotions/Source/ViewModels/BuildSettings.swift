@@ -18,6 +18,7 @@ struct BuildSettings {
         case homeView
         case playView
         case calibration
+        case dynamicView
     }
     
     //Main theme setting
