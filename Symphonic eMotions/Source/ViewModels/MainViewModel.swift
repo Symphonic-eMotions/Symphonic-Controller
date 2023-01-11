@@ -56,6 +56,8 @@ final class MainViewModel: ObservableObject {
             )
             
         } else {
+            //Here we are
+            mainState.buildSettings.activeView = .playView
             
             print("---> LOADING NEW SETSETTINGS")
             
@@ -95,6 +97,15 @@ final class MainViewModel: ObservableObject {
     func backButton() {
         
         print("Lets go back!")
+        
+        conductor.pauzeEngineAndStopTracks(setSettings: mainState.setSettings)
+        
+        mainState.buildSettings.activeView = .homeView
+    }
+    
+    func backButtonSkins() {
+        
+        print("Lets go back, but now for skins!")
         
         conductor.pauzeEngineAndStopTracks(setSettings: mainState.setSettings)
         

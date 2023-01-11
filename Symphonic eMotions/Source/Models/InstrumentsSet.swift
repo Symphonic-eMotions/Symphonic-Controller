@@ -189,11 +189,15 @@ struct InstrumentsSet: Identifiable, Decodable {
         return false
     }
     
-//    mutating func update(track: Track) {
-//        guard let trackIndex = tracks.firstIndex(where: { $0.id == track.id }) else { return }
-//        tracks.remove(at: trackIndex)
-//        tracks.insert(track, at: trackIndex)
-//    }
+    func isSkinSet() -> Bool {
+
+        if playViewImages == nil {
+            return false
+        }
+        else {
+            return true
+        }
+    }
 }
 
 extension InstrumentsSet: Encodable {

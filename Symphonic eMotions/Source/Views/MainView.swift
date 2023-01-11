@@ -11,6 +11,7 @@ import SwiftUI
 struct MainView: View {
     
     @ObservedObject var viewModel: MainViewModel
+    
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
     
@@ -60,7 +61,35 @@ struct MainView: View {
                     mainViewUpdate: $mainViewUpdate
                 )
             }
-            else{
+            else if viewModel.mainState.currentInstrumentsSet.isSkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
+                ZStack {
+                    SkinDefault(
+                        playViewModel: PlayViewModel(
+                            playViewState: PlayViewState(
+                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
+                                buildSettings: viewModel.mainState.buildSettings
+                            ),
+                            conductor: viewModel.conductor,
+                            imageDifference: $viewModel.mainState.imageDifference,
+                            leveling: viewModel.leveling,
+                            
+                            setSettings: $viewModel.mainState.setSettings,
+                            
+                            //Part feedback is part of editor
+                            partFeedback: viewModel.partFeedback,
+                            partFeedbackState: PartFeedbackState(),
+                            
+                            //Feedback objects are for custom controllable UI objects
+                            feedbackObjects: viewModel.feedbackObjects,
+                            feedbackObjectsSate: FeedbackObjectsState()
+                        ),
+                        mainViewModel: viewModel
+                    )
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            }
+            else {
                 ZStack{
                     NavigationView {
                         SidebarView(

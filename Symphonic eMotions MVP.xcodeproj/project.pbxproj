@@ -24,6 +24,7 @@
 		7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */; };
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
 		7C3CD115296D952A00A4C522 /* effects.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effects.json */; };
+		7C3CD118296DC19900A4C522 /* SkinDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3CD117296DC19900A4C522 /* SkinDefault.swift */; };
 		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C67D15F270F8B83009122BF /* SoundpipeAudioKit */; };
@@ -42,6 +43,7 @@
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
 		7C8C3D9F28D306D00051BAC9 /* VisualFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */; };
+		7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
 		7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionSettings.swift */; };
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
@@ -117,6 +119,7 @@
 		7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRangeCompressorEffect.swift; sourceTree = "<group>"; };
 		7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSettings.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C3CD114296D952A00A4C522 /* effects.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = effects.json; sourceTree = "<group>"; };
+		7C3CD117296DC19900A4C522 /* SkinDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinDefault.swift; sourceTree = "<group>"; };
 		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostelloReverbEffect.swift; sourceTree = "<group>"; };
@@ -134,6 +137,7 @@
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualFeedback.swift; sourceTree = "<group>"; };
+		7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinGridImages.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
@@ -265,6 +269,15 @@
 				7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7C3CD116296DC17500A4C522 /* Skins */ = {
+			isa = PBXGroup;
+			children = (
+				7C3CD117296DC19900A4C522 /* SkinDefault.swift */,
+				7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */,
+			);
+			path = Skins;
 			sourceTree = "<group>";
 		};
 		7C6A341C28426EDB006F2E95 /* PartFeedbackView */ = {
@@ -436,6 +449,7 @@
 			children = (
 				7CB5835A292FAE72000C46FF /* Calibration */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
+				7C3CD116296DC17500A4C522 /* Skins */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				7CD0333028871809008CE900 /* FeedbackObjectsView */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
@@ -585,6 +599,7 @@
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CB58362292FAE72000C46FF /* CalibrateLightView.swift in Sources */,
 				16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */,
+				7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
 				C02E54EB26B53EC2003D503E /* PlayerControlsView.swift in Sources */,
 				C0C5129E27075DAA00DE3393 /* LowPassFilterEffect.swift in Sources */,
@@ -642,6 +657,7 @@
 				7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */,
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
+				7C3CD118296DC19900A4C522 /* SkinDefault.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
 				7C8C3D9F28D306D00051BAC9 /* VisualFeedback.swift in Sources */,
