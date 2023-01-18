@@ -187,6 +187,7 @@ final class AppUtils {
             name: instrumentSet.name,
             filesPath: instrumentSet.filesPath,
             bpm: instrumentSet.bpm,
+            hasTempo: instrumentSet.hasTempo,
             timeSignature: instrumentSet.timeSignature,
             
             //MasterTrack effects editor values

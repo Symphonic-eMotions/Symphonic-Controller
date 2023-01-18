@@ -79,6 +79,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case name = "setName"
         case filesPath = "setPath"
         case bpm = "setBPM"
+        case hasTempo
         case timeSignature = "setTimeSignature"
         case masterTrackEffects
         case rows = "gridRows"
@@ -96,7 +97,8 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Depricate filesPath, it's not used?
     let filesPath: String
     //Sequencer objects variables
-    let bpm: Double
+    var bpm: Double
+    let hasTempo: Bool
     let timeSignature: Int
     //Master effect rack group
     let masterTrackEffects: [Track.Effect]
@@ -120,6 +122,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         name = try container.decode(String.self, forKey: .name)
         filesPath = try container.decode(String.self, forKey: .filesPath)
         bpm = try container.decode(Double.self, forKey: .bpm)
+        hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
         let masterTrackEffectsRaw = try container.decode([Track.Effect].self, forKey: .masterTrackEffects)
         masterTrackEffects = masterTrackEffectsRaw
@@ -138,6 +141,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         name: String,
         filesPath: String,
         bpm: Double,
+        hasTempo: Bool,
         timeSignature: Int,
         masterTrackEffects: [Track.Effect],
         rows: Int,
@@ -152,6 +156,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.name = name
         self.filesPath = filesPath
         self.bpm = bpm
+        self.hasTempo = hasTempo
         self.timeSignature = timeSignature
         //TODO: new values from state object
         self.masterTrackEffects = masterTrackEffects

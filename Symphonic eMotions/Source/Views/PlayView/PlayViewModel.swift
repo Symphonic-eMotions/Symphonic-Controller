@@ -35,7 +35,7 @@ final class PlayViewModel: ObservableObject {
     @Published var partFeedbackState: PartFeedbackState
     //Higher up databse for all changed values in playView / editView
     @Binding var setSettings: SetSettings
-    
+        
     init(
         playViewState: PlayViewState,
         conductor: Conductor,

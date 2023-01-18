@@ -41,9 +41,13 @@ final class Conductor {
     
     //Velocities per track to be controlled by intrumentParts
     private var velocities: [String: Double] = [:]
-    //Tempo, 1 part for all sequencers. So have onlt 1 part per instrument set
+    //Tempo, 1 part for all sequencers. So have only 1 part per instrument set
     //NB Tempo only works for velocity sensitive instruments
+    //TODO: Deprecate old tempo
     private var tempo: [String: Double] = [:]
+    
+    private var currentTempo: Double = 0
+    
     //TODO generic var for controlling Synth and Sampler params
     private var soundModuleParam01: [String: Double] = [:]
     private var soundModuleParam02: [String: Double] = [:]
@@ -181,6 +185,8 @@ final class Conductor {
         setSettings: SetSettings
     ) {
         pauzeEngineAndStopTracks(setSettings:setSettings)
+        
+        currentTempo = newInstrumentsSet.bpm
         
         set.tracks.forEach { track in
             
@@ -476,6 +482,20 @@ final class Conductor {
         for (index, track) in set.tracks.enumerated() {
             if track.id == trackId {
                 set.tracks[index].muted = false
+            }
+        }
+    }
+    
+    public func setTempo( tempoChange: Double){
+        
+        currentTempo = self.currentTempo + tempoChange
+        
+        print("currentTempo \(currentTempo)")
+        
+        //All sequences get this tempo
+        for trackId in trackSequencers.keys {
+            if trackSequencers[trackId] != nil {
+                trackSequencers[trackId]!.setTempo(currentTempo)
             }
         }
     }
@@ -820,7 +840,6 @@ final class Conductor {
         
         return sampler
     }
-
     // MARK: Synths
     private func createPulseWidthSynth(
         for track: InstrumentsSet.Track,

@@ -25,6 +25,8 @@ final class PlayerControlsViewModel: ObservableObject {
     let leveling: Leveling
     var setSettings: SetSettings
     let playerControlsAction: (PlayerControlsViewAction) -> Void
+    let hasTempo: Bool
+
     @Published var playerControlsViewState: PlayerControlsViewState
     
     init(
@@ -33,6 +35,7 @@ final class PlayerControlsViewModel: ObservableObject {
         frameExtractor: FrameExtractor,
         leveling: Leveling,
         setSettings: SetSettings,
+        hasTempo: Bool,
         playerControlsAction: @escaping (PlayerControlsViewAction) -> Void
     ) {
         self.conductor = conductor
@@ -40,7 +43,16 @@ final class PlayerControlsViewModel: ObservableObject {
         self.leveling = leveling
         self.setSettings = setSettings
         self.playerControlsViewState = playerControlsViewState
+        self.hasTempo = hasTempo
         self.playerControlsAction = playerControlsAction
+    }
+    
+    func tapSetTempoPlus(){
+        self.conductor.setTempo(tempoChange: 5)
+    }
+    
+    func tapSetTempoMin(){
+        self.conductor.setTempo(tempoChange: -5)
     }
     
     func tapMediaControlButton() {
