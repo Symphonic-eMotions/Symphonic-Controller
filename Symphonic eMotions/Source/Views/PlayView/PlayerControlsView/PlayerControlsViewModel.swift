@@ -56,7 +56,17 @@ final class PlayerControlsViewModel: ObservableObject {
     }
     
     func tapMediaControlButton() {
+        
         leveling.pauseLevel = conductor.isConductorPlayingSubject.value
+        
+        if self.conductor.isConductorPlayingSubject.value {
+            self.frameExtractor.stopExtracting()
+            self.frameExtractor.startExtracting()
+        }
+        else{
+//            self.frameExtractor.startExtracting()
+        }
+        
         conductor.togglePlayEngineAndTracks(
             currentSetLevel: leveling.currentSetLevelSubject.value,
             setSettings: self.setSettings
