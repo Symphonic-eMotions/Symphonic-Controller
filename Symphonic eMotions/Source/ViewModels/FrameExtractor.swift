@@ -41,7 +41,7 @@ class FrameExtractor: NSObject {
     private var listener: AnyCancellable?
     
     deinit {
-        listener?.cancel()
+//        listener?.cancel()
         captureSession.stopRunning()
     }
     
@@ -52,7 +52,10 @@ class FrameExtractor: NSObject {
         super.init()
         
         checkPermission()
-        
+        startExtracting()
+    }
+    
+    public func startExtracting(){
         sessionQueue.async {
 //            DispatchQueue.global(qos: .background).async { [weak self] in
             DispatchQueue.main.async { [weak self] in
@@ -61,11 +64,15 @@ class FrameExtractor: NSObject {
                 self.configureSession()
                 self.captureSession.startRunning()
                 
-                self.listener = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-                    .compactMap { _ in (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.interfaceOrientation ?? .unknown }
-                    .assign(to: \.orientation, on: self)
+//                self.listener = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+//                    .compactMap { _ in (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.interfaceOrientation ?? .unknown }
+//                    .assign(to: \.orientation, on: self)
             }
         }
+    }
+    
+    public func stopExtracting(){
+        captureSession.stopRunning()
     }
     
     // MARK: AVSession configuration

@@ -68,12 +68,28 @@ struct PlayerControlsView: View {
                                 "play.fill")
                     }
                 }
-                //Volume slider
-                VolumeSlider()
-                   .frame(height: 10)
-                   .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                   .zIndex(100)
                 
+                HStack {
+                    if viewModelPlayerControls.hasTempo {
+                        EMButton(action: {
+                            viewModelPlayerControls.tapSetTempoMin()
+                        }, color: .accentColor, isSolid: false, maxWidth: 100) {
+                            Image(systemName: "minus.square")
+                        }
+                        
+                        EMButton(action: {
+                            viewModelPlayerControls.tapSetTempoPlus()
+                        }, color: .accentColor, isSolid: false, maxWidth: 100) {
+                            Image(systemName: "plus.square")
+                        }
+                    }
+                    
+                    //Volume slider
+                    VolumeSlider()
+                       .frame(height: 10)
+                       .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                       .zIndex(100)
+                }
             }
         }
 //        .padding()

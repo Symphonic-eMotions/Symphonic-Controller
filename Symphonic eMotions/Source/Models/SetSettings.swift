@@ -9,6 +9,8 @@ import Foundation
 import OrderedCollections
 import SwiftUI
 
+// SetSettings is used to keep track of settingchanges to store them to disk
+
 class SetSettings: Identifiable {
     
     //Keep track of current edited values

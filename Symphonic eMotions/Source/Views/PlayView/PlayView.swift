@@ -62,6 +62,7 @@ struct PlayView: View {
                         frameExtractor: playViewModel.frameExtractor,
                         leveling: playViewModel.leveling,
                         setSettings: playViewModel.setSettings,
+                        hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
                         playerControlsAction: playViewModel.controlsViewAction(action:)
                     ),
                     mainViewUpdate: $mainViewUpdate
