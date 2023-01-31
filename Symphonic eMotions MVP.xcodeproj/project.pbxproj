@@ -65,6 +65,8 @@
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CEFB9D028734205006A191F /* FullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFB9CF28734205006A191F /* FullView.swift */; };
+		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
+		7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C629899166003D33D3 /* SpriteKitView.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
@@ -159,6 +161,8 @@
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CEFB9CF28734205006A191F /* FullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullView.swift; sourceTree = "<group>"; };
+		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
+		7CF327C629899166003D33D3 /* SpriteKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitView.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -276,6 +280,7 @@
 			children = (
 				7C3CD117296DC19900A4C522 /* SkinDefault.swift */,
 				7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */,
+				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
 			);
 			path = Skins;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				C0C5129C27075D9500DE3393 /* Effects */,
 				7C6FC4652747DF6200BD64D6 /* Genres.swift */,
 				7CB5834A292F9C2A000C46FF /* SessionSettings.swift */,
+				7CF327C42989504F003D33D3 /* Skin.swift */,
 				7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */,
 				7C6FC4632747D52700BD64D6 /* Sets.swift */,
 				7CB58365292FAEE2000C46FF /* ColorType.swift */,
@@ -583,6 +589,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
 				7CD033322887183D008CE900 /* FeedbackObjectsView.swift in Sources */,
@@ -597,6 +604,7 @@
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
 				7CB5834F292FACC6000C46FF /* SavedSettingsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
+				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CB58362292FAE72000C46FF /* CalibrateLightView.swift in Sources */,
 				16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */,
 				7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */,

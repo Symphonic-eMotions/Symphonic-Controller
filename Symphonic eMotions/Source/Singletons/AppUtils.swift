@@ -188,6 +188,7 @@ final class AppUtils {
             filesPath: instrumentSet.filesPath,
             bpm: instrumentSet.bpm,
             hasTempo: instrumentSet.hasTempo,
+            skin: instrumentSet.skin,
             timeSignature: instrumentSet.timeSignature,
             
             //MasterTrack effects editor values
@@ -219,7 +220,8 @@ final class AppUtils {
             imageMaxLightPart: storeSessionSettings.imageMaxLightPart,
             imageFeedback: storeSessionSettings.imageFeedback,
             imageFeedbackDisctancePart: storeSessionSettings.imageFeedback,
-            calibrationPartMeterSteps: 12
+            calibrationPartMeterSteps: 12,
+            skin: nil
         )
         
         return sessionSetting

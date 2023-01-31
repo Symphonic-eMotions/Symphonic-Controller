@@ -56,10 +56,7 @@ final class MainViewModel: ObservableObject {
             )
             
         } else {
-            //Here we are
-            mainState.buildSettings.activeView = .playView
             
-            print("---> LOADING NEW SETSETTINGS")
             
             let setSettings = AppUtils.setSettings(instrumentSet: instrumentsSet)
             
@@ -84,9 +81,14 @@ final class MainViewModel: ObservableObject {
                 buildSettings: mainState.buildSettings
             )
             
-            if mainState.buildSettings.mainSettings == .muur {
+            //Here we are
+//            mainState.buildSettings.activeView = .playView
+            
+            print("---> LOADING NEW SETSETTINGS")
+            
+//            if mainState.buildSettings.mainSettings == .muur {
                 mainState.buildSettings.activeView = .playView
-            }
+//            }
             
             //The engine startup is located in the FullPlayView.onAppear
             //Or in the transport button PlayView

@@ -80,6 +80,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case filesPath = "setPath"
         case bpm = "setBPM"
         case hasTempo
+        case skin
         case timeSignature = "setTimeSignature"
         case masterTrackEffects
         case rows = "gridRows"
@@ -99,6 +100,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Sequencer objects variables
     var bpm: Double
     let hasTempo: Bool
+    var skin: Skin
     let timeSignature: Int
     //Master effect rack group
     let masterTrackEffects: [Track.Effect]
@@ -114,6 +116,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     let levelClipControlStartLevel: Int?
     //Skins
     let playViewImages: PlayViewImages?
+    
     //Tracks
     var tracks: [Track]
     
@@ -123,6 +126,14 @@ struct InstrumentsSet: Identifiable, Decodable {
         filesPath = try container.decode(String.self, forKey: .filesPath)
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
+        
+        if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
+            skin = skinRaw
+        }
+        else{
+            skin = Skin(name: .swiftUI, instruments: [])
+        }
+        
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
         let masterTrackEffectsRaw = try container.decode([Track.Effect].self, forKey: .masterTrackEffects)
         masterTrackEffects = masterTrackEffectsRaw
@@ -142,6 +153,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         filesPath: String,
         bpm: Double,
         hasTempo: Bool,
+        skin: Skin,
         timeSignature: Int,
         masterTrackEffects: [Track.Effect],
         rows: Int,
@@ -157,6 +169,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.filesPath = filesPath
         self.bpm = bpm
         self.hasTempo = hasTempo
+        self.skin = skin
         self.timeSignature = timeSignature
         //TODO: new values from state object
         self.masterTrackEffects = masterTrackEffects
@@ -194,7 +207,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         return false
     }
     
-    func isSkinSet() -> Bool {
+    func isSwiftUISkinSet() -> Bool {
 
         if playViewImages == nil {
             return false

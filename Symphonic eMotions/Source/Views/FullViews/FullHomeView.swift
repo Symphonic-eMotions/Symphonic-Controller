@@ -33,7 +33,7 @@ final class FullHomeViewModel: ObservableObject {
         self.conductor = conductor
     }
     
-    func tapLoadInstrumentSet(selectedCollection: Set) {
+    func tapLoadInstrumentSet(selectedCollection: MusicSet) {
         
         //Get sound effect note number from sets file
         let noteNumber = MIDINoteNumber(selectedCollection.noteNumber ?? 1)

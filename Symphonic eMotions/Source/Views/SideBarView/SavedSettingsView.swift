@@ -12,7 +12,7 @@ struct SavedSettingsView: View {
     
     @ObservedObject var sideBarSetsViewModel: SideBarSetsViewModel
     var currenSetName: String
-    let setCollection: Set
+    let setCollection: MusicSet
     
 //    var url: URL
     @State var urls: [URL] = []

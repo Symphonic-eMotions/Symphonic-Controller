@@ -41,8 +41,17 @@ struct MainView: View {
             setSettings:  viewModel.mainState.setSettings
         )
         
+        //
+        
         //Main view selector (skin)
-        if viewModel.mainState.buildSettings.mainSettings == .zorg {
+        
+        if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
+            viewModel.mainState.buildSettings.activeView == .playView{
+            
+            SpriteKitView()
+        }
+        
+        else if viewModel.mainState.buildSettings.mainSettings == .zorg {
             
             if self.mainViewUpdate == .calibration {
                 
@@ -61,7 +70,7 @@ struct MainView: View {
                     mainViewUpdate: $mainViewUpdate
                 )
             }
-            else if viewModel.mainState.currentInstrumentsSet.isSkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
+            else if viewModel.mainState.currentInstrumentsSet.isSwiftUISkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
                 ZStack {
                     SkinDefault(
                         playViewModel: PlayViewModel(

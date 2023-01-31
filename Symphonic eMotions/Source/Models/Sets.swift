@@ -25,10 +25,10 @@ struct Sets: Decodable {
         return nil
     }
     
-    let sets: [Set]
+    let sets: [MusicSet]
 }
 
-struct Set: Decodable, Hashable {
+struct MusicSet: Decodable, Hashable {
     
     private enum CodingKeys: String, CodingKey {
         case name = "setName"

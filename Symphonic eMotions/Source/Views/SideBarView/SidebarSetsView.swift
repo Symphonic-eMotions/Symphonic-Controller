@@ -27,7 +27,7 @@ class SideBarSetsViewModel: ObservableObject {
         self.rowSelected = rowSelected
     }
     
-    func tapSetRow(selectedCollection: Set) {
+    func tapSetRow(selectedCollection: MusicSet) {
         if selectedCollection.name != state.currentInstrumentsSetName{
             
             let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)
@@ -81,7 +81,7 @@ struct SidebarSetsView: View {
 struct SidebarSetCollectionView: View {
     
     let currentInstrumentsSetName: String
-    let setCollection: Set
+    let setCollection: MusicSet
     
     var isSelected: Bool {
         currentInstrumentsSetName == setCollection.name
