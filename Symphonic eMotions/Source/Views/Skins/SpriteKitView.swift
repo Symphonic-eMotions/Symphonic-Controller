@@ -37,6 +37,8 @@ struct CellInstrument{
 
 class GameScene: SKScene {
     
+//    @ObservedObject var viewModel: MainViewModel
+    
     //Columns
     let columns = 3
     //Rows
@@ -53,9 +55,6 @@ class GameScene: SKScene {
              0,0,0,0]
         ]
     )
-        
-    let instrument2:[[Int]] = [[0,1,0,0,1,0],[0,1,0,0,0,0]]
-    let instrument3:[[Int]] = [[0,0,1,0,0,1],[0,0,1,0,0,0]]
     
     override func didMove(to view: SKView) {
         
@@ -133,50 +132,6 @@ class GameScene: SKScene {
         return (max + min) - number
     }
 
-    
-    
-    
-    
-    func setupPlayerAndObstacles() {
-      addObstacle()
-    }
-
-    func addObstacle() {
-      addCircleObstacle()
-    }
-
-    func addCircleObstacle() {
-        // 1
-        let path = UIBezierPath()
-        // 2
-        path.move(to: CGPoint(x: 0, y: -200))
-        // 3
-        path.addLine(to: CGPoint(x: 0, y: -160))
-        // 4
-        path.addArc(withCenter: CGPoint.zero,
-                  radius: 160,
-                  startAngle: CGFloat(3.0 * Double.pi / 2),
-                  endAngle: CGFloat(0),
-                  clockwise: true)
-        // 5
-        path.addLine(to: CGPoint(x: 200, y: 0))
-        path.addArc(withCenter: CGPoint.zero,
-                  radius: 200,
-                  startAngle: CGFloat(0.0),
-                  endAngle: CGFloat(3.0 * Double.pi / 2),
-                  clockwise: false)
-
-        let section = SKShapeNode(path: path.cgPath)
-        section.position = CGPoint(x: size.width/2, y: size.height/2)
-        section.fillColor = .yellow
-        section.strokeColor = .yellow
-        
-        section.physicsBody = SKPhysicsBody(edgeChainFrom: path.cgPath)
-        section.physicsBody?.affectedByGravity = false
-        
-        addChild(section)
-    }
-    
     //Make box on tap, first part of this tutorial
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -194,19 +149,17 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-        
 //        print("called on: \(currentTime)")
         
-        
     }
-    
-    
-    
 }
 
 // A sample SwiftUI creating a GameScene and sizing it
 // at 300x400 points
 struct SpriteKitView: View {
+    
+    let transportHeigth: CGFloat = 100
+    
     var scene: SKScene {
         
         let scene = GameScene()
@@ -215,6 +168,7 @@ struct SpriteKitView: View {
         let height = UIScreen.main.bounds.height
         scene.size = CGSize(width: width, height: height)
         scene.scaleMode = .fill
+//        scene.viewModel = self.viewModel
         
 //        scene.size = CGSize(width: 300, height: 400)
 //        scene.scaleMode = .fill
@@ -223,8 +177,22 @@ struct SpriteKitView: View {
     }
 
     var body: some View {
-        SpriteView(scene: scene, options: [.allowsTransparency])
-//            .frame(width: 300, height: 400)
-            .ignoresSafeArea()
+        
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
+        
+        ZStack(alignment: .top) {
+            
+            SpriteView(scene: scene, options: [.allowsTransparency])
+                .frame(width: width, height: height)
+                .ignoresSafeArea()
+            
+            Text("width: \(width) height: \(height)")
+                .font(.headline).fontWeight(.bold)
+                .padding().cornerRadius(10)
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1.0))
+            
+            
+        }
     }
 }
