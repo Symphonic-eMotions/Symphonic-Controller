@@ -207,6 +207,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(name, forKey: .name)
         try container.encode(filesPath, forKey: .filesPath)
         try container.encode(bpm, forKey: .bpm)
+        try container.encode(hasTempo, forKey: .hasTempo)
         try container.encode(timeSignature, forKey: .timeSignature)
         try container.encode(masterTrackEffects, forKey: .masterTrackEffects)
         try container.encode(rows, forKey: .rows)

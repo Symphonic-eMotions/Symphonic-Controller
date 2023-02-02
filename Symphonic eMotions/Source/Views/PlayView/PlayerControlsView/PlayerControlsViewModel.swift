@@ -48,11 +48,13 @@ final class PlayerControlsViewModel: ObservableObject {
     }
     
     func tapSetTempoPlus(){
-        self.conductor.setTempo(tempoChange: 5)
+        let currentTempo = self.conductor.setTempo(tempoChange: 5)
+        self.setSettings.bpm = currentTempo
     }
     
     func tapSetTempoMin(){
-        self.conductor.setTempo(tempoChange: -5)
+        let currentTempo = self.conductor.setTempo(tempoChange: -5)
+        self.setSettings.bpm = currentTempo
     }
     
     func tapMediaControlButton() {

@@ -186,7 +186,8 @@ final class AppUtils {
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,
             filesPath: instrumentSet.filesPath,
-            bpm: instrumentSet.bpm,
+            //BPM is changed by tempo buttons
+            bpm: setSettings.bpm,
             hasTempo: instrumentSet.hasTempo,
             timeSignature: instrumentSet.timeSignature,
             
@@ -294,6 +295,7 @@ final class AppUtils {
             setName: instrumentSet.name,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
+            bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks
         )
