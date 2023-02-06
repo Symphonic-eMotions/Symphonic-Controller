@@ -29,6 +29,9 @@ class SetSettings: Identifiable {
     var gridRows: Int
     var gridColumns: Int
     
+    //Dynamic tempo
+    var bpm: Double
+    
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
     
@@ -39,11 +42,13 @@ class SetSettings: Identifiable {
         setName: String,
         rows: Int,
         columns: Int,
+        bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>
     ){
         self.setName = setName
         self.gridRows = rows
+        self.bpm = bpm
         self.gridColumns = columns
         self.masterEffects = masterEffects
         self.tracks = tracks

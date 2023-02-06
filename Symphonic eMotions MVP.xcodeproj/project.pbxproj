@@ -180,7 +180,7 @@
 		C069591E26B4E77E002EB522 /* AreaValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaValues.swift; sourceTree = "<group>"; };
 		C069592026B4E8FC002EB522 /* PlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGridView.swift; sourceTree = "<group>"; };
 		C069592226B4F2F6002EB522 /* EMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMButton.swift; sourceTree = "<group>"; };
-		C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro RC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Symphonic eMotions Pro RC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Symphonic eMotions Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C084FFD626B3115E009A4D0C /* eMotionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eMotionApp.swift; sourceTree = "<group>"; };
 		C084FFDA26B31160009A4D0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C084FFDD26B31160009A4D0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 		C084FFD426B3115E009A4D0C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro RC.app */,
+				C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,9 +505,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro RC */ = {
+		C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro RC" */;
+			buildConfigurationList = C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro" */;
 			buildPhases = (
 				C084FFCF26B3115E009A4D0C /* Sources */,
 				C084FFD026B3115E009A4D0C /* Frameworks */,
@@ -517,7 +517,7 @@
 			);
 			dependencies = (
 			);
-			name = "Symphonic eMotions Pro RC";
+			name = "Symphonic eMotions Pro";
 			packageProductDependencies = (
 				C0AFDD082705D254006EF64F /* AudioKit */,
 				7C67D15F270F8B83009122BF /* SoundpipeAudioKit */,
@@ -525,7 +525,7 @@
 				7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */,
 			);
 			productName = eMotion;
-			productReference = C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro RC.app */;
+			productReference = C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -562,7 +562,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro RC */,
+				C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro */,
 			);
 		};
 /* End PBXProject section */
@@ -801,14 +801,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro RC";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions RC";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
@@ -818,14 +818,14 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.9.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproRC";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacRC";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -844,14 +844,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro RC";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions RC";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
@@ -861,14 +861,14 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.9.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproRC";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacRC";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -891,7 +891,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro RC" */ = {
+		C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C084FFE226B31160009A4D0C /* Debug */,

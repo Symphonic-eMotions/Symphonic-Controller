@@ -486,11 +486,11 @@ final class Conductor {
         }
     }
     
-    public func setTempo( tempoChange: Double){
+    public func setTempo( tempoChange: Double) -> Double{
         
         currentTempo = self.currentTempo + tempoChange
         
-        print("currentTempo \(currentTempo)")
+        print("new tempo: \(currentTempo) BPM")
         
         //All sequences get this tempo
         for trackId in trackSequencers.keys {
@@ -498,6 +498,8 @@ final class Conductor {
                 trackSequencers[trackId]!.setTempo(currentTempo)
             }
         }
+        
+        return currentTempo
     }
     
     private func isInstrumentPlayedByMIDIonlyInstrument( selectedLevel: Int, trackId: String ) -> Bool {
