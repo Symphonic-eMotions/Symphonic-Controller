@@ -37,13 +37,18 @@ struct CellInstrument{
 
 class GameScene: SKScene {
     
-//    @ObservedObject var viewModel: MainViewModel
+    let debugNumbers: Bool = true
+    
+    //GameScene globals to change through update
+    var instrumentPart0a: SKShapeNode!
+    var instrumentPart0aScale: CGFloat = 0
     
     //Columns
-    let columns = 3
+    let columns = 4
     //Rows
     let rows = 2
     
+    //Config which needs to come out of SessionSettings
     let instrument1 = CellInstrument(
         color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
         shape: "Circle",
@@ -61,20 +66,59 @@ class GameScene: SKScene {
         let instrument = instrument1
         let cell = Cell(columns: columns, rows: rows)
         
-        setupGridAndInstruments(cell: cell, instrument: instrument)
+        setupGridAndInstrumentParts(cell: cell, instrument: instrument)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
     
-    func setupGridAndInstruments(cell: Cell, instrument: CellInstrument) {
+    func setupInstrumentPart(localSize: CGFloat, xOffset: CGFloat, yOffset: CGFloat, color: UIColor) -> SKShapeNode{
         
-        var index:Int = 0
-        let localSize:CGFloat = 100
+        //SKSpriteNode offers higher performance than SKShapeNode class
+        
+        let instrumentPart = SKShapeNode(circleOfRadius: localSize)
+        instrumentPart.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
+        instrumentPart.fillColor = SKColor.clear
+        instrumentPart.strokeColor = color
+        
+        
+        instrumentPart.physicsBody = SKPhysicsBody(circleOfRadius: localSize)
+        instrumentPart.physicsBody?.affectedByGravity = false
+        instrumentPart.physicsBody?.pinned = true
+        
+        
+        //        if instrumentPart[index] == 1 {
+        //            //Placing an image
+        //            let image = SKSpriteNode(imageNamed: "Circle")
+        //            image.scale(to: CGSize(width: localSize, height: localSize))
+        //            image.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
+        //            addChild(image)
+        //        }
+        
+        return instrumentPart
+    }
+    
+    func setUpDebugNumbers(partNr:Int, xOffset: CGFloat, yOffsetText: CGFloat) -> SKLabelNode {
+        
+        let indexText = SKLabelNode(fontNamed: "Arial")
+        indexText.text = "\(partNr)"
+        indexText.fontSize = 50
+        indexText.fontColor = SKColor.green
+        indexText.alpha = 0.5
+        indexText.position = CGPoint(x: size.width * xOffset, y: size.height * yOffsetText)
+        
+        return indexText
+    }
+    
+    func setupGridAndInstrumentParts(cell: Cell, instrument: CellInstrument) {
+        
+        let trackNr:Int = 0
+        var partNr:Int = 0
+        let localSize:CGFloat = 260
         
         for row in 0..<cell.rows {
-        
+            
             for column in 0..<cell.columns {
-    
+                
                 //Calculate the horizontal center of all cells
                 let xOffset = CGFloat(Float(column) * cell.celWidth + cell.centerWidth)
                 
@@ -86,44 +130,21 @@ class GameScene: SKScene {
                 //For debuging we show text in all cells
                 let yOffsetText = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth - 0.013)
                 
-                //For now only first oart is read
-                if instrument.areas[0][index] == 1 {
-
-//                    let instrumentPart = SKShapeNode(circleOfRadius: CGFloat(localSize))
-//                    let ipSize = CGSize(width: localSize, height: localSize)
-                    //SKSpriteNode offers higher performance than SKShapeNode class
-                    let instrumentPart = SKShapeNode(circleOfRadius: localSize)
-                    instrumentPart.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
-                    instrumentPart.fillColor = SKColor.clear
-                    instrumentPart.strokeColor = instrument.color
+                //For now only first part is read
+                if instrument.areas[trackNr][partNr] == 1 {
                     
-                    
-                    instrumentPart.physicsBody = SKPhysicsBody(circleOfRadius: localSize)
-                    instrumentPart.physicsBody?.affectedByGravity = false
-                    instrumentPart.physicsBody?.pinned = true
-                    addChild(instrumentPart)
+                    if trackNr == 0 && partNr == 0 {
+                        instrumentPart0a = setupInstrumentPart(localSize: localSize, xOffset: xOffset, yOffset: yOffset, color: instrument.color)
+                        addChild(instrumentPart0a)
+                    }
                 }
                 
-//                if instrumentPart[index] == 1 {
-//                    //Placing an image
-//                    let image = SKSpriteNode(imageNamed: "Circle")
-//                    image.scale(to: CGSize(width: localSize, height: localSize))
-//                    image.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
-//                    addChild(image)
-//                }
+                if debugNumbers {
+                    let debugNumber = setUpDebugNumbers(partNr: partNr, xOffset: xOffset, yOffsetText: yOffsetText)
+                    addChild(debugNumber)
+                }
                 
-    
-                let indexText = SKLabelNode(fontNamed: "Arial")
-                indexText.text = "\(index)"
-                indexText.fontSize = 50
-                indexText.fontColor = SKColor.green
-                indexText.position = CGPoint(x: size.width * xOffset, y: size.height * yOffsetText)
-                
-                addChild(indexText)
-            
-                index += 1
-                
-//                return container
+                partNr += 1
             }
         }
     }
@@ -131,7 +152,7 @@ class GameScene: SKScene {
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
     }
-
+    
     //Make box on tap, first part of this tutorial
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -149,7 +170,9 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-//        print("called on: \(currentTime)")
+        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale))
+        
+        //        print("called on: \(currentTime)")
         
     }
 }
@@ -161,24 +184,27 @@ struct SpriteKitView: View {
     @ObservedObject var mainViewModel: MainViewModel
     
     let transportHeigth: CGFloat = 50
+    var scene = GameScene()
     
-    var scene: SKScene {
-        
-        let scene = GameScene()
-        
+    init(playViewModel:PlayViewModel, mainViewModel:MainViewModel) {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         scene.size = CGSize(width: width, height: height - transportHeigth)
         scene.scaleMode = .fill
-//        scene.viewModel = self.viewModel
-
-        return scene
+        
+        self.playViewModel = playViewModel
+        self.mainViewModel = mainViewModel
     }
-
+    
     var body: some View {
         
-        let width = UIScreen.main.bounds.width
-        let height = UIScreen.main.bounds.height
+#if targetEnvironment(macCatalyst)
+        let width:CGFloat = 1024
+        let height:CGFloat = 960
+#else
+        let width:CGFloat = UIScreen.main.bounds.width
+        let height:CGFloat = UIScreen.main.bounds.height
+#endif
         
         VStack{
             
@@ -196,13 +222,16 @@ struct SpriteKitView: View {
                 
                 VolumeSlider()
                     .frame(width: 300, height: 20)
-                   .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                   .zIndex(100)
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    .zIndex(100)
             }
             
             SpriteView(scene: scene, options: [.allowsTransparency])
                 .frame(width: width, height: height - transportHeigth - 10)
                 .ignoresSafeArea()
+                .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+                    scene.instrumentPart0aScale = CGFloat(value)
+                }
             
         }
     }

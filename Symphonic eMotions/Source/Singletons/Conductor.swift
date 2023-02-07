@@ -118,6 +118,15 @@ final class Conductor {
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
     
+    
+    //InstrumentParts to SpriteKit through PassthroughSubject
+    var spriteKitParts0a = PassthroughSubject<Double, Never>()
+    var spriteKitParts0b = PassthroughSubject<Double, Never>()
+    var spriteKitParts1a = PassthroughSubject<Double, Never>()
+    var spriteKitParts1b = PassthroughSubject<Double, Never>()
+    var spriteKitParts2a = PassthroughSubject<Double, Never>()
+    var spriteKitParts2b = PassthroughSubject<Double, Never>()
+    
     //The main instrument set structure. A Musical set is loaded into this struct
     private var set: InstrumentsSet
 
@@ -1234,9 +1243,13 @@ final class Conductor {
         
         
         var localCurrentSetLevel: Double = currentSetLevel
+        var trackNr: Int = 0
+        var partNr: Int = 0
         
         //Loop through all tracks per value
         set.tracks.forEach { track in
+            
+            partNr = 0
             
             //If muted return
             if track.muted != nil && track.muted == true {
@@ -1280,7 +1293,8 @@ final class Conductor {
                     forwardInstrumment(value: value, on: samplerId, for: "samplerCC9")
                 }
                 
-            } else {
+            }
+            else {
                 /*
                  
                  MARK: Original multi part system
@@ -1290,8 +1304,8 @@ final class Conductor {
                 //Loop through all parts per track per value
                 track.parts.forEach { part in
                     
-                    //before setSetting
-//                    let valuesMapped = part.indexes(for: set).map{values[$0.row][$0.column].scaledValue}
+// before setSetting
+// let valuesMapped = part.indexes(for: set).map{values[$0.row][$0.column].scaledValue}
                     
                     let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(rows: setSettings.gridRows, columns: setSettings.gridColumns).map {
                         values[$0.row][$0.column].scaledValue
@@ -1299,13 +1313,11 @@ final class Conductor {
                     
                     guard !valuesMapped.isEmpty else { return }
                     
-                    
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                     
                     //Convert index to index of areaOfInterest
                     var maxIndex = Int(maxIndexTupple.0)
-                    
                     
                     //Lets call maxMapped value to work with
                     var value = maxIndexTupple.1
@@ -1319,7 +1331,6 @@ final class Conductor {
                         
                         let mapMaxIndex = part.mapMaxIndex ?? []
                         maxIndex = mapMaxIndex[maxIndex]
-                        
                         forwardMaxIndex(
                             for: part.damperTarget,
                             maxIndex: maxIndex
@@ -1350,6 +1361,15 @@ final class Conductor {
                         currentSetLevel: localCurrentSetLevel
                     )
                     
+                    //TODO: Add spriteKit exeption
+                    forwardSpriteKit(
+                        trackNr: trackNr,
+                        partNr: partNr,
+                        ramped: value
+                    )
+                    
+                    partNr += 1
+                    
                     //Check part feedback interface state for part feedback visualisation
                     if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
                         forwardPartFeedback(
@@ -1358,6 +1378,8 @@ final class Conductor {
                     }
                 }
             }
+            
+            trackNr += 1
         }
         return localCurrentSetLevel
     }
@@ -1433,6 +1455,37 @@ final class Conductor {
     //Forward Part Feedback
     public func forwardPartFeedback( ramped: Double ) -> Void {
         forwardRampedPartFeedback.send(ramped)
+    }
+    
+    public func forwardSpriteKit(
+        trackNr: Int,
+        partNr: Int,
+        ramped: Double
+    ) -> Void {
+        if trackNr == 0 {
+            if partNr == 0 {
+                spriteKitParts0a.send(ramped)
+            }
+            else if partNr == 1 {
+                spriteKitParts0b.send(ramped)
+            }
+        }
+        else if trackNr == 1 {
+            if partNr == 0 {
+                spriteKitParts1a.send(ramped)
+            }
+            else if partNr == 1 {
+                spriteKitParts1b.send(ramped)
+            }
+        }
+        else if trackNr == 2 {
+            if partNr == 0 {
+                spriteKitParts2a.send(ramped)
+            }
+            else if partNr == 1 {
+                spriteKitParts2b.send(ramped)
+            }
+        }
     }
     
     //Forward damper data
