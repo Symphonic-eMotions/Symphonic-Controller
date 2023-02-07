@@ -32,7 +32,7 @@ struct CellInstrument{
     let color:UIColor
     let shape:String
     let image:String
-    let areas:[[Int]]
+    let areas:[Int]
 }
 
 class GameScene: SKScene {
@@ -43,32 +43,91 @@ class GameScene: SKScene {
     var instrumentPart0a: SKShapeNode!
     var instrumentPart0aScale: CGFloat = 0
     
+    var sessionSkin: InstrumentsSet.Skin!
+    
+    
+    
     //Columns
     let columns = 4
     //Rows
-    let rows = 2
+    let rows = 4
     
     //Config which needs to come out of SessionSettings
-    let instrument1 = CellInstrument(
-        color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
-        shape: "Circle",
-        image: "Instrument Piano Keys",
-        areas:[
-            [1,0,0,0,
-             1,0,0,0],
-            [1,0,0,0,
-             0,0,0,0]
-        ]
-    )
+//    let instrument1 = CellInstrument(
+//        color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
+//        shape: "Circle",
+//        image: "Instrument Piano Keys",
+//        areas:[
+//            [1,0,0,0,
+//             1,0,0,0],
+//            [1,0,0,0,
+//             0,0,0,0]
+//        ]
+//    )
     
+    //Start of Scene funciton
     override func didMove(to view: SKView) {
         
-        let instrument = instrument1
+//        print(sessionSkin!)
+        
+//        let instrument = instrument1
+        let instrument = sessionSkin.instruments[1]
         let cell = Cell(columns: columns, rows: rows)
         
-        setupGridAndInstrumentParts(cell: cell, instrument: instrument)
+        print(instrument.color)
+        
+        let cellInstrument = CellInstrument(
+            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1), //instrument.color,
+            shape: instrument.shape.rawValue,
+            image: instrument.image,
+            areas: instrument.areas[0]
+        )
+        
+        setupGrid(cell: cell, instrument: cellInstrument)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+    }
+    
+    func setupGrid(cell: Cell, instrument: CellInstrument) {
+        
+//        let trackNr:Int = 0
+//        var partNr:Int = 0
+        let localSize:CGFloat = 260
+        
+        var index: Int = 0
+        
+        for row in 0..<cell.rows {
+            
+            for column in 0..<cell.columns {
+                
+                //Calculate the horizontal center of all cells
+                let xOffset = CGFloat(Float(column) * cell.celWidth + cell.centerWidth)
+                
+                //Calculate the vertical center of all cells
+                //Reverse columns for mirrored output on x-axis (SpriteKit 0:0 is left bottom, SeM 0:0 is left top)
+                let reversedColumn = reverseNumber(number: row, min: 0, max: rows - 1)
+                let yOffset = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth)
+                
+                //For debuging we show text in all cells
+                let yOffsetText = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth - 0.013)
+                
+                if instrument.areas[index] == 1 {
+                    
+                    print("SETTING UP INSTRUMENT \(localSize) \(xOffset) \(yOffset)")
+                    
+                    instrumentPart0a = setupInstrumentPart(localSize: localSize, xOffset: xOffset, yOffset: yOffset, color: instrument.color)
+                        
+                    addChild(instrumentPart0a)
+                }
+                
+                if debugNumbers {
+                    let debugNumber = setUpDebugNumbers(index: index, xOffset: xOffset, yOffsetText: yOffsetText)
+                    addChild(debugNumber)
+                }
+                
+                index += 1
+            }
+        }
     }
     
     func setupInstrumentPart(localSize: CGFloat, xOffset: CGFloat, yOffset: CGFloat, color: UIColor) -> SKShapeNode{
@@ -97,10 +156,10 @@ class GameScene: SKScene {
         return instrumentPart
     }
     
-    func setUpDebugNumbers(partNr:Int, xOffset: CGFloat, yOffsetText: CGFloat) -> SKLabelNode {
+    func setUpDebugNumbers(index:Int, xOffset: CGFloat, yOffsetText: CGFloat) -> SKLabelNode {
         
         let indexText = SKLabelNode(fontNamed: "Arial")
-        indexText.text = "\(partNr)"
+        indexText.text = "\(index)"
         indexText.fontSize = 50
         indexText.fontColor = SKColor.green
         indexText.alpha = 0.5
@@ -109,48 +168,14 @@ class GameScene: SKScene {
         return indexText
     }
     
-    func setupGridAndInstrumentParts(cell: Cell, instrument: CellInstrument) {
-        
-        let trackNr:Int = 0
-        var partNr:Int = 0
-        let localSize:CGFloat = 260
-        
-        for row in 0..<cell.rows {
-            
-            for column in 0..<cell.columns {
-                
-                //Calculate the horizontal center of all cells
-                let xOffset = CGFloat(Float(column) * cell.celWidth + cell.centerWidth)
-                
-                //Calculate the vertical center of all cells
-                //Reverse columns for mirrored output on x-axis (SpriteKit 0:0 is left bottom, SeM 0:0 is left top)
-                let reversedColumn = reverseNumber(number: row, min: 0, max: rows - 1)
-                let yOffset = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth)
-                
-                //For debuging we show text in all cells
-                let yOffsetText = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth - 0.013)
-                
-                //For now only first part is read
-                if instrument.areas[trackNr][partNr] == 1 {
-                    
-                    if trackNr == 0 && partNr == 0 {
-                        instrumentPart0a = setupInstrumentPart(localSize: localSize, xOffset: xOffset, yOffset: yOffset, color: instrument.color)
-                        addChild(instrumentPart0a)
-                    }
-                }
-                
-                if debugNumbers {
-                    let debugNumber = setUpDebugNumbers(partNr: partNr, xOffset: xOffset, yOffsetText: yOffsetText)
-                    addChild(debugNumber)
-                }
-                
-                partNr += 1
-            }
-        }
-    }
-    
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        
+        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale))
+                
     }
     
     //Make box on tap, first part of this tutorial
@@ -168,13 +193,7 @@ class GameScene: SKScene {
         addChild(box)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        
-        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale))
-        
-        //        print("called on: \(currentTime)")
-        
-    }
+    
 }
 
 //SwiftUI creating a GameScene and sizing it
@@ -191,6 +210,7 @@ struct SpriteKitView: View {
         let height = UIScreen.main.bounds.height
         scene.size = CGSize(width: width, height: height - transportHeigth)
         scene.scaleMode = .fill
+        scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
@@ -198,13 +218,13 @@ struct SpriteKitView: View {
     
     var body: some View {
         
-#if targetEnvironment(macCatalyst)
+        #if targetEnvironment(macCatalyst)
         let width:CGFloat = 1024
         let height:CGFloat = 960
-#else
+        #else
         let width:CGFloat = UIScreen.main.bounds.width
         let height:CGFloat = UIScreen.main.bounds.height
-#endif
+        #endif
         
         VStack{
             
@@ -230,6 +250,9 @@ struct SpriteKitView: View {
                 .frame(width: width, height: height - transportHeigth - 10)
                 .ignoresSafeArea()
                 .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+                    
+//                    print("Received: spriteKitParts0a \(value)")
+                    
                     scene.instrumentPart0aScale = CGFloat(value)
                 }
             

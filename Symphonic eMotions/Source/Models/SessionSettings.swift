@@ -114,15 +114,45 @@ class SessionSettings: Identifiable {
         let instruments:[InstrumentsSet.Skin.Instrument] = [InstrumentsSet.Skin.Instrument(
             shape: .circle,
             image: "Keyboard",
-            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
+            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
+            areas: [
+                [0,0,0,0,
+                 0,0,0,1,
+                 0,0,0,0,
+                 0,0,0,0],
+                [0,0,0,1,
+                 0,0,0,0,
+                 0,0,0,0,
+                 0,0,0,0]
+            ]
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
             image: "Cello",
-            color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
+            color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1),
+            areas: [
+                [0,0,0,0,
+                 0,0,1,0,
+                 0,0,0,0,
+                 0,0,0,0],
+                [0,0,1,0,
+                 0,0,0,0,
+                 0,0,0,0,
+                 0,0,0,0]
+            ]
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
             image: "Trom",
-            color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
+            color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1),
+            areas: [
+                [0,0,0,0,
+                 0,1,0,0,
+                 0,0,0,0,
+                 0,0,0,0],
+                [0,1,0,0,
+                 0,0,0,0,
+                 0,0,0,0,
+                 0,0,0,0]
+            ]
         )]
         
         if skin != nil {
