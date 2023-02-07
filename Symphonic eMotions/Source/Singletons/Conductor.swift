@@ -2305,6 +2305,7 @@ final class Conductor {
     //MARK: Transport
     // Play a track
     private func playTrack(_ track: InstrumentsSet.Track) {
+        
         trackSequencers[track.id]?.play()
     }
     // Stop a track
@@ -2365,7 +2366,7 @@ final class Conductor {
     }
     
     func playEngineAndTracks() {
-                
+        
         guard !isConductorPlayingSubject.value else { return }
         
         do {

@@ -808,7 +808,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions RC";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
@@ -851,7 +851,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions RC";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";

@@ -131,5 +131,8 @@ class SessionSettings: Identifiable {
         else {
             self.activeSkin = InstrumentsSet.Skin(name: .growingDots, instruments: instruments)
         }
+        
+        print(self.activeSkin)
+        
     }
 }

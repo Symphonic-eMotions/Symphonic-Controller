@@ -65,9 +65,6 @@ final class PlayerControlsViewModel: ObservableObject {
             self.frameExtractor.stopExtracting()
             self.frameExtractor.startExtracting()
         }
-        else{
-//            self.frameExtractor.startExtracting()
-        }
         
         conductor.togglePlayEngineAndTracks(
             currentSetLevel: leveling.currentSetLevelSubject.value,

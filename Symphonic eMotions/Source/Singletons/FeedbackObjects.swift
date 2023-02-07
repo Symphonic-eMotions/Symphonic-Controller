@@ -9,11 +9,11 @@ import Combine
 
 class FeedbackObjects {
     
-    var objectOne = CurrentValueSubject<Double, Never>(0)
-    
-    var objectTwo = CurrentValueSubject<Double, Never>(0)
-    
-    var objectThree = CurrentValueSubject<Double, Never>(0)
-    
-    var objectFour = CurrentValueSubject<Double, Never>(0)
+//    var objectOne = CurrentValueSubject<Double, Never>(0)
+//    
+//    var objectTwo = CurrentValueSubject<Double, Never>(0)
+//    
+//    var objectThree = CurrentValueSubject<Double, Never>(0)
+//    
+//    var objectFour = CurrentValueSubject<Double, Never>(0)
 }

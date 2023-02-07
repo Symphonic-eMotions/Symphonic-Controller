@@ -48,7 +48,36 @@ struct MainView: View {
         if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
             viewModel.mainState.buildSettings.activeView == .playView{
             
-            SpriteKitView()
+            SpriteKitView(
+                playViewModel: PlayViewModel(
+                    playViewState: PlayViewState(
+                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
+                        buildSettings: viewModel.mainState.buildSettings
+                    ),
+                    conductor: viewModel.conductor,
+                    imageDifference: $viewModel.mainState.imageDifference,
+                    leveling: viewModel.leveling,
+                    
+                    setSettings: $viewModel.mainState.setSettings,
+                    
+                    //Part feedback is part of editor
+                    partFeedback: viewModel.partFeedback,
+                    partFeedbackState: PartFeedbackState(),
+                    
+                    //Feedback objects are for custom controllable UI objects
+                    feedbackObjects: viewModel.feedbackObjects,
+                    feedbackObjectsSate: FeedbackObjectsState()
+                ),
+                mainViewModel: viewModel
+            )
+            .onAppear{
+                viewModel.conductor.playEngineAndTracks()
+                viewModel.conductor.trackMuteAndClipStatusPerLevel(
+                    level: 0,
+                    setSettings: viewModel.mainState.setSettings,
+                    from: "spriteKitOnAppear"
+                )
+            }
         }
         
         else if viewModel.mainState.buildSettings.mainSettings == .zorg {
@@ -70,34 +99,34 @@ struct MainView: View {
                     mainViewUpdate: $mainViewUpdate
                 )
             }
-            else if viewModel.mainState.currentInstrumentsSet.isSwiftUISkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
-                ZStack {
-                    SkinDefault(
-                        playViewModel: PlayViewModel(
-                            playViewState: PlayViewState(
-                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                                buildSettings: viewModel.mainState.buildSettings
-                            ),
-                            conductor: viewModel.conductor,
-                            imageDifference: $viewModel.mainState.imageDifference,
-                            leveling: viewModel.leveling,
-                            
-                            setSettings: $viewModel.mainState.setSettings,
-                            
-                            //Part feedback is part of editor
-                            partFeedback: viewModel.partFeedback,
-                            partFeedbackState: PartFeedbackState(),
-                            
-                            //Feedback objects are for custom controllable UI objects
-                            feedbackObjects: viewModel.feedbackObjects,
-                            feedbackObjectsSate: FeedbackObjectsState()
-                        ),
-                        mainViewModel: viewModel
-                    )
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-            }
+            //            else if viewModel.mainState.currentInstrumentsSet.isSwiftUISkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
+            //                ZStack {
+            //                    SkinDefault(
+            //                        playViewModel: PlayViewModel(
+            //                            playViewState: PlayViewState(
+            //                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
+            //                                buildSettings: viewModel.mainState.buildSettings
+            //                            ),
+            //                            conductor: viewModel.conductor,
+            //                            imageDifference: $viewModel.mainState.imageDifference,
+            //                            leveling: viewModel.leveling,
+            //
+            //                            setSettings: $viewModel.mainState.setSettings,
+            //
+            //                            //Part feedback is part of editor
+            //                            partFeedback: viewModel.partFeedback,
+            //                            partFeedbackState: PartFeedbackState(),
+            //
+            //                            //Feedback objects are for custom controllable UI objects
+            //                            feedbackObjects: viewModel.feedbackObjects,
+            //                            feedbackObjectsSate: FeedbackObjectsState()
+            //                        ),
+            //                        mainViewModel: viewModel
+            //                    )
+            //                }
+            //                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            //
+            //            }
             else {
                 ZStack{
                     NavigationView {
@@ -116,7 +145,7 @@ struct MainView: View {
                                 }
                             )
                         ).environmentObject(fileController)
-                    
+                        
                         PlayView(
                             playViewModel: PlayViewModel(
                                 playViewState: PlayViewState(
@@ -131,6 +160,7 @@ struct MainView: View {
                                 
                                 partFeedback: viewModel.partFeedback,
                                 partFeedbackState: PartFeedbackState(),
+                                
                                 feedbackObjects: viewModel.feedbackObjects,
                                 feedbackObjectsSate: FeedbackObjectsState()
                             ),

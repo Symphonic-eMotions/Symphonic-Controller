@@ -154,11 +154,13 @@ class GameScene: SKScene {
     }
 }
 
-// A sample SwiftUI creating a GameScene and sizing it
-// at 300x400 points
+//SwiftUI creating a GameScene and sizing it
 struct SpriteKitView: View {
     
-    let transportHeigth: CGFloat = 100
+    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var mainViewModel: MainViewModel
+    
+    let transportHeigth: CGFloat = 50
     
     var scene: SKScene {
         
@@ -166,13 +168,10 @@ struct SpriteKitView: View {
         
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
-        scene.size = CGSize(width: width, height: height)
+        scene.size = CGSize(width: width, height: height - transportHeigth)
         scene.scaleMode = .fill
 //        scene.viewModel = self.viewModel
-        
-//        scene.size = CGSize(width: 300, height: 400)
-//        scene.scaleMode = .fill
-        
+
         return scene
     }
 
@@ -181,17 +180,29 @@ struct SpriteKitView: View {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         
-        ZStack(alignment: .top) {
+        VStack{
+            
+            HStack{
+                
+                Text("Back")
+                    .frame(width: 150, height: transportHeigth)
+                    .font(.headline)
+                    .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1.0))
+                    .zIndex(101)
+                    .onTapGesture {
+                        mainViewModel.backButton()
+                    }
+                
+                VolumeSlider()
+                    .frame(width: 300, height: 20)
+                   .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                   .zIndex(100)
+            }
             
             SpriteView(scene: scene, options: [.allowsTransparency])
-                .frame(width: width, height: height)
+                .frame(width: width, height: height - transportHeigth - 10)
                 .ignoresSafeArea()
-            
-            Text("width: \(width) height: \(height)")
-                .font(.headline).fontWeight(.bold)
-                .padding().cornerRadius(10)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1.0))
-            
             
         }
     }
