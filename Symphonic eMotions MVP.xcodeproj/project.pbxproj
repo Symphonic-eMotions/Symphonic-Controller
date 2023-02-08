@@ -12,6 +12,8 @@
 		16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */; };
 		7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3B2874306400F00B42 /* FullHomeView.swift */; };
 		7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3D2874556900F00B42 /* FullPlayView.swift */; };
+		7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */; };
+		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
 		7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */; };
@@ -109,6 +111,8 @@
 		16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTracksView.swift; sourceTree = "<group>"; };
 		7C037B3B2874306400F00B42 /* FullHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHomeView.swift; sourceTree = "<group>"; };
 		7C037B3D2874556900F00B42 /* FullPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayView.swift; sourceTree = "<group>"; };
+		7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitZonesView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
 		7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leveling.swift; sourceTree = "<group>"; };
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 				7C3CD117296DC19900A4C522 /* SkinDefault.swift */,
 				7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */,
 				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
+				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
+				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
 			);
 			path = Skins;
 			sourceTree = "<group>";
@@ -620,6 +626,7 @@
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
 				7C6FC4642747D52700BD64D6 /* Sets.swift in Sources */,
+				7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */,
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
 				7CD0332F2887169C008CE900 /* FeedbackObjects.swift in Sources */,
@@ -658,6 +665,7 @@
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
 				C084FFEE26B31534009A4D0C /* SidebarView.swift in Sources */,
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
+				7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */,
 				7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */,
 				7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,

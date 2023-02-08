@@ -48,6 +48,7 @@ struct MainView: View {
         if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
             viewModel.mainState.buildSettings.activeView == .playView{
             
+//            SpriteKitView(
             SpriteKitView(
                 playViewModel: PlayViewModel(
                     playViewState: PlayViewState(

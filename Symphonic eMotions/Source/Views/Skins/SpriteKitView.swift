@@ -45,25 +45,10 @@ class GameScene: SKScene {
     
     var sessionSkin: InstrumentsSet.Skin!
     
-    
-    
     //Columns
-    let columns = 4
+    let columns = 3
     //Rows
-    let rows = 4
-    
-    //Config which needs to come out of SessionSettings
-//    let instrument1 = CellInstrument(
-//        color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
-//        shape: "Circle",
-//        image: "Instrument Piano Keys",
-//        areas:[
-//            [1,0,0,0,
-//             1,0,0,0],
-//            [1,0,0,0,
-//             0,0,0,0]
-//        ]
-//    )
+    let rows = 3
     
     //Start of Scene funciton
     override func didMove(to view: SKView) {
@@ -71,13 +56,14 @@ class GameScene: SKScene {
 //        print(sessionSkin!)
         
 //        let instrument = instrument1
-        let instrument = sessionSkin.instruments[1]
+        let instrument = sessionSkin.instruments[0]
         let cell = Cell(columns: columns, rows: rows)
         
         print(instrument.color)
         
         let cellInstrument = CellInstrument(
-            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1), //instrument.color,
+//            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
+            color: instrument.color,
             shape: instrument.shape.rawValue,
             image: instrument.image,
             areas: instrument.areas[0]
@@ -137,6 +123,8 @@ class GameScene: SKScene {
         let instrumentPart = SKShapeNode(circleOfRadius: localSize)
         instrumentPart.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
         instrumentPart.fillColor = SKColor.clear
+        instrumentPart.lineWidth = 3
+        instrumentPart.glowWidth = 3
         instrumentPart.strokeColor = color
         
         
@@ -228,23 +216,10 @@ struct SpriteKitView: View {
         
         VStack{
             
-            HStack{
-                
-                Text("Back")
-                    .frame(width: 150, height: transportHeigth)
-                    .font(.headline)
-                    .cornerRadius(10)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1.0))
-                    .zIndex(101)
-                    .onTapGesture {
-                        mainViewModel.backButton()
-                    }
-                
-                VolumeSlider()
-                    .frame(width: 300, height: 20)
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                    .zIndex(100)
-            }
+            SpriteKitTransport(
+                mainViewModel: mainViewModel,
+                transportHeigth: transportHeigth
+            )
             
             SpriteView(scene: scene, options: [.allowsTransparency])
                 .frame(width: width, height: height - transportHeigth - 10)

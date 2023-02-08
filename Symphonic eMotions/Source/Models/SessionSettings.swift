@@ -116,9 +116,11 @@ class SessionSettings: Identifiable {
             image: "Keyboard",
             color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
             areas: [
-                [0,0,0,0,
-                 0,0,0,1,
-                 0,0,0,0,
+                [0,0,0,
+                 0,1,0,
+                 0,0,0,
+                 
+                 0,0,0,
                  0,0,0,0],
                 [0,0,0,1,
                  0,0,0,0,
@@ -131,8 +133,8 @@ class SessionSettings: Identifiable {
             color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1),
             areas: [
                 [0,0,0,0,
-                 0,0,1,0,
                  0,0,0,0,
+                 0,0,1,0,
                  0,0,0,0],
                 [0,0,1,0,
                  0,0,0,0,
