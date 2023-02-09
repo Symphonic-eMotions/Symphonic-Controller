@@ -11,7 +11,7 @@ import SwiftUI
 struct Zone {
     
     let columns: Int
-    let column: Int
+//    let column: Int
     let zoneWidth: CGFloat
 //    let zoneHeigth: CGFloat
     let centerWidth: CGFloat
@@ -42,7 +42,8 @@ class ZoneScene: SKScene {
     var sessionSkin: InstrumentsSet.Skin!
     
     //Columns
-    let columns = 3
+    let columns = 4
+    let rows = 4
     
     override func didMove(to view: SKView) {
         
@@ -55,10 +56,17 @@ class ZoneScene: SKScene {
     
     func setupZones(zone: Zone, instruments: [InstrumentsSet.Skin.Instrument]) -> Void {
         
+        //Create instrument rectangle based on first instrument part location
+        let instrument = instruments[0]
         
+        print(instrument)
+        
+        //scnView.backgroundColor = NSColor.lightGray
     }
 }
 
+//Import SpriteKit into SwiftUI View
+//Have observable objects fo interaction with SpriteKit
 struct SpriteKitZonesView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
@@ -92,6 +100,19 @@ struct SpriteKitZonesView: View {
             
             SpriteKitTransport(
                 mainViewModel: mainViewModel,
+                viewModelPlayerControls: PlayerControlsViewModel(
+                    playerControlsViewState: PlayerControlsViewState(
+                        displayMode: playViewModel.playViewState.displayMode,
+                        buildSettings: playViewModel.playViewState.buildSettings
+                    ),
+                    conductor: playViewModel.conductor,
+                    frameExtractor: playViewModel.frameExtractor,
+                    leveling: playViewModel.leveling,
+                    setSettings: playViewModel.setSettings,
+                    hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
+                    playerControlsAction: playViewModel.controlsViewAction(action:)
+                
+                ),
                 transportHeigth: transportHeigth
             )
             

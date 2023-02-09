@@ -10,10 +10,16 @@ import SwiftUI
 struct SpriteKitTransport: View {
     
     @ObservedObject var mainViewModel: MainViewModel
+    @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
+    
     let transportHeigth: CGFloat
     
-    init(mainViewModel: MainViewModel, transportHeigth: CGFloat) {
+    init(
+        mainViewModel: MainViewModel,
+        viewModelPlayerControls: PlayerControlsViewModel,
+        transportHeigth: CGFloat) {
         self.mainViewModel = mainViewModel
+        self.viewModelPlayerControls = viewModelPlayerControls
         self.transportHeigth = transportHeigth
     }
     
@@ -30,6 +36,33 @@ struct SpriteKitTransport: View {
                 .onTapGesture {
                     mainViewModel.backButton()
                 }
+            
+            if viewModelPlayerControls.hasTempo {
+                EMButton(action: {
+                    viewModelPlayerControls.tapSetTempoMin()
+                }, color: .accentColor, isSolid: false, maxWidth: 100) {
+                    Image(systemName: "minus.square")
+                }
+                
+                EMButton(action: {
+                    viewModelPlayerControls.tapSetTempoPlus()
+                }, color: .accentColor, isSolid: false, maxWidth: 100) {
+                    Image(systemName: "plus.square")
+                }
+            }
+            
+            //Start stop
+            EMButton(action: {
+                viewModelPlayerControls.tapMediaControlButton()
+            }, color: .accentColor) {
+                Image(systemName: viewModelPlayerControls.conductor.isConductorPlayingSubject.value ?
+                        "stop.fill" :
+                        "play.fill")
+            }
+            
+//            LevelView(
+//                playViewModel: playViewModel
+//            )
             
             VolumeSlider()
                 .frame(width: 300, height: 20)

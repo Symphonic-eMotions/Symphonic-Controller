@@ -46,10 +46,10 @@ struct MainView: View {
         //Main view selector (skin)
         
         if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
-            viewModel.mainState.buildSettings.activeView == .playView{
+            viewModel.mainState.buildSettings.activeView == .playView {
             
-//            SpriteKitView(
             SpriteKitView(
+//            SpriteKitZonesView(
                 playViewModel: PlayViewModel(
                     playViewState: PlayViewState(
                         currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
@@ -100,34 +100,6 @@ struct MainView: View {
                     mainViewUpdate: $mainViewUpdate
                 )
             }
-            //            else if viewModel.mainState.currentInstrumentsSet.isSwiftUISkinSet() && viewModel.mainState.buildSettings.activeView == .playView {
-            //                ZStack {
-            //                    SkinDefault(
-            //                        playViewModel: PlayViewModel(
-            //                            playViewState: PlayViewState(
-            //                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-            //                                buildSettings: viewModel.mainState.buildSettings
-            //                            ),
-            //                            conductor: viewModel.conductor,
-            //                            imageDifference: $viewModel.mainState.imageDifference,
-            //                            leveling: viewModel.leveling,
-            //
-            //                            setSettings: $viewModel.mainState.setSettings,
-            //
-            //                            //Part feedback is part of editor
-            //                            partFeedback: viewModel.partFeedback,
-            //                            partFeedbackState: PartFeedbackState(),
-            //
-            //                            //Feedback objects are for custom controllable UI objects
-            //                            feedbackObjects: viewModel.feedbackObjects,
-            //                            feedbackObjectsSate: FeedbackObjectsState()
-            //                        ),
-            //                        mainViewModel: viewModel
-            //                    )
-            //                }
-            //                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            //
-            //            }
             else {
                 ZStack{
                     NavigationView {

@@ -16,7 +16,9 @@ struct PlayView: View {
     
     @Binding var mainViewUpdate: BuildSettings.ActiveView
     
-    init(playViewModel: PlayViewModel, mainViewUpdate: Binding<BuildSettings.ActiveView>){
+    init(
+        playViewModel: PlayViewModel,
+        mainViewUpdate: Binding<BuildSettings.ActiveView>){
         self.playViewModel = playViewModel
         self._mainViewUpdate = mainViewUpdate
     }
@@ -37,7 +39,7 @@ struct PlayView: View {
                 )
                 .padding(.trailing)
                 
-                //Levels
+                //Level editor
                 if playViewModel.playViewState.buildSettings.instrumentPartEditor {
                     
                     let trackLevels: [Int] = playViewModel.setSettings.getTrackLevels(

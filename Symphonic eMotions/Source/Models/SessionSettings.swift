@@ -116,8 +116,8 @@ class SessionSettings: Identifiable {
             image: "Keyboard",
             color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
             areas: [
-                [0,0,0,
-                 0,1,0,
+                [0,0,1,
+                 0,0,0,
                  0,0,0,
                  
                  0,0,0,
@@ -161,7 +161,7 @@ class SessionSettings: Identifiable {
             self.activeSkin = skin!
         }
         else {
-            self.activeSkin = InstrumentsSet.Skin(name: .growingDots, instruments: instruments)
+            self.activeSkin = InstrumentsSet.Skin(name: .swiftUI, instruments: instruments)
         }
         
         print(self.activeSkin)

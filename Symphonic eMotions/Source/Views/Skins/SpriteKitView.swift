@@ -207,8 +207,8 @@ struct SpriteKitView: View {
     var body: some View {
         
         #if targetEnvironment(macCatalyst)
-        let width:CGFloat = 1024
-        let height:CGFloat = 960
+        let width:CGFloat = UIScreen.main.bounds.width / 2
+        let height:CGFloat = UIScreen.main.bounds.height / 2
         #else
         let width:CGFloat = UIScreen.main.bounds.width
         let height:CGFloat = UIScreen.main.bounds.height
@@ -218,6 +218,18 @@ struct SpriteKitView: View {
             
             SpriteKitTransport(
                 mainViewModel: mainViewModel,
+                viewModelPlayerControls: PlayerControlsViewModel(
+                    playerControlsViewState: PlayerControlsViewState(
+                        displayMode: playViewModel.playViewState.displayMode,
+                        buildSettings: playViewModel.playViewState.buildSettings
+                    ),
+                    conductor: playViewModel.conductor,
+                    frameExtractor: playViewModel.frameExtractor,
+                    leveling: playViewModel.leveling,
+                    setSettings: playViewModel.setSettings,
+                    hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
+                    playerControlsAction: playViewModel.controlsViewAction(action:)
+                ),
                 transportHeigth: transportHeigth
             )
             
