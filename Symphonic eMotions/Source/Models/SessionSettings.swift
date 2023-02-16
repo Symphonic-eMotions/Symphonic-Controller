@@ -161,7 +161,7 @@ class SessionSettings: Identifiable {
             self.activeSkin = skin!
         }
         else {
-            self.activeSkin = InstrumentsSet.Skin(name: .swiftUI, instruments: instruments)
+            self.activeSkin = InstrumentsSet.Skin(name: .growingDots, instruments: instruments)
         }
         
         print(self.activeSkin)
