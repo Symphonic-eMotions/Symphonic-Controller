@@ -69,6 +69,30 @@ struct StoreSessionSettings: Codable {
     }
 }
 
+enum SessionDisplay: Hashable {
+    
+    case home
+    case swiftUI
+    case setInfo
+    case spriteKit
+    case calibrator
+    
+    var title: String {
+        switch self {
+        case .home:
+            return "SeM Home"
+        case .swiftUI:
+            return "Symphonic eMotions Pro"
+        case .spriteKit:
+            return "Game Skin"
+        case .setInfo:
+            return "Set information"
+        case .calibrator:
+            return "Kalibrator!"
+        }
+    }
+}
+
 class SessionSettings: Identifiable {
     
     //End value imageMax to imageDifference

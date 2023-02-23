@@ -44,8 +44,7 @@ struct eMotionApp: App {
                     ),
                     conductor: Conductor(set: instrumentSet),
                     leveling: Leveling(),
-                    partFeedback: PartFeedback(instrumentsSet: instrumentSet),
-                    feedbackObjects: FeedbackObjects()
+                    partFeedback: PartFeedback(instrumentsSet: instrumentSet)
                 ),
                 mainViewUpdate: buildSettings.activeView
             )

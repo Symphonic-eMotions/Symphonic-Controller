@@ -35,8 +35,6 @@ struct MainView: View {
             setSettings:  viewModel.mainState.setSettings
         )
         
-        //
-        
         //Main view selector (skin)
         if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
             viewModel.mainState.buildSettings.activeView == .playView {
@@ -59,7 +57,6 @@ struct MainView: View {
                     partFeedbackState: PartFeedbackState(),
                     
                     //Feedback objects are for custom controllable UI objects
-                    feedbackObjects: viewModel.feedbackObjects,
                     feedbackObjectsSate: FeedbackObjectsState()
                 ),
                 mainViewModel: viewModel
@@ -127,7 +124,6 @@ struct MainView: View {
                                 partFeedback: viewModel.partFeedback,
                                 partFeedbackState: PartFeedbackState(),
                                 
-                                feedbackObjects: viewModel.feedbackObjects,
                                 feedbackObjectsSate: FeedbackObjectsState()
                             ),
                             mainViewUpdate: $mainViewUpdate
@@ -160,7 +156,6 @@ struct MainView: View {
                         partFeedbackState: PartFeedbackState(),
                         
                         //Feedback objects are for custom controllable UI objects
-                        feedbackObjects: viewModel.feedbackObjects,
                         feedbackObjectsSate: FeedbackObjectsState()
                     ),
                     fullViewModel: FullViewModel(
@@ -198,7 +193,6 @@ struct MainView: View {
                         partFeedbackState: PartFeedbackState(),
                         
                         //Feedback objects are for custom controllable UI objects
-                        feedbackObjects: viewModel.feedbackObjects,
                         feedbackObjectsSate: FeedbackObjectsState()
                     ),
                     mainViewModel: viewModel

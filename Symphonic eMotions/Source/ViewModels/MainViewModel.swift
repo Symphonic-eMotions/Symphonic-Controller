@@ -22,20 +22,17 @@ final class MainViewModel: ObservableObject {
     let conductor: Conductor
     let leveling: Leveling
     var partFeedback: PartFeedback
-    let feedbackObjects: FeedbackObjects
     
     init(
         mainState: MainViewState,
         conductor: Conductor,
         leveling: Leveling,
-        partFeedback: PartFeedback,
-        feedbackObjects: FeedbackObjects
+        partFeedback: PartFeedback
     ) {
         self.mainState = mainState
         self.conductor = conductor
         self.leveling = leveling
         self.partFeedback = partFeedback
-        self.feedbackObjects = feedbackObjects
     }
     
     func currentModelInstrumentsSetChanged(

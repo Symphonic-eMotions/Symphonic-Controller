@@ -46,7 +46,6 @@ final class PlayViewModel: ObservableObject {
         partFeedback: PartFeedback,
         partFeedbackState: PartFeedbackState,
         
-        feedbackObjects: FeedbackObjects,
         feedbackObjectsSate: FeedbackObjectsState
         
         
