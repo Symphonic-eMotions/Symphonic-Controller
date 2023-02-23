@@ -5,7 +5,7 @@
 //  Created by Frans-Jan Wind on 15/09/2022.
 //
 
-import Foundation
+import SwiftUI
 
 struct MainViewState {
     var sessionSettings: SessionSettings
@@ -14,6 +14,9 @@ struct MainViewState {
     var currentInstrumentsSet: InstrumentsSet
     var buildSettings: BuildSettings
     var masterTrackStructure: [MasterTrackEffect]?
+    
+    //Needed for switcher core forwarder
+    @Binding public var sessionDisplay: SessionDisplay
 }
 
 final class MainViewModel: ObservableObject {
@@ -75,7 +78,8 @@ final class MainViewModel: ObservableObject {
                     sessionSetting: sessionSettings
                 ),
                 currentInstrumentsSet: instrumentsSet,
-                buildSettings: mainState.buildSettings
+                buildSettings: mainState.buildSettings,
+                sessionDisplay: mainState.$sessionDisplay
             )
             
             //Here we are

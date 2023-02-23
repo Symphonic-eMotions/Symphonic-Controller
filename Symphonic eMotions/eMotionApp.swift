@@ -49,7 +49,8 @@ struct eMotionApp: App {
                             sessionSetting: sessionSettings
                         ),
                         currentInstrumentsSet: instrumentSet,
-                        buildSettings: buildSettings
+                        buildSettings: buildSettings,
+                        sessionDisplay: $sessionDisplay
                     ),
                     conductor: Conductor(set: instrumentSet),
                     leveling: Leveling(),
