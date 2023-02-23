@@ -61,7 +61,6 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
-		7CD033322887183D008CE900 /* FeedbackObjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD033312887183D008CE900 /* FeedbackObjectsView.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
@@ -72,6 +71,11 @@
 		7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009D29A74FA1001D8A5D /* PartSettings.swift */; };
 		7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */; };
 		7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009F29A74FA1001D8A5D /* MasterTrackEffectsSettings.swift */; };
+		7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */; };
+		7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00A829A759F9001D8A5D /* SwiftUIState.swift */; };
+		7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */; };
+		7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */; };
+		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
@@ -162,7 +166,6 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
-		7CD033312887183D008CE900 /* FeedbackObjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackObjectsView.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
@@ -173,6 +176,11 @@
 		7CFA009D29A74FA1001D8A5D /* PartSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartSettings.swift; sourceTree = "<group>"; };
 		7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterSettings.swift; sourceTree = "<group>"; };
 		7CFA009F29A74FA1001D8A5D /* MasterTrackEffectsSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTrackEffectsSettings.swift; sourceTree = "<group>"; };
+		7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoModel.swift; sourceTree = "<group>"; };
+		7CFA00A829A759F9001D8A5D /* SwiftUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIState.swift; sourceTree = "<group>"; };
+		7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfo.swift; sourceTree = "<group>"; };
+		7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoadAndPlay.swift; sourceTree = "<group>"; };
+		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -290,9 +298,6 @@
 			children = (
 				7C3CD117296DC19900A4C522 /* SkinDefault.swift */,
 				7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */,
-				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
-				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
-				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
 			);
 			path = Skins;
 			sourceTree = "<group>";
@@ -322,14 +327,6 @@
 				7C7756F528C7964200E73B14 /* MasterTrackView.swift */,
 			);
 			path = MasterTrack;
-			sourceTree = "<group>";
-		};
-		7CD0333028871809008CE900 /* FeedbackObjectsView */ = {
-			isa = PBXGroup;
-			children = (
-				7CD033312887183D008CE900 /* FeedbackObjectsView.swift */,
-			);
-			path = FeedbackObjectsView;
 			sourceTree = "<group>";
 		};
 		7CEFB9CE287341DC006A191F /* FullViews */ = {
@@ -377,14 +374,53 @@
 			path = SetSettings;
 			sourceTree = "<group>";
 		};
+		7CFA00A629A75912001D8A5D /* SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
+				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
+				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
+			);
+			path = SpriteKit;
+			sourceTree = "<group>";
+		};
+		7CFA00A729A759D0001D8A5D /* StateObjects */ = {
+			isa = PBXGroup;
+			children = (
+				7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */,
+				7CFA00A829A759F9001D8A5D /* SwiftUIState.swift */,
+			);
+			path = StateObjects;
+			sourceTree = "<group>";
+		};
+		7CFA00AA29A75A1C001D8A5D /* ViewUtils */ = {
+			isa = PBXGroup;
+			children = (
+				C069592226B4F2F6002EB522 /* EMButton.swift */,
+				7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */,
+				7CB58356292FAE1D000C46FF /* ColorPicker.swift */,
+				7C7756F728C798BD00E73B14 /* Dial.swift */,
+			);
+			path = ViewUtils;
+			sourceTree = "<group>";
+		};
+		7CFA00AB29A75ADC001D8A5D /* SetInfo */ = {
+			isa = PBXGroup;
+			children = (
+				7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */,
+				7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */,
+				7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */,
+			);
+			path = SetInfo;
+			sourceTree = "<group>";
+		};
 		C06958F926B4D9E4002EB522 /* PlayView */ = {
 			isa = PBXGroup;
 			children = (
 				C06958FA26B4D9E4002EB522 /* PlayView.swift */,
-				C06958F726B4D969002EB522 /* PlayViewModel.swift */,
 				7CCDE10228E2C61300343920 /* MasterTrack */,
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
-				7C109D7F2851FF5C008E08D2 /* LevelView */,
+				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
 			);
 			path = PlayView;
@@ -439,7 +475,9 @@
 			children = (
 				C084FFE726B31216009A4D0C /* Singletons */,
 				7CFA009929A74E01001D8A5D /* Helpers */,
+				7CFA00A729A759D0001D8A5D /* StateObjects */,
 				C084FFE826B31216009A4D0C /* Models */,
+				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				C084FFE626B31216009A4D0C /* ViewModels */,
 				C084FFEA26B31216009A4D0C /* Views */,
 			);
@@ -449,10 +487,8 @@
 		C084FFE626B31216009A4D0C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				C069591C26B4E6A2002EB522 /* ImageDifference.swift */,
-				C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */,
 				7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */,
-				7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */,
+				C06958F726B4D969002EB522 /* PlayViewModel.swift */,
 				7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */,
 			);
 			path = ViewModels;
@@ -471,20 +507,23 @@
 		C084FFE826B31216009A4D0C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7CFA009A29A74E5A001D8A5D /* Conductor */,
 				7CFA009B29A74F62001D8A5D /* SetSettings */,
-				7C6FC4652747DF6200BD64D6 /* Genres.swift */,
+				7CFA009A29A74E5A001D8A5D /* Conductor */,
+				C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */,
+				C069591C26B4E6A2002EB522 /* ImageDifference.swift */,
 				7CB5834A292F9C2A000C46FF /* SessionSettings.swift */,
-				7CF327C42989504F003D33D3 /* Skin.swift */,
+				7C6FC4652747DF6200BD64D6 /* Genres.swift */,
 				7C6FC4632747D52700BD64D6 /* Sets.swift */,
 				C069590526B4E150002EB522 /* InstrumentsSet.swift */,
 				C069590326B4E0C7002EB522 /* Track.swift */,
-				C0AFDD022705BC24006EF64F /* Effect.swift */,
 				C0AFDD002705BC08006EF64F /* Part.swift */,
+				C0AFDD022705BC24006EF64F /* Effect.swift */,
+				7CF327C42989504F003D33D3 /* Skin.swift */,
+				7C400788287EFED900A5E5C2 /* PlayViewImages.swift */,
 				C069591E26B4E77E002EB522 /* AreaValues.swift */,
 				7C6A341A28425F01006F2E95 /* PartFeedback.swift */,
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
-				7C400788287EFED900A5E5C2 /* PlayViewImages.swift */,
+				7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -492,18 +531,15 @@
 		C084FFEA26B31216009A4D0C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
+				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
+				C06958F926B4D9E4002EB522 /* PlayView */,
+				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CB5835A292FAE72000C46FF /* Calibration */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
 				7C3CD116296DC17500A4C522 /* Skins */,
-				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
-				7CD0333028871809008CE900 /* FeedbackObjectsView */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
-				C06958F926B4D9E4002EB522 /* PlayView */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
-				C069592226B4F2F6002EB522 /* EMButton.swift */,
-				7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */,
-				7CB58356292FAE1D000C46FF /* ColorPicker.swift */,
-				7C7756F728C798BD00E73B14 /* Dial.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -632,7 +668,6 @@
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
-				7CD033322887183D008CE900 /* FeedbackObjectsView.swift in Sources */,
 				7CB5835F292FAE72000C46FF /* CalibrationView.swift in Sources */,
 				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
@@ -681,6 +716,7 @@
 				C069590226B4E029002EB522 /* VideoPreviewView.swift in Sources */,
 				16935FA127E36E1A00BF5EDB /* SidebarSetsView.swift in Sources */,
 				7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */,
+				7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */,
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
 				7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
@@ -702,13 +738,17 @@
 				C084FFEE26B31534009A4D0C /* SidebarView.swift in Sources */,
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
 				7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */,
+				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
 				7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */,
+				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
 				7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */,
 				7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */,
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
+				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
+				7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */,
 				7C3CD118296DC19900A4C522 /* SkinDefault.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
