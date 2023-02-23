@@ -11,12 +11,10 @@ struct MainViewState {
     var sessionSettings: SessionSettings
     var setSettings: SetSettings
     var imageDifference: ImageDifference
+    var setCollection: Sets
     var currentInstrumentsSet: InstrumentsSet
     var buildSettings: BuildSettings
     var masterTrackStructure: [MasterTrackEffect]?
-    
-    //Needed for switcher core forwarder
-    @Binding public var sessionDisplay: SessionDisplay
 }
 
 final class MainViewModel: ObservableObject {
@@ -77,9 +75,9 @@ final class MainViewModel: ObservableObject {
                     setSetting: setSettings,
                     sessionSetting: sessionSettings
                 ),
+                setCollection: mainState.setCollection,
                 currentInstrumentsSet: instrumentsSet,
-                buildSettings: mainState.buildSettings,
-                sessionDisplay: mainState.$sessionDisplay
+                buildSettings: mainState.buildSettings
             )
             
             //Here we are
@@ -95,6 +93,11 @@ final class MainViewModel: ObservableObject {
             //Or in the transport button PlayView
             print("\(mainState.setSettings.setName) \(mainState.setSettings.gridColumns)x\(mainState.setSettings.gridRows) Session maxValue: \(mainState.sessionSettings.imageMax) imageFeedback: \(mainState.sessionSettings.imageFeedback)")
         }
+    }
+    
+    func tapStopAudioEngine(){
+            
+        conductor.pauzeEngineAndStopTracks(setSettings: self.mainState.setSettings)
     }
     
     func backButton() {

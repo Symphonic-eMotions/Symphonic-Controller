@@ -15,7 +15,7 @@ struct eMotionApp: App {
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default")
     
     let sessionSettings = AppUtils.setSessionSetting()
-    
+        
     let buildSettings = BuildSettings(
         mainSettings: .zorg,
         activeView: .homeView,
@@ -48,14 +48,15 @@ struct eMotionApp: App {
                             instrumentsSet: instrumentSet,
                             sessionSetting: sessionSettings
                         ),
+                        setCollection: setCollection,
                         currentInstrumentsSet: instrumentSet,
-                        buildSettings: buildSettings,
-                        sessionDisplay: $sessionDisplay
+                        buildSettings: buildSettings
                     ),
                     conductor: Conductor(set: instrumentSet),
                     leveling: Leveling(),
                     partFeedback: PartFeedback(instrumentsSet: instrumentSet)
                 ),
+                sessionDisplay: $sessionDisplay,
                 mainViewUpdate: buildSettings.activeView
             )
         }

@@ -33,23 +33,33 @@ final class SidebarViewModel: ObservableObject {
 
 struct SidebarView: View {
     
+    @ObservedObject var viewModel: MainViewModel
+    
     @ObservedObject var sidebarViewModel: SidebarViewModel
     
     @EnvironmentObject var fileController: FileController
+    
+    @Binding public var sessionDisplay: SessionDisplay
+    
+    @Binding public var setInfoLocalState: SetInfoLocalState
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
                 SidebarSetsView(
+                    viewModel: viewModel,
                     sideBarSetsViewModel: SideBarSetsViewModel(
                             state: SideBarSetsViewState(
                                 setCollections: sidebarViewModel.setCollections,
                                 currentInstrumentsSetName: sidebarViewModel.state.currentInstrumentsSetName,
                                 currentInstrumentSet: sidebarViewModel.state.currentInstrumentSet,
                                 buildSettings: sidebarViewModel.state.buildSettings
-                            ),
-                            rowSelected: sidebarViewModel.currentInstrumentsSetIsChanged
-                        )
+                            )
+//                            ,
+//                            rowSelected: sidebarViewModel.currentInstrumentsSetIsChanged
+                        ),
+                    sessionDisplay: $sessionDisplay,
+                    setInfoLocalState: $setInfoLocalState
                 ).environmentObject(fileController)
                 Spacer()
             }

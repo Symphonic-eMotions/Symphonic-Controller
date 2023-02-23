@@ -17,36 +17,50 @@ struct SideBarSetsViewState {
 class SideBarSetsViewModel: ObservableObject {
     
     @Published var state: SideBarSetsViewState
-    let rowSelected: (InstrumentsSet) -> ()
+//    let rowSelected: (InstrumentsSet) -> ()
     
     init(
-        state: SideBarSetsViewState,
-        rowSelected: @escaping (InstrumentsSet) -> ()
+        state: SideBarSetsViewState
+//        ,
+//        rowSelected: @escaping (InstrumentsSet) -> ()
     ) {
         self.state = state
-        self.rowSelected = rowSelected
+//        self.rowSelected = rowSelected
     }
     
-    func tapSetRow(selectedCollection: MusicSet) {
-        if selectedCollection.name != state.currentInstrumentsSetName{
-            
-            let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)
-            rowSelected(instrumentSet)
-        }
+    func currentSetInfoChanged(selectedCollection: MusicSet) -> MusicSet {
+        
+        print("Set name: \(selectedCollection.name)")
+
+        return selectedCollection
     }
+    
+//    func tapSetRow(selectedCollection: MusicSet) {
+//        if selectedCollection.name != state.currentInstrumentsSetName{
+//            
+//            let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)
+//            rowSelected(instrumentSet)
+//        }
+//    }
     
     func tapSavedRow(fileName: String) {
         
-        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
-        rowSelected(instrumentSet!)
+//        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
+//        rowSelected(instrumentSet!)
     }
 }
 
 struct SidebarSetsView: View {
     
+    @ObservedObject var viewModel: MainViewModel
+    
     @ObservedObject var sideBarSetsViewModel: SideBarSetsViewModel
-//    @StateObject var fileController = FileController()
+
     @EnvironmentObject var fileController: FileController
+    
+    @Binding public var sessionDisplay: SessionDisplay
+    
+    @Binding public var setInfoLocalState: SetInfoLocalState
     
     var body: some View {
         
@@ -64,14 +78,14 @@ struct SidebarSetsView: View {
                     currentInstrumentsSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
                     setCollection: setCollection
                 ).onTapGesture {
-                    sideBarSetsViewModel.tapSetRow(selectedCollection: setCollection)
-                }
-                if sideBarSetsViewModel.state.currentInstrumentsSetName == setCollection.name {
-                    SavedSettingsView(
-                        sideBarSetsViewModel: sideBarSetsViewModel,
-                        currenSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
-                        setCollection: setCollection
-                    ).environmentObject(fileController)
+                    
+                    viewModel.tapStopAudioEngine()
+                    
+                    let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
+                    setInfoLocalState.setName = set.name
+                    setInfoLocalState.setConfig = set.config
+                    
+                    sessionDisplay = .setInfo
                 }
             }
         }

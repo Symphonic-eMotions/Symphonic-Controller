@@ -76,6 +76,7 @@ enum SessionDisplay: Hashable {
     case setInfo
     case spriteKit
     case calibrator
+    case muur
     
     var title: String {
         switch self {
@@ -89,6 +90,8 @@ enum SessionDisplay: Hashable {
             return "Set information"
         case .calibrator:
             return "Kalibrator!"
+        case .muur:
+            return "SeM Wall build"
         }
     }
 }
