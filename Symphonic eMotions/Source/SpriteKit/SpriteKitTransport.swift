@@ -67,7 +67,7 @@ struct SpriteKitTransport: View {
                 
                 //Start stop
                 EMButton(action: {
-                    mainViewModel.tapStopAudioEngine()
+                    playViewModel.tapMediaControlButton()
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {
                     Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
                             "stop.fill" :

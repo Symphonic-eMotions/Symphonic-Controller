@@ -79,6 +79,7 @@ struct MainView: View {
                     from: "spriteKitOnAppear"
                 )
             }
+            .padding(.top, 20)
         }
         
         else if sessionDisplay == .swiftUI || sessionDisplay == .setInfo  || sessionDisplay == .home {

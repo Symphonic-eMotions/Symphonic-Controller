@@ -59,6 +59,7 @@ struct eMotionApp: App {
                 sessionDisplay: $sessionDisplay,
                 mainViewUpdate: buildSettings.activeView
             )
+            .statusBar(hidden: true)
         }
     }
 }

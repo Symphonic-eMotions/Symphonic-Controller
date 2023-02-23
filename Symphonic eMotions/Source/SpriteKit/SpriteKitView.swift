@@ -219,7 +219,7 @@ struct SpriteKitView: View {
         let height:CGFloat = UIScreen.main.bounds.height
         #endif
         
-        VStack{
+        VStack(spacing: 0){
             
             SpriteKitTransport(
                 mainViewModel: mainViewModel,
@@ -228,16 +228,16 @@ struct SpriteKitView: View {
                 transportHeigth: transportHeigth
             )
             
-            SpriteView(scene: scene, options: [.allowsTransparency])
-                .frame(width: width, height: height - transportHeigth - 10)
-                .ignoresSafeArea()
-                .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
-                    
-//                    print("Received: spriteKitParts0a \(value)")
-                    
-                    scene.instrumentPart0aScale = CGFloat(value)
-                }
-            
+            SpriteView(
+                scene: scene,
+                options: [.allowsTransparency]
+            )
+            .frame(width: width, height: height - transportHeigth - 10)
+            .ignoresSafeArea()
+            .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+    
+                scene.instrumentPart0aScale = CGFloat(value)
+            }
         }
     }
 }

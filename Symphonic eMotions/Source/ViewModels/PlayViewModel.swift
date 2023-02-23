@@ -131,6 +131,21 @@ final class PlayViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
+    func tapMediaControlButton() {
+        
+        leveling.pauseLevel = conductor.isConductorPlayingSubject.value
+        
+        if self.conductor.isConductorPlayingSubject.value {
+            self.frameExtractor.stopExtracting()
+            self.frameExtractor.startExtracting()
+        }
+
+        conductor.togglePlayEngineAndTracks(
+            currentSetLevel: leveling.currentSetLevelSubject.value,
+            setSettings: self.setSettings
+        )
+    }
+    
     func controlsViewAction(action: PlayerControlsViewAction) {
         switch action {
         case .displayModeChange(let displayModes):
