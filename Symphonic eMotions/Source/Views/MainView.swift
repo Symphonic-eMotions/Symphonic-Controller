@@ -128,6 +128,15 @@ struct MainView: View {
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea([.top, .trailing])
+                        .onAppear{
+                            viewModel.leveling.pauseLevel = false
+                            viewModel.conductor.trackMuteAndClipStatusPerLevel(
+                                level: 0,
+                                setSettings: viewModel.mainState.setSettings,
+                                from: "playViewOnAppear"
+                            )
+                            viewModel.conductor.playEngineAndTracks()
+                        }
                     }
                     
                     //Selected set info View
