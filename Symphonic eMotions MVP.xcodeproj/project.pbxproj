@@ -414,7 +414,7 @@
 			path = SetInfo;
 			sourceTree = "<group>";
 		};
-		C06958F926B4D9E4002EB522 /* PlayView */ = {
+		C06958F926B4D9E4002EB522 /* PlayAndEditView */ = {
 			isa = PBXGroup;
 			children = (
 				C06958FA26B4D9E4002EB522 /* PlayView.swift */,
@@ -423,7 +423,7 @@
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
 			);
-			path = PlayView;
+			path = PlayAndEditView;
 			sourceTree = "<group>";
 		};
 		C084FFCA26B3115E009A4D0C = {
@@ -533,7 +533,7 @@
 			children = (
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
-				C06958F926B4D9E4002EB522 /* PlayView */,
+				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CB5835A292FAE72000C46FF /* Calibration */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
