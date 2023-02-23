@@ -10,16 +10,20 @@ import SwiftUI
 struct SpriteKitTransport: View {
     
     @ObservedObject var mainViewModel: MainViewModel
-    @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
-    
+    @ObservedObject var playViewModel: PlayViewModel
+    @Binding public var sessionDisplay: SessionDisplay
     let transportHeigth: CGFloat
+    @State private(set) var localTempo: Int = 0
     
     init(
         mainViewModel: MainViewModel,
-        viewModelPlayerControls: PlayerControlsViewModel,
-        transportHeigth: CGFloat) {
+        playViewModel: PlayViewModel,
+        sessionDisplay: Binding<SessionDisplay>,
+        transportHeigth: CGFloat
+    ) {
         self.mainViewModel = mainViewModel
-        self.viewModelPlayerControls = viewModelPlayerControls
+        self.playViewModel = playViewModel
+        self._sessionDisplay = sessionDisplay
         self.transportHeigth = transportHeigth
     }
     
@@ -27,47 +31,59 @@ struct SpriteKitTransport: View {
         
         HStack{
             
-            Text("Back")
-                .frame(width: 150, height: transportHeigth)
-                .font(.headline)
-                .cornerRadius(10)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1.0))
-                .zIndex(101)
-                .onTapGesture {
-                    mainViewModel.backButton()
-                }
-            
-            if viewModelPlayerControls.hasTempo {
-                EMButton(action: {
-                    viewModelPlayerControls.tapSetTempoMin()
-                }, color: .accentColor, isSolid: false, maxWidth: 100) {
-                    Image(systemName: "minus.square")
-                }
+            HStack{
                 
                 EMButton(action: {
-                    viewModelPlayerControls.tapSetTempoPlus()
-                }, color: .accentColor, isSolid: false, maxWidth: 100) {
-                    Image(systemName: "plus.square")
+                    mainViewModel.tapStopAudioEngine()
+                    sessionDisplay = .setInfo
+                }, color: .accentColor, isSolid: false, maxWidth: 70) {
+                    Image(systemName: "arrowshape.backward")
                 }
+                
+                if playViewModel.playViewState.currentInstrumentsSet.hasTempo {
+                    
+                    EMButton(action: {
+                        mainViewModel.tapSetTempoMin()
+                        localTempo -= 1
+                    }, color: .accentColor, isSolid: false, maxWidth: 70) {
+                        Image(systemName: "minus")
+                    }
+                    
+                    EMButton(action: {
+                        print("Reset")
+                        localTempo = 0
+                        mainViewModel.tapSetTempoReset()
+                    }, color: .accentColor, isSolid: false, maxWidth: 65) {
+                        Text(String(localTempo))
+                    }
+
+                    EMButton(action: {
+                        mainViewModel.tapSetTempoPlus()
+                        localTempo += 1
+                    }, color: .accentColor, isSolid: false, maxWidth: 70) {
+                        Image(systemName: "plus")
+                    }
+                }
+                
+                //Start stop
+                EMButton(action: {
+                    mainViewModel.tapStopAudioEngine()
+                }, color: .accentColor, isSolid: true, maxWidth: 90) {
+                    Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
+                            "stop.fill" :
+                            "play.fill")
+                }
+                
+                //Level progress and interface
+                LevelView(
+                    playViewModel: playViewModel
+                )
+                
+                VolumeSlider()
+                    .frame(width: 200, height: 20)
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    .zIndex(100)
             }
-            
-            //Start stop
-            EMButton(action: {
-                viewModelPlayerControls.tapMediaControlButton()
-            }, color: .accentColor) {
-                Image(systemName: viewModelPlayerControls.conductor.isConductorPlayingSubject.value ?
-                        "stop.fill" :
-                        "play.fill")
-            }
-            
-//            LevelView(
-//                playViewModel: playViewModel
-//            )
-            
-            VolumeSlider()
-                .frame(width: 300, height: 20)
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                .zIndex(100)
         }
     }
 }

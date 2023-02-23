@@ -189,11 +189,15 @@ struct SpriteKitView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var mainViewModel: MainViewModel
+    @Binding public var sessionDisplay: SessionDisplay
     
     let transportHeigth: CGFloat = 50
     var scene = GameScene()
     
-    init(playViewModel:PlayViewModel, mainViewModel:MainViewModel) {
+    init( playViewModel: PlayViewModel,
+          mainViewModel: MainViewModel,
+          sessionDisplay: Binding<SessionDisplay>
+    ) {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         scene.size = CGSize(width: width, height: height - transportHeigth)
@@ -202,6 +206,7 @@ struct SpriteKitView: View {
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
+        self._sessionDisplay = sessionDisplay
     }
     
     var body: some View {
@@ -218,18 +223,8 @@ struct SpriteKitView: View {
             
             SpriteKitTransport(
                 mainViewModel: mainViewModel,
-                viewModelPlayerControls: PlayerControlsViewModel(
-                    playerControlsViewState: PlayerControlsViewState(
-                        displayMode: playViewModel.playViewState.displayMode,
-                        buildSettings: playViewModel.playViewState.buildSettings
-                    ),
-                    conductor: playViewModel.conductor,
-                    frameExtractor: playViewModel.frameExtractor,
-                    leveling: playViewModel.leveling,
-                    setSettings: playViewModel.setSettings,
-                    hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
-                    playerControlsAction: playViewModel.controlsViewAction(action:)
-                ),
+                playViewModel: playViewModel,
+                sessionDisplay: $sessionDisplay,
                 transportHeigth: transportHeigth
             )
             

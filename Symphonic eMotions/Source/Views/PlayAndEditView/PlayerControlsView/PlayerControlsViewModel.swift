@@ -57,6 +57,12 @@ final class PlayerControlsViewModel: ObservableObject {
         self.setSettings.bpm = currentTempo
     }
     
+    func tapSetTempoReset(){
+        
+        let tempo = self.conductor.resetTempo()
+        self.setSettings.bpm = tempo
+    }
+    
     func tapMediaControlButton() {
         
         leveling.pauseLevel = conductor.isConductorPlayingSubject.value

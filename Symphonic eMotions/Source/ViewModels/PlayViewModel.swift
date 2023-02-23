@@ -47,8 +47,6 @@ final class PlayViewModel: ObservableObject {
         partFeedbackState: PartFeedbackState,
         
         feedbackObjectsSate: FeedbackObjectsState
-        
-        
     ) {
         self.playViewState = playViewState
         self.conductor = conductor

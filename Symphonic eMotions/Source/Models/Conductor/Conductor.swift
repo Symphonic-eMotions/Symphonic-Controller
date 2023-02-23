@@ -511,6 +511,22 @@ final class Conductor {
         return currentTempo
     }
     
+    public func resetTempo() -> Double {
+        
+        let tempo: Double = set.bpm
+        
+        print("reset tempo to: \(currentTempo) BPM")
+        
+        //All sequences get this tempo
+        for trackId in trackSequencers.keys {
+            if trackSequencers[trackId] != nil {
+                trackSequencers[trackId]!.setTempo(tempo)
+            }
+        }
+        
+        return tempo
+    }
+    
     private func isInstrumentPlayedByMIDIonlyInstrument( selectedLevel: Int, trackId: String ) -> Bool {
         
         //if a midi only track is active which points to this instrument then do not mute this track

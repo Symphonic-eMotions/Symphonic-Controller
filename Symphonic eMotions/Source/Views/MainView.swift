@@ -49,7 +49,7 @@ struct MainView: View {
         //Main view selector (skin)
         if sessionDisplay == .spriteKit {
             SpriteKitView(
-//            SpriteKitZonesView(
+//          SpriteKitZonesView(
                 playViewModel: PlayViewModel(
                     playViewState: PlayViewState(
                         currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
@@ -68,7 +68,8 @@ struct MainView: View {
                     //Feedback objects are for custom controllable UI objects
                     feedbackObjectsSate: FeedbackObjectsState()
                 ),
-                mainViewModel: viewModel
+                mainViewModel: viewModel,
+                sessionDisplay: $sessionDisplay
             )
             .onAppear{
                 viewModel.conductor.playEngineAndTracks()
