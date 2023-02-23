@@ -10,9 +10,12 @@ import SwiftUI
 @main
 struct eMotionApp: App {
     
+    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets")
+    
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default")
-//    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-muur-onderwater")
+    
     let sessionSettings = AppUtils.setSessionSetting()
+    
     let buildSettings = BuildSettings(
         mainSettings: .zorg,
         activeView: .homeView,
@@ -20,6 +23,8 @@ struct eMotionApp: App {
         instrumentPartEditor: false,
         isMasterTrack: false
     )
+    
+
     
     var body: some Scene {
         WindowGroup {

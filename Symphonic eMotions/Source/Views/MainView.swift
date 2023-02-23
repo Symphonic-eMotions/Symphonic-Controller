@@ -12,23 +12,17 @@ struct MainView: View {
     
     @ObservedObject var viewModel: MainViewModel
     
+    @State private var mainViewUpdate: BuildSettings.ActiveView
+    
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
     
     //HomeKit connection for external lamp control
     @StateObject private var homeKitStore: HomeKitManager = .init()
     
-    @State private var mainViewUpdate: BuildSettings.ActiveView
-    
     init(viewModel: MainViewModel, mainViewUpdate: BuildSettings.ActiveView) {
         
         self.viewModel = viewModel
-        
-        let color = UIColor(named: "AccentColor")!
-        UISegmentedControl.appearance().selectedSegmentTintColor = color
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: color], for: .normal)
-        
         self.mainViewUpdate = mainViewUpdate
     }
     
@@ -44,7 +38,6 @@ struct MainView: View {
         //
         
         //Main view selector (skin)
-        
         if viewModel.mainState.sessionSettings.activeSkin.name != .swiftUI &&
             viewModel.mainState.buildSettings.activeView == .playView {
             
