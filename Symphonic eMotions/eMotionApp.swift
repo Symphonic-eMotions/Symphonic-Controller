@@ -25,12 +25,12 @@ struct eMotionApp: App {
     )
     
     //SwiftUI * Pro and Editor variables
-    @StateObject var swiftUIState = SwiftUIState(
-        isAdvanced: false,
-        instrumentPartEditor: false,
-        isMasterTrack: false,
-        displayMode: .both
-    )
+//    @StateObject var swiftUIState = SwiftUIState(
+//        isAdvanced: false,
+//        instrumentPartEditor: false,
+//        isMasterTrack: false,
+//        displayMode: .both
+//    )
     
     @State public var sessionDisplay: SessionDisplay = .home
 

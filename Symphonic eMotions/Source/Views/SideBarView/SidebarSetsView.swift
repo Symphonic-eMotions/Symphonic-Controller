@@ -71,12 +71,16 @@ struct SidebarSetsView: View {
         VStack(alignment: .leading) {
             Text("Sets")
                 .font(.largeTitle)
+                .onTapGesture {
+                    sessionDisplay = .home
+                    setInfoLocalState.setName = "home"
+                }
             
             ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
                 
                 SidebarSetCollectionView(
-                    currentInstrumentsSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
-                    setCollection: setCollection
+                    setCollection: setCollection,
+                    setInfoLocalState: $setInfoLocalState
                 ).onTapGesture {
                     
                     viewModel.tapStopAudioEngine()
@@ -94,11 +98,11 @@ struct SidebarSetsView: View {
 
 struct SidebarSetCollectionView: View {
     
-    let currentInstrumentsSetName: String
     let setCollection: MusicSet
+    @Binding public var setInfoLocalState: SetInfoLocalState
     
     var isSelected: Bool {
-        currentInstrumentsSetName == setCollection.name
+        setInfoLocalState.setName == setCollection.name
     }
     
     var body: some View {
