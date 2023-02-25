@@ -97,7 +97,6 @@ final class MainViewModel: ObservableObject {
     
     //These function are for the SwiftUI View also available in PlayerControlsModel
     func tapStopAudioEngine(){
-            
         conductor.pauzeEngineAndStopTracks(setSettings: self.mainState.setSettings)
     }
     
@@ -118,8 +117,6 @@ final class MainViewModel: ObservableObject {
     }
     
     func backButton() {
-        
-        print("Lets go back!")
         
         conductor.pauzeEngineAndStopTracks(setSettings: mainState.setSettings)
         

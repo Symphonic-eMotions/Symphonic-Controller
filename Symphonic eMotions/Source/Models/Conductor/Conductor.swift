@@ -120,12 +120,14 @@ final class Conductor {
     
     
     //InstrumentParts to SpriteKit through PassthroughSubject
-    var spriteKitParts0a = PassthroughSubject<Double, Never>()
-    var spriteKitParts0b = PassthroughSubject<Double, Never>()
-    var spriteKitParts1a = PassthroughSubject<Double, Never>()
-    var spriteKitParts1b = PassthroughSubject<Double, Never>()
-    var spriteKitParts2a = PassthroughSubject<Double, Never>()
-    var spriteKitParts2b = PassthroughSubject<Double, Never>()
+    var spriteKitParts0a = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts0b = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts1a = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts1b = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts2a = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts2b = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts3a = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts3b = PassthroughSubject<(Int,Double), Never>()
     
     //The main instrument set structure. A Musical set is loaded into this struct
     private var set: InstrumentsSet
@@ -1381,7 +1383,8 @@ final class Conductor {
                     forwardSpriteKit(
                         trackNr: trackNr,
                         partNr: partNr,
-                        ramped: value
+                        ramped: value,
+                        maxIndex: maxIndex
                     )
                     
                     partNr += 1
@@ -1476,30 +1479,39 @@ final class Conductor {
     public func forwardSpriteKit(
         trackNr: Int,
         partNr: Int,
-        ramped: Double
+        ramped: Double,
+        maxIndex: Int
     ) -> Void {
         if trackNr == 0 {
             if partNr == 0 {
-                spriteKitParts0a.send(ramped)
+                spriteKitParts0a.send((maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts0b.send(ramped)
+                spriteKitParts0b.send((maxIndex,ramped))
             }
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send(ramped)
+                spriteKitParts1a.send((maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts1b.send(ramped)
+                spriteKitParts1b.send((maxIndex,ramped))
             }
         }
         else if trackNr == 2 {
             if partNr == 0 {
-                spriteKitParts2a.send(ramped)
+                spriteKitParts2a.send((maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts2b.send(ramped)
+                spriteKitParts2b.send((maxIndex,ramped))
+            }
+        }
+        else if trackNr == 3 {
+            if partNr == 0 {
+                spriteKitParts3a.send((maxIndex,ramped))
+            }
+            else if partNr == 1 {
+                spriteKitParts3b.send((maxIndex,ramped))
             }
         }
     }

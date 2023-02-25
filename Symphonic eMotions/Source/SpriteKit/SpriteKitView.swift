@@ -8,9 +8,7 @@
 import SpriteKit
 import SwiftUI
 
-
-
-//SwiftUI creating a GameScene and sizing it
+//SwiftUI creating a SpriteKit scene and sizing it
 struct SpriteKitView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
@@ -26,8 +24,28 @@ struct SpriteKitView: View {
     ) {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
-        scene.size = CGSize(width: width, height: height - transportHeigth)
+        let size = CGSize(width: width, height: height - transportHeigth)
+        let columns = mainViewModel.mainState.setSettings.gridColumns
+        let rows = mainViewModel.mainState.setSettings.gridRows
+        let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
+        
+        scene.size = size
         scene.scaleMode = .fill
+        
+        scene.rows = rows
+        scene.columns = columns
+        scene.instrumentPartAreas = instrumentAreas
+        scene.instrumentXs = mainViewModel.mainState.setSettings.spriteKitInstrumentXs(
+            instrumentAreas: instrumentAreas,
+            size: size,
+            columns: columns
+        )
+        let instrumentYs = mainViewModel.mainState.setSettings.spriteKitInstrumentYs(
+            instrumentAreas: instrumentAreas
+        )
+        scene.instrumentYs = instrumentYs
+        scene.rememberYs = instrumentYs
+        scene.yStep = size.height / CGFloat(rows)
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
         
         self.playViewModel = playViewModel
@@ -60,9 +78,33 @@ struct SpriteKitView: View {
             )
             .frame(width: width, height: height - transportHeigth - 10)
             .ignoresSafeArea()
+            
+            //Cello
             .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
-    
-                scene.instrumentPart0aScale = CGFloat(value)
+                
+                scene.instrumentPart0aMaxIndex = value.0
+                scene.instrumentPart0aScale = CGFloat(value.1)
+            }
+            
+            //Drums
+            .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
+                
+                scene.instrumentPart1aMaxIndex = value.0
+                scene.instrumentPart1aScale = CGFloat(value.1)
+            }
+            
+            //Bassline
+            .onReceive(playViewModel.conductor.spriteKitParts2a){ ( value ) in
+                
+                scene.instrumentPart2aMaxIndex = value.0
+                scene.instrumentPart2aScale = CGFloat(value.1)
+            }
+            
+            //Synth
+            .onReceive(playViewModel.conductor.spriteKitParts3a){ ( value ) in
+                
+                scene.instrumentPart3aMaxIndex = value.0
+                scene.instrumentPart3aScale = CGFloat(value.1)
             }
         }
     }

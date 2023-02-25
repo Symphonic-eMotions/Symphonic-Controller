@@ -47,7 +47,6 @@ extension InstrumentsSet.Skin {
         var shape: Shape
         var image: String
         var color: UIColor
-        var areas: [[Int]] = []
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: SkinInstrumentKeys.self)
@@ -61,11 +60,10 @@ extension InstrumentsSet.Skin {
         }
         
         //Ad Hoc init
-        init(shape: Shape, image: String, color: UIColor, areas: [[Int]]){
+        init(shape: Shape, image: String, color: UIColor){
             self.shape = shape
             self.image = image
             self.color = color
-            self.areas = areas
         }
     }
 }

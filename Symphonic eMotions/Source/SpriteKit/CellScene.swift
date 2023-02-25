@@ -26,93 +26,99 @@ struct Cell {
     }
 }
 
-struct CellInstrument{
+
+struct InstrumentSetting{
     
     let color:UIColor
     let shape:String
     let image:String
-    let areas:[Int]
+//    let areas:[Int]
 }
 
 class CellScene: SKScene {
     
-    let debugNumbers: Bool = true
+    let debugNumbers: Bool = false
     
     //GameScene globals to change through update
     var instrumentPart0a: SKShapeNode!
-    var instrumentPart0aScale: CGFloat = 0
+    var instrumentPart0aScale: CGFloat?
+    var instrumentPart0aMaxIndex: Int = 0
+    
+    var instrumentPart1a: SKShapeNode!
+    var instrumentPart1aScale: CGFloat?
+    var instrumentPart1aMaxIndex: Int = 0
+    
+    var instrumentPart2a: SKShapeNode!
+    var instrumentPart2aScale: CGFloat?
+    var instrumentPart2aMaxIndex: Int = 0
+    
+    var instrumentPart3a: SKShapeNode!
+    var instrumentPart3aScale: CGFloat?
+    var instrumentPart3aMaxIndex: Int = 0
     
     var sessionSkin: InstrumentsSet.Skin!
     
-    //Columns
-    let columns = 3
-    //Rows
-    let rows = 3
+    var columns: Int = 0
+    var rows: Int = 0
+    
+    var instrumentXs: [CGFloat] = []
+    var yStep: CGFloat = 0
+    var rememberYs: [CGFloat] = []
+    var instrumentYs: [CGFloat] = []
+    
+    //Collect all areas of interest from the instrument settings
+    var instrumentPartAreas: [[[Int]]] = []
     
     //Start of Scene funciton
     override func didMove(to view: SKView) {
         
-//        print(sessionSkin!)
+        for (index,_) in instrumentXs.enumerated() {
+            
+            if index == 0 {
+                instrumentPart0a = setupInstrument(instrumentIndex: index)
+                addChild(instrumentPart0a)
+            }
+            else if index == 1 {
+                instrumentPart1a = setupInstrument(instrumentIndex: index)
+                addChild(instrumentPart1a)
+            }
+            else if index == 2 {
+                instrumentPart2a = setupInstrument(instrumentIndex: index)
+                addChild(instrumentPart2a)
+            }
+            else if index == 3 {
+                instrumentPart3a = setupInstrument(instrumentIndex: index)
+                addChild(instrumentPart3a)
+            }
+        }
         
-//        let instrument = instrument1
-        let instrument = sessionSkin.instruments[0]
-        let cell = Cell(columns: columns, rows: rows)
-        
-        print(instrument.color)
-        
-        let cellInstrument = CellInstrument(
-//            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1),
-            color: instrument.color,
-            shape: instrument.shape.rawValue,
-            image: instrument.image,
-            areas: instrument.areas[0]
-        )
-        
-        setupGrid(cell: cell, instrument: cellInstrument)
+        if debugNumbers {
+            let cell = Cell(columns: columns, rows: rows)
+            debugGrid(cell: cell)
+        }
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
     
-    func setupGrid(cell: Cell, instrument: CellInstrument) {
+    func setupInstrument(instrumentIndex: Int) -> SKShapeNode{
         
-//        let trackNr:Int = 0
-//        var partNr:Int = 0
-        let localSize:CGFloat = 260
+        let skin = self.sessionSkin.instruments[instrumentIndex]
         
-        var index: Int = 0
+        let instrument = SKShapeNode(circleOfRadius: self.size.width / CGFloat(self.columns + 1))
+        instrument.position = CGPoint(x: self.instrumentXs[instrumentIndex], y: self.instrumentYs[instrumentIndex])
+        instrument.fillColor = skin.color
+        instrument.strokeColor = skin.color
         
-        for row in 0..<cell.rows {
-            
-            for column in 0..<cell.columns {
-                
-                //Calculate the horizontal center of all cells
-                let xOffset = CGFloat(Float(column) * cell.celWidth + cell.centerWidth)
-                
-                //Calculate the vertical center of all cells
-                //Reverse columns for mirrored output on x-axis (SpriteKit 0:0 is left bottom, SeM 0:0 is left top)
-                let reversedColumn = reverseNumber(number: row, min: 0, max: rows - 1)
-                let yOffset = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth)
-                
-                //For debuging we show text in all cells
-                let yOffsetText = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth - 0.013)
-                
-                if instrument.areas[index] == 1 {
-                    
-                    print("SETTING UP INSTRUMENT \(localSize) \(xOffset) \(yOffset)")
-                    
-                    instrumentPart0a = setupInstrumentPart(localSize: localSize, xOffset: xOffset, yOffset: yOffset, color: instrument.color)
-                        
-                    addChild(instrumentPart0a)
-                }
-                
-                if debugNumbers {
-                    let debugNumber = setUpDebugNumbers(index: index, xOffset: xOffset, yOffsetText: yOffsetText)
-                    addChild(debugNumber)
-                }
-                
-                index += 1
-            }
-        }
+        return instrument
+    }
+    
+    func maxIndexToY(maxIndex: Int) -> CGFloat {
+        
+        var y: CGFloat = 100
+        
+        y += CGFloat(maxIndex) * self.yStep
+        
+        return y
     }
     
     func setupInstrumentPart(localSize: CGFloat, xOffset: CGFloat, yOffset: CGFloat, color: UIColor) -> SKShapeNode{
@@ -126,11 +132,9 @@ class CellScene: SKScene {
         instrumentPart.glowWidth = 3
         instrumentPart.strokeColor = color
         
-        
         instrumentPart.physicsBody = SKPhysicsBody(circleOfRadius: localSize)
         instrumentPart.physicsBody?.affectedByGravity = false
         instrumentPart.physicsBody?.pinned = true
-        
         
         //        if instrumentPart[index] == 1 {
         //            //Placing an image
@@ -143,26 +147,36 @@ class CellScene: SKScene {
         return instrumentPart
     }
     
-    func setUpDebugNumbers(index:Int, xOffset: CGFloat, yOffsetText: CGFloat) -> SKLabelNode {
-        
-        let indexText = SKLabelNode(fontNamed: "Arial")
-        indexText.text = "\(index)"
-        indexText.fontSize = 50
-        indexText.fontColor = SKColor.green
-        indexText.alpha = 0.5
-        indexText.position = CGPoint(x: size.width * xOffset, y: size.height * yOffsetText)
-        
-        return indexText
-    }
-    
-    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
-        return (max + min) - number
-    }
-    
     override func update(_ currentTime: TimeInterval) {
+        //Cello
+        instrumentPart0a.position = CGPoint(
+            x: self.instrumentXs[0],
+            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
+        )
+        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale ?? 0))
         
-        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale))
-                
+        //Drums
+        instrumentPart1a.position = CGPoint(
+            x: self.instrumentXs[1],
+            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
+        )
+        instrumentPart1a.setScale(CGFloat(instrumentPart1aScale ?? 0))
+        
+        //Bassline
+//        print("MaxIndex Bassline: \(instrumentPart2aMaxIndex) Drums: \(instrumentPart1aMaxIndex)")
+        instrumentPart2a.position = CGPoint(
+            x: self.instrumentXs[2],
+            //
+            y: maxIndexToY(maxIndex: reverseNumber(number: instrumentPart2aMaxIndex, min: 0, max: 3))
+        )
+        instrumentPart2a.setScale(CGFloat(instrumentPart2aScale ?? 0))
+        
+        //Synth
+        instrumentPart3a.position = CGPoint(
+            x: self.instrumentXs[3],
+            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
+        )
+        instrumentPart3a.setScale(CGFloat(instrumentPart3aScale ?? 0))
     }
     
     //Make box on tap, first part of this tutorial
@@ -181,4 +195,46 @@ class CellScene: SKScene {
     }
     
     
+    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
+        return (max + min) - number
+    }
+    
+    func debugGrid(cell: Cell) {
+        
+        var index: Int = 0
+        
+        for row in 0..<cell.rows {
+            
+            for column in 0..<cell.columns {
+                
+                //Calculate the horizontal center of all cells
+                let xOffset = CGFloat(Float(column) * cell.celWidth + cell.centerWidth)
+                
+                //Calculate the vertical center of all cells
+                //Reverse columns for mirrored output on x-axis (SpriteKit 0:0 is left bottom, SeM 0:0 is left top)
+                let reversedColumn = reverseNumber(number: row, min: 0, max: rows - 1)
+//                let yOffset = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth)
+                
+                //For debuging we show text in all cells
+                let yOffsetText = CGFloat(Float(reversedColumn) * cell.celHeight + cell.centerHeigth - 0.013)
+                
+                let debugNumber = setUpDebugNumbers(index: index, xOffset: xOffset, yOffsetText: yOffsetText)
+                addChild(debugNumber)
+            
+                index += 1
+            }
+        }
+    }
+    
+    func setUpDebugNumbers(index:Int, xOffset: CGFloat, yOffsetText: CGFloat) -> SKLabelNode {
+        
+        let indexText = SKLabelNode(fontNamed: "Arial")
+        indexText.text = "\(index)"
+        indexText.fontSize = 50
+        indexText.fontColor = SKColor.green
+        indexText.alpha = 0.5
+        indexText.position = CGPoint(x: size.width * xOffset, y: size.height * yOffsetText)
+        
+        return indexText
+    }
 }

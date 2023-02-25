@@ -130,7 +130,7 @@ struct SpriteKitZonesView: View {
                     
 //                    print("Received: spriteKitParts0a \(value)")
                     
-                    scene.instrumentPart0aScale = CGFloat(value)
+                    scene.instrumentPart0aScale = CGFloat(value.1)
                 }
             
         }

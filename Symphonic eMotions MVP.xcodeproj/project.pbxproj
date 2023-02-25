@@ -30,6 +30,7 @@
 		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
+		7C645CA729AA4682000C5861 /* Orion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA629AA4682000C5861 /* Orion.swift */; };
 		7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C67D15F270F8B83009122BF /* SoundpipeAudioKit */; };
 		7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */; };
 		7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6801B82875A24A00688C2E /* PhaserEffect.swift */; };
@@ -137,6 +138,7 @@
 		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
+		7C645CA629AA4682000C5861 /* Orion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orion.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostelloReverbEffect.swift; sourceTree = "<group>"; };
 		7C6801B82875A24A00688C2E /* PhaserEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaserEffect.swift; sourceTree = "<group>"; };
 		7C69ED39295350750009F382 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
 				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
 				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
+				7C645CA629AA4682000C5861 /* Orion.swift */,
 			);
 			path = SpriteKit;
 			sourceTree = "<group>";
@@ -748,6 +751,7 @@
 				7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
 				7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */,
+				7C645CA729AA4682000C5861 /* Orion.swift in Sources */,
 				7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */,
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,

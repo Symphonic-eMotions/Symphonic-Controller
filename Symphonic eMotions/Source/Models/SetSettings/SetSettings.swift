@@ -66,6 +66,50 @@ class SetSettings: Identifiable {
         self.settingsRampDown = firstPart.value.rampDown
     }
     
+    //Collect instrument areas
+    func getInstrumentAreas() -> [[[Int]]] {
+        
+        var instruments: [[[Int]]] = []
+        var trackParts: [[Int]] = []
+        
+        for track in self.tracks {
+            trackParts = [[Int]]()
+            for part in track.value.parts {
+                trackParts.append(part.value.areaOfInterest)
+            }
+            instruments.append(trackParts)
+        }
+        return instruments
+    }
+    
+    //Calculate column x-axis center fo
+    func spriteKitInstrumentXs(
+        instrumentAreas: [[[Int]]],
+        size: CGSize,
+        columns: Int) -> [CGFloat] {
+        
+        var instrumentXs: [CGFloat] = []
+        for instrument in instrumentAreas {
+            //Do this only for first part, other parts inherit x-axis value
+            let partAreas = instrument[0]
+            let firstIndex = partAreas.firstIndex(of: 1) ?? 0
+            let instrumentColumn = firstIndex % columns
+            let columnWidth:CGFloat = size.width / CGFloat(columns)
+            let x = CGFloat(instrumentColumn) * columnWidth + columnWidth / 2
+            instrumentXs.append(x)
+        }
+        return instrumentXs
+    }
+    
+    func spriteKitInstrumentYs( instrumentAreas: [[[Int]]] ) -> [CGFloat] {
+            
+        var instrumentYs: [CGFloat] = []
+        for _ in instrumentAreas {
+            instrumentYs.append(200)
+        }
+        return instrumentYs
+    }
+    
     func getTrackLevels(trackId: String?) -> [Int] {
         
         return self.tracks[trackId!]!.levels
