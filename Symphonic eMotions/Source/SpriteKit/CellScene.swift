@@ -37,9 +37,10 @@ struct InstrumentSetting{
 
 class CellScene: SKScene {
     
-    let debugNumbers: Bool = false
+    let debugNumbers: Bool = true
     
     //GameScene globals to change through update
+    //At this moment static 4 instruments
     var instrumentPart0a: SKShapeNode!
     var instrumentPart0aScale: CGFloat?
     var instrumentPart0aMaxIndex: Int = 0
@@ -72,6 +73,7 @@ class CellScene: SKScene {
     //Start of Scene funciton
     override func didMove(to view: SKView) {
         
+        //At this stage there is a maximum of 4 instruments
         for (index,_) in instrumentXs.enumerated() {
             
             if index == 0 {

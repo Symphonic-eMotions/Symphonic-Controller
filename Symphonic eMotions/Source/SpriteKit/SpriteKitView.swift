@@ -64,48 +64,62 @@ struct SpriteKitView: View {
         #endif
         
         VStack(spacing: 0){
+            //Stack
             
-            SpriteKitTransport(
-                mainViewModel: mainViewModel,
-                playViewModel: playViewModel,
-                sessionDisplay: $sessionDisplay,
-                transportHeigth: transportHeigth
-            )
-            
-            SpriteView(
-                scene: scene,
-                options: [.allowsTransparency]
-            )
-            .frame(width: width, height: height - transportHeigth - 10)
-            .ignoresSafeArea()
-            
-            //Cello
-            .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+            VStack{
+                SpriteKitTransport(
+                    mainViewModel: mainViewModel,
+                    playViewModel: playViewModel,
+                    sessionDisplay: $sessionDisplay,
+                    transportHeigth: transportHeigth
+                )
+                ZStack{
+                    SpriteView(
+                        scene: scene,
+                        options: [.allowsTransparency]
+                    )
+                    .frame(width: width, height: height - transportHeigth - 10)
+                    .ignoresSafeArea()
+                    //Cello
+                    .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+                        
+                        scene.instrumentPart0aMaxIndex = value.0
+                        scene.instrumentPart0aScale = CGFloat(value.1)
+                    }
+                    //Drums
+                    .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
+                        
+                        scene.instrumentPart1aMaxIndex = value.0
+                        scene.instrumentPart1aScale = CGFloat(value.1)
+                    }
+                    //Bassline
+                    .onReceive(playViewModel.conductor.spriteKitParts2a){ ( value ) in
+                        
+                        scene.instrumentPart2aMaxIndex = value.0
+                        scene.instrumentPart2aScale = CGFloat(value.1)
+                    }
+                    //Synth
+                    .onReceive(playViewModel.conductor.spriteKitParts3a){ ( value ) in
+                        
+                        scene.instrumentPart3aMaxIndex = value.0
+                        scene.instrumentPart3aScale = CGFloat(value.1)
+                    }
+                    
+                    //Video
+                    VideoPreviewViewRepresetable(
+                        playViewModel: playViewModel
+                    )
+                    .aspectRatio(1.666666, contentMode: .fit)
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                    .cornerRadius(10.0)
+                    .opacity( 0.5)
+                }
+                    
                 
-                scene.instrumentPart0aMaxIndex = value.0
-                scene.instrumentPart0aScale = CGFloat(value.1)
+                
             }
             
-            //Drums
-            .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
-                
-                scene.instrumentPart1aMaxIndex = value.0
-                scene.instrumentPart1aScale = CGFloat(value.1)
-            }
             
-            //Bassline
-            .onReceive(playViewModel.conductor.spriteKitParts2a){ ( value ) in
-                
-                scene.instrumentPart2aMaxIndex = value.0
-                scene.instrumentPart2aScale = CGFloat(value.1)
-            }
-            
-            //Synth
-            .onReceive(playViewModel.conductor.spriteKitParts3a){ ( value ) in
-                
-                scene.instrumentPart3aMaxIndex = value.0
-                scene.instrumentPart3aScale = CGFloat(value.1)
-            }
         }
     }
 }
