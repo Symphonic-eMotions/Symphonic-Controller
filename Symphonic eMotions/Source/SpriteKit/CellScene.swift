@@ -116,7 +116,7 @@ class CellScene: SKScene {
     
     func maxIndexToY(maxIndex: Int) -> CGFloat {
         
-        var y: CGFloat = 100
+        var y: CGFloat = -100
         
         y += CGFloat(maxIndex) * self.yStep
         
@@ -173,7 +173,7 @@ class CellScene: SKScene {
         instrumentPart2a.position = CGPoint(
             x: self.instrumentXs[2],
             //
-            y: maxIndexToY(maxIndex: reverseNumber(number: instrumentPart2aMaxIndex, min: 0, max: 3))
+            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
         )
         instrumentPart2a.setScale(CGFloat(instrumentPart2aScale ?? 0))
         

@@ -47,7 +47,7 @@ struct SpriteKitView: View {
         scene.rememberYs = instrumentYs
         scene.yStep = size.height / CGFloat(rows)
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
-        scene.videoOpacity = playViewModel.playViewState.displayOpacity
+//        scene.videoOpacity = playViewModel.playViewState.displayOpacity
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel

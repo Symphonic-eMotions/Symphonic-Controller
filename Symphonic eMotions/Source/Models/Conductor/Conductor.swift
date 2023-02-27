@@ -1334,8 +1334,9 @@ final class Conductor {
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                     
-                    //Convert index to index of areaOfInterest
-                    var maxIndex = Int(maxIndexTupple.0)
+                    //Spare original
+                    let maxIndexraw = Int(maxIndexTupple.0)
+                    var maxIndex = maxIndexraw
                     
                     //Lets call maxMapped value to work with
                     var value = maxIndexTupple.1
@@ -1346,7 +1347,6 @@ final class Conductor {
                     //Change order of indeces for mapping with events
                     //mapMaxIndex should be present once in a track
                     if part.mapMaxIndex != nil {
-                        
                         let mapMaxIndex = part.mapMaxIndex ?? []
                         maxIndex = mapMaxIndex[maxIndex]
                         forwardMaxIndex(
@@ -1379,12 +1379,14 @@ final class Conductor {
                         currentSetLevel: localCurrentSetLevel
                     )
                     
+                    
                     //TODO: Add spriteKit exeption
                     forwardSpriteKit(
                         trackNr: trackNr,
                         partNr: partNr,
                         ramped: value,
-                        maxIndex: maxIndex
+                        areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
+                        maxIndexRaw: maxIndexraw
                     )
                     
                     partNr += 1
@@ -1476,42 +1478,54 @@ final class Conductor {
         forwardRampedPartFeedback.send(ramped)
     }
     
+    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
+        return (max + min) - number
+    }
+    
     public func forwardSpriteKit(
         trackNr: Int,
         partNr: Int,
         ramped: Double,
-        maxIndex: Int
+        areaOfInterest: [Int],
+        maxIndexRaw: Int
     ) -> Void {
+        
+        let allCells = areaOfInterest.filter { int in
+            return int == 1
+        }
+        //Reverse maxIndexes for inverted Y axis in SpriteKit
+        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count)
+        
         if trackNr == 0 {
             if partNr == 0 {
-                spriteKitParts0a.send((maxIndex,ramped))
+                spriteKitParts0a.send((reversed,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts0b.send((maxIndex,ramped))
+                spriteKitParts0b.send((reversed,ramped))
             }
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send((maxIndex,ramped))
+                spriteKitParts1a.send((reversed,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts1b.send((maxIndex,ramped))
+                spriteKitParts1b.send((reversed,ramped))
             }
         }
         else if trackNr == 2 {
             if partNr == 0 {
-                spriteKitParts2a.send((maxIndex,ramped))
+                spriteKitParts2a.send((reversed,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts2b.send((maxIndex,ramped))
+                spriteKitParts2b.send((reversed,ramped))
             }
         }
         else if trackNr == 3 {
             if partNr == 0 {
-                spriteKitParts3a.send((maxIndex,ramped))
+                spriteKitParts3a.send((reversed,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts3b.send((maxIndex,ramped))
+                spriteKitParts3b.send((reversed,ramped))
             }
         }
     }
@@ -1585,6 +1599,7 @@ final class Conductor {
             
             guard let track = set.track(for: damperTarget.trackId) else { return }
             
+            //
             let maxIndexPart = maxIndex % track.midiFiles!.first!.loopLength.count
             
             //Copy MIDI part based on max movement cell index
