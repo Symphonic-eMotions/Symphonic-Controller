@@ -7,6 +7,26 @@
 
 import SwiftUI
 
+struct OpacitySlider: View {
+    @Binding var value: Float
+    init(
+        value: Binding<Float>
+    ) { _value = value }
+    var body: some View {
+        GeometryReader { geometry in
+                
+            ZStack{
+                HStack {
+                    Slider(value: $value, in: 0...1)
+                        .foregroundColor(.secondary)
+                        .foregroundColor(.white)
+                        .font(.subheadline)
+                }
+            }
+        }
+    }
+}
+
 struct SpriteKitTransport: View {
     
     @ObservedObject var mainViewModel: MainViewModel
@@ -79,10 +99,24 @@ struct SpriteKitTransport: View {
                     playViewModel: playViewModel
                 )
                 
-                VolumeSlider()
+                VStack(spacing: 5){
+                    VolumeSlider()
+                        .frame(width: 200, height: 20)
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                        .zIndex(100)
+                    
+                    OpacitySlider(value: Binding(
+                            get: {playViewModel.playViewState.displayOpacity},
+                            set: { (newval) in
+                                self.playViewModel.playViewState.displayOpacity = newval
+                                
+                            }
+                        )
+                    )
                     .frame(width: 200, height: 20)
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    .padding(.bottom, 2)
                     .zIndex(100)
+                }
             }
         }
     }

@@ -47,6 +47,7 @@ struct SpriteKitView: View {
         scene.rememberYs = instrumentYs
         scene.yStep = size.height / CGFloat(rows)
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
+        scene.videoOpacity = playViewModel.playViewState.displayOpacity
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
@@ -112,14 +113,9 @@ struct SpriteKitView: View {
                     .aspectRatio(1.666666, contentMode: .fit)
                     .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                     .cornerRadius(10.0)
-                    .opacity( 0.5)
+                    .opacity( Double(playViewModel.playViewState.displayOpacity) )
                 }
-                    
-                
-                
             }
-            
-            
         }
     }
 }

@@ -28,7 +28,6 @@ struct Cell {
 
 
 struct InstrumentSetting{
-    
     let color:UIColor
     let shape:String
     let image:String
@@ -37,7 +36,8 @@ struct InstrumentSetting{
 
 class CellScene: SKScene {
     
-    let debugNumbers: Bool = true
+    var debugNumbers: Bool = true
+//    var videoOpacity: Float = 0
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
@@ -150,6 +150,10 @@ class CellScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        //Show numbers if video is requested
+//        self.debugNumbers = videoOpacity > 0
+        
         //Cello
         instrumentPart0a.position = CGPoint(
             x: self.instrumentXs[0],
