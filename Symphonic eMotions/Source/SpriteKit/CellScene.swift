@@ -32,17 +32,6 @@ struct InstrumentSetting{
     let color:UIColor
     let shape:String
     let image:String
-    
-//    let areas:[Int]
-}
-
-struct GravityGroups: OptionSet {
-    let rawValue: UInt32
-    
-    static let gravityGroup1 = GravityGroups(rawValue: 0x1 << 0)
-    static let gravityGroup2 = GravityGroups(rawValue: 0x1 << 1)
-    static let gravityGroup3 = GravityGroups(rawValue: 0x1 << 2)
-    static let gravityGroup4 = GravityGroups(rawValue: 0x1 << 3)
 }
 
 class Instrument: SKShapeNode { }
@@ -50,25 +39,28 @@ class Instrument: SKShapeNode { }
 class CellScene: SKScene {
     
     var gravityVector: vector_float3!
-    var gravityNode: SKFieldNode!
     
-    var debugNumbers: Bool = true
+    var debugNumbers: Bool = false
 //    var videoOpacity: Float = 0
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
+    var gravityNode0: SKFieldNode!
     var instrumentPart0a: Instrument!
     var instrumentPart0aScale: CGFloat?
     var instrumentPart0aMaxIndex: Int = 0
     
+    var gravityNode1: SKFieldNode!
     var instrumentPart1a: Instrument!
     var instrumentPart1aScale: CGFloat?
     var instrumentPart1aMaxIndex: Int = 0
     
+    var gravityNode2: SKFieldNode!
     var instrumentPart2a: Instrument!
     var instrumentPart2aScale: CGFloat?
     var instrumentPart2aMaxIndex: Int = 0
     
+    var gravityNode3: SKFieldNode!
     var instrumentPart3a: Instrument!
     var instrumentPart3aScale: CGFloat?
     var instrumentPart3aMaxIndex: Int = 0
@@ -90,35 +82,58 @@ class CellScene: SKScene {
     override func didMove(to view: SKView) {
         
         
-        gravityNode = SKFieldNode.radialGravityField()
-        gravityNode.strength = 0.5
-        gravityNode.falloff = 1
-        gravityNode.animationSpeed = 0.5
-        gravityNode.position = CGPoint(x: size.width/2, y: size.height/2)
-        addChild(gravityNode)
-        
         //At this stage there is a maximum of 4 instruments
         for (index,_) in instrumentXs.enumerated() {
             if index == 0 {
-                instrumentPart0a = setupInstrument(instrumentIndex: index)
+//                gravityNode0 = setupGravityNode(
+//                    instrumentIndex: index,
+//                    gravityGroup: 0x1 << 0
+//                )
+//                addChild(gravityNode0)
+                instrumentPart0a = setupInstrument(
+                    instrumentIndex: index,
+                    gravityGroup: 0x1 << 0
+                )
                 addChild(instrumentPart0a)
             }
             else if index == 1 {
-                instrumentPart1a = setupInstrument(instrumentIndex: index)
+//                gravityNode1 = setupGravityNode(
+//                    instrumentIndex: index,
+//                    gravityGroup: 0x1 << 1
+//                )
+//                addChild(gravityNode1)
+                instrumentPart1a = setupInstrument(
+                    instrumentIndex: index,
+                    gravityGroup: 0x1 << 1
+                )
                 addChild(instrumentPart1a)
             }
             else if index == 2 {
-                instrumentPart2a = setupInstrument(instrumentIndex: index)
+//                gravityNode2 = setupGravityNode(
+//                    instrumentIndex: index,
+//                    gravityGroup: 0x1 << 2
+//                )
+//                addChild(gravityNode2)
+                instrumentPart2a = setupInstrument(
+                    instrumentIndex: index,
+                    gravityGroup: 0x1 << 2
+                )
                 addChild(instrumentPart2a)
             }
             else if index == 3 {
-                instrumentPart3a = setupInstrument(instrumentIndex: index)
+//                gravityNode3 = setupGravityNode(
+//                    instrumentIndex: index,
+//                    gravityGroup: 0x1 << 3
+//                )
+//                addChild(gravityNode3)
+                instrumentPart3a = setupInstrument(
+                    instrumentIndex: index,
+                    gravityGroup: 0x1 << 3
+                )
                 addChild(instrumentPart3a)
             }
         }
-        
-        //Field node for attracting instruments
-        
+
         
         if debugNumbers {
             let cell = Cell(columns: columns, rows: rows)
@@ -126,16 +141,38 @@ class CellScene: SKScene {
         }
         
         physicsBody = SKPhysicsBody()
-        
-        
     }
     
-    func setupInstrument(instrumentIndex: Int) -> Instrument{
+//    func setupGravityNode(instrumentIndex: Int, gravityGroup: UInt32) -> SKFieldNode{
+//
+//        let skin = self.sessionSkin.instruments[instrumentIndex]
+//
+//        let gravityNode = SKFieldNode.radialGravityField()
+//        gravityNode.strength = 0
+////        gravityNode.physicsBody?.charge = 30
+//        gravityNode.falloff = 0.5
+//        gravityNode.region = SKRegion(radius: Float(size.width))
+////        gravityNode.animationSpeed = 0.5
+//
+//        gravityNode.position = CGPoint(
+//            x: self.instrumentXs[instrumentIndex],
+//            y: self.instrumentYs[instrumentIndex] + 200
+//        )
+//        gravityNode.physicsBody?.fieldBitMask = gravityGroup
+//
+//        let box = SKSpriteNode(color: skin.color, size: CGSize(width: 50, height: 50))
+//        gravityNode.addChild(box)
+//
+//        return gravityNode
+//    }
+    
+    func setupInstrument(instrumentIndex: Int, gravityGroup: UInt32) -> Instrument{
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
         let instrumentRadius = self.size.width / CGFloat(self.columns + 2)
         
         let instrument = Instrument(circleOfRadius: instrumentRadius)
+        
         instrument.position = CGPoint(
             x: self.instrumentXs[instrumentIndex],
             y: self.instrumentYs[instrumentIndex]
@@ -145,7 +182,10 @@ class CellScene: SKScene {
         instrument.strokeColor = skin.color
         instrument.glowWidth = 2
         
-        instrument.physicsBody = SKPhysicsBody(circleOfRadius: instrumentRadius)
+        instrument.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        instrument.physicsBody?.fieldBitMask = gravityGroup
+        instrument.physicsBody?.restitution = 0
+        instrument.physicsBody?.friction = 0
 //        instrument.physicsBody?.affectedByGravity = false
 //        instrument.physicsBody?.pinned = true
         
@@ -161,64 +201,38 @@ class CellScene: SKScene {
         return y
     }
     
-    func setupInstrumentPart(localSize: CGFloat, xOffset: CGFloat, yOffset: CGFloat, color: UIColor) -> SKShapeNode{
-        
-        //SKSpriteNode offers higher performance than SKShapeNode class
-        
-        let instrumentPart = SKShapeNode(circleOfRadius: localSize)
-        instrumentPart.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
-        instrumentPart.fillColor = SKColor.clear
-        instrumentPart.lineWidth = 3
-        instrumentPart.glowWidth = 3
-        instrumentPart.strokeColor = color
-        
-        instrumentPart.physicsBody = SKPhysicsBody(circleOfRadius: localSize)
-        instrumentPart.physicsBody?.affectedByGravity = false
-        instrumentPart.physicsBody?.pinned = true
-        
-        //        if instrumentPart[index] == 1 {
-        //            //Placing an image
-        //            let image = SKSpriteNode(imageNamed: "Circle")
-        //            image.scale(to: CGSize(width: localSize, height: localSize))
-        //            image.position = CGPoint(x: size.width * xOffset, y: size.height * yOffset)
-        //            addChild(image)
-        //        }
-        
-        return instrumentPart
-    }
-    
     override func update(_ currentTime: TimeInterval) {
         
-        //Show numbers if video is requested
-//        self.debugNumbers = videoOpacity > 0
-        
         //Cello
-//        instrumentPart0a.position = CGPoint(
-//            x: self.instrumentXs[0],
-//            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
-//        )
+        var position = CGPoint(
+            x: self.instrumentXs[0],
+            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
+        )
+        instrumentPart0a.run(SKAction.move(to: position, duration: 0.5))
         instrumentPart0a.setScale(CGFloat(instrumentPart0aScale ?? 0))
         
         //Drums
-//        instrumentPart1a.position = CGPoint(
-//            x: self.instrumentXs[1],
-//            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
-//        )
+        position = CGPoint(
+            x: self.instrumentXs[1],
+            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
+        )
+        instrumentPart1a.run(SKAction.move(to: position, duration: 0.5))
         instrumentPart1a.setScale(CGFloat(instrumentPart1aScale ?? 0))
         
-        //Bassline
-//        instrumentPart2a.position = CGPoint(
-//            x: self.instrumentXs[2],
-//            //
-//            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
-//        )
+        //Basslin
+        position = CGPoint(
+            x: self.instrumentXs[2],
+            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
+        )
+        instrumentPart2a.run(SKAction.move(to: position, duration: 0.5))
         instrumentPart2a.setScale(CGFloat(instrumentPart2aScale ?? 0))
         
         //Synth
-//        instrumentPart3a.position = CGPoint(
-//            x: self.instrumentXs[3],
-//            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
-//        )
+        position = CGPoint(
+            x: self.instrumentXs[3],
+            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
+        )
+        instrumentPart3a.run(SKAction.move(to: position, duration: 0.5))
         instrumentPart3a.setScale(CGFloat(instrumentPart3aScale ?? 0))
     }
     
