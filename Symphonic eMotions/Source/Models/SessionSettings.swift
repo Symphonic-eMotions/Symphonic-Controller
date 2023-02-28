@@ -143,19 +143,23 @@ class SessionSettings: Identifiable {
         //We go Skinning!
         let instruments:[InstrumentsSet.Skin.Instrument] = [InstrumentsSet.Skin.Instrument(
             shape: .circle,
-            image: "Keyboard",
+            name: "Cello",
+            image: "Strings",
             color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
-            image: "Cello",
+            name: "Beats",
+            image: "Trom",
             color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
-            image: "Trom",
+            name: "Bassline",
+            image: "SynthA",
             color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
-            image: "Trom",
+            name: "Synth",
+            image: "SynthB",
             color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
         )]
         

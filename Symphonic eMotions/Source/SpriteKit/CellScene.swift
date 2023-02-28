@@ -28,32 +28,48 @@ struct Cell {
 
 
 struct InstrumentSetting{
+    let name:String
     let color:UIColor
     let shape:String
     let image:String
+    
 //    let areas:[Int]
 }
 
+struct GravityGroups: OptionSet {
+    let rawValue: UInt32
+    
+    static let gravityGroup1 = GravityGroups(rawValue: 0x1 << 0)
+    static let gravityGroup2 = GravityGroups(rawValue: 0x1 << 1)
+    static let gravityGroup3 = GravityGroups(rawValue: 0x1 << 2)
+    static let gravityGroup4 = GravityGroups(rawValue: 0x1 << 3)
+}
+
+class Instrument: SKShapeNode { }
+
 class CellScene: SKScene {
+    
+    var gravityVector: vector_float3!
+    var gravityNode: SKFieldNode!
     
     var debugNumbers: Bool = true
 //    var videoOpacity: Float = 0
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
-    var instrumentPart0a: SKShapeNode!
+    var instrumentPart0a: Instrument!
     var instrumentPart0aScale: CGFloat?
     var instrumentPart0aMaxIndex: Int = 0
     
-    var instrumentPart1a: SKShapeNode!
+    var instrumentPart1a: Instrument!
     var instrumentPart1aScale: CGFloat?
     var instrumentPart1aMaxIndex: Int = 0
     
-    var instrumentPart2a: SKShapeNode!
+    var instrumentPart2a: Instrument!
     var instrumentPart2aScale: CGFloat?
     var instrumentPart2aMaxIndex: Int = 0
     
-    var instrumentPart3a: SKShapeNode!
+    var instrumentPart3a: Instrument!
     var instrumentPart3aScale: CGFloat?
     var instrumentPart3aMaxIndex: Int = 0
     
@@ -64,7 +80,7 @@ class CellScene: SKScene {
     
     var instrumentXs: [CGFloat] = []
     var yStep: CGFloat = 0
-    var rememberYs: [CGFloat] = []
+//    var rememberYs: [CGFloat] = []
     var instrumentYs: [CGFloat] = []
     
     //Collect all areas of interest from the instrument settings
@@ -73,9 +89,16 @@ class CellScene: SKScene {
     //Start of Scene funciton
     override func didMove(to view: SKView) {
         
+        
+        gravityNode = SKFieldNode.radialGravityField()
+        gravityNode.strength = 0.5
+        gravityNode.falloff = 1
+        gravityNode.animationSpeed = 0.5
+        gravityNode.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(gravityNode)
+        
         //At this stage there is a maximum of 4 instruments
         for (index,_) in instrumentXs.enumerated() {
-            
             if index == 0 {
                 instrumentPart0a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart0a)
@@ -94,22 +117,37 @@ class CellScene: SKScene {
             }
         }
         
+        //Field node for attracting instruments
+        
+        
         if debugNumbers {
             let cell = Cell(columns: columns, rows: rows)
             debugGrid(cell: cell)
         }
         
-        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsBody = SKPhysicsBody()
+        
+        
     }
     
-    func setupInstrument(instrumentIndex: Int) -> SKShapeNode{
+    func setupInstrument(instrumentIndex: Int) -> Instrument{
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
+        let instrumentRadius = self.size.width / CGFloat(self.columns + 2)
         
-        let instrument = SKShapeNode(circleOfRadius: self.size.width / CGFloat(self.columns + 1))
-        instrument.position = CGPoint(x: self.instrumentXs[instrumentIndex], y: self.instrumentYs[instrumentIndex])
+        let instrument = Instrument(circleOfRadius: instrumentRadius)
+        instrument.position = CGPoint(
+            x: self.instrumentXs[instrumentIndex],
+            y: self.instrumentYs[instrumentIndex]
+        )
+        instrument.name = skin.image
         instrument.fillColor = skin.color
         instrument.strokeColor = skin.color
+        instrument.glowWidth = 2
+        
+        instrument.physicsBody = SKPhysicsBody(circleOfRadius: instrumentRadius)
+//        instrument.physicsBody?.affectedByGravity = false
+//        instrument.physicsBody?.pinned = true
         
         return instrument
     }
@@ -155,33 +193,32 @@ class CellScene: SKScene {
 //        self.debugNumbers = videoOpacity > 0
         
         //Cello
-        instrumentPart0a.position = CGPoint(
-            x: self.instrumentXs[0],
-            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
-        )
+//        instrumentPart0a.position = CGPoint(
+//            x: self.instrumentXs[0],
+//            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
+//        )
         instrumentPart0a.setScale(CGFloat(instrumentPart0aScale ?? 0))
         
         //Drums
-        instrumentPart1a.position = CGPoint(
-            x: self.instrumentXs[1],
-            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
-        )
+//        instrumentPart1a.position = CGPoint(
+//            x: self.instrumentXs[1],
+//            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
+//        )
         instrumentPart1a.setScale(CGFloat(instrumentPart1aScale ?? 0))
         
         //Bassline
-//        print("MaxIndex Bassline: \(instrumentPart2aMaxIndex) Drums: \(instrumentPart1aMaxIndex)")
-        instrumentPart2a.position = CGPoint(
-            x: self.instrumentXs[2],
-            //
-            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
-        )
+//        instrumentPart2a.position = CGPoint(
+//            x: self.instrumentXs[2],
+//            //
+//            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
+//        )
         instrumentPart2a.setScale(CGFloat(instrumentPart2aScale ?? 0))
         
         //Synth
-        instrumentPart3a.position = CGPoint(
-            x: self.instrumentXs[3],
-            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
-        )
+//        instrumentPart3a.position = CGPoint(
+//            x: self.instrumentXs[3],
+//            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
+//        )
         instrumentPart3a.setScale(CGFloat(instrumentPart3aScale ?? 0))
     }
     

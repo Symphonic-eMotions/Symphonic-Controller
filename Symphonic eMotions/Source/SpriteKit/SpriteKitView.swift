@@ -31,6 +31,8 @@ struct SpriteKitView: View {
         
         scene.size = size
         scene.scaleMode = .fill
+        scene.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        scene.gravityVector = vector_float3(0, -1, 0)
         
         scene.rows = rows
         scene.columns = columns
@@ -44,7 +46,7 @@ struct SpriteKitView: View {
             instrumentAreas: instrumentAreas
         )
         scene.instrumentYs = instrumentYs
-        scene.rememberYs = instrumentYs
+//        scene.rememberYs = instrumentYs
         scene.yStep = size.height / CGFloat(rows)
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
 //        scene.videoOpacity = playViewModel.playViewState.displayOpacity

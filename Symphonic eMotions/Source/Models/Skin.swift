@@ -40,17 +40,20 @@ extension InstrumentsSet.Skin {
         
         private enum SkinInstrumentKeys: String, CodingKey {
             case shape
+            case name
             case image
             case color
         }
             
         var shape: Shape
+        var name: String
         var image: String
         var color: UIColor
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: SkinInstrumentKeys.self)
             shape = try container.decode(Shape.self, forKey: .shape)
+            name = try container.decode(String.self, forKey: .name)
             image = try container.decode(String.self, forKey: .image)
             let colorRaw:[Int] = try container.decode([Int].self, forKey: .color)
             color = UIColor(
@@ -60,8 +63,9 @@ extension InstrumentsSet.Skin {
         }
         
         //Ad Hoc init
-        init(shape: Shape, image: String, color: UIColor){
+        init(shape: Shape, name: String, image: String, color: UIColor){
             self.shape = shape
+            self.name = name
             self.image = image
             self.color = color
         }
