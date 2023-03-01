@@ -34,46 +34,49 @@ struct InstrumentSetting{
     let image:String
 }
 
+class Container: SKNode { }
+
 class Instrument: SKShapeNode { }
 
-class Receiver {
-    
-    var instrumentPart: Instrument!
-    var instrumentPartScale: CGFloat?
-    var instrumentPartMaxIndex: Int = 0
-    var instrumentPartMidiClip: Int = 0
-}
+//class Receiver {
+//
+//    var instrumentPart: Instrument!
+//    var instrumentPartScale: CGFloat?
+//    var instrumentPartMaxIndex: Int = 0
+//    var instrumentPartMidiClip: Int = 0
+//}
 
 class CellScene: SKScene {
     
     var gravityVector: vector_float3!
+    var updateLimiter: Int = 0
     
     var debugNumbers: Bool = false
 //    var videoOpacity: Float = 0
     
-    var receiver: [Receiver] = []
+//    var receiver: [Receiver] = []
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
-    var gravityNode0: SKFieldNode!
-    var instrumentPart0a: Instrument!
+    var instrumentPart0a: Container!
     var instrumentPart0aScale: CGFloat?
     var instrumentPart0aMaxIndex: Int = 0
+    var instrumentPart0aMidiClip: Int = 0
     
-    var gravityNode1: SKFieldNode!
-    var instrumentPart1a: Instrument!
+    var instrumentPart1a: Container!
     var instrumentPart1aScale: CGFloat?
     var instrumentPart1aMaxIndex: Int = 0
+    var instrumentPart1aMidiClip: Int = 0
     
-    var gravityNode2: SKFieldNode!
-    var instrumentPart2a: Instrument!
+    var instrumentPart2a: Container!
     var instrumentPart2aScale: CGFloat?
     var instrumentPart2aMaxIndex: Int = 0
+    var instrumentPart2aMidiClip: Int = 0
     
-    var gravityNode3: SKFieldNode!
-    var instrumentPart3a: Instrument!
+    var instrumentPart3a: Container!
     var instrumentPart3aScale: CGFloat?
     var instrumentPart3aMaxIndex: Int = 0
+    var instrumentPart3aMidiClip: Int = 0
     
     var sessionSkin: InstrumentsSet.Skin!
     
@@ -84,13 +87,14 @@ class CellScene: SKScene {
     var yStep: CGFloat = 0
 //    var rememberYs: [CGFloat] = []
     var instrumentYs: [CGFloat] = []
+    //Keep track of current MidiClip to add or remove particle emitter
+    var rememberMidiClips: [Int] = []
     
     //Collect all areas of interest from the instrument settings
     var instrumentPartAreas: [[[Int]]] = []
     
     //Start of Scene funciton
     override func didMove(to view: SKView) {
-        
         
         //At this stage there is a maximum of 4 instruments
         for (index,_) in instrumentXs.enumerated() {
@@ -133,35 +137,162 @@ class CellScene: SKScene {
         physicsBody = SKPhysicsBody()
     }
     
-    func setupInstrument(instrumentIndex: Int, gravityGroup: UInt32) -> Instrument{
+    func setupInstrument(instrumentIndex: Int, gravityGroup: UInt32) -> Container{
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
-        let instrumentRadius = self.size.width / CGFloat(self.columns + 2)
         
-        let instrument = Instrument(circleOfRadius: instrumentRadius)
-        
-        instrument.position = CGPoint(
+        let container = Container()
+        container.position = CGPoint(
             x: self.instrumentXs[instrumentIndex],
             y: self.instrumentYs[instrumentIndex]
         )
-        instrument.name = skin.image
-        instrument.fillColor = skin.color
+        
+        var instrumentRadius = self.size.width / CGFloat(self.columns + 2)
+        var instrument = Instrument(circleOfRadius: instrumentRadius)
+        instrument.name = "1stChild"
+        instrument.fillColor = .clear
         instrument.strokeColor = skin.color
-        instrument.glowWidth = 2
+        instrument.glowWidth = 5
+        container.addChild(instrument)
         
-        instrument.physicsBody = SKPhysicsBody(circleOfRadius: 1)
-        instrument.physicsBody?.fieldBitMask = gravityGroup
-        instrument.physicsBody?.restitution = 0
-        instrument.physicsBody?.friction = 0
-//        instrument.physicsBody?.affectedByGravity = false
-//        instrument.physicsBody?.pinned = true
+        instrumentRadius = self.size.width / CGFloat(self.columns + 3)
+        instrument = Instrument(circleOfRadius: instrumentRadius)
+        instrument.name = "2ndChild"
+        instrument.fillColor = skin.color
+        instrument.strokeColor = .clear
+        instrument.alpha = 0.8
+//        instrument.glowWidth = 5
+        container.addChild(instrument)
         
-        if let emitter = SKEmitterNode(fileNamed: "MagicParticle"){
-//            emitter.particleColor
-            instrument.addChild(emitter)
+        return container
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        
+        //        let movementSpeed = 0.35
+        var instrumentIndex: Int!
+        var partScale: Double!
+        var position: CGPoint!
+        
+        instrumentIndex = 0
+        if self.instrumentXs.indices.contains(instrumentIndex){
+            //Cello
+            position = CGPoint(
+                x: self.instrumentXs[instrumentIndex],
+                y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
+            )
+            partScale = instrumentPart0aScale ?? 0
+            updateInstrument(
+                container: instrumentPart0a,
+                instrumentIndex: instrumentIndex,
+                partScale: partScale,
+                position: position
+            )
+            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
         }
         
-        return instrument
+        instrumentIndex = 1
+        if self.instrumentXs.indices.contains(instrumentIndex){
+            //Cello
+            position = CGPoint(
+                x: self.instrumentXs[instrumentIndex],
+                y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
+            )
+            partScale = instrumentPart1aScale ?? 0
+            updateInstrument(
+                container: instrumentPart1a,
+                instrumentIndex: instrumentIndex,
+                partScale: partScale,
+                position: position
+            )
+            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+        }
+        
+        instrumentIndex = 2
+        if self.instrumentXs.indices.contains(instrumentIndex){
+            //Cello
+            position = CGPoint(
+                x: self.instrumentXs[instrumentIndex],
+                y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
+            )
+            partScale = instrumentPart2aScale ?? 0
+            updateInstrument(
+                container: instrumentPart2a,
+                instrumentIndex: instrumentIndex,
+                partScale: partScale,
+                position: position
+            )
+            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+        }
+        
+        instrumentIndex = 3
+        if self.instrumentXs.indices.contains(instrumentIndex){
+            //Cello
+            position = CGPoint(
+                x: self.instrumentXs[instrumentIndex],
+                y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
+            )
+            partScale = instrumentPart3aScale ?? 0
+            updateInstrument(
+                container: instrumentPart3a,
+                instrumentIndex: instrumentIndex,
+                partScale: partScale,
+                position: position
+            )
+            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+        }
+        
+        self.updateLimiter += 1
+        if self.updateLimiter > 10 { self.updateLimiter = 0 }
+        
+    }
+    
+    func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void{
+        container.run(SKAction.move(to: position, duration: 0.35))
+        container.childNode(withName: "1stChild")!.setScale(CGFloat(partScale))
+        container.childNode(withName: "2ndChild")!.setScale(CGFloat(partScale*partScale*partScale))
+    }
+    
+    func updateEmitter(instrumentIndex: Int, position: CGPoint, partScale: Double) -> Void {
+        
+        if self.updateLimiter == 0 {
+            
+            if let emitter: SKEmitterNode = SKEmitterNode(fileNamed: "MagicParticle") {
+                
+                let skin = self.sessionSkin.instruments[instrumentIndex]
+                emitter.position = position
+                emitter.particleColorSequence = nil;
+                emitter.particleColorBlendFactor = 1.0;
+                emitter.particleColor = skin.color
+                emitter.alpha = partScale
+                addChild(emitter)
+                
+                let remover = SKAction.sequence([
+                    SKAction.wait(forDuration: 3),
+                    SKAction.removeFromParent()
+                ])
+                emitter.run(remover)
+            }
+        }
+    }
+    
+    func isMidiClipChanged(currrentClip: Int, insrtumentIndex: Int) -> Bool{
+        if currrentClip != self.rememberMidiClips[insrtumentIndex] {
+            self.rememberMidiClips[insrtumentIndex] = currrentClip
+            return true
+        }
+        else {
+            self.rememberMidiClips[insrtumentIndex] = currrentClip
+            return false
+        }
+    }
+    
+    func midiClipToParticle(midiClip: Int) -> Int{
+        let ranges: [Int] = [5,10,25,50]
+        if ranges.indices.contains(midiClip) {
+            return ranges[midiClip]
+        }
+        else { return 0 }
     }
     
     func maxIndexToY(maxIndex: Int) -> CGFloat {
@@ -173,60 +304,25 @@ class CellScene: SKScene {
         return y
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        
-        //Cello
-        var position = CGPoint(
-            x: self.instrumentXs[0],
-            y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
-        )
-        instrumentPart0a.run(SKAction.move(to: position, duration: 0.5))
-        instrumentPart0a.setScale(CGFloat(instrumentPart0aScale ?? 0))
-        
-        //Drums
-        position = CGPoint(
-            x: self.instrumentXs[1],
-            y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
-        )
-        instrumentPart1a.run(SKAction.move(to: position, duration: 0.5))
-        instrumentPart1a.setScale(CGFloat(instrumentPart1aScale ?? 0))
-        
-        //Basslin
-        position = CGPoint(
-            x: self.instrumentXs[2],
-            y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
-        )
-        instrumentPart2a.run(SKAction.move(to: position, duration: 0.5))
-        instrumentPart2a.setScale(CGFloat(instrumentPart2aScale ?? 0))
-        
-        //Synth
-        position = CGPoint(
-            x: self.instrumentXs[3],
-            y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
-        )
-        instrumentPart3a.run(SKAction.move(to: position, duration: 0.5))
-        instrumentPart3a.setScale(CGFloat(instrumentPart3aScale ?? 0))
-    }
-    
-    //Make box on tap, first part of this tutorial
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        
-        let location = touch.location(in: self)
-        
-        let randomInt = Int.random(in: 10...75)
-        
-        let box = SKSpriteNode(color: .green, size: CGSize(width: randomInt, height: randomInt))
-        box.position = location
-        box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: randomInt, height: randomInt))
-        box.physicsBody?.restitution = CGFloat(Float.random(in: 0.2...0.8))
-        addChild(box)
-    }
-    
-    
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
     }
+    
+//    //Make box on tap, first part of this tutorial
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        guard let touch = touches.first else { return }
+//
+//        let location = touch.location(in: self)
+//
+//        let randomInt = Int.random(in: 10...75)
+//
+//        let box = SKSpriteNode(color: .green, size: CGSize(width: randomInt, height: randomInt))
+//        box.position = location
+//        box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: randomInt, height: randomInt))
+//        box.physicsBody?.restitution = CGFloat(Float.random(in: 0.2...0.8))
+//        addChild(box)
+//    }
+    
     
     func debugGrid(cell: Cell) {
         

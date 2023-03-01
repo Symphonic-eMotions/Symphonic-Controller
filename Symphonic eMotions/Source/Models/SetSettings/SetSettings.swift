@@ -110,6 +110,15 @@ class SetSettings: Identifiable {
         return instrumentYs
     }
     
+    func spriteKitMidiClip( instrumentAreas: [[[Int]]] ) -> [Int] {
+        
+        var midiClips: [Int] = []
+        for _ in instrumentAreas {
+            midiClips.append(-1)
+        }
+        return midiClips
+    }
+    
     func getTrackLevels(trackId: String?) -> [Int] {
         
         return self.tracks[trackId!]!.levels

@@ -120,14 +120,14 @@ final class Conductor {
     
     
     //InstrumentParts to SpriteKit through PassthroughSubject
-    var spriteKitParts0a = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts0b = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts1a = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts1b = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts2a = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts2b = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts3a = PassthroughSubject<(Int,Double), Never>()
-    var spriteKitParts3b = PassthroughSubject<(Int,Double), Never>()
+    var spriteKitParts0a = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts0b = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts1a = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts1b = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts2a = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts2b = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts3a = PassthroughSubject<(Int,Int,Double), Never>()
+    var spriteKitParts3b = PassthroughSubject<(Int,Int,Double), Never>()
     
     //The main instrument set structure. A Musical set is loaded into this struct
     private var set: InstrumentsSet
@@ -1386,7 +1386,8 @@ final class Conductor {
                         partNr: partNr,
                         ramped: value,
                         areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
-                        maxIndexRaw: maxIndexraw
+                        maxIndexRaw: maxIndexraw,
+                        maxIndex: maxIndex
                     )
                     
                     partNr += 1
@@ -1487,7 +1488,8 @@ final class Conductor {
         partNr: Int,
         ramped: Double,
         areaOfInterest: [Int],
-        maxIndexRaw: Int
+        maxIndexRaw: Int,
+        maxIndex: Int
     ) -> Void {
         
         let allCells = areaOfInterest.filter { int in
@@ -1498,34 +1500,34 @@ final class Conductor {
         
         if trackNr == 0 {
             if partNr == 0 {
-                spriteKitParts0a.send((reversed,ramped))
+                spriteKitParts0a.send((reversed,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts0b.send((reversed,ramped))
+                spriteKitParts0b.send((reversed,maxIndex,ramped))
             }
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send((reversed,ramped))
+                spriteKitParts1a.send((reversed,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts1b.send((reversed,ramped))
+                spriteKitParts1b.send((reversed,maxIndex,ramped))
             }
         }
         else if trackNr == 2 {
             if partNr == 0 {
-                spriteKitParts2a.send((reversed,ramped))
+                spriteKitParts2a.send((reversed,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts2b.send((reversed,ramped))
+                spriteKitParts2b.send((reversed,maxIndex,ramped))
             }
         }
         else if trackNr == 3 {
             if partNr == 0 {
-                spriteKitParts3a.send((reversed,ramped))
+                spriteKitParts3a.send((reversed,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts3b.send((reversed,ramped))
+                spriteKitParts3b.send((reversed,maxIndex,ramped))
             }
         }
     }

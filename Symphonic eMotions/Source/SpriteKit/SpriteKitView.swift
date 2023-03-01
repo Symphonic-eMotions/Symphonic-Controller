@@ -48,6 +48,8 @@ struct SpriteKitView: View {
         scene.instrumentYs = instrumentYs
 //        scene.rememberYs = instrumentYs
         scene.yStep = size.height / CGFloat(rows)
+        scene.rememberMidiClips = mainViewModel.mainState.setSettings.spriteKitMidiClip(
+            instrumentAreas: instrumentAreas)
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
 //        scene.videoOpacity = playViewModel.playViewState.displayOpacity
         
@@ -87,25 +89,29 @@ struct SpriteKitView: View {
                     .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
                         
                         scene.instrumentPart0aMaxIndex = value.0
-                        scene.instrumentPart0aScale = CGFloat(value.1)
+                        scene.instrumentPart0aMidiClip = value.1
+                        scene.instrumentPart0aScale = CGFloat(value.2)
                     }
                     //Drums
                     .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
                         
                         scene.instrumentPart1aMaxIndex = value.0
-                        scene.instrumentPart1aScale = CGFloat(value.1)
+                        scene.instrumentPart1aMidiClip = value.1
+                        scene.instrumentPart1aScale = CGFloat(value.2)
                     }
                     //Bassline
                     .onReceive(playViewModel.conductor.spriteKitParts2a){ ( value ) in
                         
                         scene.instrumentPart2aMaxIndex = value.0
-                        scene.instrumentPart2aScale = CGFloat(value.1)
+                        scene.instrumentPart2aMidiClip = value.1
+                        scene.instrumentPart2aScale = CGFloat(value.2)
                     }
                     //Synth
                     .onReceive(playViewModel.conductor.spriteKitParts3a){ ( value ) in
                         
                         scene.instrumentPart3aMaxIndex = value.0
-                        scene.instrumentPart3aScale = CGFloat(value.1)
+                        scene.instrumentPart3aMidiClip = value.1
+                        scene.instrumentPart3aScale = CGFloat(value.2)
                     }
                     
                     //Video
