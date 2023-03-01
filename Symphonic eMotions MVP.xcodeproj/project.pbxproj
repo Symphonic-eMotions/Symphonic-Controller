@@ -30,6 +30,8 @@
 		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
+		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
+		7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA929AF4BB9000C5861 /* Assets.xcassets */; };
 		7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C67D15F270F8B83009122BF /* SoundpipeAudioKit */; };
 		7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */; };
 		7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6801B82875A24A00688C2E /* PhaserEffect.swift */; };
@@ -137,6 +139,8 @@
 		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
+		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
+		7C645CA929AF4BB9000C5861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostelloReverbEffect.swift; sourceTree = "<group>"; };
 		7C6801B82875A24A00688C2E /* PhaserEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaserEffect.swift; sourceTree = "<group>"; };
 		7C69ED39295350750009F382 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
 				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
 				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
+				7C645CA829AF4BB9000C5861 /* MagicParticle.sks */,
+				7C645CA929AF4BB9000C5861 /* Assets.xcassets */,
 			);
 			path = SpriteKit;
 			sourceTree = "<group>";
@@ -655,7 +661,9 @@
 				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C0AFDD0D2705F425006EF64F /* Sounds in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
+				7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
+				7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */,
 				7C3CD115296D952A00A4C522 /* effects.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

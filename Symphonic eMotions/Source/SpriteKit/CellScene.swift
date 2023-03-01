@@ -36,12 +36,22 @@ struct InstrumentSetting{
 
 class Instrument: SKShapeNode { }
 
+class Receiver {
+    
+    var instrumentPart: Instrument!
+    var instrumentPartScale: CGFloat?
+    var instrumentPartMaxIndex: Int = 0
+    var instrumentPartMidiClip: Int = 0
+}
+
 class CellScene: SKScene {
     
     var gravityVector: vector_float3!
     
     var debugNumbers: Bool = false
 //    var videoOpacity: Float = 0
+    
+    var receiver: [Receiver] = []
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
@@ -85,11 +95,6 @@ class CellScene: SKScene {
         //At this stage there is a maximum of 4 instruments
         for (index,_) in instrumentXs.enumerated() {
             if index == 0 {
-//                gravityNode0 = setupGravityNode(
-//                    instrumentIndex: index,
-//                    gravityGroup: 0x1 << 0
-//                )
-//                addChild(gravityNode0)
                 instrumentPart0a = setupInstrument(
                     instrumentIndex: index,
                     gravityGroup: 0x1 << 0
@@ -97,11 +102,6 @@ class CellScene: SKScene {
                 addChild(instrumentPart0a)
             }
             else if index == 1 {
-//                gravityNode1 = setupGravityNode(
-//                    instrumentIndex: index,
-//                    gravityGroup: 0x1 << 1
-//                )
-//                addChild(gravityNode1)
                 instrumentPart1a = setupInstrument(
                     instrumentIndex: index,
                     gravityGroup: 0x1 << 1
@@ -109,11 +109,6 @@ class CellScene: SKScene {
                 addChild(instrumentPart1a)
             }
             else if index == 2 {
-//                gravityNode2 = setupGravityNode(
-//                    instrumentIndex: index,
-//                    gravityGroup: 0x1 << 2
-//                )
-//                addChild(gravityNode2)
                 instrumentPart2a = setupInstrument(
                     instrumentIndex: index,
                     gravityGroup: 0x1 << 2
@@ -121,11 +116,6 @@ class CellScene: SKScene {
                 addChild(instrumentPart2a)
             }
             else if index == 3 {
-//                gravityNode3 = setupGravityNode(
-//                    instrumentIndex: index,
-//                    gravityGroup: 0x1 << 3
-//                )
-//                addChild(gravityNode3)
                 instrumentPart3a = setupInstrument(
                     instrumentIndex: index,
                     gravityGroup: 0x1 << 3
@@ -142,29 +132,6 @@ class CellScene: SKScene {
         
         physicsBody = SKPhysicsBody()
     }
-    
-//    func setupGravityNode(instrumentIndex: Int, gravityGroup: UInt32) -> SKFieldNode{
-//
-//        let skin = self.sessionSkin.instruments[instrumentIndex]
-//
-//        let gravityNode = SKFieldNode.radialGravityField()
-//        gravityNode.strength = 0
-////        gravityNode.physicsBody?.charge = 30
-//        gravityNode.falloff = 0.5
-//        gravityNode.region = SKRegion(radius: Float(size.width))
-////        gravityNode.animationSpeed = 0.5
-//
-//        gravityNode.position = CGPoint(
-//            x: self.instrumentXs[instrumentIndex],
-//            y: self.instrumentYs[instrumentIndex] + 200
-//        )
-//        gravityNode.physicsBody?.fieldBitMask = gravityGroup
-//
-//        let box = SKSpriteNode(color: skin.color, size: CGSize(width: 50, height: 50))
-//        gravityNode.addChild(box)
-//
-//        return gravityNode
-//    }
     
     func setupInstrument(instrumentIndex: Int, gravityGroup: UInt32) -> Instrument{
         
@@ -188,6 +155,11 @@ class CellScene: SKScene {
         instrument.physicsBody?.friction = 0
 //        instrument.physicsBody?.affectedByGravity = false
 //        instrument.physicsBody?.pinned = true
+        
+        if let emitter = SKEmitterNode(fileNamed: "MagicParticle"){
+//            emitter.particleColor
+            instrument.addChild(emitter)
+        }
         
         return instrument
     }
