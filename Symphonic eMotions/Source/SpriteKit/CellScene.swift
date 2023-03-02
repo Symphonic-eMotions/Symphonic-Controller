@@ -49,7 +49,7 @@ class Instrument: SKShapeNode { }
 class CellScene: SKScene {
     
     var gravityVector: vector_float3!
-    var updateLimiter: Int = 0
+    var updateLimiter: [Int]!
     
     var debugNumbers: Bool = false
 //    var videoOpacity: Float = 0
@@ -88,7 +88,7 @@ class CellScene: SKScene {
 //    var rememberYs: [CGFloat] = []
     var instrumentYs: [CGFloat] = []
     //Keep track of current MidiClip to add or remove particle emitter
-    var rememberMidiClips: [Int] = []
+//    var rememberMidiClips: [Int] = []
     
     //Collect all areas of interest from the instrument settings
     var instrumentPartAreas: [[[Int]]] = []
@@ -100,29 +100,25 @@ class CellScene: SKScene {
         for (index,_) in instrumentXs.enumerated() {
             if index == 0 {
                 instrumentPart0a = setupInstrument(
-                    instrumentIndex: index,
-                    gravityGroup: 0x1 << 0
+                    instrumentIndex: index
                 )
                 addChild(instrumentPart0a)
             }
             else if index == 1 {
                 instrumentPart1a = setupInstrument(
-                    instrumentIndex: index,
-                    gravityGroup: 0x1 << 1
+                    instrumentIndex: index
                 )
                 addChild(instrumentPart1a)
             }
             else if index == 2 {
                 instrumentPart2a = setupInstrument(
-                    instrumentIndex: index,
-                    gravityGroup: 0x1 << 2
+                    instrumentIndex: index
                 )
                 addChild(instrumentPart2a)
             }
             else if index == 3 {
                 instrumentPart3a = setupInstrument(
-                    instrumentIndex: index,
-                    gravityGroup: 0x1 << 3
+                    instrumentIndex: index
                 )
                 addChild(instrumentPart3a)
             }
@@ -137,7 +133,9 @@ class CellScene: SKScene {
         physicsBody = SKPhysicsBody()
     }
     
-    func setupInstrument(instrumentIndex: Int, gravityGroup: UInt32) -> Container{
+    func setupInstrument(instrumentIndex: Int) -> Container{
+        
+        updateLimiter[instrumentIndex] = 0
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
         
@@ -147,20 +145,21 @@ class CellScene: SKScene {
             y: self.instrumentYs[instrumentIndex]
         )
         
-        var instrumentRadius = self.size.width / CGFloat(self.columns + 2)
+        var instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         var instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "1stChild"
         instrument.fillColor = .clear
         instrument.strokeColor = skin.color
         instrument.glowWidth = 5
+        instrument.alpha = 0.5
         container.addChild(instrument)
         
-        instrumentRadius = self.size.width / CGFloat(self.columns + 3)
+        instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "2ndChild"
         instrument.fillColor = skin.color
         instrument.strokeColor = .clear
-        instrument.alpha = 0.8
+        instrument.alpha = 0.4
 //        instrument.glowWidth = 5
         container.addChild(instrument)
         
@@ -188,7 +187,12 @@ class CellScene: SKScene {
                 partScale: partScale,
                 position: position
             )
-            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+            updateEmitter(
+                instrumentIndex: instrumentIndex,
+                position: position,
+                partScale: partScale,
+                midiClip: instrumentPart0aMidiClip
+            )
         }
         
         instrumentIndex = 1
@@ -205,7 +209,12 @@ class CellScene: SKScene {
                 partScale: partScale,
                 position: position
             )
-            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+            updateEmitter(
+                instrumentIndex: instrumentIndex,
+                position: position,
+                partScale: partScale,
+                midiClip: instrumentPart1aMidiClip
+            )
         }
         
         instrumentIndex = 2
@@ -222,7 +231,12 @@ class CellScene: SKScene {
                 partScale: partScale,
                 position: position
             )
-            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+            updateEmitter(
+                instrumentIndex: instrumentIndex,
+                position: position,
+                partScale: partScale,
+                midiClip: instrumentPart2aMidiClip
+            )
         }
         
         instrumentIndex = 3
@@ -239,23 +253,26 @@ class CellScene: SKScene {
                 partScale: partScale,
                 position: position
             )
-            updateEmitter(instrumentIndex: instrumentIndex, position: position, partScale: partScale)
+            updateEmitter(
+                instrumentIndex: instrumentIndex,
+                position: position,
+                partScale: partScale,
+                midiClip: instrumentPart3aMidiClip
+            )
         }
-        
-        self.updateLimiter += 1
-        if self.updateLimiter > 10 { self.updateLimiter = 0 }
-        
     }
     
-    func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void{
+    func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void {
+        //Maybe connect duration to rampUp value?
         container.run(SKAction.move(to: position, duration: 0.35))
         container.childNode(withName: "1stChild")!.setScale(CGFloat(partScale))
         container.childNode(withName: "2ndChild")!.setScale(CGFloat(partScale*partScale*partScale))
     }
     
-    func updateEmitter(instrumentIndex: Int, position: CGPoint, partScale: Double) -> Void {
+    func updateEmitter(instrumentIndex: Int, position: CGPoint, partScale: Double, midiClip: Int) -> Void {
         
-        if self.updateLimiter == 0 {
+        //Manual modulo fps limiter
+        if self.updateLimiter[instrumentIndex] == 0 {
             
             if let emitter: SKEmitterNode = SKEmitterNode(fileNamed: "MagicParticle") {
                 
@@ -274,21 +291,17 @@ class CellScene: SKScene {
                 emitter.run(remover)
             }
         }
-    }
-    
-    func isMidiClipChanged(currrentClip: Int, insrtumentIndex: Int) -> Bool{
-        if currrentClip != self.rememberMidiClips[insrtumentIndex] {
-            self.rememberMidiClips[insrtumentIndex] = currrentClip
-            return true
-        }
-        else {
-            self.rememberMidiClips[insrtumentIndex] = currrentClip
-            return false
+        
+        self.updateLimiter[instrumentIndex] += 1
+        //Higher MIDI clip index gets lower modulo (more fps)
+        if self.updateLimiter[instrumentIndex] >= midiClipToParticle(midiClip: midiClip) {
+            self.updateLimiter[instrumentIndex] = 0
         }
     }
     
     func midiClipToParticle(midiClip: Int) -> Int{
-        let ranges: [Int] = [5,10,25,50]
+        //Higher number are LESS update (updateLimiter)
+        let ranges: [Int] = [10,5,2,1]
         if ranges.indices.contains(midiClip) {
             return ranges[midiClip]
         }
@@ -307,6 +320,18 @@ class CellScene: SKScene {
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
     }
+    
+    
+//    func isMidiClipChanged(currrentClip: Int, insrtumentIndex: Int) -> Bool{
+//        if currrentClip != self.rememberMidiClips[insrtumentIndex] {
+//            self.rememberMidiClips[insrtumentIndex] = currrentClip
+//            return true
+//        }
+//        else {
+//            self.rememberMidiClips[insrtumentIndex] = currrentClip
+//            return false
+//        }
+//    }
     
 //    //Make box on tap, first part of this tutorial
 //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

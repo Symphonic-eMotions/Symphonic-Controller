@@ -102,7 +102,6 @@ class SetSettings: Identifiable {
     }
     
     func spriteKitInstrumentYs( instrumentAreas: [[[Int]]] ) -> [CGFloat] {
-            
         var instrumentYs: [CGFloat] = []
         for _ in instrumentAreas {
             instrumentYs.append(200)
@@ -110,8 +109,7 @@ class SetSettings: Identifiable {
         return instrumentYs
     }
     
-    func spriteKitMidiClip( instrumentAreas: [[[Int]]] ) -> [Int] {
-        
+    func updateLimiter( instrumentAreas: [[[Int]]] ) -> [Int] {
         var midiClips: [Int] = []
         for _ in instrumentAreas {
             midiClips.append(-1)

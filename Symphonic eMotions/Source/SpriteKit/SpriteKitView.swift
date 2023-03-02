@@ -48,8 +48,9 @@ struct SpriteKitView: View {
         scene.instrumentYs = instrumentYs
 //        scene.rememberYs = instrumentYs
         scene.yStep = size.height / CGFloat(rows)
-        scene.rememberMidiClips = mainViewModel.mainState.setSettings.spriteKitMidiClip(
-            instrumentAreas: instrumentAreas)
+        scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(
+            instrumentAreas: instrumentAreas
+        )
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
 //        scene.videoOpacity = playViewModel.playViewState.displayOpacity
         
