@@ -38,6 +38,8 @@ class Container: SKNode { }
 
 class Instrument: SKShapeNode { }
 
+class ImageInstrument: SKSpriteNode { }
+
 //class Receiver {
 //
 //    var instrumentPart: Instrument!
@@ -53,7 +55,6 @@ class CellScene: SKScene {
     
     var debugNumbers: Bool = false
 //    var videoOpacity: Float = 0
-    
 //    var receiver: [Receiver] = []
     
     //GameScene globals to change through update
@@ -124,7 +125,6 @@ class CellScene: SKScene {
             }
         }
 
-        
         if debugNumbers {
             let cell = Cell(columns: columns, rows: rows)
             debugGrid(cell: cell)
@@ -160,15 +160,17 @@ class CellScene: SKScene {
         instrument.fillColor = skin.color
         instrument.strokeColor = .clear
         instrument.alpha = 0.4
-//        instrument.glowWidth = 5
         container.addChild(instrument)
+        
+        let image = ImageInstrument(imageNamed: skin.image)
+        image.name = "image"
+        container.addChild(image)
         
         return container
     }
 
     override func update(_ currentTime: TimeInterval) {
         
-        //        let movementSpeed = 0.35
         var instrumentIndex: Int!
         var partScale: Double!
         var position: CGPoint!
@@ -265,8 +267,12 @@ class CellScene: SKScene {
     func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void {
         //Maybe connect duration to rampUp value?
         container.run(SKAction.move(to: position, duration: 0.35))
+        //Stroke circle
         container.childNode(withName: "1stChild")!.setScale(CGFloat(partScale))
-        container.childNode(withName: "2ndChild")!.setScale(CGFloat(partScale*partScale*partScale))
+        //Solid circle
+        container.childNode(withName: "2ndChild")!.setScale(CGFloat(partScale*partScale*partScale*0.7))
+        //Image
+        container.childNode(withName: "image")!.setScale(CGFloat(partScale*partScale*partScale*partScale*2.5))
     }
     
     func updateEmitter(instrumentIndex: Int, position: CGPoint, partScale: Double, midiClip: Int) -> Void {
