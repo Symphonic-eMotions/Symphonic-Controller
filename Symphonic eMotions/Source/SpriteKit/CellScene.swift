@@ -7,7 +7,7 @@
 import SpriteKit
 import SwiftUI
 
-struct Cell {
+struct DebugCell {
     
     let columns:Int
     let rows:Int
@@ -25,7 +25,6 @@ struct Cell {
         self.centerHeigth = self.celHeight/2
     }
 }
-
 
 struct InstrumentSetting{
     let name:String
@@ -48,13 +47,28 @@ class ImageInstrument: SKSpriteNode { }
 //    var instrumentPartMidiClip: Int = 0
 //}
 
+
+/*
+ 
+ Stappenplan
+ √ MoveTo ipv Y-Step naar X-Y Locatie
+ √ - Elk instrument moet een x en y collectie krijgen gebasseerd op indexes
+ - Background voor actieve cellen
+ - - background strokes
+ - Adaptive colors from settings
+ - - Negative instrument active stroke activator
+ - - Stroke invisible on connectd cell
+ - Waarom heeft Upbeat Acid gespiegelde X-as
+ -
+ 
+ */
+
 class CellScene: SKScene {
     
     var gravityVector: vector_float3!
     var updateLimiter: [Int]!
     
-    var debugNumbers: Bool = false
-//    var videoOpacity: Float = 0
+    var debugNumbers: Bool = true
 //    var receiver: [Receiver] = []
     
     //GameScene globals to change through update
@@ -84,10 +98,19 @@ class CellScene: SKScene {
     var columns: Int = 0
     var rows: Int = 0
     
-    var instrumentXs: [CGFloat] = []
-    var yStep: CGFloat = 0
-//    var rememberYs: [CGFloat] = []
-    var instrumentYs: [CGFloat] = []
+    var instrument0Xs: [CGFloat] = []
+    var instrument0Ys: [CGFloat] = []
+    
+    var instrument1Xs: [CGFloat] = []
+    var instrument1Ys: [CGFloat] = []
+    
+    var instrument2Xs: [CGFloat] = []
+    var instrument2Ys: [CGFloat] = []
+    
+    var instrument3Xs: [CGFloat] = []
+    var instrument3Ys: [CGFloat] = []
+    
+    
     //Keep track of current MidiClip to add or remove particle emitter
 //    var rememberMidiClips: [Int] = []
     
@@ -98,7 +121,7 @@ class CellScene: SKScene {
     override func didMove(to view: SKView) {
         
         //At this stage there is a maximum of 4 instruments
-        for (index,_) in instrumentXs.enumerated() {
+        for index in [0,1,2,3] {
             if index == 0 {
                 instrumentPart0a = setupInstrument(
                     instrumentIndex: index
@@ -126,7 +149,7 @@ class CellScene: SKScene {
         }
 
         if debugNumbers {
-            let cell = Cell(columns: columns, rows: rows)
+            let cell = DebugCell(columns: columns, rows: rows)
             debugGrid(cell: cell)
         }
         
@@ -140,9 +163,32 @@ class CellScene: SKScene {
         let skin = self.sessionSkin.instruments[instrumentIndex]
         
         let container = Container()
+        
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        
+        if instrumentIndex == 0 {
+            x = self.instrument0Xs.first ?? 0
+            y = self.instrument0Ys.first ?? 0
+        }
+        else if instrumentIndex == 1 {
+            x = self.instrument1Xs.first ?? 0
+            y = self.instrument1Ys.first ?? 0
+        }
+        else if instrumentIndex == 2 {
+            x = self.instrument2Xs.first ?? 0
+            y = self.instrument2Ys.first ?? 0
+        }
+        else if instrumentIndex == 3 {
+            x = self.instrument3Xs.first ?? 0
+            y = self.instrument3Ys.first ?? 0
+        }
+        
+        print("instrumentIndex: \(instrumentIndex) x: \(x) y: \(y)")
+        
         container.position = CGPoint(
-            x: self.instrumentXs[instrumentIndex],
-            y: self.instrumentYs[instrumentIndex]
+            x: x,
+            y: y
         )
         
         var instrumentRadius = self.size.width / CGFloat(self.columns + 4)
@@ -176,11 +222,16 @@ class CellScene: SKScene {
         var position: CGPoint!
         
         instrumentIndex = 0
-        if self.instrumentXs.indices.contains(instrumentIndex){
+        if self.instrument0Xs.indices.contains(instrumentPart0aMaxIndex){
             //Cello
+            
+            print("Cello maxIndex \(instrumentPart0aMaxIndex)")
+            print(self.instrument0Xs)
+            print(self.instrument0Ys)
+            
             position = CGPoint(
-                x: self.instrumentXs[instrumentIndex],
-                y: maxIndexToY(maxIndex: instrumentPart0aMaxIndex)
+                x: self.instrument0Xs[instrumentPart0aMaxIndex],
+                y: self.instrument0Ys[instrumentPart0aMaxIndex]
             )
             partScale = instrumentPart0aScale ?? 0
             updateInstrument(
@@ -198,11 +249,11 @@ class CellScene: SKScene {
         }
         
         instrumentIndex = 1
-        if self.instrumentXs.indices.contains(instrumentIndex){
+        if self.instrument1Xs.indices.contains(instrumentPart1aMaxIndex){
             //Cello
             position = CGPoint(
-                x: self.instrumentXs[instrumentIndex],
-                y: maxIndexToY(maxIndex: instrumentPart1aMaxIndex)
+                x: self.instrument1Xs[instrumentPart1aMaxIndex],
+                y: self.instrument1Ys[instrumentPart1aMaxIndex]
             )
             partScale = instrumentPart1aScale ?? 0
             updateInstrument(
@@ -220,11 +271,11 @@ class CellScene: SKScene {
         }
         
         instrumentIndex = 2
-        if self.instrumentXs.indices.contains(instrumentIndex){
+        if self.instrument2Xs.indices.contains(instrumentPart2aMaxIndex){
             //Cello
             position = CGPoint(
-                x: self.instrumentXs[instrumentIndex],
-                y: maxIndexToY(maxIndex: instrumentPart2aMaxIndex)
+                x: self.instrument2Xs[instrumentPart2aMaxIndex],
+                y: self.instrument2Ys[instrumentPart2aMaxIndex]
             )
             partScale = instrumentPart2aScale ?? 0
             updateInstrument(
@@ -242,11 +293,11 @@ class CellScene: SKScene {
         }
         
         instrumentIndex = 3
-        if self.instrumentXs.indices.contains(instrumentIndex){
+        if self.instrument3Xs.indices.contains(instrumentPart3aMaxIndex){
             //Cello
             position = CGPoint(
-                x: self.instrumentXs[instrumentIndex],
-                y: maxIndexToY(maxIndex: instrumentPart3aMaxIndex)
+                x: self.instrument3Xs[instrumentPart3aMaxIndex],
+                y: self.instrument3Ys[instrumentPart3aMaxIndex]
             )
             partScale = instrumentPart3aScale ?? 0
             updateInstrument(
@@ -265,6 +316,7 @@ class CellScene: SKScene {
     }
     
     func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void {
+        
         //Maybe connect duration to rampUp value?
         container.run(SKAction.move(to: position, duration: 0.35))
         //Stroke circle
@@ -314,14 +366,6 @@ class CellScene: SKScene {
         else { return 0 }
     }
     
-    func maxIndexToY(maxIndex: Int) -> CGFloat {
-        
-        var y: CGFloat = -100
-        
-        y += CGFloat(maxIndex) * self.yStep
-        
-        return y
-    }
     
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
@@ -355,7 +399,7 @@ class CellScene: SKScene {
 //    }
     
     
-    func debugGrid(cell: Cell) {
+    func debugGrid(cell: DebugCell) {
         
         var index: Int = 0
         

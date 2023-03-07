@@ -14,7 +14,7 @@ struct PlayViewState {
     var currentLevel: Double = 0.0 //Leveling
     var values: [[AreaValues]] = []
     var displayMode: DisplayModes = .both
-    var displayOpacity: Float = 0.0
+    var displayOpacity: Float = 0.12
     var buildSettings: BuildSettings
     var masterTrackStructure: [MasterTrackEffect]?
     var updateEditView: Int = 0

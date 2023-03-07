@@ -1479,9 +1479,9 @@ final class Conductor {
         forwardRampedPartFeedback.send(ramped)
     }
     
-    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
-        return (max + min) - number
-    }
+//    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
+//        return (max + min) - number
+//    }
     
     public func forwardSpriteKit(
         trackNr: Int,
@@ -1492,42 +1492,42 @@ final class Conductor {
         maxIndex: Int
     ) -> Void {
         
-        let allCells = areaOfInterest.filter { int in
-            return int == 1
-        }
+//        let allCells = areaOfInterest.filter { int in
+//            return int == 1
+//        }
         //Reverse maxIndexes for inverted Y axis in SpriteKit
-        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count)
+//        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
         
         if trackNr == 0 {
             if partNr == 0 {
-                spriteKitParts0a.send((reversed,maxIndex,ramped))
+                spriteKitParts0a.send((maxIndexRaw,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts0b.send((reversed,maxIndex,ramped))
+                spriteKitParts0b.send((maxIndexRaw,maxIndex,ramped))
             }
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send((reversed,maxIndex,ramped))
+                spriteKitParts1a.send((maxIndexRaw,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts1b.send((reversed,maxIndex,ramped))
+                spriteKitParts1b.send((maxIndexRaw,maxIndex,ramped))
             }
         }
         else if trackNr == 2 {
             if partNr == 0 {
-                spriteKitParts2a.send((reversed,maxIndex,ramped))
+                spriteKitParts2a.send((maxIndexRaw,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts2b.send((reversed,maxIndex,ramped))
+                spriteKitParts2b.send((maxIndexRaw,maxIndex,ramped))
             }
         }
         else if trackNr == 3 {
             if partNr == 0 {
-                spriteKitParts3a.send((reversed,maxIndex,ramped))
+                spriteKitParts3a.send((maxIndexRaw,maxIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts3b.send((reversed,maxIndex,ramped))
+                spriteKitParts3b.send((maxIndexRaw,maxIndex,ramped))
             }
         }
     }

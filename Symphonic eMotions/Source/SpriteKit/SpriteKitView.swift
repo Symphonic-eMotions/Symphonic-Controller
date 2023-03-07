@@ -29,6 +29,7 @@ struct SpriteKitView: View {
         let rows = mainViewModel.mainState.setSettings.gridRows
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         
+        scene.backgroundColor = .clear
         scene.size = size
         scene.scaleMode = .fill
         scene.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -37,22 +38,49 @@ struct SpriteKitView: View {
         scene.rows = rows
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
-        scene.instrumentXs = mainViewModel.mainState.setSettings.spriteKitInstrumentXs(
+        
+        var instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+            instrumentIndex: 0,
             instrumentAreas: instrumentAreas,
             size: size,
-            columns: columns
+            columns: columns,
+            rows: rows
         )
-        let instrumentYs = mainViewModel.mainState.setSettings.spriteKitInstrumentYs(
-            instrumentAreas: instrumentAreas
+        scene.instrument0Xs = instrumentXYs.0
+        scene.instrument0Ys = instrumentXYs.1
+        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+            instrumentIndex: 1,
+            instrumentAreas: instrumentAreas,
+            size: size,
+            columns: columns,
+            rows: rows
         )
-        scene.instrumentYs = instrumentYs
-//        scene.rememberYs = instrumentYs
-        scene.yStep = size.height / CGFloat(rows)
+        scene.instrument1Xs = instrumentXYs.0
+        scene.instrument1Ys = instrumentXYs.1
+        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+            instrumentIndex: 2,
+            instrumentAreas: instrumentAreas,
+            size: size,
+            columns: columns,
+            rows: rows
+        )
+        scene.instrument2Xs = instrumentXYs.0
+        scene.instrument2Ys = instrumentXYs.1
+        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+            instrumentIndex: 3,
+            instrumentAreas: instrumentAreas,
+            size: size,
+            columns: columns,
+            rows: rows
+        )
+        scene.instrument3Xs = instrumentXYs.0
+        scene.instrument3Ys = instrumentXYs.1
+        
+        
         scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(
             instrumentAreas: instrumentAreas
         )
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
-//        scene.videoOpacity = playViewModel.playViewState.displayOpacity
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
@@ -80,20 +108,32 @@ struct SpriteKitView: View {
                     transportHeigth: transportHeigth
                 )
                 ZStack{
+                    
+                    //Video
+                    VideoPreviewViewRepresetable(
+                        playViewModel: playViewModel
+                    )
+                    .aspectRatio(1.666666, contentMode: .fit)
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                    .cornerRadius(10.0)
+                    .opacity( Double(playViewModel.playViewState.displayOpacity) )
+                    
+                    
+                    //The SpriteKit interface
                     SpriteView(
                         scene: scene,
                         options: [.allowsTransparency]
                     )
                     .frame(width: width, height: height - transportHeigth - 10)
                     .ignoresSafeArea()
-                    //Cello
+                    //First configured instrument (GO Cello)
                     .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
                         
                         scene.instrumentPart0aMaxIndex = value.0
                         scene.instrumentPart0aMidiClip = value.1
                         scene.instrumentPart0aScale = CGFloat(value.2)
                     }
-                    //Drums
+                    //Second configured instrument (GO Drums)
                     .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
                         
                         scene.instrumentPart1aMaxIndex = value.0
@@ -115,14 +155,7 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
                     
-                    //Video
-                    VideoPreviewViewRepresetable(
-                        playViewModel: playViewModel
-                    )
-                    .aspectRatio(1.666666, contentMode: .fit)
-                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                    .cornerRadius(10.0)
-                    .opacity( Double(playViewModel.playViewState.displayOpacity) )
+                    
                 }
             }
         }

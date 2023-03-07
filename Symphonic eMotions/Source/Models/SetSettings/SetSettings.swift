@@ -82,32 +82,93 @@ class SetSettings: Identifiable {
         return instruments
     }
     
-    //Calculate column x-axis center fo
-    func spriteKitInstrumentXs(
+    //Calculateactice cell borders
+    
+    
+    //Calculate x- and y-axis center points
+    func spriteKitInstrumentXYs(
+        instrumentIndex: Int,
         instrumentAreas: [[[Int]]],
         size: CGSize,
-        columns: Int) -> [CGFloat] {
+        columns: Int,
+        rows: Int
+    ) -> ([CGFloat],[CGFloat]) {
         
+        let cellWidth:CGFloat = size.width/CGFloat(columns)
+        let cellHeight:CGFloat = size.height/CGFloat(rows)
+        let centerWidth:CGFloat = cellWidth/2
+        let centerHeight:CGFloat = cellHeight/2
+        
+        //We want ALL instrumentXs stored in here
         var instrumentXs: [CGFloat] = []
-        for instrument in instrumentAreas {
-            //Do this only for first part, other parts inherit x-axis value
-            let partAreas = instrument[0]
-            let firstIndex = partAreas.firstIndex(of: 1) ?? 0
-            let instrumentColumn = firstIndex % columns
-            let columnWidth:CGFloat = size.width / CGFloat(columns)
-            let x = CGFloat(instrumentColumn) * columnWidth + columnWidth / 2
-            instrumentXs.append(x)
+        var instrumentYs: [CGFloat] = []
+        
+        //For now, Combine parts within each other
+        //Imitialize with first part of current instrument
+        var combinedParts: [Int] = instrumentAreas[instrumentIndex][0]
+        
+        //Loop through all parts to add aditional values found in other parts
+        for partArea in instrumentAreas[instrumentIndex] {
+            for (index, value) in partArea.enumerated() {
+                if value == 1 {
+                    combinedParts[index] = 1
+                }
+            }
         }
-        return instrumentXs
+    
+        var index: Int = 0
+        for row in 0..<rows {
+            
+            for column in 0..<columns {
+                
+                //Calculatie centerpoint of this cell
+                if combinedParts[index] == 1 {
+                    let x = CGFloat(column) * cellWidth + centerWidth
+                    instrumentXs.append(x)
+                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
+                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
+                    instrumentYs.append(y)
+                }
+                
+                index += 1
+            }
+        }
+        
+        print("instrumentYs \(instrumentIndex) \(instrumentYs)")
+        
+        return (instrumentXs,instrumentYs)
     }
     
-    func spriteKitInstrumentYs( instrumentAreas: [[[Int]]] ) -> [CGFloat] {
-        var instrumentYs: [CGFloat] = []
-        for _ in instrumentAreas {
-            instrumentYs.append(200)
-        }
-        return instrumentYs
+    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
+        return (max + min) - number
     }
+    
+//    func spriteKitInstrumentYs(
+//        instrumentAreas: [[[Int]]],
+//        size: CGSize,
+//        rows: Int) -> [CGFloat] {
+//
+//            var instrumentYs: [CGFloat] = []
+//
+//            for instrument in instrumentAreas {
+//                //Do this only for first part, other parts inherit x-axis value
+//                let partAreas = instrument[0]
+//
+////            let firstIndex = partAreas.firstIndex(of: 1) ?? 0
+////            let instrumentColumn = firstIndex % columns
+////            let columnWidth:CGFloat = size.width / CGFloat(columns)
+////            let x = CGFloat(instrumentColumn) * columnWidth + columnWidth / 2
+////            instrumentXs.append(x)
+//            }
+//        }
+    
+//    func spriteKitInstrumentYsStatic( instrumentAreas: [[[Int]]] ) -> [CGFloat] {
+//        var instrumentYs: [CGFloat] = []
+//        for _ in instrumentAreas {
+//            instrumentYs.append(200)
+//        }
+//        return instrumentYs
+//    }
     
     func updateLimiter( instrumentAreas: [[[Int]]] ) -> [Int] {
         var midiClips: [Int] = []
