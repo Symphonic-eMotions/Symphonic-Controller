@@ -38,41 +38,45 @@ struct SpriteKitView: View {
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
         
-        var instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
+        var instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
             instrumentIndex: 0,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument0Positions = instrumentPositions
+        scene.instrument0Positions = instruments.0
+        scene.instrument0Sizes = instruments.1
         
-        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
+        instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
             instrumentIndex: 1,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument1Positions = instrumentPositions
+        scene.instrument1Positions = instruments.0
+        scene.instrument1Sizes = instruments.1
         
-        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
+        instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
             instrumentIndex: 2,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument2Positions = instrumentPositions
+        scene.instrument2Positions = instruments.0
+        scene.instrument2Sizes = instruments.1
         
-        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
+        instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
             instrumentIndex: 3,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument3Positions = instrumentPositions
+        scene.instrument3Positions = instruments.0
+        scene.instrument3Sizes = instruments.1
         
         
         scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(

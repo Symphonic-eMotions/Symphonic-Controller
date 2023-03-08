@@ -33,6 +33,8 @@ struct InstrumentSetting{
     let image:String
 }
 
+class Background: SKShapeNode { }
+
 class Container: SKNode { }
 
 class Instrument: SKShapeNode { }
@@ -78,24 +80,28 @@ class CellScene: SKScene {
     var instrumentPart0aMaxIndex: Int = 0
     var instrumentPart0aMidiClip: Int = 0
     var instrument0Positions: [CGPoint] = []
+    var instrument0Sizes: [CGSize] = []
     
     var instrumentPart1a: Container!
     var instrumentPart1aScale: CGFloat?
     var instrumentPart1aMaxIndex: Int = 0
     var instrumentPart1aMidiClip: Int = 0
     var instrument1Positions: [CGPoint] = []
+    var instrument1Sizes: [CGSize] = []
     
     var instrumentPart2a: Container!
     var instrumentPart2aScale: CGFloat?
     var instrumentPart2aMaxIndex: Int = 0
     var instrumentPart2aMidiClip: Int = 0
     var instrument2Positions: [CGPoint] = []
+    var instrument2Sizes: [CGSize] = []
     
     var instrumentPart3a: Container!
     var instrumentPart3aScale: CGFloat?
     var instrumentPart3aMaxIndex: Int = 0
     var instrumentPart3aMidiClip: Int = 0
     var instrument3Positions: [CGPoint] = []
+    var instrument3Sizes: [CGSize] = []
     
     var sessionSkin: InstrumentsSet.Skin!
     
@@ -111,24 +117,28 @@ class CellScene: SKScene {
         //At this stage there is a maximum of 4 instruments
         for index in [0,1,2,3] {
             if index == 0 {
+                setUpBackgrounds(instrumentIndex: index)
                 instrumentPart0a = setupInstrument(
                     instrumentIndex: index
                 )
                 addChild(instrumentPart0a)
             }
             else if index == 1 {
+                setUpBackgrounds(instrumentIndex: index)
                 instrumentPart1a = setupInstrument(
                     instrumentIndex: index
                 )
                 addChild(instrumentPart1a)
             }
             else if index == 2 {
+                setUpBackgrounds(instrumentIndex: index)
                 instrumentPart2a = setupInstrument(
                     instrumentIndex: index
                 )
                 addChild(instrumentPart2a)
             }
             else if index == 3 {
+                setUpBackgrounds(instrumentIndex: index)
                 instrumentPart3a = setupInstrument(
                     instrumentIndex: index
                 )
@@ -144,6 +154,52 @@ class CellScene: SKScene {
         physicsBody = SKPhysicsBody()
     }
     
+    func setUpBackgrounds(instrumentIndex: Int) -> Void {
+        
+        let skin = self.sessionSkin.instruments[instrumentIndex]
+        let cr: CGFloat = 5
+        
+        if instrumentIndex == 0 {
+            for (index,position) in self.instrument0Positions.enumerated() {
+                let background = Background(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                addChild(setBackground(skin: skin, background: background, position: position))
+            }
+        }
+        else if instrumentIndex == 1 {
+            for (index,position) in self.instrument1Positions.enumerated() {
+                let background = Background(rectOf: self.instrument1Sizes[index], cornerRadius: cr)
+                addChild(setBackground(skin: skin, background: background, position: position))
+            }
+        }
+        else if instrumentIndex == 2 {
+            for (index,position) in self.instrument2Positions.enumerated() {
+                let background = Background(rectOf: self.instrument2Sizes[index], cornerRadius: cr)
+                addChild(setBackground(skin: skin, background: background, position: position))
+            }
+        }
+        else if instrumentIndex == 3 {
+            for (index,position) in self.instrument3Positions.enumerated() {
+                let background = Background(rectOf: self.instrument3Sizes[index], cornerRadius: cr)
+                addChild(setBackground(skin: skin, background: background, position: position))
+            }
+        }
+    }
+    
+    func setBackground(
+        skin: InstrumentsSet.Skin.Instrument,
+        background: Background,
+        position: CGPoint
+    ) -> Background{
+        
+        background.position = position
+        background.setScale(0.89)
+        background.lineWidth = 0
+        background.strokeColor = UIColor.clear
+        background.fillColor = skin.color.withAlphaComponent(0.05)
+        
+        return background
+    }
+    
     func setupInstrument(instrumentIndex: Int) -> Container{
         
         updateLimiter[instrumentIndex] = 0
@@ -154,6 +210,7 @@ class CellScene: SKScene {
         
         if instrumentIndex == 0 {
             container.position = self.instrument0Positions.first ?? CGPoint()
+            setUpBackgrounds(instrumentIndex: instrumentIndex)
         }
         else if instrumentIndex == 1 {
             container.position = self.instrument1Positions.first ?? CGPoint()
@@ -198,11 +255,7 @@ class CellScene: SKScene {
         
         instrumentIndex = 0
         if self.instrument0Positions.indices.contains(instrumentPart0aMaxIndex){
-            //Cello
-            
-            print("Cello maxIndex \(instrumentPart0aMaxIndex)")
-            print(instrument0Positions)
-            
+            //First configured instrument
             position = self.instrument0Positions[instrumentPart0aMaxIndex]
             partScale = instrumentPart0aScale ?? 0
             updateInstrument(
@@ -221,7 +274,7 @@ class CellScene: SKScene {
         
         instrumentIndex = 1
         if self.instrument1Positions.indices.contains(instrumentPart1aMaxIndex){
-            
+            //Second configured instrument
             position = self.instrument1Positions[instrumentPart1aMaxIndex]
             partScale = instrumentPart1aScale ?? 0
             updateInstrument(
@@ -240,7 +293,7 @@ class CellScene: SKScene {
         
         instrumentIndex = 2
         if self.instrument2Positions.indices.contains(instrumentPart2aMaxIndex){
-            
+            //This needs to be an object containing excact the amount of instruments
             position = self.instrument2Positions[instrumentPart2aMaxIndex]
             partScale = instrumentPart2aScale ?? 0
             updateInstrument(

@@ -82,60 +82,18 @@ class SetSettings: Identifiable {
         return instruments
     }
     
-    //Calculateactice cell borders
-    func spriteKitInstrumentCellBackground(
+    
+    //Calculate positions and sizes
+    func spriteKitInstruments(
         instrumentIndex: Int,
         instrumentAreas: [[[Int]]],
         size: CGSize,
         columns: Int,
         rows: Int
-    ) -> [CGSize] {
+    ) -> ([CGPoint],[CGSize]){
         
-        //Output
-        
-        let cellWidth:CGFloat = size.width/CGFloat(columns)
-        let cellHeight:CGFloat = size.height/CGFloat(rows)
-        
-        //Position determination
-        
-        var sizes: [CGSize] = []
-        var combinedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
-        
-        var index: Int = 0
-        
-        for row in 0..<rows {
-            for column in 0..<columns {
-                //Calculatie centerpoint of this cell
-                if combinedParts[index] == 1 {
-                    
-//                    let cellNode = SKShapeNode(rectOf:
-                    
-//                    let x = CGFloat(column) * cellWidth + centerWidth
-//                    instrumentXs.append(x)
-//                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
-//                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
-//                    instrumentYs.append(y)
-                    
-                }
-                index += 1
-            }
-        }
-        
-        
-        return sizes
-    }
-    
-    
-    //Calculate x- and y-axis center points
-    func spriteKitInstrumenPositions(
-        instrumentIndex: Int,
-        instrumentAreas: [[[Int]]],
-        size: CGSize,
-        columns: Int,
-        rows: Int
-    ) -> [CGPoint]{
-        
-        var positions: [CGPoint] = []
+        var positions:[CGPoint] = []
+        var sizes:[CGSize] = []
         var index: Int = 0
         let flattenedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
         let cellWidth:CGFloat = size.width/CGFloat(columns)
@@ -145,17 +103,25 @@ class SetSettings: Identifiable {
         
         for row in 0..<rows {
             for column in 0..<columns {
-                //Calculatie centerpoint of this cell
+                //This current cell is within one of the instrument parts
                 if flattenedParts[index] == 1 {
+                    //Calculate center of cell
                     let x = CGFloat(column) * cellWidth + centerWidth
+                    //Correct different 0,0 point SpriteKit row and SeM row on Y axis
                     let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
                     let y = CGFloat(reversedRow) * cellHeight + centerHeight
                     positions.append(CGPoint(x: x, y: y))
+                    //Calculate cell size
+                    let size = CGSize(
+                        width: size.width/CGFloat(columns),
+                        height: size.height/CGFloat(rows)
+                    )
+                    sizes.append(size)
                 }
                 index += 1
             }
         }
-        return positions
+        return (positions,sizes)
     }
     
     
