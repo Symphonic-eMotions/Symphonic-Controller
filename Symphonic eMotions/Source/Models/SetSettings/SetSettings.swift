@@ -83,92 +83,105 @@ class SetSettings: Identifiable {
     }
     
     //Calculateactice cell borders
-    
-    
-    //Calculate x- and y-axis center points
-    func spriteKitInstrumentXYs(
+    func spriteKitInstrumentCellBackground(
         instrumentIndex: Int,
         instrumentAreas: [[[Int]]],
         size: CGSize,
         columns: Int,
         rows: Int
-    ) -> ([CGFloat],[CGFloat]) {
+    ) -> [CGSize] {
         
+        //Output
+        
+        let cellWidth:CGFloat = size.width/CGFloat(columns)
+        let cellHeight:CGFloat = size.height/CGFloat(rows)
+        
+        //Position determination
+        
+        var sizes: [CGSize] = []
+        var combinedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
+        
+        var index: Int = 0
+        
+        for row in 0..<rows {
+            for column in 0..<columns {
+                //Calculatie centerpoint of this cell
+                if combinedParts[index] == 1 {
+                    
+//                    let cellNode = SKShapeNode(rectOf:
+                    
+//                    let x = CGFloat(column) * cellWidth + centerWidth
+//                    instrumentXs.append(x)
+//                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
+//                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
+//                    instrumentYs.append(y)
+                    
+                }
+                index += 1
+            }
+        }
+        
+        
+        return sizes
+    }
+    
+    
+    //Calculate x- and y-axis center points
+    func spriteKitInstrumenPositions(
+        instrumentIndex: Int,
+        instrumentAreas: [[[Int]]],
+        size: CGSize,
+        columns: Int,
+        rows: Int
+    ) -> [CGPoint]{
+        
+        var positions: [CGPoint] = []
+        var index: Int = 0
+        let flattenedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
         let cellWidth:CGFloat = size.width/CGFloat(columns)
         let cellHeight:CGFloat = size.height/CGFloat(rows)
         let centerWidth:CGFloat = cellWidth/2
         let centerHeight:CGFloat = cellHeight/2
         
-        //We want ALL instrumentXs stored in here
-        var instrumentXs: [CGFloat] = []
-        var instrumentYs: [CGFloat] = []
+        for row in 0..<rows {
+            for column in 0..<columns {
+                //Calculatie centerpoint of this cell
+                if flattenedParts[index] == 1 {
+                    let x = CGFloat(column) * cellWidth + centerWidth
+                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
+                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
+                    positions.append(CGPoint(x: x, y: y))
+                }
+                index += 1
+            }
+        }
+        return positions
+    }
+    
+    
+    func flatttenParts(
+        currentInstrumentArea:[[Int]]
+    ) -> [Int]{
         
         //For now, Combine parts within each other
         //Imitialize with first part of current instrument
-        var combinedParts: [Int] = instrumentAreas[instrumentIndex][0]
+        var combinedParts:[Int] = currentInstrumentArea[0]
         
         //Loop through all parts to add aditional values found in other parts
-        for partArea in instrumentAreas[instrumentIndex] {
+        for partArea in currentInstrumentArea {
             for (index, value) in partArea.enumerated() {
                 if value == 1 {
                     combinedParts[index] = 1
                 }
             }
         }
-    
-        var index: Int = 0
-        for row in 0..<rows {
-            
-            for column in 0..<columns {
-                
-                //Calculatie centerpoint of this cell
-                if combinedParts[index] == 1 {
-                    let x = CGFloat(column) * cellWidth + centerWidth
-                    instrumentXs.append(x)
-                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
-                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
-                    instrumentYs.append(y)
-                }
-                
-                index += 1
-            }
-        }
         
-        print("instrumentYs \(instrumentIndex) \(instrumentYs)")
-        
-        return (instrumentXs,instrumentYs)
+        return combinedParts
     }
     
     func reverseNumber(number:Int, min:Int, max:Int) -> Int{
         return (max + min) - number
     }
-    
-//    func spriteKitInstrumentYs(
-//        instrumentAreas: [[[Int]]],
-//        size: CGSize,
-//        rows: Int) -> [CGFloat] {
-//
-//            var instrumentYs: [CGFloat] = []
-//
-//            for instrument in instrumentAreas {
-//                //Do this only for first part, other parts inherit x-axis value
-//                let partAreas = instrument[0]
-//
-////            let firstIndex = partAreas.firstIndex(of: 1) ?? 0
-////            let instrumentColumn = firstIndex % columns
-////            let columnWidth:CGFloat = size.width / CGFloat(columns)
-////            let x = CGFloat(instrumentColumn) * columnWidth + columnWidth / 2
-////            instrumentXs.append(x)
-//            }
-//        }
-    
-//    func spriteKitInstrumentYsStatic( instrumentAreas: [[[Int]]] ) -> [CGFloat] {
-//        var instrumentYs: [CGFloat] = []
-//        for _ in instrumentAreas {
-//            instrumentYs.append(200)
-//        }
-//        return instrumentYs
-//    }
     
     func updateLimiter( instrumentAreas: [[[Int]]] ) -> [Int] {
         var midiClips: [Int] = []

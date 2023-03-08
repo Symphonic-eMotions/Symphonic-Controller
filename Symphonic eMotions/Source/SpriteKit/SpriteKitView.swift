@@ -25,56 +25,54 @@ struct SpriteKitView: View {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         let size = CGSize(width: width, height: height - transportHeigth)
-        let columns = mainViewModel.mainState.setSettings.gridColumns
         let rows = mainViewModel.mainState.setSettings.gridRows
+        let columns = mainViewModel.mainState.setSettings.gridColumns
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         
         scene.backgroundColor = .clear
         scene.size = size
         scene.scaleMode = .fill
         scene.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        scene.gravityVector = vector_float3(0, -1, 0)
         
         scene.rows = rows
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
         
-        var instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+        var instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
             instrumentIndex: 0,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument0Xs = instrumentXYs.0
-        scene.instrument0Ys = instrumentXYs.1
-        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+        scene.instrument0Positions = instrumentPositions
+        
+        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
             instrumentIndex: 1,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument1Xs = instrumentXYs.0
-        scene.instrument1Ys = instrumentXYs.1
-        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+        scene.instrument1Positions = instrumentPositions
+        
+        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
             instrumentIndex: 2,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument2Xs = instrumentXYs.0
-        scene.instrument2Ys = instrumentXYs.1
-        instrumentXYs = mainViewModel.mainState.setSettings.spriteKitInstrumentXYs(
+        scene.instrument2Positions = instrumentPositions
+        
+        instrumentPositions = mainViewModel.mainState.setSettings.spriteKitInstrumenPositions(
             instrumentIndex: 3,
             instrumentAreas: instrumentAreas,
             size: size,
             columns: columns,
             rows: rows
         )
-        scene.instrument3Xs = instrumentXYs.0
-        scene.instrument3Ys = instrumentXYs.1
+        scene.instrument3Positions = instrumentPositions
         
         
         scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(
