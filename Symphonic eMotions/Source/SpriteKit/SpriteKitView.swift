@@ -16,6 +16,7 @@ struct SpriteKitView: View {
     @Binding public var sessionDisplay: SessionDisplay
     let transportHeigth: CGFloat = 50
     
+    //Create the complete 2D "gaming" interface
     var scene = CellScene()
     
     init( playViewModel: PlayViewModel,
@@ -29,6 +30,7 @@ struct SpriteKitView: View {
         let columns = mainViewModel.mainState.setSettings.gridColumns
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         
+        scene.isPlaying = mainViewModel.conductor.isConductorPlayingSubject.value
         scene.backgroundColor = .clear
         scene.size = size
         scene.scaleMode = .fill
@@ -38,6 +40,7 @@ struct SpriteKitView: View {
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
         
+        //For now we have 4 instruments who control unique named variables in the SKScene
         var instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
             instrumentIndex: 0,
             instrumentAreas: instrumentAreas,
@@ -77,11 +80,11 @@ struct SpriteKitView: View {
         )
         scene.instrument3Positions = instruments.0
         scene.instrument3Sizes = instruments.1
-        
-        
+        //Frameskipper particle emitters per instrument
         scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(
             instrumentAreas: instrumentAreas
         )
+        //We store the skin within the session
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
         
         self.playViewModel = playViewModel
@@ -100,8 +103,6 @@ struct SpriteKitView: View {
         #endif
         
         VStack(spacing: 0){
-            //Stack
-            
             VStack{
                 SpriteKitTransport(
                     mainViewModel: mainViewModel,
@@ -109,9 +110,11 @@ struct SpriteKitView: View {
                     sessionDisplay: $sessionDisplay,
                     transportHeigth: transportHeigth
                 )
+                //SKScene with underneat a video (camera) preview
                 ZStack{
                     
-                    //Video
+                    //Video (Camera)
+                    //Adjustable through displayOpacity
                     VideoPreviewViewRepresetable(
                         playViewModel: playViewModel
                     )
@@ -128,6 +131,10 @@ struct SpriteKitView: View {
                     )
                     .frame(width: width, height: height - transportHeigth - 10)
                     .ignoresSafeArea()
+                    .onReceive(mainViewModel.conductor.isConductorPlayingSubject ){ ( value ) in
+                        scene.isPlaying = value
+                    }
+                    //Again 4 static instruments
                     //First configured instrument (GO Cello)
                     .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
                         
@@ -156,8 +163,6 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aMidiClip = value.1
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
-                    
-                    
                 }
             }
         }

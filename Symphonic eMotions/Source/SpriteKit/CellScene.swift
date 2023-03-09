@@ -33,7 +33,9 @@ struct InstrumentSetting{
     let image:String
 }
 
-class Background: SKShapeNode { }
+class Tiles: SKNode { }
+
+class Tile: SKShapeNode { }
 
 class Container: SKNode { }
 
@@ -67,21 +69,28 @@ class ImageInstrument: SKSpriteNode { }
 
 class CellScene: SKScene {
     
-    var updateLimiter: [Int]!
+    //Show big ass numbers on grid positions
+    var debugNumbers: Bool = false
     
-    var debugNumbers: Bool = true
+    var isPlaying: Bool = false
+    
+    //We need to combine instrument vars in a object (SKNode?)
 //    var receiver: [Receiver] = []
+    
+    //Skip frames for ease on particle emitter spawn
+    var updateLimiter: [Int]!
     
     //GameScene globals to change through update
     //At this moment static 4 instruments
-    //TODO: Convert to Receiver Class for dynamic number of instruments
+    var tiles0: Tiles!
     var instrumentPart0a: Container!
     var instrumentPart0aScale: CGFloat?
     var instrumentPart0aMaxIndex: Int = 0
     var instrumentPart0aMidiClip: Int = 0
     var instrument0Positions: [CGPoint] = []
     var instrument0Sizes: [CGSize] = []
-    
+    //TODO: Convert to Receiver Class (SKNode?) for dynamic number of instruments
+    var tiles1: Tiles!
     var instrumentPart1a: Container!
     var instrumentPart1aScale: CGFloat?
     var instrumentPart1aMaxIndex: Int = 0
@@ -89,6 +98,7 @@ class CellScene: SKScene {
     var instrument1Positions: [CGPoint] = []
     var instrument1Sizes: [CGSize] = []
     
+    var tiles2: Tiles!
     var instrumentPart2a: Container!
     var instrumentPart2aScale: CGFloat?
     var instrumentPart2aMaxIndex: Int = 0
@@ -96,6 +106,7 @@ class CellScene: SKScene {
     var instrument2Positions: [CGPoint] = []
     var instrument2Sizes: [CGSize] = []
     
+    var tiles3: Tiles!
     var instrumentPart3a: Container!
     var instrumentPart3aScale: CGFloat?
     var instrumentPart3aMaxIndex: Int = 0
@@ -116,33 +127,30 @@ class CellScene: SKScene {
         
         //At this stage there is a maximum of 4 instruments
         for index in [0,1,2,3] {
+            
             if index == 0 {
-                setUpBackgrounds(instrumentIndex: index)
-                instrumentPart0a = setupInstrument(
-                    instrumentIndex: index
-                )
+                instrumentPart0a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart0a)
+                tiles0 = setUpBackgrounds(instrumentIndex: index)
+                addChild(tiles0)
             }
             else if index == 1 {
-                setUpBackgrounds(instrumentIndex: index)
-                instrumentPart1a = setupInstrument(
-                    instrumentIndex: index
-                )
+                instrumentPart1a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart1a)
+                tiles1 = setUpBackgrounds(instrumentIndex: index)
+                addChild(tiles1)
             }
             else if index == 2 {
-                setUpBackgrounds(instrumentIndex: index)
-                instrumentPart2a = setupInstrument(
-                    instrumentIndex: index
-                )
+                instrumentPart2a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart2a)
+                tiles2 = setUpBackgrounds(instrumentIndex: index)
+                addChild(tiles2)
             }
             else if index == 3 {
-                setUpBackgrounds(instrumentIndex: index)
-                instrumentPart3a = setupInstrument(
-                    instrumentIndex: index
-                )
+                instrumentPart3a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart3a)
+                tiles3 = setUpBackgrounds(instrumentIndex: index)
+                addChild(tiles3)
             }
         }
 
@@ -154,42 +162,44 @@ class CellScene: SKScene {
         physicsBody = SKPhysicsBody()
     }
     
-    func setUpBackgrounds(instrumentIndex: Int) -> Void {
+    func setUpBackgrounds(instrumentIndex: Int) -> Tiles {
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
         let cr: CGFloat = 5
+        let tiles: Tiles = Tiles()
         
         if instrumentIndex == 0 {
             for (index,position) in self.instrument0Positions.enumerated() {
-                let background = Background(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
-                addChild(setBackground(skin: skin, background: background, position: position))
+                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
         else if instrumentIndex == 1 {
             for (index,position) in self.instrument1Positions.enumerated() {
-                let background = Background(rectOf: self.instrument1Sizes[index], cornerRadius: cr)
-                addChild(setBackground(skin: skin, background: background, position: position))
+                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
         else if instrumentIndex == 2 {
             for (index,position) in self.instrument2Positions.enumerated() {
-                let background = Background(rectOf: self.instrument2Sizes[index], cornerRadius: cr)
-                addChild(setBackground(skin: skin, background: background, position: position))
+                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
         else if instrumentIndex == 3 {
             for (index,position) in self.instrument3Positions.enumerated() {
-                let background = Background(rectOf: self.instrument3Sizes[index], cornerRadius: cr)
-                addChild(setBackground(skin: skin, background: background, position: position))
+                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
+        return tiles
     }
     
     func setBackground(
         skin: InstrumentsSet.Skin.Instrument,
-        background: Background,
+        background: Tile,
         position: CGPoint
-    ) -> Background{
+    ) -> Tile{
         
         background.position = position
         background.setScale(0.89)
@@ -210,7 +220,6 @@ class CellScene: SKScene {
         
         if instrumentIndex == 0 {
             container.position = self.instrument0Positions.first ?? CGPoint()
-            setUpBackgrounds(instrumentIndex: instrumentIndex)
         }
         else if instrumentIndex == 1 {
             container.position = self.instrument1Positions.first ?? CGPoint()
@@ -258,6 +267,7 @@ class CellScene: SKScene {
             //First configured instrument
             position = self.instrument0Positions[instrumentPart0aMaxIndex]
             partScale = instrumentPart0aScale ?? 0
+            if !self.isPlaying { partScale = 0 }
             updateInstrument(
                 container: instrumentPart0a,
                 instrumentIndex: instrumentIndex,
@@ -277,6 +287,7 @@ class CellScene: SKScene {
             //Second configured instrument
             position = self.instrument1Positions[instrumentPart1aMaxIndex]
             partScale = instrumentPart1aScale ?? 0
+            if !self.isPlaying { partScale = 0 }
             updateInstrument(
                 container: instrumentPart1a,
                 instrumentIndex: instrumentIndex,
@@ -296,6 +307,7 @@ class CellScene: SKScene {
             //This needs to be an object containing excact the amount of instruments
             position = self.instrument2Positions[instrumentPart2aMaxIndex]
             partScale = instrumentPart2aScale ?? 0
+            if !self.isPlaying { partScale = 0 }
             updateInstrument(
                 container: instrumentPart2a,
                 instrumentIndex: instrumentIndex,
@@ -315,6 +327,7 @@ class CellScene: SKScene {
             
             position = self.instrument3Positions[instrumentPart3aMaxIndex]
             partScale = instrumentPart3aScale ?? 0
+            if !self.isPlaying { partScale = 0 }
             updateInstrument(
                 container: instrumentPart3a,
                 instrumentIndex: instrumentIndex,
@@ -328,6 +341,7 @@ class CellScene: SKScene {
                 midiClip: instrumentPart3aMidiClip
             )
         }
+        
     }
     
     func updateInstrument(container: Container, instrumentIndex: Int, partScale: Double, position: CGPoint) -> Void {
