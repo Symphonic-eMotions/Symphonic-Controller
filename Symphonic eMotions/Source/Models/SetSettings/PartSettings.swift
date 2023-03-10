@@ -15,6 +15,7 @@ class PartSettings: Identifiable {
     var rampUp: Double
     var rampDown: Double
     var areaOfInterest: [Int]
+    var areaOfIntersetDeltaTiimes: [Int]
     var areaOfInterestColor: [Color]
     var dontDrawVisual: Bool
     
@@ -24,6 +25,7 @@ class PartSettings: Identifiable {
          rampUp: Double,
          rampDown: Double,
          areaOfInterest: [Int],
+         areaOfIntersetDeltaTiimes: [Int],
          areaOfInterestColor: [Color],
          dontDrawVisual: Bool
     ){
@@ -33,6 +35,7 @@ class PartSettings: Identifiable {
         self.rampUp = rampUp
         self.rampDown = rampDown
         self.areaOfInterest = areaOfInterest
+        self.areaOfIntersetDeltaTiimes = areaOfIntersetDeltaTiimes
         self.areaOfInterestColor = areaOfInterestColor
         self.dontDrawVisual = dontDrawVisual
     }

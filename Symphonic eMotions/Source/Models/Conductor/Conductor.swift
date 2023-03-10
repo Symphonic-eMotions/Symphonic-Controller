@@ -1334,11 +1334,43 @@ final class Conductor {
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                     
-                    //Spare original
-                    let maxIndexraw = Int(maxIndexTupple.0)
-                    var maxIndex = maxIndexraw
                     
-                    //Lets call maxMapped value to work with
+                    //Have en array of delta times per index height
+                    // - Precalculate time per index
+                    let deltaTimes = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetDeltaTiimes
+                    
+//                    guard !deltaTimes!.isEmpty else { return }
+                    
+                    //Spare original for SpriteKit locations
+                    let maxIndexraw = Int(maxIndexTupple.0)
+                    
+                    
+                    /*
+                    Here we need to add a found index holder for a relative amount of time
+                    - Is delta time running?
+                     - return old value
+                     
+                    - Is delta time NOT running
+                     
+                         - is new value other than old?
+                         - YES
+                         -- Set delta timer to zero
+                         - NO
+                    
+                    
+                    */
+                    
+                    let deltaTime = deltaTimes![maxIndexraw]
+                    
+                    print("partId: \(part.id) current delta: \(deltaTime)")
+                    
+                    
+                    
+                    
+                    //Have a var for MaxIndex to number of MidiClips range
+                    var maxIndexMidiClips = maxIndexraw
+                    
+                    //MaxMapped (highest value found in all of AreaOfInterest) value to work with
                     var value = maxIndexTupple.1
                     if value.isNaN {
                         value = 0
@@ -1348,10 +1380,11 @@ final class Conductor {
                     //mapMaxIndex should be present once in a track
                     if part.mapMaxIndex != nil {
                         let mapMaxIndex = part.mapMaxIndex ?? []
-                        maxIndex = mapMaxIndex[maxIndex]
+                        //Range converter, static now models could be added
+                        maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
                         forwardMaxIndex(
                             for: part.damperTarget,
-                            maxIndex: maxIndex
+                            maxIndex: maxIndexMidiClips
                         )
                     }
                     
@@ -1387,7 +1420,7 @@ final class Conductor {
                         ramped: value,
                         areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
                         maxIndexRaw: maxIndexraw,
-                        maxIndex: maxIndex
+                        maxIndex: maxIndexMidiClips
                     )
                     
                     partNr += 1

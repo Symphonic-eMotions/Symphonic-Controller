@@ -255,6 +255,64 @@ final class AppUtils {
         return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }
     
+    static func getPartAreaDeltaTimes(
+        rows: Int,
+        columns: Int,
+        areaOfInterest:[Int]
+    ) -> [Int] {
+        
+        var deltaTimes:[Int] = []
+        
+        let twoRows:[Int]   = [400,0]
+        let threeRows:[Int] = [400,200,0]
+        let fourRows:[Int]  = [400,300,200,0]
+        let fiveRows:[Int]  = [500,400,300,200,0]
+        
+        let twoXtwo:[Int] = [
+            twoRows[0],twoRows[0],
+            twoRows[1],twoRows[1]
+        ]
+        
+        let threeXthree:[Int] = [
+            threeRows[0],threeRows[0],threeRows[0],
+            threeRows[1],threeRows[1],threeRows[1],
+            threeRows[2],threeRows[2],threeRows[2]
+        ]
+        
+        let fourXfour:[Int] = [
+            fourRows[0],fourRows[0],fourRows[0],fourRows[0],
+            fourRows[1],fourRows[1],fourRows[1],fourRows[1],
+            fourRows[2],fourRows[2],fourRows[2],fourRows[2],
+            fourRows[3],fourRows[3],fourRows[3],fourRows[3]
+        ]
+        
+        let fiveXfive:[Int] = [
+            fiveRows[0],fiveRows[0],fiveRows[0],fiveRows[0],
+            fiveRows[1],fiveRows[1],fiveRows[1],fiveRows[1],
+            fiveRows[2],fiveRows[2],fiveRows[2],fiveRows[2],
+            fiveRows[3],fiveRows[3],fiveRows[3],fiveRows[3]
+        ]
+        
+        for (index,value) in areaOfInterest.enumerated() {
+            if value == 1 {
+                if rows == 2{
+                    deltaTimes.append(twoXtwo[index])
+                }
+                else if rows == 3 {
+                    deltaTimes.append(threeXthree[index])
+                }
+                else if rows == 4 {
+                    deltaTimes.append(fourXfour[index])
+                }
+                else if rows == 5 {
+                    deltaTimes.append(fiveXfive[index])
+                }
+            }
+        }
+    
+        return deltaTimes
+    }
+    
     static func setSettings(instrumentSet: InstrumentsSet) -> SetSettings {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
@@ -276,6 +334,11 @@ final class AppUtils {
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
                     areaOfInterest: partLoaded.areaOfInterest,
+                    areaOfIntersetDeltaTiimes: self.getPartAreaDeltaTimes(
+                        rows: instrumentSet.rows,
+                        columns: instrumentSet.columns,
+                        areaOfInterest: partLoaded.areaOfInterest
+                    ),
                     areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
                     dontDrawVisual: partLoaded.dontDrawVisual ?? false
                 )

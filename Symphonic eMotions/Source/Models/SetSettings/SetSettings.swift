@@ -29,6 +29,7 @@ class SetSettings: Identifiable {
     var gridRows: Int
     var gridColumns: Int
     
+    
     //Dynamic tempo
     var bpm: Double
     
