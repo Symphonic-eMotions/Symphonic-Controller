@@ -73,6 +73,8 @@ class CellScene: SKScene {
     var debugNumbers: Bool = false
     
     var isPlaying: Bool = false
+    var currentLevel: Double = 0
+    var levels: [[Int]] = []
     
     //We need to combine instrument vars in a object (SKNode?)
 //    var receiver: [Receiver] = []
@@ -176,19 +178,19 @@ class CellScene: SKScene {
         }
         else if instrumentIndex == 1 {
             for (index,position) in self.instrument1Positions.enumerated() {
-                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                let tile = Tile(rectOf: self.instrument1Sizes[index], cornerRadius: cr)
                 tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
         else if instrumentIndex == 2 {
             for (index,position) in self.instrument2Positions.enumerated() {
-                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                let tile = Tile(rectOf: self.instrument2Sizes[index], cornerRadius: cr)
                 tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
         else if instrumentIndex == 3 {
             for (index,position) in self.instrument3Positions.enumerated() {
-                let tile = Tile(rectOf: self.instrument0Sizes[index], cornerRadius: cr)
+                let tile = Tile(rectOf: self.instrument3Sizes[index], cornerRadius: cr)
                 tiles.addChild(setBackground(skin: skin, background: tile, position: position))
             }
         }
@@ -201,6 +203,7 @@ class CellScene: SKScene {
         position: CGPoint
     ) -> Tile{
         
+        background.name = "tile"
         background.position = position
         background.setScale(0.89)
         background.lineWidth = 0
@@ -231,7 +234,6 @@ class CellScene: SKScene {
             container.position = self.instrument3Positions.first ?? CGPoint()
         }
         
-        
         var instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         var instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "1stChild"
@@ -261,6 +263,8 @@ class CellScene: SKScene {
         var instrumentIndex: Int!
         var partScale: Double!
         var position: CGPoint!
+        
+        updateBackgrounds()
         
         instrumentIndex = 0
         if self.instrument0Positions.indices.contains(instrumentPart0aMaxIndex){
@@ -354,6 +358,65 @@ class CellScene: SKScene {
         container.childNode(withName: "2ndChild")!.setScale(CGFloat(partScale*partScale*partScale*0.7))
         //Image
         container.childNode(withName: "image")!.setScale(CGFloat(partScale*partScale*partScale*partScale*2.5))
+    }
+    
+    func updateBackgrounds(){
+        
+        
+        //TODO: Do this on level change so update can be used for further increase alpha
+        
+        //First itteration for not showing if not in current level
+        for (index, trackLevels) in levels.enumerated() {
+            
+            if index == 0 {
+                if trackLevels.contains(Int(currentLevel)) {
+                    tiles0.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 1
+                    }
+                }
+                else{
+                    tiles0.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 0
+                    }
+                }
+            }
+            if index == 1 {
+                if trackLevels.contains(Int(currentLevel)) {
+                    tiles1.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 1
+                    }
+                }
+                else{
+                    tiles1.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 0
+                    }
+                }
+            }
+            if index == 2 {
+                if trackLevels.contains(Int(currentLevel)) {
+                    tiles2.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 1
+                    }
+                }
+                else{
+                    tiles2.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 0
+                    }
+                }
+            }
+            if index == 3 {
+                if trackLevels.contains(Int(currentLevel)) {
+                    tiles3.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 1
+                    }
+                }
+                else{
+                    tiles3.enumerateChildNodes(withName: "tile") { node, _ in
+                        node.alpha = 0
+                    }
+                }
+            }
+        }
     }
     
     func updateEmitter(instrumentIndex: Int, position: CGPoint, partScale: Double, midiClip: Int) -> Void {

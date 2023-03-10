@@ -29,6 +29,7 @@ struct SpriteKitView: View {
         let rows = mainViewModel.mainState.setSettings.gridRows
         let columns = mainViewModel.mainState.setSettings.gridColumns
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
+        let levels = mainViewModel.mainState.setSettings.getLevels()
         
         scene.isPlaying = mainViewModel.conductor.isConductorPlayingSubject.value
         scene.backgroundColor = .clear
@@ -39,6 +40,7 @@ struct SpriteKitView: View {
         scene.rows = rows
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
+        scene.levels = levels
         
         //For now we have 4 instruments who control unique named variables in the SKScene
         var instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
@@ -133,6 +135,9 @@ struct SpriteKitView: View {
                     .ignoresSafeArea()
                     .onReceive(mainViewModel.conductor.isConductorPlayingSubject ){ ( value ) in
                         scene.isPlaying = value
+                    }
+                    .onReceive(mainViewModel.leveling.currentSetLevelSubject ){ ( value ) in
+                        scene.currentLevel = value
                     }
                     //Again 4 static instruments
                     //First configured instrument (GO Cello)

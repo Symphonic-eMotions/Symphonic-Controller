@@ -79,9 +79,27 @@ class SetSettings: Identifiable {
             }
             instruments.append(trackParts)
         }
+        //Make 4 instrument compatible
+        while instruments.count < 4 {
+            instruments.append([])
+        }
+        
         return instruments
     }
     
+    func getLevels() -> [[Int]] {
+        
+        var levels:[[Int]] = []
+        for track in self.tracks {
+            print("Levels Track order: \(track.value.trackId)")
+            levels.append(track.value.levels)
+        }
+        //Make 4 instrument compatible
+        while levels.count < 4 {
+            levels.append([])
+        }
+        return levels
+    }
     
     //Calculate positions and sizes
     func spriteKitInstruments(
@@ -92,38 +110,48 @@ class SetSettings: Identifiable {
         rows: Int
     ) -> ([CGPoint],[CGSize]){
         
-        var positions:[CGPoint] = []
-        var sizes:[CGSize] = []
-        var index: Int = 0
-        let flattenedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
-        let cellWidth:CGFloat = size.width/CGFloat(columns)
-        let cellHeight:CGFloat = size.height/CGFloat(rows)
-        let centerWidth:CGFloat = cellWidth/2
-        let centerHeight:CGFloat = cellHeight/2
-        
-        for row in 0..<rows {
-            for column in 0..<columns {
-                //This current cell is within one of the instrument parts
-                if flattenedParts[index] == 1 {
-                    //Calculate center of cell
-                    let x = CGFloat(column) * cellWidth + centerWidth
-                    //Correct different 0,0 point SpriteKit row and SeM row on Y axis
-                    let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
-                    let y = CGFloat(reversedRow) * cellHeight + centerHeight
-                    positions.append(CGPoint(x: x, y: y))
-                    //Calculate cell size
-                    let size = CGSize(
-                        width: size.width/CGFloat(columns),
-                        height: size.height/CGFloat(rows)
-                    )
-                    sizes.append(size)
+        //Quick fix empty instrument
+        if instrumentAreas[instrumentIndex].count > 0 {
+            
+            var positions:[CGPoint] = []
+            var sizes:[CGSize] = []
+            var index: Int = 0
+            let flattenedParts:[Int] = flatttenParts(currentInstrumentArea: instrumentAreas[instrumentIndex])
+            let cellWidth:CGFloat = size.width/CGFloat(columns)
+            let cellHeight:CGFloat = size.height/CGFloat(rows)
+            let centerWidth:CGFloat = cellWidth/2
+            let centerHeight:CGFloat = cellHeight/2
+            
+            for row in 0..<rows {
+                for column in 0..<columns {
+                    //This current cell is within one of the instrument parts
+                    
+                    if flattenedParts[index] == 1 {
+                        //Calculate center of cell
+                        let x = CGFloat(column) * cellWidth + centerWidth
+                        //Correct different 0,0 point SpriteKit row and SeM row on Y axis
+                        let reversedRow = reverseNumber(number: row, min: 0, max: rows - 1)
+                        let y = CGFloat(reversedRow) * cellHeight + centerHeight
+                        positions.append(CGPoint(x: x, y: y))
+                        //Calculate cell size
+                        let size = CGSize(
+                            width: size.width/CGFloat(columns),
+                            height: size.height/CGFloat(rows)
+                        )
+                        sizes.append(size)
+                    }
+                    index += 1
                 }
-                index += 1
             }
+            return (positions,sizes)
         }
-        return (positions,sizes)
+        else{
+            return ([CGPoint.zero],[CGSize.zero])
+        }
+            
+        
+        
     }
-    
     
     func flatttenParts(
         currentInstrumentArea:[[Int]]
@@ -141,7 +169,6 @@ class SetSettings: Identifiable {
                 }
             }
         }
-        
         return combinedParts
     }
     
