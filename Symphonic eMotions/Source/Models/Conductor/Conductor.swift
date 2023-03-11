@@ -11,6 +11,7 @@ import SoundpipeAudioKit
 import AVFAudio
 import Accelerate
 import Combine
+import Dispatch
 
 final class Conductor {
     
@@ -82,8 +83,11 @@ final class Conductor {
     private var midiDataGroupIndex: [String: [Int]] = [:]
     
     //Keep track of maxIndex values per track
-    private var maxIndexTracks: [String: Int] = [:]
-  
+    private var maxIndexParts: [String: Int] = [:]
+    //keep track of delta start times
+    private var deltaStartTimePart: [String: DispatchTime] = [:]
+    private var clock = ContinuousClock()
+    
     //TODO: Make generic container for samplers and synths
     //Sampler container
     private var trackSamplers: [String: MIDISampler] = [:]
@@ -331,6 +335,8 @@ final class Conductor {
                     rampValues[part.id] = 0.0
                     rampUp[part.id] = part.damperTarget.nodeSettings!.rampSpeed ?? -1
                     rampDown[part.id] = part.damperTarget.nodeSettings!.rampSpeedDown ?? -1
+                    maxIndexParts[part.id] = 0
+                    deltaStartTimePart[part.id] = DispatchTime.now()
                 }
             }
                         
@@ -1328,41 +1334,48 @@ final class Conductor {
                     let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(rows: setSettings.gridRows, columns: setSettings.gridColumns).map {
                         values[$0.row][$0.column].scaledValue
                     }
-                    
                     guard !valuesMapped.isEmpty else { return }
                     
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                     
                     
+                    //MARK: Start maxIndex Gate
                     //Have en array of delta times per index height
-                    // - Precalculate time per index
+                    //Precalculated times per index
                     let deltaTimes = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetDeltaTiimes
+                    
+                    print(part.id)
+                    print(deltaTimes as Any)
                     
 //                    guard !deltaTimes!.isEmpty else { return }
                     
                     //Spare original for SpriteKit locations
-                    let maxIndexraw = Int(maxIndexTupple.0)
-                    
-                    
-                    /*
-                    Here we need to add a found index holder for a relative amount of time
-                    - Is delta time running?
-                     - return old value
-                     
-                    - Is delta time NOT running
-                     
-                         - is new value other than old?
-                         - YES
-                         -- Set delta timer to zero
-                         - NO
-                    
-                    
-                    */
-                    
+                    var maxIndexraw = Int(maxIndexTupple.0)
                     let deltaTime = deltaTimes![maxIndexraw]
+                    var isNewIndex: Bool = false
                     
-                    print("partId: \(part.id) current delta: \(deltaTime)")
+                    //Gate is closed send old MaxIndex
+                    if isPartDeltaTimeRunning(
+                        partId: part.id,
+                        partDeltaTime: deltaTime
+                    ) {
+                        maxIndexraw = maxIndexParts[part.id]!
+//                        print("Gate closed old maxIndex: \(maxIndexraw)")
+                    }
+                    //Gate is open
+                    else{
+                        //Set (store) new index
+                        isNewIndex = valueIndexChanged(maxIndex: maxIndexraw, trackId: track.trackId)
+                        if isNewIndex {
+//                            print("New index \(maxIndexraw) thus: DispatchTime.now()")
+                            //Set new start time
+                            deltaStartTimePart[part.id] = DispatchTime.now()
+                        }
+                    }
+                    
+                    
+//                print("partId: \(part.id) current delta: \(deltaTime)")
                     
                     
                     
@@ -1384,7 +1397,8 @@ final class Conductor {
                         maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
                         forwardMaxIndex(
                             for: part.damperTarget,
-                            maxIndex: maxIndexMidiClips
+                            maxIndex: maxIndexMidiClips,
+                            isNewIndex: isNewIndex
                         )
                     }
                     
@@ -1626,17 +1640,15 @@ final class Conductor {
     
     private func forwardMaxIndex(
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        maxIndex: Int
+        maxIndex: Int,
+        isNewIndex: Bool
     ) {
     
         //Low level midi data control based on index of activity
-        if maxIndex != -1 && valueIndexChanged(maxIndex: maxIndex, trackId: damperTarget.trackId) {
+        if maxIndex != -1 && isNewIndex {
             
             guard let track = set.track(for: damperTarget.trackId) else { return }
-            
-            //
             let maxIndexPart = maxIndex % track.midiFiles!.first!.loopLength.count
-            
             //Copy MIDI part based on max movement cell index
             switchTrackMidiPart(track, maxIndexPart)
         }
@@ -1743,9 +1755,20 @@ final class Conductor {
         }
     }
     
+    private func isPartDeltaTimeRunning(partId: String, partDeltaTime: Int) -> Bool {
+        
+        var isRunning = false
+        
+        if deltaStartTimePart[partId]! + .milliseconds(partDeltaTime) > DispatchTime.now() {
+            isRunning = true
+        }
+        
+        return isRunning
+    }
+    
     private func valueIndexChanged(maxIndex: Int, trackId: String) -> Bool{
-        if maxIndexTracks[trackId] != maxIndex {
-            maxIndexTracks[trackId] = maxIndex
+        if maxIndexParts[trackId] != maxIndex {
+            maxIndexParts[trackId] = maxIndex
             return true
         }
         return false
