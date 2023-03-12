@@ -1375,11 +1375,6 @@ final class Conductor {
                     }
                     
                     
-//                print("partId: \(part.id) current delta: \(deltaTime)")
-                    
-                    
-                    
-                    
                     //Have a var for MaxIndex to number of MidiClips range
                     var maxIndexMidiClips = maxIndexraw
                     
@@ -1389,6 +1384,7 @@ final class Conductor {
                         value = 0
                     }
                     
+                    //MARK: index to midi clip conversion
                     //Change order of indeces for mapping with events
                     //mapMaxIndex should be present once in a track
                     if part.mapMaxIndex != nil {

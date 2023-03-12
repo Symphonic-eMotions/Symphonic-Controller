@@ -149,9 +149,6 @@ class SetSettings: Identifiable {
         else{
             return ([CGPoint.zero],[CGSize.zero])
         }
-            
-        
-        
     }
     
     func flatttenParts(

@@ -265,8 +265,8 @@ final class AppUtils {
         
         let twoRows:[Int]   = [400,0]
         let threeRows:[Int] = [400,200,0]
-        let fourRows:[Int]  = [400,300,200,0]
-        let fiveRows:[Int]  = [500,400,300,200,0]
+        let fourRows:[Int]  = [500,350,200,0]
+        let fiveRows:[Int]  = [600,450,300,150,0]
         
         let twoXtwo:[Int] = [
             twoRows[0],twoRows[0],
