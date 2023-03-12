@@ -115,7 +115,7 @@ struct SpriteKitView: View {
                 //SKScene with underneat a video (camera) preview
                 ZStack{
                     
-                    //Video (Camera)
+                    //Video (Camera), first is by default the bottom View in ZStack
                     //Adjustable through displayOpacity
                     VideoPreviewViewRepresetable(
                         playViewModel: playViewModel
@@ -126,7 +126,7 @@ struct SpriteKitView: View {
                     .opacity( Double(playViewModel.playViewState.displayOpacity) )
                     
                     
-                    //The SpriteKit interface
+                    //The SpriteKit interface with layered SwiftUI calibrator
                     SpriteView(
                         scene: scene,
                         options: [.allowsTransparency]
@@ -167,6 +167,14 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aMaxIndex = value.0
                         scene.instrumentPart3aMidiClip = value.1
                         scene.instrumentPart3aScale = CGFloat(value.2)
+                    }
+                    
+                    //The calibrator slider and video slider
+                    if true {
+                        CalibratorSlider(
+                            mainViewModel: mainViewModel,
+                             playViewModel: playViewModel
+                        )
                     }
                 }
             }

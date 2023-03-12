@@ -91,7 +91,7 @@ final class MainViewModel: ObservableObject {
             
             //The engine startup is located in the FullPlayView.onAppear
             //Or in the transport button PlayView
-            print("\(mainState.setSettings.setName) \(mainState.setSettings.gridColumns)x\(mainState.setSettings.gridRows) Session maxValue: \(mainState.sessionSettings.imageMax) imageFeedback: \(mainState.sessionSettings.imageFeedback)")
+            print("\(mainState.setSettings.setName) \(mainState.setSettings.gridColumns)x\(mainState.setSettings.gridRows) Session maxValue: \(mainState.sessionSettings.imageMaxLoaded) imageFeedback: \(mainState.sessionSettings.imageFeedbackLoaded)")
         }
     }
     

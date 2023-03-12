@@ -212,7 +212,7 @@ final class AppUtils {
         
         let storeSessionSettings = StoreSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
-        print("setSessionSetting storeSessionSettings.imageMax \(storeSessionSettings.imageMax)")
+        print("setSessionSetting storeSessionSettings.imageMax \(storeSessionSettings.imageMax) storeSessionSettings.imageFeedback \(storeSessionSettings.imageFeedback)")
         
         let sessionSetting = SessionSettings(
             imageMax: storeSessionSettings.imageMax,

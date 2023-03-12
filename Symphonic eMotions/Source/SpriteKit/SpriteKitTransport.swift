@@ -99,23 +99,24 @@ struct SpriteKitTransport: View {
                     playViewModel: playViewModel
                 )
                 
-                VStack(spacing: 5){
+                VStack(){
+                    
                     VolumeSlider()
                         .frame(width: 200, height: 20)
-                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                        .zIndex(100)
+//                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+//                        .zIndex(100)
                     
-                    OpacitySlider(value: Binding(
-                            get: {playViewModel.playViewState.displayOpacity},
-                            set: { (newval) in
-                                self.playViewModel.playViewState.displayOpacity = newval
-                                
-                            }
-                        )
-                    )
-                    .frame(width: 200, height: 20)
-                    .padding(.bottom, 2)
-                    .zIndex(100)
+//                    OpacitySlider(value: Binding(
+//                            get: {playViewModel.playViewState.displayOpacity},
+//                            set: { (newval) in
+//                                self.playViewModel.playViewState.displayOpacity = newval
+//
+//                            }
+//                        )
+//                    )
+//                    .frame(width: 200, height: 20)
+//                    .padding(.bottom, 2)
+//                    .zIndex(100)
                 }
             }
         }

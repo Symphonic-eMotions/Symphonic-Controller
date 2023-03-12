@@ -99,7 +99,7 @@ enum SessionDisplay: Hashable {
 class SessionSettings: Identifiable {
     
     //End value imageMax to imageDifference
-    var imageMax: Int
+    var imageMaxLoaded: Int
     
     //User input light buttons
     //Increment or decrement imageMaxLightPart with this value
@@ -110,7 +110,7 @@ class SessionSettings: Identifiable {
     var imageMaxLightPart: Int
     
     //End value imageFeedback to imageDifference
-    var imageFeedback: Float
+    var imageFeedbackLoaded: Float
     //Movement / distance buttons fill these
     var imageFeedbackDisctancePart: Float
     
@@ -129,11 +129,11 @@ class SessionSettings: Identifiable {
         calibrationPartMeterSteps: Int,
         skin: InstrumentsSet.Skin?
     ){
-        self.imageMax = imageMax
+        self.imageMaxLoaded = imageMax
         self.imageMaxStepSizeLight = imageMaxStepSizeLight
         self.imageMaxStepAmountLight = imageMaxStepAmountLight
         self.imageMaxLightPart = imageMaxLightPart
-        self.imageFeedback = imageFeedback
+        self.imageFeedbackLoaded = imageFeedback
         self.imageFeedbackDisctancePart = imageFeedbackDisctancePart
         self.calibrationPartMeterSteps = calibrationPartMeterSteps
         

@@ -64,8 +64,8 @@ class ImageDifference {
         self.init(
             rowCount: instrumentsSet.rows,
             columnCount: instrumentsSet.columns,
-            maxValue: sessionSetting.imageMax,
-            feedback: sessionSetting.imageFeedback
+            maxValue: sessionSetting.imageMaxLoaded,
+            feedback: sessionSetting.imageFeedbackLoaded
         )
     }
     
@@ -74,8 +74,8 @@ class ImageDifference {
         self.init(
             rowCount: setSetting.gridRows,
             columnCount: setSetting.gridColumns,
-            maxValue: sessionSetting.imageMax,
-            feedback: sessionSetting.imageFeedback
+            maxValue: sessionSetting.imageMaxLoaded,
+            feedback: sessionSetting.imageFeedbackLoaded
         )
     }
     

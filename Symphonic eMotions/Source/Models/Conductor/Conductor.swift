@@ -86,7 +86,6 @@ final class Conductor {
     private var maxIndexParts: [String: Int] = [:]
     //keep track of delta start times
     private var deltaStartTimePart: [String: DispatchTime] = [:]
-    private var clock = ContinuousClock()
     
     //TODO: Make generic container for samplers and synths
     //Sampler container
@@ -1345,8 +1344,8 @@ final class Conductor {
                     //Precalculated times per index
                     let deltaTimes = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetDeltaTiimes
                     
-                    print(part.id)
-                    print(deltaTimes as Any)
+//                    print(part.id)
+//                    print(deltaTimes as Any)
                     
 //                    guard !deltaTimes!.isEmpty else { return }
                     

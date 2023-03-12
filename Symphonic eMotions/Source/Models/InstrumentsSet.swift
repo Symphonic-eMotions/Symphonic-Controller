@@ -193,10 +193,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         tracks.first { $0.id == id }
     }
     
-    func slaveTracks(for id: String) -> [Track] {
-        tracks.filter { $0.masterTrackId == id }
-    }
-    
     func instrumentInLevel(_ level: Double, _ Instrument: String) -> Bool {
         
         let levelInt = Int(level)
@@ -205,16 +201,6 @@ struct InstrumentsSet: Identifiable, Decodable {
             return true
         }
         return false
-    }
-    
-    func isSwiftUISkinSet() -> Bool {
-
-        if playViewImages == nil {
-            return false
-        }
-        else {
-            return true
-        }
     }
 }
 
