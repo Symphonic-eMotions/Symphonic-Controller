@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-struct OpacitySlider: View {
-    @Binding var value: Float
-    init(
-        value: Binding<Float>
-    ) { _value = value }
-    var body: some View {
-        GeometryReader { geometry in
-                
-            ZStack{
-                HStack {
-                    Slider(value: $value, in: 0...1)
-                        .foregroundColor(.secondary)
-                        .foregroundColor(.white)
-                        .font(.subheadline)
-                }
-            }
-        }
-    }
-}
-
 struct SpriteKitTransport: View {
     
     @ObservedObject var mainViewModel: MainViewModel

@@ -79,7 +79,8 @@ struct PlayView: View {
                                 get: { playViewModel.imageDifference.feedback.value },
                                 set: { playViewModel.imageDifference.feedback.send($0) }
                             ),
-                            showsSeparator: false
+                            showsSeparator: false,
+                            withPercentage: 0.6
                         )
                         
                         SliderView(
@@ -91,23 +92,46 @@ struct PlayView: View {
                                 ),
                             minValue: 1,
                             maxValue: 255,
-                            showsSeparator: false
+                            showsSeparator: false,
+                            withPercentage: 0.6
                         )
                         
-                        EMButton(action: {
-                            if playViewModel.conductor.isConductorPlayingSubject.value {
-                                playViewModel.conductor.togglePlayEngineAndTracks(
-                                    currentSetLevel: 0, setSettings: self.playViewModel.setSettings
-                                )
-                            }
-                            else{
-                                self.mainViewUpdate = .calibration
-                            }
-                        }, color: .accentColor, isSolid: false, maxWidth: 50) {
-                            Label("", systemImage: "hand.wave")
-                                .blur(radius: 1)
-                        }
+//                        EMButton(action: {
+//                            if playViewModel.conductor.isConductorPlayingSubject.value {
+//                                playViewModel.conductor.togglePlayEngineAndTracks(
+//                                    currentSetLevel: 0, setSettings: self.playViewModel.setSettings
+//                                )
+//                            }
+//                            else{
+//                                self.mainViewUpdate = .calibration
+//                            }
+//                        }, color: .accentColor, isSolid: false, maxWidth: 50) {
+//                            Label("", systemImage: "hand.wave")
+//                                .blur(radius: 1)
+//                        }
                     }
+                    
+                    SliderView(
+                        label: "Sensitivity",
+                        value:
+                            Binding(
+                                get: {
+                                    playViewModel.imageDifference.sensitivitySubject.value
+                                },
+                                set: {
+                                    playViewModel.imageDifference.sensitivitySubject.send($0)
+                                    let maxValue = playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
+                                    playViewModel.imageDifference.maxValueSubject.send(maxValue)
+                                    let feedback = playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
+                                    playViewModel.imageDifference.feedback.send(feedback)
+                                }
+                            ),
+                        minValue: 0,
+                        maxValue: 1,
+                        showsSeparator: false,
+                        withPercentage: 0.8
+                    )
+                    
                 }
                 
                 //Video preview and instrument locations
@@ -183,17 +207,26 @@ struct SliderView: View {
     var minValue: Float = 0
     var maxValue: Float = 1
     var showsSeparator: Bool
+    var withPercentage: CGFloat = 0.7
     
-    init(label: String, value: Binding<Float>, minValue: Float = 0, maxValue: Float = 1, showsSeparator: Bool = true) {
-        self.init(label: LocalizedStringKey(label), value: value, minValue: minValue, maxValue: maxValue, showsSeparator: showsSeparator)
+    init(
+        label: String,
+        value: Binding<Float>,
+        minValue: Float = 0,
+        maxValue: Float = 1,
+        showsSeparator: Bool = true,
+        withPercentage: CGFloat = 0.7
+    ) {
+        self.init(label: LocalizedStringKey(label), value: value, minValue: minValue, maxValue: maxValue, showsSeparator: showsSeparator, withPercentage: withPercentage)
     }
     
-    init(label: LocalizedStringKey, value: Binding<Float>, minValue: Float = 0, maxValue: Float = 1, showsSeparator: Bool = true) {
+    init(label: LocalizedStringKey, value: Binding<Float>, minValue: Float = 0, maxValue: Float = 1, showsSeparator: Bool = true, withPercentage: CGFloat) {
         self.label = label
         _value = value
         self.maxValue = minValue
         self.maxValue = maxValue
         self.showsSeparator = showsSeparator
+        self.withPercentage = withPercentage
     }
     
     var body: some View {
@@ -210,7 +243,7 @@ struct SliderView: View {
                     Spacer()
                     Slider(value: $value, in: minValue...maxValue)
                         .foregroundColor(.accentColor)
-                        .frame(width: geometry.size.width * 0.7)
+                        .frame(width: geometry.size.width * withPercentage)
                 }
                 .padding(.horizontal)
                 

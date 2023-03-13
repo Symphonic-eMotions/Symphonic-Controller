@@ -290,7 +290,8 @@ final class AppUtils {
             fiveRows[0],fiveRows[0],fiveRows[0],fiveRows[0],
             fiveRows[1],fiveRows[1],fiveRows[1],fiveRows[1],
             fiveRows[2],fiveRows[2],fiveRows[2],fiveRows[2],
-            fiveRows[3],fiveRows[3],fiveRows[3],fiveRows[3]
+            fiveRows[3],fiveRows[3],fiveRows[3],fiveRows[3],
+            fiveRows[4],fiveRows[4],fiveRows[4],fiveRows[4]
         ]
         
         for (index,value) in areaOfInterest.enumerated() {

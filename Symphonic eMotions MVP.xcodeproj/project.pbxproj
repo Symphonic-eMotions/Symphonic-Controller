@@ -41,7 +41,7 @@
 		7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */; };
 		7C6FC4642747D52700BD64D6 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4632747D52700BD64D6 /* Sets.swift */; };
 		7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4652747DF6200BD64D6 /* Genres.swift */; };
-		7C7502E929BDE89C00F55CA3 /* CalibratorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502E829BDE89C00F55CA3 /* CalibratorSlider.swift */; };
+		7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
 		7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */; };
@@ -150,7 +150,7 @@
 		7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackView.swift; sourceTree = "<group>"; };
 		7C6FC4632747D52700BD64D6 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
-		7C7502E829BDE89C00F55CA3 /* CalibratorSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibratorSlider.swift; sourceTree = "<group>"; };
+		7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibratorView.swift; sourceTree = "<group>"; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
 		7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanhDistortionEffect.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		7CB5835A292FAE72000C46FF /* Calibration */ = {
 			isa = PBXGroup;
 			children = (
-				7C7502E829BDE89C00F55CA3 /* CalibratorSlider.swift */,
+				7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */,
 				7CB5835B292FAE72000C46FF /* CalibrationView.swift */,
 				7CB5835C292FAE72000C46FF /* CalibrateLPartMeterView.swift */,
 				7CB5835D292FAE72000C46FF /* CalibrationModel.swift */,
@@ -746,7 +746,7 @@
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */,
 				7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */,
-				7C7502E929BDE89C00F55CA3 /* CalibratorSlider.swift in Sources */,
+				7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */,
 				7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */,
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,

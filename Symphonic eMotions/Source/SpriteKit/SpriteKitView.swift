@@ -170,8 +170,8 @@ struct SpriteKitView: View {
                     }
                     
                     //The calibrator slider and video slider
-                    if true {
-                        CalibratorSlider(
+                    if false {
+                        CalibratorView(
                             mainViewModel: mainViewModel,
                              playViewModel: playViewModel
                         )

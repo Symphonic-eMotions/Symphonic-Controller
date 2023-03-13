@@ -11,19 +11,14 @@ import SwiftUI
 struct MainView: View {
     
     @ObservedObject var viewModel: MainViewModel
-    
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
-    
-    //This doesn't work when included in swiftUIState
-    @State var setInfoLocalState = SetInfoLocalState()
-    
-    
+    //This needs to be replaced with sessionDisplay
     @State private var mainViewUpdate: BuildSettings.ActiveView
-    
+    //Set info page vars
+    @State var setInfoLocalState = SetInfoLocalState()
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
-    
     //HomeKit connection for external lamp control
     @StateObject private var homeKitStore: HomeKitManager = .init()
     
