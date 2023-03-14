@@ -45,8 +45,7 @@ struct eMotionApp: App {
                             instrumentSet: instrumentSet
                         ),
                         imageDifference: ImageDifference(
-                            instrumentsSet: instrumentSet,
-                            sessionSetting: sessionSettings
+                            instrumentsSet: instrumentSet
                         ),
                         setCollection: setCollection,
                         currentInstrumentsSet: instrumentSet,

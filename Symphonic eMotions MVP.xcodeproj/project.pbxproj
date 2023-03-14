@@ -42,6 +42,10 @@
 		7C6FC4642747D52700BD64D6 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4632747D52700BD64D6 /* Sets.swift */; };
 		7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4652747DF6200BD64D6 /* Genres.swift */; };
 		7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */; };
+		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
+		7C7502EE29C083F300F55CA3 /* BinaryFileSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502ED29C083F300F55CA3 /* BinaryFileSelectionView.swift */; };
+		7C7502F029C086AC00F55CA3 /* FilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */; };
+		7C7502F229C08B8400F55CA3 /* EditorHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
 		7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */; };
@@ -151,6 +155,10 @@
 		7C6FC4632747D52700BD64D6 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibratorView.swift; sourceTree = "<group>"; };
+		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		7C7502ED29C083F300F55CA3 /* BinaryFileSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryFileSelectionView.swift; sourceTree = "<group>"; };
+		7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerView.swift; sourceTree = "<group>"; };
+		7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorHomeView.swift; sourceTree = "<group>"; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
 		7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanhDistortionEffect.swift; sourceTree = "<group>"; };
@@ -316,6 +324,17 @@
 				7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */,
 			);
 			path = PartFeedbackView;
+			sourceTree = "<group>";
+		};
+		7C7502EA29C07C1600F55CA3 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */,
+				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
+				7C7502ED29C083F300F55CA3 /* BinaryFileSelectionView.swift */,
+				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
+			);
+			path = Editor;
 			sourceTree = "<group>";
 		};
 		7CB5835A292FAE72000C46FF /* Calibration */ = {
@@ -544,8 +563,9 @@
 			isa = PBXGroup;
 			children = (
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
-				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
+				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
+				7C7502EA29C07C1600F55CA3 /* Editor */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CB5835A292FAE72000C46FF /* Calibration */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
@@ -686,11 +706,13 @@
 				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
+				7C7502F029C086AC00F55CA3 /* FilePickerView.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
 				16687D8C27FF1F8A006FFD5A /* PlayerControlsViewModel.swift in Sources */,
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
+				7C7502F229C08B8400F55CA3 /* EditorHomeView.swift in Sources */,
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
 				7CB5834F292FACC6000C46FF /* SavedSettingsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
@@ -735,6 +757,7 @@
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
 				7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
+				7C7502EE29C083F300F55CA3 /* BinaryFileSelectionView.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,
 				7CB58361292FAE72000C46FF /* CalibrationModel.swift in Sources */,
 				7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */,
@@ -749,6 +772,7 @@
 				7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */,
 				7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */,
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
+				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
 				C084FFEE26B31534009A4D0C /* SidebarView.swift in Sources */,

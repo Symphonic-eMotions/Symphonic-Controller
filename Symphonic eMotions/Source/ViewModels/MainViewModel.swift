@@ -41,6 +41,10 @@ final class MainViewModel: ObservableObject {
         sessionSettings: SessionSettings
     ) {
         
+        let currentSensitivity = mainState.imageDifference.sensitivitySubject.value
+        
+        print("Current sensitivit: \(mainState.imageDifference.sensitivitySubject.value)")
+        
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
         
@@ -72,26 +76,24 @@ final class MainViewModel: ObservableObject {
                 sessionSettings: sessionSettings,
                 setSettings: setSettings,
                 imageDifference: ImageDifference(
-                    setSetting: setSettings,
-                    sessionSetting: sessionSettings
+                    setSetting: setSettings
                 ),
                 setCollection: mainState.setCollection,
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )
             
-            //Here we are
 //            mainState.buildSettings.activeView = .playView
             
-            print("---> LOADING NEW SETSETTINGS")
+            print("XXX mainState.buildSettings.activeView is OFF")
+            print("YYY loading sensitivity \(currentSensitivity) to imageDifference subjects")
             
-//            if mainState.buildSettings.mainSettings == .muur {
-                mainState.buildSettings.activeView = .playView
-//            }
-            
-            //The engine startup is located in the FullPlayView.onAppear
-            //Or in the transport button PlayView
-            print("\(mainState.setSettings.setName) \(mainState.setSettings.gridColumns)x\(mainState.setSettings.gridRows) Session maxValue: \(mainState.sessionSettings.imageMaxLoaded) imageFeedback: \(mainState.sessionSettings.imageFeedbackLoaded)")
+            mainState.imageDifference.sensitivitySubject.value = currentSensitivity
+            let feedback = mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
+            mainState.imageDifference.feedback.send(feedback)
+            let maxValue = mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
+            mainState.imageDifference.maxValueSubject.send(maxValue)
+
         }
     }
     

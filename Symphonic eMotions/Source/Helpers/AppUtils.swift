@@ -210,17 +210,17 @@ final class AppUtils {
     
     static func setSessionSetting() -> SessionSettings {
         
-        let storeSessionSettings = StoreSessionSettings.readSessionSettings(fileName: "SeM-settings")
+        let readSessionSettings = StoreSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
-        print("setSessionSetting storeSessionSettings.imageMax \(storeSessionSettings.imageMax) storeSessionSettings.imageFeedback \(storeSessionSettings.imageFeedback)")
+        print("setSessionSetting \nreadSessionSettings.imageMax \(readSessionSettings.imageMax) \nreadSessionSettings.imageFeedback \(readSessionSettings.imageFeedback) \nreadSessionSettingsSensitivity \(readSessionSettings.sensitivity)")
         
         let sessionSetting = SessionSettings(
-            imageMax: storeSessionSettings.imageMax,
+            imageMax: readSessionSettings.imageMax,
             imageMaxStepSizeLight: 5,
             imageMaxStepAmountLight: 5,
-            imageMaxLightPart: storeSessionSettings.imageMaxLightPart,
-            imageFeedback: storeSessionSettings.imageFeedback,
-            imageFeedbackDisctancePart: storeSessionSettings.imageFeedback,
+            imageMaxLightPart: readSessionSettings.imageMaxLightPart,
+            imageFeedback: readSessionSettings.imageFeedback,
+            imageFeedbackDisctancePart: readSessionSettings.imageFeedback,
             calibrationPartMeterSteps: 12,
             skin: nil
         )
@@ -229,13 +229,14 @@ final class AppUtils {
     }
     
     static func createSessionFile(
-        imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float
+        imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float, sensitivity: Float
     ){
         let fileName: String = "SeM-settings"
         let storeSettings = StoreSessionSettings(
             imageMax: imageMax,
             imageMaxLightPart: imageMaxLightPart,
-            imageFeedback: imageFeedback
+            imageFeedback: imageFeedback,
+            sensitivity: sensitivity
         )
         
         StoreSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)

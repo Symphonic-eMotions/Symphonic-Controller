@@ -111,10 +111,10 @@ struct PlayView: View {
 //                        }
                     }
                     
-                    SliderView(
+                    SensitivitySliderView(
+                        playViewModel: playViewModel,
                         label: "Sensitivity",
-                        value:
-                            Binding(
+                        value: Binding(
                                 get: {
                                     playViewModel.imageDifference.sensitivitySubject.value
                                 },
@@ -203,24 +203,19 @@ struct SliderView: View {
     
     var label: LocalizedStringKey
     @Binding var value: Float
-    
     var minValue: Float = 0
     var maxValue: Float = 1
     var showsSeparator: Bool
     var withPercentage: CGFloat = 0.7
     
     init(
-        label: String,
+        label: LocalizedStringKey,
         value: Binding<Float>,
         minValue: Float = 0,
         maxValue: Float = 1,
         showsSeparator: Bool = true,
         withPercentage: CGFloat = 0.7
     ) {
-        self.init(label: LocalizedStringKey(label), value: value, minValue: minValue, maxValue: maxValue, showsSeparator: showsSeparator, withPercentage: withPercentage)
-    }
-    
-    init(label: LocalizedStringKey, value: Binding<Float>, minValue: Float = 0, maxValue: Float = 1, showsSeparator: Bool = true, withPercentage: CGFloat) {
         self.label = label
         _value = value
         self.maxValue = minValue
@@ -241,9 +236,86 @@ struct SliderView: View {
                             .font(.subheadline)
                     }
                     Spacer()
+                    
                     Slider(value: $value, in: minValue...maxValue)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * withPercentage)
+                
+                }
+                .padding(.horizontal)
+                
+                if showsSeparator {
+                    Rectangle()
+                        .fill(Color.secondary)
+                        .frame(height: 1.0)
+                }
+            }
+        }
+        .frame(height: 50.0)
+    }
+    
+}
+
+
+struct SensitivitySliderView: View {
+    
+    @ObservedObject var playViewModel: PlayViewModel
+    
+    var label: LocalizedStringKey
+    @Binding var value: Float
+    var minValue: Float = 0
+    var maxValue: Float = 1
+    var showsSeparator: Bool
+    var withPercentage: CGFloat = 0.7
+    
+    init(
+        playViewModel: PlayViewModel,
+        label: LocalizedStringKey,
+        value: Binding<Float>,
+        minValue: Float = 0,
+        maxValue: Float = 1,
+        showsSeparator: Bool = true,
+        withPercentage: CGFloat = 0.7
+    ) {
+        self.playViewModel = playViewModel
+        self.label = label
+        _value = value
+        self.maxValue = minValue
+        self.maxValue = maxValue
+        self.showsSeparator = showsSeparator
+        self.withPercentage = withPercentage
+    }
+    
+    var body: some View {
+        GeometryReader { geometry in
+            VStack {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(label)
+                            .font(.headline)
+                        Text("\(value)")
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                    }
+                    
+                    Spacer()
+                    //Write to session file (Sensitivity Slider)
+                    Slider(value: $value, in: minValue...maxValue, onEditingChanged: { changed in
+                        
+                            print("Sensitivity changed to: \(value)")
+                        
+                            AppUtils.createSessionFile(
+                                imageMax: self.playViewModel.imageDifference.maxValueSubject.value,
+                                imageMaxLightPart: 0,
+                                imageFeedback: self.playViewModel.imageDifference.feedback.value,
+                                sensitivity: value //self.playViewModel.imageDifference.sensitivitySubject.value
+                            )
+                        
+                        
+                        })
+                        .foregroundColor(.accentColor)
+                        .frame(width: geometry.size.width * withPercentage)
+                
                 }
                 .padding(.horizontal)
                 

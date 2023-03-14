@@ -15,8 +15,10 @@ struct MainView: View {
     @Binding public var sessionDisplay: SessionDisplay
     //This needs to be replaced with sessionDisplay
     @State private var mainViewUpdate: BuildSettings.ActiveView
-    //Set info page vars
+    //Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState()
+    //Set editor vars from navigation
+    @State var setEditLocalState = SetEditLocalState()
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
     //HomeKit connection for external lamp control
@@ -91,15 +93,16 @@ struct MainView: View {
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
                                     instrumentsSet: instrumentsSet,
-                                    sessionSettings: AppUtils.setSessionSetting()
+                                    sessionSettings: viewModel.mainState.sessionSettings
                                 )
                             }
                         ),
                         sessionDisplay: $sessionDisplay,
-                        setInfoLocalState: $setInfoLocalState
+                        setInfoLocalState: $setInfoLocalState,
+                        setEditLocalState: $setEditLocalState
                     ).environmentObject(fileController)
                     
-                    //SeM Pro interface with editor
+                    //SeM Pro interface with interaction editor
                     if sessionDisplay == .swiftUI {
                         
                         PlayView(
@@ -149,7 +152,7 @@ struct MainView: View {
                                 currentInstrumentsSetIsChanged: { instrumentsSet in
                                     viewModel.currentModelInstrumentsSetChanged(
                                         instrumentsSet: instrumentsSet,
-                                        sessionSettings: AppUtils.setSessionSetting()
+                                        sessionSettings: viewModel.mainState.sessionSettings
                                     )
                                 }
                                 
@@ -177,6 +180,51 @@ struct MainView: View {
                 ),
                 mainViewUpdate: $mainViewUpdate
             )
+        }
+        else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
+            
+            NavigationView {
+                SidebarView(
+                    viewModel: viewModel,
+                    sidebarViewModel: SidebarViewModel(
+                        state: SidebarViewState(
+                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
+                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
+                            buildSettings: viewModel.mainState.buildSettings
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet,
+                                sessionSettings: viewModel.mainState.sessionSettings
+                            )
+                        }
+                    ),
+                    sessionDisplay: $sessionDisplay,
+                    setInfoLocalState: $setInfoLocalState,
+                    setEditLocalState: $setEditLocalState
+                ).environmentObject(fileController)
+                
+                if sessionDisplay == .editor {
+                    
+                    EditorHomeView()
+                }
+                else if sessionDisplay == .setEditor {
+                    
+                    EditorView(
+                        setEditModel: SetEditModel(
+                            setEditLocalState: $setEditLocalState,
+                            setEditState: SetEditState(setCollections: viewModel.mainState.setCollection), currentInstrumentsSetIsChanged: { instrumentsSet in
+                                viewModel.currentModelInstrumentsSetChanged(
+                                    instrumentsSet: instrumentsSet,
+                                    sessionSettings: viewModel.mainState.sessionSettings
+                                )
+                            }
+                        ),
+                        sessionDisplay: $sessionDisplay
+                    )
+                }
+            }
+            .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
         
         else if sessionDisplay == .muur {

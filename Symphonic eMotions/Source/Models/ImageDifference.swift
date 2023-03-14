@@ -41,11 +41,11 @@ class ImageDifference {
     
     var sensitivitySubject = CurrentValueSubject<Float, Never>(0.99)
     /// Kan later aan bijvoorbeeld een slider hangen
-    var maxValueSubject = CurrentValueSubject<Int, Never>(39)
+    var maxValueSubject = CurrentValueSubject<Int, Never>(50)
     /// Kan later aan bijvoorbeeld een slider hangen
-    var feedback = CurrentValueSubject<Float, Never>(0.39)
+    var feedback = CurrentValueSubject<Float, Never>(0.50)
     
-    private init(rowCount: Int, columnCount: Int, maxValue: Int = 38, feedback: Float = 0.38) {
+    private init(rowCount: Int, columnCount: Int, maxValue: Int = 50, feedback: Float = 0.50) {
         
         self.rowCount = CGFloat(rowCount)
         self.columnCount = CGFloat(columnCount)
@@ -61,22 +61,18 @@ class ImageDifference {
     }
     
     //old instrument set version
-    convenience init(instrumentsSet: InstrumentsSet, sessionSetting: SessionSettings) {
+    convenience init(instrumentsSet: InstrumentsSet) {
         self.init(
             rowCount: instrumentsSet.rows,
-            columnCount: instrumentsSet.columns,
-            maxValue: sessionSetting.imageMaxLoaded,
-            feedback: sessionSetting.imageFeedbackLoaded
+            columnCount: instrumentsSet.columns
         )
     }
     
     //New set / session settings
-    convenience init(setSetting: SetSettings, sessionSetting: SessionSettings){
+    convenience init(setSetting: SetSettings){
         self.init(
             rowCount: setSetting.gridRows,
-            columnCount: setSetting.gridColumns,
-            maxValue: sessionSetting.imageMaxLoaded,
-            feedback: sessionSetting.imageFeedbackLoaded
+            columnCount: setSetting.gridColumns
         )
     }
     

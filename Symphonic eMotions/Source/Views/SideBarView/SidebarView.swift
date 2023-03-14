@@ -42,6 +42,8 @@ struct SidebarView: View {
     @Binding public var sessionDisplay: SessionDisplay
     
     @Binding public var setInfoLocalState: SetInfoLocalState
+    
+    @Binding public var setEditLocalState: SetEditLocalState
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -59,7 +61,8 @@ struct SidebarView: View {
 //                            rowSelected: sidebarViewModel.currentInstrumentsSetIsChanged
                         ),
                     sessionDisplay: $sessionDisplay,
-                    setInfoLocalState: $setInfoLocalState
+                    setInfoLocalState: $setInfoLocalState,
+                    setEditLocalState: $setEditLocalState
                 ).environmentObject(fileController)
                 Spacer()
             }

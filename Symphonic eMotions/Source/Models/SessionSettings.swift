@@ -10,14 +10,16 @@ import SwiftUI
 
 struct StoreSessionSettings: Codable {
     
+    var sensitivity: Float
     var imageMax: Int
     var imageMaxLightPart: Int
     var imageFeedback: Float
     
-    init(imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float){
+    init(imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float, sensitivity: Float){
         self.imageMax = imageMax
         self.imageMaxLightPart = imageMaxLightPart
         self.imageFeedback = imageFeedback
+        self.sensitivity = sensitivity
     }
     
     static func writeSessionSettings(fileName: String, storeSessionSettings: StoreSessionSettings){
@@ -41,7 +43,7 @@ struct StoreSessionSettings: Codable {
         
         //Default settings to be over written by actual values
         var storeSessionSettings: StoreSessionSettings = StoreSessionSettings(
-            imageMax: 40, imageMaxLightPart: 0,  imageFeedback: 0.4)
+            imageMax: 40, imageMaxLightPart: 0,  imageFeedback: 0.4, sensitivity: 0.9)
 
         let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = pathURL[0]
@@ -56,6 +58,7 @@ struct StoreSessionSettings: Codable {
                 storeSessionSettings.imageMax = storeSessionSettings.imageMax + decoded.imageMaxLightPart
                 storeSessionSettings.imageMaxLightPart = decoded.imageMaxLightPart
                 storeSessionSettings.imageFeedback = decoded.imageFeedback
+                storeSessionSettings.sensitivity = decoded.sensitivity
             }
             catch{
                 print("Unexpected error InstrumentsSet withJSON: \(error).")
@@ -75,6 +78,8 @@ enum SessionDisplay: Hashable {
     case swiftUI
     case setInfo
     case spriteKit
+    case editor
+    case setEditor
     case calibrator
     case muur
     
@@ -88,6 +93,10 @@ enum SessionDisplay: Hashable {
             return "Game Skin"
         case .setInfo:
             return "Set information"
+        case .editor:
+            return "Editor"
+        case .setEditor:
+            return "Set editor"
         case .calibrator:
             return "Kalibrator!"
         case .muur:

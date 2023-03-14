@@ -10,12 +10,14 @@ import SwiftUI
 struct SetInfoLocalState {
     var setName: String
     var setConfig: String
+    var sideBarHead: String
     //What Skin WILL the set load
     var loadSessionDisplay: SessionDisplay
     
     init(){
         self.setName = ""
         self.setConfig = ""
+        self.sideBarHead = "Sets"
         self.loadSessionDisplay = .swiftUI
     }
 }

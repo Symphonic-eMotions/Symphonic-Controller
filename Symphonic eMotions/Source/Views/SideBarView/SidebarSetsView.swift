@@ -62,6 +62,8 @@ struct SidebarSetsView: View {
     
     @Binding public var setInfoLocalState: SetInfoLocalState
     
+    @Binding public var setEditLocalState: SetEditLocalState
+    
     var body: some View {
         
         //Pass Documents folder URL for saved versions
@@ -69,11 +71,19 @@ struct SidebarSetsView: View {
 //        let _ = print(documentsFolder.description)
         
         VStack(alignment: .leading) {
-            Text("Sets")
+            
+            Text(setInfoLocalState.sideBarHead)
                 .font(.largeTitle)
                 .onTapGesture {
                     sessionDisplay = .home
                     setInfoLocalState.setName = "home"
+                    setInfoLocalState.sideBarHead = "Sets"
+                }
+                .onLongPressGesture{
+                    sessionDisplay = .editor
+                    setInfoLocalState.setName = "home"
+                    setEditLocalState.setName = "editor"
+                    setInfoLocalState.sideBarHead = "Set Editor"
                 }
             
             ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
@@ -85,11 +95,21 @@ struct SidebarSetsView: View {
                     
                     viewModel.tapStopAudioEngine()
                     
-                    let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
-                    setInfoLocalState.setName = set.name
-                    setInfoLocalState.setConfig = set.config
-                    
-                    sessionDisplay = .setInfo
+                    //The brand new SeM File editor
+                    if sessionDisplay == .editor || sessionDisplay == .setEditor {
+                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
+                        setEditLocalState.setName = set.name
+                        setEditLocalState.setConfig = set.config
+                        sessionDisplay = .setEditor
+                        
+                    }
+                    else {
+                        //Loading for setInfoView
+                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
+                        setInfoLocalState.setName = set.name
+                        setInfoLocalState.setConfig = set.config
+                        sessionDisplay = .setInfo
+                    }
                 }
             }
         }

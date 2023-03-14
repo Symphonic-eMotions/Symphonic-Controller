@@ -136,7 +136,8 @@ struct  CalibrationView: View {
                                     AppUtils.createSessionFile(
                                         imageMax: self.calibrationModel.imageDifference.maxValueSubject.value,
                                         imageMaxLightPart: self.calibrationModel.calibrationState.sessionSettings.imageMaxLightPart,
-                                        imageFeedback: self.calibrationModel.imageDifference.feedback.value
+                                        imageFeedback: self.calibrationModel.imageDifference.feedback.value,
+                                        sensitivity: self.calibrationModel.imageDifference.sensitivitySubject.value
                                     )
                                     self.mainViewUpdate = .playView
                                     
