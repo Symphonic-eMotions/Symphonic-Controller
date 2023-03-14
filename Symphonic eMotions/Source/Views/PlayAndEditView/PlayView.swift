@@ -120,12 +120,8 @@ struct PlayView: View {
                                 },
                                 set: {
                                     playViewModel.imageDifference.sensitivitySubject.send($0)
-//                                    let maxValue =
                                     playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
-//                                    playViewModel.imageDifference.maxValueSubject.send(maxValue)
-//                                    let feedback =
                                     playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
-//                                    playViewModel.imageDifference.feedback.send(feedback)
                                 }
                             ),
                         minValue: 0,

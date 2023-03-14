@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OpacitySliderVertical: View {
+struct VerticalSlider: View {
     
     @Binding var value: Float
     init(
@@ -15,37 +15,18 @@ struct OpacitySliderVertical: View {
     ) { _value = value }
     var body: some View {
         
-        Slider(value: $value, in: 0...1)
-            .foregroundColor(.secondary)
-            .foregroundColor(.white)
-            .font(.subheadline)
-    }
-}
-
-//TODO: Make vertical
-struct OpacitySlider: View {
-    
-    @Binding var value: Float
-    
-    var body: some View {
-        GeometryReader { geometry in
-            
-        }
-    }
-}
-
-struct CalibratorSlider: View {
-    
-    @Binding var value: Float
-    init(
-        value: Binding<Float>
-    ) { _value = value }
-    var body: some View {
+        Spacer()
         
         Slider(value: $value, in: 0...1)
             .foregroundColor(.secondary)
             .foregroundColor(.white)
             .font(.subheadline)
+        
+        Text("Sensitiviy")
+            .foregroundColor(.secondary)
+            .foregroundColor(.white)
+            .font(.subheadline)
+            .scaleEffect(x: -1, y: 1, anchor: .center)
     }
 }
 
@@ -56,16 +37,40 @@ struct SensitivityView: View {
     
     var body: some View {
         
-        OpacitySliderVertical(value: Binding(
-            get: {playViewModel.playViewState.displayOpacity},
-            set: { (newval) in
-                self.playViewModel.playViewState.displayOpacity = newval
+            
+            HStack{
                 
+                Spacer()
+//                Spacer()
+                
+                //            VerticalSlider(value: Binding(
+                //                get: {playViewModel.playViewState.displayOpacity},
+                //                set: { (newval) in
+                //                    self.playViewModel.playViewState.displayOpacity = newval
+                //
+                //                }
+                //            ))
+                //            .frame(width: .infinity, height: 20)
+                //            .padding(.bottom, 2)
+                //            .zIndex(100)
+                
+                VerticalSlider(value: Binding(
+                    get: {
+                        playViewModel.imageDifference.sensitivitySubject.value
+                    },
+                    set: {
+                        playViewModel.imageDifference.sensitivitySubject.send($0)
+                        playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
+                        playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
+                    }
+                ))
+                .frame(width: 400, height: 20)
+//                .padding(.trailing)
+                .zIndex(100)
+                .border(.green)
+                .rotationEffect(Angle(degrees: 90))
+                .scaleEffect(x: 1, y: -1, anchor: .center)
             }
-        ))
-        .frame(width: 200, height: 20)
-        .padding(.bottom, 2)
-        .zIndex(100)
-        
-    }
+        }
+    
 }

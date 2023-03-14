@@ -14,6 +14,7 @@ struct SpriteKitView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
+    @State var showSettings: Bool = false
     let transportHeigth: CGFloat = 50
     
     //Create the complete 2D "gaming" interface
@@ -168,9 +169,12 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aMidiClip = value.1
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
+                    .onLongPressGesture {
+                        self.showSettings.toggle()
+                    }
                     
                     //The calibrator slider and video slider
-                    if false {
+                    if showSettings {
                         SensitivityView(
                             mainViewModel: mainViewModel,
                              playViewModel: playViewModel
