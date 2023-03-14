@@ -191,19 +191,44 @@ class ImageDifference {
         self.previousFrame = monoImage
     }
 
-    //Mark Sensitivity calculations
-    func sensitivityToMaxValue(sensitivity: Float) -> Int {
+    
+    //Functions
+    func convertFastLinearToScaledFloat(sensitivity: Float) -> Float {
+        let clampedValue = max(0, min(sensitivity, 1)) // Clamp the value between 0 and 1
+        let exponentialValue = pow(clampedValue, 2) // Apply exponential function (squared)
+        let logarithmicValue = log(clampedValue * 99 + 1) // Apply logarithmic function (scaled and shifted)
+        let scaledValue = exponentialValue * logarithmicValue * 0.40 + 0.09 // Combine the exponential and logarithmic functions
+        return scaledValue
+    }
+
+    
+    func exponetialRanged(sensitivity: Float) -> Float {
+        
+        let clampedValue = max(0, min(sensitivity, 1)) // Clamp the value between 0 and 1
+        let exponentialValue = pow(clampedValue, 2) // Apply exponential function (squared)
+//        let logarithmicValue = log10(exponentialValue + 1) / log10(2)
+        let reversedValue = 1 - exponentialValue // Reverse the value
+        let scaledValue = reversedValue * 0.40 + 0.09 // Scale the value between 0.09 and 0.85
+        return scaledValue
+    }
+ 
+    func lineairReverserd(sensitivity: Float) -> Int {
         let clampedValue = max(0, min(sensitivity, 1)) // Clamp the value between 0 and 1
         let reversedValue = 1 - clampedValue // Reverse the value
         let scaledValue = Int(reversedValue * 185) + 15 // Scale the value between 15 and 200
         return scaledValue
     }
     
-    func sensitivityToFeedback(sensitivity: Float) -> Float {
-        let clampedValue = max(0, min(sensitivity, 1)) // Clamp the value between 0 and 1
-        let exponentialValue = pow(clampedValue, 2) // Apply exponential function (squared)
-        let reversedValue = 1 - exponentialValue // Reverse the value
-        let scaledValue = reversedValue * 0.40 + 0.09 // Scale the value between 0.09 and 0.85
-        return scaledValue
+    //Mark Sensitivity calculations
+    func sensitivityToMaxValue(sensitivity: Float) -> Void {
+        
+        self.maxValueSubject.send( lineairReverserd(sensitivity: sensitivity) )
     }
+    
+    func sensitivityToFeedback(sensitivity: Float) -> Void {
+        
+        self.feedback.send(exponetialRanged(sensitivity: sensitivity))
+    }
+    
+    
 }

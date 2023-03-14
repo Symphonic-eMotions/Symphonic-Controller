@@ -41,7 +41,10 @@ final class MainViewModel: ObservableObject {
         sessionSettings: SessionSettings
     ) {
         
-        let currentSensitivity = sessionSettings.sensitivity
+        //Reload from file, the sensitivitySlider saves to file, not YET? to session
+        let sessionSettingsLoaded = AppUtils.setSessionSetting()
+        print("REMEMBER SESSION GETS RELOADED FROM FILE ON SET CHANGE")
+        let currentSensitivity = sessionSettingsLoaded.sensitivity
         
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
@@ -83,10 +86,12 @@ final class MainViewModel: ObservableObject {
             print("YYY loading sensitivity \(currentSensitivity) to imageDifference subjects")
             
             mainState.imageDifference.sensitivitySubject.value = currentSensitivity
-            let feedback = mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
-            mainState.imageDifference.feedback.send(feedback)
-            let maxValue = mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
-            mainState.imageDifference.maxValueSubject.send(maxValue)
+//            let feedback =
+            mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
+//            mainState.imageDifference.feedback.send(feedback)
+//            let maxValue =
+            mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
+//            mainState.imageDifference.maxValueSubject.send(maxValue)
 
         }
     }
