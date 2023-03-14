@@ -212,30 +212,17 @@ final class AppUtils {
         
         let readSessionSettings = StoreSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
-        print("setSessionSetting \nreadSessionSettings.imageMax \(readSessionSettings.imageMax) \nreadSessionSettings.imageFeedback \(readSessionSettings.imageFeedback) \nreadSessionSettingsSensitivity \(readSessionSettings.sensitivity)")
-        
         let sessionSetting = SessionSettings(
-            imageMax: readSessionSettings.imageMax,
-            imageMaxStepSizeLight: 5,
-            imageMaxStepAmountLight: 5,
-            imageMaxLightPart: readSessionSettings.imageMaxLightPart,
-            imageFeedback: readSessionSettings.imageFeedback,
-            imageFeedbackDisctancePart: readSessionSettings.imageFeedback,
-            calibrationPartMeterSteps: 12,
+            sensitivity: readSessionSettings.sensitivity,
             skin: nil
         )
         
         return sessionSetting
     }
     
-    static func createSessionFile(
-        imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float, sensitivity: Float
-    ){
+    static func createSessionFile(sensitivity: Float){
         let fileName: String = "SeM-settings"
         let storeSettings = StoreSessionSettings(
-            imageMax: imageMax,
-            imageMaxLightPart: imageMaxLightPart,
-            imageFeedback: imageFeedback,
             sensitivity: sensitivity
         )
         

@@ -41,9 +41,7 @@ final class MainViewModel: ObservableObject {
         sessionSettings: SessionSettings
     ) {
         
-        let currentSensitivity = mainState.imageDifference.sensitivitySubject.value
-        
-        print("Current sensitivit: \(mainState.imageDifference.sensitivitySubject.value)")
+        let currentSensitivity = sessionSettings.sensitivity
         
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
@@ -82,10 +80,6 @@ final class MainViewModel: ObservableObject {
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )
-            
-//            mainState.buildSettings.activeView = .playView
-            
-            print("XXX mainState.buildSettings.activeView is OFF")
             print("YYY loading sensitivity \(currentSensitivity) to imageDifference subjects")
             
             mainState.imageDifference.sensitivitySubject.value = currentSensitivity

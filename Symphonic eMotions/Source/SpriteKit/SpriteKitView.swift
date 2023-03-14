@@ -171,7 +171,7 @@ struct SpriteKitView: View {
                     
                     //The calibrator slider and video slider
                     if false {
-                        CalibratorView(
+                        SensitivityView(
                             mainViewModel: mainViewModel,
                              playViewModel: playViewModel
                         )

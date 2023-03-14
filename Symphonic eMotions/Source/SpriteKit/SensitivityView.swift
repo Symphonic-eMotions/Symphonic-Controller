@@ -49,7 +49,7 @@ struct CalibratorSlider: View {
     }
 }
 
-struct CalibratorView: View {
+struct SensitivityView: View {
     
     @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var playViewModel: PlayViewModel

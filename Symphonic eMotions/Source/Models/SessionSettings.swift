@@ -11,14 +11,8 @@ import SwiftUI
 struct StoreSessionSettings: Codable {
     
     var sensitivity: Float
-    var imageMax: Int
-    var imageMaxLightPart: Int
-    var imageFeedback: Float
     
-    init(imageMax: Int, imageMaxLightPart: Int, imageFeedback: Float, sensitivity: Float){
-        self.imageMax = imageMax
-        self.imageMaxLightPart = imageMaxLightPart
-        self.imageFeedback = imageFeedback
+    init(sensitivity: Float){
         self.sensitivity = sensitivity
     }
     
@@ -42,8 +36,7 @@ struct StoreSessionSettings: Codable {
     static func readSessionSettings(fileName: String) -> StoreSessionSettings {
         
         //Default settings to be over written by actual values
-        var storeSessionSettings: StoreSessionSettings = StoreSessionSettings(
-            imageMax: 40, imageMaxLightPart: 0,  imageFeedback: 0.4, sensitivity: 0.9)
+        var storeSessionSettings: StoreSessionSettings = StoreSessionSettings( sensitivity: 0.0 )
 
         let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = pathURL[0]
@@ -54,10 +47,6 @@ struct StoreSessionSettings: Codable {
             guard let data = try? Data(contentsOf: documentURL) else { return storeSessionSettings }
             do {
                 let decoded = try JSONDecoder().decode(StoreSessionSettings.self, from: data)
-                
-                storeSessionSettings.imageMax = storeSessionSettings.imageMax + decoded.imageMaxLightPart
-                storeSessionSettings.imageMaxLightPart = decoded.imageMaxLightPart
-                storeSessionSettings.imageFeedback = decoded.imageFeedback
                 storeSessionSettings.sensitivity = decoded.sensitivity
             }
             catch{
@@ -107,47 +96,14 @@ enum SessionDisplay: Hashable {
 
 class SessionSettings: Identifiable {
     
-    //End value imageMax to imageDifference
-    var imageMaxLoaded: Int
-    
-    //User input light buttons
-    //Increment or decrement imageMaxLightPart with this value
-    var imageMaxStepSizeLight: Int
-    //How many steps in both way from zero can be made
-    var imageMaxStepAmountLight: Int
-    //final light value to be added to end value
-    var imageMaxLightPart: Int
-    
-    //End value imageFeedback to imageDifference
-    var imageFeedbackLoaded: Float
-    //Movement / distance buttons fill these
-    var imageFeedbackDisctancePart: Float
-    
-    //How many steps does the part meter show
-    var calibrationPartMeterSteps: Int
-    
+    var sensitivity: Float
     var activeSkin: InstrumentsSet.Skin
     
     init(
-        imageMax: Int,
-        imageMaxStepSizeLight: Int,
-        imageMaxStepAmountLight: Int,
-        imageMaxLightPart: Int,
-        imageFeedback: Float,
-        imageFeedbackDisctancePart: Float,
-        calibrationPartMeterSteps: Int,
+        sensitivity: Float,
         skin: InstrumentsSet.Skin?
     ){
-        self.imageMaxLoaded = imageMax
-        self.imageMaxStepSizeLight = imageMaxStepSizeLight
-        self.imageMaxStepAmountLight = imageMaxStepAmountLight
-        self.imageMaxLightPart = imageMaxLightPart
-        self.imageFeedbackLoaded = imageFeedback
-        self.imageFeedbackDisctancePart = imageFeedbackDisctancePart
-        self.calibrationPartMeterSteps = calibrationPartMeterSteps
-        
-        
-        
+        self.sensitivity = sensitivity
         
         //We go Skinning!
         let instruments:[InstrumentsSet.Skin.Instrument] = [InstrumentsSet.Skin.Instrument(

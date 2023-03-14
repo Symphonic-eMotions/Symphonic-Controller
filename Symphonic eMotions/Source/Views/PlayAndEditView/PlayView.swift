@@ -301,17 +301,18 @@ struct SensitivitySliderView: View {
                     Spacer()
                     //Write to session file (Sensitivity Slider)
                     Slider(value: $value, in: minValue...maxValue, onEditingChanged: { changed in
-                        
-                            print("Sensitivity changed to: \(value)")
-                        
-                            AppUtils.createSessionFile(
-                                imageMax: self.playViewModel.imageDifference.maxValueSubject.value,
-                                imageMaxLightPart: 0,
-                                imageFeedback: self.playViewModel.imageDifference.feedback.value,
-                                sensitivity: value //self.playViewModel.imageDifference.sensitivitySubject.value
-                            )
-                        
-                        
+                            //Only on end of slide change
+                            if !changed {
+                                
+                                print("Sensitivity changed and stored to: \(value)")
+                                
+                                print("XXXXX Hier moet ook de sessie worden geupdate!!!!!!!!!!!!!!!")
+                                
+                                AppUtils.createSessionFile(
+                                    sensitivity: value //self.playViewModel.imageDifference.sensitivitySubject.value
+                                )
+                                
+                            }
                         })
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * withPercentage)

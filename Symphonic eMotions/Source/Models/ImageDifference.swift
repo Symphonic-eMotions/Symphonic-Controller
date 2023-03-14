@@ -203,7 +203,7 @@ class ImageDifference {
         let clampedValue = max(0, min(sensitivity, 1)) // Clamp the value between 0 and 1
         let exponentialValue = pow(clampedValue, 2) // Apply exponential function (squared)
         let reversedValue = 1 - exponentialValue // Reverse the value
-        let scaledValue = exponentialValue * 0.40 + 0.09 // Scale the value between 0.09 and 0.85
+        let scaledValue = reversedValue * 0.40 + 0.09 // Scale the value between 0.09 and 0.85
         return scaledValue
     }
 }

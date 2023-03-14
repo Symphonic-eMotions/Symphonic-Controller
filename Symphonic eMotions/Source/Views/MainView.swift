@@ -164,23 +164,6 @@ struct MainView: View {
                 .navigationViewStyle(DoubleColumnNavigationViewStyle())
             
         }
-        else if sessionDisplay  == .calibrator {
-            
-            CalibrationView(
-                calibrationModel: CalibrationModel(
-                    conductor: viewModel.conductor,
-                    calibrationState: CalibrationState(
-                        buildSettings: viewModel.mainState.buildSettings,
-                        sessionSettings: viewModel.mainState.sessionSettings
-                    ),
-                    imageDifference: $viewModel.mainState.imageDifference,
-                    setSettings: viewModel.mainState.setSettings,
-                    partFeedback: viewModel.partFeedback,
-                    partFeedbackState: PartFeedbackState()
-                ),
-                mainViewUpdate: $mainViewUpdate
-            )
-        }
         else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
             
             NavigationView {

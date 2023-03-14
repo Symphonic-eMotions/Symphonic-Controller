@@ -41,7 +41,7 @@
 		7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */; };
 		7C6FC4642747D52700BD64D6 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4632747D52700BD64D6 /* Sets.swift */; };
 		7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4652747DF6200BD64D6 /* Genres.swift */; };
-		7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */; };
+		7C7502E929BDE89C00F55CA3 /* SensitivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502E829BDE89C00F55CA3 /* SensitivityView.swift */; };
 		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
 		7C7502EE29C083F300F55CA3 /* BinaryFileSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502ED29C083F300F55CA3 /* BinaryFileSelectionView.swift */; };
 		7C7502F029C086AC00F55CA3 /* FilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */; };
@@ -62,10 +62,6 @@
 		7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58352292FAD2F000C46FF /* EditGridView.swift */; };
 		7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58354292FAD47000C46FF /* EditLevelView.swift */; };
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
-		7CB5835F292FAE72000C46FF /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5835B292FAE72000C46FF /* CalibrationView.swift */; };
-		7CB58360292FAE72000C46FF /* CalibrateLPartMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5835C292FAE72000C46FF /* CalibrateLPartMeterView.swift */; };
-		7CB58361292FAE72000C46FF /* CalibrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5835D292FAE72000C46FF /* CalibrationModel.swift */; };
-		7CB58362292FAE72000C46FF /* CalibrateLightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5835E292FAE72000C46FF /* CalibrateLightView.swift */; };
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
@@ -154,7 +150,7 @@
 		7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackView.swift; sourceTree = "<group>"; };
 		7C6FC4632747D52700BD64D6 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
-		7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibratorView.swift; sourceTree = "<group>"; };
+		7C7502E829BDE89C00F55CA3 /* SensitivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitivityView.swift; sourceTree = "<group>"; };
 		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		7C7502ED29C083F300F55CA3 /* BinaryFileSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryFileSelectionView.swift; sourceTree = "<group>"; };
 		7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerView.swift; sourceTree = "<group>"; };
@@ -175,10 +171,6 @@
 		7CB58352292FAD2F000C46FF /* EditGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGridView.swift; sourceTree = "<group>"; };
 		7CB58354292FAD47000C46FF /* EditLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLevelView.swift; sourceTree = "<group>"; };
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
-		7CB5835B292FAE72000C46FF /* CalibrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
-		7CB5835C292FAE72000C46FF /* CalibrateLPartMeterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrateLPartMeterView.swift; sourceTree = "<group>"; };
-		7CB5835D292FAE72000C46FF /* CalibrationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationModel.swift; sourceTree = "<group>"; };
-		7CB5835E292FAE72000C46FF /* CalibrateLightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrateLightView.swift; sourceTree = "<group>"; };
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
@@ -337,18 +329,6 @@
 			path = Editor;
 			sourceTree = "<group>";
 		};
-		7CB5835A292FAE72000C46FF /* Calibration */ = {
-			isa = PBXGroup;
-			children = (
-				7C7502E829BDE89C00F55CA3 /* CalibratorView.swift */,
-				7CB5835B292FAE72000C46FF /* CalibrationView.swift */,
-				7CB5835C292FAE72000C46FF /* CalibrateLPartMeterView.swift */,
-				7CB5835D292FAE72000C46FF /* CalibrationModel.swift */,
-				7CB5835E292FAE72000C46FF /* CalibrateLightView.swift */,
-			);
-			path = Calibration;
-			sourceTree = "<group>";
-		};
 		7CCDE10228E2C61300343920 /* MasterTrack */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +385,7 @@
 		7CFA00A629A75912001D8A5D /* SpriteKit */ = {
 			isa = PBXGroup;
 			children = (
+				7C7502E829BDE89C00F55CA3 /* SensitivityView.swift */,
 				7C645CA429A91260000C5861 /* CellScene.swift */,
 				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
 				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
@@ -567,7 +548,6 @@
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
 				7C7502EA29C07C1600F55CA3 /* Editor */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
-				7CB5835A292FAE72000C46FF /* Calibration */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
 				7C3CD116296DC17500A4C522 /* Skins */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
@@ -702,7 +682,6 @@
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
-				7CB5835F292FAE72000C46FF /* CalibrationView.swift in Sources */,
 				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
@@ -718,7 +697,6 @@
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
-				7CB58362292FAE72000C46FF /* CalibrateLightView.swift in Sources */,
 				16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */,
 				7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
@@ -759,9 +737,7 @@
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
 				7C7502EE29C083F300F55CA3 /* BinaryFileSelectionView.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,
-				7CB58361292FAE72000C46FF /* CalibrationModel.swift in Sources */,
 				7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */,
-				7CB58360292FAE72000C46FF /* CalibrateLPartMeterView.swift in Sources */,
 				C069590426B4E0C7002EB522 /* Track.swift in Sources */,
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7CEFB9D028734205006A191F /* FullView.swift in Sources */,
@@ -769,7 +745,7 @@
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */,
 				7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */,
-				7C7502E929BDE89C00F55CA3 /* CalibratorView.swift in Sources */,
+				7C7502E929BDE89C00F55CA3 /* SensitivityView.swift in Sources */,
 				7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */,
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
 				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
