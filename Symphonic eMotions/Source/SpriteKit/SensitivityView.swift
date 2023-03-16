@@ -15,18 +15,20 @@ struct VerticalSlider: View {
     ) { _value = value }
     var body: some View {
         
-        Spacer()
-        
-        Slider(value: $value, in: 0...1)
-            .foregroundColor(.secondary)
-            .foregroundColor(.white)
-            .font(.subheadline)
-        
-        Text("Sensitiviy")
-            .foregroundColor(.secondary)
-            .foregroundColor(.white)
-            .font(.subheadline)
-            .scaleEffect(x: -1, y: 1, anchor: .center)
+        HStack{
+//            Spacer()
+            
+            Slider(value: $value, in: 0...1)
+                .foregroundColor(.secondary)
+                .foregroundColor(.white)
+                .font(.subheadline)
+            
+            Text("Sensitiviy")
+                .foregroundColor(.secondary)
+                .foregroundColor(.white)
+                .font(.subheadline)
+                .scaleEffect(x: -1, y: 1, anchor: .center)
+        }
     }
 }
 
@@ -42,17 +44,17 @@ struct SensitivityView: View {
                 
                 Spacer()
 //                Spacer()
-                
-                //            VerticalSlider(value: Binding(
-                //                get: {playViewModel.playViewState.displayOpacity},
-                //                set: { (newval) in
-                //                    self.playViewModel.playViewState.displayOpacity = newval
-                //
-                //                }
-                //            ))
-                //            .frame(width: .infinity, height: 20)
-                //            .padding(.bottom, 2)
-                //            .zIndex(100)
+//
+//                            VerticalSlider(value: Binding(
+//                                get: {playViewModel.playViewState.displayOpacity},
+//                                set: { (newval) in
+//                                    self.playViewModel.playViewState.displayOpacity = newval
+//
+//                                }
+//                            ))
+//                            .frame(width: 450, height: 30)
+//                            .padding(.bottom, 2)
+//                            .zIndex(100)
                 
                 VerticalSlider(value: Binding(
                     get: {
@@ -64,13 +66,14 @@ struct SensitivityView: View {
                         playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
                     }
                 ))
-                .frame(width: 400, height: 20)
+                .frame(width: 450, height: 30)
 //                .padding(.trailing)
                 .zIndex(100)
-                .border(.green)
+//                .border(.green)
                 .rotationEffect(Angle(degrees: 90))
                 .scaleEffect(x: 1, y: -1, anchor: .center)
             }
+//            .border(.red)
         }
     
 }

@@ -46,11 +46,13 @@ struct EditorView: View {
     @Binding public var sessionDisplay: SessionDisplay
     
     var body: some View {
+        Spacer()
         Text("Editor for \(setEditModel.setEditLocalState.setName)")
             .font(.largeTitle)
             .fontWeight(.regular)
         Text("Load default set\nShow list of saves")
         Spacer()
         FilePickerView()
+        Spacer()
     }
 }
