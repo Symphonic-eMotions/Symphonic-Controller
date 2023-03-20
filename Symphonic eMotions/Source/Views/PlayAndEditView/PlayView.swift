@@ -26,7 +26,8 @@ struct PlayView: View {
         
         ZStack{
             
-            //Vetical stack to hold levels, transport, settings, video / instrument feedback and instrument part feedback
+            //Vetical stack to hold levels, transport, settings,
+            //video/instrument feedback and instrument part feedback
             VStack {
                 
                 #if targetEnvironment(macCatalyst)
@@ -95,20 +96,6 @@ struct PlayView: View {
                             showsSeparator: false,
                             withPercentage: 0.6
                         )
-                        
-//                        EMButton(action: {
-//                            if playViewModel.conductor.isConductorPlayingSubject.value {
-//                                playViewModel.conductor.togglePlayEngineAndTracks(
-//                                    currentSetLevel: 0, setSettings: self.playViewModel.setSettings
-//                                )
-//                            }
-//                            else{
-//                                self.mainViewUpdate = .calibration
-//                            }
-//                        }, color: .accentColor, isSolid: false, maxWidth: 50) {
-//                            Label("", systemImage: "hand.wave")
-//                                .blur(radius: 1)
-//                        }
                     }
                     
                     SensitivityPlayView(
@@ -136,11 +123,10 @@ struct PlayView: View {
                 ZStack{
                     
                     //Instruments
-                    if playViewModel.playViewState.displayMode == .instruments
-                        || playViewModel.playViewState.displayMode == .both {
+                    if playViewModel.playViewState.displayMode == .instruments ||
+                       playViewModel.playViewState.displayMode == .both {
                         
-                        if playViewModel.playViewState.buildSettings.instrumentPartEditor
-                            && !playViewModel.conductor.isConductorPlayingSubject.value {
+                        if playViewModel.playViewState.buildSettings.instrumentPartEditor && !playViewModel.conductor.isConductorPlayingSubject.value {
                             
                             EditGridView(playViewModel: playViewModel)
                             
@@ -168,7 +154,7 @@ struct PlayView: View {
                     VideoPreviewViewRepresetable(
                         playViewModel: playViewModel
                     )
-    //                .frame(width: 180.0, height: 120.0)
+                    //.frame(width: 180.0, height: 120.0)
                     .aspectRatio(1.77777, contentMode: .fit)
                     .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                     .cornerRadius(10.0)
@@ -198,15 +184,6 @@ struct PlayView: View {
         }
     }
 }
-
-
-/*
-struct PlayView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayView(viewModel: PlayViewModel(appState: AppState()))
-    }
-}
- */
 
 struct SliderView: View {
     

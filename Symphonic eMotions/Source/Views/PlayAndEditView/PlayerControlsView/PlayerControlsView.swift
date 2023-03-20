@@ -41,13 +41,11 @@ struct PlayerControlsView: View {
                         viewModelPlayerControls.playerControlsViewState.displayMode.icon
                     }
                     
-                    
-//                    //Settings button
+                    //Settings button
                     EMButtonLongPress(
                         viewModelPlayerControls: viewModelPlayerControls,
                         mainViewUpdate: $mainViewUpdate
                     )
-                    
                     
                     
                     if viewModelPlayerControls.playerControlsViewState.buildSettings.instrumentPartEditor {
@@ -92,15 +90,6 @@ struct PlayerControlsView: View {
                 }
             }
         }
-//        .padding()
     }
     
 }
-
-/*
-struct PlayerControlsView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerControlsView(viewModel: PlayViewModel(appState: AppState()))
-    }
-}
- */
