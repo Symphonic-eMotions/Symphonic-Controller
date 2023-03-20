@@ -11,10 +11,9 @@ import AudioKit
 struct PlayView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
-    
     @EnvironmentObject var fileController: FileController
-    
     @Binding var mainViewUpdate: BuildSettings.ActiveView
+    @State var showOverView: Bool = false
     
     init(
         playViewModel: PlayViewModel,
@@ -69,6 +68,7 @@ struct PlayView: View {
                     ),
                     mainViewUpdate: $mainViewUpdate
                 )
+                .zIndex(100)
                 
                //Hidden sensitivity setttings
                 if playViewModel.playViewState.buildSettings.isAdvanced {
@@ -111,7 +111,7 @@ struct PlayView: View {
 //                        }
                     }
                     
-                    SensitivitySliderView(
+                    SensitivityPlayView(
                         playViewModel: playViewModel,
                         label: "Sensitivity",
                         value: Binding(
@@ -147,6 +147,17 @@ struct PlayView: View {
                         } else {
                             
                             PlayGridView(playViewModel: playViewModel)
+                            .onLongPressGesture {
+                                self.showOverView.toggle()
+                            }
+                            
+                            //The calibrator slider and video slider
+                            if showOverView {
+                                SensitivityView(
+                                     playViewModel: playViewModel
+                                )
+                                .zIndex(50)
+                            }
                         }
                     }
                     else{
@@ -255,7 +266,7 @@ struct SliderView: View {
 }
 
 
-struct SensitivitySliderView: View {
+struct SensitivityPlayView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
     
@@ -299,21 +310,18 @@ struct SensitivitySliderView: View {
                     Spacer()
                     //Write to session file (Sensitivity Slider)
                     Slider(value: $value, in: minValue...maxValue, onEditingChanged: { changed in
-                            //Only on end of slide change
-                            if !changed {
-                                
-                                print("Sensitivity changed and stored to: \(value)")
-                                
-                                print("XXXXX Hier moet ook de sessie worden geupdate!!!!!!!!!!!!!!!")
-                                
-                                AppUtils.createSessionFile(
-                                    sensitivity: value //self.playViewModel.imageDifference.sensitivitySubject.value
-                                )
-                                
-                            }
-                        })
-                        .foregroundColor(.accentColor)
-                        .frame(width: geometry.size.width * withPercentage)
+                        //Only on end of slide change
+                        if !changed {
+                            
+                            print("Sensitivity changed and stored to: \(value)")
+                            
+                            AppUtils.createSessionFile(
+                                sensitivity: value
+                            )
+                        }
+                    })
+                    .foregroundColor(.accentColor)
+                    .frame(width: geometry.size.width * withPercentage)
                 
                 }
                 .padding(.horizontal)
@@ -327,5 +335,4 @@ struct SensitivitySliderView: View {
         }
         .frame(height: 50.0)
     }
-    
 }

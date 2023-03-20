@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VerticalSlider: View {
+struct VerticalSensitivitySlider: View {
     
     @Binding var value: Float
     init(
@@ -16,12 +16,20 @@ struct VerticalSlider: View {
     var body: some View {
         
         HStack{
-//            Spacer()
-            
-            Slider(value: $value, in: 0...1)
-                .foregroundColor(.secondary)
-                .foregroundColor(.white)
-                .font(.subheadline)
+            Slider(value: $value, in: 0...1, onEditingChanged: { changed in
+                //Only on end of slide change
+                if !changed {
+                    
+                    print("Sensitivity changed and stored to: \(value)")
+                    
+                    AppUtils.createSessionFile(
+                        sensitivity: value
+                    )
+                }
+            })
+            .foregroundColor(.secondary)
+            .foregroundColor(.white)
+            .font(.subheadline)
             
             Text("Sensitiviy")
                 .foregroundColor(.secondary)
@@ -34,7 +42,6 @@ struct VerticalSlider: View {
 
 struct SensitivityView: View {
     
-    @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var playViewModel: PlayViewModel
     
     var body: some View {
@@ -43,8 +50,6 @@ struct SensitivityView: View {
             HStack{
                 
                 Spacer()
-//                Spacer()
-//
 //                            VerticalSlider(value: Binding(
 //                                get: {playViewModel.playViewState.displayOpacity},
 //                                set: { (newval) in
@@ -56,7 +61,7 @@ struct SensitivityView: View {
 //                            .padding(.bottom, 2)
 //                            .zIndex(100)
                 
-                VerticalSlider(value: Binding(
+                VerticalSensitivitySlider(value: Binding(
                     get: {
                         playViewModel.imageDifference.sensitivitySubject.value
                     },
