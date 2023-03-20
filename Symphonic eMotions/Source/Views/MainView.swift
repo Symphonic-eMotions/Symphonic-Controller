@@ -43,7 +43,7 @@ struct MainView: View {
             setSettings:  viewModel.mainState.setSettings
         )
         
-        //Main view selector (skin)
+        //SpriteKit (2D Game) interface
         if sessionDisplay == .spriteKit {
             SpriteKitView(
 //          SpriteKitZonesView(
@@ -79,6 +79,7 @@ struct MainView: View {
             .padding(.top, 20)
         }
         
+        //SwiftUI Interface with Part editor
         else if sessionDisplay == .swiftUI || sessionDisplay == .setInfo  || sessionDisplay == .home {
             
                 NavigationView {
@@ -164,6 +165,8 @@ struct MainView: View {
                 .navigationViewStyle(DoubleColumnNavigationViewStyle())
             
         }
+        
+        //Set editor
         else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
             
             NavigationView {
