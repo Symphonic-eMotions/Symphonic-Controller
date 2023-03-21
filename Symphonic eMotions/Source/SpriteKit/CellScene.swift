@@ -57,7 +57,7 @@ class ImageInstrument: SKSpriteNode { }
  Stappenplan
  √ MoveTo ipv Y-Step naar X-Y Locatie
  √ - Elk instrument moet een x en y collectie krijgen gebasseerd op indexes
- - Background voor actieve cellen
+ √ Background voor actieve cellen
  - - background strokes
  - Adaptive colors from settings
  - - Negative instrument active stroke activator
@@ -124,6 +124,7 @@ class CellScene: SKScene {
     //Collect all areas of interest from the instrument settings
     var instrumentPartAreas: [[[Int]]] = []
     
+    //MARK: Initialisation
     //Start of Scene funciton
     override func didMove(to view: SKView) {
         
@@ -164,6 +165,7 @@ class CellScene: SKScene {
         physicsBody = SKPhysicsBody()
     }
     
+    //MARK: Setup Background
     func setUpBackgrounds(instrumentIndex: Int) -> Tiles {
         
         let skin = self.sessionSkin.instruments[instrumentIndex]
@@ -206,13 +208,15 @@ class CellScene: SKScene {
         background.name = "tile"
         background.position = position
         background.setScale(0.89)
-        background.lineWidth = 0
-        background.strokeColor = UIColor.clear
-        background.fillColor = skin.color.withAlphaComponent(0.05)
+        background.lineWidth = 4
+//        background.strokeColor = UIColor.clear
+        background.strokeColor = skin.color.withAlphaComponent(0.3)
+        background.fillColor = skin.color.withAlphaComponent(0.12)
         
         return background
     }
     
+    //MARK: Setup instrument
     func setupInstrument(instrumentIndex: Int) -> Container{
         
         updateLimiter[instrumentIndex] = 0
@@ -257,7 +261,8 @@ class CellScene: SKScene {
         
         return container
     }
-
+    
+    //MARK: The Update on frame rate function!
     override func update(_ currentTime: TimeInterval) {
         
         var instrumentIndex: Int!
@@ -360,8 +365,9 @@ class CellScene: SKScene {
         container.childNode(withName: "image")!.setScale(CGFloat(partScale*partScale*partScale*partScale*2.5))
     }
     
+    //MARK: Update background
+    //TODO: Add stroke opacity controller
     func updateBackgrounds(){
-        
         
         //TODO: Do this on level change so update can be used for further increase alpha
         
