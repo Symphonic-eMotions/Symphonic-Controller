@@ -451,7 +451,7 @@ class CellScene: SKScene {
     
     func midiClipToParticle(midiClip: Int) -> Int{
         //Higher number are LESS update (updateLimiter)
-        let ranges: [Int] = [10,5,2,1]
+        let ranges: [Int] = [100,50,25,12]
         if ranges.indices.contains(midiClip) {
             return ranges[midiClip]
         }
