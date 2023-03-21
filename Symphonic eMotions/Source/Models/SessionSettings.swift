@@ -109,22 +109,22 @@ class SessionSettings: Identifiable {
         let instruments:[InstrumentsSet.Skin.Instrument] = [InstrumentsSet.Skin.Instrument(
             shape: .circle,
             name: "Cello",
-            image: "Piano",
+            image: "Cello",
             color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
             name: "Beats",
-            image: "Guitar",
+            image: "DrumKit",
             color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
             name: "Bassline",
-            image: "Drums",
+            image: "Machine",
             color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
         ),InstrumentsSet.Skin.Instrument(
             shape: .circle,
             name: "Synth",
-            image: "Drums",
+            image: "AudioFile1",
             color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
         )]
         
