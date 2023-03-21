@@ -243,7 +243,7 @@ final class AppUtils {
         return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }
     
-    static func getPartAreaDeltaTimes(
+    static func getPartAreaBoostFactor(
         rows: Int,
         columns: Int,
         areaOfInterest:[Int]
@@ -323,7 +323,7 @@ final class AppUtils {
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
                     areaOfInterest: partLoaded.areaOfInterest,
-                    areaOfIntersetDeltaTiimes: self.getPartAreaDeltaTimes(
+                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
                         rows: instrumentSet.rows,
                         columns: instrumentSet.columns,
                         areaOfInterest: partLoaded.areaOfInterest

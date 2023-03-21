@@ -1319,16 +1319,11 @@ final class Conductor {
             }
             else {
                 /*
-                 
                  MARK: Original multi part system
-                 
                  */
                 
                 //Loop through all parts per track per value
                 track.parts.forEach { part in
-                    
-// before setSetting
-// let valuesMapped = part.indexes(for: set).map{values[$0.row][$0.column].scaledValue}
                     
                     let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(rows: setSettings.gridRows, columns: setSettings.gridColumns).map {
                         values[$0.row][$0.column].scaledValue
@@ -1339,42 +1334,10 @@ final class Conductor {
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                     
                     
-                    //MARK: Start maxIndex Gate
-                    //Have en array of delta times per index height
-                    //Precalculated times per index
-                    let deltaTimes = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetDeltaTiimes
-                    
-//                    print(part.id)
-//                    print(deltaTimes as Any)
-                    
-//                    guard !deltaTimes!.isEmpty else { return }
-                    
-                    //Spare original for SpriteKit locations
-                    var maxIndexraw = Int(maxIndexTupple.0)
-                    let deltaTime = deltaTimes![maxIndexraw]
-                    var isNewIndex: Bool = false
-                    
-                    //Gate is closed send old MaxIndex
-                    if isPartDeltaTimeRunning(
-                        partId: part.id,
-                        partDeltaTime: deltaTime
-                    ) {
-                        maxIndexraw = maxIndexParts[part.id]!
-//                        print("Gate closed old maxIndex: \(maxIndexraw)")
-                    }
-                    //Gate is open
-                    else{
-                        //Set (store) new index
-                        isNewIndex = valueIndexChanged(maxIndex: maxIndexraw, trackId: track.trackId)
-                        if isNewIndex {
-//                            print("New index \(maxIndexraw) thus: DispatchTime.now()")
-                            //Set new start time
-                            deltaStartTimePart[part.id] = DispatchTime.now()
-                        }
-                    }
-                    
+//                    let boostFactor = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetBoostFactor
                     
                     //Have a var for MaxIndex to number of MidiClips range
+                    let maxIndexraw = Int(maxIndexTupple.0)
                     var maxIndexMidiClips = maxIndexraw
                     
                     //MaxMapped (highest value found in all of AreaOfInterest) value to work with
@@ -1392,8 +1355,7 @@ final class Conductor {
                         maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
                         forwardMaxIndex(
                             for: part.damperTarget,
-                            maxIndex: maxIndexMidiClips,
-                            isNewIndex: isNewIndex
+                            maxIndex: maxIndexMidiClips
                         )
                     }
                     
@@ -1635,18 +1597,19 @@ final class Conductor {
     
     private func forwardMaxIndex(
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        maxIndex: Int,
-        isNewIndex: Bool
+        maxIndex: Int
+//        ,
+//        isNewIndex: Bool
     ) {
     
         //Low level midi data control based on index of activity
-        if maxIndex != -1 && isNewIndex {
+//        if maxIndex != -1 && isNewIndex {
             
             guard let track = set.track(for: damperTarget.trackId) else { return }
             let maxIndexPart = maxIndex % track.midiFiles!.first!.loopLength.count
             //Copy MIDI part based on max movement cell index
             switchTrackMidiPart(track, maxIndexPart)
-        }
+//        }
     }
     
     private func forwardSequencer(
