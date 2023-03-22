@@ -88,6 +88,7 @@ struct SpriteKitView: View {
             instrumentAreas: instrumentAreas
         )
         //We store the skin within the session
+        
         scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
         
         self.playViewModel = playViewModel

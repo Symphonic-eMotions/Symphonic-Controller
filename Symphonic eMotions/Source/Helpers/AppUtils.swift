@@ -189,7 +189,7 @@ final class AppUtils {
             //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
             hasTempo: instrumentSet.hasTempo,
-            skin: instrumentSet.skin,
+            skin: setSettings.skins,
             timeSignature: instrumentSet.timeSignature,
             
             //MasterTrack effects editor values
@@ -210,7 +210,7 @@ final class AppUtils {
     
     static func setSessionSetting() -> SessionSettings {
         
-        let readSessionSettings = StoreSessionSettings.readSessionSettings(fileName: "SeM-settings")
+        let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
         let sessionSetting = SessionSettings(
             sensitivity: readSessionSettings.sensitivity,
@@ -222,11 +222,11 @@ final class AppUtils {
     
     static func createSessionFile(sensitivity: Float){
         let fileName: String = "SeM-settings"
-        let storeSettings = StoreSessionSettings(
+        let storeSettings = ManageSessionSettings(
             sensitivity: sensitivity
         )
         
-        StoreSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
+        ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
     static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
@@ -302,9 +302,18 @@ final class AppUtils {
         return deltaTimes
     }
     
-    static func setSettings(instrumentSet: InstrumentsSet) -> SetSettings {
+    static func setSettings(
+        instrumentSet: InstrumentsSet,
+        sessionSettings: SessionSettings
+    ) -> SetSettings {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
+        
+        //If the set config has a skin, use it
+        var skin: InstrumentsSet.Skin!
+        if instrumentSet.skin.instruments.count > 0 { skin = instrumentSet.skin }
+        //Default skin hard coded in sessionSettings
+        else{ skin = sessionSettings.activeSkin }
         
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
@@ -351,7 +360,8 @@ final class AppUtils {
             columns: instrumentSet.columns,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
-            tracks: tracks
+            tracks: tracks,
+            skins: skin
         )
         
         return setSettings

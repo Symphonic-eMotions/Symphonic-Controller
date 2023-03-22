@@ -39,13 +39,17 @@ class SetSettings: Identifiable {
     //Tracks
     var tracks: OrderedDictionary<String,TrackSettings>
     
+    //Skins
+    var skins: InstrumentsSet.Skin
+    
     init(
         setName: String,
         rows: Int,
         columns: Int,
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
-        tracks: OrderedDictionary<String,TrackSettings>
+        tracks: OrderedDictionary<String,TrackSettings>,
+        skins: InstrumentsSet.Skin
     ){
         self.setName = setName
         self.gridRows = rows
@@ -53,11 +57,14 @@ class SetSettings: Identifiable {
         self.gridColumns = columns
         self.masterEffects = masterEffects
         self.tracks = tracks
+        self.skins = skins
         
         //Set editor values (partFeedbackView) ready for first track first part editing
         let firstTrack = tracks.elements.first!
         
-        print("Set loaded, first track ID: \(firstTrack.key)")
+        print("Set loaded, first track ID: \(firstTrack.key) and SKIN:")
+        print(skins)
+        
         
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume

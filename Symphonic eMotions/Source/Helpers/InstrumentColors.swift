@@ -27,7 +27,10 @@ struct InstrumentColors {
         Color("InstrumentColor702"),
         Color("InstrumentColor800"),
         Color("InstrumentColor801"),
-        Color("InstrumentColor802")
+        Color("InstrumentColor802"),
+        Color("Skin0"),
+        Color("Skin1"),
+        Color("Skin2")
     ]
     
     public func name( color: Color ) -> String {

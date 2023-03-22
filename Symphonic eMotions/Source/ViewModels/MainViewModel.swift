@@ -41,9 +41,11 @@ final class MainViewModel: ObservableObject {
         sessionSettings: SessionSettings
     ) {
         
-        //Reload from file, the sensitivitySlider saves to file, not YET? to session
+        //Reload from file, the sensitivitySlider saves to file, not to session
         let sessionSettingsLoaded = AppUtils.setSessionSetting()
-        print("REMEMBER SESSION GETS RELOADED FROM FILE ON SET CHANGE")
+        //A defaut SKIN is loaded at this point.
+        //We are going to overwrite the colors to the colors of the instrument within the set
+        
         let currentSensitivity = sessionSettingsLoaded.sensitivity
         
         //Reset leveling
@@ -60,8 +62,10 @@ final class MainViewModel: ObservableObject {
             
         } else {
             
-            
-            let setSettings = AppUtils.setSettings(instrumentSet: instrumentsSet)
+            let setSettings = AppUtils.setSettings(
+                instrumentSet: instrumentsSet,
+                sessionSettings: sessionSettingsLoaded
+            )
             
             self.partFeedback = PartFeedback(instrumentsSet: instrumentsSet)
             
@@ -86,12 +90,11 @@ final class MainViewModel: ObservableObject {
             print("YYY loading sensitivity \(currentSensitivity) to imageDifference subjects")
             
             mainState.imageDifference.sensitivitySubject.value = currentSensitivity
-//            let feedback =
             mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
-//            mainState.imageDifference.feedback.send(feedback)
-//            let maxValue =
             mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
-//            mainState.imageDifference.maxValueSubject.send(maxValue)
+            
+            //Override default SKIN colors first 4 instruments
+            
 
         }
     }

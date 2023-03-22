@@ -10,6 +10,7 @@
 		16687D8C27FF1F8A006FFD5A /* PlayerControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16687D8B27FF1F8A006FFD5A /* PlayerControlsViewModel.swift */; };
 		16935FA127E36E1A00BF5EDB /* SidebarSetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */; };
 		16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */; };
+		7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */; };
 		7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3B2874306400F00B42 /* FullHomeView.swift */; };
 		7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3D2874556900F00B42 /* FullPlayView.swift */; };
 		7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */; };
@@ -120,6 +121,7 @@
 		16687D8B27FF1F8A006FFD5A /* PlayerControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsViewModel.swift; sourceTree = "<group>"; };
 		16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSetsView.swift; sourceTree = "<group>"; };
 		16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTracksView.swift; sourceTree = "<group>"; };
+		7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		7C037B3B2874306400F00B42 /* FullHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHomeView.swift; sourceTree = "<group>"; };
 		7C037B3D2874556900F00B42 /* FullPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayView.swift; sourceTree = "<group>"; };
 		7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitZonesView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -355,6 +357,7 @@
 				7CB58365292FAEE2000C46FF /* ColorType.swift */,
 				7CB58363292FAEB1000C46FF /* InstrumentColors.swift */,
 				7C205ABA28D70A2B009646C1 /* RangeConverter.swift */,
+				7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				7C6A341B28425F01006F2E95 /* PartFeedback.swift in Sources */,
 				7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */,
 				7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */,
+				7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */,
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
 				7C6FC4642747D52700BD64D6 /* Sets.swift in Sources */,

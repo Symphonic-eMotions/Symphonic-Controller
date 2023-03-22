@@ -126,14 +126,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         filesPath = try container.decode(String.self, forKey: .filesPath)
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
-        
-        if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
-            skin = skinRaw
-        }
-        else{
-            skin = Skin(name: .swiftUI, instruments: [])
-        }
-        
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
         let masterTrackEffectsRaw = try container.decode([Track.Effect].self, forKey: .masterTrackEffects)
         masterTrackEffects = masterTrackEffectsRaw
@@ -145,6 +137,12 @@ struct InstrumentsSet: Identifiable, Decodable {
         levelClipControlStartLevel = try container.decodeIfPresent(Int.self, forKey: .levelClipControlStartLevel)
         playViewImages = try container.decodeIfPresent(PlayViewImages.self, forKey: .playViewImages)
         tracks = try container.decode([Track].self, forKey: .tracks)
+        if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
+            skin = skinRaw
+        }
+        else{
+            skin = Skin(name: "named is this not", instruments: [])
+        }
     }
     
     //Init for writing a copy with live values
@@ -220,5 +218,6 @@ extension InstrumentsSet: Encodable {
         try container.encode(levelClipControl, forKey: .levelClipControl)
         try container.encode(levelClipControlStartLevel, forKey: .levelClipControlStartLevel)
         try container.encode(tracks, forKey: .tracks)
+        try container.encode(skin, forKey: .skin)
     }
 }

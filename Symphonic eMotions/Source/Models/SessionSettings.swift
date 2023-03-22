@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct StoreSessionSettings: Codable {
+struct ManageSessionSettings: Codable {
     
     var sensitivity: Float
     
@@ -16,7 +16,7 @@ struct StoreSessionSettings: Codable {
         self.sensitivity = sensitivity
     }
     
-    static func writeSessionSettings(fileName: String, storeSessionSettings: StoreSessionSettings){
+    static func writeSessionSettings(fileName: String, storeSessionSettings: ManageSessionSettings){
         
         let directoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let documentURL = (directoryURL.appendingPathComponent(fileName).appendingPathExtension("json"))
@@ -33,10 +33,11 @@ struct StoreSessionSettings: Codable {
         }
     }
     
-    static func readSessionSettings(fileName: String) -> StoreSessionSettings {
+    static func readSessionSettings(fileName: String) -> ManageSessionSettings {
         
         //Default settings to be over written by actual values
-        var storeSessionSettings: StoreSessionSettings = StoreSessionSettings( sensitivity: 0.0 )
+        let sensitivity: Float = 0.55
+        var sessionSettings: ManageSessionSettings = ManageSessionSettings( sensitivity: sensitivity )
 
         let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = pathURL[0]
@@ -44,10 +45,10 @@ struct StoreSessionSettings: Codable {
         
         if FileManager.default.fileExists(atPath: documentURL.path) {
             
-            guard let data = try? Data(contentsOf: documentURL) else { return storeSessionSettings }
+            guard let data = try? Data(contentsOf: documentURL) else { return sessionSettings }
             do {
-                let decoded = try JSONDecoder().decode(StoreSessionSettings.self, from: data)
-                storeSessionSettings.sensitivity = decoded.sensitivity
+                let decoded = try JSONDecoder().decode(ManageSessionSettings.self, from: data)
+                sessionSettings.sensitivity = decoded.sensitivity
             }
             catch{
                 print("Unexpected error InstrumentsSet withJSON: \(error).")
@@ -55,9 +56,10 @@ struct StoreSessionSettings: Codable {
         }
         else{
             print("FILE NOT AVAILABLE \(documentURL.path)")
+            print("Sensitivity set to \(sensitivity)")
         }
 
-        return storeSessionSettings
+        return sessionSettings
     }
 }
 
@@ -106,38 +108,50 @@ class SessionSettings: Identifiable {
         self.sensitivity = sensitivity
         
         //We go Skinning!
-        let instruments:[InstrumentsSet.Skin.Instrument] = [InstrumentsSet.Skin.Instrument(
-            shape: .circle,
-            name: "Cello",
-            image: "Cello",
-            color: UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: .circle,
-            name: "Beats",
-            image: "DrumKit",
-            color: UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: .circle,
-            name: "Bassline",
-            image: "Machine",
-            color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: .circle,
-            name: "Synth",
+        let instruments = [InstrumentsSet.Skin.Instrument(
+            shape: "circle",
+            name: "AudioA",
             image: "AudioFile1",
-            color: UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
+            color: .white
+            //UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
+        ),InstrumentsSet.Skin.Instrument(
+            shape: "circle",
+            name: "AudioB",
+            image: "AudioFile1",
+            color: .white
+            //UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
+        ),InstrumentsSet.Skin.Instrument(
+            shape: "circle",
+            name: "AudioC",
+            image: "AudioFile1",
+            color: .white
+            //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
+        ),InstrumentsSet.Skin.Instrument(
+            shape: "circle",
+            name: "AudioD",
+            image: "AudioFile1",
+            color: .white
+            //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
         )]
         
         if skin != nil {
             self.activeSkin = skin!
         }
         else {
-            self.activeSkin = InstrumentsSet.Skin(name: .growingDots, instruments: instruments)
+            self.activeSkin = InstrumentsSet.Skin(name: "noname", instruments: instruments)
+        }
+    }
+    
+    //This needs to go to InstrumentSet?
+    func getInstrumentColors(instrumentsSet: InstrumentsSet) -> [UIColor]{
+        
+        var instrumentColors: [UIColor] = []
+        
+        for track in instrumentsSet.tracks {
+            
+            instrumentColors.append(track.instrumentColor.toUIColor())
         }
         
-        
-        
-        print(self.activeSkin)
-        
+        return instrumentColors
     }
 }

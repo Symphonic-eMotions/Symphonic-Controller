@@ -42,7 +42,8 @@ struct eMotionApp: App {
                     mainState: MainViewState(
                         sessionSettings: sessionSettings,
                         setSettings: AppUtils.setSettings(
-                            instrumentSet: instrumentSet
+                            instrumentSet: instrumentSet,
+                            sessionSettings: sessionSettings
                         ),
                         imageDifference: ImageDifference(
                             instrumentsSet: instrumentSet

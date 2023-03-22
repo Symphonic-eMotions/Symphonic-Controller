@@ -210,8 +210,8 @@ class CellScene: SKScene {
         background.setScale(0.89)
         background.lineWidth = 4
 //        background.strokeColor = UIColor.clear
-        background.strokeColor = skin.color.withAlphaComponent(0.3)
-        background.fillColor = skin.color.withAlphaComponent(0.12)
+        background.strokeColor = skin.uiColor.withAlphaComponent(0.3)
+        background.fillColor = skin.uiColor.withAlphaComponent(0.12)
         
         return background
     }
@@ -242,7 +242,7 @@ class CellScene: SKScene {
         var instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "1stChild"
         instrument.fillColor = .clear
-        instrument.strokeColor = skin.color
+        instrument.strokeColor = skin.uiColor
         instrument.glowWidth = 5
         instrument.alpha = 0.5
         container.addChild(instrument)
@@ -250,7 +250,7 @@ class CellScene: SKScene {
         instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "2ndChild"
-        instrument.fillColor = skin.color
+        instrument.fillColor = skin.uiColor
         instrument.strokeColor = .clear
         instrument.alpha = 0.4
         container.addChild(instrument)
@@ -382,7 +382,7 @@ class CellScene: SKScene {
                     tiles0.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
                         if let shapeNode = node as? SKShapeNode {
-                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                            shapeNode.strokeColor = skin.uiColor.withAlphaComponent(partScale*partScale*0.8)
                         }
                     }
                 }
@@ -399,7 +399,7 @@ class CellScene: SKScene {
                     tiles1.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
                         if let shapeNode = node as? SKShapeNode {
-                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                            shapeNode.strokeColor = skin.uiColor.withAlphaComponent(partScale*partScale*0.8)
                         }
                     }
                 }
@@ -416,7 +416,7 @@ class CellScene: SKScene {
                     tiles2.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
                         if let shapeNode = node as? SKShapeNode {
-                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                            shapeNode.strokeColor = skin.uiColor.withAlphaComponent(partScale*partScale*0.8)
                         }
                     }
                 }
@@ -433,7 +433,7 @@ class CellScene: SKScene {
                     tiles3.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
                         if let shapeNode = node as? SKShapeNode {
-                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                            shapeNode.strokeColor = skin.uiColor.withAlphaComponent(partScale*partScale*0.8)
                         }
                     }
                 }
@@ -457,7 +457,7 @@ class CellScene: SKScene {
                 emitter.position = position
                 emitter.particleColorSequence = nil;
                 emitter.particleColorBlendFactor = 1.0;
-                emitter.particleColor = skin.color
+                emitter.particleColor = skin.uiColor
                 emitter.alpha = partScale
                 addChild(emitter)
                 

@@ -18,19 +18,27 @@ extension InstrumentsSet {
             case instruments
         }
     
-        var name: Skin.Name
+        var name: String
         var instruments: [Instrument]
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: SkinKeys.self)
-            name = try container.decode(Skin.Name.self, forKey: .name)
+            name = try container.decode(String.self, forKey: .name)
             instruments = try container.decode([Instrument].self, forKey: .instruments)
         }
         //Ad Hoc init
-        init(name: Skin.Name, instruments: [Instrument]){
+        init(name: String, instruments: [Instrument]){
             self.name = name
             self.instruments = instruments
         }
+    }
+}
+
+extension InstrumentsSet.Skin: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: SkinKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(instruments, forKey: .instruments)
     }
 }
 
@@ -45,30 +53,43 @@ extension InstrumentsSet.Skin {
             case color
         }
             
-        var shape: Shape
+        var shape: String
         var name: String
         var image: String
-        var color: UIColor
+        var color: Color
+        var uiColor: UIColor
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: SkinInstrumentKeys.self)
-            shape = try container.decode(Shape.self, forKey: .shape)
+            shape = try container.decode(String.self, forKey: .shape)
             name = try container.decode(String.self, forKey: .name)
             image = try container.decode(String.self, forKey: .image)
-            let colorRaw:[Int] = try container.decode([Int].self, forKey: .color)
-            color = UIColor(
-                red: CGFloat(colorRaw[0]/255),
-                green: CGFloat(colorRaw[1]/255),
-                blue: CGFloat(colorRaw[2]/255), alpha: 1)
+            let colorString = try container.decodeIfPresent(String.self, forKey: .color)
+            color = Color(colorString ?? "InstrumentColor000")
+            uiColor = color.toUIColor()
         }
         
         //Ad Hoc init
-        init(shape: Shape, name: String, image: String, color: UIColor){
+        init(shape: String, name: String, image: String, color: Color){
             self.shape = shape
             self.name = name
             self.image = image
             self.color = color
+            self.uiColor = color.toUIColor()
         }
+    }
+}
+
+
+
+extension InstrumentsSet.Skin.Instrument: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: SkinInstrumentKeys.self)
+        try container.encode(shape, forKey: .shape)
+        try container.encode(name, forKey: .name)
+        try container.encode(image, forKey: .image)
+        let instrumentColors = InstrumentColors()
+        try container.encode(instrumentColors.name(color: color), forKey: .color)
     }
 }
 
@@ -86,24 +107,26 @@ extension InstrumentsSet.Skin {
 //    }
 //}
 
-extension InstrumentsSet.Skin {
-    
-    enum Name: String, Decodable {
-        case swiftUI = "Camera / grid"
-        case growingDots = "Growing dots"
-        case zones = "Zones"
-        case equaliser = "Equaliser"
-    }
-    
-}
+//extension InstrumentsSet.Skin {
+//    
+//    enum Name: String, Decodable {
+//        case free = "Test Set Free"
+//        case boundries = "Test Set Kaders"
+//        case swiftUI = "Camera / grid"
+//        case growingDots = "Growing dots"
+//        case zones = "Zones"
+//        case equaliser = "Equaliser"
+//    }
+//    
+//}
 
-extension InstrumentsSet.Skin.Instrument {
-    
-    enum Shape: String, Decodable {
-        
-        case circle
-        case box
-    }
-}
+//extension InstrumentsSet.Skin.Instrument {
+//
+//    enum Shape: String, Decodable {
+//
+//        case circle
+//        case box
+//    }
+//}
 
 
