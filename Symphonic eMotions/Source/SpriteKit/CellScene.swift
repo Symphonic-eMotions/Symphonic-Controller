@@ -58,7 +58,7 @@ class ImageInstrument: SKSpriteNode { }
  √ MoveTo ipv Y-Step naar X-Y Locatie
  √ - Elk instrument moet een x en y collectie krijgen gebasseerd op indexes
  √ Background voor actieve cellen
- - - background strokes
+ √ - background strokes
  - Adaptive colors from settings
  - - Negative instrument active stroke activator
  - - Stroke invisible on connectd cell
@@ -370,14 +370,20 @@ class CellScene: SKScene {
     func updateBackgrounds(){
         
         //TODO: Do this on level change so update can be used for further increase alpha
+        var partScale: Double!
         
         //First itteration for not showing if not in current level
         for (index, trackLevels) in levels.enumerated() {
-            
+            let skin = self.sessionSkin.instruments[index]
             if index == 0 {
                 if trackLevels.contains(Int(currentLevel)) {
+                    partScale = self.instrumentPart0aScale ?? 0
+                    if !self.isPlaying { partScale = 0 }
                     tiles0.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
+                        if let shapeNode = node as? SKShapeNode {
+                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                        }
                     }
                 }
                 else{
@@ -388,8 +394,13 @@ class CellScene: SKScene {
             }
             if index == 1 {
                 if trackLevels.contains(Int(currentLevel)) {
+                    partScale = self.instrumentPart1aScale ?? 0
+                    if !self.isPlaying { partScale = 0 }
                     tiles1.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
+                        if let shapeNode = node as? SKShapeNode {
+                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                        }
                     }
                 }
                 else{
@@ -400,8 +411,13 @@ class CellScene: SKScene {
             }
             if index == 2 {
                 if trackLevels.contains(Int(currentLevel)) {
+                    partScale = self.instrumentPart2aScale ?? 0
+                    if !self.isPlaying { partScale = 0 }
                     tiles2.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
+                        if let shapeNode = node as? SKShapeNode {
+                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                        }
                     }
                 }
                 else{
@@ -412,8 +428,13 @@ class CellScene: SKScene {
             }
             if index == 3 {
                 if trackLevels.contains(Int(currentLevel)) {
+                    partScale = self.instrumentPart3aScale ?? 0
+                    if !self.isPlaying { partScale = 0 }
                     tiles3.enumerateChildNodes(withName: "tile") { node, _ in
                         node.alpha = 1
+                        if let shapeNode = node as? SKShapeNode {
+                            shapeNode.strokeColor = skin.color.withAlphaComponent(partScale*partScale*0.8)
+                        }
                     }
                 }
                 else{
