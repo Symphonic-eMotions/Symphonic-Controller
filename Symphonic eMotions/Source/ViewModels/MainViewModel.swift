@@ -62,14 +62,13 @@ final class MainViewModel: ObservableObject {
             
         } else {
             
+            print(instrumentsSet.skin)
+            
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet,
                 //Load set colors into UIColor in setting
                 sessionSettings: sessionSettingsLoaded
             )
-            
-            //Update set with skin settings from set, if Decoded
-            sessionSettings.activeSkin = instrumentsSet.skin
             
             //Editor Instrument Part visual feedback connector
             self.partFeedback = PartFeedback(instrumentsSet: instrumentsSet)

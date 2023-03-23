@@ -141,7 +141,36 @@ struct InstrumentsSet: Identifiable, Decodable {
             skin = skinRaw
         }
         else{
-            skin = Skin(name: "named this set, it is not", instruments: [])
+            
+            //We go Skinning!
+            let instruments = [InstrumentsSet.Skin.Instrument(
+                shape: "circle",
+                name: "AudioA",
+                image: "AudioFile1",
+                color: .white
+                //UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
+            ),InstrumentsSet.Skin.Instrument(
+                shape: "circle",
+                name: "AudioB",
+                image: "AudioFile1",
+                color: .white
+                //UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
+            ),InstrumentsSet.Skin.Instrument(
+                shape: "circle",
+                name: "AudioC",
+                image: "AudioFile1",
+                color: .white
+                //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
+            ),InstrumentsSet.Skin.Instrument(
+                shape: "circle",
+                name: "AudioD",
+                image: "AudioFile1",
+                color: .white
+                //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
+            )]
+            
+            //Here we need to load the initial Skset
+            skin = Skin(name: "named this set, it is not", instruments:instruments)
         }
     }
     

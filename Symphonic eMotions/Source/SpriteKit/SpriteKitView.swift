@@ -42,6 +42,7 @@ struct SpriteKitView: View {
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
         scene.levels = levels
+        scene.sceneSkin = playViewModel.setSettings.skins
         
         //For now we have 4 instruments who control unique named variables in the SKScene
         var instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
@@ -87,9 +88,8 @@ struct SpriteKitView: View {
         scene.updateLimiter = mainViewModel.mainState.setSettings.updateLimiter(
             instrumentAreas: instrumentAreas
         )
-        //We store the skin within the session
         
-        scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
+        
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel

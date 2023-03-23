@@ -67,6 +67,9 @@ extension InstrumentsSet.Skin {
             let colorString = try container.decodeIfPresent(String.self, forKey: .color)
             color = Color(colorString ?? "InstrumentColor000")
             uiColor = color.toUIColor()
+            print("COLOR UICOLOR")
+            print(color)
+            print(uiColor)
         }
         
         //Ad Hoc init

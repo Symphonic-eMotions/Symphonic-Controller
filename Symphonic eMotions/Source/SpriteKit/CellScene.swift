@@ -82,6 +82,9 @@ class CellScene: SKScene {
     //Skip frames for ease on particle emitter spawn
     var updateLimiter: [Int]!
     
+    //Set spicific variables
+    var sceneSkin: InstrumentsSet.Skin!
+
     //GameScene globals to change through update
     //At this moment static 4 instruments
     var tiles0: Tiles!
@@ -116,8 +119,6 @@ class CellScene: SKScene {
     var instrument3Positions: [CGPoint] = []
     var instrument3Sizes: [CGSize] = []
     
-    var sessionSkin: InstrumentsSet.Skin!
-    
     var columns: Int = 0
     var rows: Int = 0
     
@@ -129,7 +130,7 @@ class CellScene: SKScene {
     override func didMove(to view: SKView) {
         
         //At this stage there is a maximum of 4 instruments
-        for index in [0,1,2,3] {
+        for index in 0...3 {
             
             if index == 0 {
                 instrumentPart0a = setupInstrument(instrumentIndex: index)
@@ -168,7 +169,7 @@ class CellScene: SKScene {
     //MARK: Setup Background
     func setUpBackgrounds(instrumentIndex: Int) -> Tiles {
         
-        let skin = self.sessionSkin.instruments[instrumentIndex]
+        let skin = self.sceneSkin.instruments[instrumentIndex]
         let cr: CGFloat = 5
         let tiles: Tiles = Tiles()
         
@@ -209,7 +210,6 @@ class CellScene: SKScene {
         background.position = position
         background.setScale(0.89)
         background.lineWidth = 4
-//        background.strokeColor = UIColor.clear
         background.strokeColor = skin.uiColor.withAlphaComponent(0.3)
         background.fillColor = skin.uiColor.withAlphaComponent(0.12)
         
@@ -221,7 +221,7 @@ class CellScene: SKScene {
         
         updateLimiter[instrumentIndex] = 0
         
-        let skin = self.sessionSkin.instruments[instrumentIndex]
+        let skin = self.sceneSkin.instruments[instrumentIndex]
         
         let container = Container()
         
@@ -237,6 +237,9 @@ class CellScene: SKScene {
         else if instrumentIndex == 3 {
             container.position = self.instrument3Positions.first ?? CGPoint()
         }
+        
+        print("Instrument index: \(instrumentIndex) skin.uiColor:")
+        print(skin.uiColor)
         
         var instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         var instrument = Instrument(circleOfRadius: instrumentRadius)
@@ -373,8 +376,14 @@ class CellScene: SKScene {
         var partScale: Double!
         
         //First itteration for not showing if not in current level
-        for (index, trackLevels) in levels.enumerated() {
-            let skin = self.sessionSkin.instruments[index]
+        
+        //BRAINFART
+//        for (index, trackLevels) in levels.enumerated() {
+        for index in 0...3 {
+            
+            let trackLevels = levels[index]
+            let skin = self.sceneSkin.instruments[index]
+            
             if index == 0 {
                 if trackLevels.contains(Int(currentLevel)) {
                     partScale = self.instrumentPart0aScale ?? 0
@@ -453,7 +462,7 @@ class CellScene: SKScene {
             
             if let emitter: SKEmitterNode = SKEmitterNode(fileNamed: "MagicParticle") {
                 
-                let skin = self.sessionSkin.instruments[instrumentIndex]
+                let skin = self.sceneSkin.instruments[instrumentIndex]
                 emitter.position = position
                 emitter.particleColorSequence = nil;
                 emitter.particleColorBlendFactor = 1.0;

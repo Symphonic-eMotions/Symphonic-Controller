@@ -84,7 +84,7 @@ struct SpriteKitZonesView: View {
         let height = UIScreen.main.bounds.height
         scene.size = CGSize(width: width, height: height - transportHeigth)
         scene.scaleMode = .fill
-        scene.sessionSkin = mainViewModel.mainState.sessionSettings.activeSkin
+        scene.sessionSkin = mainViewModel.mainState.setSettings.skins
         
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel

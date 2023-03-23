@@ -213,8 +213,7 @@ final class AppUtils {
         let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
         let sessionSetting = SessionSettings(
-            sensitivity: readSessionSettings.sensitivity,
-            skin: nil
+            sensitivity: readSessionSettings.sensitivity
         )
         
         return sessionSetting
@@ -236,13 +235,7 @@ final class AppUtils {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
         
-        //If the set config has a skin, use it
-        var skin: InstrumentsSet.Skin!
-        
-        if instrumentSet.skin.instruments.count > 0 { skin = instrumentSet.skin }
-        //Default skin hard coded in sessionSettings
-        else{ skin = sessionSettings.activeSkin }
-        
+        let skin: InstrumentsSet.Skin = instrumentSet.skin
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
         //Keep track of partNumber for variations track/instrument Color...

@@ -99,59 +99,14 @@ enum SessionDisplay: Hashable {
 class SessionSettings: Identifiable {
     
     var sensitivity: Float
-    var activeSkin: InstrumentsSet.Skin
+//    var activeSkin: InstrumentsSet.Skin
     
     init(
-        sensitivity: Float,
-        skin: InstrumentsSet.Skin?
+        sensitivity: Float
+//        ,
+//        skin: InstrumentsSet.Skin
     ){
         self.sensitivity = sensitivity
-        
-        //We go Skinning!
-        let instruments = [InstrumentsSet.Skin.Instrument(
-            shape: "circle",
-            name: "AudioA",
-            image: "AudioFile1",
-            color: .white
-            //UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: "circle",
-            name: "AudioB",
-            image: "AudioFile1",
-            color: .white
-            //UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: "circle",
-            name: "AudioC",
-            image: "AudioFile1",
-            color: .white
-            //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
-        ),InstrumentsSet.Skin.Instrument(
-            shape: "circle",
-            name: "AudioD",
-            image: "AudioFile1",
-            color: .white
-            //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
-        )]
-        
-        if skin != nil {
-            self.activeSkin = skin!
-        }
-        else {
-            self.activeSkin = InstrumentsSet.Skin(name: "noname", instruments: instruments)
-        }
-    }
-    
-    //This needs to go to InstrumentSet?
-    func getInstrumentColors(instrumentsSet: InstrumentsSet) -> [UIColor]{
-        
-        var instrumentColors: [UIColor] = []
-        
-        for track in instrumentsSet.tracks {
-            
-            instrumentColors.append(track.instrumentColor.toUIColor())
-        }
-        
-        return instrumentColors
+//        self.activeSkin = skin
     }
 }
