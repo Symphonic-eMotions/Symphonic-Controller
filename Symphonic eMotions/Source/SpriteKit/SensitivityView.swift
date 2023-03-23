@@ -22,9 +22,7 @@ struct VerticalSensitivitySlider: View {
                     
                     print("Sensitivity changed and stored to: \(value)")
                     
-                    AppUtils.createSessionFile(
-                        sensitivity: value
-                    )
+                    AppUtils.createSessionFile(sensitivity: value)
                 }
             })
             .foregroundColor(.secondary)

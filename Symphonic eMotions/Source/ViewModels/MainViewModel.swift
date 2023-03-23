@@ -64,11 +64,17 @@ final class MainViewModel: ObservableObject {
             
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet,
+                //Load set colors into UIColor in setting
                 sessionSettings: sessionSettingsLoaded
             )
             
+            //Update set with skin settings from set, if Decoded
+            sessionSettings.activeSkin = instrumentsSet.skin
+            
+            //Editor Instrument Part visual feedback connector
             self.partFeedback = PartFeedback(instrumentsSet: instrumentsSet)
             
+            //Load all sequencers, audio generators and effects
             conductor.currentConductorInstrumentsSetChanged(
                 newInstrumentsSet: instrumentsSet,
                 currentSetLevel: leveling.currentSetLevelSubject.value,
@@ -92,10 +98,6 @@ final class MainViewModel: ObservableObject {
             mainState.imageDifference.sensitivitySubject.value = currentSensitivity
             mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
             mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
-            
-            //Override default SKIN colors first 4 instruments
-            
-
         }
     }
     

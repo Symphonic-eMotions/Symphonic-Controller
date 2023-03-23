@@ -141,7 +141,7 @@ struct InstrumentsSet: Identifiable, Decodable {
             skin = skinRaw
         }
         else{
-            skin = Skin(name: "named is this not", instruments: [])
+            skin = Skin(name: "named this set, it is not", instruments: [])
         }
     }
     

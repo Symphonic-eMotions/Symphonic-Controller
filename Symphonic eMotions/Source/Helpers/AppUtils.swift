@@ -229,20 +229,73 @@ final class AppUtils {
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
-    static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
+    static func setSettings(
+        instrumentSet: InstrumentsSet,
+        sessionSettings: SessionSettings
+    ) -> SetSettings {
         
-        var areaOfInterestColor: [Color] = []
-        for i in areaOfInterest {
-            if i == 1 { areaOfInterestColor.append(trackColor) }
-            else { areaOfInterestColor.append(.black.opacity(0.01)) }
+        let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
+        
+        //If the set config has a skin, use it
+        var skin: InstrumentsSet.Skin!
+        
+        if instrumentSet.skin.instruments.count > 0 { skin = instrumentSet.skin }
+        //Default skin hard coded in sessionSettings
+        else{ skin = sessionSettings.activeSkin }
+        
+        var tracks: OrderedDictionary<String,TrackSettings> = [:]
+        let tracksLoaded = instrumentSet.tracks
+        //Keep track of partNumber for variations track/instrument Color...
+        var partNumber: Int = 0
+        for trackLoaded in tracksLoaded {
+            
+            partNumber = 0
+            var parts: OrderedDictionary<String, PartSettings> = [:]
+            for partLoaded in trackLoaded.parts {
+                
+                let part = PartSettings(
+                    partId: partLoaded.id,
+                    partName: partLoaded.instrumentPartName,
+                    partNumber: partNumber,
+                    rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
+                    rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
+                    areaOfInterest: partLoaded.areaOfInterest,
+                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
+                        rows: instrumentSet.rows,
+                        columns: instrumentSet.columns,
+                        areaOfInterest: partLoaded.areaOfInterest
+                    ),
+                    areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
+                    dontDrawVisual: partLoaded.dontDrawVisual ?? false
+                )
+                parts[partLoaded.id] = part
+                partNumber += 1
+            }
+            
+            let track = TrackSettings(
+                trackId: trackLoaded.id,
+                trackName: trackLoaded.instrumentName,
+                instrumentVolume: trackLoaded.volume,
+                instrumentColor: trackLoaded.instrumentColor,
+                levels: trackLoaded.levels,
+                parts: parts)
+            
+            tracks[trackLoaded.id] = track
         }
-        return areaOfInterestColor
+        let setSettings = SetSettings(
+            setName: instrumentSet.name,
+            rows: instrumentSet.rows,
+            columns: instrumentSet.columns,
+            bpm: instrumentSet.bpm,
+            masterEffects: masterEffects,
+            tracks: tracks,
+            skins: skin
+        )
+        
+        return setSettings
     }
     
-    static func getIndexes(areaOfInterest: [Int]) -> [Int] {
-        return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
-    }
-    
+    //Not yet used for amplifying top row
     static func getPartAreaBoostFactor(
         rows: Int,
         columns: Int,
@@ -302,71 +355,6 @@ final class AppUtils {
         return deltaTimes
     }
     
-    static func setSettings(
-        instrumentSet: InstrumentsSet,
-        sessionSettings: SessionSettings
-    ) -> SetSettings {
-        
-        let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
-        
-        //If the set config has a skin, use it
-        var skin: InstrumentsSet.Skin!
-        if instrumentSet.skin.instruments.count > 0 { skin = instrumentSet.skin }
-        //Default skin hard coded in sessionSettings
-        else{ skin = sessionSettings.activeSkin }
-        
-        var tracks: OrderedDictionary<String,TrackSettings> = [:]
-        let tracksLoaded = instrumentSet.tracks
-        //Keep track of partNumber for variations track/instrument Color...
-        var partNumber: Int = 0
-        for trackLoaded in tracksLoaded {
-            
-            partNumber = 0
-            var parts: OrderedDictionary<String, PartSettings> = [:]
-            for partLoaded in trackLoaded.parts {
-                
-                let part = PartSettings(
-                    partId: partLoaded.id,
-                    partName: partLoaded.instrumentPartName,
-                    partNumber: partNumber,
-                    rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
-                    rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
-                    areaOfInterest: partLoaded.areaOfInterest,
-                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
-                        rows: instrumentSet.rows,
-                        columns: instrumentSet.columns,
-                        areaOfInterest: partLoaded.areaOfInterest
-                    ),
-                    areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
-                    dontDrawVisual: partLoaded.dontDrawVisual ?? false
-                )
-                parts[partLoaded.id] = part
-                partNumber += 1
-            }
-            
-            let track = TrackSettings(
-                trackId: trackLoaded.id,
-                trackName: trackLoaded.instrumentName,
-                instrumentVolume: trackLoaded.volume,
-                instrumentColor: trackLoaded.instrumentColor,
-                levels: trackLoaded.levels,
-                parts: parts)
-            
-            tracks[trackLoaded.id] = track
-        }
-        let setSettings = SetSettings(
-            setName: instrumentSet.name,
-            rows: instrumentSet.rows,
-            columns: instrumentSet.columns,
-            bpm: instrumentSet.bpm,
-            masterEffects: masterEffects,
-            tracks: tracks,
-            skins: skin
-        )
-        
-        return setSettings
-    }
-    
     //Create the "database" to store the changed values in the master track, these values will be written to disk
     static func masterTrackSettings(instrumentSet: InstrumentsSet) -> OrderedDictionary<Int,MasterTrackEffectsSettings> {
         
@@ -406,6 +394,21 @@ final class AppUtils {
         }
         
         return masterTrackSettings
+    }
+    
+    //Part editor SwiftUI interface
+    static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
+        
+        var areaOfInterestColor: [Color] = []
+        for i in areaOfInterest {
+            if i == 1 { areaOfInterestColor.append(trackColor) }
+            else { areaOfInterestColor.append(.black.opacity(0.01)) }
+        }
+        return areaOfInterestColor
+    }
+    
+    static func getIndexes(areaOfInterest: [Int]) -> [Int] {
+        return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }
     
     //Create the object to build the master track view. This cannot hold changed values due to View rebuild on change
