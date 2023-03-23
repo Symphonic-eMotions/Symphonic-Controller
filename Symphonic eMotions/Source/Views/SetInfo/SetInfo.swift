@@ -14,11 +14,11 @@ struct SetInfoLocalState {
     //What Skin WILL the set load
     var loadSessionDisplay: SessionDisplay
     
-    init(){
+    init(sessioDisplay: SessionDisplay){
         self.setName = ""
         self.setConfig = ""
         self.sideBarHead = "Sets"
-        self.loadSessionDisplay = .swiftUI
+        self.loadSessionDisplay = sessioDisplay
     }
 }
 

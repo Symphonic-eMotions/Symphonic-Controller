@@ -135,26 +135,34 @@ class CellScene: SKScene {
             if index == 0 {
                 instrumentPart0a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart0a)
-                tiles0 = setUpBackgrounds(instrumentIndex: index)
-                addChild(tiles0)
+                if self.sceneSkin.name != "free" {
+                    tiles0 = setUpBackgrounds(instrumentIndex: index)
+                    addChild(tiles0)
+                }
             }
             else if index == 1 {
                 instrumentPart1a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart1a)
-                tiles1 = setUpBackgrounds(instrumentIndex: index)
-                addChild(tiles1)
+                if self.sceneSkin.name != "free" {
+                    tiles1 = setUpBackgrounds(instrumentIndex: index)
+                    addChild(tiles1)
+                }
             }
             else if index == 2 {
                 instrumentPart2a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart2a)
-                tiles2 = setUpBackgrounds(instrumentIndex: index)
-                addChild(tiles2)
+                if self.sceneSkin.name != "free" {
+                    tiles2 = setUpBackgrounds(instrumentIndex: index)
+                    addChild(tiles2)
+                }
             }
             else if index == 3 {
                 instrumentPart3a = setupInstrument(instrumentIndex: index)
                 addChild(instrumentPart3a)
-                tiles3 = setUpBackgrounds(instrumentIndex: index)
-                addChild(tiles3)
+                if self.sceneSkin.name != "free" {
+                    tiles3 = setUpBackgrounds(instrumentIndex: index)
+                    addChild(tiles3)
+                }
             }
         }
 
@@ -238,9 +246,6 @@ class CellScene: SKScene {
             container.position = self.instrument3Positions.first ?? CGPoint()
         }
         
-        print("Instrument index: \(instrumentIndex) skin.uiColor:")
-        print(skin.uiColor)
-        
         var instrumentRadius = self.size.width / CGFloat(self.columns + 4)
         var instrument = Instrument(circleOfRadius: instrumentRadius)
         instrument.name = "1stChild"
@@ -272,7 +277,9 @@ class CellScene: SKScene {
         var partScale: Double!
         var position: CGPoint!
         
-        updateBackgrounds()
+        if self.sceneSkin.name != "free" {
+            updateBackgrounds()
+        }
         
         instrumentIndex = 0
         if self.instrument0Positions.indices.contains(instrumentPart0aMaxIndex){
@@ -369,16 +376,10 @@ class CellScene: SKScene {
     }
     
     //MARK: Update background
-    //TODO: Add stroke opacity controller
     func updateBackgrounds(){
         
-        //TODO: Do this on level change so update can be used for further increase alpha
         var partScale: Double!
         
-        //First itteration for not showing if not in current level
-        
-        //BRAINFART
-//        for (index, trackLevels) in levels.enumerated() {
         for index in 0...3 {
             
             let trackLevels = levels[index]

@@ -170,7 +170,8 @@ struct InstrumentsSet: Identifiable, Decodable {
             )]
             
             //Here we need to load the initial Skset
-            skin = Skin(name: "named this set, it is not", instruments:instruments)
+            //default name switches SetInfoLocalState to SwiftUI
+            skin = Skin(name: "default", instruments:instruments)
         }
     }
     

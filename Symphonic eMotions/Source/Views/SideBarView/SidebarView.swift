@@ -21,7 +21,7 @@ final class SidebarViewModel: ObservableObject {
     
     init(
         
-        setCollections: Sets = AppUtils.loadSets(json: "SE-sets"),
+        setCollections: Sets = AppUtils.loadSets(json: "SE-sets-test-001"),
         state: SidebarViewState,
         currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void
     ) {

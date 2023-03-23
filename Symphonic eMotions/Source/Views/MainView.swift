@@ -16,7 +16,7 @@ struct MainView: View {
     //This needs to be replaced with sessionDisplay
     @State private var mainViewUpdate: BuildSettings.ActiveView
     //Set info page vars from navigation
-    @State var setInfoLocalState = SetInfoLocalState()
+    @State var setInfoLocalState = SetInfoLocalState(sessioDisplay: .swiftUI)
     //Set editor vars from navigation
     @State var setEditLocalState = SetEditLocalState()
     //Keep track of local saved setting files
@@ -32,6 +32,12 @@ struct MainView: View {
         self.viewModel = viewModel
         self._sessionDisplay = sessionDisplay
         self.mainViewUpdate = mainViewUpdate
+            
+        //What Skin is selected by default
+        //TODO: This doesn't get updated with set change.
+        if viewModel.mainState.setSettings.skins.name != "default"{
+            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit)
+        }
     }
     
     var body: some View {
