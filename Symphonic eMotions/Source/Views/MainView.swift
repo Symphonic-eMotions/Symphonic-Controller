@@ -22,7 +22,7 @@ struct MainView: View {
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
     //HomeKit connection for external lamp control
-    @StateObject private var homeKitStore: HomeKitManager = .init()
+//    @StateObject private var homeKitStore: HomeKitManager = .init()
     
     init(
         viewModel: MainViewModel,
@@ -252,7 +252,8 @@ struct MainView: View {
                         },
                         conductor: viewModel.conductor
                     )
-                ).environmentObject(homeKitStore)
+                )
+//                .environmentObject(homeKitStore)
             }
             
             else if viewModel.mainState.buildSettings.activeView == .playView {
@@ -284,7 +285,7 @@ struct MainView: View {
                 .onAppear{
                     viewModel.conductor.playEngineAndTracks()
                 }
-                .environmentObject(homeKitStore)
+//                .environmentObject(homeKitStore)
             }
         }
     }

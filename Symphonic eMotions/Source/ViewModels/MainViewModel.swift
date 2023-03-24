@@ -61,9 +61,7 @@ final class MainViewModel: ObservableObject {
             )
             
         } else {
-            
-            print(instrumentsSet.skin)
-            
+                        
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet,
                 //Load set colors into UIColor in setting

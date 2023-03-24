@@ -30,8 +30,6 @@ class SideBarSetsViewModel: ObservableObject {
     
     func currentSetInfoChanged(selectedCollection: MusicSet) -> MusicSet {
         
-        print("Set name: \(selectedCollection.name)")
-
         return selectedCollection
     }
     

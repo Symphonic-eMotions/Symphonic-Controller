@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 import AudioKit
-import HomeKit
+//import HomeKit
 
 struct FullViewState {
     let currentInstrumentSet: InstrumentsSet
@@ -54,7 +54,7 @@ struct FullView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var fullViewModel: FullViewModel
     
-    @EnvironmentObject var homeKitStore: HomeKitManager
+//    @EnvironmentObject var homeKitStore: HomeKitManager
     
     var body: some View {
         
@@ -74,9 +74,10 @@ struct FullView: View {
                 ),
                 rowSelected: fullViewModel.currentInstrumentSetIsChanged,
                 conductor: fullViewModel.conductor
-            )).environmentObject(homeKitStore)
+            ))
+//            .environmentObject(homeKitStore)
             
-            HomeKitView().environmentObject(homeKitStore)
+//            HomeKitView().environmentObject(homeKitStore)
             
         }
         

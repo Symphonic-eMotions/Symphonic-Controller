@@ -52,7 +52,7 @@ final class FullHomeViewModel: ObservableObject {
 struct FullHomeView: View {
     
     @ObservedObject var fullHomeViewModel: FullHomeViewModel
-    @EnvironmentObject var homeKitStore: HomeKitManager
+//    @EnvironmentObject var homeKitStore: HomeKitManager
     
     var body: some View {
         
@@ -80,7 +80,7 @@ struct FullHomeView: View {
                     
                     .onTapGesture {
                         
-                        homeKitStore.lampAan()
+//                        homeKitStore.lampAan()
                         
                         let duration: Double = 3.5
                         let baseAnimation = Animation.easeInOut(duration: duration)

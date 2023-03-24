@@ -13,7 +13,7 @@ struct FullPlayView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var mainViewModel: MainViewModel
     
-    @EnvironmentObject var homeKitStore: HomeKitManager
+//    @EnvironmentObject var homeKitStore: HomeKitManager
     
     var body: some View {
         
@@ -80,7 +80,7 @@ struct FullPlayView: View {
                 .frame(width: 160, height: 160, alignment: .center)
                 .position(x: 130, y: 130)
                 .onTapGesture {
-                    homeKitStore.lampUit()
+//                    homeKitStore.lampUit()
                     mainViewModel.backButton()
                 }
                 

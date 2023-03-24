@@ -63,7 +63,6 @@ class SetSettings: Identifiable {
         let firstTrack = tracks.elements.first!
         
         print("Set loaded, first track ID: \(firstTrack.key) and SKIN:")
-        print(skins)
         
         
         self.settingsCurrentTrackID = firstTrack.key
