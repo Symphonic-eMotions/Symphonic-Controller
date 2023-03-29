@@ -11,9 +11,11 @@ import SwiftUI
 struct ManageSessionSettings: Codable {
     
     var sensitivity: Float
+    var setURL: URL
     
-    init(sensitivity: Float){
+    init(sensitivity: Float, setURL: URL){
         self.sensitivity = sensitivity
+        self.setURL = setURL
     }
     
     static func writeSessionSettings(fileName: String, storeSessionSettings: ManageSessionSettings){
@@ -37,7 +39,7 @@ struct ManageSessionSettings: Codable {
         
         //Default settings to be over written by actual values
         let sensitivity: Float = 0.55
-        var sessionSettings: ManageSessionSettings = ManageSessionSettings( sensitivity: sensitivity )
+        var sessionSettings: ManageSessionSettings = ManageSessionSettings( sensitivity: sensitivity, setURL: URL("readSessionSettings.json") )
 
         let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = pathURL[0]
@@ -49,6 +51,7 @@ struct ManageSessionSettings: Codable {
             do {
                 let decoded = try JSONDecoder().decode(ManageSessionSettings.self, from: data)
                 sessionSettings.sensitivity = decoded.sensitivity
+                sessionSettings.setURL = decoded.setURL
             }
             catch{
                 print("Unexpected error InstrumentsSet withJSON: \(error).")
@@ -104,14 +107,14 @@ enum SessionDisplay: Hashable {
 class SessionSettings: Identifiable {
     
     var sensitivity: Float
-//    var activeSkin: InstrumentsSet.Skin
-    
+    var setURL: URL
+
     init(
-        sensitivity: Float
-//        ,
-//        skin: InstrumentsSet.Skin
+        sensitivity: Float,
+        setURL: URL
+
     ){
         self.sensitivity = sensitivity
-//        self.activeSkin = skin
+        self.setURL = setURL
     }
 }

@@ -55,7 +55,6 @@ final class AppUtils {
     ) -> String {
         
         let setName = instrumentSet.name
-        var customName = setSettings.customName
         let timestammp = NSDate().timeIntervalSince1970
         let fileName = setName + "-timestamp-\(timestammp)"
         
@@ -216,16 +215,33 @@ final class AppUtils {
         let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
         
         let sessionSetting = SessionSettings(
-            sensitivity: readSessionSettings.sensitivity
+            sensitivity: readSessionSettings.sensitivity,
+            setURL: readSessionSettings.setURL
         )
         
         return sessionSetting
     }
     
-    static func createSessionFile(sensitivity: Float){
+    static func createSessionFile(sensitivity: Float, setURL: URL){
+        
         let fileName: String = "SeM-settings"
+        var localSensitifity: Float = 0
+        
+        //When loading a set we do not have the sensitifity present, so we load it from disk
+        if sensitivity == -1 {
+            //Load current sensitivity before writing
+            let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: fileName)
+            localSensitifity = readSessionSettings.sensitivity
+        }
+        else{
+            localSensitifity = sensitivity;
+        }
+        
+        
+        let setURL: URL = setURL
         let storeSettings = ManageSessionSettings(
-            sensitivity: sensitivity
+            sensitivity: localSensitifity,
+            setURL: setURL
         )
         
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
@@ -281,6 +297,7 @@ final class AppUtils {
         let setSettings = SetSettings(
             setName: instrumentSet.name,
             customName: instrumentSet.customName,
+            setURL: sessionSettings.setURL,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             bpm: instrumentSet.bpm,

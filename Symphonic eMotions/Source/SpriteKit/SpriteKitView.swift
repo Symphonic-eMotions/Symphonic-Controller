@@ -89,8 +89,6 @@ struct SpriteKitView: View {
             instrumentAreas: instrumentAreas
         )
         
-        
-        
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
         self._sessionDisplay = sessionDisplay

@@ -64,7 +64,6 @@ final class MainViewModel: ObservableObject {
                         
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet,
-                //Load set colors into UIColor in setting
                 sessionSettings: sessionSettingsLoaded
             )
             

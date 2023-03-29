@@ -293,7 +293,8 @@ struct SensitivityPlayView: View {
                             print("Sensitivity changed and stored to: \(value)")
                             
                             AppUtils.createSessionFile(
-                                sensitivity: value
+                                sensitivity: value,
+                                setURL: playViewModel.setSettings.setURL
                             )
                         }
                     })

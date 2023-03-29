@@ -55,6 +55,14 @@ struct SavedSetsList: View {
                             .background(Color.green)
                             .cornerRadius(5.0)
                         .onTapGesture {
+                            //Save current URL
+//                            setInfoModel.setSettings.setURL = url
+                            print("Write current loaded URL to session file: \(url)")
+                            
+                            AppUtils.createSessionFile(
+                                sensitivity: -1,
+                                setURL: url)
+                            
                             //Load settngs over current
                             setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
                             //Change the View

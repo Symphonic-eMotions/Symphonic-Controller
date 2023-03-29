@@ -25,7 +25,7 @@ class SetSettings: Identifiable {
     //Set Name
     var setName: String
     var customName: String
-//    var setURL: URL
+    var setURL: URL
     
     //grid dimention
     var gridRows: Int
@@ -47,6 +47,7 @@ class SetSettings: Identifiable {
     init(
         setName: String,
         customName: String,
+        setURL: URL,
         rows: Int,
         columns: Int,
         bpm: Double,
@@ -56,6 +57,7 @@ class SetSettings: Identifiable {
     ){
         self.setName = setName
         self.customName = customName
+        self.setURL = setURL
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns

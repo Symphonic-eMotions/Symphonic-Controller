@@ -22,11 +22,8 @@ struct EditorView: View {
     @State var fileUrl: URL?
     
     var body: some View {
-        Spacer()
-        Text("Editor for \(setInfoModel.setInfoLocalState.setName)")
-            .font(.largeTitle)
-            .fontWeight(.regular)
-        Text("We need setSettings -> \(setInfoModel.setSettings.setName)")
+
+        Text("URL -> \(setInfoModel.setSettings.setURL)")
         Spacer()
         VStack (spacing: 30) {
             Button(action: {imported.toggle()}, label: {

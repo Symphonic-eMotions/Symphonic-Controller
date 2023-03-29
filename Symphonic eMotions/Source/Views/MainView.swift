@@ -179,53 +179,6 @@ struct MainView: View {
                 .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
         
-        //Set editor
-//        else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
-//
-////            NavigationView {
-////                SidebarView(
-////                    viewModel: viewModel,
-////                    sidebarViewModel: SidebarViewModel(
-////                        state: SidebarViewState(
-////                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
-////                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
-////                            buildSettings: viewModel.mainState.buildSettings
-////                        ),
-////                        currentInstrumentsSetIsChanged: { instrumentsSet in
-////                            viewModel.currentModelInstrumentsSetChanged(
-////                                instrumentsSet: instrumentsSet,
-////                                sessionSettings: viewModel.mainState.sessionSettings
-////                            )
-////                        }
-////                    ),
-////                    sessionDisplay: $sessionDisplay,
-////                    setInfoLocalState: $setInfoLocalState,
-////                    setEditLocalState: $setEditLocalState
-////                ).environmentObject(fileController)
-//
-////                if sessionDisplay == .editor {
-////
-////                    EditorHomeView()
-////                }
-////                else if sessionDisplay == .setEditor {
-////
-////                    EditorView(
-////                        setEditModel: SetEditModel(
-////                            setEditLocalState: $setEditLocalState,
-////                            setEditState: SetEditState(setCollections: viewModel.mainState.setCollection), currentInstrumentsSetIsChanged: { instrumentsSet in
-////                                viewModel.currentModelInstrumentsSetChanged(
-////                                    instrumentsSet: instrumentsSet,
-////                                    sessionSettings: viewModel.mainState.sessionSettings
-////                                )
-////                            }
-////                        ),
-////                        sessionDisplay: $sessionDisplay
-////                    )
-////                }
-////            }
-////            .navigationViewStyle(DoubleColumnNavigationViewStyle())
-//        }
-        
         else if sessionDisplay == .muur {
             
             if viewModel.mainState.buildSettings.activeView == .homeView {

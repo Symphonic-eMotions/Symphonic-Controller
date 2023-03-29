@@ -9,10 +9,16 @@ import SwiftUI
 
 struct VerticalSensitivitySlider: View {
     
+    @ObservedObject var playViewModel: PlayViewModel
     @Binding var value: Float
+    
     init(
+        playViewModel: PlayViewModel,
         value: Binding<Float>
-    ) { _value = value }
+    ) {
+        _value = value
+        self.playViewModel = playViewModel
+    }
     var body: some View {
         
         HStack{
@@ -20,9 +26,11 @@ struct VerticalSensitivitySlider: View {
                 //Only on end of slide change
                 if !changed {
                     
-                    print("Sensitivity changed and stored to: \(value)")
+                    print("Sensitivity changed and stored to: \(value) \n setURL kept: \(playViewModel.setSettings.setURL)")
                     
-                    AppUtils.createSessionFile(sensitivity: value)
+                    AppUtils.createSessionFile(
+                        sensitivity: value,
+                        setURL: playViewModel.setSettings.setURL)
                 }
             })
             .foregroundColor(.secondary)
@@ -59,16 +67,19 @@ struct SensitivityView: View {
 //                            .padding(.bottom, 2)
 //                            .zIndex(100)
                 
-                VerticalSensitivitySlider(value: Binding(
-                    get: {
-                        playViewModel.imageDifference.sensitivitySubject.value
-                    },
-                    set: {
-                        playViewModel.imageDifference.sensitivitySubject.send($0)
-                        playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
-                        playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
-                    }
-                ))
+                VerticalSensitivitySlider(
+                    playViewModel: playViewModel,
+                    value: Binding(
+                        get: {
+                            playViewModel.imageDifference.sensitivitySubject.value
+                        },
+                        set: {
+                            playViewModel.imageDifference.sensitivitySubject.send($0)
+                            playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
+                            playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
+                        }
+                    )
+                )
                 .frame(width: 450, height: 30)
 //                .padding(.trailing)
                 .zIndex(100)
