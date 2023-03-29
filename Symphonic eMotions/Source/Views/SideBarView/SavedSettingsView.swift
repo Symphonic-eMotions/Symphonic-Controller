@@ -14,7 +14,6 @@ struct SavedSettingsView: View {
     var currenSetName: String
     let setCollection: MusicSet
     
-//    var url: URL
     @State var urls: [URL] = []
     
     @EnvironmentObject var fileController: FileController

@@ -27,10 +27,12 @@ struct SetInfo: View {
 //    @ObservedObject var sharedViewModel: SharedViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
+    @EnvironmentObject var fileController: FileController
     
     var body: some View {
         VStack{
             
+            //.home is the page on entering app, also accesible by clicking the Sets header in the side bar
             if sessionDisplay == .home {
                 SetInfoHome(
 //                    sharedViewModel: sharedViewModel,
@@ -48,7 +50,11 @@ struct SetInfo: View {
                     .onTapGesture {
                         
                         //Load the Set
-                        setInfoModel.tapSetRow(selectedCollection: setInfoModel.filterSet(setName: setInfoModel.setInfoLocalState.setName))
+                        setInfoModel.tapSetRow(
+                            selectedCollection: setInfoModel.filterSet(
+                                setName: setInfoModel.setInfoLocalState.setName
+                            )
+                        )
                         
                         //Change the View
                         sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
@@ -61,17 +67,18 @@ struct SetInfo: View {
                     loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
                 )
                 
+                Divider()
+
+                
+                SavedSetsList(
+                    setInfoModel: setInfoModel,
+                    sessionDisplay: $sessionDisplay
+                ).environmentObject(fileController)
+                
+                Divider()
+
+                
                 Spacer()
-                
-    //            Text("About this set. Saved versions:")
-    //            Text("Calibrator")
-    //            Spacer()
-                
-    //            SavedSettingsView(
-    //                sideBarSetsViewModel: sideBarSetsViewModel,
-    //                currenSetName: sideBarSetsViewModel.state.currentInstrumentsSetName,
-    //                setCollection: setCollection
-    //            ).environmentObject(fileController)
             }
             
             

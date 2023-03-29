@@ -34,6 +34,12 @@ final class SetInfoModel: ObservableObject {
         currentInstrumentsSetIsChanged(instrumentSet)
     }
     
+    func tapSavedRow(fileName: String) {
+        
+        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
+        currentInstrumentsSetIsChanged(instrumentSet!)
+    }
+    
     func filterSet(setName: String) -> MusicSet {
         
         let filtered = setInfoState.setCollections.sets.filter { set in

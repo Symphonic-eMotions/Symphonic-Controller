@@ -166,6 +166,7 @@ struct MainView: View {
                             ),
                             sessionDisplay: $sessionDisplay
                         )
+                        .environmentObject(fileController)
                     }
                 }
                 .navigationViewStyle(DoubleColumnNavigationViewStyle())
