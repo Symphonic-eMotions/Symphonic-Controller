@@ -11,6 +11,7 @@ struct SavedSetsList: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     @State var urls: [URL] = []
     //FIXME: select the chosen one
@@ -43,18 +44,22 @@ struct SavedSetsList: View {
                             sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
                         }
                         
-//                        Divider()
+                        Spacer().frame(width: 20)
                         
                         Image(systemName: "square.and.pencil")
-                        .frame(width: 30)
+                            .foregroundColor(.white)
+                            .font(.system(size: 18))
+                            .frame(width: 30)
+                            .padding(.vertical, 5.0)
+                            .padding(.horizontal, 5.0)
+                            .background(Color.green)
+                            .cornerRadius(5.0)
                         .onTapGesture {
                             //Load settngs over current
                             setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
                             //Change the View
-                            sessionDisplay = .editor
+                            sessionDisplaySub = .setEditor
                         }
-                        
-//                        Divider()
                         
                         Text(fileController.name(url: url))
                             .foregroundColor(isSelected ? Color(.lightGray) : .primary)

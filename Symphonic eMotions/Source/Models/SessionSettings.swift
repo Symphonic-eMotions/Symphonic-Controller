@@ -63,6 +63,8 @@ struct ManageSessionSettings: Codable {
     }
 }
 
+//SessionDisplay is used for navigating the SwiftUI view
+//For the editor this same enum is used for SessionDisplaySub navigation
 enum SessionDisplay: Hashable {
     
     case home
@@ -73,6 +75,7 @@ enum SessionDisplay: Hashable {
     case setEditor
     case calibrator
     case muur
+    case none
     
     var title: String {
         switch self {
@@ -92,6 +95,8 @@ enum SessionDisplay: Hashable {
             return "Kalibrator!"
         case .muur:
             return "SeM Wall build"
+        case .none:
+            return "Nothing"
         }
     }
 }

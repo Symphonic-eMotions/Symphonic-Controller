@@ -27,6 +27,7 @@ struct SetInfo: View {
 //    @ObservedObject var sharedViewModel: SharedViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     
     var body: some View {
@@ -35,54 +36,61 @@ struct SetInfo: View {
             //.home is the page on entering app, also accesible by clicking the Sets header in the side bar
             if sessionDisplay == .home {
                 SetInfoHome(
-//                    sharedViewModel: sharedViewModel,
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay
                 )
             }
+            //Set info is also the navigator to saved files within the set
             else if sessionDisplay == .setInfo {
                 
-                Text("\(setInfoModel.setInfoLocalState.setName)")
+                Text("Set \(setInfoModel.setInfoLocalState.setName)")
                     .font(.largeTitle)
                     .fontWeight(.regular)
                 
-                SetLoadAndPlay(setInfoModel: setInfoModel)
-                    .onTapGesture {
-                        
-                        //Load the Set
-                        setInfoModel.tapSetRow(
-                            selectedCollection: setInfoModel.filterSet(
-                                setName: setInfoModel.setInfoLocalState.setName
+                //Here we got the Editor!
+                if sessionDisplaySub == .setEditor {
+                    
+                    EditorView(
+                        setInfoModel: setInfoModel,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
+                    )
+                }
+                //Set Info
+                else{
+                    SetLoadAndPlay(setInfoModel: setInfoModel)
+                        .onTapGesture {
+                            
+                            //Load the Set
+                            setInfoModel.tapSetRow(
+                                selectedCollection: setInfoModel.filterSet(
+                                    setName: setInfoModel.setInfoLocalState.setName
+                                )
                             )
-                        )
-                        
-                        //Change the View
-                        sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
-                    }
-                
-                SkinSelector(
-//                    sharedViewModel: sharedViewModel,
-                    setInfoModel: setInfoModel,
-                    availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
-                    loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
-                )
-                
-                Divider()
+                            
+                            //Change the View
+                            sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
+                        }
+                    
+                    SkinSelector(
+    //                    sharedViewModel: sharedViewModel,
+                        setInfoModel: setInfoModel,
+                        availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
+                        loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
+                    )
+                    
+                    Divider()
 
-                
-                SavedSetsList(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay
-                ).environmentObject(fileController)
-                
-                Divider()
-
-                
-                Spacer()
+                    SavedSetsList(
+                        setInfoModel: setInfoModel,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
+                    ).environmentObject(fileController)
+                    
+                    Divider()
+                    Spacer()
+                }
             }
-            
-            
-            
         }
     }
 }

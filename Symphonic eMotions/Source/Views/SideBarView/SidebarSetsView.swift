@@ -57,10 +57,11 @@ struct SidebarSetsView: View {
     @EnvironmentObject var fileController: FileController
     
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     
     @Binding public var setInfoLocalState: SetInfoLocalState
     
-    @Binding public var setEditLocalState: SetEditLocalState
+//    @Binding public var setEditLocalState: SetEditLocalState
     
     var body: some View {
         
@@ -77,13 +78,7 @@ struct SidebarSetsView: View {
                     setInfoLocalState.setName = "home"
                     setInfoLocalState.sideBarHead = "Sets"
                 }
-                .onLongPressGesture{
-                    sessionDisplay = .editor
-                    setInfoLocalState.setName = "home"
-                    setEditLocalState.setName = "editor"
-                    setInfoLocalState.sideBarHead = "Set Editor"
-                }
-            
+                
             ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
                 
                 SidebarSetCollectionView(
@@ -94,20 +89,21 @@ struct SidebarSetsView: View {
                     viewModel.tapStopAudioEngine()
                     
                     //The brand new SeM File editor
-                    if sessionDisplay == .editor || sessionDisplay == .setEditor {
-                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
-                        setEditLocalState.setName = set.name
-                        setEditLocalState.setConfig = set.config
-                        sessionDisplay = .setEditor
-                        
-                    }
-                    else {
+//                    if sessionDisplay == .editor || sessionDisplay == .setEditor {
+//                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
+//                        setEditLocalState.setName = set.name
+//                        setEditLocalState.setConfig = set.config
+//                        sessionDisplay = .setEditor
+//
+//                    }
+//                    else {
                         //Loading for setInfoView
                         let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
                         setInfoLocalState.setName = set.name
                         setInfoLocalState.setConfig = set.config
                         sessionDisplay = .setInfo
-                    }
+                        sessionDisplaySub = .none
+//                    }
                 }
             }
         }

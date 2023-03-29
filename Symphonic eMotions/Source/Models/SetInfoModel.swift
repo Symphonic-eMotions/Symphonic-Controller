@@ -15,15 +15,18 @@ struct SetInfoState {
 final class SetInfoModel: ObservableObject {
     
     @Binding var setInfoLocalState: SetInfoLocalState
+    @Binding var setSettings: SetSettings
     @Published var setInfoState: SetInfoState
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
     
     init(
         setInfoLocalState: Binding<SetInfoLocalState>,
+        setSettings: Binding<SetSettings>,
         setInfoState: SetInfoState,
         currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void
     ) {
         self._setInfoLocalState = setInfoLocalState
+        self._setSettings = setSettings
         self.setInfoState = setInfoState
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
     }

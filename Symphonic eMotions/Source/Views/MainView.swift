@@ -13,12 +13,14 @@ struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
+    
     //This needs to be replaced with sessionDisplay
     @State private var mainViewUpdate: BuildSettings.ActiveView
     //Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState(sessioDisplay: .swiftUI)
     //Set editor vars from navigation
-    @State var setEditLocalState = SetEditLocalState()
+//    @State var setEditLocalState = SetEditLocalState()
     //Keep track of local saved setting files
     @StateObject var fileController = FileController()
     //HomeKit connection for external lamp control
@@ -27,10 +29,12 @@ struct MainView: View {
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>,
         mainViewUpdate: BuildSettings.ActiveView) {
         
         self.viewModel = viewModel
         self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
             
         //What Skin is selected by default
@@ -105,8 +109,10 @@ struct MainView: View {
                             }
                         ),
                         sessionDisplay: $sessionDisplay,
-                        setInfoLocalState: $setInfoLocalState,
-                        setEditLocalState: $setEditLocalState
+                        sessionDisplaySub: $sessionDisplaySub,
+                        setInfoLocalState: $setInfoLocalState
+//                        ,
+//                        setEditLocalState: $setEditLocalState
                     ).environmentObject(fileController)
                     
                     //SeM Pro interface with interaction editor
@@ -153,6 +159,7 @@ struct MainView: View {
 //                            sharedViewModel: sharedViewModel,
                             setInfoModel: SetInfoModel(
                                 setInfoLocalState: $setInfoLocalState,
+                                setSettings: $viewModel.mainState.setSettings,
                                 setInfoState: SetInfoState(
                                     setCollections: viewModel.mainState.setCollection
                                 ),
@@ -162,63 +169,62 @@ struct MainView: View {
                                         sessionSettings: viewModel.mainState.sessionSettings
                                     )
                                 }
-                                
                             ),
-                            sessionDisplay: $sessionDisplay
+                            sessionDisplay: $sessionDisplay,
+                            sessionDisplaySub: $sessionDisplaySub
                         )
                         .environmentObject(fileController)
                     }
                 }
                 .navigationViewStyle(DoubleColumnNavigationViewStyle())
-            
         }
         
         //Set editor
-        else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
-            
-            NavigationView {
-                SidebarView(
-                    viewModel: viewModel,
-                    sidebarViewModel: SidebarViewModel(
-                        state: SidebarViewState(
-                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
-                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
-                            buildSettings: viewModel.mainState.buildSettings
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet,
-                                sessionSettings: viewModel.mainState.sessionSettings
-                            )
-                        }
-                    ),
-                    sessionDisplay: $sessionDisplay,
-                    setInfoLocalState: $setInfoLocalState,
-                    setEditLocalState: $setEditLocalState
-                ).environmentObject(fileController)
-                
-                if sessionDisplay == .editor {
-                    
-                    EditorHomeView()
-                }
-                else if sessionDisplay == .setEditor {
-                    
-                    EditorView(
-                        setEditModel: SetEditModel(
-                            setEditLocalState: $setEditLocalState,
-                            setEditState: SetEditState(setCollections: viewModel.mainState.setCollection), currentInstrumentsSetIsChanged: { instrumentsSet in
-                                viewModel.currentModelInstrumentsSetChanged(
-                                    instrumentsSet: instrumentsSet,
-                                    sessionSettings: viewModel.mainState.sessionSettings
-                                )
-                            }
-                        ),
-                        sessionDisplay: $sessionDisplay
-                    )
-                }
-            }
-            .navigationViewStyle(DoubleColumnNavigationViewStyle())
-        }
+//        else if sessionDisplay  == .editor || sessionDisplay == .setEditor {
+//
+////            NavigationView {
+////                SidebarView(
+////                    viewModel: viewModel,
+////                    sidebarViewModel: SidebarViewModel(
+////                        state: SidebarViewState(
+////                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
+////                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
+////                            buildSettings: viewModel.mainState.buildSettings
+////                        ),
+////                        currentInstrumentsSetIsChanged: { instrumentsSet in
+////                            viewModel.currentModelInstrumentsSetChanged(
+////                                instrumentsSet: instrumentsSet,
+////                                sessionSettings: viewModel.mainState.sessionSettings
+////                            )
+////                        }
+////                    ),
+////                    sessionDisplay: $sessionDisplay,
+////                    setInfoLocalState: $setInfoLocalState,
+////                    setEditLocalState: $setEditLocalState
+////                ).environmentObject(fileController)
+//
+////                if sessionDisplay == .editor {
+////
+////                    EditorHomeView()
+////                }
+////                else if sessionDisplay == .setEditor {
+////
+////                    EditorView(
+////                        setEditModel: SetEditModel(
+////                            setEditLocalState: $setEditLocalState,
+////                            setEditState: SetEditState(setCollections: viewModel.mainState.setCollection), currentInstrumentsSetIsChanged: { instrumentsSet in
+////                                viewModel.currentModelInstrumentsSetChanged(
+////                                    instrumentsSet: instrumentsSet,
+////                                    sessionSettings: viewModel.mainState.sessionSettings
+////                                )
+////                            }
+////                        ),
+////                        sessionDisplay: $sessionDisplay
+////                    )
+////                }
+////            }
+////            .navigationViewStyle(DoubleColumnNavigationViewStyle())
+//        }
         
         else if sessionDisplay == .muur {
             

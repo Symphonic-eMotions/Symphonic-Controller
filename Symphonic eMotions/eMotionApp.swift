@@ -35,6 +35,7 @@ struct eMotionApp: App {
 //    )
     
     @State public var sessionDisplay: SessionDisplay = .home
+    @State public var sessionDisplaySub: SessionDisplay = .none
 
     
     var body: some Scene {
@@ -59,6 +60,7 @@ struct eMotionApp: App {
                     partFeedback: PartFeedback(instrumentsSet: instrumentSet)
                 ),
                 sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub,
                 mainViewUpdate: buildSettings.activeView
             )
             .statusBar(hidden: true)

@@ -50,10 +50,12 @@ final class AppUtils {
     static func createWorkingFile(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
-        duplicateLastTrack: Bool
+        duplicateLastTrack: Bool,
+        asNewFile: Bool
     ) -> String {
         
         let setName = instrumentSet.name
+        var customName = setSettings.customName
         let timestammp = NSDate().timeIntervalSince1970
         let fileName = setName + "-timestamp-\(timestammp)"
         
@@ -185,6 +187,7 @@ final class AppUtils {
         
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,
+            customName: setSettings.customName,
             filesPath: instrumentSet.filesPath,
             //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
@@ -277,6 +280,7 @@ final class AppUtils {
         }
         let setSettings = SetSettings(
             setName: instrumentSet.name,
+            customName: instrumentSet.customName,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             bpm: instrumentSet.bpm,

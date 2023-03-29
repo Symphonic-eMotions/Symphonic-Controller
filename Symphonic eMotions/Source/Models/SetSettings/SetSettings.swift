@@ -24,6 +24,8 @@ class SetSettings: Identifiable {
     //Id comes from loaded struct
     //Set Name
     var setName: String
+    var customName: String
+//    var setURL: URL
     
     //grid dimention
     var gridRows: Int
@@ -44,6 +46,7 @@ class SetSettings: Identifiable {
     
     init(
         setName: String,
+        customName: String,
         rows: Int,
         columns: Int,
         bpm: Double,
@@ -52,6 +55,7 @@ class SetSettings: Identifiable {
         skins: InstrumentsSet.Skin
     ){
         self.setName = setName
+        self.customName = customName
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns

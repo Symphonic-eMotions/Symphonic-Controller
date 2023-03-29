@@ -77,6 +77,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     
     private enum SetKeys: String, CodingKey {
         case name = "setName"
+        case customName
         case filesPath = "setPath"
         case bpm = "setBPM"
         case hasTempo
@@ -95,6 +96,8 @@ struct InstrumentsSet: Identifiable, Decodable {
     
     var id: String { name }
     let name: String
+    //User editable name
+    let customName: String
     //Depricate filesPath, it's not used?
     let filesPath: String
     //Sequencer objects variables
@@ -123,6 +126,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: SetKeys.self)
         name = try container.decode(String.self, forKey: .name)
+        customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
         filesPath = try container.decode(String.self, forKey: .filesPath)
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
@@ -178,6 +182,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Init for writing a copy with live values
     init(
         name: String,
+        customName: String,
         filesPath: String,
         bpm: Double,
         hasTempo: Bool,
@@ -194,6 +199,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         tracks: [Track]
     ) {
         self.name = name
+        self.customName = customName
         self.filesPath = filesPath
         self.bpm = bpm
         self.hasTempo = hasTempo
@@ -236,6 +242,7 @@ extension InstrumentsSet: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: SetKeys.self)
         try container.encode(name, forKey: .name)
+        try container.encode(customName, forKey: .customName)
         try container.encode(filesPath, forKey: .filesPath)
         try container.encode(bpm, forKey: .bpm)
         try container.encode(hasTempo, forKey: .hasTempo)

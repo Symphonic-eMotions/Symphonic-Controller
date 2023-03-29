@@ -230,22 +230,22 @@ struct PartFeedbackView: View {
                             playViewModel: playViewModel
                         )
                         
-                        EMButton(
-                            action: {
-                                
-                                let fileName = AppUtils.createWorkingFile(
-                                    setSettings: setSettings,
-                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
-                                    duplicateLastTrack: true
-                                )
-                                fileController.addSetFileURLToController(fileName: fileName)
-                                
-                                
-                                
-                            }, color: .primary, isSolid: false, maxWidth: 35, height: 35
-                        ){
-                            Image(systemName: "doc.on.doc.fill")
-                        }.frame(width: 80)
+//                        EMButton(
+//                            action: {
+//
+//                                let fileName = AppUtils.createWorkingFile(
+//                                    setSettings: setSettings,
+//                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+//                                    duplicateLastTrack: true
+//                                )
+//                                fileController.addSetFileURLToController(fileName: fileName)
+//
+//
+//
+//                            }, color: .primary, isSolid: false, maxWidth: 35, height: 35
+//                        ){
+//                            Image(systemName: "doc.on.doc.fill")
+//                        }.frame(width: 80)
                         
                         EMButton(
                             action: {
@@ -253,14 +253,33 @@ struct PartFeedbackView: View {
                                 let fileName = AppUtils.createWorkingFile(
                                     setSettings: setSettings,
                                     instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
-                                    duplicateLastTrack: false
+                                    duplicateLastTrack: false,
+                                    asNewFile: true
+                                )
+                                fileController.addSetFileURLToController(fileName: fileName)
+                                
+                                
+                            }, color: .green, isSolid: true, maxWidth: 80, height: 35
+                        ){
+                            Text("New file")
+                        }.frame(width: 80)
+                        
+                        //TODO: Show only is is edited file
+                        EMButton(
+                            action: {
+                                
+                                let fileName = AppUtils.createWorkingFile(
+                                    setSettings: setSettings,
+                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                    duplicateLastTrack: false,
+                                    asNewFile: false
                                 )
                                 fileController.addSetFileURLToController(fileName: fileName)
                                 
                                 
                             }, color: .red, isSolid: true, maxWidth: 80, height: 35
                         ){
-                            Text("write")
+                            Text("Overwrite")
                         }.frame(width: 80)
                     }
                 }
