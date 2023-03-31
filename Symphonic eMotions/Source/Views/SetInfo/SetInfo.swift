@@ -77,7 +77,6 @@ struct SetInfo: View {
                         }
                     
                     SkinSelector(
-    //                    sharedViewModel: sharedViewModel,
                         setInfoModel: setInfoModel,
                         availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
                         loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
@@ -89,7 +88,8 @@ struct SetInfo: View {
                         setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
-                    ).environmentObject(fileController)
+                    )
+                    .environmentObject(fileController)
                     
                     Divider()
                     Spacer()
@@ -98,54 +98,3 @@ struct SetInfo: View {
         }
     }
 }
-
-struct SkinSelector: View {
-    
-//    @ObservedObject var sharedViewModel: SharedViewModel
-    @ObservedObject var setInfoModel: SetInfoModel
-    var availableSkins: [SessionDisplay]
-    @State var localSessionDisplay: SessionDisplay
-    
-    init(
-//        sharedViewModel: SharedViewModel,
-        setInfoModel: SetInfoModel,
-        availableSkins: [SessionDisplay],
-        loadSessionDisplay: SessionDisplay
-    ){
-//        self.sharedViewModel = sharedViewModel
-        self.setInfoModel = setInfoModel
-        self.availableSkins = availableSkins
-        self.localSessionDisplay = loadSessionDisplay
-    }
-    
-    var body: some View {
-        
-        HStack{
-            Picker(
-                "Skins",
-                selection: Binding(
-                    get: {
-                        localSessionDisplay
-                    },
-                    set: { value in
-                        localSessionDisplay = value
-                        setInfoModel.setInfoLocalState.loadSessionDisplay = value
-                    }
-                )
-                    
-            ) {
-                
-                ForEach( availableSkins, id: \.self){
-                    Text($0.title)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .fixedSize()
-            .padding(.vertical, 10.0)
-            .padding(.leading, 10.0)
-            .foregroundColor(.white)
-            .accentColor(Color.accentColor)
-        }
-    }
-}
-

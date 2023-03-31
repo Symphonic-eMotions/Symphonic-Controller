@@ -49,7 +49,8 @@ final class AppUtils {
         return instrumentSet
     }
     
-    //Write Instrument Set to file structure and return file name
+    //MARK: Write Instrument Set
+    //Write set settings to file structure and return used file name
     static func createWorkingFile(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
@@ -220,8 +221,9 @@ final class AppUtils {
             //MasterTrack effects editor values
             masterTrackEffects: modifiedMasterEffects,
             
-            rows: instrumentSet.rows,
-            columns: instrumentSet.columns,
+            rows: setSettings.gridRows,
+            columns: setSettings.gridColumns,
+            
             levelDurations: instrumentSet.levelDurations,
             levelInstruments: instrumentSet.levelInstruments,
             levelClipControl: instrumentSet.levelClipControl,
@@ -300,11 +302,12 @@ final class AppUtils {
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
                     areaOfInterest: partLoaded.areaOfInterest,
-                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
-                        rows: instrumentSet.rows,
-                        columns: instrumentSet.columns,
-                        areaOfInterest: partLoaded.areaOfInterest
-                    ),
+                    //This needs to get the newly generated area of interest
+//                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
+//                        rows: instrumentSet.rows,
+//                        columns: instrumentSet.columns,
+//                        areaOfInterest: partLoaded.areaOfInterest
+//                    ),
                     areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
                     dontDrawVisual: partLoaded.dontDrawVisual ?? false
                 )
@@ -314,8 +317,8 @@ final class AppUtils {
             
             var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid.mapper ?? []
             if loopsToGrid.count == 0 {
-                let grids = Grids(rawValue: rows)!
-                loopsToGrid = grids.oneClip
+                let grids = Grids(oneClip: loopsToGrid)
+                loopsToGrid = grids!.oneClip
             }
             
             let track = TrackSettings(

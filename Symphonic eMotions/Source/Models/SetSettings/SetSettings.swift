@@ -79,6 +79,20 @@ class SetSettings: Identifiable {
         self.settingsRampDown = firstPart.value.rampDown
     }
     
+    func updateAreaOfInterest(rows: Int) {
+        
+        let allGrids = Grids.allCases
+        let newGrid = allGrids[rows].oneClip
+        
+        for( index, _ ) in tracks {
+            
+            for( partIndex, _ ) in tracks[index]!.parts {
+                
+                tracks[index]!.parts[partIndex]?.areaOfInterest = newGrid
+            }
+        }
+    }
+    
     //Collect instrument areas
     func getInstrumentAreas() -> [[[Int]]] {
         

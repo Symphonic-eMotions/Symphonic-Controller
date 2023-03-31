@@ -15,7 +15,7 @@ class PartSettings: Identifiable {
     var rampUp: Double
     var rampDown: Double
     var areaOfInterest: [Int]
-    var areaOfIntersetBoostFactor: [Int]
+//    var areaOfIntersetBoostFactor: [Int]
     var areaOfInterestColor: [Color]
     var dontDrawVisual: Bool
     
@@ -25,7 +25,7 @@ class PartSettings: Identifiable {
          rampUp: Double,
          rampDown: Double,
          areaOfInterest: [Int],
-         areaOfIntersetBoostFactor: [Int],
+//         areaOfIntersetBoostFactor: [Int],
          areaOfInterestColor: [Color],
          dontDrawVisual: Bool
     ){
@@ -35,7 +35,7 @@ class PartSettings: Identifiable {
         self.rampUp = rampUp
         self.rampDown = rampDown
         self.areaOfInterest = areaOfInterest
-        self.areaOfIntersetBoostFactor = areaOfIntersetBoostFactor
+//        self.areaOfIntersetBoostFactor = areaOfIntersetBoostFactor
         self.areaOfInterestColor = areaOfInterestColor
         self.dontDrawVisual = dontDrawVisual
     }

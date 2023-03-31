@@ -178,12 +178,30 @@ extension InstrumentsSet {
     }
 }
 
-enum Grids: Int {
+enum Grids: CaseIterable {
     case empty
     case oneByOne
     case twoByTwo
     case threeByThree
     case fourbyfour
+    
+    init?(oneClip: [Int]) {
+        switch oneClip.count {
+        case 0:
+            self = .empty
+        case 1:
+            self = .oneByOne
+        case 4:
+            self = .twoByTwo
+        case 9:
+            self = .threeByThree
+        case 16:
+            self = .fourbyfour
+        default:
+            return nil
+        }
+    }
+    
     //There's just one clip in the MIDI file zo all regions trigger 0
     var oneClip: [Int] {
         switch self {

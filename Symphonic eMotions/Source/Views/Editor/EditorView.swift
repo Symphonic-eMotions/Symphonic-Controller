@@ -29,7 +29,7 @@ struct EditorView: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
     
-        
+        SelectGrid(setInfoModel: setInfoModel, localGridRow: setInfoModel.setSettings.gridRows)
         
 //        Spacer()
 //        VStack (spacing: 30) {

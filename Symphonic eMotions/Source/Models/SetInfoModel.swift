@@ -52,5 +52,4 @@ final class SetInfoModel: ObservableObject {
         
         return filtered.first!
     }
-    
 }
