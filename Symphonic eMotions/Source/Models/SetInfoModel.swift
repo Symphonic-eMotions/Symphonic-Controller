@@ -10,6 +10,7 @@ import SwiftUI
 struct SetInfoState {
 
     let setCollections: Sets
+    var currentInstrumentsSet: InstrumentsSet
 }
 
 final class SetInfoModel: ObservableObject {

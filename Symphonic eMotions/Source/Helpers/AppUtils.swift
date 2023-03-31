@@ -210,7 +210,11 @@ final class AppUtils {
             //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
             hasTempo: instrumentSet.hasTempo,
+            
+            //MIGHT: change skin colors according to track colors
+            //Bur what if skin colors difffer from skin colors?
             skin: setSettings.skins,
+            
             timeSignature: instrumentSet.timeSignature,
             
             //MasterTrack effects editor values

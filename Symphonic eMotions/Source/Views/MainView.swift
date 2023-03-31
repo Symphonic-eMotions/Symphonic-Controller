@@ -161,7 +161,8 @@ struct MainView: View {
                                 setInfoLocalState: $setInfoLocalState,
                                 setSettings: $viewModel.mainState.setSettings,
                                 setInfoState: SetInfoState(
-                                    setCollections: viewModel.mainState.setCollection
+                                    setCollections: viewModel.mainState.setCollection,
+                                    currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                                 ),
                                 currentInstrumentsSetIsChanged: { instrumentsSet in
                                     viewModel.currentModelInstrumentsSetChanged(

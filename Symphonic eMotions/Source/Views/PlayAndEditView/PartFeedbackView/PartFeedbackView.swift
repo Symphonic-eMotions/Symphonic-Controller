@@ -230,25 +230,6 @@ struct PartFeedbackView: View {
                             playViewModel: playViewModel
                         )
                         
-//                        EMButton(
-//                            action: {
-//
-//                                let fileName = AppUtils.createWorkingFile(
-//                                    setSettings: setSettings,
-//                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
-//                                    duplicateLastTrack: true
-//                                )
-//                                fileController.addSetFileURLToController(fileName: fileName)
-//
-//
-//
-//                            }, color: .primary, isSolid: false, maxWidth: 35, height: 35
-//                        ){
-//                            Image(systemName: "doc.on.doc.fill")
-//                        }.frame(width: 80)
-                        
-                        var _ = print("current setURL: \(setSettings.setURL)")
-                        
                         EMButton(
                             action: {
                                 
@@ -267,7 +248,8 @@ struct PartFeedbackView: View {
                             Text("New file")
                         }.frame(width: 130)
                         
-                        //TODO: Show only is is edited file
+                        let isDisabled = setSettings.setURL.absoluteString == "dontOverWrite"
+                        
                         EMButton(
                             action: {
                                 
@@ -283,7 +265,9 @@ struct PartFeedbackView: View {
                             }, color: .red, isSolid: true, maxWidth: 130, height: 35
                         ){
                             Text("Overwrite")
-                        }.frame(width: 130)
+                        }
+                        .frame(width: 130)
+                        .disabled(isDisabled)
                     }
                 }
             }

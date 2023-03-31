@@ -54,12 +54,16 @@ struct SetInfo: View {
                         setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
-                    )
+                    ).environmentObject(fileController)
                 }
                 //Set Info
                 else{
                     SetLoadAndPlay(setInfoModel: setInfoModel)
                         .onTapGesture {
+                            
+                            AppUtils.createSessionFile(
+                                sensitivity: -1,
+                                setURL: URL("dontOverWrite"))
                             
                             //Load the Set
                             setInfoModel.tapSetRow(
