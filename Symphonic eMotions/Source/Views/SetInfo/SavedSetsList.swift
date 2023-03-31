@@ -38,6 +38,11 @@ struct SavedSetsList: View {
                         .background(Color.accentColor)
                         .cornerRadius(5.0)
                         .onTapGesture {
+                            
+                            AppUtils.createSessionFile(
+                                sensitivity: -1,
+                                setURL: url)
+                            
                             //Load settngs over current
                             setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
                             //Change the View

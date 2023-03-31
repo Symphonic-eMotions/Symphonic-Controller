@@ -12,6 +12,7 @@ import OrderedCollections
 
 final class AppUtils {
     
+    //MARK: Sets
     static func loadSets(json: String) -> Sets {
         
         guard let sets = Sets.withJSON(json) else {
@@ -20,6 +21,7 @@ final class AppUtils {
         return sets
     }
     
+    //MARK: Instrument Set Loading
     static func loadInstrumentSet(json: String) -> InstrumentsSet {
         
         print("Loading \(json)")
@@ -47,6 +49,7 @@ final class AppUtils {
         return instrumentSet
     }
     
+    //Write Instrument Set to file structure and return file name
     static func createWorkingFile(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
@@ -54,9 +57,19 @@ final class AppUtils {
         asNewFile: Bool
     ) -> String {
         
-        let setName = instrumentSet.name
-        let timestammp = NSDate().timeIntervalSince1970
-        let fileName = setName + "-timestamp-\(timestammp)"
+        var fileName: String!
+        
+        //Write over last opened file.
+        if !asNewFile {
+            let deleteExtension = setSettings.setURL.deletingPathExtension()
+            fileName = deleteExtension.lastPathComponent
+        }
+        //New file name
+        else{
+            let setName = instrumentSet.name
+            let timestammp = NSDate().timeIntervalSince1970
+            fileName = setName + "-timestamp-\(timestammp)"
+        }
         
         let storeInstrumentSet: InstrumentsSet = createInstrumentSet(setSettings: setSettings, instrumentSet: instrumentSet, duplicateLastTrack: duplicateLastTrack)
         
@@ -65,6 +78,7 @@ final class AppUtils {
         return fileName
     }
     
+    //Insrument set from current state
     static func createInstrumentSet(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
@@ -142,6 +156,10 @@ final class AppUtils {
                 storeParts.append(storePart)
             }
             
+            let midiFiles = track.midiFiles
+            var midiFile = midiFiles![0]
+            midiFile.loopsToGrid.mapper = setSettings.tracks[track.trackId]?.loopsToGrid
+            
             var storeTrack = InstrumentsSet.Track(
                 id: track.id,
                 trackId: track.trackId,
@@ -157,7 +175,8 @@ final class AppUtils {
                 instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
                 
-                midiFiles: track.midiFiles,
+                midiFiles: [midiFile],
+                
                 midiThreshold: track.midiThreshold,
                 exsFiles: track.exsFiles,
                 audioFiles: track.audioFiles,
@@ -238,7 +257,8 @@ final class AppUtils {
         }
         
         
-        let setURL: URL = setURL
+        print("Create session file with URL: \(setURL)")
+        
         let storeSettings = ManageSessionSettings(
             sensitivity: localSensitifity,
             setURL: setURL
@@ -254,8 +274,9 @@ final class AppUtils {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
         
+        //Just rows is needed at the moment because all grids have equal sides
         let rows = instrumentSet.rows
-        let cols = instrumentSet.columns
+//        let cols = instrumentSet.columns
         
         let skin: InstrumentsSet.Skin = instrumentSet.skin
         var tracks: OrderedDictionary<String,TrackSettings> = [:]

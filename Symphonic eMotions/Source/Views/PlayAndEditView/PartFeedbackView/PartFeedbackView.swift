@@ -247,6 +247,8 @@ struct PartFeedbackView: View {
 //                            Image(systemName: "doc.on.doc.fill")
 //                        }.frame(width: 80)
                         
+                        var _ = print("current setURL: \(setSettings.setURL)")
+                        
                         EMButton(
                             action: {
                                 
@@ -256,13 +258,14 @@ struct PartFeedbackView: View {
                                     duplicateLastTrack: false,
                                     asNewFile: true
                                 )
+                                
                                 fileController.addSetFileURLToController(fileName: fileName)
                                 
                                 
-                            }, color: .green, isSolid: true, maxWidth: 80, height: 35
+                            }, color: .orange, isSolid: true, maxWidth: 130, height: 35
                         ){
                             Text("New file")
-                        }.frame(width: 80)
+                        }.frame(width: 130)
                         
                         //TODO: Show only is is edited file
                         EMButton(
@@ -277,10 +280,10 @@ struct PartFeedbackView: View {
                                 fileController.addSetFileURLToController(fileName: fileName)
                                 
                                 
-                            }, color: .red, isSolid: true, maxWidth: 80, height: 35
+                            }, color: .red, isSolid: true, maxWidth: 130, height: 35
                         ){
                             Text("Overwrite")
-                        }.frame(width: 80)
+                        }.frame(width: 130)
                     }
                 }
             }

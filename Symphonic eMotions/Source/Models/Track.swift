@@ -234,6 +234,13 @@ extension InstrumentsSet.Track {
     }
 }
 
+extension InstrumentsSet.Track.LoopsToGrid: Encodable {
+    func encoder(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: LoopsToGridKeys.self)
+        try container.encode(mapper, forKey: .mapper)
+    }
+}
+
 
 extension InstrumentsSet.Track: Encodable {
     
@@ -339,6 +346,7 @@ extension InstrumentsSet.Track.MidiFile: Encodable {
         try container.encode(fileName, forKey: .fileName)
         try container.encode(fileExtension, forKey: .fileExtension)
         try container.encode(loopLength, forKey: .loopLength)
+        try container.encode(loopsToGrid, forKey: .loopsToGrid)
     }
 }
 
