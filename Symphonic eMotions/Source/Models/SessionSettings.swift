@@ -11,7 +11,7 @@ import SwiftUI
 struct ManageSessionSettings: Codable {
     
     var sensitivity: Float
-    var setURL: URL
+    var setURL: URL?
     
     init(sensitivity: Float, setURL: URL){
         self.sensitivity = sensitivity
@@ -54,7 +54,7 @@ struct ManageSessionSettings: Codable {
                 sessionSettings.setURL = decoded.setURL
             }
             catch{
-                print("Unexpected error InstrumentsSet withJSON: \(error).")
+                print("Unexpected error readSessionSettings withJSON: \(error).")
             }
         }
         else{

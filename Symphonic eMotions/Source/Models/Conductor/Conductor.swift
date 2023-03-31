@@ -85,7 +85,7 @@ final class Conductor {
     //Keep track of maxIndex values per track
     private var maxIndexParts: [String: Int] = [:]
     //keep track of delta start times
-    private var deltaStartTimePart: [String: DispatchTime] = [:]
+//    private var deltaStartTimePart: [String: DispatchTime] = [:]
     
     //TODO: Make generic container for samplers and synths
     //Sampler container
@@ -281,8 +281,6 @@ final class Conductor {
                     trackAmpEnvelopes[track.id] = nil
                 }
             }
-            
-            
         }
         mixer.removeAllInputs()
         mixerMaster.removeAllInputs()
@@ -318,6 +316,18 @@ final class Conductor {
             
             print("Load track \(track.id) Levels: \(String(describing: track.levels))")
             
+//            print("Loop to grid value, if one by one fill with corrent LoopsToGrid")
+//
+//
+//            if track.midiFiles?.first!.loopsToGrid.mapper?.count == 0 {
+//                print("OVERWRITE")
+//            }
+//            else{
+//                print("LOAD loopsToGrid INTO track based version of PART maxValue")
+//            }
+            
+            
+            
             //SoundModule controlled velocity
             //Initialize velocity to zero for silent start of these instrument
             var startVelocity = 0.0
@@ -335,7 +345,7 @@ final class Conductor {
                     rampUp[part.id] = part.damperTarget.nodeSettings!.rampSpeed ?? -1
                     rampDown[part.id] = part.damperTarget.nodeSettings!.rampSpeedDown ?? -1
                     maxIndexParts[part.id] = 0
-                    deltaStartTimePart[part.id] = DispatchTime.now()
+//                    deltaStartTimePart[part.id] = DispatchTime.now()
                 }
             }
                         
@@ -1352,6 +1362,9 @@ final class Conductor {
                     if part.mapMaxIndex != nil {
                         let mapMaxIndex = part.mapMaxIndex ?? []
                         //Range converter, static now models could be added
+                        //FIXME: Add mapper called LoopsToGrid
+                        
+                        
                         maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
                         forwardMaxIndex(
                             for: part.damperTarget,
@@ -1713,16 +1726,16 @@ final class Conductor {
         }
     }
     
-    private func isPartDeltaTimeRunning(partId: String, partDeltaTime: Int) -> Bool {
-        
-        var isRunning = false
-        
-        if deltaStartTimePart[partId]! + .milliseconds(partDeltaTime) > DispatchTime.now() {
-            isRunning = true
-        }
-        
-        return isRunning
-    }
+//    private func isPartDeltaTimeRunning(partId: String, partDeltaTime: Int) -> Bool {
+//
+//        var isRunning = false
+//
+//        if deltaStartTimePart[partId]! + .milliseconds(partDeltaTime) > DispatchTime.now() {
+//            isRunning = true
+//        }
+//
+//        return isRunning
+//    }
     
     private func valueIndexChanged(maxIndex: Int, trackId: String) -> Bool{
         if maxIndexParts[trackId] != maxIndex {

@@ -216,7 +216,7 @@ final class AppUtils {
         
         let sessionSetting = SessionSettings(
             sensitivity: readSessionSettings.sensitivity,
-            setURL: readSessionSettings.setURL
+            setURL: readSessionSettings.setURL ?? URL("setSessionSetting.json")
         )
         
         return sessionSetting
@@ -254,6 +254,9 @@ final class AppUtils {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
         
+        let rows = instrumentSet.rows
+        let cols = instrumentSet.columns
+        
         let skin: InstrumentsSet.Skin = instrumentSet.skin
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
@@ -284,11 +287,18 @@ final class AppUtils {
                 partNumber += 1
             }
             
+            var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid.mapper ?? []
+            if loopsToGrid.count == 0 {
+                let grids = Grids(rawValue: rows)!
+                loopsToGrid = grids.oneClip
+            }
+            
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackName: trackLoaded.instrumentName,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
+                loopsToGrid: loopsToGrid,
                 levels: trackLoaded.levels,
                 parts: parts)
             

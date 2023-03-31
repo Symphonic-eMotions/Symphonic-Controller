@@ -55,6 +55,7 @@ extension InstrumentsSet {
         let instrumentColor: Color
         var volume: Float
         var midiFiles: [MidiFile]?
+        
         var midiThreshold: Double
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
@@ -177,6 +178,63 @@ extension InstrumentsSet {
     }
 }
 
+enum Grids: Int {
+    case empty
+    case oneByOne
+    case twoByTwo
+    case threeByThree
+    case fourbyfour
+    //There's just one clip in the MIDI file zo all regions trigger 0
+    var oneClip: [Int] {
+        switch self {
+        case .empty:
+            return []
+        case .oneByOne:
+            return [0]
+        case .twoByTwo:
+            return [0,0,0,0]
+        case .threeByThree:
+            return [0,0,0,0,0,0,0,0,0]
+        case .fourbyfour:
+            return [
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,0
+            ]
+        }
+    }
+}
+
+extension InstrumentsSet.Track {
+
+    struct LoopsToGrid: Decodable, Equatable {
+
+        private enum LoopsToGridKeys: String, CodingKey {
+            case mapper
+        }
+
+        var mapper: [Int]?
+
+        //Decoder init
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: LoopsToGridKeys.self)
+            mapper = try container.decodeIfPresent([Int].self, forKey: .mapper) ?? []
+        }
+
+        //Store to file init
+        init(mapper: [Int]?){
+            self.mapper = mapper
+        }
+        
+        //Init
+        init(grids: Grids) {
+            self.mapper = grids.oneClip
+        }
+    }
+}
+
+
 extension InstrumentsSet.Track: Encodable {
     
     func encode(to encoder: Encoder) throws {
@@ -234,6 +292,7 @@ extension InstrumentsSet.Track {
 }
 
 extension InstrumentsSet.Track {
+    
     enum MidiClipGroup: String, Codable {
         
         case chords
@@ -249,12 +308,14 @@ extension InstrumentsSet.Track {
             case fileName = "midiFileName"
             case fileExtension = "midiFileExt"
             case loopLength
+            case loopsToGrid
             //case scoreParts
         }
         
         let fileName: String
         let fileExtension: String
         var loopLength: [Double]
+        var loopsToGrid: LoopsToGrid
         //let scoreParts: Int
         
         init(from decoder: Decoder) throws {
@@ -262,6 +323,8 @@ extension InstrumentsSet.Track {
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
             loopLength = try container.decode([Double].self, forKey: .loopLength)
+            //If empty fill with empty, overwrite with correct dimenstion for editor
+            loopsToGrid = try container.decodeIfPresent(LoopsToGrid.self, forKey: .loopsToGrid) ?? LoopsToGrid.init(grids: .empty)
         }
         
         mutating func updateLoopLength(setLoopLength: Double){

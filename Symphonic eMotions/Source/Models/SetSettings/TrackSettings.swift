@@ -13,6 +13,7 @@ class TrackSettings: Identifiable {
     var trackName: String
     var instrumentVolume: Float
     var instrumentColor: Color
+    var loopsToGrid: [Int]
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
     
@@ -21,6 +22,7 @@ class TrackSettings: Identifiable {
         trackName: String,
         instrumentVolume: Float,
         instrumentColor: Color,
+        loopsToGrid: [Int],
         levels: [Int],
         parts: OrderedDictionary<String, PartSettings>
     ){
@@ -28,6 +30,7 @@ class TrackSettings: Identifiable {
         self.trackName = trackName
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
+        self.loopsToGrid = loopsToGrid
         self.levels = levels
         self.parts = parts
     }

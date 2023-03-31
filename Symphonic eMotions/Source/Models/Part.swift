@@ -31,6 +31,7 @@ extension InstrumentsSet.Track {
         
         //Map area of interest reletive indexes to custom order
         var mapMaxIndex: [Int]?
+        
         var allValues: [Double]?
         var damperTarget: DamperTarget
         
@@ -140,6 +141,7 @@ extension InstrumentsSet.Track.Part.DamperTarget {
     }
     
 }
+
 
 extension InstrumentsSet.Track.Part {
     
