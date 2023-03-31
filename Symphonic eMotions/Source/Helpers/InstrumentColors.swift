@@ -87,6 +87,15 @@ struct InstrumentColors {
             
         case Color("InstrumentColor802"):
             return "InstrumentColor802"
+            
+        case Color("Skin0"):
+            return "Skin0"
+            
+        case Color("Skin1"):
+            return "Skin1"
+            
+        case Color("Skin2"):
+            return "Skin2"
         
         default: return "InstrumentColor000"
         }
