@@ -29,6 +29,8 @@ struct EditorView: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
     
+        
+        
 //        Spacer()
 //        VStack (spacing: 30) {
 //            Button(action: {imported.toggle()}, label: {
@@ -64,7 +66,7 @@ struct EditorView: View {
                     
                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
             ){
-                Text("New file")
+                Text("New Set")
             }.frame(width: 130)
             
             let isDisabled = setInfoModel.setSettings.setURL.absoluteString == "dontOverWrite"

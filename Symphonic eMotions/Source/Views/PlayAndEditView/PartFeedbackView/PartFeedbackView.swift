@@ -245,7 +245,7 @@ struct PartFeedbackView: View {
                                 
                             }, color: .orange, isSolid: true, maxWidth: 130, height: 35
                         ){
-                            Text("New file")
+                            Text("New Set")
                         }.frame(width: 130)
                         
                         let isDisabled = setSettings.setURL.absoluteString == "dontOverWrite"
