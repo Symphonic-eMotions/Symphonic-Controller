@@ -53,6 +53,24 @@ class FileController: ObservableObject {
         return nameParts
     }
     
+    func fileContents( url: URL, fileName: String ) -> String {
+        
+        var fileNameReturn = fileName
+        
+        if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
+            
+            if isCustomNameNotEmpty(set: instrumentSet){
+                fileNameReturn = instrumentSet.customName
+            }
+        }
+        return fileNameReturn
+    }
+    
+    func isCustomNameNotEmpty(set: InstrumentsSet) -> Bool {
+        
+        return set.customName != ""
+    }
+    
     func urlToFileName( url: URL) -> String{
         return url.lastPathComponent
     }
@@ -81,13 +99,5 @@ class FileController: ObservableObject {
             return nameParts.first!
         }
         return "Mismatch"
-    }
-}
-
-extension Date {
-   func getFormattedDate(format: String) -> String {
-        let dateformat = DateFormatter()
-        dateformat.dateFormat = format
-        return dateformat.string(from: self)
     }
 }

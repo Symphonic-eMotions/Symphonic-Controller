@@ -21,76 +21,82 @@ struct SavedSetsList: View {
     
     var body: some View {
         
-        VStack(alignment: .leading){
-            
-            ForEach( urls, id: \.self ){ url in
+        ScrollView {
+            VStack(alignment: .leading){
                 
-                if fileController.isURLInGroup(url: url, name: setInfoModel.setInfoLocalState.setName)
-                {
-                    HStack(spacing:0){
-                        
-                        Image(systemName: "play.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 18))
-                        .frame(width: 30)
-                        .padding(.vertical, 5.0)
-                        .padding(.horizontal, 5.0)
-                        .background(Color.accentColor)
-                        .cornerRadius(5.0)
-                        .onTapGesture {
+                ForEach( urls, id: \.self ){ url in
+                    
+                    if fileController.isURLInGroup(url: url, name: setInfoModel.setInfoLocalState.setName)
+                    {
+                        HStack(spacing:0){
                             
-                            AppUtils.createSessionFile(
-                                sensitivity: -1,
-                                setURL: url)
-                            
-                            //Load settngs over current
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                            //Change the View
-                            sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
-                        }
-                        
-                        Spacer().frame(width: 20)
-                        
-                        Image(systemName: "square.and.pencil")
+                            Image(systemName: "play.fill")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
                             .frame(width: 30)
                             .padding(.vertical, 5.0)
                             .padding(.horizontal, 5.0)
-                            .background(Color.green)
+                            .background(Color.accentColor)
                             .cornerRadius(5.0)
-                        .onTapGesture {
-                            //Save current URL
-//                            setInfoModel.setSettings.setURL = url
-                            print("Write current loaded URL to session file: \(url)")
+                            .onTapGesture {
+                                
+                                AppUtils.createSessionFile(
+                                    sensitivity: -1,
+                                    setURL: url)
+                                
+                                //Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                //Change the View
+                                sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
+                            }
                             
-                            AppUtils.createSessionFile(
-                                sensitivity: -1,
-                                setURL: url)
+                            Spacer().frame(width: 20)
                             
-                            //Load settngs over current
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                            //Change the View
-                            sessionDisplaySub = .setEditor
+                            Image(systemName: "square.and.pencil")
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .frame(width: 30)
+                                .padding(.vertical, 5.0)
+                                .padding(.horizontal, 5.0)
+                                .background(Color.green)
+                                .cornerRadius(5.0)
+                            .onTapGesture {
+                                //Save current URL to disk
+                                AppUtils.createSessionFile(
+                                    sensitivity: -1,
+                                    setURL: url)
+                                
+                                //Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                //Change the View
+                                sessionDisplaySub = .setEditor
+                            }
+                            
+                            let filesName = fileController.fileContents(url: url, fileName:  fileController.name(url: url))
+                            Text(filesName)
+                                .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                .font(.title3)
+                                .padding(.horizontal)
+                                .frame(minWidth: 400, alignment: .leading)
+    //                            .border(.blue)
+                            
+                            Text(fileController.date(url: url))
+                                .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                .font(.subheadline)
+                                .padding(.horizontal)
+    //                            .border(.green)
+                            
+                            Spacer()
                         }
-                        
-                        Text(fileController.name(url: url))
-                            .foregroundColor(isSelected ? Color(.lightGray) : .primary)
-                            .font(.title3)
-                            .padding(.horizontal)
-                        Text(fileController.date(url: url))
-                            .foregroundColor(isSelected ? Color(.lightGray) : .primary)
-                            .font(.subheadline)
-                            .padding(.horizontal)
-                        
-                        Spacer()
+                        .padding()
+                        .fixedSize()
                     }
-                    .padding()
-                    .fixedSize()
                 }
+                
             }
-            
         }
+        
+        
         .onAppear{
             urls = fileController.addDirectoryURLsToController()
         }
