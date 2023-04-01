@@ -35,13 +35,13 @@ struct SelectGrid: View {
                 )
             ) {
                 ForEach( 2...4, id: \.self){
-                    Text("\($0) x \($0)")
+                    Text("Grid \($0) x \($0)")
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .fixedSize()
-            .padding(.vertical, 10.0)
-            .padding(.leading, 10.0)
+            .padding(.leading)
+            .padding(.trailing)
             .foregroundColor(.white)
             .accentColor(Color.accentColor)
         }

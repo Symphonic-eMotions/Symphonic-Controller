@@ -280,10 +280,6 @@ final class AppUtils {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
         
-        //Just rows is needed at the moment because all grids have equal sides
-        let rows = instrumentSet.rows
-//        let cols = instrumentSet.columns
-        
         let skin: InstrumentsSet.Skin = instrumentSet.skin
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks

@@ -49,7 +49,14 @@ final class SetInfoModel: ObservableObject {
         let filtered = setInfoState.setCollections.sets.filter { set in
             return set.name == setName
         }
-        
         return filtered.first!
+    }
+    
+    func tapSetTempoBPMPlus(){
+        self.setSettings.bpm -= 1
+    }
+    
+    func tapSetTempoBPMMin(){
+        self.setSettings.bpm += 1
     }
 }

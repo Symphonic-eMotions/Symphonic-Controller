@@ -34,6 +34,16 @@ class SetSettings: Identifiable {
     
     //Dynamic tempo
     var bpm: Double
+    var bpmAsString: String {
+        get {
+            return String(format: "%.2f", bpm)
+        }
+        set {
+            if let value = Double(newValue) {
+                bpm = value
+            }
+        }
+    }
     
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
@@ -78,6 +88,8 @@ class SetSettings: Identifiable {
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown
     }
+    
+    
     
     func updateAreaOfInterest(rows: Int) {
         
