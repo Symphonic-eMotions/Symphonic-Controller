@@ -248,26 +248,25 @@ struct PartFeedbackView: View {
                             Text("New Set")
                         }.frame(width: 130)
                         
-                        let isDisabled = setSettings.setURL.absoluteString == "dontOverWrite"
-                        
-                        EMButton(
-                            action: {
-                                
-                                let fileName = AppUtils.createWorkingFile(
-                                    setSettings: setSettings,
-                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
-                                    duplicateLastTrack: false,
-                                    asNewFile: false
-                                )
-                                fileController.addSetFileURLToController(fileName: fileName)
-                                
-                                
-                            }, color: .red, isSolid: true, maxWidth: 130, height: 35
-                        ){
-                            Text("Overwrite")
+                        if setSettings.setURL.absoluteString != "dontOverWrite" {
+                            EMButton(
+                                action: {
+                                    
+                                    let fileName = AppUtils.createWorkingFile(
+                                        setSettings: setSettings,
+                                        instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                        duplicateLastTrack: false,
+                                        asNewFile: false
+                                    )
+                                    fileController.addSetFileURLToController(fileName: fileName)
+                                    
+                                    
+                                }, color: .red, isSolid: true, maxWidth: 130, height: 35
+                            ){
+                                Text("Save")
+                            }
+                            .frame(width: 130)
                         }
-                        .frame(width: 130)
-                        .disabled(isDisabled)
                     }
                 }
             }

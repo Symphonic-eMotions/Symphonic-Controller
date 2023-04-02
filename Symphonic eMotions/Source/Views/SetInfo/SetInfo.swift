@@ -43,12 +43,14 @@ struct SetInfo: View {
             //Set info is also the navigator to saved files within the set
             else if sessionDisplay == .setInfo {
                 
-                Text("Set \(setInfoModel.setInfoLocalState.setName)")
-                    .font(.largeTitle)
-                    .fontWeight(.regular)
+                
                 
                 //Here we got the Editor!
                 if sessionDisplaySub == .setEditor {
+                    
+                    Text("Variation \(setInfoModel.setInfoLocalState.setName)")
+                        .font(.largeTitle)
+                        .fontWeight(.regular)
                     
                     EditorView(
                         setInfoModel: setInfoModel,
@@ -58,6 +60,11 @@ struct SetInfo: View {
                 }
                 //Set Info
                 else{
+                    
+                    Text("Set \(setInfoModel.setInfoLocalState.setName)")
+                        .font(.largeTitle)
+                        .fontWeight(.regular)
+                    
                     SetLoadAndPlay(setInfoModel: setInfoModel)
                         .onTapGesture {
                             

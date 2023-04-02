@@ -273,6 +273,7 @@ final class AppUtils {
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
+    //MARK: After load set instruction make this setting database for reference and saving
     static func setSettings(
         instrumentSet: InstrumentsSet,
         sessionSettings: SessionSettings
@@ -313,7 +314,7 @@ final class AppUtils {
             
             var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid.mapper ?? []
             if loopsToGrid.count == 0 {
-                let grids = Grids(oneClip: loopsToGrid)
+                let grids = Grids(rows: instrumentSet.rows)
                 loopsToGrid = grids!.oneClip
             }
             

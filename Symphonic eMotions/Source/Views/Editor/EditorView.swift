@@ -41,6 +41,10 @@ struct EditorView: View {
                     setInfoModel: setInfoModel
                 )
                 
+                EditTracks(
+                    setInfoModel: setInfoModel
+                )
+                
                 
         //        Spacer()
         //        VStack (spacing: 30) {
@@ -60,7 +64,6 @@ struct EditorView: View {
         //            }
         //        }
                 
-                
             }
         }
         Spacer()
@@ -75,25 +78,34 @@ struct EditorView: View {
                         asNewFile: true
                     )
                     fileController.addSetFileURLToController(fileName: fileName)
+                    
+                    //Change the View
+                    sessionDisplay = .setInfo
+                    sessionDisplaySub = .none
+                    
                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
             ){ Text("New Set") }
             .frame(width: 130)
             
-            let isDisabled = setInfoModel.setSettings.setURL.absoluteString == "dontOverWrite"
-            
-            EMButton(
-                action: {
-                    let fileName = AppUtils.createWorkingFile(
-                        setSettings: setInfoModel.setSettings,
-                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                        duplicateLastTrack: false,
-                        asNewFile: false
-                    )
-                    fileController.addSetFileURLToController(fileName: fileName)
-                }, color: .red, isSolid: true, maxWidth: 130, height: 35
-            ){ Text("Overwrite") }
-            .frame(width: 130)
-            .disabled(isDisabled)
+            if setInfoModel.setSettings.setURL.absoluteString != "dontOverWrite" {
+                EMButton(
+                    action: {
+                        let fileName = AppUtils.createWorkingFile(
+                            setSettings: setInfoModel.setSettings,
+                            instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                            duplicateLastTrack: false,
+                            asNewFile: false
+                        )
+                        fileController.addSetFileURLToController(fileName: fileName)
+                        
+                        //Change the View
+                        sessionDisplay = .setInfo
+                        sessionDisplaySub = .none
+                        
+                    }, color: .red, isSolid: true, maxWidth: 130, height: 35
+                ){ Text("Save") }
+                .frame(width: 130)
+            }
         }
         .padding(.leading)
         

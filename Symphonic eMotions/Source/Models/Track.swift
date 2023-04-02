@@ -183,20 +183,23 @@ enum Grids: CaseIterable {
     case oneByOne
     case twoByTwo
     case threeByThree
-    case fourbyfour
+    case fourByFour
+    case fiveByFive
     
-    init?(oneClip: [Int]) {
-        switch oneClip.count {
+    init?(rows: Int) {
+        switch rows {
         case 0:
             self = .empty
         case 1:
             self = .oneByOne
-        case 4:
+        case 2:
             self = .twoByTwo
-        case 9:
+        case 3:
             self = .threeByThree
-        case 16:
-            self = .fourbyfour
+        case 4:
+            self = .fourByFour
+        case 5:
+            self = .fiveByFive
         default:
             return nil
         }
@@ -213,12 +216,19 @@ enum Grids: CaseIterable {
             return [0,0,0,0]
         case .threeByThree:
             return [0,0,0,0,0,0,0,0,0]
-        case .fourbyfour:
+        case .fourByFour:
             return [
                 0,0,0,0,
                 0,0,0,0,
                 0,0,0,0,
                 0,0,0,0
+            ]
+        case .fiveByFive:
+            return [
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0
             ]
         }
     }
