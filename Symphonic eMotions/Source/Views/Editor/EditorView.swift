@@ -21,25 +21,47 @@ struct EditorView: View {
     
     @State var imported = false
     @State var fileUrl: URL?
+    let columnWidth: CGFloat = 130
+    let headingSize: CGFloat = 20
     
     var body: some View {
         
         ScrollView {
             VStack(alignment: .leading){
                 
-                TextField("Custom name", text: $setInfoModel.setSettings.customName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.leading)
-                    .padding(.trailing)
-            
-                SelectGrid(
-                    setInfoModel: setInfoModel,
-                    localGridRow: setInfoModel.setSettings.gridRows
-                )
+                HStack{
+                    Text("Name")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    TextField("Custom name", text: $setInfoModel.setSettings.customName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading)
+                        .padding(.trailing)
+                }
+                HStack{
+                    Text("Grid size")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    SelectGrid(
+                        setInfoModel: setInfoModel,
+                        localGridRow: setInfoModel.setSettings.gridRows
+                    )
+                }
                 
-                SelectSpeed(
-                    setInfoModel: setInfoModel
-                )
+                HStack{
+                    Text("BPM")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    SelectSpeed(
+                        setInfoModel: setInfoModel
+                    )
+                }
                 
                 EditTracks(
                     setInfoModel: setInfoModel

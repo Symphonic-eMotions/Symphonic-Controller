@@ -12,6 +12,12 @@ import OrderedCollections
 
 final class AppUtils {
     
+    
+    static func documentDirectory() -> URL {
+      let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+      return documentsDirectory
+    }
+    
     //MARK: Sets
     static func loadSets(json: String) -> Sets {
         

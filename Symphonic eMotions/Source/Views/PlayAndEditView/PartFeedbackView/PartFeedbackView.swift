@@ -62,13 +62,10 @@ struct PartFeedbackView: View {
                         let settingsVolume = setSettings.tracks[value]!.instrumentVolume
                         volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(settingsVolume)))
                         playViewModel.setSettings.settingsVolume = settingsVolume
-                            
-                        
                         
                         currentPartID = setSettings.tracks[currentTrackID]!.parts.keys.first!
                         playViewModel.partFeedback.currentPartID.send(currentPartID)
                         playViewModel.setSettings.settingsCurrentPartID = currentPartID
-                        
                         
                         let settingRampUp  = setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp
                         rampUp = Float(settingRampUp)
@@ -81,7 +78,6 @@ struct PartFeedbackView: View {
                         playViewModel.playViewState.updateEditView += 1
                     }),
                     content: {
-                        
                         ForEach(setSettings.tracks.keys, id: \.self) { key in
                             Text(setSettings.tracks[key]!.trackName).tag(key)
                         }
