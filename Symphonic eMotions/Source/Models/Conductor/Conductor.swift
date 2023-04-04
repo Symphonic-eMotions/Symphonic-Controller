@@ -461,7 +461,8 @@ final class Conductor {
             //FIXME: This is trigered twice due to togglePlayEngineAndTracks
             if levelClipControl {
                 
-                //Exclude tracks with excludeLevelClipControl
+                //Exclude tracks with excludeLevelClipControl,
+                //these tracks have no midi clip variation
                 let excludeLevelClipControl = track.excludeLevelClipControl ?? false
                 
                 if !excludeLevelClipControl
@@ -1276,6 +1277,20 @@ final class Conductor {
         
         
         var localCurrentSetLevel: Double = currentSetLevel
+        
+        let value: Double = values.flatMap { $0 }
+            .map { $0.average }
+            .reduce(0, +) / Double(values.flatMap { $0 }.count)
+        
+        //New level increment
+        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
+            levelSpeed: setSettings.levelSpeed,
+            currentSetLevel: currentSetLevel,
+            value: value,
+            levelClipControl: true
+        )
+        
+        
         var trackNr: Int = 0
         var partNr: Int = 0
         
@@ -1378,16 +1393,16 @@ final class Conductor {
                     value = valueRamper(value: value, rampId: part.id)
                     
                     //This started a hack around missing new instrument to increase
-                    let levelClipControl = set.levelClipControl
-                    let instrumentControlsLevel: Bool = set.instrumentInLevel(currentSetLevel, track.id)
+//                    let levelClipControl = set.levelClipControl
+//                    let instrumentControlsLevel: Bool = set.instrumentInLevel(currentSetLevel, track.id)
 
-                    localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-                        currentSetLevel: localCurrentSetLevel,
-                        value: value,
-                        for: part.damperTarget,
-                        inLevel: instrumentControlsLevel,
-                        levelClipControl: levelClipControl
-                    )
+//                    localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
+//                        currentSetLevel: localCurrentSetLevel,
+//                        value: value,
+//                        for: part.damperTarget,
+//                        inLevel: instrumentControlsLevel,
+//                        levelClipControl: levelClipControl
+//                    )
                     
                     //Forward to target
                     forward(
@@ -1420,6 +1435,7 @@ final class Conductor {
             
             trackNr += 1
         }
+        
         return localCurrentSetLevel
     }
     
@@ -1772,32 +1788,22 @@ final class Conductor {
      All tracks, which are not muted, will increase level (levelClipControl == true)
      */
     private func getAndOrIncreaseCurrentSetLevel(
+        levelSpeed: Double,
         currentSetLevel: Double,
         value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        inLevel: Bool,
         levelClipControl: Bool? ) -> Double {
-        
-        // levelClipControl
 
         /*
          When midi clips are controlled by current level, increase levels beyond first appearance
          So when levelClipControl == true
          */
             
-        if inLevel || levelClipControl ?? false
-            && value > damperTarget.nodeSettings?.minimalLevel ?? 0.1
-            && damperTarget.nodeSettings?.levelPart != nil {
+        if levelClipControl ?? false && value > 0.1 {
             
-            //do not increase when there's no level part at all
-            guard let levelPart = damperTarget.nodeSettings!.levelPart else { return currentSetLevel }
+            let SpeedValueAndLevelOffset = currentSetLevel + (levelSpeed/10) * value
             
-            //
             // Make sure we never "jump" at a value equal or greater to the number of levels - this will cause all tracks to mute
-            // Maybe take this check out and "fix" this in some other place?!?
-            //
-            
-            return min(Double(set.levelDurations.count) - 0.0000001, currentSetLevel + levelPart * value)
+            return min(Double(set.levelDurations.count) - 0.0000001, SpeedValueAndLevelOffset)
         }
         
         //0 ----> 1 Level part = 60 translates to 0.6 parts
