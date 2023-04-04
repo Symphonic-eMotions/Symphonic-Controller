@@ -21,7 +21,7 @@ struct EditorView: View {
     
     @State var imported = false
     @State var fileUrl: URL?
-    let columnWidth: CGFloat = 130
+    let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     
     var body: some View {
@@ -59,6 +59,17 @@ struct EditorView: View {
                         .frame(width: columnWidth, alignment: .leading)
                     
                     SelectSpeed(
+                        setInfoModel: setInfoModel
+                    )
+                }
+                
+                HStack{
+                    Text("Level speed")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    LevelSpeed(
                         setInfoModel: setInfoModel
                     )
                 }

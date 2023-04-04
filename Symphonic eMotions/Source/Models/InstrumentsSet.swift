@@ -86,6 +86,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case masterTrackEffects
         case rows = "gridRows"
         case columns = "gridColumns"
+        case levelSpeed
         case levelDurations
         case levelInstruments
         case levelClipControl
@@ -111,6 +112,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     let rows: Int
     let columns: Int
     //Level variables
+    let levelSpeed: Double
     let levelDurations: [Int]
     let levelInstruments: [[String]]
     //Level controls location within midi file
@@ -135,6 +137,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         masterTrackEffects = masterTrackEffectsRaw
         rows = try container.decode(Int.self, forKey: .rows)
         columns = try container.decode(Int.self, forKey: .columns)
+        levelSpeed = try container.decode(Double.self, forKey: .levelSpeed)
         levelDurations = try container.decode([Int].self, forKey: .levelDurations)
         levelInstruments = try container.decode([[String]].self, forKey: .levelInstruments)
         levelClipControl = try container.decodeIfPresent(Bool.self, forKey: .levelClipControl)
@@ -191,6 +194,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         masterTrackEffects: [Track.Effect],
         rows: Int,
         columns: Int,
+        levelSpeed: Double,
         levelDurations: [Int],
         levelInstruments: [[String]],
         levelClipControl: Bool?,
@@ -210,6 +214,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         
         self.rows = rows
         self.columns = columns
+        self.levelSpeed = levelSpeed
         self.levelDurations = levelDurations
         self.levelInstruments = levelInstruments
         self.levelClipControl = levelClipControl
@@ -250,6 +255,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(masterTrackEffects, forKey: .masterTrackEffects)
         try container.encode(rows, forKey: .rows)
         try container.encode(columns, forKey: .columns)
+        try container.encode(levelSpeed, forKey: .levelSpeed)
         try container.encode(levelDurations, forKey: .levelDurations)
         try container.encode(levelInstruments, forKey: .levelInstruments)
         try container.encode(levelClipControl, forKey: .levelClipControl)

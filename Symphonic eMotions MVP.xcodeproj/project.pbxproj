@@ -86,6 +86,7 @@
 		7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */; };
 		7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */; };
 		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
+		7CFB298129DB322200DFA32E /* LevelSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298029DB322200DFA32E /* LevelSpeed.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
@@ -202,6 +203,7 @@
 		7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfo.swift; sourceTree = "<group>"; };
 		7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoadAndPlay.swift; sourceTree = "<group>"; };
 		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
+		7CFB298029DB322200DFA32E /* LevelSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSpeed.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -339,6 +341,7 @@
 				7C4EBB9729D7879F00958954 /* SelectGrid.swift */,
 				7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */,
 				7CB7028229D84E1A003399BC /* EditTracks.swift */,
+				7CFB298029DB322200DFA32E /* LevelSpeed.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
 				7C8C3D9F28D306D00051BAC9 /* VisualFeedback.swift in Sources */,
 				7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */,
+				7CFB298129DB322200DFA32E /* LevelSpeed.swift in Sources */,
 				7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

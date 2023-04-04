@@ -229,7 +229,7 @@ final class AppUtils {
             
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
-            
+            levelSpeed: setSettings.levelSpeed,
             levelDurations: instrumentSet.levelDurations,
             levelInstruments: instrumentSet.levelInstruments,
             levelClipControl: instrumentSet.levelClipControl,
@@ -341,6 +341,8 @@ final class AppUtils {
             setURL: sessionSettings.setURL,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
+            levelSpeed: instrumentSet.levelSpeed,
+            levelInsrtuments: instrumentSet.levelInstruments,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks,

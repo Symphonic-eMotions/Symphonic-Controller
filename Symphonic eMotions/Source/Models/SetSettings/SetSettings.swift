@@ -31,7 +31,6 @@ class SetSettings: Identifiable {
     var gridRows: Int
     var gridColumns: Int
     
-    
     //Dynamic tempo
     var bpm: Double
     var bpmAsString: String {
@@ -44,6 +43,10 @@ class SetSettings: Identifiable {
             }
         }
     }
+    
+    //Level speed
+    var levelSpeed: Double
+    var levelInsrtuments: [[String]]
     
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
@@ -60,6 +63,8 @@ class SetSettings: Identifiable {
         setURL: URL,
         rows: Int,
         columns: Int,
+        levelSpeed: Double,
+        levelInsrtuments: [[String]],
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
@@ -71,6 +76,9 @@ class SetSettings: Identifiable {
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns
+        self.levelSpeed = levelSpeed
+        self.levelInsrtuments = levelInsrtuments
+        
         self.masterEffects = masterEffects
         self.tracks = tracks
         self.skins = skins
@@ -87,6 +95,7 @@ class SetSettings: Identifiable {
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown
+        
     }
     
     
