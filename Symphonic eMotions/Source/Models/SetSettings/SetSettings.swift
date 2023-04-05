@@ -46,7 +46,7 @@ class SetSettings: Identifiable {
     
     //Level speed
     var levelSpeed: Double
-    var levelInsrtuments: [[String]]
+//    var levelInsrtuments: [[String]]
     
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
@@ -64,7 +64,7 @@ class SetSettings: Identifiable {
         rows: Int,
         columns: Int,
         levelSpeed: Double,
-        levelInsrtuments: [[String]],
+//        levelInsrtuments: [[String]],
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
@@ -77,7 +77,7 @@ class SetSettings: Identifiable {
         self.bpm = bpm
         self.gridColumns = columns
         self.levelSpeed = levelSpeed
-        self.levelInsrtuments = levelInsrtuments
+//        self.levelInsrtuments = levelInsrtuments
         
         self.masterEffects = masterEffects
         self.tracks = tracks

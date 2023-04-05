@@ -469,6 +469,8 @@ final class Conductor {
                     && selectedLevel >= levelClipControlStartLevel
                     && source == "levelChange"{
                     
+                    print("trackMuteAndClipStatusPerLevel levelChange SELECTED LEVEL: \(selectedLevel)")
+                    
                     levelMidiClipVariation(in: selectedLevel, on: track)
                 }
             }
@@ -1686,56 +1688,57 @@ final class Conductor {
                 
                 playMidiData(with: damperTarget)
             
-            case "clipVariation":
+//            case "clipVariation":
+//                
+//                guard let track = set.track(for: damperTarget.trackId) else { return }
+////                let midiClipVariation = .nextLoop
+//                
+//                let midiClipGroup = track.midiClipGroup
+//                
+//                //wavetrigger returns true on the moment of action in a wave
+//                //false on all other moments
+//                if waveTrigger(for: damperTarget, test: value) {
+//                    groupMidiClipVariation(midiClipGroup ?? .chords, midiClipVariation)
+//                }
                 
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                let midiClipVariation = damperTarget.midiClipVariation ?? .nextLoop
-                
-                let midiClipGroup = track.midiClipGroup
-                
-                //wavetrigger returns true on the moment of action in a wave
-                //false on all other moments
-                if waveTrigger(for: damperTarget, test: value) {
-                    groupMidiClipVariation(midiClipGroup ?? .chords, midiClipVariation)
-                }
-                
-            case "scoreWanderer":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                guard let scoreWandererType = damperTarget.scoreWandererType else { return }
-                
-                let midiClipVariations = damperTarget.midiClipVariation ?? .anyButFirst
-                
-                let clipLengths = track.midiFiles![0].loopLength
-                
-                switch scoreWandererType {
-                case .beatsToMIDIclip:
-                    guard let clipPlayLength = track.scoreWalkDuration else { return }
-                    scoreWandererBeatsToMIDIclip(
-                        value: value,
-                        for: damperTarget,
-                        clipPlayLength,
-                        clipLengths,
-                        currentSetLevel: currentSetLevel
-                    )
-                case .rampToMIDIclip:
-                    
-                    scoreWandererRampToMIDIclip(
-                        value: value,
-                        for: damperTarget,
-                        clipLengths,
-                        midiClipVariations
-                    )
-                    
-                case .valueToMIDIclip:
-                    
-                    scoreWandererValueToMIDIclip(
-                        value: value,
-                        for: damperTarget,
-                        clipLengths,
-                        midiClipVariations
-                    )
-                }
+//            case "scoreWanderer":
+//
+//                guard let track = set.track(for: damperTarget.trackId) else { return }
+//                guard let scoreWandererType = damperTarget.scoreWandererType else { return }
+//
+//                let midiClipVariations = .anyButFirst
+//                
+//                let clipLengths = track.midiFiles![0].loopLength
+//
+//                switch scoreWandererType {
+//                case .beatsToMIDIclip:
+//                    guard let clipPlayLength = track.scoreWalkDuration else { return }
+//                    scoreWandererBeatsToMIDIclip(
+//                        value: value,
+//                        for: damperTarget,
+//                        clipPlayLength,
+//                        clipLengths,
+//                        currentSetLevel: currentSetLevel
+//                    )
+//
+//                case .rampToMIDIclip:
+//
+//                    scoreWandererRampToMIDIclip(
+//                        value: value,
+//                        for: damperTarget,
+//                        clipLengths,
+//                        midiClipVariations
+//                    )
+//
+//                case .valueToMIDIclip:
+//
+//                    scoreWandererValueToMIDIclip(
+//                        value: value,
+//                        for: damperTarget,
+//                        clipLengths,
+//                        midiClipVariations
+//                    )
+//                }
                 
             default:
                 print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
@@ -2055,34 +2058,34 @@ final class Conductor {
         }
     }
     
-    private func groupMidiClipVariation (
-        _ midiClipGroup: InstrumentsSet.Track.MidiClipGroup,
-        _ midiClipVariation: InstrumentsSet.Track.Part.DamperTarget.MidiClipVariations
-    ) {
-        //Copy for all tagged tracks the given midiClipVariation to the active sequencer
-        set.tracks.forEach {
-            if $0.midiClipGroup == midiClipGroup {
-                
-                stopNotesTrackId(for: $0.trackId)
-                let clipLengths = $0.midiFiles![0].loopLength
-                
-                let currentIndex = globalCurrentMIDIclip[$0.trackId]!
-                
-                let nextVariation = findNextVariation(clipLengths, midiClipVariation, currentIndex)
-                
-                //We need to remeber this for increase reference
-                globalCurrentMIDIclip[$0.trackId]! = nextVariation
-                
-                //Calculate start time next MIDI part
-                let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
-                copyMIDIfromMemory(
-                    trackId: $0.trackId,
-                    midiStartTime: nextMIDIstartTime,
-                    loopLength: clipLengths[triggerCurrentMIDIpart[$0.trackId]!])
-                
-            }
-        }
-    }
+//    private func groupMidiClipVariation (
+//        _ midiClipGroup: InstrumentsSet.Track.MidiClipGroup,
+//        _ midiClipVariation: InstrumentsSet.Track.Part.DamperTarget.MidiClipVariations
+//    ) {
+//        //Copy for all tagged tracks the given midiClipVariation to the active sequencer
+//        set.tracks.forEach {
+//            if $0.midiClipGroup == midiClipGroup {
+//
+//                stopNotesTrackId(for: $0.trackId)
+//                let clipLengths = $0.midiFiles![0].loopLength
+//
+//                let currentIndex = globalCurrentMIDIclip[$0.trackId]!
+//
+//                let nextVariation = findNextVariation(clipLengths, midiClipVariation, currentIndex)
+//
+//                //We need to remeber this for increase reference
+//                globalCurrentMIDIclip[$0.trackId]! = nextVariation
+//
+//                //Calculate start time next MIDI part
+//                let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
+//                copyMIDIfromMemory(
+//                    trackId: $0.trackId,
+//                    midiStartTime: nextMIDIstartTime,
+//                    loopLength: clipLengths[triggerCurrentMIDIpart[$0.trackId]!])
+//
+//            }
+//        }
+//    }
     
     private func waveTrigger(for damperTarget: InstrumentsSet.Track.Part.DamperTarget, test value: Double) -> Bool {
         
@@ -2263,6 +2266,11 @@ final class Conductor {
             allButFirst.removeFirst()
             foundIndex = Int(allButFirst.indices.randomElement()!)
             foundIndex += 1
+        }
+        else if variationType == .levelToMidiClip {
+            
+            
+            
         }
         else if variationType == .increaseWithValue {
             

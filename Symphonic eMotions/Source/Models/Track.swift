@@ -162,69 +162,8 @@ extension InstrumentsSet {
         func effect(for effectType: Effect.EffectType) -> Effect? {
             effects?.first { $0.effectType == effectType }
         }
-
-//        mutating func update(part: Part) {
-//            guard let partIndex = parts.firstIndex(where: { $0.id == part.id }) else { return }
-//            parts.remove(at: partIndex)
-//            parts.insert(part, at: partIndex)
-//        }
-//
-//        mutating func update(effect: Effect) {
-//            guard let effectIndex = effects?.firstIndex(where: { $0.effectType == effect.effectType }) else { return }
-//            effects?.remove(at: effectIndex)
-//            effects?.insert(effect, at: effectIndex)
-//        }
-        
     }
 }
-
-extension InstrumentsSet.Track {
-
-    struct LoopsToGrid: Decodable, Equatable {
-
-        private enum LoopsToGridKeys: String, CodingKey {
-            case mapper
-        }
-
-        var mapper: [Int]?
-
-        //Decoder init
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: LoopsToGridKeys.self)
-            mapper = try container.decodeIfPresent([Int].self, forKey: .mapper) ?? []
-        }
-
-        //Store to file init
-        init(mapper: [Int]?){
-            self.mapper = mapper
-        }
-        
-        //Init with all fields filled with zero, just one midi section in the Midi File
-        //Also have correct amount of cells for itiration
-        init(grids: Grids) {
-            self.mapper = grids.oneClip
-        }
-        
-        //Return current mapper as string
-        func asString() -> String {
-            
-            var str: String = "";
-            
-//            print("MAPPER")
-//            print(self.mapper)
-//
-            return str
-        }
-    }
-}
-
-extension InstrumentsSet.Track.LoopsToGrid: Encodable {
-    func encoder(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: LoopsToGridKeys.self)
-        try container.encode(mapper, forKey: .mapper)
-    }
-}
-
 
 extension InstrumentsSet.Track: Encodable {
     
@@ -249,45 +188,6 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(parts, forKey: .parts)
         try container.encode(levels, forKey: .levels)
         try container.encode(scoreWalkDuration, forKey: .scoreWalkDuration)
-    }
-}
-
-extension InstrumentsSet.Track {
-    
-    enum InstrumentType: String, Codable {
-        case audioBuffer
-        case exsSampler
-        case exsSamplerMIDI
-        case pulseWidthSynth
-        case phaseSynth
-        case allValues
-    }
-    
-}
-
-extension InstrumentsSet.Track {
-    
-    enum StartType: String, Codable {
-        case global
-        case none
-        //Trigger start stop
-        case trigger
-        case triggerSlave
-        case triggerSlaveMaxIndex
-        //midiData with slaves
-        case triggerMidiDataSlaves
-        case midiDataSlave
-        //midiData global
-        case globalMidiData
-    }
-}
-
-extension InstrumentsSet.Track {
-    
-    enum MidiClipGroup: String, Codable {
-        
-        case chords
-        case seqs
     }
 }
 
@@ -331,6 +231,56 @@ extension InstrumentsSet.Track.MidiFile: Encodable {
         try container.encode(fileExtension, forKey: .fileExtension)
         try container.encode(loopLength, forKey: .loopLength)
         try container.encode(loopsToGrid, forKey: .loopsToGrid)
+    }
+}
+
+extension InstrumentsSet.Track.MidiFile {
+    
+    //LoopsToGrid an array where the index corresponds with a cell location
+    //The value corresponds with the midiClip index
+    //Loop = MidiClip == location in MIDI file
+    struct LoopsToGrid: Decodable, Equatable {
+
+        private enum LoopsToGridKeys: String, CodingKey {
+            case mapper
+        }
+
+        var mapper: [Int]?
+
+        //Decoder init
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: LoopsToGridKeys.self)
+            mapper = try container.decodeIfPresent([Int].self, forKey: .mapper) ?? []
+        }
+
+        //Store to file init
+        init(mapper: [Int]?){
+            self.mapper = mapper
+        }
+        
+        //Init with all fields filled with zero, just one midi section in the Midi File
+        //Also have correct amount of cells for itiration
+        init(grids: Grids) {
+            self.mapper = grids.oneClip
+        }
+        
+        //Return current mapper as string
+        func asString() -> String {
+            
+            var str: String = "";
+            
+//            print("MAPPER")
+//            print(self.mapper)
+//
+            return str
+        }
+    }
+}
+
+extension InstrumentsSet.Track.MidiFile.LoopsToGrid: Encodable {
+    func encoder(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: LoopsToGridKeys.self)
+        try container.encode(mapper, forKey: .mapper)
     }
 }
 
@@ -391,5 +341,44 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
         try container.encode(fileName, forKey: .fileName)
         try container.encode(fileExtension, forKey: .fileExtension)
         try container.encode(midiNote, forKey: .midiNote)
+    }
+}
+
+extension InstrumentsSet.Track {
+    
+    enum InstrumentType: String, Codable {
+        case audioBuffer
+        case exsSampler
+        case exsSamplerMIDI
+        case pulseWidthSynth
+        case phaseSynth
+        case allValues
+    }
+    
+}
+
+extension InstrumentsSet.Track {
+    
+    enum StartType: String, Codable {
+        case global
+        case none
+        //Trigger start stop
+        case trigger
+        case triggerSlave
+        case triggerSlaveMaxIndex
+        //midiData with slaves
+        case triggerMidiDataSlaves
+        case midiDataSlave
+        //midiData global
+        case globalMidiData
+    }
+}
+
+extension InstrumentsSet.Track {
+    
+    enum MidiClipGroup: String, Codable {
+        
+        case chords
+        case seqs
     }
 }

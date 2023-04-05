@@ -40,4 +40,6 @@ class TrackSettings: Identifiable {
             self.parts[partId]?.areaOfInterestColor = AppUtils.getPartColors(trackColor: newColor, areaOfInterest: self.parts[partId]!.areaOfInterest)
         }
     }
+    
+    
 }

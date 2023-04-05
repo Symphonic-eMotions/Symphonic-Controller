@@ -150,7 +150,7 @@ extension InstrumentsSet.Track.Part {
         private enum TargetKeys: String, CodingKey {
             case trackId
             case nodeType
-            case scoreWandererType
+//            case scoreWandererType
             case nodeName
             case parameter
             //Copy effect range to DamperTarget if it conserns an effect
@@ -162,8 +162,8 @@ extension InstrumentsSet.Track.Part {
         
         var trackId: String
         var nodeType: NodeType
-        var scoreWandererType: ScoreWandererType?
-        var midiClipVariation: MidiClipVariations?
+//        var scoreWandererType: ScoreWandererType?
+//        var midiClipVariation: MidiClipVariations?
         var nodeName: String
         var parameter: String
         var parameterRange: [Double]
@@ -175,7 +175,7 @@ extension InstrumentsSet.Track.Part {
             let container = try decoder.container(keyedBy: TargetKeys.self)
             trackId = try container.decode(String.self, forKey: .trackId)
             nodeType = try container.decode(NodeType.self, forKey: .nodeType)
-            scoreWandererType = try container.decodeIfPresent(ScoreWandererType.self, forKey: .scoreWandererType)
+//            scoreWandererType = try container.decodeIfPresent(ScoreWandererType.self, forKey: .scoreWandererType)
             nodeName = try container.decode(String.self, forKey: .nodeName)
             parameter = try container.decode(String.self, forKey: .parameter)
             parameterRange = [0,1]
@@ -197,8 +197,8 @@ extension InstrumentsSet.Track.Part {
         init(
             trackId: String,
             nodeType: NodeType,
-            scoreWandererType: ScoreWandererType?,
-            midiClipVariation: MidiClipVariations?,
+//            scoreWandererType: ScoreWandererType?,
+//            midiClipVariation: MidiClipVariations?,
             nodeName: String,
             parameter: String,
             parameterRange: [Double],
@@ -208,8 +208,8 @@ extension InstrumentsSet.Track.Part {
         ) {
             self.trackId = trackId
             self.nodeType = nodeType
-            self.scoreWandererType = scoreWandererType
-            self.midiClipVariation = midiClipVariation
+//            self.scoreWandererType = scoreWandererType
+//            self.midiClipVariation = midiClipVariation
             self.nodeName = nodeName
             self.parameter = parameter
             self.parameterRange = parameterRange
@@ -242,7 +242,7 @@ extension InstrumentsSet.Track.Part.DamperTarget: Encodable{
         var container = encoder.container(keyedBy: TargetKeys.self)
         try container.encode(trackId, forKey: .trackId)
         try container.encode(nodeType, forKey: .nodeType)
-        try container.encode(scoreWandererType, forKey: .scoreWandererType)
+//        try container.encode(scoreWandererType, forKey: .scoreWandererType)
         try container.encode(nodeName, forKey: .nodeName)
         try container.encode(parameter, forKey: .parameter)
         try container.encode(parameterRange, forKey: .parameterRange)
@@ -269,6 +269,7 @@ extension InstrumentsSet.Track.Part.DamperTarget {
         case nextLoop
         case nextLoopReverse
         case increaseWithValue
+        case levelToMidiClip
         
         //Level increase is located at set -> levelClipControl
     }

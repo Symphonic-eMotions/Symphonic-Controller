@@ -88,7 +88,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case columns = "gridColumns"
         case levelSpeed
         case levelDurations
-        case levelInstruments
+//        case levelInstruments
         case levelClipControl
         case levelClipControlStartLevel
         case playViewImages
@@ -114,7 +114,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Level variables
     let levelSpeed: Double
     let levelDurations: [Int]
-    let levelInstruments: [[String]]
+//    let levelInstruments: [[String]]
     //Level controls location within midi file
     //TODO: this needs to be rewritten
     let levelClipControl: Bool?
@@ -139,7 +139,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         columns = try container.decode(Int.self, forKey: .columns)
         levelSpeed = try container.decode(Double.self, forKey: .levelSpeed)
         levelDurations = try container.decode([Int].self, forKey: .levelDurations)
-        levelInstruments = try container.decode([[String]].self, forKey: .levelInstruments)
+//        levelInstruments = try container.decode([[String]].self, forKey: .levelInstruments)
         levelClipControl = try container.decodeIfPresent(Bool.self, forKey: .levelClipControl)
         levelClipControlStartLevel = try container.decodeIfPresent(Int.self, forKey: .levelClipControlStartLevel)
         playViewImages = try container.decodeIfPresent(PlayViewImages.self, forKey: .playViewImages)
@@ -196,7 +196,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         columns: Int,
         levelSpeed: Double,
         levelDurations: [Int],
-        levelInstruments: [[String]],
+//        levelInstruments: [[String]],
         levelClipControl: Bool?,
         levelClipControlStartLevel: Int?,
         playViewImages: PlayViewImages?,
@@ -216,7 +216,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.columns = columns
         self.levelSpeed = levelSpeed
         self.levelDurations = levelDurations
-        self.levelInstruments = levelInstruments
+//        self.levelInstruments = levelInstruments
         self.levelClipControl = levelClipControl
         self.levelClipControlStartLevel = levelClipControlStartLevel
         self.playViewImages = playViewImages
@@ -232,15 +232,15 @@ struct InstrumentsSet: Identifiable, Decodable {
         tracks.first { $0.id == id }
     }
     
-    func instrumentInLevel(_ level: Double, _ Instrument: String) -> Bool {
-        
-        let levelInt = Int(level)
-        let levelArray = levelInstruments[levelInt]
-        if levelArray.contains(Instrument){
-            return true
-        }
-        return false
-    }
+//    func instrumentInLevel(_ level: Double, _ Instrument: String) -> Bool {
+//        
+//        let levelInt = Int(level)
+//        let levelArray = levelInstruments[levelInt]
+//        if levelArray.contains(Instrument){
+//            return true
+//        }
+//        return false
+//    }
 }
 
 extension InstrumentsSet: Encodable {
@@ -257,7 +257,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(columns, forKey: .columns)
         try container.encode(levelSpeed, forKey: .levelSpeed)
         try container.encode(levelDurations, forKey: .levelDurations)
-        try container.encode(levelInstruments, forKey: .levelInstruments)
+//        try container.encode(levelInstruments, forKey: .levelInstruments)
         try container.encode(levelClipControl, forKey: .levelClipControl)
         try container.encode(levelClipControlStartLevel, forKey: .levelClipControlStartLevel)
         try container.encode(tracks, forKey: .tracks)

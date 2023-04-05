@@ -7,35 +7,54 @@
 
 import SwiftUI
 
+struct Item: Identifiable, Equatable {
+    let id = UUID()
+    let name: String
+    let details: String
+}
+
 struct EditTracks: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     
+    @State private var selectedItem: String? = nil
+    
     var body: some View {
         
-        ForEach(setInfoModel.setSettings.tracks.keys, id: \.self) { key in
+        VStack(alignment: .leading) {
             
-            HStack{
+            ForEach(setInfoModel.setSettings.tracks.keys, id: \.self) { key in
                 
-                Group{
-                    Image("track")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30)
-                        .padding(4)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                }.padding(.leading)
+                HStack{
+                    
+                    Group{
+                        Image("track")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30)
+                            .padding(4)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                    }
+                    .padding(.leading)
+                    
+                    Text(setInfoModel.setSettings.tracks[key]!.trackName)
+                        .font(.system(size: 20))
+                        .padding()
+                }
+                .onTapGesture {
+                    withAnimation {
+                        if selectedItem == key {
+                            selectedItem = nil
+                        } else {
+                            selectedItem = key
+                        }
+                    }
+                }
                 
-                Text(setInfoModel.setSettings.tracks[key]!.trackName)
-                    .font(.system(size: 20))
-                    .padding()
+                if selectedItem == key {
+                    LoopsToGridView(setInfoModel: setInfoModel, key: key)
+                }
             }
-            
-//            let p: String = setInfoModel.setSettings.tracks[key]?.loopsToGrid.map({ String($0) }).joined(separator: ", ")
-            
-//            Text("Midi File mapping used: ")
-            
-            
         }
     }
 }

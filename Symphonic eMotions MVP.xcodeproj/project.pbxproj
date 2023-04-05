@@ -87,6 +87,7 @@
 		7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */; };
 		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
 		7CFB298129DB322200DFA32E /* LevelSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298029DB322200DFA32E /* LevelSpeed.swift */; };
+		7CFB298329DCA90100DFA32E /* LoopsToGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
@@ -204,6 +205,7 @@
 		7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoadAndPlay.swift; sourceTree = "<group>"; };
 		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
 		7CFB298029DB322200DFA32E /* LevelSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSpeed.swift; sourceTree = "<group>"; };
+		7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopsToGridView.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -342,6 +344,7 @@
 				7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */,
 				7CB7028229D84E1A003399BC /* EditTracks.swift */,
 				7CFB298029DB322200DFA32E /* LevelSpeed.swift */,
+				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
 				C06958FB26B4D9E4002EB522 /* PlayView.swift in Sources */,
+				7CFB298329DCA90100DFA32E /* LoopsToGridView.swift in Sources */,
 				7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */,
 				7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
