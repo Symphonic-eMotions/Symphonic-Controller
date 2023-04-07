@@ -11,7 +11,7 @@ import SwiftUI
 
 // SetSettings is used to keep track of settingchanges to store them to disk
 
-class SetSettings: Identifiable {
+class SetSettings: Identifiable, ObservableObject {
     
     //Keep track of current edited values
     var settingsCurrentTrackID: String
@@ -46,7 +46,8 @@ class SetSettings: Identifiable {
     
     //Level speed
     var levelSpeed: Double
-//    var levelInsrtuments: [[String]]
+    //Levels
+    @Published var levels: [Int]
     
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
@@ -64,7 +65,7 @@ class SetSettings: Identifiable {
         rows: Int,
         columns: Int,
         levelSpeed: Double,
-//        levelInsrtuments: [[String]],
+        levels: [Int],
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
@@ -77,18 +78,12 @@ class SetSettings: Identifiable {
         self.bpm = bpm
         self.gridColumns = columns
         self.levelSpeed = levelSpeed
-//        self.levelInsrtuments = levelInsrtuments
-        
+        self.levels = levels
         self.masterEffects = masterEffects
         self.tracks = tracks
         self.skins = skins
-        
         //Set editor values (partFeedbackView) ready for first track first part editing
         let firstTrack = tracks.elements.first!
-        
-        print("Set loaded, first track ID: \(firstTrack.key) and SKIN:")
-        
-        
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!
@@ -97,8 +92,6 @@ class SetSettings: Identifiable {
         self.settingsRampDown = firstPart.value.rampDown
         
     }
-    
-    
     
     func updateAreaOfInterest(rows: Int) {
         

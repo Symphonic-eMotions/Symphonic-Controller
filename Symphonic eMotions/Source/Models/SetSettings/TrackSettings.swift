@@ -8,11 +8,12 @@
 import OrderedCollections
 import SwiftUI
 
-class TrackSettings: Identifiable {
+class TrackSettings: Identifiable, ObservableObject {
     var trackId: String
     var trackName: String
     var instrumentVolume: Float
     var instrumentColor: Color
+    var loopLength: [Double]
     var loopsToGrid: [Int]
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
@@ -22,6 +23,7 @@ class TrackSettings: Identifiable {
         trackName: String,
         instrumentVolume: Float,
         instrumentColor: Color,
+        loopLength: [Double],
         loopsToGrid: [Int],
         levels: [Int],
         parts: OrderedDictionary<String, PartSettings>
@@ -30,6 +32,7 @@ class TrackSettings: Identifiable {
         self.trackName = trackName
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
+        self.loopLength = loopLength
         self.loopsToGrid = loopsToGrid
         self.levels = levels
         self.parts = parts
@@ -40,6 +43,4 @@ class TrackSettings: Identifiable {
             self.parts[partId]?.areaOfInterestColor = AppUtils.getPartColors(trackColor: newColor, areaOfInterest: self.parts[partId]!.areaOfInterest)
         }
     }
-    
-    
 }

@@ -1806,7 +1806,7 @@ final class Conductor {
             let SpeedValueAndLevelOffset = currentSetLevel + (levelSpeed/10) * value
             
             // Make sure we never "jump" at a value equal or greater to the number of levels - this will cause all tracks to mute
-            return min(Double(set.levelDurations.count) - 0.0000001, SpeedValueAndLevelOffset)
+            return min(Double(set.levels.count) - 0.0000001, SpeedValueAndLevelOffset)
         }
         
         //0 ----> 1 Level part = 60 translates to 0.6 parts

@@ -218,6 +218,18 @@ extension InstrumentsSet.Track {
             loopsToGrid = try container.decodeIfPresent(LoopsToGrid.self, forKey: .loopsToGrid) ?? LoopsToGrid.init(grids: .empty)
         }
         
+        init(
+            fileName: String,
+            fileExtension: String,
+            loopLength: [Double],
+            loopsToGrid: LoopsToGrid
+        ) {
+            self.fileName = fileName
+            self.fileExtension = fileExtension
+            self.loopLength = loopLength
+            self.loopsToGrid = loopsToGrid
+        }
+        
         mutating func updateLoopLength(setLoopLength: Double){
             loopLength = [setLoopLength]
         }

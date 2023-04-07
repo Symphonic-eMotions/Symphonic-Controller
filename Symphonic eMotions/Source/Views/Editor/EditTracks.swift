@@ -52,7 +52,12 @@ struct EditTracks: View {
                 }
                 
                 if selectedItem == key {
-                    LoopsToGridView(setInfoModel: setInfoModel, key: key)
+//                    LoopsToGridView(setInfoModel: setInfoModel, key: key)
+                    LoopsToLevelView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
+                    )
                 }
             }
         }

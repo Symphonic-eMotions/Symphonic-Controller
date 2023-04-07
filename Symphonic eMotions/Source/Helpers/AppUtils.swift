@@ -163,9 +163,16 @@ final class AppUtils {
                 storeParts.append(storePart)
             }
             
-            let midiFiles = track.midiFiles
-            var midiFile = midiFiles![0]
-            midiFile.loopsToGrid.mapper = setSettings.tracks[track.trackId]?.loopsToGrid
+            let midiFiles = [InstrumentsSet.Track.MidiFile(
+                fileName: track.midiFiles![0].fileName,
+                fileExtension: track.midiFiles![0].fileExtension,
+                loopLength: setSettings.tracks[track.trackId]!.loopLength,
+                loopsToGrid: InstrumentsSet.Track.MidiFile.LoopsToGrid.init(
+                    mapper: setSettings.tracks[track.trackId]!.loopsToGrid
+                )
+            )]
+//            var midiFile = midiFiles![0]
+//            midiFile.loopsToGrid.mapper = setSettings.tracks[track.trackId]?.loopsToGrid
             
             var storeTrack = InstrumentsSet.Track(
                 id: track.id,
@@ -182,7 +189,7 @@ final class AppUtils {
                 instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
                 
-                midiFiles: [midiFile],
+                midiFiles: midiFiles,
                 
                 midiThreshold: track.midiThreshold,
                 exsFiles: track.exsFiles,
@@ -230,8 +237,7 @@ final class AppUtils {
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
             levelSpeed: setSettings.levelSpeed,
-            levelDurations: instrumentSet.levelDurations,
-//            levelInstruments: instrumentSet.levelInstruments,
+            levels: setSettings.levels,
             levelClipControl: instrumentSet.levelClipControl,
             levelClipControlStartLevel: instrumentSet.levelClipControlStartLevel,
             playViewImages: instrumentSet.playViewImages,
@@ -329,6 +335,7 @@ final class AppUtils {
                 trackName: trackLoaded.instrumentName,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
+                loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToGrid: loopsToGrid,
                 levels: trackLoaded.levels,
                 parts: parts)
@@ -342,7 +349,7 @@ final class AppUtils {
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             levelSpeed: instrumentSet.levelSpeed,
-//            levelInsrtuments: instrumentSet.levelInstruments,
+            levels: instrumentSet.levels,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks,

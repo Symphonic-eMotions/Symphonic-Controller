@@ -24,7 +24,7 @@ struct EditLevelView: View {
         
         HStack {
             
-            ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levelDurations.count, id: \.self) { index in
+            ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levels.count, id: \.self) { index in
                                 
                 let inLevel: Bool = self.currentTrackLevels.levels.contains(index) ? true : false
                 

@@ -87,8 +87,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case rows = "gridRows"
         case columns = "gridColumns"
         case levelSpeed
-        case levelDurations
-//        case levelInstruments
+        case levels = "levelDurations"
         case levelClipControl
         case levelClipControlStartLevel
         case playViewImages
@@ -113,8 +112,10 @@ struct InstrumentsSet: Identifiable, Decodable {
     let columns: Int
     //Level variables
     let levelSpeed: Double
-    let levelDurations: [Int]
-//    let levelInstruments: [[String]]
+    //Level duration keeps the amount of levels with an int
+    //Duration could be refectored to aditional level speed per level
+    let levels: [Int]
+    
     //Level controls location within midi file
     //TODO: this needs to be rewritten
     let levelClipControl: Bool?
@@ -138,7 +139,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows = try container.decode(Int.self, forKey: .rows)
         columns = try container.decode(Int.self, forKey: .columns)
         levelSpeed = try container.decode(Double.self, forKey: .levelSpeed)
-        levelDurations = try container.decode([Int].self, forKey: .levelDurations)
+        levels = try container.decode([Int].self, forKey: .levels)
 //        levelInstruments = try container.decode([[String]].self, forKey: .levelInstruments)
         levelClipControl = try container.decodeIfPresent(Bool.self, forKey: .levelClipControl)
         levelClipControlStartLevel = try container.decodeIfPresent(Int.self, forKey: .levelClipControlStartLevel)
@@ -195,7 +196,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows: Int,
         columns: Int,
         levelSpeed: Double,
-        levelDurations: [Int],
+        levels: [Int],
 //        levelInstruments: [[String]],
         levelClipControl: Bool?,
         levelClipControlStartLevel: Int?,
@@ -215,7 +216,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.rows = rows
         self.columns = columns
         self.levelSpeed = levelSpeed
-        self.levelDurations = levelDurations
+        self.levels = levels
 //        self.levelInstruments = levelInstruments
         self.levelClipControl = levelClipControl
         self.levelClipControlStartLevel = levelClipControlStartLevel
@@ -256,7 +257,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(rows, forKey: .rows)
         try container.encode(columns, forKey: .columns)
         try container.encode(levelSpeed, forKey: .levelSpeed)
-        try container.encode(levelDurations, forKey: .levelDurations)
+        try container.encode(levels, forKey: .levels)
 //        try container.encode(levelInstruments, forKey: .levelInstruments)
         try container.encode(levelClipControl, forKey: .levelClipControl)
         try container.encode(levelClipControlStartLevel, forKey: .levelClipControlStartLevel)

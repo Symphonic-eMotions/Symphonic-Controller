@@ -74,6 +74,17 @@ struct EditorView: View {
                     )
                 }
                 
+                HStack{
+                    Text("Levels")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    Levels(
+                        setInfoModel: setInfoModel
+                    )
+                }
+                
                 EditTracks(
                     setInfoModel: setInfoModel
                 )

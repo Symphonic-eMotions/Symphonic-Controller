@@ -39,7 +39,7 @@ struct LevelView: View {
                 
                 //Progress bars
                 HStack {
-                    ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levelDurations.count, id: \.self) { index in
+                    ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levels.count, id: \.self) { index in
                         
                         //Index is the number of the current available level
                         
@@ -62,7 +62,7 @@ struct LevelView: View {
                         playViewModel.leveling.currentSetLevelSubject.value = Double(value)
                     }),
                     content: {
-                        ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levelDurations.count, id: \.self) { index in
+                        ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levels.count, id: \.self) { index in
                             Text("Level "+String(describing: (index+1))).tag(index)
                         }
                     }
