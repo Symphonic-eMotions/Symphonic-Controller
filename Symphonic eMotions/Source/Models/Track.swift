@@ -199,6 +199,7 @@ extension InstrumentsSet.Track {
             case fileName = "midiFileName"
             case fileExtension = "midiFileExt"
             case loopLength
+            case loopsToLevel
             case loopsToGrid
             //case scoreParts
         }
@@ -206,6 +207,7 @@ extension InstrumentsSet.Track {
         let fileName: String
         let fileExtension: String
         var loopLength: [Double]
+        var loopsToLevel: [Int]
         var loopsToGrid: LoopsToGrid
         //let scoreParts: Int
         
@@ -215,6 +217,7 @@ extension InstrumentsSet.Track {
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
             loopLength = try container.decode([Double].self, forKey: .loopLength)
             //If empty fill with empty, overwrite with correct dimenstion for editor
+            loopsToLevel = try container.decodeIfPresent([Int].self, forKey: .loopsToLevel) ?? []
             loopsToGrid = try container.decodeIfPresent(LoopsToGrid.self, forKey: .loopsToGrid) ?? LoopsToGrid.init(grids: .empty)
         }
         
@@ -222,11 +225,13 @@ extension InstrumentsSet.Track {
             fileName: String,
             fileExtension: String,
             loopLength: [Double],
+            loopsToLevel: [Int],
             loopsToGrid: LoopsToGrid
         ) {
             self.fileName = fileName
             self.fileExtension = fileExtension
             self.loopLength = loopLength
+            self.loopsToLevel = loopsToLevel
             self.loopsToGrid = loopsToGrid
         }
         
@@ -242,6 +247,7 @@ extension InstrumentsSet.Track.MidiFile: Encodable {
         try container.encode(fileName, forKey: .fileName)
         try container.encode(fileExtension, forKey: .fileExtension)
         try container.encode(loopLength, forKey: .loopLength)
+        try container.encode(loopsToLevel, forKey: .loopsToLevel)
         try container.encode(loopsToGrid, forKey: .loopsToGrid)
     }
 }

@@ -12,6 +12,12 @@ import OrderedCollections
 
 final class AppUtils {
     
+    static func letterForNumber(_ number: Int) -> String? {
+        guard let scalarValue = UnicodeScalar(number + 65) else {
+            return nil
+        }
+        return String(scalarValue)
+    }
     
     static func documentDirectory() -> URL {
       let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -167,6 +173,7 @@ final class AppUtils {
                 fileName: track.midiFiles![0].fileName,
                 fileExtension: track.midiFiles![0].fileExtension,
                 loopLength: setSettings.tracks[track.trackId]!.loopLength,
+                loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
                 loopsToGrid: InstrumentsSet.Track.MidiFile.LoopsToGrid.init(
                     mapper: setSettings.tracks[track.trackId]!.loopsToGrid
                 )
@@ -336,6 +343,7 @@ final class AppUtils {
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
+                loopsToLevel: (trackLoaded.midiFiles?.first!.loopsToLevel)!,
                 loopsToGrid: loopsToGrid,
                 levels: trackLoaded.levels,
                 parts: parts)

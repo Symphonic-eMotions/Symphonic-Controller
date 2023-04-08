@@ -93,6 +93,30 @@ class SetSettings: Identifiable, ObservableObject {
         
     }
     
+    func updateTrackClipInLevel(){
+        
+        let levelsSize = self.levels.count
+        tracks.forEach{ (trackId, track) in
+            
+            var loopsToLevelSize = track.loopsToLevel.count
+            
+            if loopsToLevelSize < levelsSize {
+                
+                while loopsToLevelSize < levelsSize {
+                    track.loopsToLevel.append(0)
+                    loopsToLevelSize = track.loopsToLevel.count
+                }
+            }
+            
+            else if loopsToLevelSize > levelsSize {
+                while loopsToLevelSize > levelsSize {
+                    track.loopsToLevel.removeLast()
+                    loopsToLevelSize = track.loopsToLevel.count
+                }
+            }
+        }
+    }
+    
     func updateAreaOfInterest(rows: Int) {
         
         let allGrids = Grids.allCases

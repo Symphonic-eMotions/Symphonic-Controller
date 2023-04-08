@@ -32,6 +32,7 @@ final class SetInfoModel: ObservableObject {
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
     }
     
+    
     func tapSetRow(selectedCollection: MusicSet) {
         
         let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)

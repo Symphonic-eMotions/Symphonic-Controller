@@ -21,6 +21,7 @@ struct EditorView: View {
     
     @State var imported = false
     @State var fileUrl: URL?
+    @State var showEditorPart: String = "setEditor"
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     
@@ -30,63 +31,90 @@ struct EditorView: View {
             VStack(alignment: .leading){
                 
                 HStack{
-                    Text("Name")
-                        .font(.system(size: headingSize))
-                        .padding()
-                        .frame(width: columnWidth, alignment: .leading)
                     
-                    TextField("Custom name", text: $setInfoModel.setSettings.customName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.leading)
-                        .padding(.trailing)
+                    Group{
+                        Image("track")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30)
+                            .padding(4)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                    }
+                    .padding(.leading)
+                    
+                    Text("Set settings")
+                        .font(.system(size: 20))
+                        .padding()
                 }
-                HStack{
-                    Text("Grid size")
-                        .font(.system(size: headingSize))
-                        .padding()
-                        .frame(width: columnWidth, alignment: .leading)
-                    
-                    SelectGrid(
-                        setInfoModel: setInfoModel,
-                        localGridRow: setInfoModel.setSettings.gridRows
-                    )
-                }
-                
-                HStack{
-                    Text("BPM")
-                        .font(.system(size: headingSize))
-                        .padding()
-                        .frame(width: columnWidth, alignment: .leading)
-                    
-                    SelectSpeed(
-                        setInfoModel: setInfoModel
-                    )
+                .onTapGesture {
+                    withAnimation {
+                        showEditorPart = "setEditor"
+                    }
                 }
                 
-                HStack{
-                    Text("Level speed")
-                        .font(.system(size: headingSize))
-                        .padding()
-                        .frame(width: columnWidth, alignment: .leading)
+                if showEditorPart == "setEditor" {
+                    HStack{
+                        Text("Name")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        TextField("Custom name", text: $setInfoModel.setSettings.customName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.leading)
+                            .padding(.trailing)
+                    }
+                    HStack{
+                        Text("Grid size")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        SelectGrid(
+                            setInfoModel: setInfoModel,
+                            localGridRow: setInfoModel.setSettings.gridRows
+                        )
+                    }
                     
-                    LevelSpeed(
-                        setInfoModel: setInfoModel
-                    )
+                    HStack{
+                        Text("BPM")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        SelectSpeed(
+                            setInfoModel: setInfoModel
+                        )
+                    }
+                    
+                    HStack{
+                        Text("Level speed")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        LevelSpeed(
+                            setInfoModel: setInfoModel
+                        )
+                    }
+                    
+                    HStack{
+                        Text("Amount of levels")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        Levels(
+                            setInfoModel: setInfoModel
+                        )
+                    }
                 }
                 
-                HStack{
-                    Text("Levels")
-                        .font(.system(size: headingSize))
-                        .padding()
-                        .frame(width: columnWidth, alignment: .leading)
-                    
-                    Levels(
-                        setInfoModel: setInfoModel
-                    )
-                }
+                
                 
                 EditTracks(
-                    setInfoModel: setInfoModel
+                    setInfoModel: setInfoModel,
+                    showEditorPart: $showEditorPart
                 )
                 
                 

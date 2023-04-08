@@ -14,6 +14,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var instrumentVolume: Float
     var instrumentColor: Color
     var loopLength: [Double]
+    var loopsToLevel: [Int]
     var loopsToGrid: [Int]
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
@@ -24,6 +25,7 @@ class TrackSettings: Identifiable, ObservableObject {
         instrumentVolume: Float,
         instrumentColor: Color,
         loopLength: [Double],
+        loopsToLevel: [Int],
         loopsToGrid: [Int],
         levels: [Int],
         parts: OrderedDictionary<String, PartSettings>
@@ -33,6 +35,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.loopLength = loopLength
+        self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid
         self.levels = levels
         self.parts = parts

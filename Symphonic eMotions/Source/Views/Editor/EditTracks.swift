@@ -16,8 +16,7 @@ struct Item: Identifiable, Equatable {
 struct EditTracks: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
-    
-    @State private var selectedItem: String? = nil
+    @Binding var showEditorPart: String
     
     var body: some View {
         
@@ -43,15 +42,19 @@ struct EditTracks: View {
                 }
                 .onTapGesture {
                     withAnimation {
-                        if selectedItem == key {
-                            selectedItem = nil
-                        } else {
-                            selectedItem = key
+                        if showEditorPart != key {
+                            showEditorPart = key
                         }
                     }
                 }
                 
-                if selectedItem == key {
+                if showEditorPart == key {
+                    
+                    Text("Select Track Type [midiClipLevel, midiClipPosition]")
+                        .padding()
+                    Text("Select Start Type [transport, triggerSequencer, triggerTimeLess]")
+                        .padding()
+                    
 //                    LoopsToGridView(setInfoModel: setInfoModel, key: key)
                     LoopsToLevelView(
                         setInfoModel: setInfoModel,
