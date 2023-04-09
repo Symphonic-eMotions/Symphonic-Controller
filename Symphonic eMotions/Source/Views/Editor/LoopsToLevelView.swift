@@ -24,26 +24,6 @@ struct MidiClipName: View {
     }
 }
 
-struct ClipToLevel: View {
-    
-    var value: String
-    
-    var body: some View {
-        ZStack {
-            
-            Rectangle()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.clear)
-                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-            Text("\(value)")
-                .foregroundColor(.blue)
-                .onTapGesture {
-                    print("Increment clip name with modulo count clip names")
-                }
-        }
-    }
-}
-
 struct LoopsToLevelView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -53,6 +33,7 @@ struct LoopsToLevelView: View {
     @State var loopLengthLocal: [Double]
     @State var clipLength: Int
     @State private var levels: [Int]
+    @State private var clipLetters: [Int]
     
     let columnWidth: CGFloat = 150
     
@@ -66,16 +47,17 @@ struct LoopsToLevelView: View {
             _loopLengthLocal = State(initialValue: currentTrack.loopLength)
             _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
             _levels = State(initialValue: setInfoModel.setSettings.levels)
+            _clipLetters = State(initialValue: currentTrack.loopsToLevel)
     }
     
     var body: some View {
         VStack(alignment: .leading){
             
             Divider()
-            
+            //MIDI clips in file
             HStack() {
                 
-                Text("MIDI clip names")
+                Text("MIDI clips in file")
                 .frame(width: columnWidth, alignment: .leading)
                 
                 ForEach(0..<loopLengthLocal.count, id: \.self) { index in
@@ -91,9 +73,19 @@ struct LoopsToLevelView: View {
                 
                 Button("-") {
                     if (loopLengthLocal.count) > 1 {
-                        print("remove last from:")
-                        loopLengthLocal.removeLast()
+                        
+                        let oldLength: Int = currentTrack.loopLength.count-1
+                        //Mutate
                         currentTrack.loopLength.removeLast()
+                        loopLengthLocal.removeLast()
+                        let newLength: Int = currentTrack.loopLength.count-1
+                        
+                        if currentTrack.loopsToLevel.contains(oldLength){
+                            currentTrack.loopsToLevel = currentTrack.loopsToLevel.map {
+                                $0 == oldLength ? newLength: $0
+                            }
+                            clipLetters = currentTrack.loopsToLevel
+                        }
                     }
                 }
                 .disabled(loopLengthLocal.count == 1)
@@ -107,7 +99,7 @@ struct LoopsToLevelView: View {
             }
             
             Divider()
-            
+            //MIDI clip lengths
             HStack(){
                 
                 Text("MIDI Clip lengths")
@@ -128,20 +120,37 @@ struct LoopsToLevelView: View {
             }
             
             Divider()
-            
+            //Place clips in level
             HStack(){
+                
                 Text("Place clip in level: ")
-                    .frame(width: columnWidth, alignment: .leading)
+                .frame(width: columnWidth, alignment: .leading)
                 
                 ForEach(0..<levels.count, id: \.self) { index in
                     
                     VStack{
                         
-                        if let letter: String = AppUtils.letterForNumber(currentTrack.loopsToLevel[index]) {
-                            ClipToLevel(value: letter)
+                        ZStack {
+                            
+                            Rectangle()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                        
+                            let levelClip = clipLetters[index]
+                            let clipLetter: String = AppUtils.letterForNumber(levelClip) ?? "-"
+                            
+                            Text("\(clipLetter)")
+                            .foregroundColor(.blue)
                         }
-                        
-                        
+                        .onTapGesture {
+                            
+                            let increment = currentTrack.loopsToLevel[index] + 1
+                            let incrementModulo = increment % loopLengthLocal.count
+                            
+                            clipLetters[index] = incrementModulo
+                            currentTrack.loopsToLevel[index] = incrementModulo
+                        }
                     }
                 }
             }
