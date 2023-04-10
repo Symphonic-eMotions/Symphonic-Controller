@@ -110,8 +110,6 @@ struct EditorView: View {
                     }
                 }
                 
-                
-                
                 EditTracks(
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart

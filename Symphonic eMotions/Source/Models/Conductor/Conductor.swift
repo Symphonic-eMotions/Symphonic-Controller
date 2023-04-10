@@ -2494,6 +2494,8 @@ final class Conductor {
             
         }
         else {
+            print("Mute here before play?")
+            
             playEngineAndTracks()
             //Fade in on master play, we need level.currentlevel here
             trackMuteAndClipStatusPerLevel(

@@ -36,7 +36,7 @@ struct EditTracks: View {
                     }
                     .padding(.leading)
                     
-                    Text(setInfoModel.setSettings.tracks[key]!.trackName)
+                    Text("Track \(setInfoModel.setSettings.tracks[key]!.trackName)")
                         .font(.system(size: 20))
                         .padding()
                 }
