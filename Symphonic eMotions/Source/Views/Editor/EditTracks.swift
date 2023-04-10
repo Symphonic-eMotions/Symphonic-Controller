@@ -50,6 +50,12 @@ struct EditTracks: View {
                 
                 if showEditorPart == key {
                     
+                    InLevelView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
+                    )
+                    
                     Text("Select Track Type [midiClipLevel, midiClipPosition]")
                         .padding()
                     Text("Select Start Type [transport, triggerSequencer, triggerTimeLess]")

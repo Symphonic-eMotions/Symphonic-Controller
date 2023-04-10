@@ -269,7 +269,6 @@ extension InstrumentsSet.Track.Part.DamperTarget {
         case nextLoop
         case nextLoopReverse
         case increaseWithValue
-        case levelToMidiClip
         
         //Level increase is located at set -> levelClipControl
     }

@@ -51,6 +51,7 @@ struct LoopsToLevelView: View {
     }
     
     var body: some View {
+        
         VStack(alignment: .leading){
             
             Divider()
@@ -70,7 +71,7 @@ struct LoopsToLevelView: View {
                         }
                     }
                 }
-                
+                //Remove clip button
                 Button("-") {
                     if (loopLengthLocal.count) > 1 {
                         
@@ -90,7 +91,7 @@ struct LoopsToLevelView: View {
                 }
                 .disabled(loopLengthLocal.count == 1)
                 .font(.system(size: 30))
-                
+                //Add clip button
                 Button("+") {
                     currentTrack.loopLength.append(16)
                     loopLengthLocal.append(16)
@@ -98,8 +99,7 @@ struct LoopsToLevelView: View {
                 .font(.system(size: 30))
             }
             
-            Divider()
-            //MIDI clip lengths
+            //MIDI clip lengths, this value is placed on all loopLength indexes needed for clip selection
             HStack(){
                 
                 Text("MIDI Clip lengths")
@@ -119,7 +119,6 @@ struct LoopsToLevelView: View {
                     .frame(width: columnWidth, alignment: .leading)
             }
             
-            Divider()
             //Place clips in level
             HStack(){
                 

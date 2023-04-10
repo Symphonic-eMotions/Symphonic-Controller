@@ -80,7 +80,7 @@ struct MainView: View {
             )
             .onAppear{
                 viewModel.conductor.playEngineAndTracks()
-                viewModel.conductor.trackMuteAndClipStatusPerLevel(
+                viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
                     level: 0,
                     setSettings: viewModel.mainState.setSettings,
                     from: "spriteKitOnAppear"
@@ -143,7 +143,7 @@ struct MainView: View {
                         .edgesIgnoringSafeArea([.top, .trailing])
                         .onAppear{
                             viewModel.leveling.pauseLevel = false
-                            viewModel.conductor.trackMuteAndClipStatusPerLevel(
+                            viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings,
                                 from: "playViewOnAppear"

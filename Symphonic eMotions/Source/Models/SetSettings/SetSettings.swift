@@ -156,7 +156,6 @@ class SetSettings: Identifiable, ObservableObject {
         
         var levels:[[Int]] = []
         for track in self.tracks {
-            print("Levels Track order: \(track.value.trackId)")
             levels.append(track.value.levels)
         }
         //Make 4 instrument compatible

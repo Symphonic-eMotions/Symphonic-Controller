@@ -21,6 +21,7 @@
 		7C166AD4295450750078C384 /* sets.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C166AD3295450750078C384 /* sets.json */; };
 		7C1FB0B229DDFD9A00621909 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B129DDFD9A00621909 /* Levels.swift */; };
 		7C1FB0B429DE0B2600621909 /* LoopsToLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */; };
+		7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B529E4429700621909 /* InLevelView.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
 		7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2EF62E28C0A98200B75BE2 /* HomeKitView.swift */; };
@@ -142,6 +143,7 @@
 		7C166AD3295450750078C384 /* sets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sets.json; sourceTree = "<group>"; };
 		7C1FB0B129DDFD9A00621909 /* Levels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopsToLevelView.swift; sourceTree = "<group>"; };
+		7C1FB0B529E4429700621909 /* InLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InLevelView.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
 		7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
@@ -351,6 +353,7 @@
 				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
 				7C1FB0B129DDFD9A00621909 /* Levels.swift */,
 				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
+				7C1FB0B529E4429700621909 /* InLevelView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
+				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,

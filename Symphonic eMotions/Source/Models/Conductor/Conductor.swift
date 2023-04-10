@@ -58,6 +58,8 @@ final class Conductor {
     private var triggerCurrentMIDIpart: [String: Int] = [:]
     private var globalCurrentMIDIclip: [String: Int] = [:]
     private var currentMIDIclip: [String: Int] = [:]
+    //Index = level, value is midiclip
+//    private var levelToMidiClip: [String: Int] = [:]
     
     
     //Monitor per instrument movement "wave"
@@ -430,7 +432,7 @@ final class Conductor {
     //Playing a sound effect at this moment is not working well with switching sets
     public func playSoundEffect(midi noteNumer: MIDINoteNumber){
         
-        playEngineShort()
+        playEngineUIEffect()
         
         let noteOn = MIDIEvent(noteOn: noteNumer, velocity: 100, channel: 1)
         soundEffectSampler.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
@@ -442,10 +444,19 @@ final class Conductor {
 
     //MARK: Mute status tracks
     //TODO: switch sound off on set init
-    public func trackMuteAndClipStatusPerLevel(
+    
+    //What does trackMuteAndClipStatusPerLevelControl do?
+    //Called from
+    //- PlayViewModel.startObservingData -> Level change
+    //- Conductor.togglePlayEngineAndTracks -> Transport play and stop
+    //- Conductor.pauzeEngineAndStopTracks ->
+    //Control if midiClips are controlled by level number
+    
+    
+    public func trackMuteAndClipStatusPerLevelControl(
         level selectedLevel: Int,
         setSettings: SetSettings,
-        from source: String){
+        from source: String) -> Void {
         
         print("CALLED Track mute and clip status per level")
             
@@ -469,7 +480,7 @@ final class Conductor {
                     && selectedLevel >= levelClipControlStartLevel
                     && source == "levelChange"{
                     
-                    print("trackMuteAndClipStatusPerLevel levelChange SELECTED LEVEL: \(selectedLevel)")
+                    print("LEVELCHANGE FROM: \(source)")
                     
                     levelMidiClipVariation(in: selectedLevel, on: track)
                 }
@@ -2089,7 +2100,7 @@ final class Conductor {
     
     private func waveTrigger(for damperTarget: InstrumentsSet.Track.Part.DamperTarget, test value: Double) -> Bool {
         
-        //wavetrigger returns true on the moment of action in a wave
+        //Returns true on the moment of action in a wave
         //false on all other moments
         //The mimimal amount of movement before looking up a trigger, defaults to 0.01
         //Low minimal values give more unwanted trigger moments
@@ -2207,13 +2218,13 @@ final class Conductor {
         
         /*
          Due to the use of globalCurrentMIDIclip this method of scoreWalk is not
-         compatible with other score walks!
+         compatible with other score walks on the same track!
          Multiple instances should not modify the playing midi buffer
          */
         
         let currentIndex = globalCurrentMIDIclip[track.id]!
         let clipLengths = track.midiFiles!.first!.loopLength
-        let nextVariation = findNextVariation(clipLengths, .nextLoop, currentIndex)
+        let nextVariation = track.midiFiles?.first!.loopsToLevel[level] ?? 0
         let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
         
         stopNotesTrackId(for: track.id)
@@ -2266,11 +2277,6 @@ final class Conductor {
             allButFirst.removeFirst()
             foundIndex = Int(allButFirst.indices.randomElement()!)
             foundIndex += 1
-        }
-        else if variationType == .levelToMidiClip {
-            
-            
-            
         }
         else if variationType == .increaseWithValue {
             
@@ -2498,7 +2504,7 @@ final class Conductor {
             
             playEngineAndTracks()
             //Fade in on master play, we need level.currentlevel here
-            trackMuteAndClipStatusPerLevel(
+            trackMuteAndClipStatusPerLevelControl(
                 level: Int(currentSetLevel),
                 setSettings: setSettings,
                 from: "togglePlay"
@@ -2538,7 +2544,7 @@ final class Conductor {
         }
     }
     
-    func playEngineShort() {
+    func playEngineUIEffect() {
         do {
             //Fire up the audio engine
             try audioEngine.start()
@@ -2548,12 +2554,9 @@ final class Conductor {
     }
     
     func pauzeEngineAndStopTracks(setSettings: SetSettings) {
+        
         guard isConductorPlayingSubject.value else { return }
-        trackMuteAndClipStatusPerLevel(
-            level: -1,
-            setSettings: setSettings,
-            from: "pauzeAndstop"
-        )
+        
         set.tracks.forEach { stopTrack($0) }
         audioEngine.pause()
         isConductorPlayingSubject.send(false)

@@ -74,6 +74,8 @@ final class PlayViewModel: ObservableObject {
         //Levels
         self.leveling.currentSetLevelSubject.sink { value in
             
+//            print("startObservingData value: \(value)")
+            
             let oldLevel = Int(self.playViewState.currentLevel)
             self.playViewState.currentLevel = value
             let currentLevel = Int(self.playViewState.currentLevel)
@@ -81,7 +83,7 @@ final class PlayViewModel: ObservableObject {
             //On level change mute and un-mute tracks accordingly
             if oldLevel != currentLevel {
                                 
-                self.conductor.trackMuteAndClipStatusPerLevel(
+                self.conductor.trackMuteAndClipStatusPerLevelControl(
                     level: Int(currentLevel),
                     setSettings: self.setSettings,
                     from: "levelChange"

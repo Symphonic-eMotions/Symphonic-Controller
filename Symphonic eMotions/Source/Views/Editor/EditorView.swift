@@ -179,8 +179,6 @@ struct EditorView: View {
         }
         .padding(.leading)
         
-        Divider()
-        
-        Text("Editing: \(setInfoModel.setSettings.setURL)")
+//        Text("Editing: \(setInfoModel.setSettings.setURL)")
     }
 }
