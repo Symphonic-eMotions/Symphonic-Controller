@@ -39,31 +39,11 @@ struct EMButtonLongPress: View {
         .background(isSolid ? color : .clear)
         .cornerRadius(8.0)
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
-            print("Secret Long Press Action!")
             viewModelPlayerControls.tapPartFeedbackButton()
         })
         .simultaneousGesture(TapGesture().onEnded {
-            print("Boring regular tap")
-//            if viewModelPlayerControls.conductor.isConductorPlayingSubject.value {
-//                viewModelPlayerControls.conductor.togglePlayEngineAndTracks(currentSetLevel: 0)
-//            }
-//            presentAlert = true
             viewModelPlayerControls.tapSettingsButton()
         })
-//        .alert(
-//            "Calibreren",
-//            isPresented: $presentAlert,
-//            actions: {
-//                Button("Ga naar calibreren", action: {
-//                    self.mainViewUpdate = .calibration
-//                })
-//                Button("Cancel", role: .cancel, action: {})
-//            },
-//            message: {
-//                Text("Ga naar calibreren om de gevoeligheid van de app aan te passen")
-//            }
-//
-//        )
     }
     
 }

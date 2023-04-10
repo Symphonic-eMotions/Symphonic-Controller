@@ -11,6 +11,7 @@ import SwiftUI
 class TrackSettings: Identifiable, ObservableObject {
     var trackId: String
     var trackName: String
+    var trackType: TrackType
     var instrumentVolume: Float
     var instrumentColor: Color
     var loopLength: [Double]
@@ -22,6 +23,7 @@ class TrackSettings: Identifiable, ObservableObject {
     init(
         trackId: String,
         trackName: String,
+        trackType: TrackType,
         instrumentVolume: Float,
         instrumentColor: Color,
         loopLength: [Double],
@@ -32,6 +34,7 @@ class TrackSettings: Identifiable, ObservableObject {
     ){
         self.trackId = trackId
         self.trackName = trackName
+        self.trackType = trackType
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.loopLength = loopLength

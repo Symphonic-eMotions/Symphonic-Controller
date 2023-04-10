@@ -186,9 +186,10 @@ final class AppUtils {
                 trackId: track.trackId,
                 muted: track.muted,
                 instrumentType: track.instrumentType,
+                trackType: setSettings.tracks[track.trackId]!.trackType,
                 midiTargetTrackId: track.midiTargetTrackId,
                 midiClipGroup: track.midiClipGroup,
-                excludeLevelClipControl: track.excludeLevelClipControl,
+                levelClipControl: track.levelClipControl,
                 startType: track.startType,
                 masterTrackId: track.midiTargetTrackId,
                 instrumentName: track.instrumentName,
@@ -245,8 +246,8 @@ final class AppUtils {
             columns: setSettings.gridColumns,
             levelSpeed: setSettings.levelSpeed,
             levels: setSettings.levels,
-            levelClipControl: instrumentSet.levelClipControl,
-            levelClipControlStartLevel: instrumentSet.levelClipControlStartLevel,
+//            levelClipControl: instrumentSet.levelClipControl,
+//            levelClipControlStartLevel: instrumentSet.levelClipControlStartLevel,
             playViewImages: instrumentSet.playViewImages,
             tracks: storeTracks
         )
@@ -340,6 +341,7 @@ final class AppUtils {
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackName: trackLoaded.instrumentName,
+                trackType: trackLoaded.trackType ?? .midiClipPosition,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,

@@ -29,8 +29,7 @@ struct InLevelView: View{
     var body: some View {
         
         VStack(alignment: .leading){
-            
-            
+        
             Divider()
             //Track is presenr in level
             HStack() {

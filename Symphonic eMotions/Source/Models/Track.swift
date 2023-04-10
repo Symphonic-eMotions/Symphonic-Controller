@@ -24,11 +24,12 @@ extension InstrumentsSet {
             case trackId
             case muted
             case instrumentType
+            case trackType
             case midiTargetTrackId
             case startType
             case masterTrackId
             case midiClipGroup
-            case excludeLevelClipControl
+            case levelClipControl
             case instrumentName
             case instrumentColor
             case volume = "instrumentVolume"
@@ -46,9 +47,10 @@ extension InstrumentsSet {
         var trackId: String
         var muted: Bool? = true
         let instrumentType: InstrumentType
+        var trackType: TrackType?
         let midiTargetTrackId: String?
         let midiClipGroup: MidiClipGroup?
-        let excludeLevelClipControl: Bool?
+        let levelClipControl: Bool?
         let startType: StartType
         let masterTrackId: String?
         var instrumentName: String
@@ -73,9 +75,10 @@ extension InstrumentsSet {
             id = try container.decode(String.self, forKey: .trackId)
             trackId = try container.decode(String.self, forKey: .trackId)
             instrumentType = try container.decode(InstrumentType.self, forKey: .instrumentType)
+            trackType = try container.decodeIfPresent(TrackType.self, forKey: .trackType)
             midiTargetTrackId = try container.decodeIfPresent(String.self, forKey: .midiTargetTrackId)
             midiClipGroup = try container.decodeIfPresent(MidiClipGroup.self, forKey: .midiClipGroup)
-            excludeLevelClipControl = try container.decodeIfPresent(Bool.self, forKey: .excludeLevelClipControl)
+            levelClipControl = try container.decodeIfPresent(Bool.self, forKey: .levelClipControl)
             muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
             startType = try container.decode(StartType.self, forKey: .startType)
             masterTrackId = try container.decodeIfPresent(String.self, forKey: .masterTrackId)
@@ -120,9 +123,10 @@ extension InstrumentsSet {
             trackId: String,
             muted: Bool?,
             instrumentType: InstrumentType,
+            trackType: TrackType,
             midiTargetTrackId: String?,
             midiClipGroup: MidiClipGroup?,
-            excludeLevelClipControl: Bool?,
+            levelClipControl: Bool?,
             startType: StartType,
             masterTrackId: String?,
             instrumentName: String,
@@ -141,9 +145,10 @@ extension InstrumentsSet {
             self.trackId = trackId
             self.muted = muted
             self.instrumentType = instrumentType
+            self.trackType = trackType
             self.midiTargetTrackId = midiTargetTrackId
             self.midiClipGroup = midiClipGroup
-            self.excludeLevelClipControl = excludeLevelClipControl
+            self.levelClipControl = levelClipControl
             self.startType = startType
             self.masterTrackId = masterTrackId
             self.instrumentName = instrumentName
@@ -172,8 +177,9 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(trackId, forKey: .trackId)
         try container.encode(muted, forKey: .muted)
         try container.encode(instrumentType, forKey: .instrumentType)
+        try container.encode(trackType, forKey: .trackType)
         try container.encode(midiTargetTrackId, forKey: .midiTargetTrackId)
-        try container.encode(excludeLevelClipControl, forKey: .excludeLevelClipControl)
+        try container.encode(levelClipControl, forKey: .levelClipControl)
         try container.encode(startType, forKey: .startType)
         try container.encode(masterTrackId, forKey: .masterTrackId)
         try container.encode(instrumentName, forKey: .instrumentName)
@@ -193,114 +199,26 @@ extension InstrumentsSet.Track: Encodable {
 
 extension InstrumentsSet.Track {
     
-    struct MidiFile: Decodable {
-        
-        private enum MidiKeys: String, CodingKey {
-            case fileName = "midiFileName"
-            case fileExtension = "midiFileExt"
-            case loopLength
-            case loopsToLevel
-            case loopsToGrid
-            //case scoreParts
-        }
-        
-        let fileName: String
-        let fileExtension: String
-        var loopLength: [Double]
-        var loopsToLevel: [Int]
-        var loopsToGrid: LoopsToGrid
-        //let scoreParts: Int
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: MidiKeys.self)
-            fileName = try container.decode(String.self, forKey: .fileName)
-            fileExtension = try container.decode(String.self, forKey: .fileExtension)
-            loopLength = try container.decode([Double].self, forKey: .loopLength)
-            //If empty fill with empty, overwrite with correct dimenstion for editor
-            loopsToLevel = try container.decodeIfPresent([Int].self, forKey: .loopsToLevel) ?? []
-            loopsToGrid = try container.decodeIfPresent(LoopsToGrid.self, forKey: .loopsToGrid) ?? LoopsToGrid.init(grids: .empty)
-        }
-        
-        init(
-            fileName: String,
-            fileExtension: String,
-            loopLength: [Double],
-            loopsToLevel: [Int],
-            loopsToGrid: LoopsToGrid
-        ) {
-            self.fileName = fileName
-            self.fileExtension = fileExtension
-            self.loopLength = loopLength
-            self.loopsToLevel = loopsToLevel
-            self.loopsToGrid = loopsToGrid
-        }
-        
-        mutating func updateLoopLength(setLoopLength: Double){
-            loopLength = [setLoopLength]
-        }
+    enum InstrumentType: String, Codable {
+        case audioBuffer
+        case exsSampler
+        case exsSamplerMIDI
+        case pulseWidthSynth
+        case phaseSynth
+        case allValues
     }
-}
-
-extension InstrumentsSet.Track.MidiFile: Encodable {
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: MidiKeys.self)
-        try container.encode(fileName, forKey: .fileName)
-        try container.encode(fileExtension, forKey: .fileExtension)
-        try container.encode(loopLength, forKey: .loopLength)
-        try container.encode(loopsToLevel, forKey: .loopsToLevel)
-        try container.encode(loopsToGrid, forKey: .loopsToGrid)
-    }
-}
-
-extension InstrumentsSet.Track.MidiFile {
     
-    //LoopsToGrid an array where the index corresponds with a cell location
-    //The value corresponds with the midiClip index
-    //Loop = MidiClip == location in MIDI file
-    struct LoopsToGrid: Decodable, Equatable {
+}
 
-        private enum LoopsToGridKeys: String, CodingKey {
-            case mapper
-        }
-
-        var mapper: [Int]?
-
-        //Decoder init
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: LoopsToGridKeys.self)
-            mapper = try container.decodeIfPresent([Int].self, forKey: .mapper) ?? []
-        }
-
-        //Store to file init
-        init(mapper: [Int]?){
-            self.mapper = mapper
-        }
-        
-        //Init with all fields filled with zero, just one midi section in the Midi File
-        //Also have correct amount of cells for itiration
-        init(grids: Grids) {
-            self.mapper = grids.oneClip
-        }
-        
-        //Return current mapper as string
-        func asString() -> String {
-            
-            var str: String = "";
-            
-//            print("MAPPER")
-//            print(self.mapper)
+//Cannot be extension because of Binding in SwiftUI
+//extension InstrumentsSet.Track {
+    
+    enum TrackType: String, Codable, CaseIterable {
+        case midiClipLevel = "Levels control midi clip"
+        case midiClipPosition = "Position control midi clip"
+        case midiClipValue = "Movement controls midi clip"
+    }
 //
-            return str
-        }
-    }
-}
-
-extension InstrumentsSet.Track.MidiFile.LoopsToGrid: Encodable {
-    func encoder(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: LoopsToGridKeys.self)
-        try container.encode(mapper, forKey: .mapper)
-    }
-}
 
 extension InstrumentsSet.Track {
     
@@ -362,18 +280,7 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
     }
 }
 
-extension InstrumentsSet.Track {
-    
-    enum InstrumentType: String, Codable {
-        case audioBuffer
-        case exsSampler
-        case exsSamplerMIDI
-        case pulseWidthSynth
-        case phaseSynth
-        case allValues
-    }
-    
-}
+
 
 extension InstrumentsSet.Track {
     

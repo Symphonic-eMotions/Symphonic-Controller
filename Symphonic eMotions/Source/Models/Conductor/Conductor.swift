@@ -449,7 +449,7 @@ final class Conductor {
     //Called from
     //- PlayViewModel.startObservingData -> Level change
     //- Conductor.togglePlayEngineAndTracks -> Transport play and stop
-    //- Conductor.pauzeEngineAndStopTracks ->
+    //- MainView SpriteKitView.onAppear -> spriteKitOnAppear
     //Control if midiClips are controlled by level number
     
     
@@ -458,55 +458,66 @@ final class Conductor {
         setSettings: SetSettings,
         from source: String) -> Void {
         
-        print("CALLED Track mute and clip status per level")
+        print("MUTING and LevelChange variation")
             
         //Does this set have "MIDI clips" follow levels
         //I.E. Score Walk by level <- This is timed through score by user movement
-        let levelClipControl = set.levelClipControl ?? false
-        let levelClipControlStartLevel = set.levelClipControlStartLevel ?? 0
+//        let levelClipControl = set.levelClipControl ?? false
+//        let levelClipControlStartLevel = set.levelClipControlStartLevel ?? 0
             
         //Run over all tracks
         set.tracks.forEach { track in
-                        
+            
             //For all tracks, move up a clip modulo amount of clips
-            //FIXME: This is trigered twice due to togglePlayEngineAndTracks
-            if levelClipControl {
+            if setSettings.tracks[track.trackId]!.trackType == .midiClipLevel && source == "levelChange" {
                 
-                //Exclude tracks with excludeLevelClipControl,
-                //these tracks have no midi clip variation
-                let excludeLevelClipControl = track.excludeLevelClipControl ?? false
+                stopNotesTrackId(for: track.trackId)
                 
-                if !excludeLevelClipControl
-                    && selectedLevel >= levelClipControlStartLevel
-                    && source == "levelChange"{
-                    
-                    print("LEVELCHANGE FROM: \(source)")
-                    
-                    levelMidiClipVariation(in: selectedLevel, on: track)
-                }
+                print("LEVEL CLIP CONTROL CHANGE")
+                levelMidiClipVariation(in: selectedLevel, on: track)
+            }
+            
+            //UN-Mute
+            if setSettings.tracks[track.id]!.levels.contains(selectedLevel)
+            {
+                print("\(track.id) ON")
+                
+                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
+                trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
+                unMuteTrack(trackId: track.id)
+            }
+            //Mute
+            else {
+                
+                print("\(track.id) OFF")
+                
+                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+                trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
+                muteTrack(trackId: track.id)
+                
             }
             
             
-            //Don't (un)mute MIDI only instruments
-            if track.instrumentType != .exsSamplerMIDI {
-                
-                let thisTrackIsReferenced = isInstrumentPlayedByMIDIonlyInstrument(selectedLevel: selectedLevel, trackId: track.id)
-                
-                //UN-Mute
-                if setSettings.tracks[track.id]!.levels.contains(selectedLevel) || thisTrackIsReferenced
-                {
-                    let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
-                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
-                    unMuteTrack(trackId: track.id)
-                }
-                //Mute
-                else {
-                    let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
-                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
-                    muteTrack(trackId: track.id)
-                    
-                }
-            }
+//            //Don't (un)mute MIDI only instruments
+//            if track.instrumentType != .exsSamplerMIDI {
+//
+//                let thisTrackIsReferenced = isInstrumentPlayedByMIDIonlyInstrument(selectedLevel: selectedLevel, trackId: track.id)
+//
+//                //UN-Mute
+//                if setSettings.tracks[track.id]!.levels.contains(selectedLevel) || thisTrackIsReferenced
+//                {
+//                    let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
+//                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
+//                    unMuteTrack(trackId: track.id)
+//                }
+//                //Mute
+//                else {
+//                    let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+//                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
+//                    muteTrack(trackId: track.id)
+//
+//                }
+//            }
         }
     }
     
@@ -1299,11 +1310,8 @@ final class Conductor {
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
             levelSpeed: setSettings.levelSpeed,
             currentSetLevel: currentSetLevel,
-            value: value,
-            levelClipControl: true
+            value: value
         )
-        
-        
         var trackNr: Int = 0
         var partNr: Int = 0
         
@@ -1416,6 +1424,10 @@ final class Conductor {
 //                        inLevel: instrumentControlsLevel,
 //                        levelClipControl: levelClipControl
 //                    )
+                    
+                    //Forward to change midi clip with level
+                    
+                    
                     
                     //Forward to target
                     forward(
@@ -1799,25 +1811,18 @@ final class Conductor {
     //MARK: Level increment
     /*
      Here we have level increment logic
-     All tracks, which are not muted, will increase level (levelClipControl == true)
      */
     private func getAndOrIncreaseCurrentSetLevel(
         levelSpeed: Double,
         currentSetLevel: Double,
-        value: Double,
-        levelClipControl: Bool? ) -> Double {
-
-        /*
-         When midi clips are controlled by current level, increase levels beyond first appearance
-         So when levelClipControl == true
-         */
+        value: Double ) -> Double {
             
-        if levelClipControl ?? false && value > 0.1 {
+        if value > 0.1 {
             
-            let SpeedValueAndLevelOffset = currentSetLevel + (levelSpeed/10) * value
+            let levelSpeedValue = currentSetLevel + (levelSpeed/50) * value
             
             // Make sure we never "jump" at a value equal or greater to the number of levels - this will cause all tracks to mute
-            return min(Double(set.levels.count) - 0.0000001, SpeedValueAndLevelOffset)
+            return min(Double(set.levels.count) - 0.0000001, levelSpeedValue)
         }
         
         //0 ----> 1 Level part = 60 translates to 0.6 parts
@@ -2214,18 +2219,13 @@ final class Conductor {
         }
     }
     
-    private func levelMidiClipVariation( in level: Int, on track: InstrumentsSet.Track ) {
+    private func levelMidiClipVariation( in level: Int, on track: InstrumentsSet.Track) -> Void {
         
-        /*
-         Due to the use of globalCurrentMIDIclip this method of scoreWalk is not
-         compatible with other score walks on the same track!
-         Multiple instances should not modify the playing midi buffer
-         */
-        
-        let currentIndex = globalCurrentMIDIclip[track.id]!
         let clipLengths = track.midiFiles!.first!.loopLength
         let nextVariation = track.midiFiles?.first!.loopsToLevel[level] ?? 0
         let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
+        
+        print("NEXT MIDI CLIP \(nextVariation)")
         
         stopNotesTrackId(for: track.id)
         

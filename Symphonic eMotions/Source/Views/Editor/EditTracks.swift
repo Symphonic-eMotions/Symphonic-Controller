@@ -14,18 +14,17 @@ struct Item: Identifiable, Equatable {
 }
 
 struct EditTracks: View {
-    
+
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: String
-    
+
     var body: some View {
-        
+
         VStack(alignment: .leading) {
-            
+
             ForEach(setInfoModel.setSettings.tracks.keys, id: \.self) { key in
-                
+                //Track navigation header
                 HStack{
-                    
                     Group{
                         Image("track")
                             .resizable()
@@ -35,7 +34,7 @@ struct EditTracks: View {
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                     }
                     .padding(.leading)
-                    
+
                     Text("Track \(setInfoModel.setSettings.tracks[key]!.trackName)")
                         .font(.system(size: 20))
                         .padding()
@@ -47,20 +46,25 @@ struct EditTracks: View {
                         }
                     }
                 }
-                
+                //If navigation header is tapped
                 if showEditorPart == key {
-                    
+
                     InLevelView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
                     )
-                    
-                    Text("Select Track Type [midiClipLevel, midiClipPosition]")
+
+                    TrackTypeView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
+                    )
+
+                    Text("Start Type [transport, triggerSequencer, triggerTimeLess]")
                         .padding()
-                    Text("Select Start Type [transport, triggerSequencer, triggerTimeLess]")
-                        .padding()
-                    
+                        .foregroundColor(.gray)
+
 //                    LoopsToGridView(setInfoModel: setInfoModel, key: key)
                     LoopsToLevelView(
                         setInfoModel: setInfoModel,

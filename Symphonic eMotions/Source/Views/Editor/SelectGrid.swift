@@ -41,7 +41,7 @@ struct SelectGrid: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .fixedSize()
+//            .fixedSize()
             .padding(.leading)
             .padding(.trailing)
             .foregroundColor(.white)
