@@ -174,12 +174,8 @@ final class AppUtils {
                 fileExtension: track.midiFiles![0].fileExtension,
                 loopLength: setSettings.tracks[track.trackId]!.loopLength,
                 loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
-                loopsToGrid: InstrumentsSet.Track.MidiFile.LoopsToGrid.init(
-                    mapper: setSettings.tracks[track.trackId]!.loopsToGrid
-                )
+                loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
             )]
-//            var midiFile = midiFiles![0]
-//            midiFile.loopsToGrid.mapper = setSettings.tracks[track.trackId]?.loopsToGrid
             
             var storeTrack = InstrumentsSet.Track(
                 id: track.id,
@@ -304,6 +300,8 @@ final class AppUtils {
         let skin: InstrumentsSet.Skin = instrumentSet.skin
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
+        //How big is this grid
+        let cells = instrumentSet.columns * instrumentSet.rows
         //Keep track of partNumber for variations track/instrument Color...
         var partNumber: Int = 0
         for trackLoaded in tracksLoaded {
@@ -332,10 +330,11 @@ final class AppUtils {
                 partNumber += 1
             }
             
-            var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid.mapper ?? []
-            if loopsToGrid.count == 0 {
-                let grids = Grids(rows: instrumentSet.rows)
-                loopsToGrid = grids!.oneClip
+            
+            var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
+            if loopsToLevel.count != cells {
+                //We've got a new grid, initialise
+                loopsToLevel = Array(repeating: 0, count: cells)
             }
             
             let track = TrackSettings(
@@ -346,8 +345,8 @@ final class AppUtils {
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
-                loopsToLevel: (trackLoaded.midiFiles?.first!.loopsToLevel)!,
-                loopsToGrid: loopsToGrid,
+                loopsToLevel: loopsToLevel,
+                loopsToGrid: (trackLoaded.midiFiles?.first!.loopsToGrid)!,
                 levels: trackLoaded.levels,
                 parts: parts)
             

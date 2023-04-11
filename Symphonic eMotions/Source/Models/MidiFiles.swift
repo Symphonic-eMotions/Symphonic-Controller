@@ -24,7 +24,7 @@ extension InstrumentsSet.Track {
         let fileExtension: String
         var loopLength: [Double]
         var loopsToLevel: [Int]
-        var loopsToGrid: LoopsToGrid
+        var loopsToGrid: [Int]
         //let scoreParts: Int
         
         init(from decoder: Decoder) throws {
@@ -32,9 +32,8 @@ extension InstrumentsSet.Track {
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
             loopLength = try container.decode([Double].self, forKey: .loopLength)
-            //If empty fill with empty, overwrite with correct dimenstion for editor
             loopsToLevel = try container.decodeIfPresent([Int].self, forKey: .loopsToLevel) ?? []
-            loopsToGrid = try container.decodeIfPresent(LoopsToGrid.self, forKey: .loopsToGrid) ?? LoopsToGrid.init(grids: .empty)
+            loopsToGrid = try container.decodeIfPresent([Int].self, forKey: .loopsToGrid) ?? []
         }
         
         init(
@@ -42,17 +41,13 @@ extension InstrumentsSet.Track {
             fileExtension: String,
             loopLength: [Double],
             loopsToLevel: [Int],
-            loopsToGrid: LoopsToGrid
+            loopsToGrid: [Int]
         ) {
             self.fileName = fileName
             self.fileExtension = fileExtension
             self.loopLength = loopLength
             self.loopsToLevel = loopsToLevel
             self.loopsToGrid = loopsToGrid
-        }
-        
-        mutating func updateLoopLength(setLoopLength: Double){
-            loopLength = [setLoopLength]
         }
     }
 }
@@ -68,41 +63,4 @@ extension InstrumentsSet.Track.MidiFile: Encodable {
     }
 }
 
-extension InstrumentsSet.Track.MidiFile {
-    
-    //LoopsToGrid an array where the index corresponds with a cell location
-    //The value corresponds with the midiClip index
-    //Loop = MidiClip == location in MIDI file
-    struct LoopsToGrid: Decodable, Equatable {
 
-        private enum LoopsToGridKeys: String, CodingKey {
-            case mapper
-        }
-
-        var mapper: [Int]?
-
-        //Decoder init
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: LoopsToGridKeys.self)
-            mapper = try container.decodeIfPresent([Int].self, forKey: .mapper) ?? []
-        }
-
-        //Store to file init
-        init(mapper: [Int]?){
-            self.mapper = mapper
-        }
-        
-        //Init with all fields filled with zero, just one midi section in the Midi File
-        //Also have correct amount of cells for itiration
-        init(grids: Grids) {
-            self.mapper = grids.oneClip
-        }
-    }
-}
-
-extension InstrumentsSet.Track.MidiFile.LoopsToGrid: Encodable {
-    func encoder(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: LoopsToGridKeys.self)
-        try container.encode(mapper, forKey: .mapper)
-    }
-}

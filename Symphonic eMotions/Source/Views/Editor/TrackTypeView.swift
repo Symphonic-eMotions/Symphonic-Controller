@@ -23,7 +23,8 @@ struct TrackTypeView: View{
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
-        trackTypeParent: Binding<TrackType>) {
+        trackTypeParent: Binding<TrackType>
+    ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId

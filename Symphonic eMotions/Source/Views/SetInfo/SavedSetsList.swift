@@ -15,6 +15,7 @@ struct SavedSetsList: View {
     @EnvironmentObject var fileController: FileController
     @State var urls: [URL] = []
     @State private var isSharePresented: Bool = false
+    @State private var showAlert = false
     
     //FIXME: select the chosen one
     var isSelected: Bool {
@@ -75,21 +76,7 @@ struct SavedSetsList: View {
                             }
                             Spacer().frame(width: 20)
                             
-//                            Image(systemName: "square.and.arrow.up")
-//                            .foregroundColor(.white)
-//                            .font(.system(size: 18))
-//                            .frame(width: 30)
-//                            .padding(.vertical, 5.0)
-//                            .padding(.horizontal, 5.0)
-//                            .background(Color.blue)
-//                            .cornerRadius(5.0)
-//                            .onTapGesture {
-//
-//                                AppUtils.shareJSONFile(setSettings: setInfoModel.setSettings)
-//
-//
-//                            }
-                            
+                            //Sharing
                             Button( action: {
                                 self.isSharePresented = true
                             }) {
@@ -111,29 +98,45 @@ struct SavedSetsList: View {
                                 ActivityViewController(activityItems: [url])
                             })
                             
-                            
-                            
-                            let filesName = fileController.fileContents(url: url, fileName:  fileController.name(url: url))
+                            let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
                             Text(filesName)
                                 .foregroundColor(isSelected ? Color(.lightGray) : .primary)
                                 .font(.title3)
                                 .padding(.horizontal)
                                 .frame(minWidth: 400, alignment: .leading)
-    //                            .border(.blue)
                             
                             Text(fileController.date(url: url))
                                 .foregroundColor(isSelected ? Color(.lightGray) : .primary)
                                 .font(.subheadline)
                                 .padding(.horizontal)
-    //                            .border(.green)
                             
                             Spacer()
+                            
+                            //Delete
+                            Button( action: {
+                                showAlert = true
+                            }) {
+                                Image(systemName: "trash")
+                                .renderingMode(.template)
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .frame(width: 30)
+                                .padding(.vertical, 5.0)
+                                .padding(.horizontal, 5.0)
+                                .background(Color.red)
+                                .cornerRadius(5.0)
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(title: Text("Confirm Delete"), message: Text("Are you sure you want to delete this item?"), primaryButton: .destructive(Text("Delete")) {
+                                    // Handle delete action
+                                    urls = fileController.deleteFile(url: url)
+                                }, secondaryButton: .cancel())
+                            }
                         }
                         .padding()
                         .fixedSize()
                     }
                 }
-                
             }
         }
         
@@ -142,6 +145,8 @@ struct SavedSetsList: View {
             urls = fileController.addDirectoryURLsToController()
         }
     }
+        
+        
 }
 
 struct ActivityViewController: UIViewControllerRepresentable {

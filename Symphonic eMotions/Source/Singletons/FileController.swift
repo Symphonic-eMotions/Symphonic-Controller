@@ -100,4 +100,14 @@ class FileController: ObservableObject {
         }
         return "Mismatch"
     }
+    func deleteFile(url: URL) -> [URL] {
+        do {
+            try FileManager.default.removeItem(at: url)
+            
+        } catch {
+            print("Error deleting file: \(error)")
+        }
+        
+        return self.addDirectoryURLsToController()
+    }
 }

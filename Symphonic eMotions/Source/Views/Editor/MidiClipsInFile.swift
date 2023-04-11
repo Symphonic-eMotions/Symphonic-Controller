@@ -13,8 +13,9 @@ struct MidiClipsInFile: View {
     @ObservedObject var currentTrack: TrackSettings
     //This is a 1 track View
     @State var trackId: String
-    @State var loopLengthLocal: [Double]
-    @State private var clipLetters: [Int]
+    
+    @Binding var loopLengthLocal: [Double]
+    @Binding var clipLetters: [Int]
     @State var clipLength: Int
     
     let columnWidth: CGFloat = 150
@@ -22,13 +23,16 @@ struct MidiClipsInFile: View {
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
-        trackId: String ){
-            self.setInfoModel = setInfoModel
-            self.currentTrack = currentTrack
-            self.trackId = trackId
-            _loopLengthLocal = State(initialValue: currentTrack.loopLength)
-            _clipLetters = State(initialValue: currentTrack.loopsToLevel)
-            _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
+        trackId: String,
+        loopLengthLocal: Binding<[Double]>,
+        clipLetters: Binding<[Int]>
+    ){
+        self.setInfoModel = setInfoModel
+        self.currentTrack = currentTrack
+        self.trackId = trackId
+        _loopLengthLocal = loopLengthLocal
+        _clipLetters = clipLetters
+        _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
     }
     
     var body: some View {

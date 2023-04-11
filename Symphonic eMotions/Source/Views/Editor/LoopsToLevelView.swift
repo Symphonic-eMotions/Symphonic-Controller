@@ -57,7 +57,9 @@ struct LoopsToLevelView: View {
             MidiClipsInFile(
                 setInfoModel: setInfoModel,
                 currentTrack: currentTrack,
-                trackId: trackId
+                trackId: trackId,
+                loopLengthLocal: $loopLengthLocal,
+                clipLetters: $clipLetters
             )
             //Place clips in level
             HStack(){

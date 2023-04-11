@@ -106,8 +106,8 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Master effect rack group
     let masterTrackEffects: [Track.Effect]
     //The row and colums used in imageDifference
-    let rows: Int
-    let columns: Int
+    internal let rows: Int
+    internal let columns: Int
     //Level variables
     let levelSpeed: Double
     //Level duration keeps the amount of levels with an int

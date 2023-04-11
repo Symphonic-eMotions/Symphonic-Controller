@@ -29,6 +29,7 @@ struct SelectGrid: View {
                         //FIXME: Also update (extend or truncate) ALL areaOfInterest
                         setInfoModel.setSettings.updateAreaOfInterest(rows: value)
                         
+                        print("FIX ALL loopsToGrid en AreaOf interests")
                         
                         //FIXME: Also Update Midi file mapper
                         

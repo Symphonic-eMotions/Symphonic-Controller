@@ -318,17 +318,8 @@ final class Conductor {
             
             print("Load track \(track.id) Levels: \(String(describing: track.levels))")
             
-//            print("Loop to grid value, if one by one fill with corrent LoopsToGrid")
-//
-//
-//            if track.midiFiles?.first!.loopsToGrid.mapper?.count == 0 {
-//                print("OVERWRITE")
-//            }
-//            else{
-//                print("LOAD loopsToGrid INTO track based version of PART maxValue")
-//            }
-            
-            
+            //TODO: Initialise loopsToGrid
+            print("LoopsToGrid?")
             
             //SoundModule controlled velocity
             //Initialize velocity to zero for silent start of these instrument
