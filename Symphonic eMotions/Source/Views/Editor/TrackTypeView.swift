@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-
-
-
 struct TrackTypeView: View{
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -20,13 +17,17 @@ struct TrackTypeView: View{
     let columnWidth: CGFloat = 150
     let color: Color = .accentColor
 
-    @State private var trackType: TrackType
+    @Binding var trackTypeParent: TrackType
 
-    init(setInfoModel: SetInfoModel, currentTrack: TrackSettings, trackId: String) {
+    init(
+        setInfoModel: SetInfoModel,
+        currentTrack: TrackSettings,
+        trackId: String,
+        trackTypeParent: Binding<TrackType>) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        _trackType = State(initialValue: currentTrack.trackType)
+        _trackTypeParent = trackTypeParent
     }
     
     var body: some View {
@@ -39,18 +40,24 @@ struct TrackTypeView: View{
 
                 Text("MIDI clip Control")
                     .frame(width: columnWidth, alignment: .leading)
-
-                Picker("Select track type", selection: $trackType) {
-                    ForEach(TrackType.allCases, id: \.self) { type in
+                
+                let availableTypes: [TrackType] = [.midiClipLevel,.midiClipPosition]
+                
+                Picker("Select track type", selection: $trackTypeParent) {
+                    ForEach(availableTypes, id: \.self) { type in
                         Text(type.rawValue).tag(type)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: trackType) { trackType in
-                    currentTrack.trackType = trackType
+                .onChange(of: trackTypeParent) { trackType in
+                    withAnimation {
+                        currentTrack.trackType = trackType
+                        trackTypeParent = trackType
+                    }
                 }
             }
         }
         .padding(.leading)
+        .padding(.trailing)
     }
 }

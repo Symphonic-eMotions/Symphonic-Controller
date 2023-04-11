@@ -14,6 +14,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var trackType: TrackType
     var instrumentVolume: Float
     var instrumentColor: Color
+    var midiFile: String
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
@@ -26,6 +27,7 @@ class TrackSettings: Identifiable, ObservableObject {
         trackType: TrackType,
         instrumentVolume: Float,
         instrumentColor: Color,
+        midiFile: String,
         loopLength: [Double],
         loopsToLevel: [Int],
         loopsToGrid: [Int],
@@ -37,6 +39,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.trackType = trackType
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
+        self.midiFile = midiFile
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid

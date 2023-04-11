@@ -217,6 +217,7 @@ extension InstrumentsSet.Track {
         case midiClipLevel = "Levels control midi clip"
         case midiClipPosition = "Position control midi clip"
         case midiClipValue = "Movement controls midi clip"
+        case none
     }
 //
 

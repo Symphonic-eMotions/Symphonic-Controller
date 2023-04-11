@@ -170,7 +170,7 @@ final class AppUtils {
             }
             
             let midiFiles = [InstrumentsSet.Track.MidiFile(
-                fileName: track.midiFiles![0].fileName,
+                fileName: setSettings.tracks[track.trackId]!.midiFile,
                 fileExtension: track.midiFiles![0].fileExtension,
                 loopLength: setSettings.tracks[track.trackId]!.loopLength,
                 loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
@@ -344,6 +344,7 @@ final class AppUtils {
                 trackType: trackLoaded.trackType ?? .midiClipPosition,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
+                midiFile: trackLoaded.midiFiles!.first!.fileName,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: (trackLoaded.midiFiles?.first!.loopsToLevel)!,
                 loopsToGrid: loopsToGrid,

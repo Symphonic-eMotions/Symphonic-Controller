@@ -99,7 +99,7 @@ struct EditorView: View {
                     }
                     
                     HStack{
-                        Text("Amount of levels")
+                        Text("Nr. of levels")
                             .font(.system(size: headingSize))
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
@@ -112,7 +112,8 @@ struct EditorView: View {
                 
                 EditTracks(
                     setInfoModel: setInfoModel,
-                    showEditorPart: $showEditorPart
+                    showEditorPart: $showEditorPart,
+                    trackTypeLocal: .none
                 )
                 
                 
@@ -177,7 +178,7 @@ struct EditorView: View {
                 .frame(width: 130)
             }
         }
-        .padding(.leading)
+        .padding()
         
 //        Text("Editing: \(setInfoModel.setSettings.setURL)")
     }

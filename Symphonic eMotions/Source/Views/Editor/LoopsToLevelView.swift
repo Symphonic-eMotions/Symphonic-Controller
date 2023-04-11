@@ -31,7 +31,6 @@ struct LoopsToLevelView: View {
     //This is a 1 track View
     var trackId: String
     @State var loopLengthLocal: [Double]
-    @State var clipLength: Int
     @State private var levels: [Int]
     @State private var clipLetters: [Int]
     
@@ -45,7 +44,6 @@ struct LoopsToLevelView: View {
             self.currentTrack = currentTrack
             self.trackId = trackId
             _loopLengthLocal = State(initialValue: currentTrack.loopLength)
-            _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
             _levels = State(initialValue: setInfoModel.setSettings.levels)
             _clipLetters = State(initialValue: currentTrack.loopsToLevel)
     }
@@ -55,70 +53,12 @@ struct LoopsToLevelView: View {
         VStack(alignment: .leading){
             
             Divider()
-            //MIDI clips in file
-            HStack() {
-                
-                Text("MIDI clips in file")
-                .frame(width: columnWidth, alignment: .leading)
-                
-                ForEach(0..<loopLengthLocal.count, id: \.self) { index in
-                    
-                    VStack {
-                        if let letter: String = AppUtils.letterForNumber(index) {
-                            ZStack{
-                                MidiClipName(value: letter)
-                            }
-                        }
-                    }
-                }
-                //Remove clip button
-                Button("-") {
-                    if (loopLengthLocal.count) > 1 {
-                        
-                        let oldLength: Int = currentTrack.loopLength.count-1
-                        //Mutate
-                        currentTrack.loopLength.removeLast()
-                        loopLengthLocal.removeLast()
-                        let newLength: Int = currentTrack.loopLength.count-1
-                        
-                        if currentTrack.loopsToLevel.contains(oldLength){
-                            currentTrack.loopsToLevel = currentTrack.loopsToLevel.map {
-                                $0 == oldLength ? newLength: $0
-                            }
-                            clipLetters = currentTrack.loopsToLevel
-                        }
-                    }
-                }
-                .disabled(loopLengthLocal.count == 1)
-                .font(.system(size: 30))
-                //Add clip button
-                Button("+") {
-                    currentTrack.loopLength.append(16)
-                    loopLengthLocal.append(16)
-                }
-                .font(.system(size: 30))
-            }
-            
-            //MIDI clip lengths, this value is placed on all loopLength indexes needed for clip selection
-            HStack(){
-                
-                Text("MIDI Clip lengths")
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                TextField("Cliplength", text: Binding(
-                    get:{ String(clipLength) },
-                    set:{ if let value = Double($0) {
-                        clipLength = Int(value)
-                        currentTrack.loopLength = Array(repeating: value, count: currentTrack.loopLength.count)
-                    }}
-                ))
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 40, height: 25)
-                
-                Text("beats")
-                    .frame(width: columnWidth, alignment: .leading)
-            }
-            
+            //MIDI clips in file AND MIDi clip lengths
+            MidiClipsInFile(
+                setInfoModel: setInfoModel,
+                currentTrack: currentTrack,
+                trackId: trackId
+            )
             //Place clips in level
             HStack(){
                 

@@ -28,25 +28,59 @@ struct GridCell: View {
 struct LoopsToGridView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
-    @State var key: String
+    @ObservedObject var currentTrack: TrackSettings
+    //This is a 1 track View
+    @State var trackId: String
+    @State var loopLengthLocal: [Double]
+    @State private var clipLetters: [Int]
+    
+    let columnWidth: CGFloat = 150
+    
+    init(
+        setInfoModel: SetInfoModel,
+        currentTrack: TrackSettings,
+        trackId: String ){
+            self.setInfoModel = setInfoModel
+            self.currentTrack = currentTrack
+            self.trackId = trackId
+            _loopLengthLocal = State(initialValue: currentTrack.loopLength)
+//            _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
+//            _levels = State(initialValue: setInfoModel.setSettings.levels)
+            _clipLetters = State(initialValue: currentTrack.loopsToLevel)
+    }
     
     var body: some View {
         
-        if let cells: [Int] = setInfoModel.setSettings.tracks[key]?.loopsToGrid {
+        VStack(alignment: .leading){
             
-            let gridRows: Int = setInfoModel.setSettings.gridRows
-            let gridColumns: Int = setInfoModel.setSettings.gridColumns
+            Divider()
             
-            VStack(spacing: 0) {
-                ForEach(0..<gridRows, id: \.self) { row in
-                    HStack(spacing: 0) {
-                        ForEach(0..<gridColumns, id: \.self) { column in
-                            let index = row * 3 + column
-                            GridCell(value: cells[index])
-                        }
-                    }
-                }
-            }
+            MidiClipsInFile(
+                setInfoModel: setInfoModel,
+                currentTrack: currentTrack,
+                trackId: trackId
+            )
+            
         }
+        .padding(.leading)
+        
+        
+        
+//        if let cells: [Int] = setInfoModel.setSettings.tracks[trackId]?.loopsToGrid {
+//
+//            let gridRows: Int = setInfoModel.setSettings.gridRows
+//            let gridColumns: Int = setInfoModel.setSettings.gridColumns
+//
+//            VStack(spacing: 0) {
+//                ForEach(0..<gridRows, id: \.self) { row in
+//                    HStack(spacing: 0) {
+//                        ForEach(0..<gridColumns, id: \.self) { column in
+//                            let index = row * 3 + column
+//                            GridCell(value: cells[index])
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 }
