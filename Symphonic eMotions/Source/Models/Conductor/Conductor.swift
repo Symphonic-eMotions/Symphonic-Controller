@@ -2492,13 +2492,10 @@ final class Conductor {
         trackSequencers[track.id]?.preroll()
     }
     
-//    private func stopNotes(for track: InstrumentsSet.Track) {
-//
-//        //Shut down all note on's
-//        for note in 0...127 {
-//            trackSamplers[track.id]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
-//        }
-//    }
+    private func envDownTracks(_ track: InstrumentsSet.Track) {
+        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+        trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
+    }
     
     private func stopNotesTrackId(for trackId: String) {
         
@@ -2507,20 +2504,6 @@ final class Conductor {
             trackSamplers[trackId]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
         }
     }
-    
-//    private func copyNewNotes(for track: InstrumentsSet.Track) {
-//
-//        let clipLengths = track.midiFiles![0].loopLength
-//
-//        //Calculate start time next MIDI part
-//        let nextMIDIstartTime = calculateMIDIstartTime(for: globalCurrentMIDIclip[track.trackId]!, in: clipLengths)
-//
-//        //copy MIDI data to active buffer
-//        copyMIDIfromMemory(
-//            trackId: track.id,
-//            midiStartTime: nextMIDIstartTime,
-//            loopLength: clipLengths[triggerCurrentMIDIpart[track.id]!])
-//    }
     
     func togglePlayEngineAndTracks(
         currentSetLevel: Double,
@@ -2589,8 +2572,13 @@ final class Conductor {
         
         guard isConductorPlayingSubject.value else { return }
         
-        set.tracks.forEach { stopTrack($0) }
+        set.tracks.forEach {
+            envDownTracks($0)
+            stopTrack($0)
+        }
         audioEngine.pause()
         isConductorPlayingSubject.send(false)
     }
+    
+    
 }

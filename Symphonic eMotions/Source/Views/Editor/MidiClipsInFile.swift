@@ -15,7 +15,7 @@ struct MidiClipsInFile: View {
     @State var trackId: String
     
     @Binding var loopLengthLocal: [Double]
-    @Binding var clipLetters: [Int]
+    @Binding var clipLetters: [String:[Int]]
     @State var clipLength: Int
     
     let columnWidth: CGFloat = 150
@@ -25,7 +25,7 @@ struct MidiClipsInFile: View {
         currentTrack: TrackSettings,
         trackId: String,
         loopLengthLocal: Binding<[Double]>,
-        clipLetters: Binding<[Int]>
+        clipLetters: Binding<[String:[Int]]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -58,27 +58,39 @@ struct MidiClipsInFile: View {
                 if (loopLengthLocal.count) > 1 {
                     
                     let oldLength: Int = currentTrack.loopLength.count-1
-                    //Mutate
+                    //Mutate in file databse
                     currentTrack.loopLength.removeLast()
+                    //Binding structure
+                    clipLetters[trackId]!.removeLast()
+                    //Interface
                     loopLengthLocal.removeLast()
+                    
                     let newLength: Int = currentTrack.loopLength.count-1
                     
+                    //Remove clip from loopsToLevel
                     if currentTrack.loopsToLevel.contains(oldLength){
                         currentTrack.loopsToLevel = currentTrack.loopsToLevel.map {
                             $0 == oldLength ? newLength: $0
                         }
-                        clipLetters = currentTrack.loopsToLevel
+                    }
+                    //Remove clip from loopsToGrid
+                    if currentTrack.loopsToGrid.contains(oldLength){
+                        currentTrack.loopsToGrid = currentTrack.loopsToGrid.map {
+                            $0 == oldLength ? newLength: $0
+                        }
                     }
                 }
             }
             .disabled(loopLengthLocal.count == 1)
-            .font(.system(size: 30))
+            .font(.system(size: 35))
+            
             //Add clip button
             Button("+") {
                 currentTrack.loopLength.append(16)
                 loopLengthLocal.append(16)
+                clipLetters[trackId]!.append(clipLetters[trackId]!.count)
             }
-            .font(.system(size: 30))
+            .font(.system(size: 35))
         }
         .onAppear {
             // Set initial value of syncedValue to value from observed object

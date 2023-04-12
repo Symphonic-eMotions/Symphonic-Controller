@@ -166,7 +166,8 @@ struct PlayView: View {
                     //Editing modee visual parameter value feedback
                     PartFeedbackView(
                         playViewModel: playViewModel
-                    ).environmentObject(fileController)
+                    )
+                    .environmentObject(fileController)
                 }
                 Spacer()
             }

@@ -24,11 +24,12 @@ struct SetInfoLocalState {
 
 struct SetInfo: View {
     
-//    @ObservedObject var sharedViewModel: SharedViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
+    @Binding public var urls: [URL]
+    
     
     var body: some View {
         VStack{
@@ -42,8 +43,6 @@ struct SetInfo: View {
             }
             //Set info is also the navigator to saved files within the set
             else if sessionDisplay == .setInfo {
-                
-                
                 
                 //Here we got the Editor!
                 if sessionDisplaySub == .setEditor {
@@ -66,35 +65,70 @@ struct SetInfo: View {
                         .fontWeight(.regular)
                     
                     SetLoadAndPlay(setInfoModel: setInfoModel)
-                        .onTapGesture {
-                            
-                            AppUtils.createSessionFile(
-                                sensitivity: -1,
-                                setURL: URL("dontOverWrite"))
-                            
-                            //Load the Set
-                            setInfoModel.tapSetRow(
-                                selectedCollection: setInfoModel.filterSet(
-                                    setName: setInfoModel.setInfoLocalState.setName
-                                )
+                    .onTapGesture {
+                        
+                        AppUtils.createSessionFile(
+                            sensitivity: -1,
+                            setURL: URL("dontOverWrite"))
+                        
+                        //Load the Set
+                        setInfoModel.tapSetRow(
+                            selectedCollection: setInfoModel.filterSet(
+                                setName: setInfoModel.setInfoLocalState.setName
                             )
-                            
-                            //Change the View
-                            sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
-                        }
+                        )
+                        
+                        //Change the View
+                        sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
+                    }
                     
-                    SkinSelector(
-                        setInfoModel: setInfoModel,
-                        availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
-                        loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
-                    )
+                    HStack{
+                        Spacer()
+                        
+                        SkinSelector(
+                            setInfoModel: setInfoModel,
+                            availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
+                            loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
+                        )
+                        
+                        Spacer(minLength: 10)
+                        EMButton(
+                            action: {
+
+                                setInfoModel.setInfoState.currentInstrumentsSet = AppUtils.loadInstrumentSet(json: setInfoModel.setInfoLocalState.setConfig)
+
+                                let setSetting = AppUtils.setSettings(
+                                    instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                                    sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
+                                )
+
+                                let fileName = AppUtils.createWorkingFile(
+                                    setSettings: setSetting,
+                                    instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                                    duplicateLastTrack: false,
+                                    asNewFile: true
+                                )
+
+//                                fileController.addSetFileURLToController(fileName: fileName)
+                                urls = fileController.getContentsOfDirectory()
+                                
+                                
+
+                            }, color: .orange, isSolid: true, maxWidth: 130, height: 35
+                        ){
+                            Text("New Set")
+                        }.frame(width: 110, height: 50)
+                        Spacer()
+                    }
+                    
                     
                     Divider()
 
                     SavedSetsList(
                         setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub
+                        sessionDisplaySub: $sessionDisplaySub,
+                        urls: $urls
                     )
                     .environmentObject(fileController)
                     

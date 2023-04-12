@@ -58,15 +58,12 @@ struct SidebarView: View {
                                 currentInstrumentSet: sidebarViewModel.state.currentInstrumentSet,
                                 buildSettings: sidebarViewModel.state.buildSettings
                             )
-//                            ,
-//                            rowSelected: sidebarViewModel.currentInstrumentsSetIsChanged
                         ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
                     setInfoLocalState: $setInfoLocalState
-//                    ,
-//                    setEditLocalState: $setEditLocalState
-                ).environmentObject(fileController)
+
+                )
                 Spacer()
             }
         }

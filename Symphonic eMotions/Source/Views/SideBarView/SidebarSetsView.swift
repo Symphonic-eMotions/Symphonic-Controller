@@ -53,8 +53,6 @@ struct SidebarSetsView: View {
     @ObservedObject var viewModel: MainViewModel
     
     @ObservedObject var sideBarSetsViewModel: SideBarSetsViewModel
-
-    @EnvironmentObject var fileController: FileController
     
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -64,10 +62,6 @@ struct SidebarSetsView: View {
 //    @Binding public var setEditLocalState: SetEditLocalState
     
     var body: some View {
-        
-        //Pass Documents folder URL for saved versions
-//        let documentsFolder = fileController.directoryURL
-//        let _ = print(documentsFolder.description)
         
         VStack(alignment: .leading) {
             

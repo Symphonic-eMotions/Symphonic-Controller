@@ -18,6 +18,10 @@ struct EditTracks: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: String
     @State var trackTypeLocal: [String: TrackType]
+    //Linear representation of the midi clips.
+    //Modified by MidiClipsInFile
+    //Used by
+    @State var clipLetters: [String: [Int]]
     
     init(
         setInfoModel: SetInfoModel,
@@ -26,13 +30,18 @@ struct EditTracks: View {
         self.setInfoModel = setInfoModel
         _showEditorPart = showEditorPart
         
-        
-        
         var tmpTrackType = [String: TrackType]()
         for track in setInfoModel.setSettings.tracks {
             tmpTrackType[track.value.trackId] = track.value.trackType
         }
         _trackTypeLocal = State(initialValue: tmpTrackType)
+        
+        var tmpClipLetters = [String: [Int]]()
+        for track in setInfoModel.setSettings.tracks {
+            let clips = track.value.loopLength
+            tmpClipLetters[track.value.trackId] = Array(0..<clips.count).map{$0}
+        }
+        _clipLetters = State(initialValue: tmpClipLetters)
     }
     
     var body: some View {
@@ -95,14 +104,17 @@ struct EditTracks: View {
                         LoopsToLevelView(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,
-                            trackId: key
+                            trackId: key,
+                            clipLetters: $clipLetters
                         )
                     }
                     else if trackTypeLocal[key] == .midiClipPosition {
                         LoopsToGridView(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,
-                            trackId: key)
+                            trackId: key,
+                            clipLetters: $clipLetters
+                        )
                     }
                 }
             }

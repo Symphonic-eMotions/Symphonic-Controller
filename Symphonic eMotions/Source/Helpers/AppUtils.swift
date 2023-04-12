@@ -91,7 +91,7 @@ final class AppUtils {
         return fileName
     }
     
-    //Insrument set from current state
+    //Instrument set from current state
     static func createInstrumentSet(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
@@ -263,6 +263,7 @@ final class AppUtils {
         return sessionSetting
     }
     
+    //Write Session file to disk
     static func createSessionFile(sensitivity: Float, setURL: URL){
         
         let fileName: String = "SeM-settings"
@@ -289,7 +290,8 @@ final class AppUtils {
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
-    //MARK: After load set instruction make this setting database for reference and saving
+    //MARK: SetSetings
+    // - Structure to mutate and save as Instrument Set
     static func setSettings(
         instrumentSet: InstrumentsSet,
         sessionSettings: SessionSettings
@@ -304,8 +306,10 @@ final class AppUtils {
         let cells = instrumentSet.columns * instrumentSet.rows
         //Keep track of partNumber for variations track/instrument Color...
         var partNumber: Int = 0
+        //Loop trhough the loaded tracks
         for trackLoaded in tracksLoaded {
             
+            //First set parts of this track
             partNumber = 0
             var parts: OrderedDictionary<String, PartSettings> = [:]
             for partLoaded in trackLoaded.parts {
@@ -330,11 +334,16 @@ final class AppUtils {
                 partNumber += 1
             }
             
-            
             var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
-            if loopsToLevel.count != cells {
-                //We've got a new grid, initialise
-                loopsToLevel = Array(repeating: 0, count: cells)
+            if loopsToLevel.count != instrumentSet.levels.count {
+                //We've got another amount of levels, correct
+                loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
+            }
+            
+            var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
+            if loopsToGrid.count != cells {
+                //We have a another amount of cells, correct
+                loopsToGrid = Array(repeating: 0, count: cells)
             }
             
             let track = TrackSettings(
@@ -346,7 +355,7 @@ final class AppUtils {
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
-                loopsToGrid: (trackLoaded.midiFiles?.first!.loopsToGrid)!,
+                loopsToGrid: loopsToGrid,
                 levels: trackLoaded.levels,
                 parts: parts)
             

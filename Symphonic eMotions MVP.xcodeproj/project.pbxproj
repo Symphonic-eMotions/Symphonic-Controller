@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		16687D8C27FF1F8A006FFD5A /* PlayerControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16687D8B27FF1F8A006FFD5A /* PlayerControlsViewModel.swift */; };
 		16935FA127E36E1A00BF5EDB /* SidebarSetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */; };
-		16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */; };
 		7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */; };
 		7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3B2874306400F00B42 /* FullHomeView.swift */; };
 		7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3D2874556900F00B42 /* FullPlayView.swift */; };
@@ -134,7 +133,6 @@
 /* Begin PBXFileReference section */
 		16687D8B27FF1F8A006FFD5A /* PlayerControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsViewModel.swift; sourceTree = "<group>"; };
 		16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSetsView.swift; sourceTree = "<group>"; };
-		16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTracksView.swift; sourceTree = "<group>"; };
 		7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		7C037B3B2874306400F00B42 /* FullHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHomeView.swift; sourceTree = "<group>"; };
 		7C037B3D2874556900F00B42 /* FullPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayView.swift; sourceTree = "<group>"; };
@@ -298,7 +296,6 @@
 			children = (
 				C084FFED26B31534009A4D0C /* SidebarView.swift */,
 				16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */,
-				16935FA227E36E4E00BF5EDB /* SidebarTracksView.swift */,
 				7CB5834E292FACC6000C46FF /* SavedSettingsView.swift */,
 			);
 			path = SideBarView;
@@ -353,18 +350,18 @@
 			children = (
 				7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */,
 				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
-				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 				7C4EBB9729D7879F00958954 /* SelectGrid.swift */,
 				7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */,
-				7CB7028229D84E1A003399BC /* EditTracks.swift */,
-				7CFB298029DB322200DFA32E /* LevelSpeed.swift */,
-				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
 				7C1FB0B129DDFD9A00621909 /* Levels.swift */,
-				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
+				7CFB298029DB322200DFA32E /* LevelSpeed.swift */,
+				7CB7028229D84E1A003399BC /* EditTracks.swift */,
 				7C1FB0B529E4429700621909 /* InLevelView.swift */,
 				7C1FB0B729E455CB00621909 /* TrackTypeView.swift */,
+				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
+				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
 				7C1FB0BB29E52F0D00621909 /* MidiClipsInFile.swift */,
 				7C1FB0BD29E53F3300621909 /* MidiFileView.swift */,
+				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -747,7 +744,6 @@
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
-				16935FA327E36E4E00BF5EDB /* SidebarTracksView.swift in Sources */,
 				7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
 				C02E54EB26B53EC2003D503E /* PlayerControlsView.swift in Sources */,

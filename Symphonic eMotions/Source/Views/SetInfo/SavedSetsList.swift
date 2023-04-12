@@ -13,7 +13,7 @@ struct SavedSetsList: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
-    @State var urls: [URL] = []
+    @Binding var urls: [URL]
     @State private var isSharePresented: Bool = false
     @State private var showAlert = false
     
@@ -36,6 +36,7 @@ struct SavedSetsList: View {
                     {
                         HStack(spacing:0){
                             
+                            //Play this set
                             Image(systemName: "play.fill")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
@@ -58,6 +59,7 @@ struct SavedSetsList: View {
                             
                             Spacer().frame(width: 20)
                             
+                            //Edit this set
                             Image(systemName: "square.and.pencil")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
@@ -142,11 +144,10 @@ struct SavedSetsList: View {
                 }
             }
         }
-        
-        
         .onAppear{
             urls = fileController.addDirectoryURLsToController()
         }
+        
     }
         
         

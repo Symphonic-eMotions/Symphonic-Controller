@@ -21,12 +21,14 @@ struct MainView: View {
     @State var setInfoLocalState = SetInfoLocalState(sessioDisplay: .swiftUI)
     //Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
+    @State var urls: [URL] = []
     
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>,
-        mainViewUpdate: BuildSettings.ActiveView) {
+        mainViewUpdate: BuildSettings.ActiveView
+    ) {
         
         self.viewModel = viewModel
         self._sessionDisplay = sessionDisplay
@@ -36,7 +38,8 @@ struct MainView: View {
         //What Skin is selected by default
         //TODO: This doesn't get updated with set change.
         if viewModel.mainState.setSettings.skins.name != "default"{
-            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit)
+            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit
+            )
         }
     }
     
@@ -107,7 +110,7 @@ struct MainView: View {
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
                     setInfoLocalState: $setInfoLocalState
-                ).environmentObject(fileController)
+                )
                 
                 //SeM Pro interface with interaction editor
                 if sessionDisplay == .swiftUI {
@@ -166,7 +169,8 @@ struct MainView: View {
                             conductor: viewModel.conductor
                         ),
                         sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub
+                        sessionDisplaySub: $sessionDisplaySub,
+                        urls: $urls
                     )
                     .environmentObject(fileController)
                 }

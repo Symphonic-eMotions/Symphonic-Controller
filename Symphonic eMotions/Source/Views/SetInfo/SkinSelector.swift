@@ -25,31 +25,29 @@ struct SkinSelector: View {
     
     var body: some View {
         
-        HStack{
-            Picker(
-                "Skins",
-                selection: Binding(
-                    get: {
-                        localSessionDisplay
-                    },
-                    set: { value in
-                        localSessionDisplay = value
-                        setInfoModel.setInfoLocalState.loadSessionDisplay = value
-                    }
-                )
-                    
-            ) {
-                
-                ForEach( availableSkins, id: \.self){
-                    Text($0.title)
+        Picker(
+            "Skins",
+            selection: Binding(
+                get: {
+                    localSessionDisplay
+                },
+                set: { value in
+                    localSessionDisplay = value
+                    setInfoModel.setInfoLocalState.loadSessionDisplay = value
                 }
+            )
+            
+        ) {
+            
+            ForEach( availableSkins, id: \.self){
+                Text($0.title)
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .fixedSize()
-            .padding(.vertical, 10.0)
-            .padding(.leading, 10.0)
-            .foregroundColor(.white)
-            .accentColor(Color.accentColor)
         }
+        .pickerStyle(SegmentedPickerStyle())
+        .fixedSize()
+        .padding(.vertical, 10.0)
+        .padding(.leading, 10.0)
+        .foregroundColor(.white)
+        .accentColor(Color.accentColor)
     }
 }
