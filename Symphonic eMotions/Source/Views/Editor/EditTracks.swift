@@ -17,8 +17,24 @@ struct EditTracks: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: String
-    @State var trackTypeLocal: TrackType
-
+    @State var trackTypeLocal: [String: TrackType]
+    
+    init(
+        setInfoModel: SetInfoModel,
+        showEditorPart: Binding<String>
+    ) {
+        self.setInfoModel = setInfoModel
+        _showEditorPart = showEditorPart
+        
+        
+        
+        var tmpTrackType = [String: TrackType]()
+        for track in setInfoModel.setSettings.tracks {
+            tmpTrackType[track.value.trackId] = track.value.trackType
+        }
+        _trackTypeLocal = State(initialValue: tmpTrackType)
+    }
+    
     var body: some View {
 
         VStack(alignment: .leading) {
@@ -44,7 +60,7 @@ struct EditTracks: View {
                     withAnimation {
                         if showEditorPart != key {
                             showEditorPart = key
-                            trackTypeLocal = setInfoModel.setSettings.tracks[key]!.trackType
+                            trackTypeLocal[key] = setInfoModel.setSettings.tracks[key]!.trackType
                         }
                     }
                 }
@@ -66,23 +82,23 @@ struct EditTracks: View {
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
                     )
-                    
-                    //MIDI clip control
+
+//                    //MIDI clip control
                     TrackTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
                         trackTypeParent: $trackTypeLocal
                     )
-                    
-                    if trackTypeLocal == .midiClipLevel {
+
+                    if trackTypeLocal[key] == .midiClipLevel {
                         LoopsToLevelView(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,
                             trackId: key
                         )
                     }
-                    else if trackTypeLocal == .midiClipPosition {
+                    else if trackTypeLocal[key] == .midiClipPosition {
                         LoopsToGridView(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,

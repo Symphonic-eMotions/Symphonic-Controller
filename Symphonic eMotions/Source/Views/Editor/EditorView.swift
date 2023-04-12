@@ -112,8 +112,7 @@ struct EditorView: View {
                 
                 EditTracks(
                     setInfoModel: setInfoModel,
-                    showEditorPart: $showEditorPart,
-                    trackTypeLocal: .none
+                    showEditorPart: $showEditorPart
                 )
                 
                 

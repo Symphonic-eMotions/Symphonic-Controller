@@ -17,18 +17,20 @@ struct TrackTypeView: View{
     let columnWidth: CGFloat = 150
     let color: Color = .accentColor
 
-    @Binding var trackTypeParent: TrackType
+    @Binding var trackTypeParent: [String: TrackType]
+    @State var localTrackType: TrackType
 
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
-        trackTypeParent: Binding<TrackType>
+        trackTypeParent: Binding<[String: TrackType]>
     ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
         _trackTypeParent = trackTypeParent
+        _localTrackType = State(initialValue: currentTrack.trackType)
     }
     
     var body: some View {
@@ -44,18 +46,37 @@ struct TrackTypeView: View{
                 
                 let availableTypes: [TrackType] = [.midiClipLevel,.midiClipPosition]
                 
-                Picker("Select track type", selection: $trackTypeParent) {
+                Picker("Select track type", selection: $localTrackType) {
                     ForEach(availableTypes, id: \.self) { type in
                         Text(type.rawValue).tag(type)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: trackTypeParent) { trackType in
+                .onChange(of: localTrackType) { trackType in
                     withAnimation {
+                        //Store to file
                         currentTrack.trackType = trackType
-                        trackTypeParent = trackType
+                        //Tell parent
+                        trackTypeParent[trackId] = trackType
+                        //Keep local state
+                        localTrackType = trackType
                     }
                 }
+                
+//                Text(localTrackType)
+                
+//                Picker("Select track type", selection: $localTrackType {
+//                    ForEach(availableTypes, id: \.self) { type in
+//                        Text(type.rawValue).tag(type)
+//                    }
+//                }
+//                .pickerStyle(SegmentedPickerStyle())
+//                .onChange(of: $trackTypeParent[trackId]) { trackType in
+//                    withAnimation {
+//                        currentTrack.trackType = trackType!
+//                        $trackTypeParent[trackId] = trackType
+//                    }
+//                }
             }
         }
         .padding(.leading)
