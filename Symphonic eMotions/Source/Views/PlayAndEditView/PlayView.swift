@@ -160,7 +160,7 @@ struct PlayView: View {
                     .cornerRadius(10.0)
                     .opacity( playViewModel.playViewState.displayMode == .both ? 0.15 : 1.0)
                 }
-                
+                //Instrument Part editor
                 if playViewModel.playViewState.buildSettings.instrumentPartEditor {
 
                     //Editing modee visual parameter value feedback

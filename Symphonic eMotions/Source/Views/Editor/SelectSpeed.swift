@@ -20,6 +20,7 @@ struct SelectSpeed: View {
             .padding(.leading)
             
             TextField("BPM", text: $setInfoModel.setSettings.bpmAsString)
+//            .keyboardType(.numberPad)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 85)
             

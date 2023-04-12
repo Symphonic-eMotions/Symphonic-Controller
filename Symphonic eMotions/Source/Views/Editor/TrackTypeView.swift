@@ -62,21 +62,6 @@ struct TrackTypeView: View{
                         localTrackType = trackType
                     }
                 }
-                
-//                Text(localTrackType)
-                
-//                Picker("Select track type", selection: $localTrackType {
-//                    ForEach(availableTypes, id: \.self) { type in
-//                        Text(type.rawValue).tag(type)
-//                    }
-//                }
-//                .pickerStyle(SegmentedPickerStyle())
-//                .onChange(of: $trackTypeParent[trackId]) { trackType in
-//                    withAnimation {
-//                        currentTrack.trackType = trackType!
-//                        $trackTypeParent[trackId] = trackType
-//                    }
-//                }
             }
         }
         .padding(.leading)

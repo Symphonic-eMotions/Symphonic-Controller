@@ -28,8 +28,11 @@ struct SavedSetsList: View {
             VStack(alignment: .leading){
                 
                 ForEach( urls, id: \.self ){ url in
-                    
-                    if fileController.isURLInGroup(url: url, name: setInfoModel.setInfoLocalState.setName)
+                    //Loop through filtered files in Documents folder
+                    if fileController.isURLInGroup(
+                        url: url,
+                        name: setInfoModel.setInfoLocalState.setName
+                    )
                     {
                         HStack(spacing:0){
                             
@@ -42,14 +45,14 @@ struct SavedSetsList: View {
                             .background(Color.accentColor)
                             .cornerRadius(5.0)
                             .onTapGesture {
-                                
+                                //Store chosen url
                                 AppUtils.createSessionFile(
                                     sensitivity: -1,
                                     setURL: url)
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                                //Change the View
+                                //Change the View to the selected view
                                 sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
                             }
                             
@@ -64,7 +67,7 @@ struct SavedSetsList: View {
                             .background(Color.green)
                             .cornerRadius(5.0)
                             .onTapGesture {
-                                //Save current URL to disk
+                                //Store chosen url
                                 AppUtils.createSessionFile(
                                     sensitivity: -1,
                                     setURL: url)

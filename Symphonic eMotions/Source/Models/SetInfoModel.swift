@@ -19,17 +19,20 @@ final class SetInfoModel: ObservableObject {
     @Binding var setSettings: SetSettings
     @Published var setInfoState: SetInfoState
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
+    var conductor: Conductor
     
     init(
         setInfoLocalState: Binding<SetInfoLocalState>,
         setSettings: Binding<SetSettings>,
         setInfoState: SetInfoState,
-        currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void
+        currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void,
+        conductor: Conductor
     ) {
         self._setInfoLocalState = setInfoLocalState
         self._setSettings = setSettings
         self.setInfoState = setInfoState
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
+        self.conductor = conductor
     }
     
     

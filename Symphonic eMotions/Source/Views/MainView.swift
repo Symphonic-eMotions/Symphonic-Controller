@@ -19,12 +19,8 @@ struct MainView: View {
     @State private var mainViewUpdate: BuildSettings.ActiveView
     //Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState(sessioDisplay: .swiftUI)
-    //Set editor vars from navigation
-//    @State var setEditLocalState = SetEditLocalState()
-    //Keep track of local saved setting files
+    //Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
-    //HomeKit connection for external lamp control
-//    @StateObject private var homeKitStore: HomeKitManager = .init()
     
     init(
         viewModel: MainViewModel,
@@ -92,92 +88,90 @@ struct MainView: View {
         //SwiftUI Interface with Part editor
         else if sessionDisplay == .swiftUI || sessionDisplay == .setInfo  || sessionDisplay == .home {
             
-                NavigationView {
-                    SidebarView(
-                        viewModel: viewModel,
-                        sidebarViewModel: SidebarViewModel(
-                            state: SidebarViewState(
-                                currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
-                                currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
-                                buildSettings: viewModel.mainState.buildSettings
+            NavigationView {
+                SidebarView(
+                    viewModel: viewModel,
+                    sidebarViewModel: SidebarViewModel(
+                        state: SidebarViewState(
+                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
+                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
+                            buildSettings: viewModel.mainState.buildSettings
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet,
+                                sessionSettings: viewModel.mainState.sessionSettings
+                            )
+                        }
+                    ),
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub,
+                    setInfoLocalState: $setInfoLocalState
+                ).environmentObject(fileController)
+                
+                //SeM Pro interface with interaction editor
+                if sessionDisplay == .swiftUI {
+                    
+                    PlayView(
+                        playViewModel: PlayViewModel(
+                            playViewState: PlayViewState(
+                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
+                                buildSettings: viewModel.mainState.buildSettings,
+                                masterTrackStructure: masterTrackSetting
+                            ),
+                            conductor: viewModel.conductor,
+                            imageDifference: $viewModel.mainState.imageDifference,
+                            leveling: viewModel.leveling,
+                            setSettings: $viewModel.mainState.setSettings,
+                            
+                            partFeedback: viewModel.partFeedback,
+                            partFeedbackState: PartFeedbackState(),
+                            
+                            feedbackObjectsSate: FeedbackObjectsState()
+                        ),
+                        mainViewUpdate: $mainViewUpdate
+                    )
+                    .environmentObject(fileController)
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                    .edgesIgnoringSafeArea([.top, .trailing])
+                    .onAppear{
+                        viewModel.leveling.pauseLevel = false
+                        viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
+                            level: 0,
+                            setSettings: viewModel.mainState.setSettings,
+                            from: "playViewOnAppear"
+                        )
+                        viewModel.conductor.playEngineAndTracks()
+                    }
+                }
+                
+                //Selected set info View
+                else if sessionDisplay == .setInfo || sessionDisplay == .home {
+                    
+                    SetInfo(
+                        setInfoModel: SetInfoModel(
+                            setInfoLocalState: $setInfoLocalState,
+                            setSettings: $viewModel.mainState.setSettings,
+                            setInfoState: SetInfoState(
+                                setCollections: viewModel.mainState.setCollection,
+                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                             ),
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
                                     instrumentsSet: instrumentsSet,
                                     sessionSettings: viewModel.mainState.sessionSettings
                                 )
-                            }
+                            },
+                            conductor: viewModel.conductor
                         ),
                         sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
-                        setInfoLocalState: $setInfoLocalState
-//                        ,
-//                        setEditLocalState: $setEditLocalState
-                    ).environmentObject(fileController)
-                    
-                    //SeM Pro interface with interaction editor
-                    if sessionDisplay == .swiftUI {
-                        
-                        PlayView(
-                            playViewModel: PlayViewModel(
-                                playViewState: PlayViewState(
-                                    currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                                    buildSettings: viewModel.mainState.buildSettings,
-                                    masterTrackStructure: masterTrackSetting
-                                ),
-                                conductor: viewModel.conductor,
-                                imageDifference: $viewModel.mainState.imageDifference,
-                                leveling: viewModel.leveling,
-                                setSettings: $viewModel.mainState.setSettings,
-                                
-                                partFeedback: viewModel.partFeedback,
-                                partFeedbackState: PartFeedbackState(),
-                                
-                                feedbackObjectsSate: FeedbackObjectsState()
-                            ),
-                            mainViewUpdate: $mainViewUpdate
-                        )
-                        .environmentObject(fileController)
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
-                        .edgesIgnoringSafeArea([.top, .trailing])
-                        .onAppear{
-                            viewModel.leveling.pauseLevel = false
-                            viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
-                                level: 0,
-                                setSettings: viewModel.mainState.setSettings,
-                                from: "playViewOnAppear"
-                            )
-                            viewModel.conductor.playEngineAndTracks()
-                        }
-                    }
-                    
-                    //Selected set info View
-                    else if sessionDisplay == .setInfo || sessionDisplay == .home {
-                        
-                        SetInfo(
-//                            sharedViewModel: sharedViewModel,
-                            setInfoModel: SetInfoModel(
-                                setInfoLocalState: $setInfoLocalState,
-                                setSettings: $viewModel.mainState.setSettings,
-                                setInfoState: SetInfoState(
-                                    setCollections: viewModel.mainState.setCollection,
-                                    currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                                ),
-                                currentInstrumentsSetIsChanged: { instrumentsSet in
-                                    viewModel.currentModelInstrumentsSetChanged(
-                                        instrumentsSet: instrumentsSet,
-                                        sessionSettings: viewModel.mainState.sessionSettings
-                                    )
-                                }
-                            ),
-                            sessionDisplay: $sessionDisplay,
-                            sessionDisplaySub: $sessionDisplaySub
-                        )
-                        .environmentObject(fileController)
-                    }
+                        sessionDisplaySub: $sessionDisplaySub
+                    )
+                    .environmentObject(fileController)
                 }
-                .navigationViewStyle(DoubleColumnNavigationViewStyle())
+            }
+            .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
         
         else if sessionDisplay == .muur {
@@ -214,7 +208,6 @@ struct MainView: View {
                         conductor: viewModel.conductor
                     )
                 )
-//                .environmentObject(homeKitStore)
             }
             
             else if viewModel.mainState.buildSettings.activeView == .playView {
@@ -246,14 +239,7 @@ struct MainView: View {
                 .onAppear{
                     viewModel.conductor.playEngineAndTracks()
                 }
-//                .environmentObject(homeKitStore)
             }
         }
     }
 }
-
-//struct MainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MainView()
-//    }
-//}

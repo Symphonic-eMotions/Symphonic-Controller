@@ -433,6 +433,47 @@ final class Conductor {
         soundEffectSampler.scheduleMIDIEvent(event: noteOff, offset: samples)
     }
 
+    //MARK: EDITOR
+    public func previewSingleTrack(trackId: String){
+        if trackSequencers[trackId] != nil {
+            let isPLaying = trackSequencers[trackId]!.isPlaying
+            
+            if isPLaying {
+                trackSequencers[trackId]?.stop()
+                trackSequencers[trackId]?.rewind()
+                trackSequencers[trackId]?.preroll()
+//                audioEngine.pause()
+            }
+            else{
+                playEngineUIEffect()
+//                unMuteTrack(trackId: trackId)
+                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
+                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
+                trackSequencers[trackId]?.play()
+            }
+        }
+    }
+    
+    public func loopSingleTrack(
+        trackId:String,
+        loopLength:Double,
+        isLooping:Bool
+    ){
+        if trackSequencers[trackId] != nil {
+            
+            if isLooping {
+                trackSequencers[trackId]?.disableLooping()
+            }
+            else{
+                trackSequencers[trackId]?.enableLooping(Duration(beats: loopLength))
+                trackSequencers[trackId]?.setLength(Duration(beats: loopLength))
+                trackSequencers[trackId]?.setLoopInfo(Duration(beats: loopLength), loopCount: 0)
+                
+            }
+        }
+    }
+    
+    
     //MARK: Mute status tracks
     //TODO: switch sound off on set init
     
