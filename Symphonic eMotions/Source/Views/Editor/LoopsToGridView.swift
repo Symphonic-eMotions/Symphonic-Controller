@@ -15,6 +15,7 @@ struct LoopsToGridView: View {
     @State var trackId: String
     @State var loopLengthLocal: [Double]
     @Binding var clipLetters: [String:[Int]]
+    @State var loopsToGridLocal: [Int]
     
     let columnWidth: CGFloat = 150
     
@@ -24,13 +25,12 @@ struct LoopsToGridView: View {
         trackId: String,
         clipLetters: Binding<[String:[Int]]>
     ){
-            self.setInfoModel = setInfoModel
-            self.currentTrack = currentTrack
-            self.trackId = trackId
-            _loopLengthLocal = State(initialValue: currentTrack.loopLength)
-//            _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
-//            _levels = State(initialValue: setInfoModel.setSettings.levels)
-            _clipLetters = clipLetters
+        self.setInfoModel = setInfoModel
+        self.currentTrack = currentTrack
+        self.trackId = trackId
+        _loopLengthLocal = State(initialValue: currentTrack.loopLength)
+        _clipLetters = clipLetters
+        _loopsToGridLocal = State(initialValue: currentTrack.loopsToGrid)
     }
     
     var body: some View {
@@ -69,18 +69,21 @@ struct LoopsToGridView: View {
                                     .foregroundColor(.clear)
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                     
-                                    let levelClip = currentTrack.loopsToGrid[cellIndex]
+                                    let levelClip = loopsToGridLocal[cellIndex]
                                     let clipLetter: String = AppUtils.letterForNumber(levelClip) ?? "-"
                                     
-                                    Text("\(cellIndex) \(clipLetter)")
+                                    Text("\(clipLetter)")
                                     .foregroundColor(.blue)
                                 }
                                 .onTapGesture {
                                     
-                                    let increment = currentTrack.loopsToGrid[cellIndex] + 1
-                                    let incrementModulo = increment % (clipLetters.count - 1)
+                                    let increment = loopsToGridLocal[cellIndex] + 1
+                                    let incrementModulo = increment % clipLetters[trackId]!.count
+                                    
+                                    print("clipLetters \(clipLetters[trackId]!.map(String.init).joined(separator: ", ")) cellIndex \(cellIndex) updated with \(increment) % \(clipLetters[trackId]!.count) = \(incrementModulo)")
                                     
                                     currentTrack.loopsToGrid[cellIndex] = incrementModulo
+                                    loopsToGridLocal[cellIndex] = incrementModulo
                                 }
                             }
                         }

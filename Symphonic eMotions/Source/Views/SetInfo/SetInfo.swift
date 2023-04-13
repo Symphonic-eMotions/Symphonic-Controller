@@ -11,14 +11,11 @@ struct SetInfoLocalState {
     var setName: String
     var setConfig: String
     var sideBarHead: String
-    //What Skin WILL the set load
-    var loadSessionDisplay: SessionDisplay
     
     init(sessioDisplay: SessionDisplay){
         self.setName = ""
         self.setConfig = ""
         self.sideBarHead = "Sets"
-        self.loadSessionDisplay = sessioDisplay
     }
 }
 
@@ -64,34 +61,26 @@ struct SetInfo: View {
                         .font(.largeTitle)
                         .fontWeight(.regular)
                     
-                    SetLoadAndPlay(setInfoModel: setInfoModel)
-                    .onTapGesture {
-                        
-                        AppUtils.createSessionFile(
-                            sensitivity: -1,
-                            setURL: URL("dontOverWrite"))
-                        
-                        //Load the Set
-                        setInfoModel.tapSetRow(
-                            selectedCollection: setInfoModel.filterSet(
-                                setName: setInfoModel.setInfoLocalState.setName
-                            )
-                        )
-                        
-                        //Change the View
-                        sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
-                    }
-                    
                     HStack{
                         Spacer()
-                        
-                        SkinSelector(
-                            setInfoModel: setInfoModel,
-                            availableSkins: [SessionDisplay.swiftUI,SessionDisplay.spriteKit],
-                            loadSessionDisplay: setInfoModel.setInfoLocalState.loadSessionDisplay
-                        )
-                        
-                        Spacer(minLength: 10)
+                        SetLoadAndPlay(setInfoModel: setInfoModel)
+                        .onTapGesture {
+                            
+                            AppUtils.createSessionFile(
+                                sensitivity: -1,
+                                setURL: URL("dontOverWrite"))
+                            
+                            //Load the Set
+                            setInfoModel.tapSetRow(
+                                selectedCollection: setInfoModel.filterSet(
+                                    setName: setInfoModel.setInfoLocalState.setName
+                                )
+                            )
+                            
+                            //Change the View
+                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                        }
+                        Spacer()
                         EMButton(
                             action: {
 
@@ -102,25 +91,25 @@ struct SetInfo: View {
                                     sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
                                 )
 
-                                let fileName = AppUtils.createWorkingFile(
+                                _ = AppUtils.createWorkingFile(
                                     setSettings: setSetting,
                                     instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
                                     duplicateLastTrack: false,
                                     asNewFile: true
                                 )
 
-//                                fileController.addSetFileURLToController(fileName: fileName)
                                 urls = fileController.getContentsOfDirectory()
                                 
-                                
-
-                            }, color: .orange, isSolid: true, maxWidth: 130, height: 35
+                            }, color: .orange, isSolid: true, maxWidth: 150, height: 35
                         ){
-                            Text("New Set")
-                        }.frame(width: 110, height: 50)
+                            Text("New variation")
+                        }
+                        .frame(width: 150, height: 50)
+//                        .padding()
                         Spacer()
                     }
                     
+                    Spacer(minLength: 20)
                     
                     Divider()
 
@@ -132,7 +121,6 @@ struct SetInfo: View {
                     )
                     .environmentObject(fileController)
                     
-                    Divider()
                     Spacer()
                 }
             }

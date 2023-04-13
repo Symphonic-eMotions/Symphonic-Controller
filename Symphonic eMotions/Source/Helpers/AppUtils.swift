@@ -162,7 +162,7 @@ final class AppUtils {
                     areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
                     
                     dontDrawVisual: part.dontDrawVisual,
-                    mapMaxIndex: part.mapMaxIndex,
+//                    mapMaxIndex: part.mapMaxIndex,
                     allValues: part.allValues,
                     damperTarget: storeDamperTarget
                 )
@@ -225,6 +225,7 @@ final class AppUtils {
             name: instrumentSet.name,
             customName: setSettings.customName,
             filesPath: instrumentSet.filesPath,
+            defaultSkin: setSettings.defaultSkin,
             //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
             hasTempo: instrumentSet.hasTempo,
@@ -312,6 +313,7 @@ final class AppUtils {
             //First set parts of this track
             partNumber = 0
             var parts: OrderedDictionary<String, PartSettings> = [:]
+            let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
             for partLoaded in trackLoaded.parts {
                 
                 let part = PartSettings(
@@ -356,6 +358,10 @@ final class AppUtils {
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,
+                loopsToGridMapped: AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: firstAreaOfInterest,
+                    loopsToGrid: loopsToGrid
+                ),
                 levels: trackLoaded.levels,
                 parts: parts)
             
@@ -365,6 +371,7 @@ final class AppUtils {
             setName: instrumentSet.name,
             customName: instrumentSet.customName,
             setURL: sessionSettings.setURL,
+            defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             levelSpeed: instrumentSet.levelSpeed,
@@ -376,6 +383,19 @@ final class AppUtils {
         )
         
         return setSettings
+    }
+    
+    static func areaOfInterestGridMapped(
+        areaOfInterest: [Int],
+        loopsToGrid: [Int]
+    ) -> [Int] {
+        var loopsToGridMapped: [Int] = []
+        for (index, value) in areaOfInterest.enumerated() {
+            if value == 1 {
+                loopsToGridMapped.append(loopsToGrid[index])
+            }
+        }
+        return loopsToGridMapped
     }
     
     //Not yet used for amplifying top row

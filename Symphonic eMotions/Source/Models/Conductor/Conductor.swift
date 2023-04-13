@@ -378,7 +378,7 @@ final class Conductor {
             )
             
             //Turn tracks off so things will be quiet to start off with
-            let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+            let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
             trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
             muteTrack(trackId: track.id)
             
@@ -439,6 +439,10 @@ final class Conductor {
             let isPLaying = trackSequencers[trackId]!.isPlaying
             
             if isPLaying {
+                
+                for note in 0...127 {
+                    trackSamplers[trackId]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
+                }
                 trackSequencers[trackId]?.stop()
                 trackSequencers[trackId]?.rewind()
                 trackSequencers[trackId]?.preroll()
@@ -447,7 +451,7 @@ final class Conductor {
             else{
                 playEngineUIEffect()
 //                unMuteTrack(trackId: trackId)
-                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
+                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
                 trackSequencers[trackId]?.play()
             }
@@ -514,7 +518,7 @@ final class Conductor {
             {
                 print("\(track.id) ON")
                 
-                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
+                let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
                 unMuteTrack(trackId: track.id)
             }
@@ -523,7 +527,7 @@ final class Conductor {
                 
                 print("\(track.id) OFF")
                 
-                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
                 muteTrack(trackId: track.id)
                 
@@ -994,7 +998,7 @@ final class Conductor {
                 env.releaseDuration = 0.005
                 
                 
-                let noteOn = MIDIEvent(noteOn: note, velocity: newVelocity, channel: 0)
+                let noteOn = MIDIEvent(noteOn: note, velocity: newVelocity, channel: 1)
                 env.scheduleMIDIEvent(event: noteOn)
                 
                 osc.$frequency.ramp(to: note.midiNoteToFrequency(), duration: freqRampDuration)
@@ -1017,7 +1021,7 @@ final class Conductor {
             }
             else if midiStatus == .noteOff {
                 
-                let noteOff = MIDIEvent(noteOn: note, velocity: 0, channel: 0)
+                let noteOff = MIDIEvent(noteOn: note, velocity: 0, channel: 1)
                 env.scheduleMIDIEvent(event: noteOff)
             }
         }
@@ -1107,10 +1111,10 @@ final class Conductor {
                 let newNote = UInt8(Double(Int(note)) + pitchShiftPhaseDist)
                 let newVelocity = UInt8(Double(Int(velocity)) * velocities[track.id]!)
                 
-                var noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 0)
+                var noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 1)
                 ampEnvPhaseDist.scheduleMIDIEvent(event: noteOn)
                 
-                noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 0)
+                noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 1)
                 ampEnvPulseWidth.scheduleMIDIEvent(event: noteOn)
                 
                 phaseDistOsc.$frequency.ramp(to: newNote.midiNoteToFrequency(), duration: freqRampDurPhaseDist)
@@ -1148,11 +1152,11 @@ final class Conductor {
             else if midiStatus == .noteOff {
                 
                 var newNote = UInt8(Double(Int(note)) + pitchShiftPhaseDist)
-                var noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 0)
+                var noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 1)
                 ampEnvPhaseDist.scheduleMIDIEvent(event: noteOff)
                 
                 newNote = UInt8(Double(Int(note)) + (pitchShiftPhaseDist * 2))
-                noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 0)
+                noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 1)
                 ampEnvPulseWidth.scheduleMIDIEvent(event: noteOff)
                 
                 //TODO add trackNotesOn tracker
@@ -1331,12 +1335,19 @@ final class Conductor {
         partFeedbackPartID: String
     ) -> Double {
         
+        print("VALUES DID CHANGE")
         
         var localCurrentSetLevel: Double = currentSetLevel
+        
+        print("level \(localCurrentSetLevel)")
         
         let value: Double = values.flatMap { $0 }
             .map { $0.average }
             .reduce(0, +) / Double(values.flatMap { $0 }.count)
+        
+        
+        print(values)
+        print(value)
         
         //New level increment
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
@@ -1349,7 +1360,7 @@ final class Conductor {
         
         //Loop through all tracks per value
         set.tracks.forEach { track in
-            
+            //Reset part per track
             partNr = 0
             
             //If muted return
@@ -1403,14 +1414,18 @@ final class Conductor {
                 //Loop through all parts per track per value
                 track.parts.forEach { part in
                     
-                    let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(rows: setSettings.gridRows, columns: setSettings.gridColumns).map {
-                        values[$0.row][$0.column].scaledValue
-                    }
+                    let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(
+                        rows: setSettings.gridRows,
+                        columns: setSettings.gridColumns).map {
+                            values[$0.row][$0.column].scaledValue
+                        }
                     guard !valuesMapped.isEmpty else { return }
+                    
+                    print("VALUES MAPPED")
+                    print(valuesMapped)
                     
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
-                    
                     
 //                    let boostFactor = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetBoostFactor
                     
@@ -1426,12 +1441,9 @@ final class Conductor {
                     
                     //MARK: index to midi clip conversion
                     //Change order of indeces for mapping with events
-                    //mapMaxIndex should be present once in a track
-                    if part.mapMaxIndex != nil {
-                        let mapMaxIndex = part.mapMaxIndex ?? []
-                        //Range converter, static now models could be added
-                        //FIXME: Add mapper called LoopsToGrid
+                    if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition {
                         
+                        let mapMaxIndex = setSettings.tracks[track.trackId]!.loopsToGridMapped
                         
                         maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
                         forwardMaxIndex(
@@ -1444,22 +1456,6 @@ final class Conductor {
                     value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
                     //Ad ramps from interface!
                     value = valueRamper(value: value, rampId: part.id)
-                    
-                    //This started a hack around missing new instrument to increase
-//                    let levelClipControl = set.levelClipControl
-//                    let instrumentControlsLevel: Bool = set.instrumentInLevel(currentSetLevel, track.id)
-
-//                    localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-//                        currentSetLevel: localCurrentSetLevel,
-//                        value: value,
-//                        for: part.damperTarget,
-//                        inLevel: instrumentControlsLevel,
-//                        levelClipControl: levelClipControl
-//                    )
-                    
-                    //Forward to change midi clip with level
-                    
-                    
                     
                     //Forward to target
                     forward(
@@ -2456,8 +2452,7 @@ final class Conductor {
         trackSequencers[trackId]?.setLoopInfo(Duration(beats: loopLength), loopCount: 0)
         trackSequencers[trackId]?.enableLooping()
     }
-    
-    
+
     private func switchTrackMidiPart(_ track: InstrumentsSet.Track, _ maxIndex: Int) {
         //This function gets called when the index of the cell with most movement changes
         //Given are the
@@ -2493,7 +2488,7 @@ final class Conductor {
     }
     
     private func envDownTracks(_ track: InstrumentsSet.Track) {
-        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
+        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
         trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
     }
     

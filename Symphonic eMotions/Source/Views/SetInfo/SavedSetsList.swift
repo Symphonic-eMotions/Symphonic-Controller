@@ -16,6 +16,7 @@ struct SavedSetsList: View {
     @Binding var urls: [URL]
     @State private var isSharePresented: Bool = false
     @State private var showAlert = false
+    @State private var deleteUrl: URL = URL("empty")
     
     //FIXME: select the chosen one
     var isSelected: Bool {
@@ -28,12 +29,19 @@ struct SavedSetsList: View {
             VStack(alignment: .leading){
                 
                 ForEach( urls, id: \.self ){ url in
+                    
                     //Loop through filtered files in Documents folder
                     if fileController.isURLInGroup(
                         url: url,
                         name: setInfoModel.setInfoLocalState.setName
                     )
                     {
+                        // Create a closure to capture the current URL and return the button
+                        let deleteAction = {
+                            showAlert = true
+                            deleteUrl = url
+                        }
+                        
                         HStack(spacing:0){
                             
                             //Play this set
@@ -54,7 +62,7 @@ struct SavedSetsList: View {
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
                                 //Change the View to the selected view
-                                sessionDisplay = setInfoModel.setInfoLocalState.loadSessionDisplay
+                                sessionDisplay = setInfoModel.setSettings.defaultSkin
                             }
                             
                             Spacer().frame(width: 20)
@@ -104,23 +112,32 @@ struct SavedSetsList: View {
                             })
                             
                             let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
-                            Text(filesName)
-                                .foregroundColor(isSelected ? Color(.lightGray) : .primary)
-                                .font(.title3)
-                                .padding(.horizontal)
-                                .frame(minWidth: 400, alignment: .leading)
-                            
-                            Text(fileController.date(url: url))
-                                .foregroundColor(isSelected ? Color(.lightGray) : .primary)
-                                .font(.subheadline)
-                                .padding(.horizontal)
-                            
+                            VStack{
+                                HStack{
+                                    Text(filesName)
+                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                        .font(.title3)
+                                        .padding(.horizontal)
+                                        .frame(minWidth: 400, alignment: .leading)
+                                
+                               
+                                    Text(fileController.date(url: url))
+                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                        .font(.subheadline)
+                                        .padding(.horizontal)
+                                }
+                                HStack{
+                                    Spacer()
+                                    Text(fileController.urlToFileName(url: url))
+                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                        .font(.subheadline)
+                                        .padding(.horizontal)
+                                }
+                            }
                             Spacer()
                             
                             //Delete
-                            Button( action: {
-                                showAlert = true
-                            }) {
+                            Button( action: deleteAction ) {
                                 Image(systemName: "trash")
                                 .renderingMode(.template)
                                 .foregroundColor(.white)
@@ -134,23 +151,20 @@ struct SavedSetsList: View {
                             .alert(isPresented: $showAlert) {
                                 Alert(title: Text("Confirm Delete"), message: Text("Are you sure you want to delete this item?"), primaryButton: .destructive(Text("Delete")) {
                                     // Handle delete action
-                                    urls = fileController.deleteFile(url: url)
+                                    urls = fileController.deleteFile(url: deleteUrl)
                                 }, secondaryButton: .cancel())
                             }
                         }
                         .padding()
                         .fixedSize()
                     }
-                }
+                } //End Foreach urls -> url
             }
         }
         .onAppear{
             urls = fileController.addDirectoryURLsToController()
         }
-        
     }
-        
-        
 }
 
 struct ActivityViewController: UIViewControllerRepresentable {
@@ -166,3 +180,44 @@ struct ActivityViewController: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
 
 }
+
+
+//struct FileListView: View {
+//
+//    @Binding var urls: [URL]
+//    @State private var showAlert = false
+//
+//    var body: some View {
+//
+//        ScrollView {
+//            VStack(alignment: .leading){
+//
+//                ForEach( urls, id: \.self ){ url in
+//
+//                    let deleteUrl: URL = url
+//
+//                    //Delete
+//                    Button( action: {
+//                        showAlert = true
+//                    }) {
+//                        Image(systemName: "trash")
+//                        .renderingMode(.template)
+//                        .foregroundColor(.white)
+//                        .font(.system(size: 18))
+//                        .frame(width: 30)
+//                        .padding(.vertical, 5.0)
+//                        .padding(.horizontal, 5.0)
+//                        .background(Color.red)
+//                        .cornerRadius(5.0)
+//                    }
+//                    .alert(isPresented: $showAlert) {
+//                        Alert(title: Text("Confirm Delete"), message: Text("Are you sure you want to delete this item?"), primaryButton: .destructive(Text("Delete")) {
+//                            // Handle delete action
+//                            print( deleteUrl )
+//                        }, secondaryButton: .cancel())
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

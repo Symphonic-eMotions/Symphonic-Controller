@@ -27,6 +27,8 @@ class SetSettings: Identifiable, ObservableObject {
     var customName: String
     var setURL: URL
     
+    var defaultSkin: SessionDisplay
+    
     //grid dimention
     var gridRows: Int
     var gridColumns: Int
@@ -62,6 +64,7 @@ class SetSettings: Identifiable, ObservableObject {
         setName: String,
         customName: String,
         setURL: URL,
+        defaultSkin: SessionDisplay,
         rows: Int,
         columns: Int,
         levelSpeed: Double,
@@ -74,6 +77,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.setName = setName
         self.customName = customName
         self.setURL = setURL
+        self.defaultSkin = defaultSkin
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns

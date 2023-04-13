@@ -25,6 +25,7 @@
 		7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B929E45C9F00621909 /* MidiFiles.swift */; };
 		7C1FB0BC29E52F0D00621909 /* MidiClipsInFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BB29E52F0D00621909 /* MidiClipsInFile.swift */; };
 		7C1FB0BE29E53F3300621909 /* MidiFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BD29E53F3300621909 /* MidiFileView.swift */; };
+		7C1FB0C029E820EC00621909 /* DefaultSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BF29E820EC00621909 /* DefaultSkin.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
 		7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2EF62E28C0A98200B75BE2 /* HomeKitView.swift */; };
@@ -38,7 +39,6 @@
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGrid.swift */; };
-		7C4EBB9A29D78ABC00958954 /* SkinSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9929D78ABC00958954 /* SkinSelector.swift */; };
 		7C4EBB9C29D83BCC00958954 /* SelectSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
 		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
@@ -150,6 +150,7 @@
 		7C1FB0B929E45C9F00621909 /* MidiFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFiles.swift; sourceTree = "<group>"; };
 		7C1FB0BB29E52F0D00621909 /* MidiClipsInFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsInFile.swift; sourceTree = "<group>"; };
 		7C1FB0BD29E53F3300621909 /* MidiFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFileView.swift; sourceTree = "<group>"; };
+		7C1FB0BF29E820EC00621909 /* DefaultSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSkin.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
 		7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
@@ -163,7 +164,6 @@
 		7C4EBB9329D3505500958954 /* SavedSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSetsList.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C4EBB9529D4A21300958954 /* Extenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenders.swift; sourceTree = "<group>"; };
 		7C4EBB9729D7879F00958954 /* SelectGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGrid.swift; sourceTree = "<group>"; };
-		7C4EBB9929D78ABC00958954 /* SkinSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinSelector.swift; sourceTree = "<group>"; };
 		7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeed.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
 		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
@@ -354,6 +354,7 @@
 				7C4EBB9B29D83BCB00958954 /* SelectSpeed.swift */,
 				7C1FB0B129DDFD9A00621909 /* Levels.swift */,
 				7CFB298029DB322200DFA32E /* LevelSpeed.swift */,
+				7C1FB0BF29E820EC00621909 /* DefaultSkin.swift */,
 				7CB7028229D84E1A003399BC /* EditTracks.swift */,
 				7C1FB0B529E4429700621909 /* InLevelView.swift */,
 				7C1FB0B729E455CB00621909 /* TrackTypeView.swift */,
@@ -462,7 +463,6 @@
 				7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */,
 				7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */,
 				7C4EBB9329D3505500958954 /* SavedSetsList.swift */,
-				7C4EBB9929D78ABC00958954 /* SkinSelector.swift */,
 			);
 			path = SetInfo;
 			sourceTree = "<group>";
@@ -736,6 +736,7 @@
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
 				7C1FB0BE29E53F3300621909 /* MidiFileView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
+				7C1FB0C029E820EC00621909 /* DefaultSkin.swift in Sources */,
 				7C1FB0B229DDFD9A00621909 /* Levels.swift in Sources */,
 				7C7502F229C08B8400F55CA3 /* EditorHomeView.swift in Sources */,
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
@@ -788,7 +789,6 @@
 				7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */,
 				7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */,
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
-				7C4EBB9A29D78ABC00958954 /* SkinSelector.swift in Sources */,
 				7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,

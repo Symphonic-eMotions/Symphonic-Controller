@@ -68,7 +68,7 @@ struct ManageSessionSettings: Codable {
 
 //SessionDisplay is used for navigating the SwiftUI view
 //For the editor this same enum is used for SessionDisplaySub navigation
-enum SessionDisplay: Hashable {
+enum SessionDisplay: Hashable, Codable {
     
     case home
     case swiftUI

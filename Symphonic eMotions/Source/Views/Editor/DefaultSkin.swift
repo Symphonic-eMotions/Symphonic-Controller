@@ -1,26 +1,23 @@
 //
-//  SkinSelector.swift
+//  DefaultSkin.swift
 //  Symphonic eMotions Pro
 //
-//  Created by Frans-Jan Wind on 31/03/2023.
+//  Created by Frans-Jan Wind on 13/04/2023.
 //
 
 import SwiftUI
 
-struct SkinSelector: View {
+struct DefaultSkin: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
-    var availableSkins: [SessionDisplay]
+    var availableSkins: [SessionDisplay] = [.swiftUI,.spriteKit]
     @State var localSessionDisplay: SessionDisplay
     
     init(
-        setInfoModel: SetInfoModel,
-        availableSkins: [SessionDisplay],
-        loadSessionDisplay: SessionDisplay
+        setInfoModel: SetInfoModel
     ){
         self.setInfoModel = setInfoModel
-        self.availableSkins = availableSkins
-        self.localSessionDisplay = loadSessionDisplay
+        _localSessionDisplay = State(initialValue: setInfoModel.setSettings.defaultSkin)
     }
     
     var body: some View {
@@ -33,12 +30,10 @@ struct SkinSelector: View {
                 },
                 set: { value in
                     localSessionDisplay = value
-                    setInfoModel.setInfoLocalState.loadSessionDisplay = value
+                    setInfoModel.setSettings.defaultSkin = value
                 }
             )
-            
         ) {
-            
             ForEach( availableSkins, id: \.self){
                 Text($0.title)
             }
@@ -49,5 +44,6 @@ struct SkinSelector: View {
         .padding(.leading, 10.0)
         .foregroundColor(.white)
         .accentColor(Color.accentColor)
+        
     }
 }

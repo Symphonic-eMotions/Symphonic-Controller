@@ -33,6 +33,8 @@ struct LoopsToLevelView: View {
     @State var loopLengthLocal: [Double]
     @State private var levels: [Int]
     @Binding var clipLetters: [String:[Int]]
+    @State var loopsToLevelLocal: [Int]
+    
 
     let columnWidth: CGFloat = 150
 
@@ -48,6 +50,7 @@ struct LoopsToLevelView: View {
         _loopLengthLocal = State(initialValue: currentTrack.loopLength)
         _levels = State(initialValue: setInfoModel.setSettings.levels)
         _clipLetters = clipLetters
+        _loopsToLevelLocal = State(initialValue: currentTrack.loopsToLevel)
     }
 
     var body: some View {
@@ -77,26 +80,26 @@ struct LoopsToLevelView: View {
 
                         ZStack {
 
+                            let levelClip = loopsToLevelLocal[index]
+                            let clipLetter: String = AppUtils.letterForNumber(levelClip) ?? "-"
+                            
                             Rectangle()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.clear)
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-
-                            let levelClip = currentTrack.loopsToLevel[index]
-                            let clipLetter: String = AppUtils.letterForNumber(levelClip) ?? "-"
-
+                            
                             Text("\(clipLetter)")
                             .foregroundColor(.blue)
                         }
                         .onTapGesture {
                             
-                            let increment = currentTrack.loopsToLevel[index] + 1
+                            let increment = loopsToLevelLocal[index] + 1
+                            let incrementModulo = increment % clipLetters[trackId]!.count
                             
-                            print("INCREMENT: \(increment)")
+                            print("clipLetters \(clipLetters[trackId]!.map(String.init).joined(separator: ", ")) index \(index) updated with \(increment) % \(clipLetters[trackId]!.count) = \(incrementModulo)")
                             
-                            let incrementModulo = increment % (clipLetters[trackId]!.count - 1)
-
                             currentTrack.loopsToLevel[index] = incrementModulo
+                            loopsToLevelLocal[index] = incrementModulo
                         }
                     }
                 }

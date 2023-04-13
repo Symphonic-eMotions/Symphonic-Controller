@@ -17,13 +17,13 @@ struct SetLoadAndPlay: View {
             Image(systemName: "play.fill")
                 .foregroundColor(.white)
                 .font(.system(size: 30))
-            Text(setInfoModel.setInfoLocalState.setName)
+            Text("Play \(setInfoModel.setInfoLocalState.setName)")
                 .foregroundColor(.white)
                 .font(.headline)
                 .padding(.trailing)
         }
-        .padding(.vertical, 10.0)
-        .padding(.leading, 10.0)
+        .padding()
+//        .padding(.leading, 10.0)
         .background(Color.accentColor)
         .cornerRadius(10.0)
         

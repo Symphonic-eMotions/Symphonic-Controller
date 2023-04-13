@@ -18,6 +18,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
+    var loopsToGridMapped: [Int]
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
     
@@ -31,6 +32,7 @@ class TrackSettings: Identifiable, ObservableObject {
         loopLength: [Double],
         loopsToLevel: [Int],
         loopsToGrid: [Int],
+        loopsToGridMapped: [Int],
         levels: [Int],
         parts: OrderedDictionary<String, PartSettings>
     ){
@@ -43,6 +45,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid
+        self.loopsToGridMapped = loopsToGridMapped
         self.levels = levels
         self.parts = parts
     }

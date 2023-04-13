@@ -108,6 +108,17 @@ struct EditorView: View {
                             setInfoModel: setInfoModel
                         )
                     }
+                    
+                    HStack{
+                        Text("Default skin")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        DefaultSkin(
+                            setInfoModel: setInfoModel
+                        )
+                    }
                 }
                 
                 EditTracks(

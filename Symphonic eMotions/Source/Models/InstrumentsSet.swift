@@ -79,6 +79,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case name = "setName"
         case customName
         case filesPath = "setPath"
+        case defaultSkin
         case bpm = "setBPM"
         case hasTempo
         case skin
@@ -98,6 +99,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     let customName: String
     //Depricate filesPath, it's not used?
     let filesPath: String
+    var defaultSkin: SessionDisplay?
     //Sequencer objects variables
     var bpm: Double
     let hasTempo: Bool
@@ -125,6 +127,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         name = try container.decode(String.self, forKey: .name)
         customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
         filesPath = try container.decode(String.self, forKey: .filesPath)
+        defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
@@ -179,6 +182,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         name: String,
         customName: String,
         filesPath: String,
+        defaultSkin: SessionDisplay,
         bpm: Double,
         hasTempo: Bool,
         skin: Skin,
@@ -194,6 +198,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.name = name
         self.customName = customName
         self.filesPath = filesPath
+        self.defaultSkin = defaultSkin
         self.bpm = bpm
         self.hasTempo = hasTempo
         self.skin = skin
@@ -235,6 +240,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(name, forKey: .name)
         try container.encode(customName, forKey: .customName)
         try container.encode(filesPath, forKey: .filesPath)
+        try container.encode(defaultSkin, forKey: .defaultSkin)
         try container.encode(bpm, forKey: .bpm)
         try container.encode(hasTempo, forKey: .hasTempo)
         try container.encode(timeSignature, forKey: .timeSignature)
