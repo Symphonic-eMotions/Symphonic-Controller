@@ -1421,8 +1421,8 @@ final class Conductor {
                         }
                     guard !valuesMapped.isEmpty else { return }
                     
-                    print("VALUES MAPPED")
-                    print(valuesMapped)
+//                    print("VALUES MAPPED")
+//                    print(valuesMapped)
                     
                     //Find highest value (maximum) with it's index
                     let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
@@ -1441,7 +1441,7 @@ final class Conductor {
                     
                     //MARK: index to midi clip conversion
                     //Change order of indeces for mapping with events
-                    if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition {
+                    if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition && partNr == 0 {
                         
                         let mapMaxIndex = setSettings.tracks[track.trackId]!.loopsToGridMapped
                         
@@ -1464,25 +1464,26 @@ final class Conductor {
                         currentSetLevel: localCurrentSetLevel
                     )
                     
-                    
-                    //TODO: Add spriteKit exeption
-                    forwardSpriteKit(
-                        trackNr: trackNr,
-                        partNr: partNr,
-                        ramped: value,
-                        areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
-                        maxIndexRaw: maxIndexraw,
-                        maxIndex: maxIndexMidiClips
-                    )
-                    
-                    partNr += 1
-                    
-                    //Check part feedback interface state for part feedback visualisation
-                    if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
-                        forwardPartFeedback(
-                            ramped: value
+                    if setSettings.defaultSkin == .spriteKit {
+                        forwardSpriteKit(
+                            trackNr: trackNr,
+                            partNr: partNr,
+                            ramped: value,
+                            areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
+                            maxIndexRaw: maxIndexraw,
+                            maxIndex: maxIndexMidiClips
                         )
                     }
+                    else if setSettings.defaultSkin == .swiftUI {
+                        //Check part feedback interface state for part feedback visualisation
+                        if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
+                            forwardPartFeedback(
+                                ramped: value
+                            )
+                        }
+                    }
+                    
+                    partNr += 1
                 }
             }
             
