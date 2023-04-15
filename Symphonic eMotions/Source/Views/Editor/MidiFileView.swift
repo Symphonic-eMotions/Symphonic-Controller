@@ -32,8 +32,6 @@ struct MidiFileView: View {
     
     var body: some View {
         
-        Divider()
-        
         HStack{
         
             Text("MIDI file")
@@ -88,9 +86,5 @@ struct MidiFileView: View {
             
             
         }
-        .padding(.leading)
-        .padding(.trailing)
-        
-        
     }
 }

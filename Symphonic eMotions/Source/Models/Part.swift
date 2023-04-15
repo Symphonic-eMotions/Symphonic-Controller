@@ -15,7 +15,6 @@ extension InstrumentsSet.Track {
         private enum PartKeys: String, CodingKey {
             case instrumentPartName
             case areaOfInterest
-//            case mapMaxIndex
             case allValues
             case dontDrawVisual
             case damperTarget
@@ -26,6 +25,7 @@ extension InstrumentsSet.Track {
         
         //All movement calculations are done on update of areaOfInterest
         var areaOfInterest: [Int]
+        
         //Do not draw this instrument part within the grid interface
         var dontDrawVisual: Bool?
         
@@ -40,7 +40,6 @@ extension InstrumentsSet.Track {
             instrumentPartName = try container.decode(String.self, forKey: .instrumentPartName)
             areaOfInterest = try container.decode([Int].self, forKey: .areaOfInterest)
             dontDrawVisual = try container.decodeIfPresent(Bool.self, forKey: .dontDrawVisual) ?? false
-//            mapMaxIndex = try container.decodeIfPresent([Int].self, forKey: .mapMaxIndex)
             allValues = try container.decodeIfPresent([Double].self, forKey: .allValues)
             damperTarget = try container.decode(DamperTarget.self, forKey: .damperTarget)
         }
@@ -49,14 +48,12 @@ extension InstrumentsSet.Track {
             instrumentPartName: String,
             areaOfInterest: [Int],
             dontDrawVisual: Bool?,
-//            mapMaxIndex: [Int]?,
             allValues: [Double]?,
             damperTarget: DamperTarget
         ) {
             self.instrumentPartName = instrumentPartName
             self.areaOfInterest = areaOfInterest
             self.dontDrawVisual = dontDrawVisual
-//            self.mapMaxIndex = mapMaxIndex
             self.allValues = allValues
             self.damperTarget = damperTarget
         }
@@ -119,7 +116,6 @@ extension InstrumentsSet.Track.Part: Encodable{
         try container.encode(instrumentPartName, forKey: .instrumentPartName)
         try container.encode(areaOfInterest, forKey: .areaOfInterest)
         try container.encode(dontDrawVisual, forKey: .dontDrawVisual)
-//        try container.encode(mapMaxIndex, forKey: .mapMaxIndex)
         try container.encode(damperTarget, forKey: .damperTarget)
     }
 }

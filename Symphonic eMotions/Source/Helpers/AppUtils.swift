@@ -146,8 +146,6 @@ final class AppUtils {
                 let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                     trackId: part.damperTarget.trackId,
                     nodeType: part.damperTarget.nodeType,
-//                    scoreWandererType: part.damperTarget.scoreWandererType,
-//                    midiClipVariation: part.damperTarget.midiClipVariation,
                     nodeName: part.damperTarget.nodeName,
                     parameter: part.damperTarget.parameter,
                     parameterRange: part.damperTarget.parameterRange,
@@ -158,11 +156,8 @@ final class AppUtils {
                 
                 let storePart = InstrumentsSet.Track.Part(
                     instrumentPartName: part.instrumentPartName,
-                    
                     areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
-                    
                     dontDrawVisual: part.dontDrawVisual,
-//                    mapMaxIndex: part.mapMaxIndex,
                     allValues: part.allValues,
                     damperTarget: storeDamperTarget
                 )
@@ -184,7 +179,6 @@ final class AppUtils {
                 instrumentType: track.instrumentType,
                 trackType: setSettings.tracks[track.trackId]!.trackType,
                 midiTargetTrackId: track.midiTargetTrackId,
-                midiClipGroup: track.midiClipGroup,
                 levelClipControl: track.levelClipControl,
                 startType: track.startType,
                 masterTrackId: track.midiTargetTrackId,
@@ -194,6 +188,7 @@ final class AppUtils {
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
                 
                 midiFiles: midiFiles,
+                midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
                 
                 midiThreshold: track.midiThreshold,
                 exsFiles: track.exsFiles,
@@ -323,12 +318,6 @@ final class AppUtils {
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
                     areaOfInterest: partLoaded.areaOfInterest,
-                    //This needs to get the newly generated area of interest
-//                    areaOfIntersetBoostFactor: self.getPartAreaBoostFactor(
-//                        rows: instrumentSet.rows,
-//                        columns: instrumentSet.columns,
-//                        areaOfInterest: partLoaded.areaOfInterest
-//                    ),
                     areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
                     dontDrawVisual: partLoaded.dontDrawVisual ?? false
                 )
@@ -348,6 +337,8 @@ final class AppUtils {
                 loopsToGrid = Array(repeating: 0, count: cells)
             }
             
+            let midiGroup:[Int] = trackLoaded.midiGroup ?? []
+            
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackName: trackLoaded.instrumentName,
@@ -355,6 +346,7 @@ final class AppUtils {
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
+                midiGroup: midiGroup,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,

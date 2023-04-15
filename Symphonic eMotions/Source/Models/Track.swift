@@ -28,12 +28,12 @@ extension InstrumentsSet {
             case midiTargetTrackId
             case startType
             case masterTrackId
-            case midiClipGroup
             case levelClipControl
             case instrumentName
             case instrumentColor
             case volume = "instrumentVolume"
             case midiFiles
+            case midiGroup
             case midiThreshold
             case exsFiles
             case audioFiles
@@ -49,7 +49,6 @@ extension InstrumentsSet {
         let instrumentType: InstrumentType
         var trackType: TrackType?
         let midiTargetTrackId: String?
-        let midiClipGroup: MidiClipGroup?
         let levelClipControl: Bool?
         let startType: StartType
         let masterTrackId: String?
@@ -57,14 +56,13 @@ extension InstrumentsSet {
         let instrumentColor: Color
         var volume: Float
         var midiFiles: [MidiFile]?
-        
+        var midiGroup: [Int]?
         var midiThreshold: Double
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
         var effects: [Effect]?
 //        var effectRanges: [EffectRanges]?
         var parts: [Part]
-        //TODO: reading from this array should be from setSettings
         let levels: [Int]
         //Amount of beats before increment to next MIDI start point
         let scoreWalkDuration: [Int]?
@@ -77,7 +75,6 @@ extension InstrumentsSet {
             instrumentType = try container.decode(InstrumentType.self, forKey: .instrumentType)
             trackType = try container.decodeIfPresent(TrackType.self, forKey: .trackType)
             midiTargetTrackId = try container.decodeIfPresent(String.self, forKey: .midiTargetTrackId)
-            midiClipGroup = try container.decodeIfPresent(MidiClipGroup.self, forKey: .midiClipGroup)
             levelClipControl = try container.decodeIfPresent(Bool.self, forKey: .levelClipControl)
             muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
             startType = try container.decode(StartType.self, forKey: .startType)
@@ -87,9 +84,12 @@ extension InstrumentsSet {
             instrumentColor = Color(instrumentColorString ?? "InstrumentColor000")
             volume = try container.decode(Float.self, forKey: .volume)
             midiFiles = try container.decodeIfPresent([MidiFile].self, forKey: .midiFiles)
+            midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
+            
             let midiThresholdTmp = try container.decodeIfPresent(Double.self, forKey: .midiThreshold)
             if midiThresholdTmp != nil { midiThreshold = midiThresholdTmp! }
             else { midiThreshold = 1 }
+            
             exsFiles = try container.decodeIfPresent([ExsFile].self, forKey: .exsFiles)
             audioFiles = try container.decodeIfPresent([AudioFile].self, forKey: .audioFiles)
             
@@ -125,7 +125,6 @@ extension InstrumentsSet {
             instrumentType: InstrumentType,
             trackType: TrackType,
             midiTargetTrackId: String?,
-            midiClipGroup: MidiClipGroup?,
             levelClipControl: Bool?,
             startType: StartType,
             masterTrackId: String?,
@@ -133,6 +132,7 @@ extension InstrumentsSet {
             instrumentColor: Color,
             volume: Float,
             midiFiles: [MidiFile]?,
+            midiGroup: [Int]?,
             midiThreshold: Double,
             exsFiles: [ExsFile]?,
             audioFiles: [AudioFile]?,
@@ -147,7 +147,6 @@ extension InstrumentsSet {
             self.instrumentType = instrumentType
             self.trackType = trackType
             self.midiTargetTrackId = midiTargetTrackId
-            self.midiClipGroup = midiClipGroup
             self.levelClipControl = levelClipControl
             self.startType = startType
             self.masterTrackId = masterTrackId
@@ -155,6 +154,7 @@ extension InstrumentsSet {
             self.instrumentColor = instrumentColor
             self.volume = volume
             self.midiFiles = midiFiles
+            self.midiGroup = midiGroup
             self.midiThreshold = midiThreshold
             self.exsFiles = exsFiles
             self.audioFiles = audioFiles
@@ -187,6 +187,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(instrumentColors.name(color: instrumentColor), forKey: .instrumentColor)
         try container.encode(volume, forKey: .volume)
         try container.encode(midiFiles, forKey: .midiFiles)
+        try container.encode(midiGroup, forKey: .midiGroup)
         try container.encode(midiThreshold, forKey: .midiThreshold)
         try container.encode(exsFiles, forKey: .exsFiles)
         try container.encode(audioFiles, forKey: .audioFiles)
@@ -214,10 +215,24 @@ extension InstrumentsSet.Track {
 //extension InstrumentsSet.Track {
     
     enum TrackType: String, Codable, CaseIterable {
-        case midiClipLevel = "Levels control midi clip"
-        case midiClipPosition = "Position control midi clip"
-        case midiClipValue = "Movement controls midi clip"
-        case none
+        
+        case midiClipLevel
+        case midiClipPosition
+        case midiGroupTrigger
+        case midiClipValue
+        
+        var discription: String {
+            switch self{
+            case .midiClipLevel:
+                return "Levels control midi clip"
+            case .midiClipPosition:
+                return "Position control midi clip"
+            case .midiGroupTrigger:
+                return "Position control note numbers"
+            case .midiClipValue:
+                return "Movement control midi clip"
+            }
+        }
     }
 //
 

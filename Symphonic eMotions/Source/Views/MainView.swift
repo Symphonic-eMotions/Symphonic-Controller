@@ -37,10 +37,10 @@ struct MainView: View {
             
         //What Skin is selected by default
         //TODO: This doesn't get updated with set change.
-        if viewModel.mainState.setSettings.skins.name != "default"{
-            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit
-            )
-        }
+//        if viewModel.mainState.setSettings.skins.name != "default"{
+//            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit
+//            )
+//        }
     }
     
     var body: some View {

@@ -44,7 +44,7 @@ struct TrackTypeView: View{
                 Text("MIDI clip Control")
                     .frame(width: columnWidth, alignment: .leading)
                 
-                let availableTypes: [TrackType] = [.midiClipLevel,.midiClipPosition]
+                let availableTypes: [TrackType] = [.midiClipLevel,.midiClipPosition,.midiGroupTrigger]
                 
                 Picker("Select track type", selection: $localTrackType) {
                     ForEach(availableTypes, id: \.self) { type in

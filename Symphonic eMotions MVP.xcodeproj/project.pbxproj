@@ -83,6 +83,7 @@
 		7CEFB9D028734205006A191F /* FullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFB9CF28734205006A191F /* FullView.swift */; };
 		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
 		7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C629899166003D33D3 /* SpriteKitView.swift */; };
+		7CF50F1E29E888200016BAF4 /* NoteNumberToGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F1D29E888200016BAF4 /* NoteNumberToGrid.swift */; };
 		7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */; };
 		7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009D29A74FA1001D8A5D /* PartSettings.swift */; };
 		7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */; };
@@ -207,6 +208,7 @@
 		7CEFB9CF28734205006A191F /* FullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullView.swift; sourceTree = "<group>"; };
 		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		7CF327C629899166003D33D3 /* SpriteKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitView.swift; sourceTree = "<group>"; };
+		7CF50F1D29E888200016BAF4 /* NoteNumberToGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberToGrid.swift; sourceTree = "<group>"; };
 		7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSettings.swift; sourceTree = "<group>"; };
 		7CFA009D29A74FA1001D8A5D /* PartSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartSettings.swift; sourceTree = "<group>"; };
 		7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterSettings.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
 				7C1FB0BB29E52F0D00621909 /* MidiClipsInFile.swift */,
 				7C1FB0BD29E53F3300621909 /* MidiFileView.swift */,
+				7CF50F1D29E888200016BAF4 /* NoteNumberToGrid.swift */,
 				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
 			path = Editor;
@@ -797,6 +800,7 @@
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7CEFB9D028734205006A191F /* FullView.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,
+				7CF50F1E29E888200016BAF4 /* NoteNumberToGrid.swift in Sources */,
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */,
 				7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */,
@@ -981,7 +985,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1024,7 +1028,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

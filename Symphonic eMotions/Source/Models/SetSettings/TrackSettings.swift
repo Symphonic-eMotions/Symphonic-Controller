@@ -15,6 +15,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var instrumentVolume: Float
     var instrumentColor: Color
     var midiFile: String
+    var midiGroup: [Int]
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
@@ -29,6 +30,7 @@ class TrackSettings: Identifiable, ObservableObject {
         instrumentVolume: Float,
         instrumentColor: Color,
         midiFile: String,
+        midiGroup: [Int],
         loopLength: [Double],
         loopsToLevel: [Int],
         loopsToGrid: [Int],
@@ -42,6 +44,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.midiFile = midiFile
+        self.midiGroup = midiGroup
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid
@@ -55,4 +58,5 @@ class TrackSettings: Identifiable, ObservableObject {
             self.parts[partId]?.areaOfInterestColor = AppUtils.getPartColors(trackColor: newColor, areaOfInterest: self.parts[partId]!.areaOfInterest)
         }
     }
+    
 }

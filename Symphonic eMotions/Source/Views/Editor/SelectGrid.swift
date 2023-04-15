@@ -25,15 +25,8 @@ struct SelectGrid: View {
                         localGridRow = value
                         setInfoModel.setSettings.gridRows = value
                         setInfoModel.setSettings.gridColumns = value
-                        
-                        //FIXME: Also update (extend or truncate) ALL areaOfInterest
-                        setInfoModel.setSettings.updateAreaOfInterest(rows: value)
-                        
-                        print("FIX ALL loopsToGrid en AreaOf interests")
-                        
-                        //FIXME: Also Update Midi file mapper
-                        
-                        
+                        //Reset all grid related arrays
+                        setInfoModel.setSettings.resetGridArrays(cells: value*value)
                     }
                 )
             ) {

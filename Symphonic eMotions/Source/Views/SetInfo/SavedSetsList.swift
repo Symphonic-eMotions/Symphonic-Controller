@@ -126,13 +126,13 @@ struct SavedSetsList: View {
                                         .font(.subheadline)
                                         .padding(.horizontal)
                                 }
-                                HStack{
-                                    Spacer()
-                                    Text(fileController.urlToFileName(url: url))
-                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
-                                        .font(.subheadline)
-                                        .padding(.horizontal)
-                                }
+//                                HStack{
+//                                    Spacer()
+//                                    Text(fileController.urlToFileName(url: url))
+//                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+//                                        .font(.subheadline)
+//                                        .padding(.horizontal)
+//                                }
                             }
                             Spacer()
                             

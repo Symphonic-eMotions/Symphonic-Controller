@@ -81,25 +81,20 @@ struct EditTracks: View {
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
                     )
-
-//                    Text("Start Type [transport, triggerSequencer, triggerTimeLess]")
-//                        .padding()
-//                        .foregroundColor(.gray)
                     
-                    MidiFileView(
-                        setInfoModel: setInfoModel,
-                        currentTrack: setInfoModel.setSettings.tracks[key]!,
-                        trackId: key
-                    )
-
-//                    //MIDI clip control
+                    //MIDI clip control
                     TrackTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
                         trackTypeParent: $trackTypeLocal
                     )
+                    
 
+//                    Text("Start Type [transport, triggerSequencer, triggerTimeLess]")
+//                        .padding()
+//                        .foregroundColor(.gray)
+                    
                     if trackTypeLocal[key] == .midiClipLevel {
                         LoopsToLevelView(
                             setInfoModel: setInfoModel,
@@ -110,6 +105,14 @@ struct EditTracks: View {
                     }
                     else if trackTypeLocal[key] == .midiClipPosition {
                         LoopsToGridView(
+                            setInfoModel: setInfoModel,
+                            currentTrack: setInfoModel.setSettings.tracks[key]!,
+                            trackId: key,
+                            clipLetters: $clipLetters
+                        )
+                    }
+                    else if trackTypeLocal[key] == .midiGroupTrigger {
+                        NoteNumberToGrid(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,
                             trackId: key,

@@ -17,6 +17,7 @@ struct MidiClipsInFile: View {
     @Binding var loopLengthLocal: [Double]
     @Binding var clipLetters: [String:[Int]]
     @State var clipLength: Int
+    @State var isPlaying: [Bool]
     
     let columnWidth: CGFloat = 150
     
@@ -33,9 +34,16 @@ struct MidiClipsInFile: View {
         _loopLengthLocal = loopLengthLocal
         _clipLetters = clipLetters
         _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
+        _isPlaying = State(initialValue: Array(repeating: false, count: currentTrack.loopLength.count))
     }
     
     var body: some View {
+        
+//        MidiFileView(
+//            setInfoModel: setInfoModel,
+//            currentTrack: currentTrack,
+//            trackId: trackId
+//        )
         
         //MIDI clips in file
         HStack() {
@@ -47,6 +55,20 @@ struct MidiClipsInFile: View {
                 
                 VStack {
                     if let letter: String = AppUtils.letterForNumber(index) {
+                        
+                        Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+                        .foregroundColor(.white)
+                        .frame(width: 40, height: 30)
+                        .padding(.vertical, 5.0)
+                        .padding(.horizontal, 5.0)
+                        .background(Color.accentColor)
+                        .cornerRadius(5.0)
+                        .onTapGesture {
+                            isPlaying[index].toggle()
+                            setInfoModel.conductor.copyMidiSingleTrack(trackId: trackId, nextVariation: index, loopLength: currentTrack.loopLength)
+                            setInfoModel.conductor.previewSingleTrack(trackId: trackId)
+                        }
+                        
                         ZStack{
                             MidiClipName(value: letter)
                         }
@@ -64,6 +86,8 @@ struct MidiClipsInFile: View {
                     clipLetters[trackId]!.removeLast()
                     //Interface
                     loopLengthLocal.removeLast()
+                    //Midiclip player
+                    isPlaying.removeLast()
                     
                     let newLength: Int = currentTrack.loopLength.count-1
                     
@@ -88,6 +112,7 @@ struct MidiClipsInFile: View {
             Button("+") {
                 currentTrack.loopLength.append(16)
                 loopLengthLocal.append(16)
+                isPlaying.append(false)
                 clipLetters[trackId]!.append(clipLetters[trackId]!.count)
             }
             .font(.system(size: 35))

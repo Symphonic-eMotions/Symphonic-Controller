@@ -65,6 +65,16 @@ struct EditorView: View {
                             .padding(.trailing)
                     }
                     HStack{
+                        Text("Default skin")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        DefaultSkin(
+                            setInfoModel: setInfoModel
+                        )
+                    }
+                    HStack{
                         Text("Grid size")
                             .font(.system(size: headingSize))
                             .padding()
@@ -105,17 +115,6 @@ struct EditorView: View {
                             .frame(width: columnWidth, alignment: .leading)
                         
                         Levels(
-                            setInfoModel: setInfoModel
-                        )
-                    }
-                    
-                    HStack{
-                        Text("Default skin")
-                            .font(.system(size: headingSize))
-                            .padding()
-                            .frame(width: columnWidth, alignment: .leading)
-                        
-                        DefaultSkin(
                             setInfoModel: setInfoModel
                         )
                     }

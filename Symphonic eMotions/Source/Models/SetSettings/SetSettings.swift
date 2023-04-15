@@ -121,16 +121,20 @@ class SetSettings: Identifiable, ObservableObject {
         }
     }
     
-    func updateAreaOfInterest(rows: Int) {
-        
-        let allGrids = Grids.allCases
-        let newGrid = allGrids[rows].oneClip
+    func resetGridArrays(cells: Int) {
         
         for( index, _ ) in tracks {
             
             for( partIndex, _ ) in tracks[index]!.parts {
                 
-                tracks[index]!.parts[partIndex]?.areaOfInterest = newGrid
+                let zeroArray:[Int] = Array(repeating: 0, count: cells)
+                
+                tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
+                tracks[index]!.loopsToGrid = zeroArray
+                tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: zeroArray,
+                    loopsToGrid: zeroArray
+                )
             }
         }
     }
