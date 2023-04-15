@@ -15,7 +15,6 @@ extension InstrumentsSet.Track {
         private enum PartKeys: String, CodingKey {
             case instrumentPartName
             case areaOfInterest
-            case allValues
             case dontDrawVisual
             case damperTarget
         }
@@ -32,7 +31,6 @@ extension InstrumentsSet.Track {
         //Map area of interest reletive indexes to custom order
 //        var mapMaxIndex: [Int]?
         
-        var allValues: [Double]?
         var damperTarget: DamperTarget
         
         init(from decoder: Decoder) throws {
@@ -40,7 +38,6 @@ extension InstrumentsSet.Track {
             instrumentPartName = try container.decode(String.self, forKey: .instrumentPartName)
             areaOfInterest = try container.decode([Int].self, forKey: .areaOfInterest)
             dontDrawVisual = try container.decodeIfPresent(Bool.self, forKey: .dontDrawVisual) ?? false
-            allValues = try container.decodeIfPresent([Double].self, forKey: .allValues)
             damperTarget = try container.decode(DamperTarget.self, forKey: .damperTarget)
         }
         
@@ -48,13 +45,11 @@ extension InstrumentsSet.Track {
             instrumentPartName: String,
             areaOfInterest: [Int],
             dontDrawVisual: Bool?,
-            allValues: [Double]?,
             damperTarget: DamperTarget
         ) {
             self.instrumentPartName = instrumentPartName
             self.areaOfInterest = areaOfInterest
             self.dontDrawVisual = dontDrawVisual
-            self.allValues = allValues
             self.damperTarget = damperTarget
         }
         

@@ -207,83 +207,55 @@ final class Conductor {
         set.tracks.forEach { track in
             
             //Replace all EXS files with the empty trigger.exs to prefent too many files open
-            
-            //allValues instrument have a group of samplers
-            if track.instrumentType == .allValues {
+            //Remove exs from memory
+            if trackSamplers[track.id] != nil {
                 
-                let midiDataGroup = track.midiGroup ?? []
-                for (i,_) in midiDataGroup.enumerated() {
-                    let samplerId = track.id + String(i)
-                    
-                    //Stop all running processes
-                    if let previousNoteNumbers = midiDataGroupNoteNumbers[samplerId] ?? nil {
-                        for noteNumber in previousNoteNumbers {
-                            let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
-                            trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
-                        }
-                    }
-                    
-                    do {
-                        try trackSamplers[samplerId]!.loadEXS24("Sounds/Sampler Instruments/trigger")
-                    } catch {
-                        print("Error loading EXS: trigger")
+                //Stop all running processes
+                if let previousNoteNumbers = midiDataGroupNoteNumbers[track.id] ?? nil {
+                    for noteNumber in previousNoteNumbers {
+                        let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
+                        trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
                     }
                 }
+                
+                do {
+                    //Close file by loading empty exs
+                    try trackSamplers[track.id]!.loadEXS24("Sounds/Sampler Instruments/trigger")
+                } catch {
+                    print("Error loading EXS: trigger")
+                }
+                
+                trackSamplers[track.id]!.destroyEndpoint()
+                trackSamplers.removeValue(forKey: track.id)
+                trackSamplers[track.id] = nil
             }
-            //The original way
-            else{
-                
-                //Remove exs from memory
-                if trackSamplers[track.id] != nil {
-                    
-                    //Stop all running processes
-                    if let previousNoteNumbers = midiDataGroupNoteNumbers[track.id] ?? nil {
-                        for noteNumber in previousNoteNumbers {
-                            let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
-                            trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
-                        }
-                    }
-                    
-                    do {
-                        //Close file by loading empty exs
-                        try trackSamplers[track.id]!.loadEXS24("Sounds/Sampler Instruments/trigger")
-                    } catch {
-                        print("Error loading EXS: trigger")
-                    }
-                    
-                    trackSamplers[track.id]!.destroyEndpoint()
-                    trackSamplers.removeValue(forKey: track.id)
-                    trackSamplers[track.id] = nil
-                    
-                    
-                }
-                
-                if( trackInstruments[track.id] != nil ) {
-                    trackInstruments.removeValue(forKey: track.id)
-                    trackInstruments[track.id] = nil
-                }
-                
-                if( trackSequencers[track.id] != nil ) {
-                    trackSequencers.removeValue(forKey: track.id)
-                    trackSequencers[track.id] = nil
-                }
-                
-                if( trackSequencersMemory[track.id] != nil ) {
-                    trackSequencersMemory.removeValue(forKey: track.id)
-                    trackSequencersMemory[track.id] = nil
-                }
-                
-                if( trackSequencersCallbackers[track.id] != nil ) {
-                    trackSequencersCallbackers.removeValue(forKey: track.id)
-                    trackSequencersCallbackers[track.id] = nil
-                }
-                
-                if( trackAmpEnvelopes[track.id] != nil ) {
-                    trackAmpEnvelopes.removeValue(forKey: track.id)
-                    trackAmpEnvelopes[track.id] = nil
-                }
+            
+            if( trackInstruments[track.id] != nil ) {
+                trackInstruments.removeValue(forKey: track.id)
+                trackInstruments[track.id] = nil
+            }
+            
+            if( trackSequencers[track.id] != nil ) {
+                trackSequencers.removeValue(forKey: track.id)
+                trackSequencers[track.id] = nil
+            }
+            
+            if( trackSequencersMemory[track.id] != nil ) {
+                trackSequencersMemory.removeValue(forKey: track.id)
+                trackSequencersMemory[track.id] = nil
+            }
+            
+            if( trackSequencersCallbackers[track.id] != nil ) {
+                trackSequencersCallbackers.removeValue(forKey: track.id)
+                trackSequencersCallbackers[track.id] = nil
+            }
+            
+            if( trackAmpEnvelopes[track.id] != nil ) {
+                trackAmpEnvelopes.removeValue(forKey: track.id)
+                trackAmpEnvelopes[track.id] = nil
             }
         }
+        
         mixer.removeAllInputs()
         mixerMaster.removeAllInputs()
         
@@ -338,21 +310,7 @@ final class Conductor {
 //                    deltaStartTimePart[part.id] = DispatchTime.now()
                 }
             }
-                        
-            //Fill ramps for allValue samplers
-            if track.instrumentType == .allValues {
-                
-//                let group = track.parts.first!.damperTarget.midiData!.group
-                let group = track.midiGroup ?? []
-                for(i,_) in group.enumerated() {
-                    
-                    let samplerId = track.id + String(i)
-                    rampValues[samplerId] = 0.0
-                    rampUp[samplerId] = rampUp[track.parts.first!.id]
-                    rampDown[samplerId] = rampDown[track.parts.first!.id]
-                }
-            }
-            
+             
             //Tempo defaults to 1 times set BPM
             tempo[track.id] = 1
             velocities[track.id] = startVelocity
@@ -533,11 +491,6 @@ final class Conductor {
         
         print("MUTING and LevelChange variation")
             
-        //Does this set have "MIDI clips" follow levels
-        //I.E. Score Walk by level <- This is timed through score by user movement
-//        let levelClipControl = set.levelClipControl ?? false
-//        let levelClipControlStartLevel = set.levelClipControlStartLevel ?? 0
-            
         //Run over all tracks
         set.tracks.forEach { track in
             
@@ -689,22 +642,7 @@ final class Conductor {
             if length == "loop" {
                 
                 switch track.instrumentType {
-                case .allValues:
-                    
-                    let midiDataGroup = track.midiGroup ?? []
-                    
-                    groupMixers[track.id] = Mixer()
-                    
-                    //Create EXS samplers per notenumber in midiDataGroup
-                    for (i,_) in midiDataGroup.enumerated() {
-                        
-                        let samplerId = track.id + String(i)
-                        
-                        trackSamplers[samplerId] = createExsGroup(for: track, and: sequencer, samplerId: samplerId)
-                        
-                        sequencer.setGlobalMIDIOutput(trackSamplers[samplerId]!.midiIn)
-                    }
-                    
+                
                 case .exsSampler:
                     
                     //Create EXS sampler
@@ -1249,18 +1187,8 @@ final class Conductor {
         var midiTargetChannels: [String: Int] = [:]
         var i: Int = 1
         set.tracks.forEach { track in
-            if track.instrumentType == .allValues {
-                let midiDataGroup = track.midiGroup ?? []
-                for (j,_) in midiDataGroup.enumerated() {
-                    let samplerId = track.id + String(j)
-                    midiTargetChannels[samplerId] = i
-                    i += 1
-                }
-            }
-            else{
-                midiTargetChannels[track.id] = i
-                i += 1
-            }
+            midiTargetChannels[track.id] = i
+            i += 1
         }
         return midiTargetChannels
     }
@@ -1395,117 +1323,78 @@ final class Conductor {
                 return
             }
             
-            /*
-            MARK: New allValues group based on first part
-
-            - send values: [[AreaValues]] to array of sound players
-            - Not to effects because of single output sampler
-
-            Not yet compatible with levelClipControl, instrumentControlsLevel
-
-            // Connect: midiDataGroupNoteNumbers
-            // Connect: midiDataGroupIndex
-
-            */
-            
-            if track.instrumentType == .allValues {
+            //Loop through all parts per track per value
+            track.parts.forEach { part in
                 
-                let part = track.parts.first!
-                
-                let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(rows: setSettings.gridRows, columns: setSettings.gridColumns).map {
-                    values[$0.row][$0.column].scaledValue
-                }
-                
+                let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(
+                    rows: setSettings.gridRows,
+                    columns: setSettings.gridColumns).map {
+                        values[$0.row][$0.column].scaledValue
+                    }
                 guard !valuesMapped.isEmpty else { return }
                 
-                for (i, letValue) in valuesMapped.enumerated() {
-                    
-                    let samplerId = part.damperTarget.trackId + String(i)
-                    
-                    var value = valueDamper(dampMode: part.damperTarget.dampMode!, value: letValue)
-                    value = valueRamper(value: value, rampId: samplerId)
-                    
-                    forwardInstrumment(value: value, on: samplerId, for: "samplerCC9")
-                }
+                //Find highest value (maximum) with it's index
+                let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                 
-            }
-            else {
-                /*
-                 MARK: Original multi part system
-                 */
-                
-                //Loop through all parts per track per value
-                track.parts.forEach { part in
-                    
-                    let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(
-                        rows: setSettings.gridRows,
-                        columns: setSettings.gridColumns).map {
-                            values[$0.row][$0.column].scaledValue
-                        }
-                    guard !valuesMapped.isEmpty else { return }
-                    
-                    //Find highest value (maximum) with it's index
-                    let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
-                    
 //                    let boostFactor = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetBoostFactor
-                    
-                    //Have a var for MaxIndex to number of MidiClips range
-                    let maxIndexraw = Int(maxIndexTupple.0)
-                    var maxIndexMidiClips = maxIndexraw
-                    
-                    //MaxMapped (highest value found in all of AreaOfInterest) value to work with
-                    var value = maxIndexTupple.1
-                    if value.isNaN {
-                        value = 0
-                    }
-                    
-                    //MARK: index to midi clip conversion
-                    //Change order of indeces for mapping with events
-                    if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition && partNr == 0 {
-                        
-                        let mapMaxIndex = setSettings.tracks[track.trackId]!.loopsToGridMapped
-                        
-                        maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
-                        forwardMaxIndex(
-                            for: part.damperTarget,
-                            maxIndex: maxIndexMidiClips
-                        )
-                    }
-                    
-                    //Ad damping curves
-                    value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
-                    //Ad ramps from interface!
-                    value = valueRamper(value: value, rampId: part.id)
-                    
-                    //Forward to target
-                    forward(
-                        value: value,
-                        for: part.damperTarget,
-                        currentSetLevel: localCurrentSetLevel
-                    )
-                    
-                    if setSettings.defaultSkin == .spriteKit {
-                        forwardSpriteKit(
-                            trackNr: trackNr,
-                            partNr: partNr,
-                            ramped: value,
-                            areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
-                            maxIndexRaw: maxIndexraw,
-                            maxIndex: maxIndexMidiClips
-                        )
-                    }
-                    else if setSettings.defaultSkin == .swiftUI {
-                        //Check part feedback interface state for part feedback visualisation
-                        if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
-                            forwardPartFeedback(
-                                ramped: value
-                            )
-                        }
-                    }
-                    
-                    partNr += 1
+                
+                //Have a var for MaxIndex to number of MidiClips range
+                let maxIndexraw = Int(maxIndexTupple.0)
+                var maxIndexMidiClips = maxIndexraw
+                
+                //MaxMapped (highest value found in all of AreaOfInterest) value to work with
+                var value = maxIndexTupple.1
+                if value.isNaN {
+                    value = 0
                 }
+                
+                //MARK: index to midi clip conversion
+                //Change order of indeces for mapping with events
+                if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition && partNr == 0 {
+                    
+                    let mapMaxIndex = setSettings.tracks[track.trackId]!.loopsToGridMapped
+                    
+                    maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
+                    forwardMaxIndex(
+                        for: part.damperTarget,
+                        maxIndex: maxIndexMidiClips
+                    )
+                }
+                
+                //Ad damping curves
+                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
+                //Ad ramps from interface!
+                value = valueRamper(value: value, rampId: part.id)
+                
+                //Forward to target
+                forward(
+                    value: value,
+                    for: part.damperTarget,
+                    currentSetLevel: localCurrentSetLevel
+                )
+                
+                if setSettings.defaultSkin == .spriteKit {
+                    forwardSpriteKit(
+                        trackNr: trackNr,
+                        partNr: partNr,
+                        ramped: value,
+                        areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
+                        maxIndexRaw: maxIndexraw,
+                        maxIndex: maxIndexMidiClips
+                    )
+                }
+                else if setSettings.defaultSkin == .swiftUI {
+                    //Check part feedback interface state for part feedback visualisation
+                    if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
+                        forwardPartFeedback(
+                            ramped: value
+                        )
+                    }
+                }
+                
+                partNr += 1
             }
+    
             
             trackNr += 1
         }
@@ -1556,29 +1445,6 @@ final class Conductor {
         
         return valueRamped
     }
-    
-    public func setSamplerIdRamp(
-        rampType: String,
-        currentTrackID: String,
-        value: Double
-    ) {
-        
-        guard let track = set.track(for: currentTrackID) else { return }
-        if track.instrumentType == .allValues {
-            
-            let group = track.midiGroup ?? []
-            for (i,_) in group.enumerated() {
-                let samplerId = track.id + String(i)
-                if rampType == "rampUp" {
-                    rampUp[samplerId] = value
-                }
-                else if rampType == "rampDown" {
-                    rampDown[samplerId] = value
-                }
-            }
-        }
-    }
-    
     
     //MARK: Forwarders
     //Forward Part Feedback
@@ -2499,16 +2365,11 @@ final class Conductor {
             set.tracks.filter { startTypes.contains($0.startType) }.forEach {
                 if $0.startType == .global{ playTrack($0) }
                 if $0.startType == .globalMidiData {
-                    if $0.instrumentType == .allValues {
-                        playMidiDataAllValues(with: $0)
-                    }
-                    else{
-                        playMidiData(with: $0.parts.first!.damperTarget)
-                    }
+                    playMidiData(with: $0.parts.first!.damperTarget)
                 }
             }
         } catch {
-                isConductorPlayingSubject.send(false)
+            isConductorPlayingSubject.send(false)
         }
     }
     
@@ -2517,7 +2378,7 @@ final class Conductor {
             //Fire up the audio engine
             try audioEngine.start()
         } catch {
-                print("Engine not started")
+            print("Engine not started")
         }
     }
     

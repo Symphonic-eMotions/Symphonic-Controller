@@ -185,11 +185,6 @@ struct PartFeedbackView: View {
                                     self.rampUp = newVal
 
                                     playViewModel.conductor.rampUp[currentPartID] = Double(newVal)
-                                    playViewModel.conductor.setSamplerIdRamp(
-                                        rampType: "rampUp",
-                                        currentTrackID: currentTrackID,
-                                        value: Double(newVal)
-                                    )
                                     setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = Double(newVal)
                                 }
                             ),
@@ -205,11 +200,6 @@ struct PartFeedbackView: View {
                                     self.rampDown = newVal
 
                                     playViewModel.conductor.rampDown[currentPartID] = Double(newVal)
-                                    playViewModel.conductor.setSamplerIdRamp(
-                                        rampType: "rampDown",
-                                        currentTrackID: currentTrackID,
-                                        value: Double(newVal)
-                                    )
                                     setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = Double(newVal)
                                 }
                             ),

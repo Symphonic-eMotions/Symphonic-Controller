@@ -158,7 +158,6 @@ final class AppUtils {
                     instrumentPartName: part.instrumentPartName,
                     areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
                     dontDrawVisual: part.dontDrawVisual,
-                    allValues: part.allValues,
                     damperTarget: storeDamperTarget
                 )
                 storeParts.append(storePart)
@@ -179,25 +178,19 @@ final class AppUtils {
                 instrumentType: track.instrumentType,
                 trackType: setSettings.tracks[track.trackId]!.trackType,
                 midiTargetTrackId: track.midiTargetTrackId,
-                levelClipControl: track.levelClipControl,
                 startType: track.startType,
                 masterTrackId: track.midiTargetTrackId,
                 instrumentName: track.instrumentName,
                 
                 instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
-                
                 midiFiles: midiFiles,
                 midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
-                
-                midiThreshold: track.midiThreshold,
                 exsFiles: track.exsFiles,
                 audioFiles: track.audioFiles,
                 effects: track.effects,
                 parts: storeParts,
-                
                 levels: setSettings.tracks[track.trackId]!.levels,
-                
                 scoreWalkDuration: track.scoreWalkDuration
             )
             storeTracks.append(storeTrack)
@@ -238,8 +231,6 @@ final class AppUtils {
             columns: setSettings.gridColumns,
             levelSpeed: setSettings.levelSpeed,
             levels: setSettings.levels,
-//            levelClipControl: instrumentSet.levelClipControl,
-//            levelClipControlStartLevel: instrumentSet.levelClipControlStartLevel,
             playViewImages: instrumentSet.playViewImages,
             tracks: storeTracks
         )

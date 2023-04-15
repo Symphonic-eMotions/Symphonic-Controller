@@ -75,7 +75,6 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CB7028329D84E1A003399BC /* EditTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracks.swift */; };
-		7CB7028529DA0C00003399BC /* Grids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028429DA0C00003399BC /* Grids.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
@@ -200,7 +199,6 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CB7028229D84E1A003399BC /* EditTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracks.swift; sourceTree = "<group>"; };
-		7CB7028429DA0C00003399BC /* Grids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grids.swift; sourceTree = "<group>"; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
@@ -545,6 +543,7 @@
 			children = (
 				7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */,
 				C06958F726B4D969002EB522 /* PlayViewModel.swift */,
+				7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */,
 				7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */,
 			);
 			path = ViewModels;
@@ -573,15 +572,13 @@
 				C069590526B4E150002EB522 /* InstrumentsSet.swift */,
 				C069590326B4E0C7002EB522 /* Track.swift */,
 				C0AFDD002705BC08006EF64F /* Part.swift */,
+				7C1FB0B929E45C9F00621909 /* MidiFiles.swift */,
 				C0AFDD022705BC24006EF64F /* Effect.swift */,
 				7CF327C42989504F003D33D3 /* Skin.swift */,
 				7C400788287EFED900A5E5C2 /* PlayViewImages.swift */,
 				C069591E26B4E77E002EB522 /* AreaValues.swift */,
 				7C6A341A28425F01006F2E95 /* PartFeedback.swift */,
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
-				7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */,
-				7CB7028429DA0C00003399BC /* Grids.swift */,
-				7C1FB0B929E45C9F00621909 /* MidiFiles.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -772,7 +769,6 @@
 				7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
-				7CB7028529DA0C00003399BC /* Grids.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
