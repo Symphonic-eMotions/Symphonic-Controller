@@ -20,11 +20,9 @@ final class Conductor {
     //Gets pauzed on set change
     private var audioEngine: AudioEngine
     //First mixer mixes the output of the effect chains per instrument
-    private var mixer: Mixer
+    internal var mixer: Mixer
     //Second mixer is the output of the first mixer's effect chain output
     private var mixerMaster: Mixer
-    //Group mixers
-    private var groupMixers: [String: Mixer] = [:]
     
     //trackSequencers holds MIDI file information
     //Is the play head in the score
@@ -41,7 +39,7 @@ final class Conductor {
     private var isSequencerPlaying: [String: Bool] = [:]
     
     //Velocities per track to be controlled by intrumentParts
-    private var velocities: [String: Double] = [:]
+    internal var velocities: [String: Double] = [:]
     //Tempo, 1 part for all sequencers. So have only 1 part per instrument set
     //NB Tempo only works for velocity sensitive instruments
     //TODO: Deprecate old tempo
@@ -50,9 +48,9 @@ final class Conductor {
     private var currentTempo: Double = 0
     
     //TODO generic var for controlling Synth and Sampler params
-    private var soundModuleParam01: [String: Double] = [:]
-    private var soundModuleParam02: [String: Double] = [:]
-    private var soundModuleVolume: [String: Double] = [:]
+    internal var soundModuleParam01: [String: Double] = [:]
+    internal var soundModuleParam02: [String: Double] = [:]
+    internal var soundModuleVolume: [String: Double] = [:]
     
     //What part of the MIDI clip are we playing.
     private var triggerCurrentMIDIpart: [String: Int] = [:]
@@ -278,7 +276,6 @@ final class Conductor {
         mixerMaster.addInput(chainMasterEffects(for: set.masterTrackEffects, startingNode: mixer))
     }
     
-    
     //Load tracks in audio engine
     // MARK: Load tracks
     private func loadTracks(currentSetLevel: Double ){
@@ -377,6 +374,7 @@ final class Conductor {
             print("Error loading EXS: \(exsFile)")
         }
     }
+    
     //Playing a sound effect at this moment is not working well with switching sets
     public func playSoundEffect(midi noteNumer: MIDINoteNumber){
         
@@ -516,28 +514,6 @@ final class Conductor {
                 muteTrack(trackId: track.id)
                 
             }
-            
-            
-//            //Don't (un)mute MIDI only instruments
-//            if track.instrumentType != .exsSamplerMIDI {
-//
-//                let thisTrackIsReferenced = isInstrumentPlayedByMIDIonlyInstrument(selectedLevel: selectedLevel, trackId: track.id)
-//
-//                //UN-Mute
-//                if setSettings.tracks[track.id]!.levels.contains(selectedLevel) || thisTrackIsReferenced
-//                {
-//                    let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 0)
-//                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
-//                    unMuteTrack(trackId: track.id)
-//                }
-//                //Mute
-//                else {
-//                    let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 0)
-//                    trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
-//                    muteTrack(trackId: track.id)
-//
-//                }
-//            }
         }
     }
     
@@ -588,22 +564,6 @@ final class Conductor {
         
         return tempo
     }
-    
-    private func isInstrumentPlayedByMIDIonlyInstrument( selectedLevel: Int, trackId: String ) -> Bool {
-        
-        //if a midi only track is active which points to this instrument then do not mute this track
-        //do this by checking if this track ID is referenced by a MIDI only instrument
-        var thisTrackIsReferenced = false
-        set.tracks.forEach { tr in
-            if tr.midiTargetTrackId == trackId {
-                if tr.levels.contains(selectedLevel){
-                    thisTrackIsReferenced = true
-                }
-            }
-        }
-        return thisTrackIsReferenced
-    }
-    
     
     // MARK: Seqs & Sound gens
     private func midiSequencer(
@@ -669,30 +629,6 @@ final class Conductor {
                     else{
                         sequencer.setGlobalMIDIOutput(trackSamplers[track.id]!.midiIn)
                     }
-                
-                    //Reference MIDI sequencers do not need the actual instruments
-                case .exsSamplerMIDI:
-                    
-                    //Just the call back, sending track must have velocity?
-                    //Create seperate isVelocity func
-                    if isVelocitySensitive(for: track) {
-                        
-                        let tempoRange = tempoRange(for: track)
-                        
-                        //Create MIDI callback instrument
-                        //Here the sampler is an excisting sampler from another track
-                        trackSequencersCallbackers[track.id] = callBackInstrument(
-                            for: track.id,
-                               controlling: trackSamplers[track.midiTargetTrackId!]!,
-                               on: midiChannels[track.midiTargetTrackId!]!,
-                               within: tempoRange)
-                        
-                        sequencer.setGlobalMIDIOutput(trackSequencersCallbackers[track.id]!.midiIn)
-                    }
-                    else{
-                        sequencer.setGlobalMIDIOutput(trackSamplers[track.midiTargetTrackId!]!.midiIn)
-                    }
-                    
                 case .audioBuffer:
                     trackSamplers[track.id] = createAudioBufferSampler(for: track, and: sequencer, currentSetLevel: currentSetLevel)
                 case .pulseWidthSynth:
@@ -704,447 +640,6 @@ final class Conductor {
             
             return sequencer
         }
-    
-    //MARK: EXS Sampler
-    private func createExsSampler(
-        for track: InstrumentsSet.Track,
-        and sequencer: AppleSequencer) -> MIDISampler? {
-            
-            // Use the 1st exs file defined.
-            guard let exsFile = track.exsFiles?.first else { // TODO: Why is this an array?!?
-                print("No EXS file for track id: \(track.id)")
-                return nil
-            }
-            
-            let sampler = MIDISampler(name: track.instrumentName)
-            sampler.amplitude = track.volume
-            
-            let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
-            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-            
-            mixer.addInput(ampEnv)
-            
-            do {
-                
-                try sampler.loadEXS24("Sounds/Sampler Instruments/\(exsFile.fileName)")
-            } catch {
-                print("Error loading EXS: \(exsFile.fileName)")
-            }
-            
-            return sampler
-        }
-    
-    private func createExsGroup(
-        for track: InstrumentsSet.Track,
-        and sequencer: AppleSequencer,
-        samplerId: String
-    ) -> MIDISampler?{
-        // Use the 1st exs file defined.
-        guard let exsFile = track.exsFiles?.first else { // TODO: Why is this an array?!?
-            print("No EXS file for samplerId: \(samplerId)")
-            return nil
-        }
-        
-        let sampler = MIDISampler(name: track.instrumentName + samplerId)
-        
-        print( "createExsGroup \(track.instrumentName) \(samplerId) amplitude  \(track.volume)" )
-        sampler.amplitude = track.volume
-        
-        groupMixers[track.id]!.addInput(sampler)
-        
-        let chainEffects: Node = chainEffects(for: track, startingNode: groupMixers[track.id]!)
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-        
-        mixer.addInput(ampEnv)
-        
-        do {
-            
-            try sampler.loadEXS24("Sounds/Sampler Instruments/\(exsFile.fileName)")
-        } catch {
-            print("Error loading EXS: \(exsFile.fileName)")
-        }
-        
-        return sampler
-    }
-    
-    //MARK: Audio buffer sampler
-    private func createAudioBufferSampler(
-        for track: InstrumentsSet.Track,
-        and sequencer: AppleSequencer,
-        currentSetLevel: Double) -> MIDISampler? {
-        
-        // Use the 1st audio file defined.
-        guard let audioFile = track.audioFiles?.first else { // TODO: Why is this an array?!?
-            print("No audio file for track id: \(track.id)")
-            return nil
-        }
-        
-        // Use the 1st audio file defined.
-        guard let midiFile = track.midiFiles?.first else { // TODO: Why is this an array?!?
-            print("No midi file for track id: \(track.id)")
-            return nil
-        }
-        
-        
-        guard let audioFileURL = Bundle.main.url(forResource: audioFile.fileName, withExtension: audioFile.fileExtension, subdirectory: "Samples/\(set.filesPath)") else {
-            print("Audio file not found at path Samples/\(set.filesPath)/\(audioFile.fileName).\(audioFile.fileExtension) for track id: \(track.id)")
-            return nil
-        }
-        var avAudioFiles = [AVAudioFile]()
-        
-        let sampler = MIDISampler(name: track.instrumentName)
-        sampler.amplitude = track.volume
-        
-        let loopLength = midiFile.loopLength.first
-        sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: loopLength ?? 64))
-        
-        //tempoTrack is optional instrument track without sound (grey instrument)
-        //MARK: Tempo Track
-        if track.id == "tempoTrack"  {
-            
-            let velocitySLider = 0
-            var tempoLow = set.bpm
-            var tempoHigh = set.bpm
-            if track.parts.count > 0 {
-                for part in track.parts {
-                    
-                    if  part.damperTarget.parameter == "tempo" &&
-                            part.damperTarget.nodeSettings?.tempoLow != nil &&
-                            part.damperTarget.nodeSettings?.tempoHigh != nil {
-                        tempoLow = part.damperTarget.nodeSettings?.tempoLow ?? set.bpm
-                        tempoHigh = part.damperTarget.nodeSettings?.tempoHigh ?? set.bpm
-                    }
-                }
-            }
-            
-            for i in 0..<Int(loopLength ?? 4) {
-                
-                var velocity = 80 * velocitySLider
-                if i == 0 { velocity = 120 * velocitySLider}
-                
-                sequencer.tracks.first?.add(
-                    noteNumber: audioFile.midiNote,
-                    velocity: MIDIVelocity(velocity),
-                    position: Duration(beats: Double(i)),
-                    duration: Duration(beats: 0.05)
-                )
-                
-                sequencer.tracks.first?.add(
-                    noteNumber: audioFile.midiNote,
-                    velocity: MIDIVelocity(40 * velocitySLider),
-                    position: Duration(beats: (Double(i) + 0.25)),
-                    duration: Duration(beats: 0.05)
-                )
-                
-                sequencer.tracks.first?.add(
-                    noteNumber: audioFile.midiNote,
-                    velocity: MIDIVelocity(60 * velocitySLider),
-                    position: Duration(beats: (Double(i) + 0.5)),
-                    duration: Duration(beats: 0.05)
-                )
-                
-                sequencer.tracks.first?.add(
-                    noteNumber: audioFile.midiNote,
-                    velocity: MIDIVelocity(40 * velocitySLider),
-                    position: Duration(beats: (Double(i) + 0.75)),
-                    duration: Duration(beats: 0.05)
-                )
-            }
-            
-            let callbacker = MIDICallbackInstrument { [self] status, note, velocity in
-                guard let midiStatus = MIDIStatusType.from(byte: status) else {
-                    return
-                }
-                
-                if midiStatus == .noteOn {
-                    
-                    //TODO midiStatus == .noteOn does not pass chords, just single notes
-                    //let newVelocity = UInt8( Double(velocity) * velocities[track.id]! )
-                    sampler.play(noteNumber: note, velocity: velocity, channel: 1)
-                    
-                }
-                else if midiStatus == .noteOff {
-                    
-                    /*
-                     createAudioBufferSampler, tempo param controls all sequencers speed
-                     */
-                    if track.levels.contains(Int(currentSetLevel)) {
-                        let tempoRange = (set.bpm + tempoHigh) - (set.bpm + tempoLow)
-                        let playedTempo: Double = tempoRange * tempo[track.id]! + (set.bpm + tempoLow )
-                        
-                        //All sequences get this tempo
-                        for trackId in trackSequencers.keys {
-                            if trackSequencers[trackId] != nil {
-                                trackSequencers[trackId]!.setTempo(playedTempo)
-                            }
-                        }
-                    }
-                    
-                    sampler.stop(noteNumber: note, channel: 1)
-                }
-            }
-            sequencer.setGlobalMIDIOutput(callbacker.midiIn)
-            
-        }
-        
-        else{
-            sequencer.tracks.first?.add(
-                noteNumber: audioFile.midiNote,
-                velocity: 120,
-                position: Duration(beats: 0),
-                duration: Duration(beats: midiFile.loopLength.first ?? 4)
-            )
-            
-            sequencer.setGlobalMIDIOutput(sampler.midiIn)
-        }
-        
-        let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-        
-        mixer.addInput(ampEnv)
-        
-        do {
-            //            try sampler.loadAudioFile(try AVAudioFile(forReading: audioFileURL))
-            try avAudioFiles.append(AVAudioFile(forReading: audioFileURL))
-            try sampler.loadAudioFiles(avAudioFiles)
-            
-        } catch {
-            print("Error audioFileURL: \(audioFileURL)")
-        }
-        
-        return sampler
-    }
-    // MARK: Synths
-    private func createPulseWidthSynth(
-        for track: InstrumentsSet.Track,
-        and sequencer: AppleSequencer) -> Node? {
-        
-        var isPlaying: Bool = false
-        let osc = PWMOscillator()
-        //osc.amplitude = 1
-        
-        //Waarde vervangen met functie call duratie * sinus voor instant LFO
-        //TODO make pulsewidth variable
-        let pulseWidth: AUValue = 0.5
-        osc.pulseWidth = pulseWidth
-        
-        //      case .phaseSynth:
-        //      osc = PhaseDistortionOscillator()
-        //PhaseDistortionOscillator
-        
-        let tb303ftl = RolandTB303Filter(osc)
-        
-        let env = AmplitudeEnvelope(tb303ftl)
-        
-        let compressor = Compressor(env)
-            
-        //Waarde met aanstuurbare functie vervangen
-        let freqRampDuration: AUValue = 0.025
-        
-        //Sequencer to callback to play sampler
-        let callbacker = MIDICallbackInstrument { [self] status, note, velocity in
-            guard let midiStatus = MIDIStatusType.from(byte: status) else {
-                return
-            }
-            if midiStatus == .noteOn {
-                
-                if !isPlaying {
-                    osc.start()
-                    //TODO, before switch set, set this to osc.stop()
-                    isPlaying = true
-                }
-                
-                var newVelocity = UInt8(max(Double(Int(velocity)) * velocities[track.id]!,0))
-                if newVelocity > 127 { newVelocity = 127 }
-                osc.amplitude = AUValue(velocities[track.id]!)
-                
-                //TODO midiStatus == .noteOn does not pass chords, just single notes
-                //osc.frequency = note.midiNoteToFrequency()
-                
-                env.attackDuration = 0.01
-                env.decayDuration = 0.05
-                env.sustainLevel = 0
-                env.releaseDuration = 0.005
-                
-                
-                let noteOn = MIDIEvent(noteOn: note, velocity: newVelocity, channel: 1)
-                env.scheduleMIDIEvent(event: noteOn)
-                
-                osc.$frequency.ramp(to: note.midiNoteToFrequency(), duration: freqRampDuration)
-                
-                let tb303ftlCutOff: Double = 500 - soundModuleParam01[track.id]! * 50
-                
-                tb303ftl.$cutoffFrequency.ramp(to: AUValue(tb303ftlCutOff), duration: 0.01)
-                
-                let resonance = soundModuleParam01[track.id] ?? 0 * 0.8 + 0.5
-                
-                tb303ftl.$resonance.ramp(to: AUValue(resonance), duration: 1)
-                
-                compressor.attackTime = 0.001
-                compressor.releaseTime = 0.05
-                compressor.threshold = -4
-                let volume = soundModuleVolume[track.id] ?? 0
-                
-                compressor.$masterGain.value = AUValue(volume)
-                
-            }
-            else if midiStatus == .noteOff {
-                
-                let noteOff = MIDIEvent(noteOn: note, velocity: 0, channel: 1)
-                env.scheduleMIDIEvent(event: noteOff)
-            }
-        }
-        sequencer.setGlobalMIDIOutput(callbacker.midiIn)
-        
-        
-            let chainEffects: Node = chainEffects(for: track, startingNode: compressor)
-            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-            
-            mixer.addInput(ampEnv)
-        
-        return env as Node
-    }
-    
-    private func createPhaseSynth(
-        for track: InstrumentsSet.Track,
-        and sequencer: AppleSequencer) -> Node? {
-        
-        var isPlaying: Bool = false
-        let phaseDistOsc = PhaseDistortionOscillator()
-        phaseDistOsc.amplitude = 1.0
-        phaseDistOsc.phaseDistortion = -0.85
-        
-        let pulseWidthOsc = PWMOscillator()
-        pulseWidthOsc.amplitude = 1.0
-        
-        //Waarde vervangen met functie call duratie * sinus voor instant LFO
-        let pulseWidth: AUValue = 0.5
-        pulseWidthOsc.pulseWidth = pulseWidth
-        
-        let ampEnvPhaseDist = AmplitudeEnvelope(phaseDistOsc)
-        let ampEnvPulseWidth = AmplitudeEnvelope(pulseWidthOsc)
-        
-        let pitchShiftPhaseDist: Double = -12
-        
-        //Waarde met aanstuurbare functie vervangen
-        let freqRampDurPhaseDist: AUValue = 0.001
-        let freqRampDurPulseWidth: AUValue = 0.05
-        
-        let moogLadder = MoogLadder(ampEnvPulseWidth)
-        moogLadder.resonance = 1.5
-        moogLadder.cutoffFrequency = 20_000.0
-        
-        let oscMixer = Mixer()
-        
-        var isTempoController = false
-        var tempoLow = set.bpm
-        var tempoHigh = set.bpm
-        if track.parts.count > 0 {
-            for part in track.parts {
-                if part.damperTarget.parameter == "tempo" &&
-                    part.damperTarget.nodeSettings?.tempoLow != nil &&
-                    part.damperTarget.nodeSettings?.tempoHigh != nil{
-                    isTempoController = true
-                    tempoLow = part.damperTarget.nodeSettings?.tempoLow ?? set.bpm
-                    tempoHigh = part.damperTarget.nodeSettings?.tempoHigh ?? set.bpm
-                }
-            }
-        }
-        
-        //Sequencer to callback to play sampler
-        let callbacker = MIDICallbackInstrument { [self] status, note, velocity in
-            guard let midiStatus = MIDIStatusType.from(byte: status) else {
-                return
-            }
-            if midiStatus == .noteOn {
-                if !isPlaying {
-                    phaseDistOsc.start()
-                    pulseWidthOsc.start()
-                    //TODO: before switch set, set this to osc.stop()
-                    isPlaying = true
-                }
-                
-                //NOTE: midiStatus == .noteOn does not pass chords, just single notes
-                //osc.frequency = note.midiNoteToFrequency()
-                
-                ampEnvPhaseDist.attackDuration = 0.01
-                ampEnvPhaseDist.decayDuration = 0.03
-                ampEnvPhaseDist.sustainLevel = 0.2
-                ampEnvPhaseDist.releaseDuration = 0.2
-                
-                ampEnvPulseWidth.attackDuration = 0.2
-                ampEnvPulseWidth.decayDuration = 0.6
-                ampEnvPulseWidth.sustainLevel = 0.1
-                ampEnvPulseWidth.releaseDuration = 0.2
-                
-                let newNote = UInt8(Double(Int(note)) + pitchShiftPhaseDist)
-                let newVelocity = UInt8(Double(Int(velocity)) * velocities[track.id]!)
-                
-                var noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 1)
-                ampEnvPhaseDist.scheduleMIDIEvent(event: noteOn)
-                
-                noteOn = MIDIEvent(noteOn: newNote, velocity: newVelocity, channel: 1)
-                ampEnvPulseWidth.scheduleMIDIEvent(event: noteOn)
-                
-                phaseDistOsc.$frequency.ramp(to: newNote.midiNoteToFrequency(), duration: freqRampDurPhaseDist)
-                
-                let phaseDistortion: Double = soundModuleParam01[track.id]! * -2.0 + 1.0
-                phaseDistOsc.$phaseDistortion.ramp(to: AUValue(phaseDistortion), duration: 2.0)
-                
-                let moogCutOffFrequencey: Double = soundModuleParam01[track.id]! * 2000
-                moogLadder.$cutoffFrequency.ramp(to: AUValue(moogCutOffFrequencey), duration: 3.0)
-                
-                let microTune: AUValue = newNote.midiNoteToFrequency() + 0.1
-                pulseWidthOsc.$frequency.ramp(to: microTune, duration: freqRampDurPulseWidth)
-                
-                /*
-                 createPhaseSynth, soundModule param controls sequencer speed
-                 */
-                if isTempoController {
-                    
-                    //tempoHigh is relative above set.bpm
-                    //tempoHigh is relative below set.bpm
-                    let tempoRange = (set.bpm + tempoHigh) - (set.bpm + tempoLow)
-                    let playedTempo: Double = tempoRange * tempo[track.id]! + (set.bpm + tempoLow )
-                    
-                    //All sequences get this tempo
-                    for trackId in trackSequencers.keys {
-                        if trackSequencers[trackId] != nil {
-                            trackSequencers[trackId]!.setTempo(playedTempo)
-                        }
-                    }
-                }
-                
-                //TODO add trackNotesOn tracker
-                
-            }
-            else if midiStatus == .noteOff {
-                
-                var newNote = UInt8(Double(Int(note)) + pitchShiftPhaseDist)
-                var noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 1)
-                ampEnvPhaseDist.scheduleMIDIEvent(event: noteOff)
-                
-                newNote = UInt8(Double(Int(note)) + (pitchShiftPhaseDist * 2))
-                noteOff = MIDIEvent(noteOn: newNote, velocity: 0, channel: 1)
-                ampEnvPulseWidth.scheduleMIDIEvent(event: noteOff)
-                
-                //TODO add trackNotesOn tracker
-            }
-        }
-        sequencer.setGlobalMIDIOutput(callbacker.midiIn)
-        
-        oscMixer.addInput(ampEnvPhaseDist)
-        oscMixer.addInput(moogLadder)
-        
-        let chainEffects: Node = chainEffects(for: track, startingNode: ampEnvPhaseDist)
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-        
-        mixer.addInput(ampEnv)
-        
-        return ampEnvPhaseDist as Node
-    }
-    
-    
     
     //MARK: MIDI events
     //Callback after MIDI event funcs
@@ -1241,7 +736,7 @@ final class Conductor {
     
     
     //MARK: Chain effects per track
-    private func chainEffects(
+    internal func chainEffects(
         for track: InstrumentsSet.Track,
         startingNode: Node) -> Node {
         
@@ -1256,7 +751,7 @@ final class Conductor {
     }
     
     //MARK: Add track amplitude envelopes
-    private func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
+    internal func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
         
         //Add Amplitude envelope for
         trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
@@ -1599,17 +1094,21 @@ final class Conductor {
                     velocities[track.id] = value
                 }
                 else { velocities[track.id] = 0 }
+                
             case "tempo":
                 guard let track = set.track(for: damperTarget.trackId) else { return }
                 tempo[track.id] = value
                 
             case "soundModuleParam01":
+                
                 guard let track = set.track(for: damperTarget.trackId) else { return }
                 soundModuleParam01[track.id] = value
             case "soundModuleParam02":
+                
                 guard let track = set.track(for: damperTarget.trackId) else { return }
                 soundModuleParam02[track.id] = value
-                
+            
+            //Used with trigger track, all tracks start playing with the beat
             case "trigger":
                 
                 triggerStartStopGroup(value: value, for: damperTarget)
@@ -1618,6 +1117,7 @@ final class Conductor {
                 
                 triggerMidiDataSlaves(value: value, for: damperTarget)
                 
+            //Used to triger just that track on that moment free of measure
             case "midiData":
                 
                 triggerMidiData(value: value, for: damperTarget)
@@ -1838,7 +1338,7 @@ final class Conductor {
     private func playMidiData(
         with damperTarget: InstrumentsSet.Track.Part.DamperTarget ){
             
-            //Is current trac playing?
+            //Is current track playing?
             let trackWaveActiveUnwrap = trackWaveActive[damperTarget.trackId] ?? false
             
             if !trackWaveActiveUnwrap {
@@ -1852,27 +1352,27 @@ final class Conductor {
             }
         }
     
-    private func playMidiDataAllValues(
-        with track: InstrumentsSet.Track ){
-            
-            //Is current trac playing?
-            let trackWaveActiveUnwrap = trackWaveActive[track.id] ?? false
-            
-            if !trackWaveActiveUnwrap {
-                
-                let damperTarget = track.parts.first!.damperTarget
-                trackWaveActive[damperTarget.trackId] = true
-                
-                let group = damperTarget.midiData!.group
-                for (i,noteNumber) in group.enumerated(){
-                    let samplerId = track.id + String(i)
-                    midiDataGroupNoteNumbers[samplerId]?.append(noteNumber)
-                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
-                    trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-                }
-            }
-        }
-    
+//    private func playMidiDataAllValues(
+//        with track: InstrumentsSet.Track ){
+//
+//            //Is current trac playing?
+//            let trackWaveActiveUnwrap = trackWaveActive[track.id] ?? false
+//
+//            if !trackWaveActiveUnwrap {
+//
+//                let damperTarget = track.parts.first!.damperTarget
+//                trackWaveActive[damperTarget.trackId] = true
+//
+//                let group = damperTarget.midiData!.group
+//                for (i,noteNumber) in group.enumerated(){
+//                    let samplerId = track.id + String(i)
+//                    midiDataGroupNoteNumbers[samplerId]?.append(noteNumber)
+//                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
+//                    trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+//                }
+//            }
+//        }
+//
     //MARK: Triggers
     private func triggerStartStopGroup(
         value: Double,

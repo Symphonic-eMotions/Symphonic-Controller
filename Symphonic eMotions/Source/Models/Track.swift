@@ -188,7 +188,6 @@ extension InstrumentsSet.Track {
     enum InstrumentType: String, Codable {
         case audioBuffer
         case exsSampler
-        case exsSamplerMIDI
         case pulseWidthSynth
         case phaseSynth
     }
@@ -296,14 +295,5 @@ extension InstrumentsSet.Track {
         case midiDataSlave
         //midiData global
         case globalMidiData
-    }
-}
-
-extension InstrumentsSet.Track {
-    
-    enum MidiClipGroup: String, Codable {
-        
-        case chords
-        case seqs
     }
 }

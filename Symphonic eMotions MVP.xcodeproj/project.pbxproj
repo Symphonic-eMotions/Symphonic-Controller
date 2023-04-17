@@ -83,6 +83,10 @@
 		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
 		7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C629899166003D33D3 /* SpriteKitView.swift */; };
 		7CF50F1E29E888200016BAF4 /* NoteNumberToGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F1D29E888200016BAF4 /* NoteNumberToGrid.swift */; };
+		7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */; };
+		7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */; };
+		7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2429ED41CE0016BAF4 /* ExsSampler.swift */; };
+		7CF50F2729ED425C0016BAF4 /* AudioBufferSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */; };
 		7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */; };
 		7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009D29A74FA1001D8A5D /* PartSettings.swift */; };
 		7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */; };
@@ -207,6 +211,10 @@
 		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		7CF327C629899166003D33D3 /* SpriteKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitView.swift; sourceTree = "<group>"; };
 		7CF50F1D29E888200016BAF4 /* NoteNumberToGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberToGrid.swift; sourceTree = "<group>"; };
+		7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseWidthSynth.swift; sourceTree = "<group>"; };
+		7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseSynth.swift; sourceTree = "<group>"; };
+		7CF50F2429ED41CE0016BAF4 /* ExsSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExsSampler.swift; sourceTree = "<group>"; };
+		7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferSampler.swift; sourceTree = "<group>"; };
 		7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSettings.swift; sourceTree = "<group>"; };
 		7CFA009D29A74FA1001D8A5D /* PartSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartSettings.swift; sourceTree = "<group>"; };
 		7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterSettings.swift; sourceTree = "<group>"; };
@@ -387,6 +395,17 @@
 			path = FullViews;
 			sourceTree = "<group>";
 		};
+		7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */ = {
+			isa = PBXGroup;
+			children = (
+				7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */,
+				7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */,
+				7CF50F2429ED41CE0016BAF4 /* ExsSampler.swift */,
+				7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */,
+			);
+			path = InstrumentTypes;
+			sourceTree = "<group>";
+		};
 		7CFA009929A74E01001D8A5D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +422,7 @@
 		7CFA009A29A74E5A001D8A5D /* Conductor */ = {
 			isa = PBXGroup;
 			children = (
+				7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */,
 				C0C512A427075E9500DE3393 /* Dampers */,
 				C0C5129C27075D9500DE3393 /* Effects */,
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
@@ -776,6 +796,7 @@
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,
+				7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */,
 				7C1FB0B429DE0B2600621909 /* LoopsToLevelView.swift in Sources */,
 				7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */,
 				7C4EBB9829D7879F00958954 /* SelectGrid.swift in Sources */,
@@ -793,6 +814,7 @@
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,
 				7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */,
 				C069590426B4E0C7002EB522 /* Track.swift in Sources */,
+				7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */,
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7CEFB9D028734205006A191F /* FullView.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,
@@ -802,8 +824,10 @@
 				7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */,
 				7C7502E929BDE89C00F55CA3 /* SensitivityView.swift in Sources */,
 				7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */,
+				7CF50F2729ED425C0016BAF4 /* AudioBufferSampler.swift in Sources */,
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
 				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
+				7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
 				C084FFEE26B31534009A4D0C /* SidebarView.swift in Sources */,
