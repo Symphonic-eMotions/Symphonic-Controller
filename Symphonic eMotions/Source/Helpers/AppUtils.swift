@@ -61,6 +61,101 @@ final class AppUtils {
         return instrumentSet
     }
     
+    //MARK: Set setSetings
+    // - Structure to mutate and save as Instrument Set
+    static func setSettings(
+        instrumentSet: InstrumentsSet,
+        sessionSettings: SessionSettings
+    ) -> SetSettings {
+        
+        let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
+        
+        let skin: InstrumentsSet.Skin = instrumentSet.skin
+        var tracks: OrderedDictionary<String,TrackSettings> = [:]
+        let tracksLoaded = instrumentSet.tracks
+        //How big is this grid
+        let cells = instrumentSet.columns * instrumentSet.rows
+        //Keep track of partNumber for variations track/instrument Color...
+        var partNumber: Int = 0
+        //Loop trhough the loaded tracks
+        for trackLoaded in tracksLoaded {
+            
+            //First set parts of this track
+            partNumber = 0
+            var parts: OrderedDictionary<String, PartSettings> = [:]
+            let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
+            for partLoaded in trackLoaded.parts {
+                
+                let part = PartSettings(
+                    partId: partLoaded.id,
+                    partName: partLoaded.instrumentPartName,
+                    partNumber: partNumber,
+                    rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
+                    rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
+                    areaOfInterest: partLoaded.areaOfInterest,
+                    areaOfInterestColor: self.getPartColors(
+                        trackColor: trackLoaded.instrumentColor,
+                        areaOfInterest: partLoaded.areaOfInterest
+                    ),
+                    damperTarget: partLoaded.damperTarget,
+                    dontDrawVisual: partLoaded.dontDrawVisual ?? false
+                )
+                parts[partLoaded.id] = part
+                partNumber += 1
+            }
+            
+            var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
+            if loopsToLevel.count != instrumentSet.levels.count {
+                //We've got another amount of levels, correct
+                loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
+            }
+            
+            var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
+            if loopsToGrid.count != cells {
+                //We have a another amount of cells, correct
+                loopsToGrid = Array(repeating: 0, count: cells)
+            }
+            
+            let midiGroup:[Int] = trackLoaded.midiGroup ?? []
+            
+            let track = TrackSettings(
+                trackId: trackLoaded.id,
+                trackName: trackLoaded.instrumentName,
+                trackType: trackLoaded.trackType ?? .midiClipPosition,
+                instrumentVolume: trackLoaded.volume,
+                instrumentColor: trackLoaded.instrumentColor,
+                midiFile: trackLoaded.midiFiles!.first!.fileName,
+                midiGroup: midiGroup,
+                loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
+                loopsToLevel: loopsToLevel,
+                loopsToGrid: loopsToGrid,
+                loopsToGridMapped: AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: firstAreaOfInterest,
+                    loopsToGrid: loopsToGrid
+                ),
+                levels: trackLoaded.levels,
+                parts: parts)
+            
+            tracks[trackLoaded.id] = track
+        }
+        let setSettings = SetSettings(
+            setName: instrumentSet.name,
+            customName: instrumentSet.customName,
+            setURL: sessionSettings.setURL,
+            defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
+            rows: instrumentSet.rows,
+            columns: instrumentSet.columns,
+            levelSpeed: instrumentSet.levelSpeed,
+            levels: instrumentSet.levels,
+            bpm: instrumentSet.bpm,
+            masterEffects: masterEffects,
+            tracks: tracks,
+            skins: skin
+        )
+        
+        return setSettings
+    }
+    
     //MARK: Write Instrument Set
     //Write set settings to file structure and return used file name
     static func createWorkingFile(
@@ -136,10 +231,8 @@ final class AppUtils {
                     levelPart: part.damperTarget.nodeSettings?.levelPart,
                     tempoLow: part.damperTarget.nodeSettings?.tempoLow,
                     tempoHigh: part.damperTarget.nodeSettings?.tempoHigh,
-                    
                     rampSpeed: setSettings.tracks[track.trackId]!.parts[part.id]!.rampUp,
                     rampSpeedDown: setSettings.tracks[track.trackId]!.parts[part.id]!.rampDown,
-                    
                     coolDownTime: part.damperTarget.nodeSettings?.coolDownTime
                 )
                 
@@ -238,6 +331,9 @@ final class AppUtils {
         return storeInstrumentSet
     }
     
+    
+    
+    //MARK: Set SESSION settings
     static func setSessionSetting() -> SessionSettings {
         
         let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
@@ -275,97 +371,6 @@ final class AppUtils {
         )
         
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
-    }
-    
-    //MARK: SetSetings
-    // - Structure to mutate and save as Instrument Set
-    static func setSettings(
-        instrumentSet: InstrumentsSet,
-        sessionSettings: SessionSettings
-    ) -> SetSettings {
-        
-        let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
-        
-        let skin: InstrumentsSet.Skin = instrumentSet.skin
-        var tracks: OrderedDictionary<String,TrackSettings> = [:]
-        let tracksLoaded = instrumentSet.tracks
-        //How big is this grid
-        let cells = instrumentSet.columns * instrumentSet.rows
-        //Keep track of partNumber for variations track/instrument Color...
-        var partNumber: Int = 0
-        //Loop trhough the loaded tracks
-        for trackLoaded in tracksLoaded {
-            
-            //First set parts of this track
-            partNumber = 0
-            var parts: OrderedDictionary<String, PartSettings> = [:]
-            let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
-            for partLoaded in trackLoaded.parts {
-                
-                let part = PartSettings(
-                    partId: partLoaded.id,
-                    partName: partLoaded.instrumentPartName,
-                    partNumber: partNumber,
-                    rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
-                    rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
-                    areaOfInterest: partLoaded.areaOfInterest,
-                    areaOfInterestColor: self.getPartColors(trackColor: trackLoaded.instrumentColor, areaOfInterest: partLoaded.areaOfInterest),
-                    dontDrawVisual: partLoaded.dontDrawVisual ?? false
-                )
-                parts[partLoaded.id] = part
-                partNumber += 1
-            }
-            
-            var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
-            if loopsToLevel.count != instrumentSet.levels.count {
-                //We've got another amount of levels, correct
-                loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
-            }
-            
-            var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
-            if loopsToGrid.count != cells {
-                //We have a another amount of cells, correct
-                loopsToGrid = Array(repeating: 0, count: cells)
-            }
-            
-            let midiGroup:[Int] = trackLoaded.midiGroup ?? []
-            
-            let track = TrackSettings(
-                trackId: trackLoaded.id,
-                trackName: trackLoaded.instrumentName,
-                trackType: trackLoaded.trackType ?? .midiClipPosition,
-                instrumentVolume: trackLoaded.volume,
-                instrumentColor: trackLoaded.instrumentColor,
-                midiFile: trackLoaded.midiFiles!.first!.fileName,
-                midiGroup: midiGroup,
-                loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
-                loopsToLevel: loopsToLevel,
-                loopsToGrid: loopsToGrid,
-                loopsToGridMapped: AppUtils.areaOfInterestGridMapped(
-                    areaOfInterest: firstAreaOfInterest,
-                    loopsToGrid: loopsToGrid
-                ),
-                levels: trackLoaded.levels,
-                parts: parts)
-            
-            tracks[trackLoaded.id] = track
-        }
-        let setSettings = SetSettings(
-            setName: instrumentSet.name,
-            customName: instrumentSet.customName,
-            setURL: sessionSettings.setURL,
-            defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
-            rows: instrumentSet.rows,
-            columns: instrumentSet.columns,
-            levelSpeed: instrumentSet.levelSpeed,
-            levels: instrumentSet.levels,
-            bpm: instrumentSet.bpm,
-            masterEffects: masterEffects,
-            tracks: tracks,
-            skins: skin
-        )
-        
-        return setSettings
     }
     
     static func areaOfInterestGridMapped(

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct SelectGrid: View {
+//Set the grid size of this variation
+struct SelectGridSize: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @State var localGridRow: Int

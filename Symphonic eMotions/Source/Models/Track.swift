@@ -279,13 +279,19 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
     }
 }
 
-
-
 extension InstrumentsSet.Track {
     
     enum StartType: String, Codable {
+        
+        //MARK: Global
+        //Start midiFiles global
         case global
-        case none
+        //Start noteNumber global
+        case globalMidiData
+        
+        
+        
+//        case none
         //Trigger start stop
         case trigger
         case triggerSlave
@@ -294,6 +300,6 @@ extension InstrumentsSet.Track {
         case triggerMidiDataSlaves
         case midiDataSlave
         //midiData global
-        case globalMidiData
+        
     }
 }

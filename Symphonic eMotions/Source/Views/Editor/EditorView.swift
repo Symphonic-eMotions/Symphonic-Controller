@@ -80,7 +80,7 @@ struct EditorView: View {
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
                         
-                        SelectGrid(
+                        SelectGridSize(
                             setInfoModel: setInfoModel,
                             localGridRow: setInfoModel.setSettings.gridRows
                         )

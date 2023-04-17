@@ -5,7 +5,6 @@
 //  Created by Mihai Fratu on 30.09.2021.
 //
 
-import Foundation
 import AudioKit
 import SoundpipeAudioKit
 import AVFAudio
@@ -27,69 +26,53 @@ final class Conductor {
     //trackSequencers holds MIDI file information
     //Is the play head in the score
     //Controls speed, loop (length)
-    //The playhead can only move in time
-    private var trackSequencers: [String: AppleSequencer] = [:]
+    //The playhead only moves lineair
+    internal var trackSequencers: [String: AppleSequencer] = [:]
     //To move the playhead to another part in the score:
-    //Copy part to move to current length
+    //Copy part to move to current length playing
     private var trackSequencersMemory: [String: AppleSequencer] = [:]
     //Modifying midi like velocity
-    //TODO: Modify note material
     private var trackSequencersCallbackers: [String: MIDICallbackInstrument] = [:]
-    
-    private var isSequencerPlaying: [String: Bool] = [:]
-    
     //Velocities per track to be controlled by intrumentParts
     internal var velocities: [String: Double] = [:]
-    //Tempo, 1 part for all sequencers. So have only 1 part per instrument set
-    //NB Tempo only works for velocity sensitive instruments
-    //TODO: Deprecate old tempo
-    private var tempo: [String: Double] = [:]
-    
+    //Modify tempo while playing
     private var currentTempo: Double = 0
     
-    //TODO generic var for controlling Synth and Sampler params
+    
+    //MARK: InstrumentTypes
     internal var soundModuleParam01: [String: Double] = [:]
     internal var soundModuleParam02: [String: Double] = [:]
     internal var soundModuleVolume: [String: Double] = [:]
     
-    //What part of the MIDI clip are we playing.
-    private var triggerCurrentMIDIpart: [String: Int] = [:]
-    private var globalCurrentMIDIclip: [String: Int] = [:]
-    private var currentMIDIclip: [String: Int] = [:]
-    //Index = level, value is midiclip
-//    private var levelToMidiClip: [String: Int] = [:]
     
-    
-    //Monitor per instrument movement "wave"
-    //A track can have just one wave
-    //Functions using wave
-    //-Trigger Sequencer
-    //-Trigger MidiData
-    //- Scorewander
-    
-    private var trackWaveActive: [String: Bool] = [:]
-    private var trackWaveStart: [String: Duration] = [:]
-    private var trackWavePreviousValue: [String: Double] = [:]
-    private var trackWaveStop: [String: Duration] = [:]
-    private var trackWaveInCooldown: [String: Bool] = [:]
-    
-    //Start event at moment in time
-    private var scorePartWatingToChange: [String: Double] = [:]
-    
+    //MARK: StartTypes
+    internal var trackWaveActive: [String: Bool] = [:]
+    internal var scorePartWatingToChange: [String: Double] = [:]
+    //Value to calculate direction of intensity of movement
+    internal var trackWavePreviousValue: [String: Double] = [:]
     //Holds notes which are used in sequencer replacement.
     //This is the basis of an Arpegiator
     //"note number index (midiData group)" and note number combination
-    private var midiDataGroupNoteNumbers: [String: [Int]] = [:]
-    private var midiDataGroupIndex: [String: [Int]] = [:]
+    internal var midiDataGroupNoteNumbers: [String: [Int]] = [:]
+    internal var midiDataGroupIndex: [String: [Int]] = [:]
     
-    //Keep track of maxIndex values per track
+    
+    //MARK: ValuesDidChange per Instrument Part
+    //Ramp values containers stored per Instrument.Part
+    public var rampValues: [String: Double] = [:]
+    //Ramp up and Ramp down values from struct and control from editor
+    public var rampUp: [String: Double] = [:]
+    public var rampDown: [String: Double] = [:]
+    //Volume also controlled by editor
+    public var volume: [String: Double] = [:]
+    
+    //MARK: Current played midi clip per track
+    private var globalCurrentMIDIclip: [String: Int] = [:]
+    //maxIndexParts holds the position controls clip grid
     private var maxIndexParts: [String: Int] = [:]
-    //keep track of delta start times
-//    private var deltaStartTimePart: [String: DispatchTime] = [:]
     
-    //TODO: Make generic container for samplers and synths
     //Sampler container
-    private var trackSamplers: [String: MIDISampler] = [:]
+    internal var trackSamplers: [String: MIDISampler] = [:]
     //Synth container
     private var trackInstruments: [String: Node] = [:]
     
@@ -100,27 +83,13 @@ final class Conductor {
     //Amplitude enelopes for muting tracks for levels
     //TODO: init of these needs to be at 0 (-90Db)
     private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
-    
-    //Feedback in instrumentpart, stored by partId
-    //var to smoothen out the raw values from image differece
-//    private var previousValueSmooth: [String: Double] = [:]
-    
-    //Ramp values containers stored per Instrument.Part
-    public var rampValues: [String: Double] = [:]
-    //Ramp up and Ramp down values from struct and control from editor
-    public var rampUp: [String: Double] = [:]
-    public var rampDown: [String: Double] = [:]
-    public var volume: [String: Double] = [:]
-    
-    //TODO: add minimum value to interface
-    //TODO: add maximimum value to structure (from maximum on reverse calculation can be done)
-    
+
+    //MARK: Combine variables for communication to user interface
     //Global for the status control and feedback of this class
     var isConductorPlayingSubject = CurrentValueSubject<Bool, Never>(false)
     
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
-    
     
     //InstrumentParts to SpriteKit through PassthroughSubject
     var spriteKitParts0a = PassthroughSubject<(Int,Int,Double), Never>()
@@ -133,7 +102,7 @@ final class Conductor {
     var spriteKitParts3b = PassthroughSubject<(Int,Int,Double), Never>()
     
     //The main instrument set structure. A Musical set is loaded into this struct
-    private var set: InstrumentsSet
+    internal var set: InstrumentsSet
 
     //MARK: Init
     init(set: InstrumentsSet) {
@@ -143,11 +112,8 @@ final class Conductor {
         audioEngine = AudioEngine()
         mixer = Mixer()
         mixerMaster = Mixer()
-        
         loadMaster(mixer: mixer)
-        
         audioEngine.output = mixerMaster
-        
         loadTracks(currentSetLevel: 0)
         
         //TODO: Don't load sound effects in .zorg
@@ -156,35 +122,20 @@ final class Conductor {
     
     //Function to reset variables, is called on change of set
     public func setInitialState() {
-        isSequencerPlaying = [:]
         velocities = [:]
-        tempo = [:]
         soundModuleParam01 = [:]
         soundModuleParam02 = [:]
         soundModuleVolume = [:]
-        
-        triggerCurrentMIDIpart = [:]
         globalCurrentMIDIclip = [:]
-        currentMIDIclip = [:]
-        
         scorePartWatingToChange = [:]
-        
         trackWaveActive = [:]
-        trackWaveStart = [:]
         trackWavePreviousValue = [:]
-        trackWaveStop = [:]
-        trackWaveInCooldown = [:]
-        
         midiDataGroupNoteNumbers = [:]
         midiDataGroupIndex = [:]
-        
         trackAmpEnvelopes = [:]
-//        previousValueSmooth = [:]
-        rampValues = [:]
         rampUp = [:]
         rampDown = [:]
         volume = [:]
-        
         trackSamplers = [:]
         trackSequencersCallbackers = [:]
         trackSequencers = [:]
@@ -300,16 +251,12 @@ final class Conductor {
                     else {
                         startVelocity = 1.0
                     }
-                    rampValues[part.id] = 0.0
+//                    rampValues[part.id] = 0.0
                     rampUp[part.id] = part.damperTarget.nodeSettings!.rampSpeed ?? -1
                     rampDown[part.id] = part.damperTarget.nodeSettings!.rampSpeedDown ?? -1
                     maxIndexParts[part.id] = 0
-//                    deltaStartTimePart[part.id] = DispatchTime.now()
                 }
             }
-             
-            //Tempo defaults to 1 times set BPM
-            tempo[track.id] = 1
             velocities[track.id] = startVelocity
             
             //Load sequencers
@@ -335,26 +282,17 @@ final class Conductor {
             let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
             trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
             muteTrack(trackId: track.id)
-            
-            isSequencerPlaying[track.id] = false
-            
+                        
             soundModuleParam01[track.id] = 0
             soundModuleParam02[track.id] = 0
             soundModuleVolume[track.id] = 0
             
-            trackWaveActive[track.id] = false
-            trackWaveStart[track.id] = Duration(beats: 0.0)
-            trackWaveStop[track.id] = Duration(beats: 0.0)
-            
             midiDataGroupNoteNumbers[track.id] = []
             midiDataGroupIndex[track.id] = [0]
             
-            triggerCurrentMIDIpart[track.id] = 0
-            currentMIDIclip[track.id] = 0
             globalCurrentMIDIclip[track.id] = 0
             
             scorePartWatingToChange[track.id] = 0
-            trackWaveInCooldown[track.id] = false
             trackWavePreviousValue[track.id] = 0
         }
     }
@@ -505,13 +443,13 @@ final class Conductor {
             {
                 let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOn)
-                unMuteTrack(trackId: track.id)
+//                unMuteTrack(trackId: track.id)
             }
             //Mute
             else {
                 let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
-                muteTrack(trackId: track.id)
+//                muteTrack(trackId: track.id)
                 
             }
         }
@@ -589,17 +527,11 @@ final class Conductor {
             }
             sequencer.setLength(duration)
             
-//            if track.startType == .triggerSlaveMaxIndex {
-//                //FIXME: Not responding?
-//                sequencer.disableLooping()
-//            }
-//            else{
-                sequencer.setLoopInfo(duration, loopCount: 0)
-                sequencer.enableLooping()
-//            }
-            
+            sequencer.setLoopInfo(duration, loopCount: 0)
+            sequencer.enableLooping()
+
             //loop means, we have an actual instrument, not a sequencer loaded for copy reference
-            if length == "loop" {
+            if length == "loop" {	
                 
                 switch track.instrumentType {
                 
@@ -613,16 +545,13 @@ final class Conductor {
                     
                     
                     if isVelocitySensitive {
-                            
-                        let tempoRange = tempoRange(for: track)
-                        
+                                                    
                         //Create MIDI callback instrument
                         //track is used for just the ID
                         trackSequencersCallbackers[track.id] = callBackInstrument(
                             for: track.id,
                                controlling: trackSamplers[track.id]!,
-                               on: midiChannels[track.id]!,
-                               within: tempoRange)
+                               on: midiChannels[track.id]!)
                         
                         sequencer.setGlobalMIDIOutput(trackSequencersCallbackers[track.id]!.midiIn)
                     }
@@ -658,24 +587,24 @@ final class Conductor {
             return (isVelocitySensitive)
         }
     
-    private func tempoRange(
-        for track: InstrumentsSet.Track) -> (Double,Double) {
-            
-            var tempoLow = set.bpm
-            var tempoHigh = set.bpm
-            if track.parts.count > 0 {
-                for part in track.parts {
-                    if part.damperTarget.parameter == "tempo" &&
-                        part.damperTarget.nodeSettings?.tempoLow != nil &&
-                        part.damperTarget.nodeSettings?.tempoHigh != nil{
-                        
-                        tempoLow = part.damperTarget.nodeSettings?.tempoLow ?? set.bpm
-                        tempoHigh = part.damperTarget.nodeSettings?.tempoHigh ?? set.bpm
-                    }
-                }
-            }
-            return (tempoLow,tempoHigh)
-        }
+//    private func tempoRange(
+//        for track: InstrumentsSet.Track) -> (Double,Double) {
+//
+//            var tempoLow = set.bpm
+//            var tempoHigh = set.bpm
+//            if track.parts.count > 0 {
+//                for part in track.parts {
+//                    if part.damperTarget.parameter == "tempo" &&
+//                        part.damperTarget.nodeSettings?.tempoLow != nil &&
+//                        part.damperTarget.nodeSettings?.tempoHigh != nil{
+//
+//                        tempoLow = part.damperTarget.nodeSettings?.tempoLow ?? set.bpm
+//                        tempoHigh = part.damperTarget.nodeSettings?.tempoHigh ?? set.bpm
+//                    }
+//                }
+//            }
+//            return (tempoLow,tempoHigh)
+//        }
     
     private func collectMidiChannels() -> [String: Int] {
         
@@ -693,8 +622,8 @@ final class Conductor {
     private func callBackInstrument(
         for trackId: String,
         controlling sampler: MIDISampler,
-        on midiChannel: Int,
-        within tempoRange: (Double,Double)) -> MIDICallbackInstrument {
+        on midiChannel: Int
+    ) -> MIDICallbackInstrument {
                         
             //Sequencer to callback to play sampler
             let midiCallBackInstrument =  MIDICallbackInstrument { [self] status, note, velocity in
@@ -711,20 +640,6 @@ final class Conductor {
                     let newVelocity = UInt8( max(Double(velocity) * velocities[trackId]!, 0 ))
                     
                     sampler.play(noteNumber: note, velocity: newVelocity, channel: MIDIChannel(midiChannel))
-                    
-                    if tempoRange.0 != tempoRange.1 {
-                        //tempoHigh is relative above set.bpm
-                        //tempoLow is relative below set.bpm, probably negative
-                        let tempoRangeOffset = (set.bpm + tempoRange.1) - (set.bpm + tempoRange.0)
-                        let playedTempo: Double = tempoRangeOffset * tempo[trackId]! + (set.bpm + tempoRange.0 )
-                        
-                        //All sequences get this tempo
-                        for allTrckId in trackSequencers.keys {
-                            if trackSequencers[allTrckId] != nil {
-                                trackSequencers[allTrckId]!.setTempo(playedTempo)
-                            }
-                        }
-                    }
                 }
                 else if midiStatus == .noteOff {
                     
@@ -775,392 +690,7 @@ final class Conductor {
             
         return finalNode as Node
     }
-    
-    // MARK: valuesDidChange
-    public func valuesDidChange(
-        //Values for movement calculations
-        values: [[AreaValues]],
-        //Dynamic area's of interest
-        setSettings: SetSettings,
-        //Is track present in current level
-        currentSetLevel: Double,
-        //Do we want to show this part in part feedback visualisation
-        partFeedbackTrackID: String,
-        partFeedbackPartID: String
-    ) -> Double {
-        
-        var localCurrentSetLevel: Double = currentSetLevel
-        
-        let value: Double = values.flatMap { $0 }
-            .map { $0.average }
-            .reduce(0, +) / Double(values.flatMap { $0 }.count)
-        
-        //New level increment
-        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-            levelSpeed: setSettings.levelSpeed,
-            currentSetLevel: currentSetLevel,
-            value: value
-        )
-        var trackNr: Int = 0
-        var partNr: Int = 0
-        
-        //Loop through all tracks per value
-        set.tracks.forEach { track in
-            //Reset part per track
-            partNr = 0
-            
-            //If muted return
-            if track.muted != nil && track.muted == true {
-                return
-            }
-            //No parts return
-            if track.parts.count == 0 {
-                return
-            }
-            
-            //Loop through all parts per track per value
-            track.parts.forEach { part in
-                
-                let valuesMapped = setSettings.tracks[track.trackId]!.parts[part.id]!.indexes(
-                    rows: setSettings.gridRows,
-                    columns: setSettings.gridColumns).map {
-                        values[$0.row][$0.column].scaledValue
-                    }
-                guard !valuesMapped.isEmpty else { return }
-                
-                //Find highest value (maximum) with it's index
-                let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
-                
-//                    let boostFactor = setSettings.tracks[track.trackId]!.parts[part.id]?.areaOfIntersetBoostFactor
-                
-                //Have a var for MaxIndex to number of MidiClips range
-                let maxIndexraw = Int(maxIndexTupple.0)
-                var maxIndexMidiClips = maxIndexraw
-                
-                //MaxMapped (highest value found in all of AreaOfInterest) value to work with
-                var value = maxIndexTupple.1
-                if value.isNaN {
-                    value = 0
-                }
-                
-                //MARK: index to midi clip conversion
-                //Change order of indeces for mapping with events
-                if setSettings.tracks[track.trackId]!.trackType == .midiClipPosition && partNr == 0 {
-                    
-                    let mapMaxIndex = setSettings.tracks[track.trackId]!.loopsToGridMapped
-                    
-                    maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
-                    forwardMaxIndex(
-                        for: part.damperTarget,
-                        maxIndex: maxIndexMidiClips
-                    )
-                }
-                
-                //Ad damping curves
-                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
-                //Ad ramps from interface!
-                value = valueRamper(value: value, rampId: part.id)
-                
-                //Forward to target
-                forward(
-                    value: value,
-                    for: part.damperTarget,
-                    currentSetLevel: localCurrentSetLevel
-                )
-                
-                if setSettings.defaultSkin == .spriteKit {
-                    forwardSpriteKit(
-                        trackNr: trackNr,
-                        partNr: partNr,
-                        ramped: value,
-                        areaOfInterest: (setSettings.tracks[track.id]?.parts[part.id]!.areaOfInterest)!,
-                        maxIndexRaw: maxIndexraw,
-                        maxIndex: maxIndexMidiClips
-                    )
-                }
-                else if setSettings.defaultSkin == .swiftUI {
-                    //Check part feedback interface state for part feedback visualisation
-                    if partFeedbackTrackID == track.id && partFeedbackPartID == part.id {
-                        forwardPartFeedback(
-                            ramped: value
-                        )
-                    }
-                }
-                
-                partNr += 1
-            }
-    
-            
-            trackNr += 1
-        }
-        
-        return localCurrentSetLevel
-    }
-    
-    private func valueDamper( dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode, value: Double) -> Double {
-        
-        var valueRamped: Double = value
-        
-        if dampMode == .easeInCircular {
-            valueRamped = EaseInCircularDamper().damp(value: valueRamped)
-        }
-        else if dampMode == .easeInCubic {
-            valueRamped = EaseInCubicDamper().damp(value: valueRamped)
-        }
-        else if dampMode == .easeOutCubic {
-            valueRamped = EaseOutCubicDamper().damp(value: valueRamped)
-            //Remove unwanted offset
-            valueRamped = valueRamped - 0.25
-            valueRamped = valueRamped * 1.25
-        }
-        else if dampMode == .easeInOutCubic {
-            valueRamped = EaseInOutCubicDamper().damp(value: valueRamped)
-            //Add missing top values
-            valueRamped = valueRamped * 1.25
-        }
-        
-        return valueRamped
-    }
-    
-    private func valueRamper(value: Double, rampId: String) -> Double {
-        
-        var valueRamped: Double = value
-        
-        //We detect a value higher compared to previous one, we increase
-        if valueRamped > rampValues[rampId]! {
-            valueRamped = min(rampValues[rampId]! + valueRamped * self.rampUp[rampId]!, 0.9999999)
-        }
-        //Otherwise we need to go back to 0
-        else{
-            valueRamped = max(rampValues[rampId]! - (1 - valueRamped) * self.rampDown[rampId]!, 0)
-        }
-        
-        //Memmber berries
-        rampValues[rampId] = valueRamped
-        
-        return valueRamped
-    }
-    
-    //MARK: Forwarders
-    //Forward Part Feedback
-    public func forwardPartFeedback( ramped: Double ) -> Void {
-        forwardRampedPartFeedback.send(ramped)
-    }
-    
-//    func reverseNumber(number:Int, min:Int, max:Int) -> Int{
-//        return (max + min) - number
-//    }
-    
-    public func forwardSpriteKit(
-        trackNr: Int,
-        partNr: Int,
-        ramped: Double,
-        areaOfInterest: [Int],
-        maxIndexRaw: Int,
-        maxIndex: Int
-    ) -> Void {
-        
-//        let allCells = areaOfInterest.filter { int in
-//            return int == 1
-//        }
-        //Reverse maxIndexes for inverted Y axis in SpriteKit
-//        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
-        
-        if trackNr == 0 {
-            if partNr == 0 {
-                spriteKitParts0a.send((maxIndexRaw,maxIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts0b.send((maxIndexRaw,maxIndex,ramped))
-            }
-        }
-        else if trackNr == 1 {
-            if partNr == 0 {
-                spriteKitParts1a.send((maxIndexRaw,maxIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts1b.send((maxIndexRaw,maxIndex,ramped))
-            }
-        }
-        else if trackNr == 2 {
-            if partNr == 0 {
-                spriteKitParts2a.send((maxIndexRaw,maxIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts2b.send((maxIndexRaw,maxIndex,ramped))
-            }
-        }
-        else if trackNr == 3 {
-            if partNr == 0 {
-                spriteKitParts3a.send((maxIndexRaw,maxIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts3b.send((maxIndexRaw,maxIndex,ramped))
-            }
-        }
-    }
-    
-    //Forward damper data
-    private func forward(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        currentSetLevel: Double
-    ) {
-        switch damperTarget.nodeType {
-        case .instrument:
-            forwardInstrumment(value: value, on: damperTarget.trackId, for: damperTarget.parameter)
-        case .sequencer:
-            forwardSequencer(
-                value: value,
-                for: damperTarget,
-                currentSetLevel: currentSetLevel)
-        case .effect:
-            forwardEffect(value: value, for: damperTarget)
-        case .master:
-            return
-        }
-    }
-    
-    public func forwardInstrumment(value: Double, on trackId: String, for parameter: String) {
-        switch parameter {
-        case "volume":
-            
-            for track in set.tracks {
-                if track.id == trackId {
-                    if track.instrumentType == .exsSampler {
-                        trackSamplers[trackId]?.volume = AUValue(value)
-                    }
-                    else {
-                        soundModuleVolume[trackId] = value
-                    }
-                }
-            }
-            
-        case "amplitude":
-            
-            for track in set.tracks {
-                if track.id == trackId {
-                    let ranged = RangeConverter.valueToRange(range: [-90,12], value: value)
-                    if track.instrumentType == .exsSampler {
-                        trackSamplers[trackId]?.amplitude = AUValue(ranged)
-                    }
-                    else {
-                        let ranged = RangeConverter.valueToRange(range: [-40,40], value: value)
-                        soundModuleVolume[trackId] = ranged
-                    }
-                }
-            }
-            
-            
-        case "samplerCC9":
-            trackSamplers[trackId]?.midiCC(UInt8(9), value: UInt8(value * 127), channel: UInt8(1))
-        default:
-            print("Instrument damperTarget.parameter Not mapped: \(parameter)")
-        }
-    }
-    
-    private func forwardMaxIndex(
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        maxIndex: Int
-//        ,
-//        isNewIndex: Bool
-    ) {
-    
-        //Low level midi data control based on index of activity
-//        if maxIndex != -1 && isNewIndex {
-            
-            guard let track = set.track(for: damperTarget.trackId) else { return }
-            let maxIndexPart = maxIndex % track.midiFiles!.first!.loopLength.count
-            //Copy MIDI part based on max movement cell index
-            switchTrackMidiPart(track, maxIndexPart)
-//        }
-    }
-    
-    private func forwardSequencer(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        currentSetLevel: Double
-    ) {
-            
-            //Parameter controllers
-            switch damperTarget.parameter {
-            
-            case "velocity":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                //Check wether track.id is in current level
-                
-                if track.levels.contains(Int(currentSetLevel)) {
-                    velocities[track.id] = value
-                }
-                else { velocities[track.id] = 0 }
-                
-            case "tempo":
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                tempo[track.id] = value
-                
-            case "soundModuleParam01":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                soundModuleParam01[track.id] = value
-            case "soundModuleParam02":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                soundModuleParam02[track.id] = value
-            
-            //Used with trigger track, all tracks start playing with the beat
-            case "trigger":
-                
-                triggerStartStopGroup(value: value, for: damperTarget)
-            
-            case "triggerMidiDataSlaves":
-                
-                triggerMidiDataSlaves(value: value, for: damperTarget)
-                
-            //Used to triger just that track on that moment free of measure
-            case "midiData":
-                
-                triggerMidiData(value: value, for: damperTarget)
-                
-            case "playMidiData":
-                
-                playMidiData(with: damperTarget)
-            
-//                case .rampToMIDIclip:
-//
-//                    scoreWandererRampToMIDIclip(
-//                        value: value,
-//                        for: damperTarget,
-//                        clipLengths,
-//                        midiClipVariations
-//                    )
-//
-//                case .valueToMIDIclip:
-//
-//                    scoreWandererValueToMIDIclip(
-//                        value: value,
-//                        for: damperTarget,
-//                        clipLengths,
-//                        midiClipVariations
-//                    )
-//                }
-                
-            default:
-                print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
-        }
-    }
-    
-//    private func isPartDeltaTimeRunning(partId: String, partDeltaTime: Int) -> Bool {
-//
-//        var isRunning = false
-//
-//        if deltaStartTimePart[partId]! + .milliseconds(partDeltaTime) > DispatchTime.now() {
-//            isRunning = true
-//        }
-//
-//        return isRunning
-//    }
-    
+
     private func valueIndexChanged(maxIndex: Int, trackId: String) -> Bool{
         if maxIndexParts[trackId] != maxIndex {
             maxIndexParts[trackId] = maxIndex
@@ -1169,16 +699,7 @@ final class Conductor {
         return false
     }
     
-    private func forwardEffect(value: Double, for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
-        
-        guard let track = set.track(for: damperTarget.trackId) else { return }
-        
-        guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
-        
-        guard let effect = track.effect(for: effectType) else { return }
-        
-        effect.apply(value: value, with: damperTarget)
-    }
+    
     
     //MARK: Forward Master Track
     public func forwardMasterTrackEffect(value: Double, nodeName: String, parameter: String, parameterRange: [Double] ) {
@@ -1194,7 +715,7 @@ final class Conductor {
     /*
      Here we have level increment logic
      */
-    private func getAndOrIncreaseCurrentSetLevel(
+    internal func getAndOrIncreaseCurrentSetLevel(
         levelSpeed: Double,
         currentSetLevel: Double,
         value: Double ) -> Double {
@@ -1209,368 +730,6 @@ final class Conductor {
         
         //0 ----> 1 Level part = 60 translates to 0.6 parts
         return currentSetLevel
-    }
-    
-    //MARK: MidiData
-    //TODO: Hier ben ik 13 april 2023
-    //Idee maak het wachten op trigger window zichtbaar, balletje dat je wegslaat
-    //vertrek snelheid is velocity van triggermoment
-    private func triggerMidiData(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget ){
-            
-            //The mimimal amount of movement before looking up a trigger
-            guard let minimalLevel = damperTarget.nodeSettings?.minimalLevel else { return }
-            
-            //Is there a wave present?
-            if trackWaveActive[damperTarget.trackId] ?? false {
-                
-                //End wave, stop note
-                //Keeps possibility multiple note ons
-                if value < (minimalLevel - (minimalLevel/2)) {
-                    
-                    //The trigger wave is over
-                    trackWaveActive[damperTarget.trackId] = false
-                    
-                    //First in first out
-                    guard let noteNumber = midiDataGroupNoteNumbers[damperTarget.trackId]?.first else { return }
-                    midiDataNoteOff(noteNumber: noteNumber, samplerId: damperTarget.trackId)
-                }
-            }
-            //There's no wave present
-            else {
-                
-                //Is there enough movement to start wave?
-                if value > minimalLevel {
-                    
-                    trackWaveActive[damperTarget.trackId] = true
-                    
-                    let group = damperTarget.midiData!.group
-                    
-                    //TODO: Creative ways to disclose
-                    //Random
-                    //let noteNumberIndex = Int.random(in: 0...(group.count-1))
-                    //More movement is higher index
-                    //
-                    
-                    let noteNumberIndex = ((midiDataGroupIndex[damperTarget.trackId]?.last)! + 1 ) % group.count
-                    let noteNumber = group[noteNumberIndex]
-                    let velocity = 127
-                    
-                    midiDataNoteOn(noteNumber: noteNumber, velocity: velocity, samplerId: damperTarget.trackId, groupIndex: noteNumberIndex)
-                }
-            }
-            //Store value for comparising within this function
-            trackWavePreviousValue[damperTarget.trackId] = value
-        }
-    
-    private func triggerMidiDataSlaves (
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget ){
-            
-            //The mimimal amount of movement before looking up a trigger
-            guard let minimalLevel = damperTarget.nodeSettings?.minimalLevel else { return }
-            
-            //Is there a wave present?
-            if trackWaveActive[damperTarget.trackId] ?? false {
-                
-                //End wave, stop note
-                //Keeps possabilety multiple note ons
-                if value < (minimalLevel - (minimalLevel/2)) {
-                    
-                    //The trigger wave is over
-                    trackWaveActive[damperTarget.trackId] = false
-                    
-                    //Find Self and Slaves. midiData object needs to be in the FIRST instrument part
-                    let startTypes: [InstrumentsSet.Track.StartType] = [.triggerMidiDataSlaves, .midiDataSlave]
-                    set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                        //First in first out
-                        guard let noteNumber = midiDataGroupNoteNumbers[$0.trackId]?.first else { return }
-                        midiDataNoteOff(noteNumber: noteNumber, samplerId: $0.trackId)
-                    }
-                }
-            }
-            //There's no wave present
-            else {
-                
-                //Is there enough movement to start wave?
-                if value > minimalLevel {
-                    
-                    trackWaveActive[damperTarget.trackId] = true
-                    
-                    //Find Self and Slaves. midiData object needs to be in the FIRST instrument part
-                    let startTypes: [InstrumentsSet.Track.StartType] = [.triggerMidiDataSlaves, .midiDataSlave]
-                    set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                        
-                        let group = $0.parts.first!.damperTarget.midiData!.group
-                        let noteNumberIndex = ((midiDataGroupIndex[$0.trackId]?.last)! + 1 ) % group.count
-                        let noteNumber = group[noteNumberIndex]
-                        let velocity = 127
-                        
-                        midiDataNoteOn(noteNumber: noteNumber, velocity: velocity, samplerId: $0.trackId, groupIndex: noteNumberIndex)
-                    }
-                }
-            }
-            //Store value for comparising within this function
-            trackWavePreviousValue[damperTarget.trackId] = value
-        }
-    
-    private func midiDataNoteOn( noteNumber: Int, velocity: Int, samplerId: String, groupIndex: Int) {
-        
-        let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(velocity), channel: 1)
-        trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-        
-        //Register we are playing
-        midiDataGroupNoteNumbers[samplerId]?.append(noteNumber)
-        midiDataGroupIndex[samplerId]?.append(groupIndex)
-    }
-    
-    private func midiDataNoteOff( noteNumber: Int, samplerId: String) {
-        
-        let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
-        trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
-        
-        //Un register note
-        midiDataGroupNoteNumbers[samplerId]?.removeFirst()
-        midiDataGroupIndex[samplerId]?.removeFirst()
-    }
-    
-    private func playMidiData(
-        with damperTarget: InstrumentsSet.Track.Part.DamperTarget ){
-            
-            //Is current track playing?
-            let trackWaveActiveUnwrap = trackWaveActive[damperTarget.trackId] ?? false
-            
-            if !trackWaveActiveUnwrap {
-                
-                trackWaveActive[damperTarget.trackId] = true
-                
-                let noteNumber = damperTarget.midiData!.group.first ?? 0
-                midiDataGroupNoteNumbers[damperTarget.trackId]?.append(noteNumber)
-                let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
-                trackSamplers[damperTarget.trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-            }
-        }
-    
-//    private func playMidiDataAllValues(
-//        with track: InstrumentsSet.Track ){
-//
-//            //Is current trac playing?
-//            let trackWaveActiveUnwrap = trackWaveActive[track.id] ?? false
-//
-//            if !trackWaveActiveUnwrap {
-//
-//                let damperTarget = track.parts.first!.damperTarget
-//                trackWaveActive[damperTarget.trackId] = true
-//
-//                let group = damperTarget.midiData!.group
-//                for (i,noteNumber) in group.enumerated(){
-//                    let samplerId = track.id + String(i)
-//                    midiDataGroupNoteNumbers[samplerId]?.append(noteNumber)
-//                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
-//                    trackSamplers[samplerId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-//                }
-//            }
-//        }
-//
-    //MARK: Triggers
-    private func triggerStartStopGroup(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget
-    ){
-        
-        //The mimimal amount of movement before looking up a trigger
-        guard let minimalLevel = damperTarget.nodeSettings?.minimalLevel else { return }
-        
-        //We need the position to hold "fire clip" until next beat
-        let currentMoment = trackSequencers["trigger"]?.currentPosition.beats
-        
-        //scorePartWatingToChange caries the moment the trigger occured
-        if scorePartWatingToChange[damperTarget.trackId]! != 0.0 {
-           
-            //The moment the triggers needs to be minus the current moment
-            //If it's not been yet but difference is smaller than 0.05 go trigger by starting wave
-            //If the moment is in the past (< currentMoment) also go trigger.
-            if scorePartWatingToChange[damperTarget.trackId]! <= currentMoment! {
-                
-                //Start wave!
-                //We need to look up all trigger tracks and start them
-                let startTypes: [InstrumentsSet.Track.StartType] = [.triggerSlave,.triggerSlaveMaxIndex]
-                set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                    playTrack($0)
-                }
-                
-                //Track wave globaly
-                trackWaveActive[damperTarget.trackId] = true
-                //Reset waiting for fire
-                scorePartWatingToChange[damperTarget.trackId]! = 0.0
-            }
-        }
-        //No clip is waiting for triggering
-        else{
-            
-            //Is there a wave present?
-            if trackWaveActive[damperTarget.trackId] ?? false {
-                
-                //Stop wave if current value is lower compared to previous frame minus minimalLevel
-                //OR value is below minimal level
-                if value < (trackWavePreviousValue[damperTarget.trackId] ?? 0) - minimalLevel
-                    || value < minimalLevel {
-                    
-                    
-                    let startTypes: [InstrumentsSet.Track.StartType] = [.triggerSlave,.triggerSlaveMaxIndex]
-                    set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                        stopTrack($0)
-                    }
-                    
-                    //The trigger wave is over
-                    trackWaveActive[damperTarget.trackId] = false
-                }
-            }
-            //There's no wave present
-            else {
-                
-                //Is there enough movement to start wave?
-                if value > minimalLevel {
-                    //TODO: nextTriggerMoment - currentMoment! <= 0.001 moet hier uit?
-                    //The beat we're in plus one is the next trigger moment
-                    let nextTriggerMoment = Double(Int(currentMoment!) + 1)
-                    //If the next trigger moment is very close by go ahaed already
-                    if nextTriggerMoment - currentMoment! <= 0.001 {
-                        //Start wave of slave type tracks
-                        let startTypes: [InstrumentsSet.Track.StartType] = [.triggerSlave, .triggerSlaveMaxIndex]
-                        set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                            playTrack($0)
-                        }
-                        
-                        //Track wave globaly
-                        trackWaveActive[damperTarget.trackId] = true
-                    }
-                    else{
-                        //Trigger not yet...
-                        scorePartWatingToChange[damperTarget.trackId] = nextTriggerMoment
-                    }
-                }
-            }
-            //Store value for comparising within this function
-            trackWavePreviousValue[damperTarget.trackId] = value
-        }
-    }
-    
-    private func waveTrigger(for damperTarget: InstrumentsSet.Track.Part.DamperTarget, test value: Double) -> Bool {
-        
-        //Returns true on the moment of action in a wave
-        //false on all other moments
-        //The mimimal amount of movement before looking up a trigger, defaults to 0.01
-        //Low minimal values give more unwanted trigger moments
-        let minimalLevel = damperTarget.nodeSettings?.minimalLevel ?? 0.01
-        //Return value
-        var actionInWave: Bool = false
-        //Where are we in time on moment off call
-        let currentPosition = trackSequencers[damperTarget.trackId]!.currentPosition
-        //Cooldown time per wave. Defaults to 4 beats
-        let coolDowntime = damperTarget.nodeSettings?.coolDownTime ?? 4.0
-        //Enough movement and no active clip and there's no trackWave in cooldown.
-        //End of trackWaveActive is end of cooldown
-        if value > minimalLevel && !trackWaveActive[damperTarget.trackId]! {
-            //In this one case we return true
-            actionInWave = true
-            trackWaveActive[damperTarget.trackId]! = true
-        }
-        
-        //Start cooldown and reset midi notes
-        if value < minimalLevel && trackWaveActive[damperTarget.trackId]! && trackWaveStop[damperTarget.trackId]!.beats == 0.0  {
-            trackWaveStop[damperTarget.trackId]! = currentPosition
-        }
-        
-        //Double use of trackWaveStop causes extra test
-        if trackWaveStop[damperTarget.trackId]!.beats != 0 {
-            //Active track AND stop time plus cooldown time is in the PAST
-            if trackWaveActive[damperTarget.trackId]! && trackWaveStop[damperTarget.trackId]! + Duration(beats: coolDowntime) < currentPosition {
-                trackWaveActive[damperTarget.trackId]! = false
-                trackWaveStop[damperTarget.trackId]! = Duration(beats: 0.0)
-                
-            }
-        }
-        return actionInWave
-    }
-    
-    //MARK: Score wanderer
-    
-    private func scoreWandererValueToMIDIclip(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        _ clipLengths: [Double],
-        _ variationType: InstrumentsSet.Track.Part.DamperTarget.MidiClipVariations){
-        
-        /*
-         This function is not compatible with triggerScorePart
-         Changing to clips (density) with offsets (chords) needs to be written out to combine scoreWandererValueToMIDIclip and triggerScorePart
-         Until then both share vars for wave detection
-         */
-        
-        print("WILL BE DEPRECATED scoreWandererValueToMIDIclip \(damperTarget.trackId) value \(value)")
-            
-        guard let minimalLevel = damperTarget.nodeSettings?.minimalLevel else { return }
-        
-        print("minimalLevel \(minimalLevel)")
-            
-        let currentPosition = trackSequencers[damperTarget.trackId]!.currentPosition
-            
-        print("currentPosition \(currentPosition)")
-            
-        //Cooldown time per wave. Defaults to 2 beats
-        let coolDowntime = damperTarget.nodeSettings?.coolDownTime ?? 2.0
-        
-        print("coolDowntime \(coolDowntime)")
-            
-        //Enough movement and no active clip and there's no trackWave in cooldown.
-        //End of trackWaveActive is end of cooldown
-        if value > minimalLevel && !trackWaveActive[damperTarget.trackId]! {
-            
-            stopNotesTrackId(for: damperTarget.trackId)
-            
-            //Do your active wave init
-            //Copy any but the first clips for this track
-            let currentIndex = globalCurrentMIDIclip[damperTarget.trackId]!
-            let nextVariation = findNextVariation(clipLengths, variationType, currentIndex)
-            globalCurrentMIDIclip[damperTarget.trackId]! = nextVariation
-
-            //Calculate start time next MIDI part
-            let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
-            copyMIDIfromMemory(
-                trackId: damperTarget.trackId,
-                midiStartTime: nextMIDIstartTime,
-                loopLength: clipLengths[triggerCurrentMIDIpart[damperTarget.trackId]!])
-            
-            trackWaveActive[damperTarget.trackId]! = true
-        }
-        
-        //Start cooldown and reset midi notes
-        if value < minimalLevel && trackWaveActive[damperTarget.trackId]! &&
-            trackWaveStop[damperTarget.trackId]!.beats == 0.0  {
-            
-            //Copy first index back to running sequencer
-            let firstIndexMidiClip = 0
-            copyMIDIfromMemory(
-                trackId: damperTarget.trackId,
-                midiStartTime: Double(firstIndexMidiClip),
-                loopLength: clipLengths[firstIndexMidiClip])
-            
-            trackWaveStop[damperTarget.trackId]! = currentPosition
-        }
-        
-        //Double use of trackWaveStop causes extra test
-        if trackWaveStop[damperTarget.trackId]!.beats != 0 {
-            
-            //Active track AND stop time plus cooldown time is in the PAST
-            if trackWaveActive[damperTarget.trackId]! && trackWaveStop[damperTarget.trackId]! + Duration(beats: coolDowntime) < currentPosition {
-                
-                trackWaveActive[damperTarget.trackId]! = false
-                trackWaveStop[damperTarget.trackId]! = Duration(beats: 0.0)
-                
-            }
-        }
     }
     
     private func levelMidiClipVariation( in level: Int, on track: InstrumentsSet.Track) -> Void {
@@ -1589,162 +748,11 @@ final class Conductor {
         globalCurrentMIDIclip[track.id] = nextVariation
     }
     
-    private func scoreWandererRampToMIDIclip(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        _ clipLengths: [Double],
-        _ variationType: InstrumentsSet.Track.Part.DamperTarget.MidiClipVariations
-    ){
-        //range 0.1 delen door het aantal clips
-        let singleClipRange: Double = 1.0 / ( Double( clipLengths.count ) )
-        
-        let currentClip = Int( value / singleClipRange )
-        
-        if currentClip != globalCurrentMIDIclip[damperTarget.trackId] {
-            
-            stopNotesTrackId(for: damperTarget.trackId)
-            
-            let nextMIDIstartTime = calculateMIDIstartTime(for: currentClip, in: clipLengths)
-            copyMIDIfromMemory(
-                trackId: damperTarget.trackId,
-                midiStartTime: nextMIDIstartTime,
-                loopLength: clipLengths[triggerCurrentMIDIpart[damperTarget.trackId]!])
-            
-            globalCurrentMIDIclip[damperTarget.trackId] = currentClip
-        }
-        
-    }
-    
-    private func findNextVariation(
-        _ clipLengths: [Double],
-        _ variationType: InstrumentsSet.Track.Part.DamperTarget.MidiClipVariations,
-        _ currentIndex: Int
-    ) -> Int {
-        
-        var foundIndex: Int = 0
-        
-        if variationType == .anyButFirst {
-            
-            var allButFirst = clipLengths
-            allButFirst.removeFirst()
-            foundIndex = Int(allButFirst.indices.randomElement()!)
-            foundIndex += 1
-        }
-        else if variationType == .increaseWithValue {
-            
-            
-            
-        }
-        else if variationType == .nextLoop {
-            
-            let totalClip: Int = clipLengths.count
-            if currentIndex + 1 >= totalClip {
-                foundIndex = 0
-            }
-            else {
-                foundIndex = currentIndex + 1
-            }
-        }
-        
-        return foundIndex
-    }
-    
-    private func scoreWandererBeatsToMIDIclip(
-        value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        _ clipPlayLengths: [Int],
-        _ clipLengths: [Double],
-        currentSetLevel: Double ){
-        
-        guard let minimalLevel = damperTarget.nodeSettings?.minimalLevel else { return }
-        
-        let totalAmountMIDIparts = clipLengths.count
-        
-        //Add trackWaveActive[damperTarget.trackId] == false for cool down?
-        if value > minimalLevel {
-            
-            //where are we in time according to running sequencer
-            let currentPosition = trackSequencers[damperTarget.trackId]!.currentPosition
-            
-            //Track / InstrumentsSet / scoreWalkDuration [Int]?
-            //How many beats to incraese to for next MIDI part
-            //Index 0 is level 1 duration, Index 1 is level 2 duration
-            let currentScoreWalkDuration = Double(clipPlayLengths[Int(currentSetLevel)])
-            
-            //New wave, set start time
-            if !trackWaveActive[damperTarget.trackId]! {
-                trackWaveActive[damperTarget.trackId] = true
-                trackWaveInCooldown[damperTarget.trackId] = true
-                //Wave take off time
-                trackWaveStart[damperTarget.trackId] = currentPosition
-            }
-            
-            //length of wave so far in beats
-            let waveLength: Duration = currentPosition - trackWaveStart[damperTarget.trackId]!
-            //TODO connect to wave indicator
-            
-            //amount of beats since update currentPosition
-            if waveLength.beats > currentScoreWalkDuration {
-                
-                //Reset take off time
-                trackWaveStart[damperTarget.trackId] = currentPosition
-                
-                //Increment MIDI clip number as long as there are clips
-                if triggerCurrentMIDIpart[damperTarget.trackId]! + 1 < totalAmountMIDIparts {
-                    //Increment to next MIDI part
-                    triggerCurrentMIDIpart[damperTarget.trackId]! += 1
-                    
-                    //Calculate start time next MIDI part
-                    let currentMIDIstartTime = calculateMIDIstartTime(for: triggerCurrentMIDIpart[damperTarget.trackId]!, in: clipLengths)
-                    
-                    copyMIDIfromMemory(trackId: damperTarget.trackId, midiStartTime: currentMIDIstartTime, loopLength: clipLengths[triggerCurrentMIDIpart[damperTarget.trackId]!])
-                }
-            }
-        }
-        else {
-            if trackWaveActive[damperTarget.trackId]! {
-                
-                //where are we in time according to running sequencer
-                let currentPosition = trackSequencers[damperTarget.trackId]!.currentPosition
-                
-                if trackWaveInCooldown[damperTarget.trackId]! {
-                    trackWaveStart[damperTarget.trackId]! = currentPosition
-                    trackWaveInCooldown[damperTarget.trackId] = false
-                }
-                
-                //Use currentScoreWalkDuration as cooldown but 4 times as fast
-                let commingScoreWalkDuration = Double(clipPlayLengths[Int(currentSetLevel)]) * 0.25
-                
-                //length of wave so far in beats
-                let waveLength: Duration = currentPosition - trackWaveStart[damperTarget.trackId]!
-                //TODO connect to wave indicator
-                
-                //amount of beats since update currentPosition
-                if waveLength.beats > commingScoreWalkDuration {
-                    
-                    if triggerCurrentMIDIpart[damperTarget.trackId]! - 1 > 0 {
-                        triggerCurrentMIDIpart[damperTarget.trackId]! -= 1
-                        trackWaveInCooldown[damperTarget.trackId] = true
-                    }
-                    else{
-                        trackWaveActive[damperTarget.trackId]! = false
-                        triggerCurrentMIDIpart[damperTarget.trackId]! = 0
-                    }
-                    
-                    //Calculate start time next MIDI part
-                    let currentMIDIstartTime = calculateMIDIstartTime(for: triggerCurrentMIDIpart[damperTarget.trackId]!, in: clipLengths)
-                    
-                    copyMIDIfromMemory(trackId: damperTarget.trackId, midiStartTime: currentMIDIstartTime, loopLength: clipLengths[triggerCurrentMIDIpart[damperTarget.trackId]!])
-                }
-            }
-        }
-    }
-    
     private func calculateMIDIstartTime(
         for currentTimeScore: Int,
         in loopLengths: [Double]
     ) -> Double {
-        
+
         var currentMIDIstartTime: Double = 0.0
         if currentTimeScore > 0 {
             for (index,loopLength) in loopLengths.enumerated() {
@@ -1777,7 +785,7 @@ final class Conductor {
         trackSequencers[trackId]?.enableLooping()
     }
 
-    private func switchTrackMidiPart(_ track: InstrumentsSet.Track, _ maxIndex: Int) {
+    internal func switchTrackMidiPart(_ track: InstrumentsSet.Track, _ maxIndex: Int) {
         //This function gets called when the index of the cell with most movement changes
         //Given are the
         // - amount of movement on the moment of the switch
@@ -1799,18 +807,6 @@ final class Conductor {
     }
     
     //MARK: Transport
-    // Play a track
-    private func playTrack(_ track: InstrumentsSet.Track) {
-        
-        trackSequencers[track.id]?.play()
-    }
-    // Stop a track
-    private func stopTrack(_ track: InstrumentsSet.Track) {
-        trackSequencers[track.id]?.stop()
-        trackSequencers[track.id]?.rewind()
-        trackSequencers[track.id]?.preroll()
-    }
-    
     private func envDownTracks(_ track: InstrumentsSet.Track) {
         let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
         trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
@@ -1824,7 +820,7 @@ final class Conductor {
         }
     }
     
-    func togglePlayEngineAndTracks(
+    internal func togglePlayEngineAndTracks(
         currentSetLevel: Double,
         setSettings: SetSettings
     ) {
@@ -1846,7 +842,7 @@ final class Conductor {
         }
     }
     
-    func playEngineAndTracks() {
+    internal func playEngineAndTracks() {
         
         guard !isConductorPlayingSubject.value else { return }
         
@@ -1873,7 +869,19 @@ final class Conductor {
         }
     }
     
-    func playEngineUIEffect() {
+    // Play a track
+    internal func playTrack(_ track: InstrumentsSet.Track) {
+        
+        trackSequencers[track.id]?.play()
+    }
+    // Stop a track
+    internal func stopTrack(_ track: InstrumentsSet.Track) {
+        trackSequencers[track.id]?.stop()
+        trackSequencers[track.id]?.rewind()
+        trackSequencers[track.id]?.preroll()
+    }
+    
+    private func playEngineUIEffect() {
         do {
             //Fire up the audio engine
             try audioEngine.start()
@@ -1882,7 +890,7 @@ final class Conductor {
         }
     }
     
-    func pauzeEngineAndStopTracks(setSettings: SetSettings) {
+    public func pauzeEngineAndStopTracks(setSettings: SetSettings) {
         
         guard isConductorPlayingSubject.value else { return }
         
@@ -1893,6 +901,4 @@ final class Conductor {
         audioEngine.pause()
         isConductorPlayingSubject.send(false)
     }
-    
-    
 }

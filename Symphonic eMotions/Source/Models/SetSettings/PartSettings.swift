@@ -17,6 +17,7 @@ class PartSettings: Identifiable {
     var areaOfInterest: [Int]
 //    var areaOfIntersetBoostFactor: [Int]
     var areaOfInterestColor: [Color]
+    var damperTarget: InstrumentsSet.Track.Part.DamperTarget
     var dontDrawVisual: Bool
     
     init(partId: String,
@@ -27,6 +28,7 @@ class PartSettings: Identifiable {
          areaOfInterest: [Int],
 //         areaOfIntersetBoostFactor: [Int],
          areaOfInterestColor: [Color],
+         damperTarget: InstrumentsSet.Track.Part.DamperTarget,
          dontDrawVisual: Bool
     ){
         self.partId = partId
@@ -37,6 +39,7 @@ class PartSettings: Identifiable {
         self.areaOfInterest = areaOfInterest
 //        self.areaOfIntersetBoostFactor = areaOfIntersetBoostFactor
         self.areaOfInterestColor = areaOfInterestColor
+        self.damperTarget = damperTarget
         self.dontDrawVisual = dontDrawVisual
     }
     
