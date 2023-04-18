@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StartType: String, Codable {
+enum StartType: String, Codable, CaseIterable {
     
     case loopedTransport
     case loopedTrigger
@@ -17,13 +17,13 @@ enum StartType: String, Codable {
         switch self {
         //Midi file and Note numbers
         case .loopedTransport:
-            return "Start and stop track with transport"
+            return "Start with transport"
         //Midi file and Note numbers
         case .loopedTrigger:
-            return "Start and stop track with movement wave"
+            return "Start with movement"
         //Note numbers
         case .oneShot:
-            return  "Play single note"
+            return  "Trigger single note"
         }
     }
 }

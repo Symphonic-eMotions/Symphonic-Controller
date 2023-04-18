@@ -103,19 +103,30 @@ class SetSettings: Identifiable, ObservableObject {
         tracks.forEach{ (trackId, track) in
             
             var loopsToLevelSize = track.loopsToLevel.count
-            
             if loopsToLevelSize < levelsSize {
-                
                 while loopsToLevelSize < levelsSize {
                     track.loopsToLevel.append(0)
                     loopsToLevelSize = track.loopsToLevel.count
                 }
             }
-            
             else if loopsToLevelSize > levelsSize {
                 while loopsToLevelSize > levelsSize {
                     track.loopsToLevel.removeLast()
                     loopsToLevelSize = track.loopsToLevel.count
+                }
+            }
+            
+            var noteToLoopSize = track.notesToLevel.count
+            if noteToLoopSize < levelsSize {
+                while noteToLoopSize < levelsSize {
+                    track.notesToLevel.append(track.midiGroup.max() ?? 48)
+                    noteToLoopSize = track.notesToLevel.count
+                }
+            }
+            else if noteToLoopSize > levelsSize {
+                while noteToLoopSize > levelsSize {
+                    track.notesToLevel.removeLast()
+                    noteToLoopSize = track.notesToLevel.count
                 }
             }
         }
@@ -130,11 +141,13 @@ class SetSettings: Identifiable, ObservableObject {
                 let zeroArray:[Int] = Array(repeating: 0, count: cells)
                 
                 tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
-                tracks[index]!.loopsToGrid = zeroArray
-                tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
-                    areaOfInterest: zeroArray,
-                    loopsToGrid: zeroArray
-                )
+                
+                //Loop's not a grid!
+//                tracks[index]!.loopsToGrid = zeroArray
+//                tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
+//                    areaOfInterest: zeroArray,
+//                    loopsToGrid: zeroArray
+//                )
                 
                 var notesToGrid:[Int] = []
                 if tracks[index]!.midiGroup.count > 0 {

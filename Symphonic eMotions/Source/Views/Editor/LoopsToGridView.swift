@@ -80,7 +80,6 @@ struct LoopsToGridView: View {
                                     let increment = loopsToGridLocal[cellIndex] + 1
                                     let incrementModulo = increment % clipLetters[trackId]!.count
                                     
-//                                    print("clipLetters \(clipLetters[trackId]!.map(String.init).joined(separator: ", ")) cellIndex \(cellIndex) updated with \(increment) % \(clipLetters[trackId]!.count) = \(incrementModulo)")
                                     currentTrack.loopsToGrid[cellIndex] = incrementModulo
                                     loopsToGridLocal[cellIndex] = incrementModulo
                                 }

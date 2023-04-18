@@ -35,6 +35,7 @@ extension InstrumentsSet {
             case midiFiles
             case midiGroup
             case notesToGrid
+            case notesToLevel
             case exsFiles
             case audioFiles
             case effects
@@ -62,9 +63,13 @@ extension InstrumentsSet {
         var instrumentName: String
         let instrumentColor: Color
         var volume: Float
+        
         var midiFiles: [MidiFile]?
+        
         var midiGroup: [Int]?
         var notesToGrid: [Int]?
+        var notesToLevel: [Int]?
+        
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
         var effects: [Effect]?
@@ -95,9 +100,10 @@ extension InstrumentsSet {
             
             volume = try container.decode(Float.self, forKey: .volume)
             midiFiles = try container.decodeIfPresent([MidiFile].self, forKey: .midiFiles)
-            midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
             
+            midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
             notesToGrid = try container.decodeIfPresent([Int].self, forKey: .notesToGrid)
+            notesToLevel = try container.decodeIfPresent([Int].self, forKey: .notesToLevel)
             
             exsFiles = try container.decodeIfPresent([ExsFile].self, forKey: .exsFiles)
             audioFiles = try container.decodeIfPresent([AudioFile].self, forKey: .audioFiles)
@@ -142,6 +148,7 @@ extension InstrumentsSet {
             midiFiles: [MidiFile]?,
             midiGroup: [Int]?,
             notesToGrid: [Int]?,
+            notesToLevel: [Int]?,
             exsFiles: [ExsFile]?,
             audioFiles: [AudioFile]?,
             effects: [Effect]?,
@@ -162,8 +169,9 @@ extension InstrumentsSet {
             self.instrumentColor = instrumentColor
             self.volume = volume
             self.midiFiles = midiFiles
-            self.notesToGrid = notesToGrid
             self.midiGroup = midiGroup
+            self.notesToGrid = notesToGrid
+            self.notesToLevel = notesToLevel
             self.exsFiles = exsFiles
             self.audioFiles = audioFiles
             self.effects = effects
@@ -199,6 +207,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(midiFiles, forKey: .midiFiles)
         try container.encode(midiGroup, forKey: .midiGroup)
         try container.encode(notesToGrid, forKey: .notesToGrid)
+        try container.encode(notesToLevel, forKey: .notesToLevel)
         try container.encode(exsFiles, forKey: .exsFiles)
         try container.encode(audioFiles, forKey: .audioFiles)
         try container.encode(effects, forKey: .effects)

@@ -35,7 +35,6 @@ struct LoopsToLevelView: View {
     @Binding var clipLetters: [String:[Int]]
     @State var loopsToLevelLocal: [Int]
     
-
     let columnWidth: CGFloat = 150
 
     init(

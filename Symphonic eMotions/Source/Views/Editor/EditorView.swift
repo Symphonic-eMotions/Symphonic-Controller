@@ -45,10 +45,24 @@ struct EditorView: View {
                     Text("Set settings")
                         .font(.system(size: 20))
                         .padding()
+                    
+                    Spacer()
+                    
+                    EMButton(
+                        action: {
+                            withAnimation {
+                                if showEditorPart == "levels" { showEditorPart = "none" }
+                                else { showEditorPart = "levels" }
+                            }
+                        }, color: .gray, isSolid: true, maxWidth: 130, height: 35
+                    ){ Text("Edit Levels") }
+                    .frame(width: 130)
+                    
                 }
                 .onTapGesture {
                     withAnimation {
-                        showEditorPart = "setEditor"
+                        if showEditorPart == "setEditor" { showEditorPart = "none"}
+                        else { showEditorPart = "setEditor" }
                     }
                 }
                 
@@ -119,6 +133,8 @@ struct EditorView: View {
                         )
                     }
                 }
+                
+                Divider()
                 
                 EditTracks(
                     setInfoModel: setInfoModel,

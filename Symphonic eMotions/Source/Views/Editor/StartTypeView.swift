@@ -1,13 +1,13 @@
 //
-//  NoteSourceView.swift
+//  StartTypeView.swift
 //  Symphonic eMotions Pro
 //
-//  Created by Frans-Jan Wind on 17/04/2023.
+//  Created by Frans-Jan Wind on 18/04/2023.
 //
 
 import SwiftUI
 
-struct NoteSourceView: View {
+struct StartTypeView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
@@ -16,20 +16,17 @@ struct NoteSourceView: View {
 
     let columnWidth: CGFloat = 150
     
-    @Binding var noteSourceParent: [String: NoteSource]
-    @State var localNoteSource: NoteSource
+    @State var startTypeLocal: StartType
     
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
-        trackId: String,
-        noteSourceParent: Binding<[String: NoteSource]>
-    ){
+        trackId: String
+    ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        _noteSourceParent = noteSourceParent
-        _localNoteSource = State(initialValue: currentTrack.noteSource)
+        _startTypeLocal = State(initialValue: currentTrack.startType)
     }
     
     var body: some View {
@@ -40,26 +37,22 @@ struct NoteSourceView: View {
             
             HStack(){
                 
-                Text("Source of notes")
+                Text("Start type")
                     .frame(width: columnWidth, alignment: .leading)
                 
-                Picker("Select source of notes", selection: $localNoteSource) {
-                    ForEach(NoteSource.allCases, id: \.self) { type in
+                Picker("Select starting type", selection: $startTypeLocal) {
+                    ForEach(StartType.allCases, id: \.self) { type in
                         Text(type.description).tag(type)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: localNoteSource) { noteSource in
+                .onChange(of: startTypeLocal) { type in
                     withAnimation {
                         
                         //Store to file
-                        currentTrack.noteSource = noteSource
-                        //Tell parent
-                        noteSourceParent[trackId] = noteSource
+                        currentTrack.startType = type
                         //Keep local state
-                        localNoteSource = noteSource
-                        //Reset clip
-                        
+                        startTypeLocal = type
                     }
                 }
             }

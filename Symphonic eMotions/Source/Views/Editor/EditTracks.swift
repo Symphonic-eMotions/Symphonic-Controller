@@ -50,21 +50,11 @@ struct EditTracks: View {
         }
         _midiClipLetters = State(initialValue: tmpClipLetters)
         
-        
         var tmpNoteNumberLetters = [String: [Int]]()
         for track in setInfoModel.setSettings.tracks {
-            
-//            print("NotNumberLetters \(track.value.trackId):")
-//
             let clips = track.value.midiGroup
-
-//            let clipsString = clips.map({ String($0) }).joined(separator: ",")
-//            print(clipsString)
-
             tmpNoteNumberLetters[track.value.trackId] = Array(0..<clips.count)
             .map{track.value.midiGroup[$0]}
-            
-//            print(tmpNoteNumberLetters[track.value.trackId] as Any)
         }
         _noteNumberLetter = State(initialValue: tmpNoteNumberLetters)
     }
@@ -89,19 +79,45 @@ struct EditTracks: View {
                     Text("Track \(setInfoModel.setSettings.tracks[key]!.trackName)")
                         .font(.system(size: 20))
                         .padding()
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .trailing){
+                        Text(setInfoModel.setSettings.tracks[key]!.startType.description)
+                            .font(.system(size: 14))
+                            .foregroundColor(.gray)
+                        Text(setInfoModel.setSettings.tracks[key]!.noteSource.description)
+                            .font(.system(size: 14))
+                            .foregroundColor(.gray)
+                        Text(setInfoModel.setSettings.tracks[key]!.trackType.description)
+                            .font(.system(size: 14))
+                            .foregroundColor(.gray)
+                    }
                 }
                 .onTapGesture {
                     withAnimation {
                         if showEditorPart != key {
                             showEditorPart = key
                             trackTypeLocal[key] = setInfoModel.setSettings.tracks[key]!.trackType
+                        } else {
+                            showEditorPart = "none"
                         }
                     }
                 }
                 //If navigation header is tapped
-                if showEditorPart == key {
-
+                if showEditorPart == key || showEditorPart == "levels" {
+                    
                     InLevelView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
+                    )
+                    
+                }
+                if showEditorPart == key {
+                    
+                    //Start type
+                    StartTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
@@ -124,12 +140,23 @@ struct EditTracks: View {
                     )
                     
                     if trackTypeLocal[key] == .variationByLevel {
-                        LoopsToLevelView(
-                            setInfoModel: setInfoModel,
-                            currentTrack: setInfoModel.setSettings.tracks[key]!,
-                            trackId: key,
-                            clipLetters: $midiClipLetters
-                        )
+                        
+                        if noteSourceLocal[key] == .midiFile {
+                            LoopsToLevelView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                clipLetters: $midiClipLetters
+                            )
+                        }
+                        else if noteSourceLocal[key] == .noteNumbers {
+                            NoteNumberToLevelView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                noteNumberLetters: $noteNumberLetter
+                            )
+                        }
                     }
                     else if trackTypeLocal[key] == .variationByPosition {
                         
@@ -151,6 +178,8 @@ struct EditTracks: View {
                         }
                     }
                 }
+                
+                Divider()
             }
         }
     }

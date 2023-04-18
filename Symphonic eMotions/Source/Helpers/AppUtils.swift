@@ -118,21 +118,27 @@ final class AppUtils {
                 loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
             }
             
-            
             var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
             if loopsToGrid.count != cells {
                 //We have a another amount of cells, correct
-
                 loopsToGrid = Array(repeating: 0, count: cells)
             }
-//
+            
             //Note numbers from interface mapping
             //Default to Midi note C2 -> 48
-            let midiGroup:[Int] = trackLoaded.midiGroup ?? [48]
+            let c2: Int = 48
+            var midiGroup:[Int] = trackLoaded.midiGroup ?? [c2]
+            //Cannot be empty for midi file source
+            if midiGroup.count == 0 { midiGroup = [c2] }
+            var notesToLevel:[Int] = trackLoaded.notesToLevel ?? []
+            if notesToLevel.count != instrumentSet.levels.count {
+                notesToLevel = Array(repeating: midiGroup.min()!, count: instrumentSet.levels.count)
+            }
+            
             var notesToGrid:[Int] = trackLoaded.notesToGrid ?? []
             if notesToGrid.count != cells {
                 //We have a another amount of cells, reset
-                notesToGrid = Array(repeating: midiGroup.first!, count: cells)
+                notesToGrid = Array(repeating: midiGroup.min()!, count: cells)
             }
             
             let track = TrackSettings(
@@ -147,6 +153,7 @@ final class AppUtils {
                 
                 midiGroup: midiGroup,
                 notesToGrid: notesToGrid,
+                notesToLevel: notesToLevel,
                 
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
@@ -286,15 +293,13 @@ final class AppUtils {
                 loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
             )]
             
-            print(setSettings.tracks[track.trackId]!.noteSource)
-            
             var storeTrack = InstrumentsSet.Track(
                 id: track.id,
                 trackId: track.trackId,
                 muted: track.muted,
                 instrumentType: track.instrumentType,
                 noteSource: setSettings.tracks[track.trackId]!.noteSource,
-                startType: track.startType,
+                startType: setSettings.tracks[track.trackId]!.startType,
                 trackType: setSettings.tracks[track.trackId]!.trackType,
                 midiTargetTrackId: track.midiTargetTrackId,
                 masterTrackId: track.midiTargetTrackId,
@@ -304,6 +309,7 @@ final class AppUtils {
                 midiFiles: midiFiles,
                 midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
                 notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
+                notesToLevel: setSettings.tracks[track.trackId]!.notesToLevel,
                 exsFiles: track.exsFiles,
                 audioFiles: track.audioFiles,
                 effects: track.effects,
