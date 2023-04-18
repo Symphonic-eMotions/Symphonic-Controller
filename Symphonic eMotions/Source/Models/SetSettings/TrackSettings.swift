@@ -11,26 +11,35 @@ import SwiftUI
 class TrackSettings: Identifiable, ObservableObject {
     var trackId: String
     var trackName: String
+    var noteSource: NoteSource
+    var startType: StartType
     var trackType: TrackType
     var instrumentVolume: Float
     var instrumentColor: Color
-    var midiFile: String
+    
     var midiGroup: [Int]
+    var notesToGrid: [Int]
+    
+    var midiFile: String
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
     var loopsToGridMapped: [Int]
+    
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
     
     init(
         trackId: String,
         trackName: String,
+        noteSource: NoteSource,
+        startType: StartType,
         trackType: TrackType,
         instrumentVolume: Float,
         instrumentColor: Color,
         midiFile: String,
         midiGroup: [Int],
+        notesToGrid: [Int],
         loopLength: [Double],
         loopsToLevel: [Int],
         loopsToGrid: [Int],
@@ -40,11 +49,14 @@ class TrackSettings: Identifiable, ObservableObject {
     ){
         self.trackId = trackId
         self.trackName = trackName
+        self.noteSource = noteSource
+        self.startType = startType
         self.trackType = trackType
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.midiFile = midiFile
         self.midiGroup = midiGroup
+        self.notesToGrid = notesToGrid
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid

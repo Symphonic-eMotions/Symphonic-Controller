@@ -26,38 +26,45 @@ extension Conductor {
         partFeedbackPartID: String
     ) -> Double {
         
+        //Levels are updated with movement
         var localCurrentSetLevel: Double = currentSetLevel
         
-        let value: Double = values.flatMap { $0 }
+        //Level update is done the average value
+        let averageForLevelupdate: Double = values.flatMap { $0 }
             .map { $0.average }
             .reduce(0, +) / Double(values.flatMap { $0 }.count)
-        
-        //New level increment
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
             levelSpeed: setSettings.levelSpeed,
             currentSetLevel: currentSetLevel,
-            value: value
+            value: averageForLevelupdate
         )
+        
+        //We iterate through all tracks and its parts
         var trackNr: Int = 0
         var partNr: Int = 0
-        
-        //Loop through all tracks per value
         setSettings.tracks.forEach { (trackIndex,track) in
             //Reset part per track
             partNr = 0
             
-//            //If muted return
-//            if track.muted != nil && track.muted == true {
-//                return
-//            }
-//            //No parts return
-//            if track.parts.count == 0 {
-//                return
-//            }
+            //If muted return
+//            if track.muted != nil && track.muted == true {return}
+            
+            //No parts return
+            if track.parts.count == 0 {
+                return
+            }
+            
+            //Here we look up the trigger method
+            let noteSource = track.noteSource
+            let startType = track.startType
+            let trackType = track.trackType
+            
+            
             
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
                 
+                //We get the value from the areas of interest
                 let valuesMapped = part.indexes(
                     rows: setSettings.gridRows,
                     columns: setSettings.gridColumns).map {
@@ -80,15 +87,18 @@ extension Conductor {
                 
                 //MARK: index to midi clip conversion
                 //Change order of indeces for mapping with events
-                if track.trackType == .midiClipPosition && partNr == 0 {
+                if track.trackType == .variationByPosition && partNr == 0 {
                     
                     let mapMaxIndex = track.loopsToGridMapped
                     
-                    maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
-                    forwardMaxIndex(
-                        for: part.damperTarget,
-                        maxIndex: maxIndexMidiClips
-                    )
+                    if track.noteSource == .midiFile {
+                        
+                        maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
+                        forwardMaxIndex(
+                            for: part.damperTarget,
+                            maxIndex: maxIndexMidiClips
+                        )
+                    }
                 }
                 
                 //Ad damping curves
@@ -103,6 +113,7 @@ extension Conductor {
                     currentSetLevel: localCurrentSetLevel
                 )
                 
+                //User interface feedback
                 if setSettings.defaultSkin == .spriteKit {
                     forwardSpriteKit(
                         trackNr: trackNr,

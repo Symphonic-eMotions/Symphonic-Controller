@@ -15,7 +15,7 @@ struct TrackTypeView: View{
     var trackId: String
 
     let columnWidth: CGFloat = 150
-    let color: Color = .accentColor
+//    let color: Color = .accentColor
 
     @Binding var trackTypeParent: [String: TrackType]
     @State var localTrackType: TrackType
@@ -41,14 +41,14 @@ struct TrackTypeView: View{
             //Track is presenr in level
             HStack() {
 
-                Text("MIDI clip Control")
+                Text("Note controllers")
                     .frame(width: columnWidth, alignment: .leading)
                 
-                let availableTypes: [TrackType] = [.midiClipLevel,.midiClipPosition,.midiGroupTrigger]
+                let availableTypes: [TrackType] = [.variationByLevel,.variationByPosition,.variationSequencial]
                 
                 Picker("Select track type", selection: $localTrackType) {
                     ForEach(availableTypes, id: \.self) { type in
-                        Text(type.rawValue).tag(type)
+                        Text(type.description).tag(type)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())

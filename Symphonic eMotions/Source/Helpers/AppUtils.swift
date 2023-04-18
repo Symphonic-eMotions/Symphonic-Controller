@@ -19,6 +19,14 @@ final class AppUtils {
         return String(scalarValue)
     }
     
+    static func midiNoteName(for noteNumber: Int) -> String {
+        let noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        let octave = (noteNumber / 12) - 1
+        let noteIndex = noteNumber % 12
+        let noteName = noteNames[noteIndex]
+        return "\(noteName)\(octave)"
+    }
+    
     static func documentDirectory() -> URL {
       let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
       return documentsDirectory
@@ -103,29 +111,43 @@ final class AppUtils {
                 parts[partLoaded.id] = part
                 partNumber += 1
             }
-            
+            //Midi clips from file mapping
             var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
             if loopsToLevel.count != instrumentSet.levels.count {
                 //We've got another amount of levels, correct
                 loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
             }
             
+            
             var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
             if loopsToGrid.count != cells {
                 //We have a another amount of cells, correct
+
                 loopsToGrid = Array(repeating: 0, count: cells)
             }
-            
-            let midiGroup:[Int] = trackLoaded.midiGroup ?? []
+//
+            //Note numbers from interface mapping
+            //Default to Midi note C2 -> 48
+            let midiGroup:[Int] = trackLoaded.midiGroup ?? [48]
+            var notesToGrid:[Int] = trackLoaded.notesToGrid ?? []
+            if notesToGrid.count != cells {
+                //We have a another amount of cells, reset
+                notesToGrid = Array(repeating: midiGroup.first!, count: cells)
+            }
             
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackName: trackLoaded.instrumentName,
-                trackType: trackLoaded.trackType ?? .midiClipPosition,
+                noteSource: trackLoaded.noteSource ?? .midiFile,
+                startType: trackLoaded.startType,
+                trackType: trackLoaded.trackType ?? .variationByPosition,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
+                
                 midiGroup: midiGroup,
+                notesToGrid: notesToGrid,
+                
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,
@@ -264,21 +286,24 @@ final class AppUtils {
                 loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
             )]
             
+            print(setSettings.tracks[track.trackId]!.noteSource)
+            
             var storeTrack = InstrumentsSet.Track(
                 id: track.id,
                 trackId: track.trackId,
                 muted: track.muted,
                 instrumentType: track.instrumentType,
+                noteSource: setSettings.tracks[track.trackId]!.noteSource,
+                startType: track.startType,
                 trackType: setSettings.tracks[track.trackId]!.trackType,
                 midiTargetTrackId: track.midiTargetTrackId,
-                startType: track.startType,
                 masterTrackId: track.midiTargetTrackId,
                 instrumentName: track.instrumentName,
-                
                 instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
                 midiFiles: midiFiles,
                 midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
+                notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
                 exsFiles: track.exsFiles,
                 audioFiles: track.audioFiles,
                 effects: track.effects,
@@ -373,6 +398,7 @@ final class AppUtils {
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
+    //Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],
         loopsToGrid: [Int]

@@ -18,10 +18,12 @@ struct EditTracks: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: String
     @State var trackTypeLocal: [String: TrackType]
+    @State var noteSourceLocal: [String: NoteSource]
     //Linear representation of the midi clips.
     //Modified by MidiClipsInFile
-    //Used by
-    @State var clipLetters: [String: [Int]]
+    @State var midiClipLetters: [String: [Int]]
+    //Representation note numbers NoteNumberToGrid
+    @State var noteNumberLetter: [String: [Int]]
     
     init(
         setInfoModel: SetInfoModel,
@@ -31,17 +33,40 @@ struct EditTracks: View {
         _showEditorPart = showEditorPart
         
         var tmpTrackType = [String: TrackType]()
+        var tmpNoteSource = [String: NoteSource]()
+        //Make for all tracks a shared trackType and noteSource dictionary
         for track in setInfoModel.setSettings.tracks {
             tmpTrackType[track.value.trackId] = track.value.trackType
+            tmpNoteSource[track.value.trackId] = track.value.noteSource
         }
         _trackTypeLocal = State(initialValue: tmpTrackType)
+        _noteSourceLocal = State(initialValue: tmpNoteSource)
         
         var tmpClipLetters = [String: [Int]]()
         for track in setInfoModel.setSettings.tracks {
             let clips = track.value.loopLength
             tmpClipLetters[track.value.trackId] = Array(0..<clips.count).map{$0}
+            
         }
-        _clipLetters = State(initialValue: tmpClipLetters)
+        _midiClipLetters = State(initialValue: tmpClipLetters)
+        
+        
+        var tmpNoteNumberLetters = [String: [Int]]()
+        for track in setInfoModel.setSettings.tracks {
+            
+//            print("NotNumberLetters \(track.value.trackId):")
+//
+            let clips = track.value.midiGroup
+
+//            let clipsString = clips.map({ String($0) }).joined(separator: ",")
+//            print(clipsString)
+
+            tmpNoteNumberLetters[track.value.trackId] = Array(0..<clips.count)
+            .map{track.value.midiGroup[$0]}
+            
+//            print(tmpNoteNumberLetters[track.value.trackId] as Any)
+        }
+        _noteNumberLetter = State(initialValue: tmpNoteNumberLetters)
     }
     
     var body: some View {
@@ -82,7 +107,15 @@ struct EditTracks: View {
                         trackId: key
                     )
                     
-                    //MIDI clip control
+                    //Source of notes
+                    NoteSourceView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        noteSourceParent: $noteSourceLocal
+                    )
+                    
+                    //MIDI clip variations
                     TrackTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -90,34 +123,32 @@ struct EditTracks: View {
                         trackTypeParent: $trackTypeLocal
                     )
                     
-
-//                    Text("Start Type [transport, triggerSequencer, triggerTimeLess]")
-//                        .padding()
-//                        .foregroundColor(.gray)
-                    
-                    if trackTypeLocal[key] == .midiClipLevel {
+                    if trackTypeLocal[key] == .variationByLevel {
                         LoopsToLevelView(
                             setInfoModel: setInfoModel,
                             currentTrack: setInfoModel.setSettings.tracks[key]!,
                             trackId: key,
-                            clipLetters: $clipLetters
+                            clipLetters: $midiClipLetters
                         )
                     }
-                    else if trackTypeLocal[key] == .midiClipPosition {
-                        LoopsToGridView(
-                            setInfoModel: setInfoModel,
-                            currentTrack: setInfoModel.setSettings.tracks[key]!,
-                            trackId: key,
-                            clipLetters: $clipLetters
-                        )
-                    }
-                    else if trackTypeLocal[key] == .midiGroupTrigger {
-                        NoteNumberToGrid(
-                            setInfoModel: setInfoModel,
-                            currentTrack: setInfoModel.setSettings.tracks[key]!,
-                            trackId: key,
-                            clipLetters: $clipLetters
-                        )
+                    else if trackTypeLocal[key] == .variationByPosition {
+                        
+                        if noteSourceLocal[key] == .midiFile {
+                            LoopsToGridView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                clipLetters: $midiClipLetters
+                            )
+                        }
+                        else if noteSourceLocal[key] == .noteNumbers {
+                            NoteNumberToGrid(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                noteNumberLetters: $noteNumberLetter
+                            )
+                        }
                     }
                 }
             }

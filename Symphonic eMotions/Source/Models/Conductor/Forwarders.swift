@@ -188,24 +188,24 @@ extension Conductor {
             //TODO: Figure out if these need to go to track level
             //TODO: Set new StartTyoes
                 
-            //Used with trigger track, all tracks start playing with the beat
-            case "trigger":
-                
-                triggerStartStopGroup(value: value, for: damperTarget)
-            
-            case "triggerMidiDataSlaves":
-                
-                triggerMidiDataSlaves(value: value, for: damperTarget)
-                
-            //Used to triger just that track on that moment free of measure
-            case "midiData":
-                
-                triggerMidiData(value: value, for: damperTarget)
-                
-            case "playMidiData":
-                
-                playMidiData(with: damperTarget)
-            
+//            //Used with trigger track, all tracks start playing with the beat
+//            case "trigger":
+//
+//                triggerStartStopGroup(value: value, for: damperTarget)
+//
+//            case "triggerMidiDataSlaves":
+//
+//                triggerMidiDataSlaves(value: value, for: damperTarget)
+//
+//            //Used to triger just that track on that moment free of measure
+//            case "midiData":
+//
+//                triggerMidiData(value: value, for: damperTarget)
+//
+//            case "playMidiData":
+//
+//                playMidiData(with: damperTarget)
+//
 //                case .rampToMIDIclip:
 //
 //                    scoreWandererRampToMIDIclip(

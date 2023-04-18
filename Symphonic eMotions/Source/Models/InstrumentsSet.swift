@@ -66,7 +66,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         print("\(String(describing: directoryURL))")
         
         let jsonEncoder = JSONEncoder()
-        jsonEncoder.outputFormatting = [.sortedKeys]
+        jsonEncoder.outputFormatting = [.sortedKeys,.prettyPrinted]
         let data = try? jsonEncoder.encode(instrumentSet)
         do {
             try data?.write(to: documentURL, options: .noFileProtection)

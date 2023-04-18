@@ -278,6 +278,7 @@ final class PlayViewModel: ObservableObject {
         
         let index: Int = row * setSettings.gridColumns + column
         
+        //Update areaOfInterest and areaOfInterestColor for storage
         if self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] == 1 {
             self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] = 0
             self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterestColor[index] = .white.opacity(0.01)
@@ -286,6 +287,11 @@ final class PlayViewModel: ObservableObject {
             self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] = 1
             self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterestColor[index] = self.setSettings.tracks[trackId]!.instrumentColor
         }
+        
+        //Get new connection with clip positions
+        self.setSettings.tracks[trackId]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
+            areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
+            loopsToGrid: self.setSettings.tracks[trackId]!.loopsToGrid)
         
         //Update this var to update View
         self.playViewState.updateEditView += 1
@@ -298,6 +304,5 @@ extension PlayViewModel: FrameExtractorDelegate {
         guard conductor.isConductorPlayingSubject.value else { return }
         imageDifference.updateImageData(image: image)
     }
-    
 }
 

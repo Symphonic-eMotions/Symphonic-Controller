@@ -431,7 +431,7 @@ final class Conductor {
         set.tracks.forEach { track in
             
             //For all tracks, move up a clip modulo amount of clips
-            if setSettings.tracks[track.trackId]!.trackType == .midiClipLevel && source == "levelChange" {
+            if setSettings.tracks[track.trackId]!.trackType == .variationByLevel && source == "levelChange" {
                 
                 stopNotesTrackId(for: track.trackId)
                 
@@ -807,9 +807,9 @@ final class Conductor {
     }
     
     //MARK: Transport
-    private func envDownTracks(_ track: InstrumentsSet.Track) {
+    private func envDownTracks(_ track: TrackSettings) {
         let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-        trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: trackOff)
+        trackAmpEnvelopes[track.trackId]!.scheduleMIDIEvent(event: trackOff)
     }
     
     private func stopNotesTrackId(for trackId: String) {
@@ -832,7 +832,8 @@ final class Conductor {
         else {
             print("Mute here before play?")
             
-            playEngineAndTracks()
+            playEngineAndTracks(setSetting: setSettings)
+            
             //Fade in on master play, we need level.currentlevel here
             trackMuteAndClipStatusPerLevelControl(
                 level: Int(currentSetLevel),
@@ -842,27 +843,21 @@ final class Conductor {
         }
     }
     
-    internal func playEngineAndTracks() {
+    internal func playEngineAndTracks(setSetting: SetSettings) {
         
         guard !isConductorPlayingSubject.value else { return }
         
         do {
             //Variable for use in View (SwiftUI)
             isConductorPlayingSubject.send(true)
+            
             //Fire up the audio engine
             try audioEngine.start()
             
-            // OLD Play all tracks that don't have a startType of triggerSlave
-            
-            // NEW, Start global tracks
-            // - .global are tracks with midi files in sequencers
-            // - .globalMidi are tracks with just notenumbers, without sequencer
-            let startTypes: [InstrumentsSet.Track.StartType] = [.global,.globalMidiData]
-            set.tracks.filter { startTypes.contains($0.startType) }.forEach {
-                if $0.startType == .global{ playTrack($0) }
-                if $0.startType == .globalMidiData {
-                    playMidiData(with: $0.parts.first!.damperTarget)
-                }
+            let startTypes: [StartType] = [.loopedTransport]
+            setSetting.tracks.values.filter { startTypes.contains($0.startType) }.forEach {
+                if $0.noteSource == .midiFile { playTrack($0) }
+                if $0.noteSource == .noteNumbers { playNoteNumber($0) }
             }
         } catch {
             isConductorPlayingSubject.send(false)
@@ -870,15 +865,15 @@ final class Conductor {
     }
     
     // Play a track
-    internal func playTrack(_ track: InstrumentsSet.Track) {
-        
-        trackSequencers[track.id]?.play()
+    internal func playTrack(_ track: TrackSettings) {
+        trackSequencers[track.trackId]?.play()
     }
+    
     // Stop a track
-    internal func stopTrack(_ track: InstrumentsSet.Track) {
-        trackSequencers[track.id]?.stop()
-        trackSequencers[track.id]?.rewind()
-        trackSequencers[track.id]?.preroll()
+    internal func stopTrack(_ track: TrackSettings) {
+        trackSequencers[track.trackId]?.stop()
+        trackSequencers[track.trackId]?.rewind()
+        trackSequencers[track.trackId]?.preroll()
     }
     
     private func playEngineUIEffect() {
@@ -893,10 +888,10 @@ final class Conductor {
     public func pauzeEngineAndStopTracks(setSettings: SetSettings) {
         
         guard isConductorPlayingSubject.value else { return }
-        
-        set.tracks.forEach {
+        setSettings.tracks.values.forEach {
             envDownTracks($0)
-            stopTrack($0)
+            if $0.noteSource == .midiFile { stopTrack($0) }
+            if $0.noteSource == .noteNumbers { stopNoteNumber($0) }
         }
         audioEngine.pause()
         isConductorPlayingSubject.send(false)

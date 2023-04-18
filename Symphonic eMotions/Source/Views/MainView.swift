@@ -78,7 +78,7 @@ struct MainView: View {
                 sessionDisplay: $sessionDisplay
             )
             .onAppear{
-                viewModel.conductor.playEngineAndTracks()
+                viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
                 viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
                     level: 0,
                     setSettings: viewModel.mainState.setSettings,
@@ -145,7 +145,7 @@ struct MainView: View {
                             setSettings: viewModel.mainState.setSettings,
                             from: "playViewOnAppear"
                         )
-                        viewModel.conductor.playEngineAndTracks()
+                        viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
                     }
                 }
                 
@@ -241,7 +241,7 @@ struct MainView: View {
                 .navigationBarHidden(false)
                 .edgesIgnoringSafeArea([.top, .trailing])
                 .onAppear{
-                    viewModel.conductor.playEngineAndTracks()
+                    viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
                 }
             }
         }

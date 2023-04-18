@@ -135,6 +135,15 @@ class SetSettings: Identifiable, ObservableObject {
                     areaOfInterest: zeroArray,
                     loopsToGrid: zeroArray
                 )
+                
+                var notesToGrid:[Int] = []
+                if tracks[index]!.midiGroup.count > 0 {
+                    notesToGrid = Array(repeating: tracks[index]!.midiGroup.first!, count: cells)
+                }
+                else {
+                    notesToGrid = Array(repeating: 48, count: cells)
+                }
+                tracks[index]!.notesToGrid = notesToGrid
             }
         }
     }
