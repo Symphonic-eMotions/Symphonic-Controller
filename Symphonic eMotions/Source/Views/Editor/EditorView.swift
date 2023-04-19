@@ -21,7 +21,7 @@ struct EditorView: View {
     
     @State var imported = false
     @State var fileUrl: URL?
-    @State var showEditorPart: String = "setEditor"
+    @State var showEditorPart: String = "none"
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     

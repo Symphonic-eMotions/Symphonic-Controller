@@ -96,7 +96,6 @@ struct NoteNumberToLevelView: View {
                     }
                 }
             }
-            .padding(.leading)
         }
         .padding(.leading)
 //        .onAppear {

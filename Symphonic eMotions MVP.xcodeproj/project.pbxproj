@@ -89,7 +89,7 @@
 		7CF50F2729ED425C0016BAF4 /* AudioBufferSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */; };
 		7CF50F2929ED458A0016BAF4 /* ValuesDidChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */; };
 		7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4429ED52B80016BAF4 /* Forwarders.swift */; };
-		7CF50F4729ED54F70016BAF4 /* StartTypesMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4629ED54F70016BAF4 /* StartTypesMethods.swift */; };
+		7CF50F4729ED54F70016BAF4 /* NoteNumberPLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4629ED54F70016BAF4 /* NoteNumberPLayer.swift */; };
 		7CF50F4929ED7D210016BAF4 /* TrackTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4829ED7D210016BAF4 /* TrackTypes.swift */; };
 		7CF50F4B29ED83090016BAF4 /* NoteSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4A29ED83090016BAF4 /* NoteSources.swift */; };
 		7CF50F4D29ED84230016BAF4 /* StartTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4C29ED84230016BAF4 /* StartTypes.swift */; };
@@ -227,7 +227,7 @@
 		7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferSampler.swift; sourceTree = "<group>"; };
 		7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesDidChange.swift; sourceTree = "<group>"; };
 		7CF50F4429ED52B80016BAF4 /* Forwarders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forwarders.swift; sourceTree = "<group>"; };
-		7CF50F4629ED54F70016BAF4 /* StartTypesMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTypesMethods.swift; sourceTree = "<group>"; };
+		7CF50F4629ED54F70016BAF4 /* NoteNumberPLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberPLayer.swift; sourceTree = "<group>"; };
 		7CF50F4829ED7D210016BAF4 /* TrackTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTypes.swift; sourceTree = "<group>"; };
 		7CF50F4A29ED83090016BAF4 /* NoteSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSources.swift; sourceTree = "<group>"; };
 		7CF50F4C29ED84230016BAF4 /* StartTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTypes.swift; sourceTree = "<group>"; };
@@ -449,7 +449,7 @@
 				7CF50F4A29ED83090016BAF4 /* NoteSources.swift */,
 				7CF50F4C29ED84230016BAF4 /* StartTypes.swift */,
 				7CF50F4829ED7D210016BAF4 /* TrackTypes.swift */,
-				7CF50F4629ED54F70016BAF4 /* StartTypesMethods.swift */,
+				7CF50F4629ED54F70016BAF4 /* NoteNumberPLayer.swift */,
 				7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */,
 				C0C512A427075E9500DE3393 /* Dampers */,
 				C0C5129C27075D9500DE3393 /* Effects */,
@@ -845,7 +845,7 @@
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
 				7C2EF62F28C0A98200B75BE2 /* HomeKitView.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
-				7CF50F4729ED54F70016BAF4 /* StartTypesMethods.swift in Sources */,
+				7CF50F4729ED54F70016BAF4 /* NoteNumberPLayer.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,
 				7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */,
 				C069590426B4E0C7002EB522 /* Track.swift in Sources */,

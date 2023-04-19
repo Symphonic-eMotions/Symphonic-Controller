@@ -82,11 +82,11 @@ final class PlayViewModel: ObservableObject {
             
             //On level change mute and un-mute tracks accordingly
             if oldLevel != currentLevel {
-                                
+                
+                //Mute and unmutes tracks to level settings
                 self.conductor.trackMuteAndClipStatusPerLevelControl(
                     level: Int(currentLevel),
-                    setSettings: self.setSettings,
-                    from: "levelChange"
+                    setSettings: self.setSettings
                 )
             }
             

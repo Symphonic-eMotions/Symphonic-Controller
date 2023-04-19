@@ -7,8 +7,10 @@
 
 import OrderedCollections
 import SwiftUI
+import AudioKit
 
 class TrackSettings: Identifiable, ObservableObject {
+    
     var trackId: String
     var trackName: String
     var noteSource: NoteSource
@@ -20,6 +22,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var midiGroup: [Int]
     var notesToGrid: [Int]
     var notesToLevel: [Int]
+    var noteIsPlaying: Int = 0
     
     var midiFile: String
     var loopLength: [Double]

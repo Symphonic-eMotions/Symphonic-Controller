@@ -60,6 +60,18 @@ extension Conductor {
             let trackType = track.trackType
             
             
+            //Version checklist
+//            NoteSource.midiFile
+//            StartType.loopedTrigger
+//            StartType.oneShot
+//            TrackType.variationByPosition
+//            TrackType.variationByIntensity
+//
+//            NoteSource.noteNumbers
+//            StartType.loopedTrigger
+//            StartType.oneShot
+//            TrackType.variationByPosition
+//            TrackType.variationByIntensity
             
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
@@ -85,22 +97,71 @@ extension Conductor {
                     value = 0
                 }
                 
-                //MARK: index to midi clip conversion
-                //Change order of indeces for mapping with events
-                if track.trackType == .variationByPosition && partNr == 0 {
+                //MARK: Handle clip and note control with first part
+                if partNr == 0 {
                     
-                    let mapMaxIndex = track.loopsToGridMapped
-                    
-                    if track.noteSource == .midiFile {
+                    //Decide WHAT to play
+                    if track.trackType == .variationByPosition {
                         
-                        maxIndexMidiClips = mapMaxIndex[maxIndexMidiClips]
-                        forwardMaxIndex(
-                            for: part.damperTarget,
-                            maxIndex: maxIndexMidiClips
-                        )
+                        if track.noteSource == .midiFile {
+                            
+                            //This is the mapped value from the editor .midiFile .variationByPosition
+                            let loopLengthIndex = track.loopsToGridMapped[maxIndexMidiClips]
+                            let nextMIDIstartTime = calculateMIDIstartTime(
+                                for: loopLengthIndex,
+                                in: track.loopLength
+                            )
+                            
+                            copyMIDIfromMemory(
+                                trackId: track.trackId,
+                                midiStartTime: nextMIDIstartTime,
+                                loopLength: track.loopLength[loopLengthIndex])
+                        }
+                        else if track.noteSource == .noteNumbers {
+                            
+                            //This is the chosen note number in the editor NoteNumberToGrid()
+                            let noteNumber:Int = track.notesToGrid[maxIndexMidiClips]
+                            track.noteIsPlaying = noteNumber
+                        }
+                    }
+                    else if track.trackType == .variationByLevel && track.noteSource == .noteNumbers {
+                        
+                        //This is the chosen note number in the editor NoteNumberToLevelView()
+                        let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
+                        track.noteIsPlaying = noteNumber
+                    }
+                    
+                    //If not playing by transport start playing here for looped start typed
+                    if [.loopedTrigger].contains(track.startType) {
+                        if setSettings.isWavePlaying {
+                            //End wave under treshold
+                            if value < setSettings.waveThreshold {
+                                //looped is always for all tracks
+                                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                                    if $0.noteSource == .midiFile { stopTrack($0) }
+                                    if $0.noteSource == .noteNumbers {
+                                        stopNoteNumber($0, track.noteIsPlaying)
+                                        track.noteIsPlaying = 0
+                                    }
+                                }
+                                setSettings.isWavePlaying = false
+                            }
+                        }
+                        //No wave
+                        else {
+                            if value > setSettings.waveThreshold {
+                                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                                    if $0.noteSource == .midiFile { playTrack($0) }
+                                    if $0.noteSource == .noteNumbers { playNoteNumber($0, track.noteIsPlaying) }
+                                }
+                                setSettings.isWavePlaying = true
+                            }
+                        }
                     }
                 }
+                //End first Part
                 
+                //All parts
                 //Ad damping curves
                 value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
                 //Ad ramps from interface!
@@ -115,6 +176,10 @@ extension Conductor {
                 
                 //User interface feedback
                 if setSettings.defaultSkin == .spriteKit {
+                    
+                    //FIXME: maxIndexMidiClips has no difference with maxIndexraw
+                    //Find out why different is needed and correct with track.loopsToGridMapped
+                    
                     forwardSpriteKit(
                         trackNr: trackNr,
                         partNr: partNr,
@@ -136,7 +201,6 @@ extension Conductor {
                 partNr += 1
             }
     
-            
             trackNr += 1
         }
         

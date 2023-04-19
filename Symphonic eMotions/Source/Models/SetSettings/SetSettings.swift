@@ -20,6 +20,10 @@ class SetSettings: Identifiable, ObservableObject {
     var settingsRampUp: Double
     var settingsRampDown: Double
     
+    //Keep track of wave playing
+    var isWavePlaying: Bool = false
+    var waveThreshold: Double = 0.1
+    
     //Use tracks own ID to ommit use of indeces
     //Id comes from loaded struct
     //Set Name

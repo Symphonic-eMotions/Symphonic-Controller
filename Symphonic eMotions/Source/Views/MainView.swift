@@ -78,11 +78,13 @@ struct MainView: View {
                 sessionDisplay: $sessionDisplay
             )
             .onAppear{
-                viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
+                viewModel.conductor.playEngineAndTracks(
+                    setSettings: viewModel.mainState.setSettings,
+                    level: 0
+                )
                 viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
                     level: 0,
-                    setSettings: viewModel.mainState.setSettings,
-                    from: "spriteKitOnAppear"
+                    setSettings: viewModel.mainState.setSettings
                 )
             }
             .padding(.top, 20)
@@ -142,10 +144,12 @@ struct MainView: View {
                         viewModel.leveling.pauseLevel = false
                         viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
                             level: 0,
-                            setSettings: viewModel.mainState.setSettings,
-                            from: "playViewOnAppear"
+                            setSettings: viewModel.mainState.setSettings
                         )
-                        viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
+                        viewModel.conductor.playEngineAndTracks(
+                            setSettings: viewModel.mainState.setSettings,
+                            level: 0
+                        )
                     }
                 }
                 
@@ -241,7 +245,10 @@ struct MainView: View {
                 .navigationBarHidden(false)
                 .edgesIgnoringSafeArea([.top, .trailing])
                 .onAppear{
-                    viewModel.conductor.playEngineAndTracks(setSetting: viewModel.mainState.setSettings)
+                    viewModel.conductor.playEngineAndTracks(
+                        setSettings: viewModel.mainState.setSettings,
+                        level: 0
+                    )
                 }
             }
         }

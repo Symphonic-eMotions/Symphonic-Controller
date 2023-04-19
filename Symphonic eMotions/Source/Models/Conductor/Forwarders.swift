@@ -134,23 +134,6 @@ extension Conductor {
         }
     }
     
-    internal func forwardMaxIndex(
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-        maxIndex: Int
-//        ,
-//        isNewIndex: Bool
-    ) {
-    
-        //Low level midi data control based on index of activity
-//        if maxIndex != -1 && isNewIndex {
-            
-            guard let track = set.track(for: damperTarget.trackId) else { return }
-            let maxIndexPart = maxIndex % track.midiFiles!.first!.loopLength.count
-            //Copy MIDI part based on max movement cell index
-            switchTrackMidiPart(track, maxIndexPart)
-//        }
-    }
-    
     internal func forwardSequencer(
         value: Double,
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
@@ -163,17 +146,11 @@ extension Conductor {
             case "velocity":
                 
                 guard let track = set.track(for: damperTarget.trackId) else { return }
-                //Check wether track.id is in current level
                 
+                //Check wether track.id is in current level
                 if track.levels.contains(Int(currentSetLevel)) {
                     velocities[track.id] = value
-                }
-                else { velocities[track.id] = 0 }
-                
-//            case "tempo":
-//                guard let track = set.track(for: damperTarget.trackId) else { return }
-//                //TODO: Make this relative to interface tempo
-//                tempo[track.id] = value
+                } else { velocities[track.id] = 0 }
                 
             case "soundModuleParam01":
                 
@@ -184,47 +161,6 @@ extension Conductor {
                 guard let track = set.track(for: damperTarget.trackId) else { return }
                 soundModuleParam02[track.id] = value
             
-                
-            //TODO: Figure out if these need to go to track level
-            //TODO: Set new StartTyoes
-                
-//            //Used with trigger track, all tracks start playing with the beat
-//            case "trigger":
-//
-//                triggerStartStopGroup(value: value, for: damperTarget)
-//
-//            case "triggerMidiDataSlaves":
-//
-//                triggerMidiDataSlaves(value: value, for: damperTarget)
-//
-//            //Used to triger just that track on that moment free of measure
-//            case "midiData":
-//
-//                triggerMidiData(value: value, for: damperTarget)
-//
-//            case "playMidiData":
-//
-//                playMidiData(with: damperTarget)
-//
-//                case .rampToMIDIclip:
-//
-//                    scoreWandererRampToMIDIclip(
-//                        value: value,
-//                        for: damperTarget,
-//                        clipLengths,
-//                        midiClipVariations
-//                    )
-//
-//                case .valueToMIDIclip:
-//
-//                    scoreWandererValueToMIDIclip(
-//                        value: value,
-//                        for: damperTarget,
-//                        clipLengths,
-//                        midiClipVariations
-//                    )
-//                }
-                
             default:
                 print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
         }
