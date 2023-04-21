@@ -33,6 +33,8 @@ extension Conductor {
         let averageForLevelupdate: Double = values.flatMap { $0 }
             .map { $0.average }
             .reduce(0, +) / Double(values.flatMap { $0 }.count)
+        
+        //The level updater
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
             levelSpeed: setSettings.levelSpeed,
             currentSetLevel: currentSetLevel,
@@ -46,32 +48,10 @@ extension Conductor {
             //Reset part per track
             partNr = 0
             
-            //If muted return
-//            if track.muted != nil && track.muted == true {return}
-            
             //No parts return
             if track.parts.count == 0 {
                 return
             }
-            
-            //Here we look up the trigger method
-            let noteSource = track.noteSource
-            let startType = track.startType
-            let trackType = track.trackType
-            
-            
-            //Version checklist
-//            NoteSource.midiFile
-//            StartType.loopedTrigger
-//            StartType.oneShot
-//            TrackType.variationByPosition
-//            TrackType.variationByIntensity
-//
-//            NoteSource.noteNumbers
-//            StartType.loopedTrigger
-//            StartType.oneShot
-//            TrackType.variationByPosition
-//            TrackType.variationByIntensity
             
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
@@ -88,8 +68,7 @@ extension Conductor {
                 let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
                                 
                 //Have a var for MaxIndex to number of MidiClips range
-                let maxIndexraw = Int(maxIndexTupple.0)
-                var maxIndexMidiClips = maxIndexraw
+                let maxIndex = Int(maxIndexTupple.0)
                 
                 //MaxMapped (highest value found in all of AreaOfInterest) value to work with
                 var value = maxIndexTupple.1
@@ -100,36 +79,53 @@ extension Conductor {
                 //MARK: Handle clip and note control with first part
                 if partNr == 0 {
                     
-                    //Decide WHAT to play
-                    if track.trackType == .variationByPosition {
+                    //Decide WHAT to play if position changes
+                    if maxIndex != track.currentMaxIndex && track.trackType == .variationByPosition {
                         
                         if track.noteSource == .midiFile {
                             
                             //This is the mapped value from the editor .midiFile .variationByPosition
-                            let loopLengthIndex = track.loopsToGridMapped[maxIndexMidiClips]
-                            let nextMIDIstartTime = calculateMIDIstartTime(
-                                for: loopLengthIndex,
-                                in: track.loopLength
-                            )
+                            let loopIndex = track.loopsToGridMapped[maxIndex]
                             
-                            copyMIDIfromMemory(
-                                trackId: track.trackId,
-                                midiStartTime: nextMIDIstartTime,
-                                loopLength: track.loopLength[loopLengthIndex])
+                            if loopIndex != track.currentLoopIndex {
+                                
+                                let nextMIDIstartTime = calculateMIDIstartTime(
+                                    for: loopIndex,
+                                    in: track.loopLength
+                                )
+                                
+//                                stopNotesTrackId(for: track.trackId)
+                                
+                                copyMIDIfromMemory(
+                                    trackId: track.trackId,
+                                    midiStartTime: nextMIDIstartTime,
+                                    loopLength: track.loopLength[loopIndex])
+                                
+                                track.currentLoopIndex = loopIndex
+                                track.currentMaxIndex = maxIndex
+                            }
                         }
                         else if track.noteSource == .noteNumbers {
                             
                             //This is the chosen note number in the editor NoteNumberToGrid()
-                            let noteNumber:Int = track.notesToGrid[maxIndexMidiClips]
+                            let noteNumber:Int = track.notesToGridMapped[maxIndex]
+                            print(track.notesToGrid.map({String($0)}).joined(separator: ","))
+                            print("noteNumbers variationByPosition \(noteNumber)")
                             track.noteIsPlaying = noteNumber
                         }
                     }
-                    else if track.trackType == .variationByLevel && track.noteSource == .noteNumbers {
+                    
+                    //Levels Note numbers
+                    if Int(localCurrentSetLevel) != track.currentLevel
+                        && track.noteSource == .noteNumbers
+                        && track.trackType == .variationByLevel {
                         
                         //This is the chosen note number in the editor NoteNumberToLevelView()
                         let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
                         track.noteIsPlaying = noteNumber
+                        track.currentLevel = Int(localCurrentSetLevel)
                     }
+                    
                     
                     //If not playing by transport start playing here for looped start typed
                     if [.loopedTrigger].contains(track.startType) {
@@ -177,16 +173,16 @@ extension Conductor {
                 //User interface feedback
                 if setSettings.defaultSkin == .spriteKit {
                     
-                    //FIXME: maxIndexMidiClips has no difference with maxIndexraw
-                    //Find out why different is needed and correct with track.loopsToGridMapped
+                    print("ADD NOTES TO GRID")
+                    let maxIndexMapped = track.loopsToGridMapped[maxIndex]
                     
                     forwardSpriteKit(
                         trackNr: trackNr,
                         partNr: partNr,
                         ramped: value,
                         areaOfInterest: part.areaOfInterest,
-                        maxIndexRaw: maxIndexraw,
-                        maxIndex: maxIndexMidiClips
+                        maxIndex: maxIndex,
+                        mappedIndex: maxIndexMapped
                     )
                 }
                 else if setSettings.defaultSkin == .swiftUI {

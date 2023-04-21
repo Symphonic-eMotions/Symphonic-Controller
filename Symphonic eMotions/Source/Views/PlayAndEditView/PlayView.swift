@@ -24,6 +24,7 @@ struct PlayView: View {
     
     var body: some View {
         
+        //ZStack for masterFX
         ZStack{
             
             //Vetical stack to hold levels, transport, settings,
@@ -169,6 +170,11 @@ struct PlayView: View {
                     )
                     .environmentObject(fileController)
                 }
+                else {
+                    Spacer()
+                    Text(playViewModel.setSettings.customName)
+                        .foregroundColor(.gray)
+                }
                 Spacer()
             }
             .padding(.horizontal)
@@ -182,6 +188,8 @@ struct PlayView: View {
 
                 )
             }
+            
+            
         }
     }
 }
@@ -242,7 +250,6 @@ struct SliderView: View {
     }
     
 }
-
 
 struct SensitivityPlayView: View {
     

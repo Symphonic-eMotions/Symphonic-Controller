@@ -57,6 +57,7 @@ struct EditorView: View {
                         }, color: .gray, isSolid: true, maxWidth: 130, height: 35
                     ){ Text("Edit Levels") }
                     .frame(width: 130)
+                    .padding(.trailing)
                     
                 }
                 .onTapGesture {
@@ -68,6 +69,18 @@ struct EditorView: View {
                 
                 if showEditorPart == "setEditor" {
                     HStack{
+                        Text("Publish set")
+                            .font(.system(size: headingSize))
+                            .padding()
+                            .frame(width: columnWidth, alignment: .leading)
+                        
+                        Toggle("", isOn: $setInfoModel.setSettings.published)
+                            .frame(width: 50)
+                            .padding(.leading)
+                        
+                        Spacer()
+                    }
+                    HStack{
                         Text("Name")
                             .font(.system(size: headingSize))
                             .padding()
@@ -77,6 +90,7 @@ struct EditorView: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.leading)
                             .padding(.trailing)
+                            
                     }
                     HStack{
                         Text("Default skin")

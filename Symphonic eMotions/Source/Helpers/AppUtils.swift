@@ -153,6 +153,10 @@ final class AppUtils {
                 
                 midiGroup: midiGroup,
                 notesToGrid: notesToGrid,
+                notesToGridMapped: AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: firstAreaOfInterest,
+                    cellsToGrid: notesToGrid
+                ),
                 notesToLevel: notesToLevel,
                 
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
@@ -160,7 +164,7 @@ final class AppUtils {
                 loopsToGrid: loopsToGrid,
                 loopsToGridMapped: AppUtils.areaOfInterestGridMapped(
                     areaOfInterest: firstAreaOfInterest,
-                    loopsToGrid: loopsToGrid
+                    cellsToGrid: loopsToGrid
                 ),
                 levels: trackLoaded.levels,
                 parts: parts)
@@ -170,6 +174,7 @@ final class AppUtils {
         let setSettings = SetSettings(
             setName: instrumentSet.name,
             customName: instrumentSet.customName,
+            published: instrumentSet.published ?? false,
             setURL: sessionSettings.setURL,
             defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
@@ -336,6 +341,7 @@ final class AppUtils {
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,
             customName: setSettings.customName,
+            published: setSettings.published,
             filesPath: instrumentSet.filesPath,
             defaultSkin: setSettings.defaultSkin,
             //BPM is changed by tempo buttons
@@ -407,15 +413,15 @@ final class AppUtils {
     //Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],
-        loopsToGrid: [Int]
+        cellsToGrid: [Int]
     ) -> [Int] {
-        var loopsToGridMapped: [Int] = []
+        var cellsToGridMapped: [Int] = []
         for (index, value) in areaOfInterest.enumerated() {
             if value == 1 {
-                loopsToGridMapped.append(loopsToGrid[index])
+                cellsToGridMapped.append(cellsToGrid[index])
             }
         }
-        return loopsToGridMapped
+        return cellsToGridMapped
     }
     
     //Not yet used for amplifying top row

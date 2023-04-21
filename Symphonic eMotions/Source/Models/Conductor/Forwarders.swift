@@ -31,8 +31,8 @@ extension Conductor {
         partNr: Int,
         ramped: Double,
         areaOfInterest: [Int],
-        maxIndexRaw: Int,
-        maxIndex: Int
+        maxIndex: Int,
+        mappedIndex: Int
     ) -> Void {
         
 //        let allCells = areaOfInterest.filter { int in
@@ -43,34 +43,34 @@ extension Conductor {
         
         if trackNr == 0 {
             if partNr == 0 {
-                spriteKitParts0a.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts0a.send((maxIndex,mappedIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts0b.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts0b.send((maxIndex,mappedIndex,ramped))
             }
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts1a.send((maxIndex,mappedIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts1b.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts1b.send((maxIndex,mappedIndex,ramped))
             }
         }
         else if trackNr == 2 {
             if partNr == 0 {
-                spriteKitParts2a.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts2a.send((maxIndex,mappedIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts2b.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts2b.send((maxIndex,mappedIndex,ramped))
             }
         }
         else if trackNr == 3 {
             if partNr == 0 {
-                spriteKitParts3a.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts3a.send((maxIndex,mappedIndex,ramped))
             }
             else if partNr == 1 {
-                spriteKitParts3b.send((maxIndexRaw,maxIndex,ramped))
+                spriteKitParts3b.send((maxIndex,mappedIndex,ramped))
             }
         }
     }

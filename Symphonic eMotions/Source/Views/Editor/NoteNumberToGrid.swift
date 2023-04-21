@@ -82,14 +82,18 @@ struct NoteNumberToGrid: View {
                                 }
                                 .onTapGesture {
                                     
-                                    var increment = notesToGridLocal[cellIndex] + 1
-                                    
-                                    if !noteNumbersLocal.contains(increment) {
-                                        increment = notesToGridLocal.min() ?? 48
-                                    }
+                                    let currentValue = notesToGridLocal[cellIndex]
+                                    if let noteIndex = noteNumbersLocal.firstIndex(where: {$0 == currentValue}){
+                                        //Increment index
+                                        var incrementNoteIndex = noteIndex+1
+                                        //If index is higher then count then index = 0
+                                        if incrementNoteIndex >= noteNumbersLocal.count {
+                                            incrementNoteIndex = 0
+                                        }
                                         
-                                    currentTrack.notesToGrid[cellIndex] = increment
-                                    notesToGridLocal[cellIndex] = increment
+                                        currentTrack.notesToGrid[cellIndex] = noteNumbersLocal[incrementNoteIndex]
+                                        notesToGridLocal[cellIndex] = noteNumbersLocal[incrementNoteIndex]
+                                    }
                                 }
                             }
                         }

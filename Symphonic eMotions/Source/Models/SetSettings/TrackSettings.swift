@@ -21,14 +21,19 @@ class TrackSettings: Identifiable, ObservableObject {
     
     var midiGroup: [Int]
     var notesToGrid: [Int]
+    var notesToGridMapped: [Int]
     var notesToLevel: [Int]
-    var noteIsPlaying: Int = 0
     
     var midiFile: String
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
     var loopsToGridMapped: [Int]
+    
+    var noteIsPlaying: Int = 0
+    var currentMaxIndex: Int = 0
+    var currentLoopIndex: Int = 0
+    var currentLevel: Int = 0
     
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
@@ -44,6 +49,7 @@ class TrackSettings: Identifiable, ObservableObject {
         midiFile: String,
         midiGroup: [Int],
         notesToGrid: [Int],
+        notesToGridMapped: [Int],
         notesToLevel: [Int],
         loopLength: [Double],
         loopsToLevel: [Int],
@@ -62,6 +68,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.midiFile = midiFile
         self.midiGroup = midiGroup
         self.notesToGrid = notesToGrid
+        self.notesToGridMapped = notesToGridMapped
         self.notesToLevel = notesToLevel
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel

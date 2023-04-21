@@ -378,20 +378,16 @@ final class Conductor {
     //- MainView SpriteKitView.onAppear -> spriteKitOnAppear
     //Control if midiClips are controlled by level number
     
-    
     public func trackMuteAndClipStatusPerLevelControl(
         level selectedLevel: Int,
         setSettings: SetSettings
     ) -> Void {
         
-        print("MUTING and LevelChange variation")
-            
         //Run over all tracks
         setSettings.tracks.forEach { track in
             
             //For all tracks, move up a clip modulo amount of clips
             if track.value.trackType == .variationByLevel && track.value.noteSource == .midiFile {
-                
                 levelMidiClipVariation(in: selectedLevel, on: track.value)
             }
             
@@ -660,7 +656,7 @@ final class Conductor {
     private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
         
         let clipLengths = track.loopLength
-        let nextVariation = track.loopsToGrid[level]
+        let nextVariation = track.loopsToLevel[level]
         let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
         
         stopNotesTrackId(for: track.trackId)
@@ -715,7 +711,7 @@ final class Conductor {
         trackAmpEnvelopes[track.trackId]!.scheduleMIDIEvent(event: trackOff)
     }
     
-    private func stopNotesTrackId(for trackId: String) {
+    internal func stopNotesTrackId(for trackId: String) {
         
         //Shut down all note on's
         for note in 0...127 {

@@ -78,6 +78,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     private enum SetKeys: String, CodingKey {
         case name = "setName"
         case customName
+        case published
         case filesPath = "setPath"
         case defaultSkin
         case bpm = "setBPM"
@@ -97,6 +98,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     let name: String
     //User editable name
     let customName: String
+    let published: Bool?
     //Depricate filesPath, it's not used?
     let filesPath: String
     var defaultSkin: SessionDisplay?
@@ -126,6 +128,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         let container = try decoder.container(keyedBy: SetKeys.self)
         name = try container.decode(String.self, forKey: .name)
         customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
+        published = try container.decodeIfPresent(Bool.self, forKey: .published)
         filesPath = try container.decode(String.self, forKey: .filesPath)
         defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
         bpm = try container.decode(Double.self, forKey: .bpm)
@@ -181,6 +184,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     init(
         name: String,
         customName: String,
+        published: Bool,
         filesPath: String,
         defaultSkin: SessionDisplay,
         bpm: Double,
@@ -197,6 +201,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     ) {
         self.name = name
         self.customName = customName
+        self.published = published
         self.filesPath = filesPath
         self.defaultSkin = defaultSkin
         self.bpm = bpm
@@ -239,6 +244,7 @@ extension InstrumentsSet: Encodable {
         var container = encoder.container(keyedBy: SetKeys.self)
         try container.encode(name, forKey: .name)
         try container.encode(customName, forKey: .customName)
+        try container.encode(published, forKey: .published)
         try container.encode(filesPath, forKey: .filesPath)
         try container.encode(defaultSkin, forKey: .defaultSkin)
         try container.encode(bpm, forKey: .bpm)

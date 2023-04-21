@@ -178,7 +178,6 @@ struct EditTracks: View {
                         }
                     }
                 }
-                
                 Divider()
             }
         }

@@ -29,6 +29,7 @@ class SetSettings: Identifiable, ObservableObject {
     //Set Name
     var setName: String
     var customName: String
+    var published: Bool
     var setURL: URL
     
     var defaultSkin: SessionDisplay
@@ -67,6 +68,7 @@ class SetSettings: Identifiable, ObservableObject {
     init(
         setName: String,
         customName: String,
+        published: Bool,
         setURL: URL,
         defaultSkin: SessionDisplay,
         rows: Int,
@@ -80,6 +82,7 @@ class SetSettings: Identifiable, ObservableObject {
     ){
         self.setName = setName
         self.customName = customName
+        self.published = published
         self.setURL = setURL
         self.defaultSkin = defaultSkin
         self.gridRows = rows
@@ -146,12 +149,12 @@ class SetSettings: Identifiable, ObservableObject {
                 
                 tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
                 
-                //Loop's not a grid!
-//                tracks[index]!.loopsToGrid = zeroArray
-//                tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
-//                    areaOfInterest: zeroArray,
-//                    loopsToGrid: zeroArray
-//                )
+                print("TESTA")
+                tracks[index]!.loopsToGrid = zeroArray
+                tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: zeroArray,
+                    cellsToGrid: zeroArray
+                )
                 
                 var notesToGrid:[Int] = []
                 if tracks[index]!.midiGroup.count > 0 {
@@ -160,7 +163,12 @@ class SetSettings: Identifiable, ObservableObject {
                 else {
                     notesToGrid = Array(repeating: 48, count: cells)
                 }
+                print("TESTB")
                 tracks[index]!.notesToGrid = notesToGrid
+                tracks[index]!.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
+                    areaOfInterest: zeroArray,
+                    cellsToGrid: notesToGrid
+                )
             }
         }
     }

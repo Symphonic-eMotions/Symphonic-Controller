@@ -291,7 +291,11 @@ final class PlayViewModel: ObservableObject {
         //Get new connection with clip positions
         self.setSettings.tracks[trackId]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
             areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
-            loopsToGrid: self.setSettings.tracks[trackId]!.loopsToGrid)
+            cellsToGrid: self.setSettings.tracks[trackId]!.loopsToGrid)
+        //Get new connections with note positions
+        self.setSettings.tracks[trackId]!.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
+            areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
+            cellsToGrid: self.setSettings.tracks[trackId]!.notesToGrid)
         
         //Update this var to update View
         self.playViewState.updateEditView += 1
