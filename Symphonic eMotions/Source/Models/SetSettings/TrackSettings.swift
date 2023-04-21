@@ -30,13 +30,15 @@ class TrackSettings: Identifiable, ObservableObject {
     var loopsToGrid: [Int]
     var loopsToGridMapped: [Int]
     
-    var noteIsPlaying: Int = 0
-    var currentMaxIndex: Int = 0
-    var currentLoopIndex: Int = 0
-    var currentLevel: Int = 0
-    
     var levels: [Int]
     var parts: OrderedDictionary<String, PartSettings>
+    
+    //PlayStatus vars
+    var playThisNote: Int = 0
+    var notesArePlaying: [Int] = []
+    var currentMaxIndex: Int = 0
+    var currentLoopIndex: Int = 0
+    var currentLevel: Int = -1
     
     init(
         trackId: String,

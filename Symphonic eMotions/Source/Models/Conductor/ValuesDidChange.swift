@@ -76,13 +76,18 @@ extension Conductor {
                     value = 0
                 }
                 
-                //MARK: Handle clip and note control with first part
+                //MARK: First part Type controlling
+                //NoteSource
+                //StartType
+                //TrackType
                 if partNr == 0 {
                     
-                    //Decide WHAT to play if position changes
-                    if maxIndex != track.currentMaxIndex && track.trackType == .variationByPosition {
+                    
+                    //Decide WHAT to play if position changes per noteSource
+                    if track.trackType == .variationByPosition {
                         
-                        if track.noteSource == .midiFile {
+                        //Make shure its not the original but the mapped maxIndex
+                        if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndex] != track.loopsToGridMapped[track.currentMaxIndex] {
                             
                             //This is the mapped value from the editor .midiFile .variationByPosition
                             let loopIndex = track.loopsToGridMapped[maxIndex]
@@ -105,40 +110,43 @@ extension Conductor {
                                 track.currentMaxIndex = maxIndex
                             }
                         }
+                        
+                        //Make shure its not the original but the mapped maxIndex
                         else if track.noteSource == .noteNumbers {
-                            
-                            //This is the chosen note number in the editor NoteNumberToGrid()
-                            let noteNumber:Int = track.notesToGridMapped[maxIndex]
-                            print(track.notesToGrid.map({String($0)}).joined(separator: ","))
-                            print("noteNumbers variationByPosition \(noteNumber)")
-                            track.noteIsPlaying = noteNumber
+                            //After a end wave, we want a new note
+                            if track.currentMaxIndex == -1 || track.notesToGridMapped[maxIndex] != track.notesToGridMapped[track.currentMaxIndex] {
+                                //This is the chosen note number in the editor NoteNumberToGrid()
+                                let noteNumber:Int = track.notesToGridMapped[maxIndex]
+                                track.playThisNote = noteNumber
+                            }
                         }
+                        
+                        track.currentMaxIndex = maxIndex
                     }
                     
                     //Levels Note numbers
-                    if Int(localCurrentSetLevel) != track.currentLevel
-                        && track.noteSource == .noteNumbers
-                        && track.trackType == .variationByLevel {
+                    if Int(localCurrentSetLevel) != track.currentLevel && track.trackType == .variationByLevel && track.noteSource == .noteNumbers {
+                        
+                        for note in track.notesArePlaying {
+                            stopNoteNumber(track, note)
+                        }
                         
                         //This is the chosen note number in the editor NoteNumberToLevelView()
                         let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-                        track.noteIsPlaying = noteNumber
+                        //Maybe wait for beat?
+                        playNoteNumber(track, noteNumber)
                         track.currentLevel = Int(localCurrentSetLevel)
                     }
                     
                     
-                    //If not playing by transport start playing here for looped start typed
-                    if [.loopedTrigger].contains(track.startType) {
+                    //Midi File Wave player, start with movemnet
+                    if track.noteSource == .midiFile && [.loopedTrigger].contains(track.startType) {
                         if setSettings.isWavePlaying {
                             //End wave under treshold
                             if value < setSettings.waveThreshold {
                                 //looped is always for all tracks
                                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                    if $0.noteSource == .midiFile { stopTrack($0) }
-                                    if $0.noteSource == .noteNumbers {
-                                        stopNoteNumber($0, track.noteIsPlaying)
-                                        track.noteIsPlaying = 0
-                                    }
+                                     stopTrack($0)
                                 }
                                 setSettings.isWavePlaying = false
                             }
@@ -147,9 +155,38 @@ extension Conductor {
                         else {
                             if value > setSettings.waveThreshold {
                                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                    if $0.noteSource == .midiFile { playTrack($0) }
-                                    if $0.noteSource == .noteNumbers { playNoteNumber($0, track.noteIsPlaying) }
+                                    playTrack($0)
                                 }
+                                setSettings.isWavePlaying = true
+                            }
+                        }
+                    }
+                    //Note Number Wave player, start with movement
+                    if track.noteSource == .noteNumbers && [.loopedTrigger].contains(track.startType) {
+                        if setSettings.isWavePlaying {
+                            //End the wave
+                            if value < setSettings.waveThreshold {
+                                setSettings.isWavePlaying = false
+                                track.currentMaxIndex = -1
+                            }
+                            //Play the notes as long as we are in the wave
+                            else{
+                                //Only play if a new one is added
+                                if track.playThisNote > 0 {
+                                    playNoteNumber(track, track.playThisNote)
+                                    //Add it to the playing note array
+                                    if !track.notesArePlaying.contains(track.playThisNote) {
+                                        track.notesArePlaying.append(track.playThisNote)
+                                    }
+                                    //Play it once per maxIndex change
+                                    track.playThisNote = 0
+                                }
+                            }
+                        }
+                        //No wave
+                        else {
+                            if value > setSettings.waveThreshold {
+                                for note in track.notesArePlaying { stopNoteNumber(track, note) }
                                 setSettings.isWavePlaying = true
                             }
                         }

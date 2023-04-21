@@ -136,9 +136,12 @@ final class Conductor {
             //Remove exs from memory
             if trackSamplers[track.id] != nil {
                 
-                if let noteIsPlaying = setSettings.tracks[track.id]?.noteIsPlaying {
-                    let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteIsPlaying), velocity: 0, channel: 1)
-                    trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+                if let notesArePlaying = setSettings.tracks[track.id]?.notesArePlaying {
+                    
+                    for note in notesArePlaying {
+                        let noteOff = MIDIEvent(noteOn: MIDINoteNumber(note), velocity: 0, channel: 1)
+                        trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+                    }
                 }
                 do {
                     //Close file by loading empty exs
@@ -146,6 +149,9 @@ final class Conductor {
                 } catch {
                     print("Error loading EXS: trigger")
                 }
+                
+                
+                
                 
                 trackSamplers[track.id]!.destroyEndpoint()
                 trackSamplers.removeValue(forKey: track.id)
@@ -791,7 +797,11 @@ final class Conductor {
             envDownTracks($0)
             
             if $0.noteSource == .midiFile { stopTrack($0) }
-            if $0.noteSource == .noteNumbers { stopNoteNumber($0, $0.noteIsPlaying) }
+            if $0.noteSource == .noteNumbers {
+                for note in $0.notesArePlaying {
+                    stopNoteNumber($0, note)
+                }
+            }
         }
         audioEngine.pause()
         isConductorPlayingSubject.send(false)
