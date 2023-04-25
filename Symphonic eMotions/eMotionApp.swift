@@ -14,7 +14,7 @@ struct eMotionApp: App {
     //TODO: AppUtils.loadSets is loaded on 2 places!!
 //    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets-test-001")
     
-    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default")
+    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     
     let sessionSettings = AppUtils.setSessionSetting()
         

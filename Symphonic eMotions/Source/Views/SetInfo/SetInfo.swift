@@ -76,31 +76,39 @@ struct SetInfo: View {
 //                                    setName: setInfoModel.setInfoLocalState.setName
 //                                )
 //                            )
-                            setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setName)
+                            setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
                             
                             
                             //Change the View
                             sessionDisplay = setInfoModel.setSettings.defaultSkin
                         }
                         Spacer()
+                        //New variation button
                         EMButton(
                             action: {
 
                                 setInfoModel.setInfoState.currentInstrumentsSet = AppUtils.loadInstrumentSet(json: setInfoModel.setInfoLocalState.setConfig)
 
-                                let setSetting = AppUtils.setSettings(
-                                    instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                                    sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
-                                )
+                                if(setInfoModel.setInfoState.currentInstrumentsSet.name != "No Set"){
+                                    
+                                    let setSetting = AppUtils.setSettings(
+                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                                        sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
+                                    )
+                                    
+                                    _ = AppUtils.createWorkingFile(
+                                        setSettings: setSetting,
+                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                                        duplicateLastTrack: false,
+                                        asNewFile: true
+                                    )
+                                    
+                                    urls = fileController.getContentsOfDirectory()
+                                }
+                                
+                                
 
-                                _ = AppUtils.createWorkingFile(
-                                    setSettings: setSetting,
-                                    instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                                    duplicateLastTrack: false,
-                                    asNewFile: true
-                                )
-
-                                urls = fileController.getContentsOfDirectory()
+                                
                                 
                             }, color: .orange, isSolid: true, maxWidth: 150, height: 35
                         ){

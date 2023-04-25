@@ -47,7 +47,11 @@ final class AppUtils {
         print("Loading \(json)")
         
         guard let instrumentSet = InstrumentsSet.withJSON(json) else {
-            preconditionFailure()
+            
+            print("Error loading instrument set from JSON: \(json)")
+            
+            //The name "No Set" is used to prevent loading
+            return InstrumentsSet(name: "No Set", customName: "", published: false, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levelSpeed: 0.5, levels: [0], playViewImages: nil, tracks: [])
         }
         return instrumentSet
     }

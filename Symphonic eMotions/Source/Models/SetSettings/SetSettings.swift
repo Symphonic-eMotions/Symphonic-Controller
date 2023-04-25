@@ -93,8 +93,14 @@ class SetSettings: Identifiable, ObservableObject {
         self.masterEffects = masterEffects
         self.tracks = tracks
         self.skins = skins
-        //Set editor values (partFeedbackView) ready for first track first part editing
-        let firstTrack = tracks.elements.first!
+        //In case of json error we need an "empty" instrumentSet
+        let initDamperTarget = InstrumentsSet.Track.Part.DamperTarget(trackIdString: "", nodeNameString: "", parameterString: "", parameterRangeArray: [])
+        let initPartSettings = PartSettings(partId: "", partName: "", partNumber: 0, rampUp: 0.5, rampDown: 0.5, areaOfInterest: [0], areaOfInterestColor: [.accentColor], damperTarget: initDamperTarget, dontDrawVisual: false)
+        let partDict = OrderedDictionary<String, PartSettings>(uniqueKeysWithValues: [("part", initPartSettings)])
+        
+        let initTrackSettings = TrackSettings(trackId: "", trackName: "", noteSource: .midiFile, startType: .loopedTransport, trackType: .variationByPosition, instrumentVolume: 1, instrumentColor: .white, midiFile: "triggers.mid", midiGroup: [], notesToGrid: [], notesToGridMapped: [], notesToLevel: [], loopLength: [], loopsToLevel: [], loopsToGrid: [], loopsToGridMapped: [], levels: [], parts: partDict)
+        let firstTrack = tracks.elements.first ?? ("track", initTrackSettings)
+
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!

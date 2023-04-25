@@ -56,6 +56,10 @@ final class SetInfoModel: ObservableObject {
 //        return filtered.first!
 //    }
     
+    func tapStopAudioEngine(){
+        conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
+    }
+    
     func tapSetTempoBPMPlus(){
         self.setSettings.bpm -= 1
     }
