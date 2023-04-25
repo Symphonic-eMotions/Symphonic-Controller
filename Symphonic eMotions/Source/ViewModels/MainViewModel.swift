@@ -11,7 +11,7 @@ struct MainViewState {
     var sessionSettings: SessionSettings
     var setSettings: SetSettings
     var imageDifference: ImageDifference
-    var setCollection: Sets
+//    var setCollection: Sets
     var currentInstrumentsSet: InstrumentsSet
     var buildSettings: BuildSettings
     var masterTrackStructure: [MasterTrackEffect]?
@@ -85,7 +85,7 @@ final class MainViewModel: ObservableObject {
                 imageDifference: ImageDifference(
                     setSetting: setSettings
                 ),
-                setCollection: mainState.setCollection,
+//                setCollection: mainState.setCollection,
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )

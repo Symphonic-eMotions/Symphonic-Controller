@@ -15,17 +15,17 @@ struct SidebarViewState {
 
 final class SidebarViewModel: ObservableObject {
     
-    let setCollections: Sets
+//    let setCollections: Sets
     @Published var state: SidebarViewState
     var currentInstrumentsSetIsChanged: (InstrumentsSet) -> Void
     
     init(
         
-        setCollections: Sets = AppUtils.loadSets(json: "SE-sets-test-001"),
+//        setCollections: Sets = AppUtils.loadSets(json: "SE-sets-test-001"),
         state: SidebarViewState,
         currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void
     ) {
-        self.setCollections = setCollections
+//        self.setCollections = setCollections
         self.state = state
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
     }
@@ -49,11 +49,12 @@ struct SidebarView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
+                                
                 SidebarSetsView(
                     viewModel: viewModel,
                     sideBarSetsViewModel: SideBarSetsViewModel(
                             state: SideBarSetsViewState(
-                                setCollections: sidebarViewModel.setCollections,
+//                                setCollections: sidebarViewModel.setCollections,
                                 currentInstrumentsSetName: sidebarViewModel.state.currentInstrumentsSetName,
                                 currentInstrumentSet: sidebarViewModel.state.currentInstrumentSet,
                                 buildSettings: sidebarViewModel.state.buildSettings

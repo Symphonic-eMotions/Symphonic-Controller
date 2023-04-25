@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SideBarSetsViewState {
-    let setCollections: Sets
+//    let setCollections: Sets
     let currentInstrumentsSetName: String
     let currentInstrumentSet: InstrumentsSet
     var buildSettings: BuildSettings
@@ -73,33 +73,23 @@ struct SidebarSetsView: View {
                     setInfoLocalState.sideBarHead = "Sets"
                 }
                 
-            ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
-                
-                SidebarSetCollectionView(
-                    setCollection: setCollection,
-                    setInfoLocalState: $setInfoLocalState
-                ).onTapGesture {
-                    
-                    viewModel.tapStopAudioEngine()
-                    
-                    //The brand new SeM File editor
-//                    if sessionDisplay == .editor || sessionDisplay == .setEditor {
-//                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
-//                        setEditLocalState.setName = set.name
-//                        setEditLocalState.setConfig = set.config
-//                        sessionDisplay = .setEditor
-//
-//                    }
-//                    else {
-                        //Loading for setInfoView
-                        let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
-                        setInfoLocalState.setName = set.name
-                        setInfoLocalState.setConfig = set.config
-                        sessionDisplay = .setInfo
-                        sessionDisplaySub = .none
-//                    }
-                }
-            }
+//            ForEach(sideBarSetsViewModel.state.setCollections.sets, id: \.self) { setCollection in
+//                
+//                SidebarSetCollectionView(
+//                    setCollection: setCollection,
+//                    setInfoLocalState: $setInfoLocalState
+//                ).onTapGesture {
+//                    
+//                    viewModel.tapStopAudioEngine()
+//                    
+//                    //Loading for setInfoView
+//                    let set = sideBarSetsViewModel.currentSetInfoChanged(selectedCollection: setCollection)
+//                    setInfoLocalState.setName = set.name
+//                    setInfoLocalState.setConfig = set.config
+//                    sessionDisplay = .setInfo
+//                    sessionDisplaySub = .none
+//                }
+//            }
         }
     }
 }

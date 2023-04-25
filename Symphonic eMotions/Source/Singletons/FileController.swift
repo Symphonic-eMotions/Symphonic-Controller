@@ -29,14 +29,14 @@ class FileController: ObservableObject {
         return self.loadedURL
     }
     
-    func addSetFileURLToController(fileName: String) {
+    public func addSetFileURLToController(fileName: String) {
         
         let directoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let fileURL = directoryURL.appendingPathComponent(fileName)
         loadedURL.append(fileURL)
     }
     
-    func getContentsOfDirectory() -> [URL] {
+    public func getContentsOfDirectory() -> [URL] {
         do {
             return try FileManager.default.contentsOfDirectory(at: self.directoryURL, includingPropertiesForKeys: nil)
         } catch {
@@ -45,7 +45,7 @@ class FileController: ObservableObject {
         }
     }
         
-    func urlToNameParts( url: URL) -> [String] {
+    private func urlToNameParts( url: URL) -> [String] {
         var nameParts: [String] = []
         let noExt = url.deletingPathExtension()
         let file = noExt.lastPathComponent
@@ -53,7 +53,7 @@ class FileController: ObservableObject {
         return nameParts
     }
     
-    func fileContents( url: URL, fileName: String ) -> String {
+    public func fileContents( url: URL, fileName: String ) -> String {
         
         var fileNameReturn = fileName
         
@@ -66,16 +66,16 @@ class FileController: ObservableObject {
         return fileNameReturn
     }
     
-    func isCustomNameNotEmpty(set: InstrumentsSet) -> Bool {
+    private func isCustomNameNotEmpty(set: InstrumentsSet) -> Bool {
         
         return set.customName != ""
     }
     
-    func urlToFileName( url: URL) -> String{
+    public func urlToFileName( url: URL) -> String{
         return url.lastPathComponent
     }
     
-    func isURLInGroup( url: URL, name: String ) -> Bool {
+    public func isURLInGroup( url: URL, name: String ) -> Bool {
         let nameParts = urlToNameParts(url: url)
         if nameParts.first! == name {
             return true
@@ -83,7 +83,7 @@ class FileController: ObservableObject {
         return false
     }
     
-    func date(url: URL) -> String{
+    public func date(url: URL) -> String{
         let nameParts = urlToNameParts(url: url)
         if nameParts.count > 1 {
             let date = Date(timeIntervalSince1970: Double(nameParts.last!)!)
@@ -93,7 +93,7 @@ class FileController: ObservableObject {
         return nameParts.first ?? "No name"
     }
     
-    func name(url: URL) -> String{
+    public func name(url: URL) -> String{
         let nameParts = urlToNameParts(url: url)
         if nameParts.count > 1 {
             return nameParts.first!
@@ -101,7 +101,7 @@ class FileController: ObservableObject {
         return "Mismatch"
     }
     
-    func deleteFile(url: URL) -> [URL] {
+    public func deleteFile(url: URL) -> [URL] {
         print(url)
         do {
             try FileManager.default.removeItem(at: url)
@@ -112,4 +112,5 @@ class FileController: ObservableObject {
         
         return self.getContentsOfDirectory()
     }
+    
 }

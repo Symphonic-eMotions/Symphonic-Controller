@@ -75,6 +75,7 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CB7028329D84E1A003399BC /* EditTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracks.swift */; };
+		7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
@@ -213,6 +214,7 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CB7028229D84E1A003399BC /* EditTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracks.swift; sourceTree = "<group>"; };
+		7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarFolderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
@@ -269,7 +271,7 @@
 		C084FFDD26B31160009A4D0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C084FFE426B3118A009A4D0C /* eMotion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = eMotion.entitlements; sourceTree = "<group>"; };
 		C084FFEB26B3122C009A4D0C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C084FFED26B31534009A4D0C /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		C084FFED26B31534009A4D0C /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0AFDD002705BC08006EF64F /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C0AFDD022705BC24006EF64F /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		C0AFDD052705D1CC006EF64F /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 		16935F9F27E36DDE00BF5EDB /* SideBarView */ = {
 			isa = PBXGroup;
 			children = (
+				7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */,
 				C084FFED26B31534009A4D0C /* SidebarView.swift */,
 				16935FA027E36E1A00BF5EDB /* SidebarSetsView.swift */,
 				7CB5834E292FACC6000C46FF /* SavedSettingsView.swift */,
@@ -398,6 +401,13 @@
 				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		7CC9089929F8165000AB1F30 /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Playlists;
 			sourceTree = "<group>";
 		};
 		7CCDE10228E2C61300343920 /* MasterTrack */ = {
@@ -554,6 +564,7 @@
 				7C166AD229544F8E0078C384 /* Library */,
 				7C69ED39295350750009F382 /* .gitignore */,
 				C0AFDD0B2705F425006EF64F /* Samples */,
+				7CC9089929F8165000AB1F30 /* Playlists */,
 				C0AFDD0C2705F425006EF64F /* Sets */,
 				C0AFDD0A2705F424006EF64F /* Sounds */,
 				C069590026B4DD0D002EB522 /* Info.plist */,
@@ -808,6 +819,7 @@
 				7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */,
 				7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */,
 				7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */,
+				7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */,
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
 				7CF50F4F29EDEC770016BAF4 /* NoteSourceView.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,

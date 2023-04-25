@@ -127,14 +127,15 @@ extension Conductor {
                     //Levels Note numbers
                     if Int(localCurrentSetLevel) != track.currentLevel && track.trackType == .variationByLevel && track.noteSource == .noteNumbers {
                         
+                        print("CALLED \(track.startType)")
+                        
                         for note in track.notesArePlaying {
                             stopNoteNumber(track, note)
                         }
                         
                         //This is the chosen note number in the editor NoteNumberToLevelView()
                         let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-                        //Maybe wait for beat?
-                        playNoteNumber(track, noteNumber)
+                        track.playThisNote = noteNumber
                         track.currentLevel = Int(localCurrentSetLevel)
                     }
                     
@@ -161,13 +162,14 @@ extension Conductor {
                             }
                         }
                     }
-                    //Note Number Wave player, start with movement
+                    //Note Number Position Wave player, start with movement
                     if track.noteSource == .noteNumbers && [.loopedTrigger].contains(track.startType) {
                         if setSettings.isWavePlaying {
                             //End the wave
                             if value < setSettings.waveThreshold {
                                 setSettings.isWavePlaying = false
                                 track.currentMaxIndex = -1
+                                track.currentLevel = -1
                             }
                             //Play the notes as long as we are in the wave
                             else{
@@ -191,6 +193,10 @@ extension Conductor {
                             }
                         }
                     }
+//                    //Note Number Levels Wave player, also start with movement
+//                    if track.noteSource == .noteNumbers && [TrackType.].contains(track.startType) {
+//
+//                    }
                 }
                 //End first Part
                 

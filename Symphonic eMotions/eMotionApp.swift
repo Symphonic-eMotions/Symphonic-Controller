@@ -12,7 +12,7 @@ struct eMotionApp: App {
     
 //    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets")
     //TODO: AppUtils.loadSets is loaded on 2 places!!
-    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets-test-001")
+//    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets-test-001")
     
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default")
     
@@ -51,7 +51,7 @@ struct eMotionApp: App {
                         imageDifference: ImageDifference(
                             instrumentsSet: instrumentSet
                         ),
-                        setCollection: setCollection,
+//                        setCollection: setCollection,
                         currentInstrumentsSet: instrumentSet,
                         buildSettings: buildSettings
                     ),

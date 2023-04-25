@@ -71,11 +71,13 @@ struct SetInfo: View {
                                 setURL: URL("dontOverWrite"))
                             
                             //Load the Set
-                            setInfoModel.tapSetRow(
-                                selectedCollection: setInfoModel.filterSet(
-                                    setName: setInfoModel.setInfoLocalState.setName
-                                )
-                            )
+//                            setInfoModel.tapSetRow(
+//                                selectedCollection: setInfoModel.filterSet(
+//                                    setName: setInfoModel.setInfoLocalState.setName
+//                                )
+//                            )
+                            setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setName)
+                            
                             
                             //Change the View
                             sessionDisplay = setInfoModel.setSettings.defaultSkin

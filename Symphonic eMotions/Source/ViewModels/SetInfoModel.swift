@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SetInfoState {
 
-    let setCollections: Sets
+//    let setCollections: Sets
     var currentInstrumentsSet: InstrumentsSet
 }
 
@@ -36,9 +36,9 @@ final class SetInfoModel: ObservableObject {
     }
     
     
-    func tapSetRow(selectedCollection: MusicSet) {
+    func tapSetRow(filePath: String) {
         
-        let instrumentSet = AppUtils.loadInstrumentSet(json: selectedCollection.config)
+        let instrumentSet = AppUtils.loadInstrumentSet(json: filePath)
         currentInstrumentsSetIsChanged(instrumentSet)
     }
     
@@ -48,13 +48,13 @@ final class SetInfoModel: ObservableObject {
         currentInstrumentsSetIsChanged(instrumentSet!)
     }
     
-    func filterSet(setName: String) -> MusicSet {
-        
-        let filtered = setInfoState.setCollections.sets.filter { set in
-            return set.name == setName
-        }
-        return filtered.first!
-    }
+//    func filterSet(setName: String) -> MusicSet {
+//        
+//        let filtered = setInfoState.setCollections.sets.filter { set in
+//            return set.name == setName
+//        }
+//        return filtered.first!
+//    }
     
     func tapSetTempoBPMPlus(){
         self.setSettings.bpm -= 1

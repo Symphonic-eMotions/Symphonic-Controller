@@ -1,0 +1,24 @@
+{
+    "sets": [
+        {
+            "id": 15,
+            "setName": "Boerenwals",
+            "imageName": "FullHomeCow",
+            "imageNameBackground": "FullHomeGreen",
+            "soundEffectMidiNoteNumer": 48,
+            "setConfig": "SE-set-muur-boerenwals",
+            "setGenres": ["Hoorspel","`Boerderij","Avontuur"],
+            "copyright": ""
+        },
+        {
+            "id": 17,
+            "setName": "Onderwater",
+            "imageName": "FullHomeWhale",
+            "imageNameBackground": "FullHomeBlue",
+            "soundEffectMidiNoteNumer": 50,
+            "setConfig": "SE-set-muur-onderwater",
+            "setGenres": ["Hoorspel","`Natuur","Onderwater","Avontuur"],
+            "copyright": ""
+        }
+    ]
+}

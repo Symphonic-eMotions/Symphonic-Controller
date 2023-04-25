@@ -10,7 +10,7 @@ import SwiftUI
 struct Sets: Decodable {
     
     static func withJSON(_ fileName: String) -> Sets? {
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json", subdirectory: "Sets") else { return nil }
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json", subdirectory: "Playlists") else { return nil }
         guard let data = try? Data(contentsOf: url) else { return nil }
         
         do {

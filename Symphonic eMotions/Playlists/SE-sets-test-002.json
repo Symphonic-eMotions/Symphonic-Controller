@@ -1,0 +1,61 @@
+{
+    "sets": [
+        {
+            "id": 80,
+            "setName": "Free interface",
+            "setBPM": 110,
+            "setConfig": "SE-set-interface-free",
+            "setGenres": ["Melodisch","Electronisch"],
+            "copyright": "Frans-Jan Wind"
+        },
+        {
+            "id": 81,
+            "setName": "Guided interface",
+            "setBPM": 110,
+            "setConfig": "SE-set-interface-guided",
+            "setGenres": ["Melodisch","Electronisch"],
+            "copyright": "Frans-Jan Wind"
+        },
+        {
+            "id": 82,
+            "setName": "Hard Rock",
+            "setBPM": 160,
+            "setConfig": "SE-set-hardrock",
+            "setGenres": ["Hard Rock"],
+            "copyright": "Axel"
+        },
+        {
+            "id": 83,
+            "setName": "Scary Things",
+            "setBPM": 160,
+            "setConfig": "SE-set-scary-things",
+            "setGenres": ["Scary Things"],
+            "copyright": "Axel"
+        },
+        {
+            "id": 84,
+            "setName": "Strings",
+            "setBPM": 160,
+            "setConfig": "SE-set-strings",
+            "setGenres": ["Strings"],
+            "copyright": "Axel"
+        },
+        {
+            "id": 70,
+            "setName": "Het dorp",
+            "setBPM": 100,
+            "setConfig": "SE-set-hetdorp",
+            "setGenres": ["Nederlandstalig","Melancholisch"],
+            "copyright": "Jean Ferrat"
+        },
+        {
+            "id": 130,
+            "setName": "Nathalie",
+            "setBPM": 120,
+            "setConfig": "SE-set-phaser",
+            "setGenres": ["Effect","Baikal"],
+            "copyright": "Frans-Jan Wind"
+        }
+    ]
+}
+

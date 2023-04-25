@@ -1,0 +1,61 @@
+{
+    "sets": [
+        {
+            "id": 80,
+            "setName": "Free interface",
+            "setBPM": 110,
+            "setConfig": "SE-set-interface-free",
+            "setGenres": ["Melodisch","Electronisch"],
+            "copyright": "Frans-Jan Wind"
+        },
+        {
+            "id": 81,
+            "setName": "Guided interface",
+            "setBPM": 110,
+            "setConfig": "SE-set-interface-guided",
+            "setGenres": ["Melodisch","Electronisch"],
+            "copyright": "Frans-Jan Wind"
+        },
+        {
+            "id": 50,
+            "setName": "Midi file examples",
+            "setBPM": 120,
+            "setConfig": "Exmaple-Midi-File",
+            "setGenres": ["Example"],
+            "copyright": "SeM"
+        },
+        {
+            "id": 50,
+            "setName": "Note Number examples",
+            "setBPM": 120,
+            "setConfig": "Exmaple-Note-Number",
+            "setGenres": ["Example"],
+            "copyright": "Sem"
+        },
+        {
+            "id": 82,
+            "setName": "Hard Rock",
+            "setBPM": 160,
+            "setConfig": "SE-set-hardrock",
+            "setGenres": ["Hard Rock"],
+            "copyright": "Axel Lukkien"
+        },
+        {
+            "id": 83,
+            "setName": "Scary Things",
+            "setBPM": 160,
+            "setConfig": "SE-set-scary-things",
+            "setGenres": ["Scary Things"],
+            "copyright": "Axel"
+        },
+        {
+            "id": 130,
+            "setName": "Nathalie",
+            "setBPM": 120,
+            "setConfig": "SE-set-phaser",
+            "setGenres": ["Effect","Baikal"],
+            "copyright": "Frans-Jan Wind"
+        }
+    ]
+}
+

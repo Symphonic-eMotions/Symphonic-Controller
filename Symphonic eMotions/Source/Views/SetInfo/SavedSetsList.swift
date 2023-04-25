@@ -18,11 +18,6 @@ struct SavedSetsList: View {
     @State private var showAlert = false
     @State private var deleteUrl: URL = URL("empty")
     
-    //FIXME: select the chosen one
-    var isSelected: Bool {
-         "false" == setInfoModel.setInfoLocalState.setName
-    }
-    
     var body: some View {
         
         ScrollView {
@@ -111,25 +106,28 @@ struct SavedSetsList: View {
                                 ActivityViewController(activityItems: [url])
                             })
                             
+                            
+
+                            
                             let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
                             VStack{
                                 HStack{
                                     Text(filesName)
-                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                        .foregroundColor(Color(.lightGray))
                                         .font(.title3)
                                         .padding(.horizontal)
                                         .frame(minWidth: 400, alignment: .leading)
                                 
                                
                                     Text(fileController.date(url: url))
-                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+                                        .foregroundColor(Color(.lightGray))
                                         .font(.subheadline)
                                         .padding(.horizontal)
                                 }
 //                                HStack{
 //                                    Spacer()
 //                                    Text(fileController.urlToFileName(url: url))
-//                                        .foregroundColor(isSelected ? Color(.lightGray) : .primary)
+//                                        .foregroundColor(Color(.lightGray))
 //                                        .font(.subheadline)
 //                                        .padding(.horizontal)
 //                                }
