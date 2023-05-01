@@ -44,8 +44,6 @@ final class AppUtils {
     //MARK: Instrument Set Loading
     static func loadInstrumentSet(json: String) -> InstrumentsSet {
         
-        print("Loading \(json)")
-        
         guard let instrumentSet = InstrumentsSet.withJSON(json) else {
             
             print("Error loading instrument set from JSON: \(json)")
@@ -414,6 +412,8 @@ final class AppUtils {
         ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
     }
     
+    
+    //MARK: Pro editor
     //Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],
@@ -428,64 +428,19 @@ final class AppUtils {
         return cellsToGridMapped
     }
     
-    //Not yet used for amplifying top row
-    static func getPartAreaBoostFactor(
-        rows: Int,
-        columns: Int,
-        areaOfInterest:[Int]
-    ) -> [Int] {
+    //Part editor SwiftUI interface
+    static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
         
-        var deltaTimes:[Int] = []
-        
-        let twoRows:[Int]   = [400,0]
-        let threeRows:[Int] = [400,200,0]
-        let fourRows:[Int]  = [500,350,200,0]
-        let fiveRows:[Int]  = [600,450,300,150,0]
-        
-        let twoXtwo:[Int] = [
-            twoRows[0],twoRows[0],
-            twoRows[1],twoRows[1]
-        ]
-        
-        let threeXthree:[Int] = [
-            threeRows[0],threeRows[0],threeRows[0],
-            threeRows[1],threeRows[1],threeRows[1],
-            threeRows[2],threeRows[2],threeRows[2]
-        ]
-        
-        let fourXfour:[Int] = [
-            fourRows[0],fourRows[0],fourRows[0],fourRows[0],
-            fourRows[1],fourRows[1],fourRows[1],fourRows[1],
-            fourRows[2],fourRows[2],fourRows[2],fourRows[2],
-            fourRows[3],fourRows[3],fourRows[3],fourRows[3]
-        ]
-        
-        let fiveXfive:[Int] = [
-            fiveRows[0],fiveRows[0],fiveRows[0],fiveRows[0],
-            fiveRows[1],fiveRows[1],fiveRows[1],fiveRows[1],
-            fiveRows[2],fiveRows[2],fiveRows[2],fiveRows[2],
-            fiveRows[3],fiveRows[3],fiveRows[3],fiveRows[3],
-            fiveRows[4],fiveRows[4],fiveRows[4],fiveRows[4]
-        ]
-        
-        for (index,value) in areaOfInterest.enumerated() {
-            if value == 1 {
-                if rows == 2{
-                    deltaTimes.append(twoXtwo[index])
-                }
-                else if rows == 3 {
-                    deltaTimes.append(threeXthree[index])
-                }
-                else if rows == 4 {
-                    deltaTimes.append(fourXfour[index])
-                }
-                else if rows == 5 {
-                    deltaTimes.append(fiveXfive[index])
-                }
-            }
+        var areaOfInterestColor: [Color] = []
+        for i in areaOfInterest {
+            if i == 1 { areaOfInterestColor.append(trackColor) }
+            else { areaOfInterestColor.append(.black.opacity(0.01)) }
         }
+        return areaOfInterestColor
+    }
     
-        return deltaTimes
+    static func getIndexes(areaOfInterest: [Int]) -> [Int] {
+        return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }
     
     //Create the "database" to store the changed values in the master track, these values will be written to disk
@@ -527,21 +482,6 @@ final class AppUtils {
         }
         
         return masterTrackSettings
-    }
-    
-    //Part editor SwiftUI interface
-    static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
-        
-        var areaOfInterestColor: [Color] = []
-        for i in areaOfInterest {
-            if i == 1 { areaOfInterestColor.append(trackColor) }
-            else { areaOfInterestColor.append(.black.opacity(0.01)) }
-        }
-        return areaOfInterestColor
-    }
-    
-    static func getIndexes(areaOfInterest: [Int]) -> [Int] {
-        return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }
     
     //Create the object to build the master track view. This cannot hold changed values due to View rebuild on change

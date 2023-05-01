@@ -78,6 +78,7 @@
 		7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
+		7CD5F8C729F96B39001DE70F /* VersionSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CEFB9D028734205006A191F /* FullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFB9CF28734205006A191F /* FullView.swift */; };
@@ -217,6 +218,7 @@
 		7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarFolderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
+		7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionSetsList.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CEFB9CF28734205006A191F /* FullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullView.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */,
 				7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */,
 				7C4EBB9329D3505500958954 /* SavedSetsList.swift */,
+				7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */,
 			);
 			path = SetInfo;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */,
+				7CD5F8C729F96B39001DE70F /* VersionSetsList.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
 				7CF50F4D29ED84230016BAF4 /* StartTypes.swift in Sources */,
 				7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */,

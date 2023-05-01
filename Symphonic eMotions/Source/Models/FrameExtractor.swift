@@ -197,8 +197,6 @@ extension FrameExtractor: AVCaptureVideoDataOutputSampleBufferDelegate {
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        // print("FJW: After 12 set switches data is no longer ariving at this spot.")
-        
         guard let image = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
         self.delegate?.captured(image: image)
     }

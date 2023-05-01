@@ -9,12 +9,17 @@ import SwiftUI
 
 struct SetInfoLocalState {
     var setName: String
+    //String of document with relative path with extension
     var setConfig: String
+    //Path of setting
+    var setURL: String
+    //Navigation header
     var sideBarHead: String
     
-    init(sessioDisplay: SessionDisplay){
+    init(){
         self.setName = ""
         self.setConfig = ""
+        self.setURL = "SetInfoLocalState"
         self.sideBarHead = "Sets"
     }
 }
@@ -25,7 +30,7 @@ struct SetInfo: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
-    @Binding public var urls: [URL]
+    @Binding public var userPresets: [URL]
     
     
     var body: some View {
@@ -78,7 +83,6 @@ struct SetInfo: View {
 //                            )
                             setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
                             
-                            
                             //Change the View
                             sessionDisplay = setInfoModel.setSettings.defaultSkin
                         }
@@ -103,13 +107,8 @@ struct SetInfo: View {
                                         asNewFile: true
                                     )
                                     
-                                    urls = fileController.getContentsOfDirectory()
+                                    userPresets = fileController.getContentsOfDirectory()
                                 }
-                                
-                                
-
-                                
-                                
                             }, color: .orange, isSolid: true, maxWidth: 150, height: 35
                         ){
                             Text("New variation")
@@ -120,17 +119,18 @@ struct SetInfo: View {
                     }
                     
                     Spacer(minLength: 20)
-                    
-                    Divider()
-
-                    SavedSetsList(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
-                        urls: $urls
-                    )
-                    .environmentObject(fileController)
-                    
+                   
+                    ScrollView {
+                        
+                        SavedSetsList(
+                            setInfoModel: setInfoModel,
+                            sessionDisplay: $sessionDisplay,
+                            sessionDisplaySub: $sessionDisplaySub,
+                            userPresets: $userPresets
+                        )
+                        .environmentObject(fileController)
+                        
+                    }
                     Spacer()
                 }
             }

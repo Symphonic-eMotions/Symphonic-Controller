@@ -57,9 +57,8 @@ class ZoneScene: SKScene {
     func setupZones(zone: Zone, instruments: [InstrumentsSet.Skin.Instrument]) -> Void {
         
         //Create instrument rectangle based on first instrument part location
-        let instrument = instruments[0]
+//        let instrument = instruments[0]
         
-        print(instrument)
         
         //scnView.backgroundColor = NSColor.lightGray
     }

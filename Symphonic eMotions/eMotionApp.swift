@@ -10,9 +10,8 @@ import SwiftUI
 @main
 struct eMotionApp: App {
     
-//    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets")
-    //TODO: AppUtils.loadSets is loaded on 2 places!!
-//    let setCollection: Sets = AppUtils.loadSets(json: "SE-sets-test-001")
+    //Copy sets to documentsfolder
+    
     
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     

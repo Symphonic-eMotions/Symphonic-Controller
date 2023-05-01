@@ -21,8 +21,6 @@ struct GrowingSun: View {
         
         let sizeScaled: CGFloat = size.height * CGFloat(value * sunMaxSizes[sunNumber])
         
-//        let _ = print("sunNumber: \(sunNumber) size: \(sizeScaled) value: \(value) sunMaxSizes: \(sunMaxSizes[sunNumber]) sunOpacities: \(sunOpacities[sunNumber])")
-        
         Image("FullPlayFarmSun")
             .resizable()
             .frame(width: sizeScaled, height: sizeScaled, alignment: .center)

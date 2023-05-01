@@ -155,7 +155,6 @@ class SetSettings: Identifiable, ObservableObject {
                 
                 tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
                 
-                print("TESTA")
                 tracks[index]!.loopsToGrid = zeroArray
                 tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
                     areaOfInterest: zeroArray,
@@ -169,7 +168,6 @@ class SetSettings: Identifiable, ObservableObject {
                 else {
                     notesToGrid = Array(repeating: 48, count: cells)
                 }
-                print("TESTB")
                 tracks[index]!.notesToGrid = notesToGrid
                 tracks[index]!.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
                     areaOfInterest: zeroArray,

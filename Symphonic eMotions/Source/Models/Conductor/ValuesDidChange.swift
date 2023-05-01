@@ -6,11 +6,7 @@
 //
 
 import AudioKit
-//import SoundpipeAudioKit
-//import AVFAudio
 import Accelerate
-//import Combine
-//import Dispatch
 
 extension Conductor {
     
@@ -82,7 +78,6 @@ extension Conductor {
                 //TrackType
                 if partNr == 0 {
                     
-                    
                     //Decide WHAT to play if position changes per noteSource
                     if track.trackType == .variationByPosition {
                         
@@ -127,7 +122,7 @@ extension Conductor {
                     //Levels Note numbers
                     if Int(localCurrentSetLevel) != track.currentLevel && track.trackType == .variationByLevel && track.noteSource == .noteNumbers {
                         
-                        print("CALLED \(track.startType)")
+//                        print("CALLED \(track.startType)")
                         
                         for note in track.notesArePlaying {
                             stopNoteNumber(track, note)
@@ -162,10 +157,13 @@ extension Conductor {
                             }
                         }
                     }
+                    
                     //Note Number Position Wave player, start with movement
                     if track.noteSource == .noteNumbers && [.loopedTrigger].contains(track.startType) {
+                        
                         if setSettings.isWavePlaying {
-                            //End the wave
+                            
+                            //End the wave under treshold
                             if value < setSettings.waveThreshold {
                                 setSettings.isWavePlaying = false
                                 track.currentMaxIndex = -1
@@ -173,6 +171,7 @@ extension Conductor {
                             }
                             //Play the notes as long as we are in the wave
                             else{
+                                
                                 //Only play if a new one is added
                                 if track.playThisNote > 0 {
                                     playNoteNumber(track, track.playThisNote)
@@ -194,13 +193,16 @@ extension Conductor {
                         }
                     }
 //                    //Note Number Levels Wave player, also start with movement
-//                    if track.noteSource == .noteNumbers && [TrackType.].contains(track.startType) {
-//
-//                    }
+                    if track.noteSource == .noteNumbers && [.oneShot].contains(track.startType) {
+                        
+                        //If position of all changes INTO area of interest then hit
+                        
+                    }
                 }
                 //End first Part
                 
                 //All parts
+                //For triggering notenumbers / position there is no need to calculate
                 //Ad damping curves
                 value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
                 //Ad ramps from interface!

@@ -18,10 +18,11 @@ struct MainView: View {
     //This needs to be replaced with sessionDisplay
     @State private var mainViewUpdate: BuildSettings.ActiveView
     //Set info page vars from navigation
-    @State var setInfoLocalState = SetInfoLocalState(sessioDisplay: .swiftUI)
+    @State var setInfoLocalState = SetInfoLocalState()
     //Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
-    @State var urls: [URL] = []
+    @State var userPresets: [URL] = []
+    @State var templatePresets: [URL] = []
     
     init(
         viewModel: MainViewModel,
@@ -34,13 +35,6 @@ struct MainView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
-            
-        //What Skin is selected by default
-        //TODO: This doesn't get updated with set change.
-//        if viewModel.mainState.setSettings.skins.name != "default"{
-//            setInfoLocalState = SetInfoLocalState(sessioDisplay: SessionDisplay.spriteKit
-//            )
-//        }
     }
     
     var body: some View {
@@ -113,8 +107,10 @@ struct MainView: View {
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-                    setInfoLocalState: $setInfoLocalState,
-                    urls: $urls
+                    setInfoLocalState: $setInfoLocalState
+//                    ,
+//                    userPresets: $userPresets,
+//                    templatePresets: $templatePresets
                 )
                 .environmentObject(fileController)
                 
@@ -199,7 +195,7 @@ struct MainView: View {
                         ),
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub,
-                        urls: $urls
+                        userPresets: $userPresets
                     )
                     .environmentObject(fileController)
                 }

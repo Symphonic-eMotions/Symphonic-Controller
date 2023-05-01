@@ -13,34 +13,39 @@ struct SavedSetsList: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
-    @Binding var urls: [URL]
+    @Binding var userPresets: [URL]
     @State private var isSharePresented: Bool = false
     @State private var showAlert = false
     @State private var deleteUrl: URL = URL("empty")
     
     var body: some View {
         
-        ScrollView {
-            VStack(alignment: .leading){
+        VStack(alignment: .leading){
+            
+            HStack{
+                Text("User sets")
+                    .padding(.leading)
+                    .font(.title)
+                Spacer()
+            }
+            //User files documents fomder
+            ForEach( userPresets, id: \.self ){ url in
                 
-                ForEach( urls, id: \.self ){ url in
+                //Loop through filtered files in Documents folder
+                if fileController.isURLInGroup(
+                    url: url,
+                    name: setInfoModel.setInfoLocalState.setName
+                ) {
+                    // Create a closure to capture the current URL and return the button
+                    let deleteAction = {
+                        showAlert = true
+                        deleteUrl = url
+                    }
                     
-                    //Loop through filtered files in Documents folder
-                    if fileController.isURLInGroup(
-                        url: url,
-                        name: setInfoModel.setInfoLocalState.setName
-                    )
-                    {
-                        // Create a closure to capture the current URL and return the button
-                        let deleteAction = {
-                            showAlert = true
-                            deleteUrl = url
-                        }
+                    HStack(spacing:20){
                         
-                        HStack(spacing:0){
-                            
-                            //Play this set
-                            Image(systemName: "play.fill")
+                        //Play this set
+                        Image(systemName: "play.fill")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
                             .frame(width: 30)
@@ -59,11 +64,9 @@ struct SavedSetsList: View {
                                 //Change the View to the selected view
                                 sessionDisplay = setInfoModel.setSettings.defaultSkin
                             }
-                            
-                            Spacer().frame(width: 20)
-                            
-                            //Edit this set
-                            Image(systemName: "square.and.pencil")
+                        
+                        //Edit this set
+                        Image(systemName: "square.and.pencil")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
                             .frame(width: 30)
@@ -82,13 +85,12 @@ struct SavedSetsList: View {
                                 //Change the View
                                 sessionDisplaySub = .setEditor
                             }
-                            Spacer().frame(width: 20)
-                            
-                            //Sharing
-                            Button( action: {
-                                self.isSharePresented = true
-                            }) {
-                                Image(systemName: "square.and.arrow.up")
+                        
+                        //Sharing
+                        Button( action: {
+                            self.isSharePresented = true
+                        }) {
+                            Image(systemName: "square.and.arrow.up")
                                 .renderingMode(.original)
                                 .foregroundColor(.white)
                                 .font(.system(size: 18))
@@ -97,70 +99,57 @@ struct SavedSetsList: View {
                                 .padding(.horizontal, 5.0)
                                 .background(Color.blue)
                                 .cornerRadius(5.0)
-                            }
-                            .sheet(isPresented: $isSharePresented, onDismiss: {
-                                print("Dismiss")
-                            }, content: {
-                                let fileName = setInfoModel.setSettings.setURL.lastPathComponent
-                                let url = AppUtils.documentDirectory().appendingPathComponent(fileName)
-                                ActivityViewController(activityItems: [url])
-                            })
+                        }
+                        .sheet(isPresented: $isSharePresented, onDismiss: {
+                            print("Dismiss")
+                        }, content: {
+                            let fileName = setInfoModel.setSettings.setURL.lastPathComponent
+                            let url = AppUtils.documentDirectory().appendingPathComponent(fileName)
+                            ActivityViewController(activityItems: [url])
+                        })
+                        
+                        let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
+                        
+                        VStack(alignment: .leading){
+                            Text(filesName)
+                                .font(.title2)
                             
-                            
-
-                            
-                            let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
-                            VStack{
-                                HStack{
-                                    Text(filesName)
-                                        .foregroundColor(Color(.lightGray))
-                                        .font(.title3)
-                                        .padding(.horizontal)
-                                        .frame(minWidth: 400, alignment: .leading)
-                                
-                               
-                                    Text(fileController.date(url: url))
-                                        .foregroundColor(Color(.lightGray))
-                                        .font(.subheadline)
-                                        .padding(.horizontal)
-                                }
-//                                HStack{
-//                                    Spacer()
-//                                    Text(fileController.urlToFileName(url: url))
-//                                        .foregroundColor(Color(.lightGray))
-//                                        .font(.subheadline)
-//                                        .padding(.horizontal)
-//                                }
-                            }
+                            Text(fileController.date(url: url))
+                                .foregroundColor(Color(.lightGray))
+                                .font(.subheadline)
+                        }
+                        
+                        Spacer()
+                        
+                        //Delete
+                        VStack {
                             Spacer()
-                            
-                            //Delete
                             Button( action: deleteAction ) {
                                 Image(systemName: "trash")
-                                .renderingMode(.template)
-                                .foregroundColor(.white)
-                                .font(.system(size: 18))
-                                .frame(width: 30)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.red)
-                                .cornerRadius(5.0)
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 18))
+                                    .frame(width: 30)
+                                    .padding(.vertical, 5.0)
+                                    .padding(.horizontal, 5.0)
+                                    .background(Color.red)
+                                    .cornerRadius(5.0)
                             }
                             .alert(isPresented: $showAlert) {
                                 Alert(title: Text("Confirm Delete"), message: Text("Are you sure you want to delete this item?"), primaryButton: .destructive(Text("Delete")) {
                                     // Handle delete action
-                                    urls = fileController.deleteFile(url: deleteUrl)
+                                    userPresets = fileController.deleteFile(url: deleteUrl)
                                 }, secondaryButton: .cancel())
                             }
                         }
-                        .padding()
-                        .fixedSize()
+                        .padding(.trailing)
                     }
-                } //End Foreach urls -> url
-            }
+                    .padding()
+                }
+            } //End Foreach userPresets -> url
         }
         .onAppear{
-            urls = fileController.addDirectoryURLsToController()
+            userPresets = fileController.addDirectoryURLsToController()
         }
     }
 }
@@ -178,3 +167,18 @@ struct ActivityViewController: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
 
 }
+
+
+//struct ActivityViewController: UIViewControllerRepresentable {
+//
+//    var jsonFile: URL
+//
+//    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+//        let jsonData = try! Data(contentsOf: jsonFile)
+//        let jsonDict = ["data": jsonData, "type": "public.json"] as [String : Any]
+//        let controller = UIActivityViewController(activityItems: [jsonDict], applicationActivities: nil)
+//        return controller
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+//}

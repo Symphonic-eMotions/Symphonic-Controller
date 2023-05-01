@@ -43,8 +43,6 @@ struct LevelView: View {
                         
                         //Index is the number of the current available level
                         
-//                        let _ = print("levelView: \(playViewModel.leveling.currentSetLevelSubject.value)")
-                        
                         ProgressBar(value: .init(
                             get: {
                                 let currentBarLevel = Float(max(0, playViewModel.leveling.currentSetLevelSubject.value - Double(index)))

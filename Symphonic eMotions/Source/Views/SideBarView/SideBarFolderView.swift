@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SetFile: Identifiable, Decodable, Equatable {
     var id = UUID()
-    let name: String
-    let url: URL
-    let published: Bool
+    var name: String = ""
+    var url: URL = URL("SetFile")
+    var published: Bool = false
 }
 
 class SetListViewModel: ObservableObject {
@@ -33,6 +33,8 @@ class SetListViewModel: ObservableObject {
             let fileURLs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])
             let decoder = JSONDecoder()
             
+            var unsortedSetFiles: [SetFile] = []
+            
             for fileURL in fileURLs {
                 if fileURL.pathExtension == "json" {
                     do {
@@ -41,7 +43,7 @@ class SetListViewModel: ObservableObject {
                         
                         //But only if the set is published
                         if decodedFile.published ?? true {
-                            setFiles.append(
+                            unsortedSetFiles.append(
                                 SetFile(
                                     name: decodedFile.name,
                                     url: fileURL,
@@ -54,6 +56,13 @@ class SetListViewModel: ObservableObject {
                     }
                 }
             }
+            
+            // Sort unsortedSetFiles based on the name field
+            let sortedSetFiles = unsortedSetFiles.sorted { $0.name < $1.name }
+            
+            // Append sorted set files to setFiles
+            setFiles.append(contentsOf: sortedSetFiles)
+            
         } catch {
             print("Error reading contents of directory: \(error)")
         }
@@ -69,17 +78,17 @@ struct SideBarFolderView: View {
     @Binding public var setInfoLocalState: SetInfoLocalState
     
     @EnvironmentObject var fileController: FileController
-    @Binding var urls: [URL]
-    
+//    @Binding var userPresets: [URL]
+//    @Binding var templatePresets: [URL]
     
     @StateObject private var viewModel = SetListViewModel()
     @State private var selectedSet: SetFile?
-    
     
     //FIXME: select the chosen one
     var isSelected: Bool {
         "false" == setInfoModel.setInfoLocalState.setName
     }
+    
     var body: some View {
         NavigationView {
             List {
@@ -93,10 +102,10 @@ struct SideBarFolderView: View {
                         
                         setInfoLocalState.setName = setFile.name
                         setInfoLocalState.setConfig = setFile.url.lastPathComponent
+                        setInfoLocalState.setURL = setFile.url.absoluteString
+                        
                         sessionDisplay = .setInfo
                         sessionDisplaySub = .none
-                        
-                        
                     }) {
                         HStack {
                             VStack(alignment: .leading) {
