@@ -43,7 +43,7 @@ class PartSettings: Identifiable {
         self.dontDrawVisual = dontDrawVisual
     }
     
-    func indexes(rows: Int, columns: Int) -> [InstrumentsSet.Track.Part.Index] {
+    func interestIndexes(rows: Int, columns: Int) -> [InstrumentsSet.Track.Part.Index] {
         var indexes: [InstrumentsSet.Track.Part.Index] = []
         for row in 0..<rows {
             for column in 0..<columns {
@@ -56,6 +56,6 @@ class PartSettings: Identifiable {
     }
     
     func isIndexSelected(row: Int, column: Int, gridRows: Int, gridColumns: Int) -> Bool {
-        self.indexes( rows: gridRows, columns: gridColumns).contains { $0.column == column && $0.row == row }
+        self.interestIndexes( rows: gridRows, columns: gridColumns).contains { $0.column == column && $0.row == row }
     }
 }

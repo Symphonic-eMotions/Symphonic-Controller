@@ -233,6 +233,12 @@ struct InstrumentsSet: Identifiable, Decodable {
         tracks.first { $0.id == id }
     }
     
+    //For global index
+    struct Index {
+        let row: Int
+        let column: Int
+    }
+    
 //    func instrumentInLevel(_ level: Double, _ Instrument: String) -> Bool {
 //        
 //        let levelInt = Int(level)

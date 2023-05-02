@@ -75,6 +75,7 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CB7028329D84E1A003399BC /* EditTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracks.swift */; };
+		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
@@ -215,6 +216,7 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CB7028229D84E1A003399BC /* EditTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracks.swift; sourceTree = "<group>"; };
+		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarFolderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				7CFA009D29A74FA1001D8A5D /* PartSettings.swift */,
 				7CFA009F29A74FA1001D8A5D /* MasterTrackEffectsSettings.swift */,
 				7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */,
+				7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */,
 			);
 			path = SetSettings;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */,
 				7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
+				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
@@ -1061,7 +1065,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1104,7 +1108,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

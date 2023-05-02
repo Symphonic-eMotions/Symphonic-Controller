@@ -37,10 +37,17 @@ extension Conductor {
             value: averageForLevelupdate
         )
         
+        //Make a global maxIndex to go in and out of if areaOfInterest is just 1 cell
+        let scaledValues = values.flatMap { $0.map { $0.scaledValue } }
+        let maxIndexTupple = vDSP.indexOfMaximum(scaledValues)
+        //We only need the index for triggering
+        let maxIndex = Int(maxIndexTupple.0)
+    
         //We iterate through all tracks and its parts
         var trackNr: Int = 0
         var partNr: Int = 0
         setSettings.tracks.forEach { (trackIndex,track) in
+            
             //Reset part per track
             partNr = 0
             
@@ -53,24 +60,31 @@ extension Conductor {
             track.parts.forEach { (partIndex,part) in
                 
                 //We get the value from the areas of interest
-                let valuesMapped = part.indexes(
+                let valuesMapped = part.interestIndexes(
                     rows: setSettings.gridRows,
                     columns: setSettings.gridColumns).map {
                         values[$0.row][$0.column].scaledValue
-                    }
+                }
+                
                 guard !valuesMapped.isEmpty else { return }
                 
                 //Find highest value (maximum) with it's index
-                let maxIndexTupple = vDSP.indexOfMaximum(valuesMapped)
+                let maxIndexPartTupple = vDSP.indexOfMaximum(valuesMapped)
                                 
                 //Have a var for MaxIndex to number of MidiClips range
-                let maxIndex = Int(maxIndexTupple.0)
+                let maxIndexPart = Int(maxIndexPartTupple.0)
                 
                 //MaxMapped (highest value found in all of AreaOfInterest) value to work with
-                var value = maxIndexTupple.1
+                var value = maxIndexPartTupple.1
                 if value.isNaN {
                     value = 0
                 }
+                
+//                if( track.trackName == "Spectral" || track.trackName == "Pings" ) {
+//                    print("MAXINDEX \(track.trackName) \(maxIndex)")
+//                }
+                
+                
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
@@ -83,10 +97,10 @@ extension Conductor {
                     if track.trackType == .variationByPosition {
                         
                         //Make sure its not the original but the mapped maxIndex
-                        if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndex] != track.loopsToGridMapped[track.currentMaxIndex] {
+                        if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
                             
                             //This is the mapped value from the editor .midiFile .variationByPosition
-                            let loopIndex = track.loopsToGridMapped[maxIndex]
+                            let loopIndex = track.loopsToGridMapped[maxIndexPart]
                             
                             if loopIndex != track.currentLoopIndex {
                                 
@@ -101,34 +115,21 @@ extension Conductor {
                                     loopLength: track.loopLength[loopIndex])
                                 
                                 track.currentLoopIndex = loopIndex
-                                track.currentMaxIndex = maxIndex
+                                track.currentPartMaxIndex = maxIndexPart
                             }
                         }
                         
                         //Make sure its not the original but the mapped maxIndex
                         else if track.noteSource == .noteNumbers {
-                            if track.startType == .oneShot {
-                                if maxIndex != track.currentMaxIndex {
-                                    let noteNumber:Int = track.notesToGridMapped[maxIndex]
-                                    track.playThisNote = noteNumber
-                                }
-                            }
                             
-                            else if track.startType == .loopedTrigger {
-                                //After a end wave, we want a new note
-                                if track.currentMaxIndex == -1 || track.notesToGridMapped[maxIndex] != track.notesToGridMapped[track.currentMaxIndex] {
-                                    //This is the chosen note number in the editor NoteNumberToGrid()
-                                    let noteNumber:Int = track.notesToGridMapped[maxIndex]
-                                    track.playThisNote = noteNumber
-                                }
-                            }
-                            
-                            else if track.startType == .loopedTransport {
-                                //We need to disable this option in the editor
-                                //But then we need an extra @State for Source of notes
+                            if [.loopedTrigger,.oneShot].contains(track.startType) {
+                                
+                                let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+                                track.playThisNote = noteNumber
                             }
                         }
                         
+                        track.currentPartMaxIndex = maxIndexPart
                         track.currentMaxIndex = maxIndex
                     }
                     
@@ -181,14 +182,13 @@ extension Conductor {
                         else{
                             
                             //Play note if area active
-                            if track.playThisNote != 0 && part.areaOfInterest[maxIndex] == 1 {
+                            if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) {
+                                
                                 playNoteNumber(track, track.playThisNote)
                                 //Add it to the playing note array
                                 if !track.notesArePlaying.contains(track.playThisNote) {
                                     track.notesArePlaying.append(track.playThisNote)
                                 }
-                                //Play it once per maxIndex change
-                                track.playThisNote = 0
                             }
                         }
                     }
@@ -196,7 +196,6 @@ extension Conductor {
                 //End first Part
                 
                 //All parts
-                //For triggering notenumbers / position there is no need to calculate
                 //Ad damping curves
                 value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
                 //Ad ramps from interface!
@@ -212,15 +211,15 @@ extension Conductor {
                 //User interface feedback
                 if setSettings.defaultSkin == .spriteKit {
                     
-                    print("ADD NOTES TO GRID")
-                    let maxIndexMapped = track.loopsToGridMapped[maxIndex]
-                    
+                    let maxIndexMapped = track.loopsToGridMapped[maxIndexPart]
+                    //Send 0 for a value if not in level
+                    let inLevel: Double = track.levels.contains([Int(localCurrentSetLevel)]) ? 1 : 0
                     forwardSpriteKit(
                         trackNr: trackNr,
                         partNr: partNr,
-                        ramped: value,
+                        ramped: value * inLevel,
                         areaOfInterest: part.areaOfInterest,
-                        maxIndex: maxIndex,
+                        maxIndex: maxIndexPart,
                         mappedIndex: maxIndexMapped
                     )
                 }
@@ -232,13 +231,10 @@ extension Conductor {
                         )
                     }
                 }
-                
                 partNr += 1
             }
-    
             trackNr += 1
         }
-        
         return localCurrentSetLevel
     }
     

@@ -68,36 +68,36 @@ struct SetInfoHome: View {
             Spacer()
             
             
-            HStack {
-                Text(selectedLanguage.selectTaal)
-                Picker("Language", selection: $selectedLanguage) {
-                    ForEach(Language.allCases, id: \.self) { language in
-                        Text(language.taal)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .fixedSize()
-                
-                Button(action: {
-                    let utterance = AVSpeechUtterance(string: selectedLanguage.helloWorld)
-                    utterance.voice = AVSpeechSynthesisVoice(language: selectedLanguage.rawValue)
-                    
-                    utterance.rate = 0.5
-                    utterance.pitchMultiplier = 1
-                    utterance.postUtteranceDelay = 0
-                    utterance.volume = 0.9
-                    
-                    synthesizer.speak(utterance)
-                }) {
-                    Text("Start")
-                        .padding()
-                        .background(Color.accentColor)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(10.0)
-                }
-            }
-            
-            Spacer()
+//            HStack {
+//                Text(selectedLanguage.selectTaal)
+//                Picker("Language", selection: $selectedLanguage) {
+//                    ForEach(Language.allCases, id: \.self) { language in
+//                        Text(language.taal)
+//                    }
+//                }
+//                .pickerStyle(SegmentedPickerStyle())
+//                .fixedSize()
+//                
+//                Button(action: {
+//                    let utterance = AVSpeechUtterance(string: selectedLanguage.helloWorld)
+//                    utterance.voice = AVSpeechSynthesisVoice(language: selectedLanguage.rawValue)
+//                    
+//                    utterance.rate = 0.5
+//                    utterance.pitchMultiplier = 1
+//                    utterance.postUtteranceDelay = 0
+//                    utterance.volume = 0.9
+//                    
+//                    synthesizer.speak(utterance)
+//                }) {
+//                    Text("Start")
+//                        .padding()
+//                        .background(Color.accentColor)
+//                        .foregroundColor(Color.white)
+//                        .cornerRadius(10.0)
+//                }
+//            }
+//            
+//            Spacer()
         }
     }
 }

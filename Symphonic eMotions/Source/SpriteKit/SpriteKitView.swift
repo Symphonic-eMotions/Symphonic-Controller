@@ -32,6 +32,8 @@ struct SpriteKitView: View {
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         let levels = mainViewModel.mainState.setSettings.getLevels()
         
+        print("LEVELS \(levels)")
+        
         scene.isPlaying = mainViewModel.conductor.isConductorPlayingSubject.value
         scene.backgroundColor = .clear
         scene.size = size

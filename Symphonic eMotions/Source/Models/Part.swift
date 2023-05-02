@@ -353,6 +353,11 @@ extension InstrumentsSet.Track.Part {
     }
 }
 
+//struct FullIndex{
+//    let row: Int
+//    let column: Int
+//}
+
 extension InstrumentsSet.Track.Part.DamperTarget {
     
     struct MidiData: Decodable, Equatable {

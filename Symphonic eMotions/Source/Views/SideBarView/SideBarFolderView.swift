@@ -114,6 +114,7 @@ struct SideBarFolderView: View {
                                     .foregroundColor(selectedSet == setFile ? .white : .primary)
                                     .font(.headline)
                                     .padding(.trailing)
+                                    .padding(.leading)
                                 Spacer()
                             }
                             Spacer()
