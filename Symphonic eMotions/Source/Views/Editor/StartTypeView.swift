@@ -42,7 +42,10 @@ struct StartTypeView: View {
                 
                 Picker("Select starting type", selection: $startTypeLocal) {
                     ForEach(StartType.allCases, id: \.self) { type in
-                        Text(type.description).tag(type)
+                        
+//                        if !(currentTrack.noteSource == .noteNumbers && type == .loopedTransport) {
+                            Text(type.description).tag(type)
+//                        }
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -53,6 +56,8 @@ struct StartTypeView: View {
                         currentTrack.startType = type
                         //Keep local state
                         startTypeLocal = type
+                        
+                        
                     }
                 }
             }

@@ -48,6 +48,7 @@ struct TrackTypeView: View{
                 
                 Picker("Select track type", selection: $localTrackType) {
                     ForEach(availableTypes, id: \.self) { type in
+                        
                         Text(type.description).tag(type)
                     }
                 }

@@ -296,6 +296,7 @@ final class Conductor {
     //MARK: EDITOR
     public func previewSingleTrack(trackId: String){
         if trackSequencers[trackId] != nil {
+            
             let isPLaying = trackSequencers[trackId]!.isPlaying
             
             if isPLaying {
@@ -318,6 +319,11 @@ final class Conductor {
 //                unMuteTrack(trackId: trackId)
                 let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: envOn)
+                
+                velocities[trackId] = 1.0
+                
+                print("play \(trackId)")
+                
                 trackSequencers[trackId]?.play()
             }
         }
@@ -345,6 +351,8 @@ final class Conductor {
     public func copyMidiSingleTrack(trackId:String,nextVariation:Int,loopLength:[Double]){
     
         let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: loopLength)
+        
+        print("nextMIDIstartTime \(nextMIDIstartTime) nextVariation \(nextVariation) loopLength \(loopLength)")
         
         stopNotesTrackId(for: trackId)
         

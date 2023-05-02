@@ -116,19 +116,19 @@ struct EditTracks: View {
                 }
                 if showEditorPart == key {
                     
-                    //Start type
-                    StartTypeView(
-                        setInfoModel: setInfoModel,
-                        currentTrack: setInfoModel.setSettings.tracks[key]!,
-                        trackId: key
-                    )
-                    
                     //Source of notes
                     NoteSourceView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
                         noteSourceParent: $noteSourceLocal
+                    )
+                    
+                    //Start type
+                    StartTypeView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
                     )
                     
                     //MIDI clip variations
