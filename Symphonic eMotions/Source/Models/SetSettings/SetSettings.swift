@@ -98,7 +98,7 @@ class SetSettings: Identifiable, ObservableObject {
         let initPartSettings = PartSettings(partId: "", partName: "", partNumber: 0, rampUp: 0.5, rampDown: 0.5, areaOfInterest: [0], areaOfInterestColor: [.accentColor], damperTarget: initDamperTarget, dontDrawVisual: false)
         let partDict = OrderedDictionary<String, PartSettings>(uniqueKeysWithValues: [("part", initPartSettings)])
         
-        let initTrackSettings = TrackSettings(trackId: "", trackName: "", noteSource: .midiFile, startType: .loopedTransport, trackType: .variationByPosition, instrumentVolume: 1, instrumentColor: .white, midiFile: "triggers.mid", midiGroup: [], notesToGrid: [], notesToGridMapped: [], notesToLevel: [], loopLength: [], loopsToLevel: [], loopsToGrid: [], loopsToGridMapped: [], levels: [], parts: partDict)
+        let initTrackSettings = TrackSettings(trackId: "", trackIndex: 0, trackName: "", noteSource: .midiFile, startType: .loopedTransport, trackType: .variationByPosition, instrumentVolume: 1, instrumentColor: .white, midiFile: "triggers.mid", midiGroup: [], notesToGrid: [], notesToGridMapped: [], notesToLevel: [], loopLength: [], loopsToLevel: [], loopsToGrid: [], loopsToGridMapped: [], levels: [], parts: partDict)
         let firstTrack = tracks.elements.first ?? ("track", initTrackSettings)
 
         self.settingsCurrentTrackID = firstTrack.key

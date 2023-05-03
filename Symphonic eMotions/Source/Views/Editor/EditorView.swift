@@ -12,6 +12,33 @@ struct SetEditState {
     let setCollections: Sets
 }
 
+enum EditorParts: String, CaseIterable {
+    case none
+    case set
+    case levels
+    case source
+    case start
+    case variation
+    case location
+    //Lets be compatible with 16 tracks
+    case track0
+    case track1
+    case track2
+    case track3
+    case track4
+    case track5
+    case track6
+    case track7
+    case track8
+    case track9
+    case track10
+    case track11
+    case track12
+    case track13
+    case track14
+    case track15
+}
+
 struct EditorView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -21,7 +48,7 @@ struct EditorView: View {
     
     @State var imported = false
     @State var fileUrl: URL?
-    @State var showEditorPart: String = "none"
+    @State var showEditorPart: EditorParts = .none
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     
@@ -48,26 +75,34 @@ struct EditorView: View {
                     
                     Spacer()
                     
-                    EMButton(
-                        action: {
-                            withAnimation {
-                                if showEditorPart == "levels" { showEditorPart = "none" }
-                                else { showEditorPart = "levels" }
-                            }
-                        }, color: .gray, isSolid: true, maxWidth: 130, height: 35
-                    ){ Text("Edit Levels") }
-                    .frame(width: 130)
-                    .padding(.trailing)
+                    let selectableEditorParts: [EditorParts] = setInfoModel.selectableEditorParts()
+                    let trackNames: [String:String] = setInfoModel.trackNames()
                     
+                    Picker("Select  editor part", selection: $showEditorPart) {
+                        ForEach(selectableEditorParts, id: \.self) { part in
+                            if trackNames.contains(where: {$0.key == part.rawValue}) {
+                                Text(trackNames[part.rawValue] ?? "Unnamed track").tag(part)
+                            }
+                            else if part == .none || part == .set {
+                                Text(part.rawValue.capitalized).tag(part)
+                            }
+                            else {
+                                Text("\(part.rawValue.capitalized) all tracks").tag(part)
+                            }
+                            
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    .frame(height: 100)
                 }
                 .onTapGesture {
                     withAnimation {
-                        if showEditorPart == "setEditor" { showEditorPart = "none"}
-                        else { showEditorPart = "setEditor" }
+                        if showEditorPart == .set { showEditorPart = .none}
+                        else { showEditorPart = .set }
                     }
                 }
                 
-                if showEditorPart == "setEditor" {
+                if showEditorPart == .set {
                     HStack{
                         Text("Publish set")
                             .font(.system(size: headingSize))

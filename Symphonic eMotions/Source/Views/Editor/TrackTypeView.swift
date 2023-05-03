@@ -41,7 +41,7 @@ struct TrackTypeView: View{
             //Track is presenr in level
             HStack() {
 
-                Text("Note controllers")
+                Text("Variation")
                     .frame(width: columnWidth, alignment: .leading)
                 
                 let availableTypes: [TrackType] = [.variationByLevel,.variationByPosition,.variationSequencial]

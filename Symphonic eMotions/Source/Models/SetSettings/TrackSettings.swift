@@ -12,6 +12,7 @@ import AudioKit
 class TrackSettings: Identifiable, ObservableObject {
     
     var trackId: String
+    var trackIndex: Int
     var trackName: String
     var noteSource: NoteSource
     var startType: StartType
@@ -43,6 +44,7 @@ class TrackSettings: Identifiable, ObservableObject {
     
     init(
         trackId: String,
+        trackIndex: Int,
         trackName: String,
         noteSource: NoteSource,
         startType: StartType,
@@ -62,6 +64,7 @@ class TrackSettings: Identifiable, ObservableObject {
         parts: OrderedDictionary<String, PartSettings>
     ){
         self.trackId = trackId
+        self.trackIndex = trackIndex
         self.trackName = trackName
         self.noteSource = noteSource
         self.startType = startType

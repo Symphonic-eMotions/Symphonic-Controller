@@ -16,7 +16,7 @@ struct Item: Identifiable, Equatable {
 struct EditTracks: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding var showEditorPart: String
+    @Binding var showEditorPart: EditorParts
     @State var trackTypeLocal: [String: TrackType]
     @State var noteSourceLocal: [String: NoteSource]
     //Linear representation of the midi clips.
@@ -27,7 +27,7 @@ struct EditTracks: View {
     
     init(
         setInfoModel: SetInfoModel,
-        showEditorPart: Binding<String>
+        showEditorPart: Binding<EditorParts>
     ) {
         self.setInfoModel = setInfoModel
         _showEditorPart = showEditorPart
@@ -62,8 +62,12 @@ struct EditTracks: View {
     var body: some View {
 
         VStack(alignment: .leading) {
-
+            
             ForEach(setInfoModel.setSettings.tracks.keys, id: \.self) { key in
+                
+                let track = setInfoModel.setSettings.tracks[key]!
+                let editorPart = EditorParts(rawValue: "track\(track.trackIndex)")
+                
                 //Track navigation header
                 HStack{
                     Group{
@@ -76,36 +80,36 @@ struct EditTracks: View {
                     }
                     .padding(.leading)
 
-                    Text("Track \(setInfoModel.setSettings.tracks[key]!.trackName)")
+                    Text("Track \(track.trackName)")
                         .font(.system(size: 20))
                         .padding()
                     
                     Spacer()
                     
                     VStack(alignment: .trailing){
-                        Text(setInfoModel.setSettings.tracks[key]!.startType.description)
+                        Text(track.startType.description)
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
-                        Text(setInfoModel.setSettings.tracks[key]!.noteSource.description)
+                        Text(track.noteSource.description)
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
-                        Text(setInfoModel.setSettings.tracks[key]!.trackType.description)
+                        Text(track.trackType.description)
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
                     }
                 }
                 .onTapGesture {
                     withAnimation {
-                        if showEditorPart != key {
-                            showEditorPart = key
+                        if showEditorPart != editorPart {
+                            showEditorPart = editorPart ?? .none
                             trackTypeLocal[key] = setInfoModel.setSettings.tracks[key]!.trackType
                         } else {
-                            showEditorPart = "none"
+                            showEditorPart = .none
                         }
                     }
                 }
                 //If navigation header is tapped
-                if showEditorPart == key || showEditorPart == "levels" {
+                if showEditorPart == editorPart || showEditorPart == .levels {
                     
                     InLevelView(
                         setInfoModel: setInfoModel,
@@ -114,7 +118,7 @@ struct EditTracks: View {
                     )
                     
                 }
-                if showEditorPart == key {
+                if showEditorPart == editorPart || showEditorPart == .source {
                     
                     //Source of notes
                     NoteSourceView(
@@ -123,13 +127,16 @@ struct EditTracks: View {
                         trackId: key,
                         noteSourceParent: $noteSourceLocal
                     )
-                    
+                }
+                if showEditorPart == editorPart || showEditorPart == .start {
                     //Start type
                     StartTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
                     )
+                }
+                if showEditorPart == editorPart || showEditorPart == .variation {
                     
                     //MIDI clip variations
                     TrackTypeView(

@@ -34,7 +34,7 @@ struct InLevelView: View{
             //Track is presenr in level
             HStack() {
                 
-                Text("Track in level")
+                Text("Active in level")
                 .frame(width: columnWidth, alignment: .leading)
                 
                 ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in

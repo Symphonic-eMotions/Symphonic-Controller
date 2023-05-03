@@ -36,6 +36,26 @@ final class SetInfoModel: ObservableObject {
     }
     
     
+    func selectableEditorParts() -> [EditorParts] {
+        var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation]
+        
+        for track in setSettings.tracks {
+            let trackIndex = track.value.trackIndex
+            let enumFromString = EditorParts(rawValue: "track\(trackIndex)")
+            selectableEditorParts.append(enumFromString ?? .none)
+        }
+        
+        return selectableEditorParts
+    }
+    
+    func trackNames() -> [String: String] {
+        var trackNames: [String: String] = [:]
+        for track in setSettings.tracks {
+            trackNames["track\(track.value.trackIndex)"] = track.value.trackName
+        }
+        return trackNames
+    }
+    
     func tapSetRow(filePath: String) {
         
         let instrumentSet = AppUtils.loadInstrumentSet(json: filePath)

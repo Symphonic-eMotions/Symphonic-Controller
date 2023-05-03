@@ -81,6 +81,7 @@ final class AppUtils {
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
         
         let skin: InstrumentsSet.Skin = instrumentSet.skin
+        var trackIndex: Int = 0
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
         //How big is this grid
@@ -145,6 +146,7 @@ final class AppUtils {
             
             let track = TrackSettings(
                 trackId: trackLoaded.id,
+                trackIndex: trackIndex,
                 trackName: trackLoaded.instrumentName,
                 noteSource: trackLoaded.noteSource ?? .midiFile,
                 startType: trackLoaded.startType,
@@ -172,6 +174,7 @@ final class AppUtils {
                 parts: parts)
             
             tracks[trackLoaded.id] = track
+            trackIndex += 1
         }
         let setSettings = SetSettings(
             setName: instrumentSet.name,
