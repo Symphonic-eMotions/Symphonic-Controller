@@ -20,10 +20,12 @@ struct VolumeSlider: UIViewRepresentable {
 struct PlayerControlsView: View {
     
     @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
-    
     @Binding var mainViewUpdate: BuildSettings.ActiveView
     
-    init(viewModelPlayerControls: PlayerControlsViewModel, mainViewUpdate: Binding<BuildSettings.ActiveView>){
+    init(
+        viewModelPlayerControls: PlayerControlsViewModel,
+        mainViewUpdate: Binding<BuildSettings.ActiveView>
+    ){
         self.viewModelPlayerControls = viewModelPlayerControls
         self._mainViewUpdate = mainViewUpdate
     }

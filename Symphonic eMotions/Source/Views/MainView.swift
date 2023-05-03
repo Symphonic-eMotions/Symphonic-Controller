@@ -114,27 +114,6 @@ struct MainView: View {
                 )
                 .environmentObject(fileController)
                 
-                //FIXME: Deprecate SidebarViewModel?
-//                SidebarView(
-//                    viewModel: viewModel,
-//                    sidebarViewModel: SidebarViewModel(
-//                        state: SidebarViewState(
-//                            currentInstrumentsSetName: viewModel.mainState.currentInstrumentsSet.name,
-//                            currentInstrumentSet: viewModel.mainState.currentInstrumentsSet,
-//                            buildSettings: viewModel.mainState.buildSettings
-//                        ),
-//                        currentInstrumentsSetIsChanged: { instrumentsSet in
-//                            viewModel.currentModelInstrumentsSetChanged(
-//                                instrumentsSet: instrumentsSet,
-//                                sessionSettings: viewModel.mainState.sessionSettings
-//                            )
-//                        }
-//                    ),
-//                    sessionDisplay: $sessionDisplay,
-//                    sessionDisplaySub: $sessionDisplaySub,
-//                    setInfoLocalState: $setInfoLocalState
-//                )
-                
                 //SeM Pro interface with interaction editor
                 if sessionDisplay == .swiftUI {
                     
@@ -149,13 +128,13 @@ struct MainView: View {
                             imageDifference: $viewModel.mainState.imageDifference,
                             leveling: viewModel.leveling,
                             setSettings: $viewModel.mainState.setSettings,
-                            
                             partFeedback: viewModel.partFeedback,
                             partFeedbackState: PartFeedbackState(),
-                            
                             feedbackObjectsSate: FeedbackObjectsState()
                         ),
-                        mainViewUpdate: $mainViewUpdate
+                        mainViewUpdate: $mainViewUpdate,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
                     )
                     .environmentObject(fileController)
                     .navigationBarTitle("")

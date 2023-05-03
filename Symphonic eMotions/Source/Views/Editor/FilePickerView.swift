@@ -61,7 +61,7 @@ class FilePickerDelegate: NSObject, UIDocumentPickerDelegate {
             }
             
             do {
-                let data = try Data.init(contentsOf: url)
+                let _ = try Data.init(contentsOf: url)
                 
                 // You will have data of the selected file
             }

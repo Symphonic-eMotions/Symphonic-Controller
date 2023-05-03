@@ -10,7 +10,6 @@ import SwiftUI
 struct EMButtonLongPress: View {
     
     @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
-    
     @Binding var mainViewUpdate: BuildSettings.ActiveView
     
     let color: Color = .accentColor
@@ -18,7 +17,10 @@ struct EMButtonLongPress: View {
     
     @State private var presentAlert = false
     
-    init(viewModelPlayerControls: PlayerControlsViewModel, mainViewUpdate: Binding<BuildSettings.ActiveView>){
+    init(
+        viewModelPlayerControls: PlayerControlsViewModel,
+        mainViewUpdate: Binding<BuildSettings.ActiveView>
+    ){
         self.viewModelPlayerControls = viewModelPlayerControls
         self._mainViewUpdate = mainViewUpdate
     }
@@ -46,12 +48,4 @@ struct EMButtonLongPress: View {
         })
     }
     
-}
-
-struct EMButtonLongPress_Previews: PreviewProvider {
-    static var previews: some View {
-        EMButton(action: {}, color: .accentColor) {
-            Text("Test")
-        }
-    }
 }

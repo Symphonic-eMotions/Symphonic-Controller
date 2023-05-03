@@ -13,13 +13,20 @@ struct PlayView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @EnvironmentObject var fileController: FileController
     @Binding var mainViewUpdate: BuildSettings.ActiveView
+    @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     @State var showOverView: Bool = false
     
     init(
         playViewModel: PlayViewModel,
-        mainViewUpdate: Binding<BuildSettings.ActiveView>){
+        mainViewUpdate: Binding<BuildSettings.ActiveView>,
+        sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>
+    ){
         self.playViewModel = playViewModel
         self._mainViewUpdate = mainViewUpdate
+        self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
     }
     
     var body: some View {
@@ -166,7 +173,9 @@ struct PlayView: View {
 
                     //Editing modee visual parameter value feedback
                     PartFeedbackView(
-                        playViewModel: playViewModel
+                        playViewModel: playViewModel,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
                     )
                     .environmentObject(fileController)
                 }

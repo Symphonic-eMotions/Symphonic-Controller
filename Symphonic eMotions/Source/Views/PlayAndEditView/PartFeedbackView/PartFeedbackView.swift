@@ -13,18 +13,27 @@ struct PartFeedbackView: View {
     
     @EnvironmentObject var fileController: FileController
     
+    @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
+    
     @State var currentTrackID: String
     @State var currentPartID: String
-    
     @State var rampUp: Float
     @State var rampDown: Float
     @State var volume: Float
     
     var setSettings: SetSettings
     
-    init(playViewModel: PlayViewModel ){
+    init(
+        playViewModel: PlayViewModel,
+        sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>
+    ){
         
         self.playViewModel = playViewModel
+        
+        self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
         
         //Set Settings for building interface
         self.setSettings = playViewModel.setSettings
@@ -228,6 +237,10 @@ struct PartFeedbackView: View {
                                 
                                 fileController.addSetFileURLToController(fileName: fileName)
                                 
+                                sessionDisplay = .setInfo
+                                sessionDisplaySub = .none
+                                
+//                                playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
                                 
                             }, color: .orange, isSolid: true, maxWidth: 130, height: 35
                         ){
@@ -246,6 +259,7 @@ struct PartFeedbackView: View {
                                     )
                                     fileController.addSetFileURLToController(fileName: fileName)
                                     
+                                    playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
                                     
                                 }, color: .red, isSolid: true, maxWidth: 130, height: 35
                             ){
