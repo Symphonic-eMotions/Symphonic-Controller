@@ -71,6 +71,7 @@ struct ManageSessionSettings: Codable {
 enum SessionDisplay: Hashable, Codable {
     
     case home
+    case playlists
     case swiftUI
     case setInfo
     case spriteKit
@@ -84,6 +85,8 @@ enum SessionDisplay: Hashable, Codable {
         switch self {
         case .home:
             return "SeM Home"
+        case .playlists:
+            return "Playlists"
         case .swiftUI:
             return "Symphonic eMotions Pro"
         case .spriteKit:

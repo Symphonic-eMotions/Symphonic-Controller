@@ -94,7 +94,6 @@ struct MainView: View {
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,
                         setInfoState: SetInfoState(
-//                            setCollections: viewModel.mainState.setCollection,
                             currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                         ),
                         currentInstrumentsSetIsChanged: { instrumentsSet in
@@ -108,9 +107,6 @@ struct MainView: View {
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
                     setInfoLocalState: $setInfoLocalState
-//                    ,
-//                    userPresets: $userPresets,
-//                    templatePresets: $templatePresets
                 )
                 .environmentObject(fileController)
                 
@@ -180,6 +176,36 @@ struct MainView: View {
                 }
             }
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        }
+        
+        //Playlists!
+        else if sessionDisplay == .playlists {
+            
+            NavigationView {
+                
+                SideBarFolderView(
+                    setInfoModel: SetInfoModel(
+                        setInfoLocalState: $setInfoLocalState,
+                        setSettings: $viewModel.mainState.setSettings,
+                        setInfoState: SetInfoState(
+                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet,
+                                sessionSettings: viewModel.mainState.sessionSettings
+                            )
+                        },
+                        conductor: viewModel.conductor
+                    ),
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub,
+                    setInfoLocalState: $setInfoLocalState
+                )
+                .environmentObject(fileController)
+                
+                PlayListsView()
+            }
         }
         
         else if sessionDisplay == .muur {

@@ -13,11 +13,6 @@ struct InstrumentsSet: Identifiable, Decodable {
     static func withJSON(_ fileName: String) -> InstrumentsSet? {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: nil, subdirectory: "Sets") else { return nil }
         guard let data = try? Data(contentsOf: url) else { return nil }
-        
-        let jsonString = String(data: data, encoding: .utf8)
-        print("JSON content: \(jsonString ?? "nil")")
-
-        
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
             

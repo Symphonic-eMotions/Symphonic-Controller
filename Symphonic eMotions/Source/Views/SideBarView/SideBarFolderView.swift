@@ -12,6 +12,11 @@ struct SetFile: Identifiable, Decodable, Equatable {
     var name: String = ""
     var url: URL = URL("SetFile")
     var published: Bool = false
+    
+//    init(name: String, url: URL){
+//        self.name = name
+//        self.url = url
+//    }
 }
 
 class SetListViewModel: ObservableObject {
@@ -52,7 +57,7 @@ class SetListViewModel: ObservableObject {
                             )
                         }
                     } catch {
-                        print("Error decoding JSON file: \(error)")
+                        print("Error decoding JSON file: \(fileURL) \(error)")
                     }
                 }
             }
@@ -78,40 +83,33 @@ struct SideBarFolderView: View {
     @Binding public var setInfoLocalState: SetInfoLocalState
     
     @EnvironmentObject var fileController: FileController
-//    @Binding var userPresets: [URL]
-//    @Binding var templatePresets: [URL]
     
     @StateObject private var viewModel = SetListViewModel()
     @State private var selectedSet: SetFile?
     
-    //FIXME: select the chosen one
-    var isSelected: Bool {
-        "false" == setInfoModel.setInfoLocalState.setName
-    }
+//    var isSelected: Bool {
+//        "false" == setInfoModel.setInfoLocalState.setName
+//    }
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.setFiles) { setFile in
+                
+                ForEach([
+                    (name: "Home", setName: "home"),
+                    (name: "Playlists", setName: "playlists")
+                ], id: \.setName) { item in
                     Button(action: {
-                        
-                        selectedSet = setFile
-                        
-//                        print("Stop engine")
-                        setInfoModel.tapStopAudioEngine()
-                        
-                        setInfoLocalState.setName = setFile.name
-                        setInfoLocalState.setConfig = setFile.url.lastPathComponent
-                        setInfoLocalState.setURL = setFile.url.absoluteString
-                        
-                        sessionDisplay = .setInfo
-                        sessionDisplaySub = .none
+                        sessionDisplay = item.setName == "home" ? .home : .playlists
+                        setInfoLocalState.setName = item.setName
+                        setInfoLocalState.sideBarHead = item.name
+                        selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
                     }) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Spacer()
-                                Text(setFile.name)
-                                    .foregroundColor(selectedSet == setFile ? .white : .primary)
+                                Text(item.name)
+                                    .foregroundColor(setInfoLocalState.setName == item.setName ? .white : .primary)
                                     .font(.headline)
                                     .padding(.trailing)
                                     .padding(.leading)
@@ -121,13 +119,47 @@ struct SideBarFolderView: View {
                         }
                         .padding(.vertical, 4.0)
                         .padding(.leading, 4.0)
-                        .background(selectedSet == setFile ? Color.accentColor : .secondary)
+                        .background(setInfoLocalState.setName == item.setName ? Color.accentColor : .teal)
                         .cornerRadius(10.0)
-                        
+                    }
+                }
+                
+                if sessionDisplay != .playlists {
+                    ForEach(viewModel.setFiles) { setFile in
+                        Button(action: {
+                            
+                            selectedSet = setFile
+                            setInfoModel.tapStopAudioEngine()
+                            
+                            setInfoLocalState.setName = setFile.name
+                            setInfoLocalState.setConfig = setFile.url.lastPathComponent
+                            setInfoLocalState.setURL = setFile.url.absoluteString
+                            
+                            sessionDisplay = .setInfo
+                            sessionDisplaySub = .none
+                        }) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Spacer()
+                                    Text(setFile.name)
+                                        .foregroundColor(selectedSet == setFile ? .white : .primary)
+                                        .font(.headline)
+                                        .padding(.trailing)
+                                        .padding(.leading)
+                                    Spacer()
+                                }
+                                Spacer()
+                            }
+                            .padding(.vertical, 4.0)
+                            .padding(.leading, 4.0)
+                            .background(selectedSet == setFile ? Color.accentColor : .secondary)
+                            .cornerRadius(10.0)
+                            
+                        }
                     }
                 }
             }
-            .navigationTitle("Sets")
+            .navigationTitle(setInfoLocalState.sideBarHead)
         }
     }
 }

@@ -12,7 +12,6 @@ struct eMotionApp: App {
     
     //Copy sets to documentsfolder
     
-    
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     
     let sessionSettings = AppUtils.setSessionSetting()

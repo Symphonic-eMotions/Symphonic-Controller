@@ -66,7 +66,17 @@ struct NoteNumberView: View {
                     TextField("Note number", text: Binding(
                         get: {String(self.noteNumbersLocal[index])},
                         set: {
-                            if let value = Int($0) {
+                            //Turn of any running notes
+                            if isPlaying[index] {
+                                setInfoModel.conductor.playNoteNumberSingleTrack(
+                                    trackId: trackId,
+                                    noteNumber: noteNumbersLocal[index],
+                                    noteOn: isPlaying[index])
+                                
+                                isPlaying[index].toggle()
+                            }
+                            //Stop playing
+                            if let value = Int($0), value >= 0, value <= 127 {
                                 self.noteNumbersLocal[index] = value
                                 currentTrack.midiGroup[index] = value
                             }
@@ -75,6 +85,7 @@ struct NoteNumberView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 50)
                     .multilineTextAlignment(.center)
+                    .keyboardType(.numberPad)
                     
                     let letter: String = AppUtils.midiNoteName(for: self.noteNumbersLocal[index])
                     Text("\(letter)").foregroundColor(.blue)

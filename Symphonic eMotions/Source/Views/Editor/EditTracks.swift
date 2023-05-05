@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct Item: Identifiable, Equatable {
-    let id = UUID()
-    let name: String
-    let details: String
-}
+//struct Item: Identifiable, Equatable {
+//    let id = UUID()
+//    let name: String
+//    let details: String
+//}
 
 struct EditTracks: View {
 
@@ -138,7 +138,7 @@ struct EditTracks: View {
                 }
                 if showEditorPart == editorPart || showEditorPart == .variation {
                     
-                    //MIDI clip variations
+                    //Variation type
                     TrackTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -184,6 +184,18 @@ struct EditTracks: View {
                             )
                         }
                     }
+                    
+                    //Sampler files
+//                    if noteSourceLocal[key] == .midiFile {
+//                        SamplerFilesView(
+//                            setInfoModel: setInfoModel,
+//                            currentTrack: setInfoModel.setSettings.tracks[key]!,
+//                            currentTrackSampler: setInfoModel.conductor.trackSamplers[key]!,
+//                            trackId: key
+////                            ,
+////                            noteNumberLetters: $noteNumberLetter
+//                        )
+//                    }
                 }
                 Divider()
             }

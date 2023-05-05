@@ -46,6 +46,7 @@ struct TrackTypeView: View{
                 
                 let availableTypes: [TrackType] = [.variationByLevel,.variationByPosition,.variationSequencial]
                 
+                //Level, Position, sequencial
                 Picker("Select track type", selection: $localTrackType) {
                     ForEach(availableTypes, id: \.self) { type in
                         

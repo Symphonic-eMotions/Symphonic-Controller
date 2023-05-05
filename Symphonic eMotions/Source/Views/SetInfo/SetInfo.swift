@@ -17,7 +17,7 @@ struct SetInfoLocalState {
     var sideBarHead: String
     
     init(){
-        self.setName = ""
+        self.setName = "home"
         self.setConfig = ""
         self.setURL = "SetInfoLocalState"
         self.sideBarHead = "Sets"

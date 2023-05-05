@@ -67,7 +67,6 @@ struct SetInfoHome: View {
             }
             Spacer()
             
-            
 //            HStack {
 //                Text(selectedLanguage.selectTaal)
 //                Picker("Language", selection: $selectedLanguage) {
@@ -77,16 +76,16 @@ struct SetInfoHome: View {
 //                }
 //                .pickerStyle(SegmentedPickerStyle())
 //                .fixedSize()
-//                
+//
 //                Button(action: {
 //                    let utterance = AVSpeechUtterance(string: selectedLanguage.helloWorld)
 //                    utterance.voice = AVSpeechSynthesisVoice(language: selectedLanguage.rawValue)
-//                    
+//
 //                    utterance.rate = 0.5
 //                    utterance.pitchMultiplier = 1
 //                    utterance.postUtteranceDelay = 0
 //                    utterance.volume = 0.9
-//                    
+//
 //                    synthesizer.speak(utterance)
 //                }) {
 //                    Text("Start")
@@ -96,7 +95,7 @@ struct SetInfoHome: View {
 //                        .cornerRadius(10.0)
 //                }
 //            }
-//            
+//
 //            Spacer()
         }
     }
