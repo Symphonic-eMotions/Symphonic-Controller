@@ -37,7 +37,7 @@ final class SetInfoModel: ObservableObject {
     
     
     func selectableEditorParts() -> [EditorParts] {
-        var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation]
+        var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
         
         for track in setSettings.tracks {
             let trackIndex = track.value.trackIndex

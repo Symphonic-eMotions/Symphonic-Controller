@@ -22,8 +22,10 @@ struct EditTracks: View {
     //Linear representation of the midi clips.
     //Modified by MidiClipsInFile
     @State var midiClipLetters: [String: [Int]]
-    //Representation note numbers NoteNumberToGrid
+    //Representation note numbers NoteNumberToGrid indexed by trackId
     @State var noteNumberLetter: [String: [Int]]
+    //Representation active areas NoteNumberToGrid indexed by partId
+    @State var areaOfInterest: [String: [Int]]
     
     init(
         setInfoModel: SetInfoModel,
@@ -51,12 +53,19 @@ struct EditTracks: View {
         _midiClipLetters = State(initialValue: tmpClipLetters)
         
         var tmpNoteNumberLetters = [String: [Int]]()
+        var tmpAreaOfInterest = [String: [Int]]()
+        
         for track in setInfoModel.setSettings.tracks {
             let clips = track.value.midiGroup
             tmpNoteNumberLetters[track.value.trackId] = Array(0..<clips.count)
             .map{track.value.midiGroup[$0]}
+            
+            for part in track.value.parts {
+                tmpAreaOfInterest[part.value.partId] = part.value.areaOfInterest
+            }
         }
         _noteNumberLetter = State(initialValue: tmpNoteNumberLetters)
+        _areaOfInterest = State(initialValue: tmpAreaOfInterest)
     }
     
     var body: some View {
@@ -108,6 +117,7 @@ struct EditTracks: View {
                         }
                     }
                 }
+                
                 //If navigation header is tapped
                 if showEditorPart == editorPart || showEditorPart == .levels {
                     
@@ -196,6 +206,14 @@ struct EditTracks: View {
 ////                            noteNumberLetters: $noteNumberLetter
 //                        )
 //                    }
+                }
+                if showEditorPart == editorPart || showEditorPart == .location {
+                    AreaOfInterestView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        areaOfInterest: $areaOfInterest
+                    )
                 }
                 Divider()
             }

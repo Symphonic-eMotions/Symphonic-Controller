@@ -292,6 +292,7 @@ final class PlayViewModel: ObservableObject {
         self.setSettings.tracks[trackId]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
             areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
             cellsToGrid: self.setSettings.tracks[trackId]!.loopsToGrid)
+        
         //Get new connections with note positions
         self.setSettings.tracks[trackId]!.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
             areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
