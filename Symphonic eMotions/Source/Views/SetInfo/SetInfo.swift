@@ -111,7 +111,7 @@ struct SetInfo: View {
                                 }
                             }, color: .orange, isSolid: true, maxWidth: 150, height: 35
                         ){
-                            Text("New variation")
+                            Text(NSLocalizedString("New variation", comment: ""))
                         }
                         .frame(width: 150, height: 50)
 //                        .padding()

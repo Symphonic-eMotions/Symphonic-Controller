@@ -71,6 +71,21 @@ final class AppUtils {
         return instrumentSet
     }
     
+    static func createPlayListFolders() {
+            
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        // Loop through all the enum cases and check if a folder with that name exists
+        for playlist in BuildSettings.Playlists.allCases {
+            let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
+            if !fileManager.fileExists(atPath: playlistURL.path) {
+                // Folder doesn't exist, create it
+                try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
+            }
+        }
+    }
+    
     //MARK: Set setSetings
     // - Structure to mutate and save as Instrument Set
     static func setSettings(

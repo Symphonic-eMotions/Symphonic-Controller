@@ -213,7 +213,7 @@ struct EditorView: View {
                     sessionDisplaySub = .none
                     
                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
-            ){ Text("New Set") }
+            ){ Text(NSLocalizedString("New set", comment: "")) }
             .frame(width: 130)
             
             if setInfoModel.setSettings.setURL.absoluteString != "dontOverWrite" {
@@ -232,7 +232,7 @@ struct EditorView: View {
                         sessionDisplaySub = .none
                         
                     }, color: .red, isSolid: true, maxWidth: 130, height: 35
-                ){ Text("Save") }
+                ){ Text(NSLocalizedString("Save", comment: "")) }
                 .frame(width: 130)
             }
         }

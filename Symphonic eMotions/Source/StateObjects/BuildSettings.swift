@@ -10,8 +10,10 @@ import Foundation
 struct BuildSettings {
     
     public enum MainSetting {
-        case zorg
-        case muur
+        case one
+        case daytime
+        case pro
+        case composer
     }
     
     public enum ActiveView: String {
@@ -19,6 +21,13 @@ struct BuildSettings {
         case playView
         case calibration
         case dynamicView
+    }
+    
+    public enum Playlists: String, CaseIterable {
+        case minimal
+        case person
+        case group
+        case nature
     }
     
     //Main theme setting

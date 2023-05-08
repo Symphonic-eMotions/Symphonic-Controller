@@ -7,6 +7,43 @@
 
 import SwiftUI
 
+struct AddToPlaylistView: View{
+    
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        VStack {
+            Text(NSLocalizedString("Add to playlist", comment: "String"))
+                .font(.largeTitle)
+            
+            ForEach(BuildSettings.Playlists.allCases, id: \.self) { playlist in
+                EMButton(action: {
+                    print("Add this file to the folder \(playlist)")
+                }, color: .primary, isSolid: false, maxWidth: 250, height: 35
+                ){
+                    Text(NSLocalizedString(playlist.rawValue, comment: "This is the name of the playlist"))
+                }
+            }
+            .padding()
+            
+            EMButton(
+                action: {
+                    dismiss()
+                }, color: .orange, isSolid: true, maxWidth: 150, height: 35
+            ){
+                Text(NSLocalizedString("Cancel", comment: ""))
+            }
+            .frame(width: 150, height: 50)
+            
+            
+        }
+    }
+
+    private func dismiss() {
+        isPresented = false
+    }
+}
+
 struct SavedSetsList: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -15,6 +52,8 @@ struct SavedSetsList: View {
     @EnvironmentObject var fileController: FileController
     @Binding var userPresets: [URL]
     @State private var isSharePresented: Bool = false
+    @State private var isPlaylistsPresented: Bool = false
+    
     @State private var showAlert = false
     @State private var deleteUrl: URL = URL("empty")
     
@@ -48,7 +87,7 @@ struct SavedSetsList: View {
                         Image(systemName: "play.fill")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
-                            .frame(width: 30)
+                            .frame(width: 30, height: 24)
                             .padding(.vertical, 5.0)
                             .padding(.horizontal, 5.0)
                             .background(Color.accentColor)
@@ -69,7 +108,7 @@ struct SavedSetsList: View {
                         Image(systemName: "square.and.pencil")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
-                            .frame(width: 30)
+                            .frame(width: 30, height: 24)
                             .padding(.vertical, 5.0)
                             .padding(.horizontal, 5.0)
                             .background(Color.green)
@@ -94,7 +133,7 @@ struct SavedSetsList: View {
                                 .renderingMode(.original)
                                 .foregroundColor(.white)
                                 .font(.system(size: 18))
-                                .frame(width: 30)
+                                .frame(width: 30, height: 24)
                                 .padding(.vertical, 5.0)
                                 .padding(.horizontal, 5.0)
                                 .background(Color.blue)
@@ -108,6 +147,25 @@ struct SavedSetsList: View {
                             ActivityViewController(activityItems: [url])
                         })
                         
+                        //Add to playlist
+                        Button( action: {
+                            self.isPlaylistsPresented = true
+                        }) {
+                            Image(systemName: "list.star")
+                                .renderingMode(.original)
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .frame(width: 30, height: 24)
+                                .padding(.vertical, 5.0)
+                                .padding(.horizontal, 5.0)
+                                .background(Color.blue)
+                                .cornerRadius(5.0)
+                        }
+                        .sheet(isPresented: $isPlaylistsPresented){
+                            AddToPlaylistView(isPresented: $isPlaylistsPresented)
+                        }
+                        
+                        //The file name and date
                         let filesName = fileController.fileContents(url: url, fileName: fileController.name(url: url))
                         
                         VStack(alignment: .leading){

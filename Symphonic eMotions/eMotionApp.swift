@@ -17,7 +17,7 @@ struct eMotionApp: App {
     let sessionSettings = AppUtils.setSessionSetting()
         
     let buildSettings = BuildSettings(
-        mainSettings: .zorg,
+        mainSettings: .composer,
         activeView: .homeView,
         isAdvanced: false,
         instrumentPartEditor: false,

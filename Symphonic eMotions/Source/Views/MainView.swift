@@ -24,6 +24,8 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
+    
+    
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
@@ -35,6 +37,9 @@ struct MainView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
+        
+        //Create Playlists if needed
+        AppUtils.createPlayListFolders()
     }
     
     var body: some View {
