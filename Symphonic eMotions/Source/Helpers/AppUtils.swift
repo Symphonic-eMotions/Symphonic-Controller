@@ -11,25 +11,34 @@ import AudioKit
 import OrderedCollections
 
 final class AppUtils {
-    
-    static func letterForNumber(_ number: Int) -> String? {
-        guard let scalarValue = UnicodeScalar(number + 65) else {
-            return nil
-        }
-        return String(scalarValue)
-    }
-    
-    static func midiNoteName(for noteNumber: Int) -> String {
-        let noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-        let octave = (noteNumber / 12) - 1
-        let noteIndex = noteNumber % 12
-        let noteName = noteNames[noteIndex]
-        return "\(noteName)\(octave)"
-    }
-    
+        
     static func documentDirectory() -> URL {
       let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
       return documentsDirectory
+    }
+    
+    static func copyOverwriteFile(from sourceURL: URL, to destinationURL: URL) throws {
+        
+        let fileManager = FileManager.default
+
+        // Check if the source file exists
+        guard fileManager.fileExists(atPath: sourceURL.path) else {
+            throw NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Source file doesn't exist"])
+        }
+
+        // Check if the destination folder exists, if not create it
+        let destinationFolderURL = destinationURL.deletingLastPathComponent()
+        if !fileManager.fileExists(atPath: destinationFolderURL.path) {
+            try fileManager.createDirectory(at: destinationFolderURL, withIntermediateDirectories: true, attributes: nil)
+        }
+
+        // Check if the destination file already exists, if yes remove it
+        if fileManager.fileExists(atPath: destinationURL.path) {
+            try fileManager.removeItem(at: destinationURL)
+        }
+
+        // Copy the file from source to destination
+        try fileManager.copyItem(at: sourceURL, to: destinationURL)
     }
     
     //MARK: Sets
@@ -431,7 +440,22 @@ final class AppUtils {
     }
     
     
-    //MARK: Pro editor
+    //MARK: editor
+    static func letterForNumber(_ number: Int) -> String? {
+        guard let scalarValue = UnicodeScalar(number + 65) else {
+            return nil
+        }
+        return String(scalarValue)
+    }
+    
+    static func midiNoteName(for noteNumber: Int) -> String {
+        let noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        let octave = (noteNumber / 12) - 1
+        let noteIndex = noteNumber % 12
+        let noteName = noteNames[noteIndex]
+        return "\(noteName)\(octave)"
+    }
+    
     //Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],

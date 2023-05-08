@@ -7,43 +7,6 @@
 
 import SwiftUI
 
-struct AddToPlaylistView: View{
-    
-    @Binding var isPresented: Bool
-
-    var body: some View {
-        VStack {
-            Text(NSLocalizedString("Add to playlist", comment: "String"))
-                .font(.largeTitle)
-            
-            ForEach(BuildSettings.Playlists.allCases, id: \.self) { playlist in
-                EMButton(action: {
-                    print("Add this file to the folder \(playlist)")
-                }, color: .primary, isSolid: false, maxWidth: 250, height: 35
-                ){
-                    Text(NSLocalizedString(playlist.rawValue, comment: "This is the name of the playlist"))
-                }
-            }
-            .padding()
-            
-            EMButton(
-                action: {
-                    dismiss()
-                }, color: .orange, isSolid: true, maxWidth: 150, height: 35
-            ){
-                Text(NSLocalizedString("Cancel", comment: ""))
-            }
-            .frame(width: 150, height: 50)
-            
-            
-        }
-    }
-
-    private func dismiss() {
-        isPresented = false
-    }
-}
-
 struct SavedSetsList: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -162,7 +125,10 @@ struct SavedSetsList: View {
                                 .cornerRadius(5.0)
                         }
                         .sheet(isPresented: $isPlaylistsPresented){
-                            AddToPlaylistView(isPresented: $isPlaylistsPresented)
+                            AddToPlaylistView(
+                                isPresented: $isPlaylistsPresented,
+                                sandBoxUrl: url
+                            )
                         }
                         
                         //The file name and date
