@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DefaultSkin: View {
+struct DefaultSkinView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     var availableSkins: [SessionDisplay] = [.swiftUI,.spriteKit]

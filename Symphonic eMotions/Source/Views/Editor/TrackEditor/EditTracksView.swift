@@ -13,7 +13,7 @@ import SwiftUI
 //    let details: String
 //}
 
-struct EditTracks: View {
+struct EditTracksView: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: EditorParts
@@ -23,9 +23,10 @@ struct EditTracks: View {
     //Modified by MidiClipsInFile
     @State var midiClipLetters: [String: [Int]]
     //Representation note numbers NoteNumberToGrid indexed by trackId
-    @State var noteNumberLetter: [String: [Int]]
-    //Representation active areas NoteNumberToGrid indexed by partId
+    @State var noteNumbersPerTrack: [String: [Int]]
+    //Representation active areas per PART ID
     @State var areaOfInterest: [String: [Int]]
+    
     
     init(
         setInfoModel: SetInfoModel,
@@ -44,6 +45,8 @@ struct EditTracks: View {
         _trackTypeLocal = State(initialValue: tmpTrackType)
         _noteSourceLocal = State(initialValue: tmpNoteSource)
         
+        //Translate loopLengths its clipLetters Counterpart
+        //First is A, Second is B etc So the length is the amount
         var tmpClipLetters = [String: [Int]]()
         for track in setInfoModel.setSettings.tracks {
             let clips = track.value.loopLength
@@ -64,7 +67,7 @@ struct EditTracks: View {
                 tmpAreaOfInterest[part.value.partId] = part.value.areaOfInterest
             }
         }
-        _noteNumberLetter = State(initialValue: tmpNoteNumberLetters)
+        _noteNumbersPerTrack = State(initialValue: tmpNoteNumberLetters)
         _areaOfInterest = State(initialValue: tmpAreaOfInterest)
     }
     
@@ -171,7 +174,7 @@ struct EditTracks: View {
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
                                 trackId: key,
-                                noteNumberLetters: $noteNumberLetter
+                                noteNumbersPerTrack: $noteNumbersPerTrack
                             )
                         }
                     }
@@ -186,11 +189,11 @@ struct EditTracks: View {
                             )
                         }
                         else if noteSourceLocal[key] == .noteNumbers {
-                            NoteNumberToGrid(
+                            NoteNumberToGridView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
                                 trackId: key,
-                                noteNumberLetters: $noteNumberLetter
+                                noteNumbersPerTrack: $noteNumbersPerTrack
                             )
                         }
                     }
@@ -203,7 +206,7 @@ struct EditTracks: View {
 //                            currentTrackSampler: setInfoModel.conductor.trackSamplers[key]!,
 //                            trackId: key
 ////                            ,
-////                            noteNumberLetters: $noteNumberLetter
+////                            noteNumbersPerTrack: $noteNumberLetter
 //                        )
 //                    }
                 }

@@ -133,7 +133,7 @@ struct EditorView: View {
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
                         
-                        DefaultSkin(
+                        DefaultSkinView(
                             setInfoModel: setInfoModel
                         )
                     }
@@ -143,7 +143,7 @@ struct EditorView: View {
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
                         
-                        SelectGridSize(
+                        SelectGridSizeView(
                             setInfoModel: setInfoModel,
                             localGridRow: setInfoModel.setSettings.gridRows
                         )
@@ -155,37 +155,21 @@ struct EditorView: View {
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
                         
-                        SelectSpeed(
+                        BpmView(
                             setInfoModel: setInfoModel
                         )
                     }
-                    
-                    HStack{
-                        Text("Level speed")
-                            .font(.system(size: headingSize))
-                            .padding()
-                            .frame(width: columnWidth, alignment: .leading)
-                        
-                        LevelSpeed(
-                            setInfoModel: setInfoModel
-                        )
-                    }
-                    
-                    HStack{
-                        Text("Nr. of levels")
-                            .font(.system(size: headingSize))
-                            .padding()
-                            .frame(width: columnWidth, alignment: .leading)
-                        
-                        Levels(
-                            setInfoModel: setInfoModel
-                        )
-                    }
+                    LevelSpeedView(
+                        setInfoModel: setInfoModel
+                    )
+                    LevelsView(
+                        setInfoModel: setInfoModel
+                    )
                 }
                 
                 Divider()
                 
-                EditTracks(
+                EditTracksView(
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart
                 )

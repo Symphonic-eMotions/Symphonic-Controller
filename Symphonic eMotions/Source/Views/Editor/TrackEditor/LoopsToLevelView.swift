@@ -35,6 +35,8 @@ struct LoopsToLevelView: View {
     @Binding var clipLetters: [String:[Int]]
     @State var loopsToLevelLocal: [Int]
     
+    @State private var updateView: Int = 0
+    
     let columnWidth: CGFloat = 150
 
     init(
@@ -59,18 +61,19 @@ struct LoopsToLevelView: View {
             Divider()
             //MIDI clips in file AND MIDi clip lengths
             //This is located here for _loopLengthLocal relation instead of higher up
-            MidiClipsInFile(
+            MidiClipsInFileView(
                 setInfoModel: setInfoModel,
                 currentTrack: currentTrack,
                 trackId: trackId,
                 loopLengthLocal: $loopLengthLocal,
-                clipLetters: $clipLetters
+                clipLetters: $clipLetters,
+                updateView: $updateView
             )
 
             //Place clips in level
             HStack(){
 
-                Text("Place clip in level: ")
+                Text("Place clip in level: \(updateView)")
                 .frame(width: columnWidth, alignment: .leading)
 
                 ForEach(0..<levels.count, id: \.self) { index in
@@ -109,14 +112,9 @@ struct LoopsToLevelView: View {
             // Set initial value of syncedValue to value from observed object
             loopLengthLocal = setInfoModel.setSettings.tracks[trackId]!.loopLength
         }
-        .onChange(of: setInfoModel.setSettings.tracks[trackId]!.loopLength) { newValue in
-            // Update syncedValue when value in observed object changes
-            loopLengthLocal = newValue
+        .onChange(of: updateView) { _ in
+            loopsToLevelLocal = currentTrack.loopsToLevel
         }
-//        .onChange(of: loopLengthLocal) { newValue in
-//            // Update value in observed object when syncedValue changes
-//            loopLengthLocal.value = newValue
-//        }
     }
 
 }

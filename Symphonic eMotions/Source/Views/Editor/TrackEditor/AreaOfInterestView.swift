@@ -74,7 +74,7 @@ struct AreaOfInterestView: View {
             currentTrack.parts[partId]!.areaOfInterestColor[cellIndex] = currentTrack.instrumentColor
         }
         
-        //Update local
+        //Update local for interface
         areaOfInterestColorLocal[partId] = currentTrack.parts[partId]!.areaOfInterestColor
         
         //Get new connection with clip positions, for live update
@@ -86,6 +86,54 @@ struct AreaOfInterestView: View {
         currentTrack.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
             areaOfInterest: currentTrack.parts[partId]!.areaOfInterest,
             cellsToGrid: currentTrack.notesToGrid)
+    }
+    
+    struct RangeSlider: View {
+        @Binding var lowerValue: Double
+        @Binding var upperValue: Double
+        
+        var body: some View {
+            GeometryReader { geometry in
+                let trackWidth = geometry.size.width - 20
+                let trackHeight: CGFloat = 4
+                let thumbSize: CGFloat = 20
+                
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.gray)
+                        .frame(width: trackWidth, height: trackHeight)
+                    Capsule()
+                        .fill(Color.blue)
+                        .frame(width: CGFloat(upperValue - lowerValue) * trackWidth, height: trackHeight)
+                        .offset(x: CGFloat(lowerValue) * trackWidth)
+                    
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: thumbSize, height: thumbSize)
+                        .shadow(radius: 2)
+                        .offset(x: CGFloat(lowerValue) * trackWidth - thumbSize/2)
+                        .gesture(DragGesture()
+                                    .onChanged { gestureValue in
+                                        let newLowerValue = Double(min(max(0, gestureValue.location.x/trackWidth), upperValue))
+                                        lowerValue = newLowerValue
+                                    }
+                        )
+                    
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: thumbSize, height: thumbSize)
+                        .shadow(radius: 2)
+                        .offset(x: CGFloat(upperValue) * trackWidth - thumbSize/2)
+                        .gesture(DragGesture()
+                                    .onChanged { gestureValue in
+                                        let newUpperValue = Double(min(max(lowerValue, gestureValue.location.x/trackWidth), 1))
+                                        upperValue = newUpperValue
+                                    }
+                        )
+                }
+                .frame(height: thumbSize)
+            }
+        }
     }
     
     var body: some View {
@@ -114,6 +162,10 @@ struct AreaOfInterestView: View {
                             
                             //The gridinterface
                             activeAreasView(for: part.value, gridRows: gridRows, gridColumns: gridColumns)
+                            
+                            Text(part.value.damperTarget.nodeName)
+                            Text(part.value.damperTarget.parameter)
+                            Text(part.value.damperTarget.parameterRange.map{String($0)}.joined(separator: ","))
                         }
                     }
                 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MidiClipsInFile: View {
+struct MidiClipsInFileView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
@@ -15,9 +15,12 @@ struct MidiClipsInFile: View {
     @State var trackId: String
     
     @Binding var loopLengthLocal: [Double]
+    //This is shared status of the clips
     @Binding var clipLetters: [String:[Int]]
+//    @State var clipLetterLocal: [Int]
     @State var clipLength: Int
     @State var isPlaying: [Bool]
+    @Binding var updateView: Int
     
     let columnWidth: CGFloat = 150
     
@@ -26,15 +29,18 @@ struct MidiClipsInFile: View {
         currentTrack: TrackSettings,
         trackId: String,
         loopLengthLocal: Binding<[Double]>,
-        clipLetters: Binding<[String:[Int]]>
+        clipLetters: Binding<[String:[Int]]>,
+        updateView: Binding<Int>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
         _loopLengthLocal = loopLengthLocal
         _clipLetters = clipLetters
+//        _clipLetterLocal = State(initialValue: currentTrack.loopLength.map{Int($0)})
         _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
         _isPlaying = State(initialValue: Array(repeating: false, count: currentTrack.loopLength.count))
+        _updateView = updateView
     }
     
     var body: some View {
@@ -48,9 +54,55 @@ struct MidiClipsInFile: View {
         //MIDI clips in file
         HStack() {
             
-            Text("MIDI clips in file")
-                .frame(width: columnWidth, alignment: .leading)
-            
+            VStack{
+                
+                Text("MIDI clips in file")
+                    .frame(width: columnWidth, alignment: .leading)
+                
+                HStack{
+                    //Remove clip button
+                    Button("-") {
+                        if (loopLengthLocal.count) > 1 {
+                            
+                            let oldClip: Int = clipLetters[trackId]!.last!
+                            //Mutate in file databse
+                            currentTrack.loopLength.removeLast()
+                            //Binding structure
+                            clipLetters[trackId]!.removeLast()
+                            //Interface
+                            loopLengthLocal.removeLast()
+                            //Midiclip player
+                            isPlaying.removeLast()
+                                                        
+                            //Replace clip in level
+                            for (i, m) in currentTrack.loopsToLevel.enumerated() {
+                                if m == oldClip {
+                                    currentTrack.loopsToLevel[i] = currentTrack.loopsToLevel.first!
+                                }
+                            }
+                            //Remove clip from midi clip grid
+                            for (i, m) in currentTrack.loopsToGrid.enumerated() {
+                                if m == oldClip {
+                                    currentTrack.loopsToGrid[i] = currentTrack.loopsToGrid.first!
+                                }
+                            }
+                            updateView += 1
+                        }
+                    }
+                    .disabled(loopLengthLocal.count == 1)
+                    .font(.system(size: 35))
+                    
+                    //Add clip button
+                    Button("+") {
+                        currentTrack.loopLength.append(16)
+                        loopLengthLocal.append(16)
+                        isPlaying.append(false)
+                        clipLetters[trackId]!.append(clipLetters[trackId]!.count)
+                        updateView += 1
+                    }
+                    .font(.system(size: 35))
+                }
+            }
             ForEach(0..<loopLengthLocal.count, id: \.self) { index in
                 
                 VStack {
@@ -75,47 +127,6 @@ struct MidiClipsInFile: View {
                     }
                 }
             }
-            //Remove clip button
-            Button("-") {
-                if (loopLengthLocal.count) > 1 {
-                    
-                    let oldLength: Int = currentTrack.loopLength.count-1
-                    //Mutate in file databse
-                    currentTrack.loopLength.removeLast()
-                    //Binding structure
-                    clipLetters[trackId]!.removeLast()
-                    //Interface
-                    loopLengthLocal.removeLast()
-                    //Midiclip player
-                    isPlaying.removeLast()
-                    
-                    let newLength: Int = currentTrack.loopLength.count-1
-                    
-                    //Remove clip from loopsToLevel
-                    if currentTrack.loopsToLevel.contains(oldLength){
-                        currentTrack.loopsToLevel = currentTrack.loopsToLevel.map {
-                            $0 == oldLength ? newLength: $0
-                        }
-                    }
-                    //Remove clip from loopsToGrid
-                    if currentTrack.loopsToGrid.contains(oldLength){
-                        currentTrack.loopsToGrid = currentTrack.loopsToGrid.map {
-                            $0 == oldLength ? newLength: $0
-                        }
-                    }
-                }
-            }
-            .disabled(loopLengthLocal.count == 1)
-            .font(.system(size: 35))
-            
-            //Add clip button
-            Button("+") {
-                currentTrack.loopLength.append(16)
-                loopLengthLocal.append(16)
-                isPlaying.append(false)
-                clipLetters[trackId]!.append(clipLetters[trackId]!.count)
-            }
-            .font(.system(size: 35))
         }
         .onAppear {
             // Set initial value of syncedValue to value from observed object

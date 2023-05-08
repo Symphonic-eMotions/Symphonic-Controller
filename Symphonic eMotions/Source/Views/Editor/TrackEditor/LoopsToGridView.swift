@@ -17,6 +17,8 @@ struct LoopsToGridView: View {
     @Binding var clipLetters: [String:[Int]]
     @State var loopsToGridLocal: [Int]
     
+    @State private var updateView: Int = 0
+    
     let columnWidth: CGFloat = 150
     
     init(
@@ -39,12 +41,13 @@ struct LoopsToGridView: View {
             
             Divider()
             
-            MidiClipsInFile(
+            MidiClipsInFileView(
                 setInfoModel: setInfoModel,
                 currentTrack: currentTrack,
                 trackId: trackId,
                 loopLengthLocal: $loopLengthLocal,
-                clipLetters: $clipLetters
+                clipLetters: $clipLetters,
+                updateView: $updateView
             )
             
             HStack(){
@@ -90,5 +93,12 @@ struct LoopsToGridView: View {
             }
         }
         .padding(.leading)
+        .onAppear {
+            // Set initial value of syncedValue to value from observed object
+            loopLengthLocal = setInfoModel.setSettings.tracks[trackId]!.loopLength
+        }
+        .onChange(of: updateView) { _ in
+            loopsToGridLocal = currentTrack.loopsToGrid
+        }
     }
 }

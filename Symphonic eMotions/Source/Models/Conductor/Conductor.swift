@@ -382,6 +382,13 @@ final class Conductor {
         }
     }
     
+    public func stopAllNoteNumbers( trackId:String ){
+        for noteNumber in 0...127 {
+            let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
+            trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+        }
+    }
+    
     //MARK: Mute status tracks
     //TODO: switch sound off on set init
     

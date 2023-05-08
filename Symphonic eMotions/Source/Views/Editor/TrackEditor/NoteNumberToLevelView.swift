@@ -14,15 +14,16 @@ struct NoteNumberToLevelView: View {
     //This is a 1 track View
     @State var trackId: String
     
+    //Higher level states with track id
+    @Binding var noteNumbersPerTrack: [String:[Int]]
      
     @State private var levels: [Int]
-    
     //These are the stored note numbers in midiGroup
     @State var noteNumbersLocal: [Int]
     //Keep track of note numbers for the View refresh
-    //Higher level states with track id
-    @Binding var noteNumberLetters: [String:[Int]]
     @State var notesToLevelLocal: [Int]
+    
+    @State var updateView: Int = 0
     
     let columnWidth: CGFloat = 150
     
@@ -30,13 +31,13 @@ struct NoteNumberToLevelView: View {
         setInfoModel:SetInfoModel,
         currentTrack:TrackSettings,
         trackId: String,
-        noteNumberLetters: Binding<[String:[Int]]>
+        noteNumbersPerTrack: Binding<[String:[Int]]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
         _levels = State(initialValue: setInfoModel.setSettings.levels)
-        _noteNumberLetters = noteNumberLetters
+        _noteNumbersPerTrack = noteNumbersPerTrack
         _noteNumbersLocal = State(initialValue: currentTrack.midiGroup)
         _notesToLevelLocal = State(initialValue: currentTrack.notesToLevel)
     }
@@ -52,7 +53,8 @@ struct NoteNumberToLevelView: View {
                 currentTrack: currentTrack,
                 trackId: trackId,
                 noteNumbersLocal: $noteNumbersLocal,
-                noteNumberLetters: $noteNumberLetters
+                noteNumbersPerTrack: $noteNumbersPerTrack,
+                updateView: $updateView
             )
             
             HStack(){
@@ -98,13 +100,8 @@ struct NoteNumberToLevelView: View {
             }
         }
         .padding(.leading)
-//        .onAppear {
-//            // Set initial value of syncedValue to value from observed object
-//            notesToLevelLocal = setInfoModel.setSettings.tracks[trackId]!.notesToLevel
-//        }
-//        .onChange(of: setInfoModel.setSettings.levels) { newValue in
-//            // Update syncedValue when value in observed object changes
-//            notesToLevelLocal = newValue
-//        }
+        .onChange(of: updateView) { _ in
+            notesToLevelLocal = currentTrack.notesToLevel
+        }
     }
 }

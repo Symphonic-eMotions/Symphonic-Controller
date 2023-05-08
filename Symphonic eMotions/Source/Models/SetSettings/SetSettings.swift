@@ -171,6 +171,10 @@ class SetSettings: Identifiable, ObservableObject {
                 let zeroArray:[Int] = Array(repeating: 0, count: cells)
                 
                 tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
+                tracks[index]!.parts[partIndex]?.areaOfInterestColor = AppUtils.getPartColors(
+                    trackColor: tracks[index]!.instrumentColor,
+                    areaOfInterest: zeroArray
+                )
                 
                 tracks[index]!.loopsToGrid = zeroArray
                 tracks[index]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
