@@ -13,6 +13,10 @@ import SwiftUI
 
 class SetSettings: Identifiable, ObservableObject {
     
+    //Keep track of playlist
+    var currentPlaylist: BuildSettings.Playlists
+    var currentSetInList: URL
+    
     //Keep track of current edited values
     var settingsCurrentTrackID: String
     var settingsVolume: Float
@@ -107,6 +111,9 @@ class SetSettings: Identifiable, ObservableObject {
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown
+        
+        self.currentPlaylist = .none
+        self.currentSetInList = URL("noSet")
         
     }
     

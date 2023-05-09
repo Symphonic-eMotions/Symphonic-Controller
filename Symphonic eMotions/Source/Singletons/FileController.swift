@@ -53,7 +53,7 @@ class FileController: ObservableObject {
         return nameParts
     }
     
-    public func fileContents( url: URL, fileName: String ) -> String {
+    public func fileNameOrCustomName( url: URL, fileName: String ) -> String {
         
         var fileNameReturn = fileName
         
@@ -64,6 +64,13 @@ class FileController: ObservableObject {
             }
         }
         return fileNameReturn
+    }
+    
+    public func fileContents(url: URL) -> InstrumentsSet? {
+        if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
+                return instrumentSet
+        }
+        return nil
     }
     
     private func isCustomNameNotEmpty(set: InstrumentsSet) -> Bool {

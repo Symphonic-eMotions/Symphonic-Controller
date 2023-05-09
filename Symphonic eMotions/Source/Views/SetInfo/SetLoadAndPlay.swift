@@ -23,7 +23,6 @@ struct SetLoadAndPlay: View {
                 .padding(.trailing)
         }
         .padding()
-//        .padding(.leading, 10.0)
         .background(Color.accentColor)
         .cornerRadius(10.0)
         

@@ -24,8 +24,6 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
-    
-    
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
@@ -42,6 +40,8 @@ struct MainView: View {
         AppUtils.createPlayListFolders()
     }
     
+    
+    
     var body: some View {
         
         //Object for Master track effect editor
@@ -54,7 +54,6 @@ struct MainView: View {
         //SpriteKit (2D Game) interface
         if sessionDisplay == .spriteKit {
             SpriteKitView(
-//          SpriteKitZonesView(
                 playViewModel: PlayViewModel(
                     playViewState: PlayViewState(
                         currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
@@ -162,7 +161,7 @@ struct MainView: View {
                             setInfoLocalState: $setInfoLocalState,
                             setSettings: $viewModel.mainState.setSettings,
                             setInfoState: SetInfoState(
-//                                setCollections: viewModel.mainState.setCollection,
+                                //                                setCollections: viewModel.mainState.setCollection,
                                 currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                             ),
                             currentInstrumentsSetIsChanged: { instrumentsSet in
@@ -209,7 +208,25 @@ struct MainView: View {
                 )
                 .environmentObject(fileController)
                 
-                PlayListsView()
+                PlayListsView(
+                    setInfoModel: SetInfoModel(
+                        setInfoLocalState: $setInfoLocalState,
+                        setSettings: $viewModel.mainState.setSettings,
+                        setInfoState: SetInfoState(
+                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet,
+                                sessionSettings: viewModel.mainState.sessionSettings
+                            )
+                        },
+                        conductor: viewModel.conductor
+                    ),
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub
+                )
+                .environmentObject(fileController)
             }
         }
         

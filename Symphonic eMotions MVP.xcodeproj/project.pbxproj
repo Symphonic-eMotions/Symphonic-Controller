@@ -560,7 +560,6 @@
 			isa = PBXGroup;
 			children = (
 				C06958FA26B4D9E4002EB522 /* PlayView.swift */,
-				7CCDE10228E2C61300343920 /* MasterTrack */,
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
@@ -675,11 +674,12 @@
 		C084FFEA26B31216009A4D0C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7CCFE4A72A03DC56008AE3EE /* Playlists */,
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
-				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
 				7C7502EA29C07C1600F55CA3 /* Editor */,
+				7CCFE4A72A03DC56008AE3EE /* Playlists */,
+				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
+				7CCDE10228E2C61300343920 /* MasterTrack */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
 				7C3CD116296DC17500A4C522 /* Skins */,
