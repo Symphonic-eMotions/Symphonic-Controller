@@ -5,6 +5,7 @@
   Created by Frans-Jan Wind on 08/05/2023.
   
 */
+"Welcome" = "Welkom";
 "New set" = "Nieuwe set";
 "Save" = "Bewaar";
 "minimal" = "Minimale beweging";
@@ -14,3 +15,7 @@
 "Add to playlist" = "Voeg aan afspeellijst toe";
 "New variation" = "Nieuwe variatie";
 "Cancel" = "Annuleer";
+"Confirm Delete" = "Bevestig verwijderen";
+"Are you sure" = "Weet je het zeker dat je deze set wilt verwijderen?";
+"Delete" = "Verwijder";
+"User sets" = "Gebruiker sets";

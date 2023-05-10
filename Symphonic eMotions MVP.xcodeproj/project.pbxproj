@@ -12,6 +12,9 @@
 		7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3B2874306400F00B42 /* FullHomeView.swift */; };
 		7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C037B3D2874556900F00B42 /* FullPlayView.swift */; };
 		7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D692A0990080031FF54 /* AddToPlaylistView.swift */; };
+		7C041D6C2A0AB6AC0031FF54 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D6B2A0AB6AC0031FF54 /* ConfettiView.swift */; };
+		7C041D6F2A0B7F4A0031FF54 /* ConfettiParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C041D6D2A0B7F4A0031FF54 /* ConfettiParticle.sks */; };
+		7C041D722A0B807E0031FF54 /* ConfettiScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D712A0B807E0031FF54 /* ConfettiScene.swift */; };
 		7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */; };
 		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
@@ -155,6 +158,9 @@
 		7C037B3B2874306400F00B42 /* FullHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHomeView.swift; sourceTree = "<group>"; };
 		7C037B3D2874556900F00B42 /* FullPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayView.swift; sourceTree = "<group>"; };
 		7C041D692A0990080031FF54 /* AddToPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistView.swift; sourceTree = "<group>"; };
+		7C041D6B2A0AB6AC0031FF54 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		7C041D6D2A0B7F4A0031FF54 /* ConfettiParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiParticle.sks; sourceTree = "<group>"; };
+		7C041D712A0B807E0031FF54 /* ConfettiScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiScene.swift; sourceTree = "<group>"; };
 		7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitZonesView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
 		7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leveling.swift; sourceTree = "<group>"; };
@@ -563,6 +569,9 @@
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
+				7C041D6B2A0AB6AC0031FF54 /* ConfettiView.swift */,
+				7C041D6D2A0B7F4A0031FF54 /* ConfettiParticle.sks */,
+				7C041D712A0B807E0031FF54 /* ConfettiScene.swift */,
 			);
 			path = PlayAndEditView;
 			sourceTree = "<group>";
@@ -675,6 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
+				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
 				7C7502EA29C07C1600F55CA3 /* Editor */,
 				7CCFE4A72A03DC56008AE3EE /* Playlists */,
@@ -683,7 +693,6 @@
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
 				7C3CD116296DC17500A4C522 /* Skins */,
-				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
 			);
 			path = Views;
@@ -803,6 +812,7 @@
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
 				7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */,
 				7C3CD115296D952A00A4C522 /* effects.json in Resources */,
+				7C041D6F2A0B7F4A0031FF54 /* ConfettiParticle.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +847,7 @@
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
+				7C041D722A0B807E0031FF54 /* ConfettiScene.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
 				7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
@@ -895,6 +906,7 @@
 				7C037B3E2874556900F00B42 /* FullPlayView.swift in Sources */,
 				C069590426B4E0C7002EB522 /* Track.swift in Sources */,
 				7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */,
+				7C041D6C2A0AB6AC0031FF54 /* ConfettiView.swift in Sources */,
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7CEFB9D028734205006A191F /* FullView.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,

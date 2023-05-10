@@ -94,16 +94,27 @@ struct SideBarFolderView: View {
     var body: some View {
         NavigationView {
             List {
-                
                 ForEach([
-                    (name: "Home", setName: "home"),
-                    (name: "Playlists", setName: "playlists")
+                    (name: "Playlists", setName: "playlists"),
+                    (name: "SeM Pro", setName: "home")
                 ], id: \.setName) { item in
                     Button(action: {
-                        sessionDisplay = item.setName == "home" ? .home : .playlists
+                        
+                        if item.setName == "home" {
+                            sessionDisplay = .home
+                            sessionDisplaySub = .none
+                        }
+                        else{
+                            sessionDisplay = .playlists
+                            sessionDisplaySub = .playlists
+                        }
+                        
                         setInfoLocalState.setName = item.setName
                         setInfoLocalState.sideBarHead = item.name
+                        
                         selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
+                        setInfoModel.tapStopAudioEngine()
+                        
                     }) {
                         HStack {
                             VStack(alignment: .leading) {
@@ -124,7 +135,7 @@ struct SideBarFolderView: View {
                     }
                 }
                 
-                if sessionDisplay != .playlists {
+                if sessionDisplay != .playlists && sessionDisplaySub != .playlists {
                     ForEach(viewModel.setFiles) { setFile in
                         Button(action: {
                             
@@ -137,6 +148,8 @@ struct SideBarFolderView: View {
                             
                             sessionDisplay = .setInfo
                             sessionDisplaySub = .none
+                            
+                            setInfoLocalState.sideBarHead = "SeM Pro"
                         }) {
                             HStack {
                                 VStack(alignment: .leading) {

@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct IdentifiableURL: Identifiable {
+    let id = UUID()
+    let url: URL
+}
+
 struct SavedSetsList: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -17,15 +22,17 @@ struct SavedSetsList: View {
     @State private var isSharePresented: Bool = false
     @State private var isPlaylistsPresented: Bool = false
     
-    @State private var showAlert = false
+    @State private var showDeleteAlert = false
     @State private var deleteUrl: URL = URL("empty")
+    @State private var playlistUrl: URL = URL("empty")
+    @State private var shareUrl: IdentifiableURL?
     
     var body: some View {
         
         VStack(alignment: .leading){
             
             HStack{
-                Text("User sets")
+                Text(NSLocalizedString("User sets", comment: ""))
                     .padding(.leading)
                     .font(.title)
                 Spacer()
@@ -40,8 +47,18 @@ struct SavedSetsList: View {
                 ) {
                     // Create a closure to capture the current URL and return the button
                     let deleteAction = {
-                        showAlert = true
+                        showDeleteAlert = true
                         deleteUrl = url
+                    }
+                    
+                    //The same for adding to playlist and share
+                    let playlistAction = {
+                        isPlaylistsPresented = true
+                        playlistUrl = url
+                    }
+                    
+                    let shareAction = {
+                        shareUrl = IdentifiableURL(url: url)
                     }
                     
                     HStack(spacing:20){
@@ -89,9 +106,7 @@ struct SavedSetsList: View {
                             }
                         
                         //Sharing
-                        Button( action: {
-                            self.isSharePresented = true
-                        }) {
+                        Button(action: shareAction) {
                             Image(systemName: "square.and.arrow.up")
                                 .renderingMode(.original)
                                 .foregroundColor(.white)
@@ -102,18 +117,14 @@ struct SavedSetsList: View {
                                 .background(Color.blue)
                                 .cornerRadius(5.0)
                         }
-                        .sheet(isPresented: $isSharePresented, onDismiss: {
+                        .sheet(item: $shareUrl, onDismiss: {
                             print("Dismiss")
-                        }, content: {
-                            let fileName = setInfoModel.setSettings.setURL.lastPathComponent
-                            let url = AppUtils.documentDirectory().appendingPathComponent(fileName)
-                            ActivityViewController(activityItems: [url])
-                        })
+                        }) { identifiableUrl in
+                            ActivityViewController(activityItems: [identifiableUrl.url as NSURL])
+                        }
                         
                         //Add to playlist
-                        Button( action: {
-                            self.isPlaylistsPresented = true
-                        }) {
+                        Button( action: playlistAction ) {
                             Image(systemName: "list.star")
                                 .renderingMode(.original)
                                 .foregroundColor(.white)
@@ -127,13 +138,12 @@ struct SavedSetsList: View {
                         .sheet(isPresented: $isPlaylistsPresented){
                             AddToPlaylistView(
                                 isPresented: $isPlaylistsPresented,
-                                sandBoxUrl: url
+                                sandBoxUrl: $playlistUrl
                             )
                         }
                         
                         //The file name and date
                         let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.name(url: url))
-                        
                         VStack(alignment: .leading){
                             Text(filesName)
                                 .font(.title2)
@@ -159,8 +169,12 @@ struct SavedSetsList: View {
                                     .background(Color.red)
                                     .cornerRadius(5.0)
                             }
-                            .alert(isPresented: $showAlert) {
-                                Alert(title: Text("Confirm Delete"), message: Text("Are you sure you want to delete this item?"), primaryButton: .destructive(Text("Delete")) {
+                            .alert(isPresented: $showDeleteAlert) {
+                                Alert(
+                                    title: Text(NSLocalizedString("Confirm Delete", comment: "")),
+                                    message: Text(NSLocalizedString("Are you sure", comment: "")),
+                                    primaryButton: .destructive(Text(NSLocalizedString("Delete", comment: ""))
+                                ) {
                                     // Handle delete action
                                     userPresets = fileController.deleteFile(url: deleteUrl)
                                 }, secondaryButton: .cancel())
@@ -189,20 +203,4 @@ struct ActivityViewController: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-
 }
-
-
-//struct ActivityViewController: UIViewControllerRepresentable {
-//
-//    var jsonFile: URL
-//
-//    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-//        let jsonData = try! Data(contentsOf: jsonFile)
-//        let jsonDict = ["data": jsonData, "type": "public.json"] as [String : Any]
-//        let controller = UIActivityViewController(activityItems: [jsonDict], applicationActivities: nil)
-//        return controller
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-//}

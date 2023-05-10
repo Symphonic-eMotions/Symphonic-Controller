@@ -24,6 +24,7 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
+    
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
@@ -35,6 +36,7 @@ struct MainView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
+        
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
@@ -117,39 +119,43 @@ struct MainView: View {
                 //SeM Pro interface with interaction editor
                 if sessionDisplay == .swiftUI {
                     
-                    PlayView(
-                        playViewModel: PlayViewModel(
-                            playViewState: PlayViewState(
-                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                                buildSettings: viewModel.mainState.buildSettings,
-                                masterTrackStructure: masterTrackSetting
+                    ZStack{
+                        PlayView(
+                            playViewModel: PlayViewModel(
+                                playViewState: PlayViewState(
+                                    currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
+                                    buildSettings: viewModel.mainState.buildSettings,
+                                    masterTrackStructure: masterTrackSetting
+                                ),
+                                conductor: viewModel.conductor,
+                                imageDifference: $viewModel.mainState.imageDifference,
+                                leveling: viewModel.leveling,
+                                setSettings: $viewModel.mainState.setSettings,
+                                partFeedback: viewModel.partFeedback,
+                                partFeedbackState: PartFeedbackState(),
+                                feedbackObjectsSate: FeedbackObjectsState()
                             ),
-                            conductor: viewModel.conductor,
-                            imageDifference: $viewModel.mainState.imageDifference,
-                            leveling: viewModel.leveling,
-                            setSettings: $viewModel.mainState.setSettings,
-                            partFeedback: viewModel.partFeedback,
-                            partFeedbackState: PartFeedbackState(),
-                            feedbackObjectsSate: FeedbackObjectsState()
-                        ),
-                        mainViewUpdate: $mainViewUpdate,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub
-                    )
-                    .environmentObject(fileController)
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
-                    .edgesIgnoringSafeArea([.top, .trailing])
-                    .onAppear{
-                        viewModel.leveling.pauseLevel = false
-                        viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
-                            level: 0,
-                            setSettings: viewModel.mainState.setSettings
+                            mainViewUpdate: $mainViewUpdate,
+                            sessionDisplay: $sessionDisplay,
+                            sessionDisplaySub: $sessionDisplaySub
                         )
-                        viewModel.conductor.playEngineAndTracks(
-                            setSettings: viewModel.mainState.setSettings,
-                            level: 0
-                        )
+                        .environmentObject(fileController)
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true)
+                        .edgesIgnoringSafeArea([.top, .trailing])
+                        .onAppear{
+                            viewModel.leveling.pauseLevel = false
+                            viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
+                                level: 0,
+                                setSettings: viewModel.mainState.setSettings
+                            )
+                            viewModel.conductor.playEngineAndTracks(
+                                setSettings: viewModel.mainState.setSettings,
+                                level: 0
+                            )
+                        }
+                        
+//                        ConfettiView()
                     }
                 }
                 

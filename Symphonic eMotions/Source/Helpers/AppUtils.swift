@@ -85,8 +85,11 @@ final class AppUtils {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         
+        let lists = BuildSettings.Playlists.allCases
+        let partOfList = lists.filter({$0 != .none})
+        
         // Loop through all the enum cases and check if a folder with that name exists
-        for playlist in BuildSettings.Playlists.allCases {
+        for playlist in partOfList {
             let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
             if !fileManager.fileExists(atPath: playlistURL.path) {
                 // Folder doesn't exist, create it

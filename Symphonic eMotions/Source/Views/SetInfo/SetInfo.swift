@@ -20,7 +20,7 @@ struct SetInfoLocalState {
         self.setName = "home"
         self.setConfig = ""
         self.setURL = "SetInfoLocalState"
-        self.sideBarHead = "Sets"
+        self.sideBarHead = NSLocalizedString("Welcome", comment: "Header of left navigation bar")
     }
 }
 

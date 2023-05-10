@@ -24,6 +24,7 @@ struct SpriteKitView: View {
           mainViewModel: MainViewModel,
           sessionDisplay: Binding<SessionDisplay>
     ) {
+        //These are defined twice, this one for init and the second for body
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         let size = CGSize(width: width, height: height - transportHeigth)
@@ -31,8 +32,6 @@ struct SpriteKitView: View {
         let columns = mainViewModel.mainState.setSettings.gridColumns
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         let levels = mainViewModel.mainState.setSettings.getLevels()
-        
-        print("LEVELS \(levels)")
         
         scene.isPlaying = mainViewModel.conductor.isConductorPlayingSubject.value
         scene.backgroundColor = .clear

@@ -5,12 +5,17 @@
   Created by Frans-Jan Wind on 08/05/2023.
   
 */
+"Welcome" = "Welcome";
 "New set" = "New set";
 "Save" = "Save";
 "minimal" = "Minimal movement";
-"person" = "Whole body momevent";
+"person" = "One person whole body";
 "group" = "Group up to 3 persons";
 "nature" = "Nature";
 "Add to playlist" = "Add to playlist";
 "New variation" = "New variation";
 "Cancel" = "Cancel";
+"Confirm Delete" = "Confirm Delete";
+"Are you sure" = "Are you sure you want to delete this set?";
+"Delete" = "Delete";
+"User sets" = "User sets";

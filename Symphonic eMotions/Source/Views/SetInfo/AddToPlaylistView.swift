@@ -10,7 +10,7 @@ import SwiftUI
 struct AddToPlaylistView: View{
     
     @Binding var isPresented: Bool
-    var sandBoxUrl: URL
+    @Binding var sandBoxUrl: URL
 
     var body: some View {
         
@@ -19,7 +19,10 @@ struct AddToPlaylistView: View{
             Text(NSLocalizedString("Add to playlist", comment: "String"))
                 .font(.largeTitle)
             
-            ForEach(BuildSettings.Playlists.allCases, id: \.self) { playlist in
+            let lists = BuildSettings.Playlists.allCases
+            let partOfList = lists.filter({$0 != .none})
+            
+            ForEach(partOfList, id: \.self) { playlist in
                 
                 EMButton(action: {
                     
@@ -36,7 +39,7 @@ struct AddToPlaylistView: View{
                     }
                     dismiss()
                     
-                }, color: .primary, isSolid: false, maxWidth: 250, height: 35
+                }, color: .blue, isSolid: true, maxWidth: 250, height: 35
                 ){
                     Text(NSLocalizedString(playlist.rawValue, comment: "This is the name of the playlist"))
                 }

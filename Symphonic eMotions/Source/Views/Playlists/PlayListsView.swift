@@ -47,41 +47,51 @@ struct PlayListsView: View {
             VStack(alignment: .leading) {
                 
                 //Playlist name
-                
-                HStack {
-                    Image(systemName: "play.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 30))
-                    Text("Play \(NSLocalizedString(playlist.rawValue, comment: ""))")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .padding(.trailing)
+                HStack{
+                    Spacer()
+                    HStack {
+                        Image(systemName: "play.fill")
+                            .foregroundColor(.white)
+                            .font(.system(size: 30))
+                        
+                        Text(NSLocalizedString(playlist.rawValue, comment: ""))
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .padding(.trailing)
+                    }
+                    .padding()
+                    .background(Color.accentColor)
+                    .cornerRadius(10.0)
+                    .onTapGesture {
+                        
+                        //Keep track for next in playlist
+                        setInfoModel.setSettings.currentPlaylist = playlist
+                        
+                        if let url = urls.first {
+                            
+                            setInfoModel.setSettings.currentSetInList = url
+
+                            AppUtils.createSessionFile(
+                                sensitivity: -1,
+                                setURL: url)
+
+                            //Load settngs over current
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+
+                            //Change the View
+                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                        }
+                        
+
+                    }
+                    
+//                    Text(NSLocalizedString(playlist.rawValue, comment: ""))
+//                        .font(.headline)
+                    
+                    Spacer()
                 }
-                .padding()
-                .background(Color.accentColor)
-                .cornerRadius(10.0)
-                .onTapGesture {
-
-                    //Keep track for next in playlist
-                    setInfoModel.setSettings.currentPlaylist = playlist
-                    setInfoModel.setSettings.currentSetInList = urls.first!
-
-                    AppUtils.createSessionFile(
-                        sensitivity: -1,
-                        setURL: URL("dontOverWrite"))
-
-                    //Load set
-                    setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
-
-                    //Change the View
-                    sessionDisplay = setInfoModel.setSettings.defaultSkin
-                    sessionDisplaySub = .playlists
-                }
-                
-//                Text(NSLocalizedString(playlist.rawValue, comment: ""))
-//                    .foregroundColor(.white)
-//                    .padding()
-                
+                .padding(.bottom)
+                    
                 
                 ScrollView(.vertical){
                     ForEach(urls, id: \.self) { url in
@@ -113,8 +123,7 @@ struct PlayListsView: View {
                                     
                                     //Change the View to the selected view
                                     sessionDisplay = setInfoModel.setSettings.defaultSkin
-                                    sessionDisplaySub = .playlists
-                                }
+                                    }
                             
                             //The file name and date
                             let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.name(url: url))
