@@ -80,23 +80,60 @@ final class AppUtils {
         return instrumentSet
     }
     
+//    static func createPlayListFolders() {
+//            
+//        let fileManager = FileManager.default
+//        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        
+//        let lists = BuildSettings.Playlists.allCases
+//        let partOfList = lists.filter({$0 != .none})
+//        
+//        // Loop through all the enum cases and check if a folder with that name exists
+//        for playlist in partOfList {
+//            let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
+//            if !fileManager.fileExists(atPath: playlistURL.path) {
+//                // Folder doesn't exist, create it
+//                try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
+//            }
+//        }
+//    }
+    
     static func createPlayListFolders() {
-            
+        
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
+        let bundleURL = Bundle.main.bundleURL
+
         let lists = BuildSettings.Playlists.allCases
         let partOfList = lists.filter({$0 != .none})
-        
+
         // Loop through all the enum cases and check if a folder with that name exists
         for playlist in partOfList {
             let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
+            let bundlePlaylistURL = bundleURL.appendingPathComponent(playlist.rawValue)
+
             if !fileManager.fileExists(atPath: playlistURL.path) {
                 // Folder doesn't exist, create it
                 try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
             }
+
+            do {
+                // Get the content of the playlist folder in the bundle
+                let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
+
+                // Copy each item in the playlist folder to the new playlist folder in the Documents directory
+                for item in playlistContent {
+                    let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
+                    if !fileManager.fileExists(atPath: destinationURL.path) {
+                        try fileManager.copyItem(at: item, to: destinationURL)
+                    }
+                }
+            } catch {
+                print("Error copying playlist files: \(error)")
+            }
         }
     }
+
     
     //MARK: Set setSetings
     // - Structure to mutate and save as Instrument Set

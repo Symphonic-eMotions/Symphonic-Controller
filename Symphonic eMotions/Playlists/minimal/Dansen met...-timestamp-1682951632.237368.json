@@ -1,0 +1,601 @@
+{
+  "customName" : "Start with movement",
+  "defaultSkin" : {
+    "swiftUI" : {
+
+    }
+  },
+  "gridColumns" : 2,
+  "gridRows" : 2,
+  "hasTempo" : true,
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : null,
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "AfricanMarimba"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor802",
+      "instrumentName" : "Marimba 1",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.002,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.056737590581178665,
+              "rampSpeedDown" : 0.1007092222571373,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "marimba1"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -7.5319128036499023,
+      "levels" : [
+        1,
+        2,
+        3
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            45,
+            45
+          ],
+          "loopsToGrid" : [
+            0,
+            1,
+            0,
+            1
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "nijntje-linker-hand-1-2"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTrigger",
+      "trackId" : "marimba1",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "AfricanMarimba"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Marimba 2",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.002,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.057092197239398977,
+              "rampSpeedDown" : 0.097872339189052582,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "marimba2"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -10.06382942199707,
+      "levels" : [
+        2,
+        3
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            45,
+            45
+          ],
+          "loopsToGrid" : [
+            1,
+            0,
+            1,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "nijntje-rechter-hand-1-2"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTrigger",
+      "trackId" : "marimba2",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "orchestralKitSmall"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Percussion",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0030000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.043262410908937454,
+              "rampSpeedDown" : 0.054964538663625717,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "perc"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.00050000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.040000000000000001,
+              "rampSpeedDown" : 0.02,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "perc"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -2.1063814163208008,
+      "levels" : [
+        3
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            18,
+            18,
+            18,
+            18
+          ],
+          "loopsToGrid" : [
+            2,
+            3,
+            1,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "nijntje-ritme-1-4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTrigger",
+      "trackId" : "perc",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "ViolinsLegatoLongRelease"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor700",
+      "instrumentName" : "Violins",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.01,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.01,
+              "rampSpeedDown" : 0.01,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "violins"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.00050000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.040000000000000001,
+              "rampSpeedDown" : 0.02,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "violins"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -4,
+      "levels" : [
+        3,
+        2,
+        1,
+        0
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            45,
+            45
+          ],
+          "loopsToGrid" : [
+            0,
+            1,
+            0,
+            1
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "nijntje-viool-1-2"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTrigger",
+      "trackId" : "violins",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDurations" : [
+    45,
+    45,
+    45,
+    45
+  ],
+  "levelSpeed" : 0.25600740313529968,
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.20000000000000001
+        ],
+        "value" : 0.0010000000474974513
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.10000000000000001,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 10
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05000000074505806
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    },
+    {
+      "effectName" : "reverb",
+      "reverbDryWetMix" : {
+        "range" : [
+          0,
+          1
+        ],
+        "value" : 0.18999999761581421
+      },
+      "reverbPreset" : {
+        "range" : [
+          0,
+          12
+        ],
+        "value" : 11.263345718383789
+      }
+    }
+  ],
+  "published" : true,
+  "setBPM" : 170,
+  "setName" : "Dansen met...",
+  "setPath" : "",
+  "setTimeSignature" : 3,
+  "skin" : {
+    "instruments" : [
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioA",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioB",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioC",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioD",
+        "shape" : "circle"
+      }
+    ],
+    "name" : "default"
+  }
+}

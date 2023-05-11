@@ -7,6 +7,8 @@
 */
 "locale" = "nl-NL";
 "Set complete" = "Gefeliciteerd! je hebt de laatste level uitgespeeld.";
+"Count down to" = "Set uitgespeeld! De volgende set start over";
+"Same song" = "Speel dezelfde set nog eens!";
 "Welcome" = "Welkom";
 "New set" = "Nieuwe set";
 "Save" = "Bewaar";

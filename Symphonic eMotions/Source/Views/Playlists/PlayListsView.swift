@@ -23,7 +23,7 @@ struct PlayListsView: View {
             playlistView(for: BuildSettings.Playlists.minimal)
             playlistView(for: BuildSettings.Playlists.person)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity / 2)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         
         //Other playlists
 //            HStack(spacing: 10) {

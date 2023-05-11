@@ -72,6 +72,8 @@
 		7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
 		7CB2B94E2A0CF80300876CCD /* PlayListsCountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */; };
+		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
+		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
 		7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionSettings.swift */; };
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
 		7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */; };
@@ -219,6 +221,8 @@
 		7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinGridImages.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsCountDown.swift; sourceTree = "<group>"; };
+		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
+		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMButtonLongPress.swift; sourceTree = "<group>"; };
@@ -400,6 +404,15 @@
 				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		7CB2B9502A0D0D1500876CCD /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				7CB2B9522A0D0E0500876CCD /* minimal */,
+				7CB2B9512A0D0E0500876CCD /* person */,
+			);
+			path = Playlists;
 			sourceTree = "<group>";
 		};
 		7CCDE10228E2C61300343920 /* MasterTrack */ = {
@@ -600,6 +613,7 @@
 		C084FFD526B3115E009A4D0C /* Symphonic eMotions */ = {
 			isa = PBXGroup;
 			children = (
+				7CB2B9502A0D0D1500876CCD /* Playlists */,
 				7CD418052A095388006831CE /* Localizable.strings */,
 				7C6C11FC2A03EF3E006F8CCB /* Sets */,
 				7C6C11FD2A03EF3F006F8CCB /* Sounds */,
@@ -810,6 +824,8 @@
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
 				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
+				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
+				7CB2B9532A0D0E0500876CCD /* person in Resources */,
 				7CD418032A095388006831CE /* Localizable.strings in Resources */,
 				7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,

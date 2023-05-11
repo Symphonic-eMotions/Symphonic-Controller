@@ -7,6 +7,8 @@
 */
 "locale" = "en-US";
 "Set complete" = "Gongratulations! You have finished the last level!";
+"Count down to" = "Set completed! The next set starts in:";
+"Same song" = "Play the same song again!";
 "Welcome" = "Welcome";
 "New set" = "New set";
 "Save" = "Save";
