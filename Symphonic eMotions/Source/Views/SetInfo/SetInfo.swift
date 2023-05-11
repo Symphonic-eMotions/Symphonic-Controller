@@ -71,6 +71,9 @@ struct SetInfo: View {
                         SetLoadAndPlay(setInfoModel: setInfoModel)
                         .onTapGesture {
                             
+                            //We do not want to go to the next set
+                            setInfoModel.setSettings.currentPlaylist = .none
+                            
                             AppUtils.createSessionFile(
                                 sensitivity: -1,
                                 setURL: URL("dontOverWrite"))

@@ -73,6 +73,7 @@ struct SavedSetsList: View {
                             .background(Color.accentColor)
                             .cornerRadius(5.0)
                             .onTapGesture {
+                                
                                 //Store chosen url
                                 AppUtils.createSessionFile(
                                     sensitivity: -1,
@@ -94,6 +95,7 @@ struct SavedSetsList: View {
                             .background(Color.green)
                             .cornerRadius(5.0)
                             .onTapGesture {
+                                
                                 //Store chosen url
                                 AppUtils.createSessionFile(
                                     sensitivity: -1,

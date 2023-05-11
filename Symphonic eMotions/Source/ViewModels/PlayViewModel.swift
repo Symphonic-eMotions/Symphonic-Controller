@@ -74,8 +74,6 @@ final class PlayViewModel: ObservableObject {
         //Levels
         self.leveling.currentSetLevelSubject.sink { value in
             
-//            print("startObservingData value: \(value)")
-            
             let oldLevel = Int(self.playViewState.currentLevel)
             self.playViewState.currentLevel = value
             let currentLevel = Int(self.playViewState.currentLevel)
@@ -84,19 +82,14 @@ final class PlayViewModel: ObservableObject {
             if oldLevel != currentLevel {
                 
                 //Mute and unmutes tracks to level settings
-                self.conductor.trackMuteAndClipStatusPerLevelControl(
+                //
+                // Switch View logic sits in MainView / PlayView.onReceive
+                //
+                self.conductor.levelController(
                     level: Int(currentLevel),
                     setSettings: self.setSettings
                 )
             }
-            
-//            TODO: Why is amount of levels not consistent within a set?
-//            print("Aantal levels: \(self.playViewState.currentInstrumentsSet.levelInstruments.count)")
-//
-//            //Start over at the end!
-//            if currentLevel > self.playViewState.currentInstrumentsSet.levelInstruments.count {
-//                self.leveling.currentSetLevelSubject.send(0)
-//            }
         }
         .store(in: &cancellables)
         

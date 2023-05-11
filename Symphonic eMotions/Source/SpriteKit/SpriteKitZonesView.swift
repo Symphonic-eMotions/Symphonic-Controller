@@ -106,19 +106,6 @@ struct SpriteKitZonesView: View {
                 mainViewModel: mainViewModel,
                 playViewModel: playViewModel,
                 sessionDisplay: $sessionDisplay,
-//                viewModelPlayerControls: PlayerControlsViewModel(
-//                    playerControlsViewState: PlayerControlsViewState(
-//                        displayMode: playViewModel.playViewState.displayMode,
-//                        buildSettings: playViewModel.playViewState.buildSettings
-//                    ),
-//                    conductor: playViewModel.conductor,
-//                    frameExtractor: playViewModel.frameExtractor,
-//                    leveling: playViewModel.leveling,
-//                    setSettings: playViewModel.setSettings,
-//                    hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
-//                    playerControlsAction: playViewModel.controlsViewAction(action:)
-//
-//                ),
                 transportHeigth: transportHeigth
             )
             

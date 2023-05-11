@@ -27,8 +27,8 @@ struct BuildSettings {
         case none
         case minimal
         case person
-        case group
-        case nature
+//        case group
+//        case nature
         
         
         var color: Color {
@@ -39,10 +39,10 @@ struct BuildSettings {
                 return Color("InstrumentColor100")
             case .person:
                 return Color("InstrumentColor200")
-            case .group:
-                return Color("InstrumentColor300")
-            case .nature:
-                return Color("InstrumentColor702")
+//            case .group:
+//                return Color("InstrumentColor300")
+//            case .nature:
+//                return Color("InstrumentColor702")
             }
         }
     }

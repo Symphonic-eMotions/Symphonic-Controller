@@ -17,19 +17,22 @@ struct PlayListsView: View {
     @EnvironmentObject var fileController: FileController
 
     var body: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 10) {
-                playlistView(for: BuildSettings.Playlists.minimal)
-                playlistView(for: BuildSettings.Playlists.person)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity / 2)
-            
-            HStack(spacing: 10) {
-                playlistView(for: BuildSettings.Playlists.group)
-                playlistView(for: BuildSettings.Playlists.nature)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity / 2)
+        
+//        VStack(spacing: 10) {
+        HStack(spacing: 10) {
+            playlistView(for: BuildSettings.Playlists.minimal)
+            playlistView(for: BuildSettings.Playlists.person)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity / 2)
+        
+        //Other playlists
+//            HStack(spacing: 10) {
+//                playlistView(for: BuildSettings.Playlists.group)
+//                playlistView(for: BuildSettings.Playlists.nature)
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity / 2)
+//        }
+        .ignoresSafeArea()
         .padding(10)
     }
     
@@ -64,13 +67,8 @@ struct PlayListsView: View {
                     .cornerRadius(10.0)
                     .onTapGesture {
                         
-                        //Keep track for next in playlist
-                        setInfoModel.setSettings.currentPlaylist = playlist
-                        
                         if let url = urls.first {
                             
-                            setInfoModel.setSettings.currentSetInList = url
-
                             AppUtils.createSessionFile(
                                 sensitivity: -1,
                                 setURL: url)
@@ -78,16 +76,14 @@ struct PlayListsView: View {
                             //Load settngs over current
                             setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
 
+                            //Keep track for next in playlist after loading new set
+                            setInfoModel.setSettings.currentSetInList = url
+                            setInfoModel.setSettings.currentPlaylist = playlist
+                            
                             //Change the View
                             sessionDisplay = setInfoModel.setSettings.defaultSkin
                         }
-                        
-
                     }
-                    
-//                    Text(NSLocalizedString(playlist.rawValue, comment: ""))
-//                        .font(.headline)
-                    
                     Spacer()
                 }
                 .padding(.bottom)
@@ -100,31 +96,31 @@ struct PlayListsView: View {
                             
                             //Play this set
                             Image(systemName: "play.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 18))
-                                .frame(width: 30, height: 24)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.accentColor)
-                                .cornerRadius(5.0)
-                                .onTapGesture {
-                                    
-                                    //Keep track for next in playlist
-                                    setInfoModel.setSettings.currentPlaylist = playlist
-                                    setInfoModel.setSettings.currentSetInList = url
-                                    
-                                    //Store chosen url
-                                    AppUtils.createSessionFile(
-                                        sensitivity: -1,
-                                        setURL: url)
-                                    
-                                    //Load settngs over current
-                                    setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                                    
-                                    //Change the View to the selected view
-                                    sessionDisplay = setInfoModel.setSettings.defaultSkin
-                                    }
-                            
+                            .foregroundColor(.white)
+                            .font(.system(size: 18))
+                            .frame(width: 30, height: 24)
+                            .padding(.vertical, 5.0)
+                            .padding(.horizontal, 5.0)
+                            .background(Color.accentColor)
+                            .cornerRadius(5.0)
+                            .onTapGesture {
+                                
+                                //Store chosen url
+                                AppUtils.createSessionFile(
+                                    sensitivity: -1,
+                                    setURL: url)
+                                
+                                //Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                
+                                //Keep track for next in playlist after loading new set
+                                setInfoModel.setSettings.currentSetInList = url
+                                setInfoModel.setSettings.currentPlaylist = playlist
+                                
+                                //Change the View to the selected view
+                                sessionDisplay = setInfoModel.setSettings.defaultSkin
+                            }
+    
                             //The file name and date
                             let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.name(url: url))
                             

@@ -1,5 +1,5 @@
 //
-//  SideBarFolderView.swift
+//  SideBarView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 25/04/2023.
@@ -74,7 +74,7 @@ class SetListViewModel: ObservableObject {
     }
 }
 
-struct SideBarFolderView: View {
+struct SideBarView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     
@@ -103,6 +103,8 @@ struct SideBarFolderView: View {
                         if item.setName == "home" {
                             sessionDisplay = .home
                             sessionDisplaySub = .none
+                            //We do not want to go to the next set
+                            setInfoModel.setSettings.currentPlaylist = .none
                         }
                         else{
                             sessionDisplay = .playlists

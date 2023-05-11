@@ -5,13 +5,15 @@
   Created by Frans-Jan Wind on 08/05/2023.
   
 */
+"locale" = "en-US";
+"Set complete" = "Gongratulations! You have finished the last level!";
 "Welcome" = "Welcome";
 "New set" = "New set";
 "Save" = "Save";
 "minimal" = "Minimal movement";
-"person" = "One person whole body";
-"group" = "Group up to 3 persons";
-"nature" = "Nature";
+"person" = "More movement";
+//"group" = "Group up to 3 persons";
+//"nature" = "Nature";
 "Add to playlist" = "Add to playlist";
 "New variation" = "New variation";
 "Cancel" = "Cancel";

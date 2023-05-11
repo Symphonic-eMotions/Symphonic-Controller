@@ -27,6 +27,7 @@ class Leveling {
         
         return opacity
     }
+    
 }
 
 class TrackLevelsModel: ObservableObject {

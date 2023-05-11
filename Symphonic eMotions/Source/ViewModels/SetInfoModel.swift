@@ -63,18 +63,10 @@ final class SetInfoModel: ObservableObject {
     }
     
     func tapSavedRow(fileName: String) {
-        
+                
         let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
         currentInstrumentsSetIsChanged(instrumentSet!)
     }
-    
-//    func filterSet(setName: String) -> MusicSet {
-//        
-//        let filtered = setInfoState.setCollections.sets.filter { set in
-//            return set.name == setName
-//        }
-//        return filtered.first!
-//    }
     
     func tapStopAudioEngine(){
         conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)

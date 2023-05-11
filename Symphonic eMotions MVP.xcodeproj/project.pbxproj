@@ -71,6 +71,7 @@
 		7C8C3D9F28D306D00051BAC9 /* VisualFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */; };
 		7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
+		7CB2B94E2A0CF80300876CCD /* PlayListsCountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */; };
 		7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionSettings.swift */; };
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
 		7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */; };
@@ -81,7 +82,7 @@
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CB7028329D84E1A003399BC /* EditTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksView.swift */; };
 		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
-		7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */; };
+		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
@@ -217,6 +218,7 @@
 		7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualFeedback.swift; sourceTree = "<group>"; };
 		7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinGridImages.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
+		7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsCountDown.swift; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMButtonLongPress.swift; sourceTree = "<group>"; };
@@ -227,7 +229,7 @@
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CB7028229D84E1A003399BC /* EditTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksView.swift; sourceTree = "<group>"; };
 		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
-		7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarFolderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
 		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
@@ -339,7 +341,7 @@
 		16935F9F27E36DDE00BF5EDB /* SideBarView */ = {
 			isa = PBXGroup;
 			children = (
-				7CC9089629F809E700AB1F30 /* SideBarFolderView.swift */,
+				7CC9089629F809E700AB1F30 /* SideBarView.swift */,
 			);
 			path = SideBarView;
 			sourceTree = "<group>";
@@ -412,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */,
+				7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */,
 			);
 			path = Playlists;
 			sourceTree = "<group>";
@@ -861,7 +864,7 @@
 				7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */,
 				7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */,
 				7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */,
-				7CC9089729F809E700AB1F30 /* SideBarFolderView.swift in Sources */,
+				7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */,
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
 				7CF50F4F29EDEC770016BAF4 /* NoteSourceView.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
@@ -884,6 +887,7 @@
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
+				7CB2B94E2A0CF80300876CCD /* PlayListsCountDown.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,
 				7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */,

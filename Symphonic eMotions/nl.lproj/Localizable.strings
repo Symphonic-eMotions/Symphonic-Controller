@@ -5,13 +5,15 @@
   Created by Frans-Jan Wind on 08/05/2023.
   
 */
+"locale" = "nl-NL";
+"Set complete" = "Gefeliciteerd! je hebt de laatste level uitgespeeld.";
 "Welcome" = "Welkom";
 "New set" = "Nieuwe set";
 "Save" = "Bewaar";
 "minimal" = "Minimale beweging";
-"person" = "Een persoon";
-"group" = "Groepje personen";
-"nature" = "Natuur";
+"person" = "Meer beweging";
+//"group" = "Groepje personen";
+//"nature" = "Natuur";
 "Add to playlist" = "Voeg aan afspeellijst toe";
 "New variation" = "Nieuwe variatie";
 "Cancel" = "Annuleer";

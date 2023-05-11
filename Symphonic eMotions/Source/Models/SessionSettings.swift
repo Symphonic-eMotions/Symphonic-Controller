@@ -71,6 +71,7 @@ struct ManageSessionSettings: Codable {
 enum SessionDisplay: Hashable, Codable {
     
     case home
+    case countDown
     case playlists
     case swiftUI
     case setInfo
@@ -85,6 +86,8 @@ enum SessionDisplay: Hashable, Codable {
         switch self {
         case .home:
             return "SeM Home"
+        case .countDown:
+            return "Count Down"
         case .playlists:
             return "Playlists"
         case .swiftUI:

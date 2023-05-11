@@ -24,6 +24,9 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
+    //Keep track of View switches from lower Views
+    @State private var autoNavigation: SessionDisplay
+    
     
     init(
         viewModel: MainViewModel,
@@ -37,12 +40,11 @@ struct MainView: View {
         self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
         
+        self.autoNavigation = .none
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
     }
-    
-    
     
     var body: some View {
         
@@ -82,7 +84,7 @@ struct MainView: View {
                     setSettings: viewModel.mainState.setSettings,
                     level: 0
                 )
-                viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
+                viewModel.conductor.levelController(
                     level: 0,
                     setSettings: viewModel.mainState.setSettings
                 )
@@ -90,12 +92,35 @@ struct MainView: View {
             .padding(.top, 20)
         }
         
+        if sessionDisplay == .countDown {
+            
+            PlayListsCountDown(
+                setInfoModel: SetInfoModel(
+                    setInfoLocalState: $setInfoLocalState,
+                    setSettings: $viewModel.mainState.setSettings,
+                    setInfoState: SetInfoState(
+                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                    ),
+                    currentInstrumentsSetIsChanged: { instrumentsSet in
+                        viewModel.currentModelInstrumentsSetChanged(
+                            instrumentsSet: instrumentsSet,
+                            sessionSettings: viewModel.mainState.sessionSettings
+                        )
+                    },
+                    conductor: viewModel.conductor
+                ),
+                sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub
+            )
+            .environmentObject(fileController)
+        }
+        
         //SwiftUI Interface with Part editor
         else if sessionDisplay == .swiftUI || sessionDisplay == .setInfo  || sessionDisplay == .home {
             
             NavigationView {
                 
-                SideBarFolderView(
+                SideBarView(
                     setInfoModel: SetInfoModel(
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,
@@ -120,6 +145,7 @@ struct MainView: View {
                 if sessionDisplay == .swiftUI {
                     
                     ZStack{
+                        
                         PlayView(
                             playViewModel: PlayViewModel(
                                 playViewState: PlayViewState(
@@ -145,7 +171,7 @@ struct MainView: View {
                         .edgesIgnoringSafeArea([.top, .trailing])
                         .onAppear{
                             viewModel.leveling.pauseLevel = false
-                            viewModel.conductor.trackMuteAndClipStatusPerLevelControl(
+                            viewModel.conductor.levelController(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings
                             )
@@ -154,8 +180,13 @@ struct MainView: View {
                                 level: 0
                             )
                         }
-                        
-//                        ConfettiView()
+                        .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
+                            if viewModel.mainState.setSettings.currentPlaylist != .none {
+                                if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {
+                                    self.sessionDisplay = .countDown
+                                }
+                            }
+                        }
                     }
                 }
                 
@@ -193,7 +224,7 @@ struct MainView: View {
             
             NavigationView {
                 
-                SideBarFolderView(
+                SideBarView(
                     setInfoModel: SetInfoModel(
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,

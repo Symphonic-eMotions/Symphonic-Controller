@@ -84,8 +84,6 @@ extension Conductor {
 //                    print("MAXINDEX \(track.trackName) \(maxIndex)")
 //                }
                 
-                
-                
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
                 //StartType -> Transport || Wave (loopedTriger)

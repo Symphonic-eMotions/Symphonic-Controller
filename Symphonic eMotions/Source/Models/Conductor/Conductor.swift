@@ -14,6 +14,9 @@ import Dispatch
 
 final class Conductor {
     
+//    let speechSynthesizer = AVSpeechSynthesizer()
+//    let speechSynthesizerAudioSession = AVAudioSession.sharedInstance()
+    
     //MARK: Var declarations
     //Audiokit AudioEngine. One engine is running at all times
     //Gets pauzed on set change
@@ -389,17 +392,18 @@ final class Conductor {
         }
     }
     
-    //MARK: Mute status tracks
-    //TODO: switch sound off on set init
+    //MARK: Level Controller / Mute status tracks
     
-    //What does trackMuteAndClipStatusPerLevelControl do?
+    //What does levelController do?
     //Called from
     //- PlayViewModel.startObservingData -> Level change
     //- Conductor.togglePlayEngineAndTracks -> Transport play and stop
     //- MainView SpriteKitView.onAppear -> spriteKitOnAppear
-    //Control if midiClips are controlled by level number
+    //- Control if midiClips are controlled by level number
+    //- Control play stop end of level
+    //- Control playlist logic
     
-    public func trackMuteAndClipStatusPerLevelControl(
+    public func levelController(
         level selectedLevel: Int,
         setSettings: SetSettings
     ) -> Void {
@@ -407,41 +411,50 @@ final class Conductor {
         //Run over all tracks
         setSettings.tracks.forEach { track in
             
-            //For all tracks, move up a clip modulo amount of clips
+            //Variation by level and midiFile, select loopsToLevel for current level
             if track.value.trackType == .variationByLevel && track.value.noteSource == .midiFile {
                 levelMidiClipVariation(in: selectedLevel, on: track.value)
             }
             
-            //UN-Mute
+            //UN-Mute if track is within level
             if track.value.levels.contains(selectedLevel)
             {
                 let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOn)
             }
-            //Mute
+            //Mute all other occasions, als after last level
             else {
+                
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
+            
                 
+                //Highest level is full and is for the first time
+                if selectedLevel == setSettings.levels.count &&  isConductorPlayingSubject.value {
+                    
+                    //We stop playing
+                    self.pauzeEngineAndStopTracks(setSettings: setSettings)
+                    
+//                    //We start the voice engine
+//                    print("Set complete speechSynthesizer")
+//                    do {
+//                        try speechSynthesizerAudioSession.setCategory(.playback, mode: .spokenAudio)
+//                        try speechSynthesizerAudioSession.setActive(true)
+//
+//                        if !speechSynthesizer.isSpeaking {
+//                            let utterance = AVSpeechUtterance(string: NSLocalizedString("Set complete", comment: ""))
+//                            utterance.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("locale",comment: ""))
+//                            speechSynthesizer.speak(utterance)
+//                        }
+//
+//                    } catch {
+//                        print("Setting category to AVAudioSessionCategoryPlayback failed.")
+//                    }
+                    
+                }
             }
         }
     }
-    
-//    public func muteTrack( trackId: String){
-//        for (index, track) in set.tracks.enumerated() {
-//            if track.id == trackId {
-//                set.tracks[index].muted = true
-//            }
-//        }
-//    }
-//
-//    public func unMuteTrack( trackId: String){
-//        for (index, track) in set.tracks.enumerated() {
-//            if track.id == trackId {
-//                set.tracks[index].muted = false
-//            }
-//        }
-//    }
     
     public func setTempo( tempoChange: Double) -> Double{
         
@@ -622,10 +635,10 @@ final class Conductor {
         
         //Add Amplitude envelope for
         trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
-        trackAmpEnvelopes[trackId]!.attackDuration = 1
+        trackAmpEnvelopes[trackId]!.attackDuration = 0.5
         trackAmpEnvelopes[trackId]!.decayDuration = 0.01
         trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
-        trackAmpEnvelopes[trackId]!.releaseDuration = 1
+        trackAmpEnvelopes[trackId]!.releaseDuration = 0.5
             
         return trackAmpEnvelopes[trackId]! as Node
     }
@@ -664,29 +677,32 @@ final class Conductor {
             
         if value > 0.1 {
             
+            //Correlation level speed (slider in editor) increment and movement (value)
             let levelSpeedValue = currentSetLevel + (levelSpeed/50) * value
             
-            // Make sure we never "jump" at a value equal or greater to the number of levels - this will cause all tracks to mute
-            return min(Double(set.levels.count) - 0.0000001, levelSpeedValue)
+            //Muting is not hapening in over amount of levels.
+            return levelSpeedValue
         }
         
-        //0 ----> 1 Level part = 60 translates to 0.6 parts
         return currentSetLevel
     }
     
     private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
         
-        let clipLengths = track.loopLength
-        let nextVariation = track.loopsToLevel[level]
-        let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
-        
-        stopNotesTrackId(for: track.trackId)
-        
-        copyMIDIfromMemory(
-            trackId: track.trackId,
-            midiStartTime: nextMIDIstartTime,
-            loopLength: clipLengths[nextVariation]
-        )
+        if track.loopsToLevel.contains(level) {
+            
+            let clipLengths = track.loopLength
+            let nextVariation = track.loopsToLevel[level]
+            let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
+            
+            stopNotesTrackId(for: track.trackId)
+            
+            copyMIDIfromMemory(
+                trackId: track.trackId,
+                midiStartTime: nextMIDIstartTime,
+                loopLength: clipLengths[nextVariation]
+            )
+        }
     }
     
     internal func calculateMIDIstartTime(
@@ -746,7 +762,15 @@ final class Conductor {
     ) {
         
         if isConductorPlayingSubject.value {
-            pauzeEngineAndStopTracks(setSettings: setSettings)
+            
+            //Fade out
+            levelController(
+                level: -1,
+                setSettings: setSettings
+            )
+            
+            //We stop playing
+            self.pauzeEngineAndStopTracks(setSettings: setSettings)
             
         }
         else {
@@ -758,7 +782,7 @@ final class Conductor {
             )
             
             //Fade in on master play, we need level.currentlevel here
-            trackMuteAndClipStatusPerLevelControl(
+            levelController(
                 level: Int(currentSetLevel),
                 setSettings: setSettings
             )
@@ -771,6 +795,8 @@ final class Conductor {
     ) {
         
         guard !isConductorPlayingSubject.value else { return }
+        
+//        speechSynthesizer.stopSpeaking(at: .word)
         
         do {
             //Variable for use in View (SwiftUI)
@@ -807,6 +833,9 @@ final class Conductor {
     public func pauzeEngineAndStopTracks(setSettings: SetSettings) {
         
         guard isConductorPlayingSubject.value else { return }
+        
+        self.isConductorPlayingSubject.send(false)
+        
         setSettings.tracks.values.forEach {
             
             envDownTracks($0)
@@ -818,8 +847,11 @@ final class Conductor {
                 }
             }
         }
-        audioEngine.pause()
-        isConductorPlayingSubject.send(false)
+        
+        //No ticks between tracks, but there are audio tailes
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            self.audioEngine.pause()
+//        }
     }
     
     private func playEngineUIEffect() {
