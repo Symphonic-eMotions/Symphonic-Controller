@@ -12,6 +12,7 @@ struct SpriteKitTransport: View {
     @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var playViewModel: PlayViewModel
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     let transportHeigth: CGFloat
     @State private(set) var localTempo: Int = 0
     
@@ -19,11 +20,13 @@ struct SpriteKitTransport: View {
         mainViewModel: MainViewModel,
         playViewModel: PlayViewModel,
         sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>,
         transportHeigth: CGFloat
     ) {
         self.mainViewModel = mainViewModel
         self.playViewModel = playViewModel
         self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
         self.transportHeigth = transportHeigth
     }
     
@@ -34,8 +37,21 @@ struct SpriteKitTransport: View {
             HStack{
                 
                 EMButton(action: {
+                    
                     mainViewModel.tapStopAudioEngine()
-                    sessionDisplay = .setInfo
+                    //Check if back is playlists or set info
+                    let parentDirectoryName = mainViewModel.mainState.setSettings.setURL.deletingLastPathComponent().lastPathComponent
+                    if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
+                        sessionDisplay = .playlists
+                        sessionDisplaySub = .playlists
+                    }
+                    else {
+                        sessionDisplay = .setInfo
+                        sessionDisplaySub = .none
+                        //We do not want to go to the next set
+                        mainViewModel.mainState.setSettings.currentPlaylist = .none
+                    }
+                    
                 }, color: .accentColor, isSolid: false, maxWidth: 70) {
                     Image(systemName: "arrowshape.backward")
                 }

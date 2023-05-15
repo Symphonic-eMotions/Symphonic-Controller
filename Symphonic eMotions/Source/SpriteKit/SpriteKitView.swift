@@ -14,6 +14,7 @@ struct SpriteKitView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     @State var showOverView: Bool = false
     let transportHeigth: CGFloat = 50
     
@@ -22,7 +23,8 @@ struct SpriteKitView: View {
     
     init( playViewModel: PlayViewModel,
           mainViewModel: MainViewModel,
-          sessionDisplay: Binding<SessionDisplay>
+          sessionDisplay: Binding<SessionDisplay>,
+          sessionDisplaySub: Binding<SessionDisplay>
     ) {
         //These are defined twice, this one for init and the second for body
         let width = UIScreen.main.bounds.width
@@ -93,6 +95,7 @@ struct SpriteKitView: View {
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
         self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
     }
     
     var body: some View {
@@ -111,6 +114,7 @@ struct SpriteKitView: View {
                     mainViewModel: mainViewModel,
                     playViewModel: playViewModel,
                     sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub,
                     transportHeigth: transportHeigth
                 )
                 //SKScene with underneat a video (camera) preview
@@ -139,6 +143,12 @@ struct SpriteKitView: View {
                     }
                     .onReceive(mainViewModel.leveling.currentSetLevelSubject ){ ( value ) in
                         scene.currentLevel = value
+                        
+                        if mainViewModel.mainState.setSettings.currentPlaylist != .none {
+                            if value >= Double(mainViewModel.mainState.setSettings.levels.count) {
+                                self.sessionDisplay = .countDown
+                            }
+                        }
                     }
                     //Again 4 static instruments
                     //First configured instrument (GO Cello)

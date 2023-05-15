@@ -77,7 +77,8 @@ struct MainView: View {
                     feedbackObjectsSate: FeedbackObjectsState()
                 ),
                 mainViewModel: viewModel,
-                sessionDisplay: $sessionDisplay
+                sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub
             )
             .onAppear{
                 viewModel.conductor.playEngineAndTracks(

@@ -221,8 +221,6 @@ struct EditorView: View {
                 EMButton(
                     action: {
                         
-                        //Figure out if we opened from playlists
-                        
                         let fileName = AppUtils.createWorkingFile(
                             setSettings: setInfoModel.setSettings,
                             instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
@@ -231,10 +229,17 @@ struct EditorView: View {
                         )
                         fileController.addSetFileURLToController(fileName: fileName)
                         
+                        //Figure out if we opened from playlists
+                        let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
                         
-                        //Change the View
-                        sessionDisplay = .setInfo
-                        sessionDisplaySub = .none
+                        //Change the View (this check is doubled in createWorkingFile)
+                        if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
+                            sessionDisplay = .playlists
+                            sessionDisplaySub = .playlists
+                        } else {
+                            sessionDisplay = .setInfo
+                            sessionDisplaySub = .none
+                        }
                         
                     }, color: .red, isSolid: true, maxWidth: 130, height: 35
                 ){ Text(NSLocalizedString("Save", comment: "")) }

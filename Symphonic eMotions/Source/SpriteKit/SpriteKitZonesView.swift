@@ -71,13 +71,15 @@ struct SpriteKitZonesView: View {
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     
     let transportHeigth: CGFloat = 50
     var scene = ZoneScene()
     
     init(playViewModel:PlayViewModel,
          mainViewModel:MainViewModel,
-         sessionDisplay: Binding<SessionDisplay>
+         sessionDisplay: Binding<SessionDisplay>,
+         sessionDisplaySub: Binding<SessionDisplay>
     ) {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
@@ -88,6 +90,7 @@ struct SpriteKitZonesView: View {
         self.playViewModel = playViewModel
         self.mainViewModel = mainViewModel
         self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
     }
     
     var body: some View {
@@ -106,6 +109,7 @@ struct SpriteKitZonesView: View {
                 mainViewModel: mainViewModel,
                 playViewModel: playViewModel,
                 sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub,
                 transportHeigth: transportHeigth
             )
             
