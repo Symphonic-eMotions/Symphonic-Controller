@@ -95,7 +95,7 @@ struct MainView: View {
         
         if sessionDisplay == .countDown {
             
-            PlayListsCountDown(
+            CountDown(
                 setInfoModel: SetInfoModel(
                     setInfoLocalState: $setInfoLocalState,
                     setSettings: $viewModel.mainState.setSettings,

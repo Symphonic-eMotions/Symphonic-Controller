@@ -71,7 +71,7 @@
 		7C8C3D9F28D306D00051BAC9 /* VisualFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */; };
 		7C96BE5A296ECDCE000E2871 /* SkinGridImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
-		7CB2B94E2A0CF80300876CCD /* PlayListsCountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */; };
+		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
 		7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionSettings.swift */; };
@@ -220,7 +220,7 @@
 		7C8C3D9E28D306D00051BAC9 /* VisualFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualFeedback.swift; sourceTree = "<group>"; };
 		7C96BE59296ECDCD000E2871 /* SkinGridImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinGridImages.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
-		7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsCountDown.swift; sourceTree = "<group>"; };
+		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
@@ -427,7 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */,
-				7CB2B94D2A0CF80300876CCD /* PlayListsCountDown.swift */,
+				7CB2B94D2A0CF80300876CCD /* CountDown.swift */,
 			);
 			path = Playlists;
 			sourceTree = "<group>";
@@ -903,7 +903,7 @@
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
-				7CB2B94E2A0CF80300876CCD /* PlayListsCountDown.swift in Sources */,
+				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,
 				7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */,
@@ -1137,7 +1137,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1180,7 +1180,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

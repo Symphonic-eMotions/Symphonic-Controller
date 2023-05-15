@@ -413,6 +413,7 @@ final class Conductor {
             
             //Variation by level and midiFile, select loopsToLevel for current level
             if track.value.trackType == .variationByLevel && track.value.noteSource == .midiFile {
+                
                 levelMidiClipVariation(in: selectedLevel, on: track.value)
             }
             
@@ -689,10 +690,11 @@ final class Conductor {
     
     private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
         
-        if track.loopsToLevel.contains(level) {
+        if track.levels.contains(level) {
             
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
+            
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
             stopNotesTrackId(for: track.trackId)

@@ -1,5 +1,5 @@
 //
-//  PlayListsCountDown.swift
+//  CountDown.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 11/05/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlayListsCountDown: View {
+struct CountDown: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -50,7 +50,8 @@ struct PlayListsCountDown: View {
                     //Keep track for next in playlist after loading new set
                     setInfoModel.setSettings.currentSetInList = nextUrl
                     setInfoModel.setSettings.currentPlaylist = thisPlaylist
-                    sessionDisplay = .swiftUI
+                    //Change the View
+                    sessionDisplay = setInfoModel.setSettings.defaultSkin
                 }
             }
         }

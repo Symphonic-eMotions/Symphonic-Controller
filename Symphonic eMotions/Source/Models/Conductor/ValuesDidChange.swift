@@ -80,10 +80,6 @@ extension Conductor {
                     value = 0
                 }
                 
-//                if( track.trackName == "Spectral" || track.trackName == "Pings" ) {
-//                    print("MAXINDEX \(track.trackName) \(maxIndex)")
-//                }
-                
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
                 //StartType -> Transport || Wave (loopedTriger)
@@ -91,6 +87,8 @@ extension Conductor {
                 if partNr == 0 {
                     
                     //Decide WHAT to play for midi
+                    //.variationByLevel sits in self.levelController
+                    
                     //For notenumner one shot play direct
                     if track.trackType == .variationByPosition {
                         
@@ -131,10 +129,18 @@ extension Conductor {
                         track.currentMaxIndex = maxIndex
                     }
                     
+                    //Levels Midi
+//                    else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .midiFile {
+//
+//
+//
+//                        //This is the chosen note number in the editor NoteNumberToLevelView()
+//                        let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
+//                        track.playThisNote = noteNumber
+//                        track.currentLevel = Int(localCurrentSetLevel)
+//                    }
                     //Levels Note numbers
                     else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .noteNumbers {
-                        
-//                        print("CALLED \(track.startType)")
                         
                         for note in track.notesArePlaying {
                             stopNoteNumber(track, note)
@@ -145,6 +151,8 @@ extension Conductor {
                         track.playThisNote = noteNumber
                         track.currentLevel = Int(localCurrentSetLevel)
                     }
+                    
+                    
                     
                     //Midi File Position Wave player, start with movement
                     if track.noteSource == .midiFile && [.loopedTrigger,.oneShot].contains(track.startType) {
@@ -169,7 +177,7 @@ extension Conductor {
                         }
                     }
                     
-                    //Note Number Levels Wave player, also start with movement
+                    //Note Number / Wave player = start with movement
                     else if track.noteSource == .noteNumbers && [.loopedTrigger,.oneShot].contains(track.startType) {
                         
                         //End all notes:
