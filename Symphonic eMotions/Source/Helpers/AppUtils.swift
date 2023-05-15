@@ -80,6 +80,7 @@ final class AppUtils {
         return instrumentSet
     }
     
+    
 //    static func createPlayListFolders() {
 //            
 //        let fileManager = FileManager.default
@@ -272,8 +273,20 @@ final class AppUtils {
         
         //Write over last opened file.
         if !asNewFile {
-            let deleteExtension = setSettings.setURL.deletingPathExtension()
-            fileName = deleteExtension.lastPathComponent
+            
+            //Strip extension .json
+            let noExtension = setSettings.setURL.deletingPathExtension()
+            
+            let parentDirectoryName = noExtension.deletingLastPathComponent().lastPathComponent
+            
+            //Save to playlist
+            if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
+                
+                fileName = "\(parentDirectoryName)/\(noExtension.lastPathComponent)"
+            }
+            else{
+                fileName = noExtension.lastPathComponent
+            }
         }
         //New file name
         else{

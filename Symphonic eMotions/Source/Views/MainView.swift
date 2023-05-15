@@ -169,17 +169,21 @@ struct MainView: View {
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea([.top, .trailing])
+                        //It's not called PlayView for nothing
                         .onAppear{
+                            //Start leveling over
                             viewModel.leveling.pauseLevel = false
                             viewModel.conductor.levelController(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings
                             )
+                            //Start sequencer
                             viewModel.conductor.playEngineAndTracks(
                                 setSettings: viewModel.mainState.setSettings,
                                 level: 0
                             )
                         }
+                        //If levels are completed go to count down view
                         .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
                             if viewModel.mainState.setSettings.currentPlaylist != .none {
                                 if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {

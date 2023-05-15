@@ -73,8 +73,10 @@ struct PlayListsView: View {
                                 sensitivity: -1,
                                 setURL: url)
 
+                            print("Load Header Playlist file \(url)")
+                            
                             //Load settngs over current
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
 
                             //Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = url
@@ -88,7 +90,7 @@ struct PlayListsView: View {
                 }
                 .padding(.bottom)
                     
-                
+                //Seperate Playlist files
                 ScrollView(.vertical){
                     ForEach(urls, id: \.self) { url in
                         
@@ -110,8 +112,10 @@ struct PlayListsView: View {
                                     sensitivity: -1,
                                     setURL: url)
                                 
+                                print("Load Playlist file \(url)")
+                                
                                 //Load settngs over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
                                 
                                 //Keep track for next in playlist after loading new set
                                 setInfoModel.setSettings.currentSetInList = url
@@ -120,10 +124,22 @@ struct PlayListsView: View {
                                 //Change the View to the selected view
                                 sessionDisplay = setInfoModel.setSettings.defaultSkin
                             }
+                            .onLongPressGesture {
+                                //Store chosen url
+                                AppUtils.createSessionFile(
+                                    sensitivity: -1,
+                                    setURL: url)
+                                
+                                //Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                                //Change the View
+                                sessionDisplay = .setInfo
+                                sessionDisplaySub = .setEditor
+                            }
     
                             //The file name and date
-                            let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.name(url: url))
-                            
+                            let filesName = fileController.setNameCustomName(url: url)
+
 //                            VStack(alignment: .leading){
                                 Text(filesName)
                                     .font(.title2)

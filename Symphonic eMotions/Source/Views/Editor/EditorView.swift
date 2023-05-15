@@ -216,9 +216,13 @@ struct EditorView: View {
             ){ Text(NSLocalizedString("New set", comment: "")) }
             .frame(width: 130)
             
+            //No saving for template files wich are in the bundle
             if setInfoModel.setSettings.setURL.absoluteString != "dontOverWrite" {
                 EMButton(
                     action: {
+                        
+                        //Figure out if we opened from playlists
+                        
                         let fileName = AppUtils.createWorkingFile(
                             setSettings: setInfoModel.setSettings,
                             instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
@@ -226,6 +230,7 @@ struct EditorView: View {
                             asNewFile: false
                         )
                         fileController.addSetFileURLToController(fileName: fileName)
+                        
                         
                         //Change the View
                         sessionDisplay = .setInfo

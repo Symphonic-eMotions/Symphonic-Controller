@@ -57,7 +57,7 @@ class FileController: ObservableObject {
         
         var fileNameReturn = fileName
         
-        if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
+        if let instrumentSet = InstrumentsSet.withOnlineJSON(url) {
             
             if isCustomNameNotEmpty(set: instrumentSet){
                 fileNameReturn = instrumentSet.customName
@@ -65,6 +65,27 @@ class FileController: ObservableObject {
         }
         return fileNameReturn
     }
+    
+    public func setNameCustomName( url: URL ) -> String {
+     
+        guard let instrumentSet: InstrumentsSet = AppUtils.loadURLServerInstrumentSet(urlServer: url.absoluteString) else {
+            return "Set not loaded error"
+        }
+        
+        if instrumentSet.customName != "" {
+            return instrumentSet.customName
+        }
+        else{
+            return instrumentSet.name
+        }
+        
+    }
+    
+//    public func fileNameOrCustomNameNew( url: URL ){
+//        
+//        
+//        
+//    }
     
     public func fileContents(url: URL) -> InstrumentsSet? {
         if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
@@ -80,6 +101,9 @@ class FileController: ObservableObject {
     
     public func urlToFileName( url: URL) -> String{
         return url.lastPathComponent
+    }
+    public func urlToPlayListFileName( url: URL) -> String{
+        return url.lastTwoPathComponents
     }
     
     public func isURLInGroup( url: URL, name: String ) -> Bool {
@@ -169,4 +193,12 @@ class FileController: ObservableObject {
         return self.getContentsOfDirectory()
     }
     
+}
+
+extension URL {
+    var lastTwoPathComponents: String {
+        let parentDirectoryName = self.deletingLastPathComponent().lastPathComponent
+        let fileName = self.lastPathComponent
+        return "\(parentDirectoryName)/\(fileName)"
+    }
 }

@@ -45,7 +45,7 @@ struct PlayListsCountDown: View {
                     let thisPlaylist = setInfoModel.setSettings.currentPlaylist
                     
                     //Load settngs over current
-                    setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: nextUrl))
+                    setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl))
                     
                     //Keep track for next in playlist after loading new set
                     setInfoModel.setSettings.currentSetInList = nextUrl
@@ -79,7 +79,7 @@ struct PlayListsCountDown: View {
                 setURL: setInfoModel.setSettings.currentSetInList)
 
             //Load settngs over current
-            setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: setInfoModel.setSettings.currentSetInList))
+            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList))
 
             //Keep track for next in playlist after loading new set
             setInfoModel.setSettings.currentSetInList = thisSet
