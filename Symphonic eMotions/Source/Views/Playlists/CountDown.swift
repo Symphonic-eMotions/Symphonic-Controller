@@ -19,75 +19,78 @@ struct CountDown: View {
 
     var body: some View {
         
-        Image("LogoColor")
-            .resizable()
-            .frame(width: 100, height: 100)
-            .cornerRadius(10)
-        
-        Text(NSLocalizedString("Count down to", comment: ""))
-            .font(.system(size: 40))
-            .padding(.bottom)
-        
-        Text("\(counter)")
-        .font(.system(size: 80))
-        .onReceive(timer) { _ in
-            if counter > 0 {
-                counter -= 1
-            } else {
-                
-                print("NEXT SET, end of count down")
-                
-                if let nextUrl = nextURL(
-                    currentURL: setInfoModel.setSettings.currentSetInList,
-                    currentPlaylist: setInfoModel.setSettings.currentPlaylist
-                ) {
-                    //Remember playlist before overwriting
-                    let thisPlaylist = setInfoModel.setSettings.currentPlaylist
-                    
-                    //Load settngs over current
-                    setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl))
-                    
-                    //Keep track for next in playlist after loading new set
-                    setInfoModel.setSettings.currentSetInList = nextUrl
-                    setInfoModel.setSettings.currentPlaylist = thisPlaylist
-                    //Change the View
-                    sessionDisplay = setInfoModel.setSettings.defaultSkin
+        VStack{
+            
+            Image("LogoColor")
+                .resizable()
+                .frame(width: 100, height: 100)
+                .cornerRadius(10)
+            
+            Text(NSLocalizedString("Count down to", comment: ""))
+                .font(.system(size: 40))
+                .padding(.bottom)
+            
+            Text("\(counter)")
+                .font(.system(size: 80))
+                .onReceive(timer) { _ in
+                    if counter > 0 {
+                        counter -= 1
+                    } else {
+                        
+                        print("NEXT SET, end of count down")
+                        
+                        if let nextUrl = nextURL(
+                            currentURL: setInfoModel.setSettings.currentSetInList,
+                            currentPlaylist: setInfoModel.setSettings.currentPlaylist
+                        ) {
+                            //Remember playlist before overwriting
+                            let thisPlaylist = setInfoModel.setSettings.currentPlaylist
+                            
+                            //Load settngs over current
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl))
+                            
+                            //Keep track for next in playlist after loading new set
+                            setInfoModel.setSettings.currentSetInList = nextUrl
+                            setInfoModel.setSettings.currentPlaylist = thisPlaylist
+                            //Change the View
+                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                        }
+                    }
                 }
-            }
-        }
-        
-        HStack {
-            Image(systemName: "play.fill")
-                .foregroundColor(.white)
-                .font(.system(size: 30))
             
-            Text(NSLocalizedString("Same song", comment: ""))
-                .foregroundColor(.white)
-                .font(.headline)
-                .padding(.trailing)
-        }
-        .padding()
-        .background(Color.accentColor)
-        .cornerRadius(10.0)
-        .onTapGesture {
+            HStack {
+                Image(systemName: "play.fill")
+                    .foregroundColor(.white)
+                    .font(.system(size: 30))
                 
-            //Remember playlist before overwriting
-            let thisPlaylist = setInfoModel.setSettings.currentPlaylist
-            let thisSet = setInfoModel.setSettings.currentSetInList
-            
-            AppUtils.createSessionFile(
-                sensitivity: -1,
-                setURL: setInfoModel.setSettings.currentSetInList)
-
-            //Load settngs over current
-            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList))
-
-            //Keep track for next in playlist after loading new set
-            setInfoModel.setSettings.currentSetInList = thisSet
-            setInfoModel.setSettings.currentPlaylist = thisPlaylist
-            
-            //Change the View
-            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                Text(NSLocalizedString("Same song", comment: ""))
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding(.trailing)
+            }
+            .padding()
+            .background(Color.accentColor)
+            .cornerRadius(10.0)
+            .onTapGesture {
+                
+                //Remember playlist before overwriting
+                let thisPlaylist = setInfoModel.setSettings.currentPlaylist
+                let thisSet = setInfoModel.setSettings.currentSetInList
+                
+                AppUtils.createSessionFile(
+                    sensitivity: -1,
+                    setURL: setInfoModel.setSettings.currentSetInList)
+                
+                //Load settngs over current
+                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList))
+                
+                //Keep track for next in playlist after loading new set
+                setInfoModel.setSettings.currentSetInList = thisSet
+                setInfoModel.setSettings.currentPlaylist = thisPlaylist
+                
+                //Change the View
+                sessionDisplay = setInfoModel.setSettings.defaultSkin
+            }
         }
     }
     

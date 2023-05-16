@@ -692,6 +692,10 @@ final class Conductor {
         
         if track.levels.contains(level) {
             
+            guard track.loopsToLevel.contains(level) else{
+                return
+            }
+            
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
             
