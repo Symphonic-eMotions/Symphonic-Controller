@@ -261,20 +261,23 @@ extension InstrumentsSet.Track {
     struct AudioFile: Decodable {
         
         private enum AudioFileKeys: String, CodingKey {
-            case fileName = "audioFileName"
-            case fileExtension = "audioFileExt"
+            case fileName
+            case fileExtension
             case midiNote
+            case lengthInBeats
         }
         
         let fileName: String
         let fileExtension: String
         let midiNote: UInt8
+        let lengthInBeats: Double
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: AudioFileKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
             midiNote = try container.decode(UInt8.self, forKey: .midiNote)
+            lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
         }
     }
 }
@@ -285,6 +288,7 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
         try container.encode(fileName, forKey: .fileName)
         try container.encode(fileExtension, forKey: .fileExtension)
         try container.encode(midiNote, forKey: .midiNote)
+        try container.encode(lengthInBeats, forKey: .lengthInBeats)
     }
 }
 
