@@ -95,13 +95,20 @@ struct SideBarView: View {
         NavigationView {
             List {
                 ForEach([
-                    (name: "Playlists", setName: "playlists"),
-                    (name: "SeM Pro", setName: "home")
+                    (name: "Start", setName: "start"),
+                    (name: "Active", setName: "playlists"),
+                    (name: "SeM Pro", setName: "pro")
                 ], id: \.setName) { item in
                     Button(action: {
                         
-                        if item.setName == "home" {
-                            sessionDisplay = .home
+                        if item.setName == "start" {
+                            sessionDisplay = .start
+                            sessionDisplaySub = .none
+                            //We do not want to go to the next set
+                            setInfoModel.setSettings.currentPlaylist = .none
+                        }
+                        else if item.setName == "pro" {
+                            sessionDisplay = .pro
                             sessionDisplaySub = .none
                             //We do not want to go to the next set
                             setInfoModel.setSettings.currentPlaylist = .none

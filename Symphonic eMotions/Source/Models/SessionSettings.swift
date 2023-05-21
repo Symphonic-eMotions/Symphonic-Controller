@@ -70,7 +70,8 @@ struct ManageSessionSettings: Codable {
 //For the editor this same enum is used for SessionDisplaySub navigation
 enum SessionDisplay: Hashable, Codable {
     
-    case home
+    case start
+    case pro
     case countDown
     case playlists
     case swiftUI
@@ -84,8 +85,10 @@ enum SessionDisplay: Hashable, Codable {
     
     var title: String {
         switch self {
-        case .home:
-            return "SeM Home"
+        case .start:
+            return "Starting with SeM"
+        case .pro:
+            return "SeM Pro"
         case .countDown:
             return "Count Down"
         case .playlists:
