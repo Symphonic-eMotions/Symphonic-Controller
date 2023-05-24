@@ -13,6 +13,9 @@ import SwiftUI
 
 class SetSettings: Identifiable, ObservableObject {
     
+    //SeM Start specific
+    var startSets: [String] = ["SE-set-interface-guided","SE-set-Neil"]
+    
     //Keep track of playlist
     var currentPlaylist: BuildSettings.Playlists
     var currentSetInList: URL

@@ -17,12 +17,16 @@ struct MidiClipsInFileView: View {
     @Binding var loopLengthLocal: [Double]
     //This is shared status of the clips
     @Binding var clipLetters: [String:[Int]]
-//    @State var clipLetterLocal: [Int]
     @State var clipLength: Int
     @State var isPlaying: [Bool]
     @Binding var updateView: Int
     
     let columnWidth: CGFloat = 150
+    
+    //Midi files
+    @State var imported = false
+    @State var urlString: String?
+//    @State var fileUrl: URL = URL("init")
     
     init(
         setInfoModel: SetInfoModel,
@@ -37,19 +41,42 @@ struct MidiClipsInFileView: View {
         self.trackId = trackId
         _loopLengthLocal = loopLengthLocal
         _clipLetters = clipLetters
-//        _clipLetterLocal = State(initialValue: currentTrack.loopLength.map{Int($0)})
         _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
         _isPlaying = State(initialValue: Array(repeating: false, count: currentTrack.loopLength.count))
         _updateView = updateView
+        
+//        _urlString = State(initialValue: currentTrack.midiFile)
     }
     
     var body: some View {
         
-//        MidiFileView(
-//            setInfoModel: setInfoModel,
-//            currentTrack: currentTrack,
-//            trackId: trackId
-//        )
+        HStack(){
+            
+            Text("MIDI File")
+                .frame(width: columnWidth, alignment: .leading)
+            
+            VStack (spacing: 30) {
+                Button(action: {imported.toggle()}, label: {
+                    Text("Import MIDI file")
+                })
+                if let theUrl = urlString {
+                    Text("file url is \(theUrl)")
+                }
+            }
+            .fileImporter(isPresented: $imported, allowedContentTypes: [.midi]) { res in
+                do {
+                    let fileUrl: URL = try res.get()
+                    urlString = fileUrl.absoluteString
+                    print("---> fileUrl: \(urlString ?? "not loaded")")
+                } catch{
+                    print ("error reading: \(error.localizedDescription)")
+                }
+            }
+            
+            Text(currentTrack.midiFile)
+                .frame(width: columnWidth, alignment: .leading)
+        }
+        
         
         //MIDI clips in file
         HStack() {

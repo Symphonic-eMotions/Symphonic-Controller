@@ -39,7 +39,7 @@ struct PlayListsView: View {
     func playlistView(for playlist: BuildSettings.Playlists) -> some View {
         
         let urls = loadPlaylistFolder(for: playlist)
-
+            
         return ZStack {
             
             //Background
@@ -134,7 +134,7 @@ struct PlayListsView: View {
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
                                 //Change the View
                                 sessionDisplay = .setInfo
-                                sessionDisplaySub = .setEditor
+                                sessionDisplaySub = .playListEditor
                             }
     
                             //The file name and date

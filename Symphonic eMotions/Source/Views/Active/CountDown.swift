@@ -33,7 +33,7 @@ struct CountDown: View {
             Text("\(counter)")
                 .font(.system(size: 80))
                 .onReceive(timer) { _ in
-                    if counter > 0 {
+                    if counter > 1   {
                         counter -= 1
                     } else {
                         
@@ -43,6 +43,9 @@ struct CountDown: View {
                             currentURL: setInfoModel.setSettings.currentSetInList,
                             currentPlaylist: setInfoModel.setSettings.currentPlaylist
                         ) {
+                            
+                            print("nextURL: \(nextUrl)")
+                            
                             //Remember playlist before overwriting
                             let thisPlaylist = setInfoModel.setSettings.currentPlaylist
                             

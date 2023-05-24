@@ -59,7 +59,7 @@ struct SetInfoHome: View {
                     .cornerRadius(10)
                 
                 
-                Text("Symphonic eMotions Pro")
+                Text("Symphonic eMotions")
                     .font(.largeTitle)
                     .fontWeight(.regular)
                     .padding(.leading, 40)

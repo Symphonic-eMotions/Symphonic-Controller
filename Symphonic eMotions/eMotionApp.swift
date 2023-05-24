@@ -32,8 +32,8 @@ struct eMotionApp: App {
 //        displayMode: .both
 //    )
     
-    @State public var sessionDisplay: SessionDisplay = .home
-    @State public var sessionDisplaySub: SessionDisplay = .none
+    @State public var sessionDisplay: SessionDisplay = .pro
+    @State public var sessionDisplaySub: SessionDisplay = .start
 
     
     var body: some Scene {

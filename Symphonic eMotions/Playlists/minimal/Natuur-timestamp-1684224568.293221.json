@@ -1,5 +1,5 @@
 {
-  "customName" : "Bad guy minimal",
+  "customName" : "Beetje natuur",
   "defaultSkin" : {
     "swiftUI" : {
 
@@ -30,52 +30,38 @@
           }
         },
         {
-          "attackTime" : {
+          "cutoffFrequencyCostello" : {
             "range" : [
-              0.0001,
-              0.20000000000000001
+              12,
+              20000
             ],
-            "value" : 0.0010000000474974513
+            "value" : 4200
           },
-          "effectName" : "compressor",
-          "headRoom" : {
+          "dryWetMixer" : {
             "range" : [
-              0.10000000000000001,
-              40
+              0,
+              1
             ],
-            "value" : 4
+            "value" : 0.5
           },
-          "masterGain" : {
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
             "range" : [
-              -40,
-              40
+              0,
+              1
             ],
-            "value" : 14
-          },
-          "releaseTime" : {
-            "range" : [
-              0.01,
-              3
-            ],
-            "value" : 0.05000000074505806
-          },
-          "threshold" : {
-            "range" : [
-              -40,
-              20
-            ],
-            "value" : -5
+            "value" : 0.5
           }
         }
       ],
       "exsFiles" : [
         {
           "exsFileExt" : "exs",
-          "exsFileName" : "EXS808"
+          "exsFileName" : "natuur"
         }
       ],
-      "instrumentColor" : "InstrumentColor802",
-      "instrumentName" : "Beat",
+      "instrumentColor" : "InstrumentColor001",
+      "instrumentName" : "Wind",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
@@ -92,8 +78,8 @@
               "coolDownTime" : null,
               "levelPart" : 0.0025000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.15283688902854919,
-              "rampSpeedDown" : 0.079500000000000001,
+              "rampSpeed" : 0.029558543115854263,
+              "rampSpeedDown" : 0.015355086885392666,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -103,328 +89,33 @@
               10,
               20000
             ],
-            "trackId" : "exs808"
+            "trackId" : "wind"
           },
           "dontDrawVisual" : false,
           "instrumentPartName" : "LPF Cut Off Frequency"
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -3.0106353759765625,
+      "instrumentVolume" : -4.0229864120483398,
       "levels" : [
-        3,
-        2,
-        1,
         0,
-        4,
-        5
-      ],
-      "masterTrackId" : null,
-      "midiFiles" : [
-        {
-          "loopLength" : [
-            4,
-            4,
-            4
-          ],
-          "loopsToGrid" : [
-            2,
-            2,
-            0,
-            1
-          ],
-          "loopsToLevel" : [
-            0,
-            1,
-            2,
-            0,
-            2,
-            0
-          ],
-          "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-kick-1-3"
-        }
-      ],
-      "midiGroup" : [
-        48
-      ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
-      "noteSource" : "midiFile",
-      "notesToGrid" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "notesToLevel" : [
-        48,
-        48,
-        48,
-        48,
-        48,
-        48
-      ],
-      "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "exs808",
-      "trackType" : "variationByPosition"
-    },
-    {
-      "audioFiles" : null,
-      "effects" : [
-        {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
-        },
-        {
-          "attackTime" : {
-            "range" : [
-              0.0001,
-              0.20000000000000001
-            ],
-            "value" : 0.0010000000474974513
-          },
-          "effectName" : "compressor",
-          "headRoom" : {
-            "range" : [
-              0.10000000000000001,
-              40
-            ],
-            "value" : 4
-          },
-          "masterGain" : {
-            "range" : [
-              -40,
-              40
-            ],
-            "value" : 14
-          },
-          "releaseTime" : {
-            "range" : [
-              0.01,
-              3
-            ],
-            "value" : 0.05000000074505806
-          },
-          "threshold" : {
-            "range" : [
-              -40,
-              20
-            ],
-            "value" : -5
-          }
-        }
-      ],
-      "exsFiles" : [
-        {
-          "exsFileExt" : "exs",
-          "exsFileName" : "BadGuy"
-        }
-      ],
-      "instrumentColor" : "InstrumentColor602",
-      "instrumentName" : "Bassline",
-      "instrumentParts" : [
-        {
-          "areaOfInterest" : [
-            1,
-            1,
-            1,
-            1
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeOutCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.00050000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.079078011214733124,
-              "rampSpeedDown" : 0.071985818445682526,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "basslineSample"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
-        }
-      ],
-      "instrumentType" : "exsSampler",
-      "instrumentVolume" : -4.0957417488098145,
-      "levels" : [
-        2,
         1,
-        5
-      ],
-      "masterTrackId" : null,
-      "midiFiles" : [
-        {
-          "loopLength" : [
-            32
-          ],
-          "loopsToGrid" : [
-            0,
-            0,
-            0,
-            0
-          ],
-          "loopsToLevel" : [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-bassline-sample"
-        }
-      ],
-      "midiGroup" : [
-        48
-      ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
-      "noteSource" : "midiFile",
-      "notesToGrid" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "notesToLevel" : [
-        48,
-        48,
-        48,
-        48,
-        48,
-        48
-      ],
-      "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "basslineSample",
-      "trackType" : "variationByPosition"
-    },
-    {
-      "audioFiles" : null,
-      "effects" : [
-        {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
-        },
-        {
-          "effectName" : "reverb",
-          "reverbDryWetMix" : {
-            "range" : [
-              0,
-              1
-            ],
-            "value" : 0.20000000298023224
-          },
-          "reverbPreset" : {
-            "range" : [
-              0,
-              12
-            ],
-            "value" : 11.263345718383789
-          }
-        }
-      ],
-      "exsFiles" : [
-        {
-          "exsFileExt" : "exs",
-          "exsFileName" : "BadGuy"
-        }
-      ],
-      "instrumentColor" : "InstrumentColor500",
-      "instrumentName" : "Accapella 1",
-      "instrumentParts" : [
-        {
-          "areaOfInterest" : [
-            1,
-            0,
-            1,
-            0
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeOutCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0030000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.05599999999999998,
-              "rampSpeedDown" : 0.06720000000000001,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "accapella1"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
-        }
-      ],
-      "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
-      "levels" : [
+        4,
+        3,
         2,
-        3,
-        4,
         5
       ],
       "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
-            32,
-            32
+            16
           ],
           "loopsToGrid" : [
             0,
-            1,
             0,
-            1
+            0,
+            0
           ],
           "loopsToLevel" : [
             0,
@@ -435,7 +126,7 @@
             0
           ],
           "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-accapella-1-2"
+          "midiFileName" : "Wind4"
         }
       ],
       "midiGroup" : [
@@ -459,8 +150,8 @@
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "accapella1",
+      "startType" : "loopedTransport",
+      "trackId" : "wind",
       "trackType" : "variationByPosition"
     },
     {
@@ -490,315 +181,23 @@
               0,
               1
             ],
-            "value" : 0.18999999761581421
+            "value" : 0.69999998807907104
           },
           "reverbPreset" : {
             "range" : [
               0,
               12
             ],
-            "value" : 11.263345718383789
-          }
-        }
-      ],
-      "exsFiles" : [
-        {
-          "exsFileExt" : "exs",
-          "exsFileName" : "BadGuy"
-        }
-      ],
-      "instrumentColor" : "InstrumentColor800",
-      "instrumentName" : "Accapella 2",
-      "instrumentParts" : [
-        {
-          "areaOfInterest" : [
-            0,
-            1,
-            0,
-            1
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeOutCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0030000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.059499999999999997,
-              "rampSpeedDown" : 0.055299999999999974,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "accapella2"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
-        }
-      ],
-      "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
-      "levels" : [
-        3,
-        4,
-        5
-      ],
-      "masterTrackId" : null,
-      "midiFiles" : [
-        {
-          "loopLength" : [
-            32
-          ],
-          "loopsToGrid" : [
-            0,
-            0,
-            0,
-            0
-          ],
-          "loopsToLevel" : [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-accapella-couplet-1"
-        }
-      ],
-      "midiGroup" : [
-        48
-      ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
-      "noteSource" : "midiFile",
-      "notesToGrid" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "notesToLevel" : [
-        48,
-        48,
-        48,
-        48,
-        48,
-        48
-      ],
-      "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "accapella2",
-      "trackType" : "variationByPosition"
-    },
-    {
-      "audioFiles" : null,
-      "effects" : [
-        {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
-        },
-        {
-          "effectName" : "reverb",
-          "reverbDryWetMix" : {
-            "range" : [
-              0,
-              1
-            ],
-            "value" : 0.18999999761581421
-          },
-          "reverbPreset" : {
-            "range" : [
-              0,
-              12
-            ],
-            "value" : 11.263345718383789
-          }
-        }
-      ],
-      "exsFiles" : [
-        {
-          "exsFileExt" : "exs",
-          "exsFileName" : "BadGuy"
-        }
-      ],
-      "instrumentColor" : "InstrumentColor600",
-      "instrumentName" : "Accapella 3&4",
-      "instrumentParts" : [
-        {
-          "areaOfInterest" : [
-            1,
-            1,
-            0,
-            0
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeOutCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0030000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.10000000000000001,
-              "rampSpeedDown" : 0.032999999999999988,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "accapella3"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
-        }
-      ],
-      "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
-      "levels" : [
-        3,
-        4,
-        5
-      ],
-      "masterTrackId" : null,
-      "midiFiles" : [
-        {
-          "loopLength" : [
-            8,
-            8
-          ],
-          "loopsToGrid" : [
-            0,
-            1,
-            0,
-            1
-          ],
-          "loopsToLevel" : [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-accapella-ahahah-1-2"
-        }
-      ],
-      "midiGroup" : [
-        48
-      ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
-      "noteSource" : "midiFile",
-      "notesToGrid" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "notesToLevel" : [
-        48,
-        48,
-        48,
-        48,
-        48,
-        48
-      ],
-      "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "accapella3",
-      "trackType" : "variationByPosition"
-    },
-    {
-      "audioFiles" : null,
-      "effects" : [
-        {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
-        },
-        {
-          "attackTime" : {
-            "range" : [
-              0.0001,
-              0.20000000000000001
-            ],
-            "value" : 0.0010000000474974513
-          },
-          "effectName" : "compressor",
-          "headRoom" : {
-            "range" : [
-              0.10000000000000001,
-              40
-            ],
-            "value" : 4
-          },
-          "masterGain" : {
-            "range" : [
-              -40,
-              40
-            ],
-            "value" : 14
-          },
-          "releaseTime" : {
-            "range" : [
-              0.01,
-              3
-            ],
-            "value" : 0.05000000074505806
-          },
-          "threshold" : {
-            "range" : [
-              -40,
-              20
-            ],
-            "value" : 5
+            "value" : 8
           }
         },
         {
           "dryWetMix" : {
             "range" : [
-              0,
+              10,
               60
             ],
-            "value" : 0
+            "value" : 27
           },
           "effectName" : "delay",
           "feedback" : {
@@ -806,39 +205,39 @@
               -100,
               100
             ],
-            "value" : 60
+            "value" : 65
           },
           "lowPassCutoff" : {
             "range" : [
               10,
               20000
             ],
-            "value" : 440
+            "value" : 666
           },
           "time" : {
             "range" : [
               0,
               2
             ],
-            "value" : 0.44600000977516174
+            "value" : 0.73000001907348633
           }
         }
       ],
       "exsFiles" : [
         {
           "exsFileExt" : "exs",
-          "exsFileName" : "BrassyLead"
+          "exsFileName" : "CellosLegatoSlowAttack"
         }
       ],
-      "instrumentColor" : "InstrumentColor700",
-      "instrumentName" : "Synth lead",
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Cello",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
             1,
             1,
-            0,
-            0
+            1,
+            1
           ],
           "damperTarget" : {
             "dampMode" : "easeInCubic",
@@ -846,10 +245,10 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "coolDownTime" : null,
-              "levelPart" : 0.0012000000000000001,
+              "levelPart" : 0.0025000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.16808511316776276,
-              "rampSpeedDown" : 0.095390073955059052,
+              "rampSpeed" : 0.083687946200370761,
+              "rampSpeedDown" : 0.011900192126631737,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -859,48 +258,19 @@
               10,
               20000
             ],
-            "trackId" : "synthLead"
+            "trackId" : "cellos"
           },
           "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cutoff Freq"
-        },
-        {
-          "areaOfInterest" : [
-            0,
-            1,
-            0,
-            0
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeInCubic",
-            "midiData" : null,
-            "nodeName" : "delay",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0012000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.016899999999999995,
-              "rampSpeedDown" : 0.0035460994113236666,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "dryWetMix",
-            "parameterRange" : [
-              0,
-              60
-            ],
-            "trackId" : "synthLead"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "Delay"
+          "instrumentPartName" : "LPF Cut Off Frequency"
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -21.276596069335938,
+      "instrumentVolume" : -19.655170440673828,
       "levels" : [
-        4,
-        5
+        2,
+        3,
+        5,
+        4
       ],
       "masterTrackId" : null,
       "midiFiles" : [
@@ -923,7 +293,7 @@
             0
           ],
           "midiFileExt" : "mid",
-          "midiFileName" : "bad-guy-synth-lead-1"
+          "midiFileName" : "natuur-cellos"
         }
       ],
       "midiGroup" : [
@@ -947,20 +317,708 @@
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "synthLead",
+      "startType" : "loopedTransport",
+      "trackId" : "cellos",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 10
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 80
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 800
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        },
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "natuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor300",
+      "instrumentName" : "Carrilion",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.00069999999999999978,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.087588652968406649,
+              "rampSpeedDown" : 0.048226948827505112,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "carrilion"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -15.160918235778809,
+      "levels" : [
+        3,
+        4,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-carrilion"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "carrilion",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 5
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 35
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 9000
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "CelestaNatuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor701",
+      "instrumentName" : "Celesta",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.086879432201385498,
+              "rampSpeedDown" : 0.014893616549670691,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "celesta"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        },
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.11595745384693146,
+              "rampSpeedDown" : 0.035460993647575378,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "instrument",
+            "parameter" : "samplerCC9",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "celesta"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "ControlNr 09"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -4,
+      "levels" : [
+        4,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-bellz"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "celesta",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 10
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 80
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 800
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        },
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "natuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Birds",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.16808511316776276,
+              "rampSpeedDown" : 0.068794332444667844,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "birds"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -1.5638312101364136,
+      "levels" : [
+        2,
+        1,
+        3,
+        4,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-birds"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "birds",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 2
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : -5
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 4000
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.92000001668930054
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "TekkbrassNatuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor700",
+      "instrumentName" : "Synth",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.11914893239736557,
+              "rampSpeedDown" : 0.025886524468660365,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "synth"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.073758862912654877,
+              "rampSpeedDown" : 0.0173758864402771,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "instrument",
+            "parameter" : "samplerCC9",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "synth"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "ControlNr 09"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -10.606385231018066,
+      "levels" : [
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            32
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-synth-1"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "synth",
       "trackType" : "variationByPosition"
     }
   ],
   "levelDurations" : [
     32,
-    64,
-    64,
-    64,
+    32,
+    32,
+    1,
     1,
     1
   ],
-  "levelSpeed" : 0.10348360985517502,
+  "levelSpeed" : 0.16615384817123413,
   "masterTrackEffects" : [
     {
       "attackTime" : {
@@ -1002,8 +1060,8 @@
     }
   ],
   "published" : true,
-  "setBPM" : 135,
-  "setName" : "Bad Guy",
+  "setBPM" : 125,
+  "setName" : "Natuur",
   "setPath" : "",
   "setTimeSignature" : 4,
   "skin" : {

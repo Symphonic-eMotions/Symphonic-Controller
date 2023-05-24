@@ -1,5 +1,5 @@
 {
-  "customName" : "Schommelen met Nijntje",
+  "customName" : "Boerenwals",
   "defaultSkin" : {
     "swiftUI" : {
 
@@ -12,34 +12,57 @@
     {
       "audioFiles" : null,
       "effects" : [
-
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.20000000298023224
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85000002384185791
+          }
+        }
       ],
       "exsFiles" : [
         {
           "exsFileExt" : "exs",
-          "exsFileName" : "AfricanMarimba"
+          "exsFileName" : "Glockenspiel"
         }
       ],
-      "instrumentColor" : "InstrumentColor802",
-      "instrumentName" : "Marimba 1",
+      "instrumentColor" : "InstrumentColor700",
+      "instrumentName" : "Glockenspiel",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
             1,
             1,
             1,
-            1
+            0
           ],
           "damperTarget" : {
-            "dampMode" : "easeInOutCubic",
+            "dampMode" : "easeOutCubic",
             "midiData" : null,
             "nodeName" : "",
             "nodeSettings" : {
               "coolDownTime" : null,
-              "levelPart" : 0.002,
+              "levelPart" : 0.001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.056737590581178665,
-              "rampSpeedDown" : 0.1007092222571373,
+              "rampSpeed" : 0.14092607796192169,
+              "rampSpeedDown" : 0.14300291240215302,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -49,29 +72,31 @@
               0,
               1
             ],
-            "trackId" : "marimba1"
+            "trackId" : "glockenspiel"
           },
           "dontDrawVisual" : false,
           "instrumentPartName" : "Velocity (aanslag)"
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -7.5319128036499023,
+      "instrumentVolume" : -16,
       "levels" : [
+        0,
         1,
-        2,
-        3
+        4,
+        5
       ],
       "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
-            45,
-            45
+            12,
+            12,
+            12
           ],
           "loopsToGrid" : [
             1,
-            1,
+            2,
             0,
             0
           ],
@@ -79,10 +104,12 @@
             0,
             0,
             0,
+            0,
+            0,
             0
           ],
           "midiFileExt" : "mid",
-          "midiFileName" : "nijntje-linker-hand-1-2"
+          "midiFileName" : "boerenwals-glockenspiel3"
         }
       ],
       "midiGroup" : [
@@ -101,11 +128,13 @@
         48,
         48,
         48,
+        48,
+        48,
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "marimba1",
+      "startType" : "loopedTransport",
+      "trackId" : "glockenspiel",
       "trackType" : "variationByPosition"
     },
     {
@@ -116,29 +145,29 @@
       "exsFiles" : [
         {
           "exsFileExt" : "exs",
-          "exsFileName" : "AfricanMarimba"
+          "exsFileName" : "CowBellAgogo"
         }
       ],
       "instrumentColor" : "InstrumentColor600",
-      "instrumentName" : "Marimba 2",
+      "instrumentName" : "Koebel Agogo",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
             1,
             1,
-            1,
+            0,
             1
           ],
           "damperTarget" : {
-            "dampMode" : "easeInOutCubic",
+            "dampMode" : "easeOutCubic",
             "midiData" : null,
             "nodeName" : "",
             "nodeSettings" : {
               "coolDownTime" : null,
-              "levelPart" : 0.002,
+              "levelPart" : 0.001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.057092197239398977,
-              "rampSpeedDown" : 0.097872339189052582,
+              "rampSpeed" : 0.18521086871623993,
+              "rampSpeedDown" : 0.18078823387622833,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -148,39 +177,46 @@
               0,
               1
             ],
-            "trackId" : "marimba2"
+            "trackId" : "cowbellAgogo"
           },
           "dontDrawVisual" : false,
           "instrumentPartName" : "Velocity (aanslag)"
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -10.06382942199707,
+      "instrumentVolume" : -27,
       "levels" : [
-        2,
-        3
+        0,
+        1,
+        4,
+        5
       ],
       "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
-            45,
-            45
+            12,
+            12,
+            12,
+            12,
+            12
           ],
           "loopsToGrid" : [
-            1,
+            3,
+            4,
             0,
-            1,
-            0
+            2
           ],
           "loopsToLevel" : [
+            0,
+            0,
             0,
             0,
             0,
             0
           ],
           "midiFileExt" : "mid",
-          "midiFileName" : "nijntje-rechter-hand-1-2"
+          "midiFileName" : "boerenwals-koebelAgogo5"
         }
       ],
       "midiGroup" : [
@@ -199,33 +235,334 @@
         48,
         48,
         48,
+        48,
+        48,
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "marimba2",
+      "startType" : "loopedTransport",
+      "trackId" : "cowbellAgogo",
       "trackType" : "variationByPosition"
     },
     {
       "audioFiles" : null,
       "effects" : [
+
+      ],
+      "exsFiles" : [
         {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
+          "exsFileExt" : "exs",
+          "exsFileName" : "BoerenOrgel"
         }
+      ],
+      "instrumentColor" : "InstrumentColor400",
+      "instrumentName" : "Orgel",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.002,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.17543740570545197,
+              "rampSpeedDown" : 0.16701120138168335,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "orgel"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -6,
+      "levels" : [
+        1,
+        2,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            12,
+            12,
+            12,
+            12
+          ],
+          "loopsToGrid" : [
+            2,
+            3,
+            0,
+            1
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "boerenwals-orgel5"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "orgel",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "FrenchHorns"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor702",
+      "instrumentName" : "French Horns",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.15694345533847809,
+              "rampSpeedDown" : 0.13092774152755737,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "frenchHorns"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        2,
+        3,
+        4,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            12,
+            12,
+            12
+          ],
+          "loopsToGrid" : [
+            2,
+            2,
+            0,
+            1
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "boerenwals-horns3"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "frenchHorns",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "TubaSolo"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor802",
+      "instrumentName" : "Tuba",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.17914913594722748,
+              "rampSpeedDown" : 0.053122241050004959,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "tuba"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        2,
+        3,
+        4,
+        5
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            12,
+            12,
+            12
+          ],
+          "loopsToGrid" : [
+            2,
+            2,
+            0,
+            1
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "boerenwals-tuba3"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "tuba",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+
       ],
       "exsFiles" : [
         {
@@ -233,26 +570,26 @@
           "exsFileName" : "orchestralKitSmall"
         }
       ],
-      "instrumentColor" : "InstrumentColor601",
-      "instrumentName" : "Percussion",
+      "instrumentColor" : "InstrumentColor602",
+      "instrumentName" : "Drums",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
             1,
             1,
-            1,
-            1
+            0,
+            0
           ],
           "damperTarget" : {
-            "dampMode" : "easeInOutCubic",
+            "dampMode" : "easeOutCubic",
             "midiData" : null,
             "nodeName" : "",
             "nodeSettings" : {
               "coolDownTime" : null,
               "levelPart" : 0.0030000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.043262410908937454,
-              "rampSpeedDown" : 0.054964538663625717,
+              "rampSpeed" : 0.18825866281986237,
+              "rampSpeedDown" : 0.18226417899131775,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -262,207 +599,28 @@
               0,
               1
             ],
-            "trackId" : "perc"
+            "trackId" : "drums"
           },
           "dontDrawVisual" : false,
           "instrumentPartName" : "Velocity (aanslag)"
-        },
-        {
-          "areaOfInterest" : [
-            0,
-            0,
-            0,
-            0
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeInCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.00050000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.040000000000000001,
-              "rampSpeedDown" : 0.02,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "perc"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -2.1063814163208008,
-      "levels" : [
-        3
-      ],
-      "masterTrackId" : null,
-      "midiFiles" : [
-        {
-          "loopLength" : [
-            18,
-            18,
-            18,
-            18
-          ],
-          "loopsToGrid" : [
-            2,
-            3,
-            1,
-            0
-          ],
-          "loopsToLevel" : [
-            0,
-            0,
-            0,
-            0
-          ],
-          "midiFileExt" : "mid",
-          "midiFileName" : "nijntje-ritme-1-4"
-        }
-      ],
-      "midiGroup" : [
-        48
-      ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
-      "noteSource" : "midiFile",
-      "notesToGrid" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "notesToLevel" : [
-        48,
-        48,
-        48,
-        48
-      ],
-      "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "perc",
-      "trackType" : "variationByPosition"
-    },
-    {
-      "audioFiles" : null,
-      "effects" : [
-        {
-          "cutoffFrequency" : {
-            "range" : [
-              10,
-              20000
-            ],
-            "value" : 20000
-          },
-          "effectName" : "lowPassFilter",
-          "resonance" : {
-            "range" : [
-              -20,
-              40
-            ],
-            "value" : -20
-          }
-        }
-      ],
-      "exsFiles" : [
-        {
-          "exsFileExt" : "exs",
-          "exsFileName" : "ViolinsLegatoLongRelease"
-        }
-      ],
-      "instrumentColor" : "InstrumentColor700",
-      "instrumentName" : "Violins",
-      "instrumentParts" : [
-        {
-          "areaOfInterest" : [
-            1,
-            1,
-            1,
-            1
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeInOutCubic",
-            "midiData" : null,
-            "nodeName" : "",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.01,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.01,
-              "rampSpeedDown" : 0.094049908220767975,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "sequencer",
-            "parameter" : "velocity",
-            "parameterRange" : [
-              0,
-              1
-            ],
-            "trackId" : "violins"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "Velocity (aanslag)"
-        },
-        {
-          "areaOfInterest" : [
-            0,
-            0,
-            0,
-            0
-          ],
-          "damperTarget" : {
-            "dampMode" : "easeInCubic",
-            "midiData" : null,
-            "nodeName" : "lowPassFilter",
-            "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.00050000000000000001,
-              "minimalLevel" : 0.01,
-              "rampSpeed" : 0.040000000000000001,
-              "rampSpeedDown" : 0.02,
-              "tempoHigh" : null,
-              "tempoLow" : null
-            },
-            "nodeType" : "effect",
-            "parameter" : "cutoffFrequency",
-            "parameterRange" : [
-              10,
-              20000
-            ],
-            "trackId" : "violins"
-          },
-          "dontDrawVisual" : false,
-          "instrumentPartName" : "LPF Cut Off Frequency"
-        }
-      ],
-      "instrumentType" : "exsSampler",
-      "instrumentVolume" : -4.2183933258056641,
+      "instrumentVolume" : -3,
       "levels" : [
         3,
-        2,
-        1,
-        0
+        4,
+        5
       ],
       "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
-            45,
-            45
+            54
           ],
           "loopsToGrid" : [
-            1,
-            1,
+            0,
+            0,
             0,
             0
           ],
@@ -470,10 +628,12 @@
             0,
             0,
             0,
+            0,
+            0,
             0
           ],
           "midiFileExt" : "mid",
-          "midiFileName" : "nijntje-viool-1-2"
+          "midiFileName" : "boerenwals-drums"
         }
       ],
       "midiGroup" : [
@@ -492,22 +652,57 @@
         48,
         48,
         48,
+        48,
+        48,
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "loopedTrigger",
-      "trackId" : "violins",
+      "startType" : "loopedTransport",
+      "trackId" : "drums",
       "trackType" : "variationByPosition"
     }
   ],
   "levelDurations" : [
-    45,
-    45,
-    45,
-    45
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
   ],
-  "levelSpeed" : 0.11043566465377808,
+  "levelSpeed" : 0.14373716711997986,
   "masterTrackEffects" : [
+    {
+      "drcAttackDuration" : {
+        "range" : [
+          0,
+          1
+        ],
+        "value" : 0.0099999997764825821
+      },
+      "drcRatio" : {
+        "range" : [
+          0.01,
+          100
+        ],
+        "value" : 20
+      },
+      "drcReleaseDuration" : {
+        "range" : [
+          0,
+          1
+        ],
+        "value" : 0.10000000149011612
+      },
+      "drcTreshold" : {
+        "range" : [
+          -100,
+          0
+        ],
+        "value" : -15
+      },
+      "effectName" : "dynamicRangeCompressor"
+    },
     {
       "attackTime" : {
         "range" : [
@@ -529,7 +724,7 @@
           -40,
           40
         ],
-        "value" : 10
+        "value" : 15
       },
       "releaseTime" : {
         "range" : [
@@ -543,30 +738,44 @@
           -40,
           20
         ],
-        "value" : -5
+        "value" : -20
       }
     },
     {
-      "effectName" : "reverb",
-      "reverbDryWetMix" : {
+      "dryWetMix" : {
         "range" : [
-          0,
-          1
+          -100,
+          100
         ],
-        "value" : 0.18999999761581421
+        "value" : 0
       },
-      "reverbPreset" : {
+      "effectName" : "delay",
+      "feedback" : {
+        "range" : [
+          -100,
+          100
+        ],
+        "value" : 0
+      },
+      "lowPassCutoff" : {
+        "range" : [
+          -100,
+          100
+        ],
+        "value" : 0
+      },
+      "time" : {
         "range" : [
           0,
-          12
+          2
         ],
-        "value" : 11.263345718383789
+        "value" : 0.42800000309944153
       }
     }
   ],
   "published" : true,
-  "setBPM" : 170,
-  "setName" : "Dansen met...",
+  "setBPM" : 140,
+  "setName" : "Boerenwals",
   "setPath" : "",
   "setTimeSignature" : 3,
   "skin" : {

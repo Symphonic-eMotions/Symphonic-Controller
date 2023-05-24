@@ -79,6 +79,7 @@ enum SessionDisplay: Hashable, Codable {
     case spriteKit
     case editor
     case setEditor
+    case playListEditor
     case calibrator
     case muur
     case none
@@ -100,6 +101,8 @@ enum SessionDisplay: Hashable, Codable {
         case .setInfo:
             return "Set information"
         case .editor:
+            return "Editor"
+        case .playListEditor:
             return "Editor"
         case .setEditor:
             return "Set editor"

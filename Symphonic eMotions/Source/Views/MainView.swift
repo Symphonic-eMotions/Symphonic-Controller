@@ -24,9 +24,6 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
-    //Keep track of View switches from lower Views
-    @State private var autoNavigation: SessionDisplay
-    
     
     init(
         viewModel: MainViewModel,
@@ -39,8 +36,6 @@ struct MainView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         self.mainViewUpdate = mainViewUpdate
-        
-        self.autoNavigation = .none
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
@@ -117,7 +112,7 @@ struct MainView: View {
         }
         
         //SwiftUI Interface with Part editor
-        else if sessionDisplay == .swiftUI || sessionDisplay == .setInfo  || sessionDisplay == .home {
+        else if [.swiftUI,.setInfo,.pro,.start].contains(sessionDisplay) {
             
             NavigationView {
                 
@@ -195,8 +190,30 @@ struct MainView: View {
                     }
                 }
                 
+                else if sessionDisplay == .start {
+                    StartView(
+                        setInfoModel: SetInfoModel(
+                            setInfoLocalState: $setInfoLocalState,
+                            setSettings: $viewModel.mainState.setSettings,
+                            setInfoState: SetInfoState(
+                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                            ),
+                            currentInstrumentsSetIsChanged: { instrumentsSet in
+                                viewModel.currentModelInstrumentsSetChanged(
+                                    instrumentsSet: instrumentsSet,
+                                    sessionSettings: viewModel.mainState.sessionSettings
+                                )
+                            },
+                            conductor: viewModel.conductor
+                        ),
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
+                    )
+                    .environmentObject(fileController)
+                }
+                
                 //Selected set info View
-                else if sessionDisplay == .setInfo || sessionDisplay == .home {
+                else if sessionDisplay == .setInfo || sessionDisplay == .pro {
                     
                     SetInfo(
                         setInfoModel: SetInfoModel(

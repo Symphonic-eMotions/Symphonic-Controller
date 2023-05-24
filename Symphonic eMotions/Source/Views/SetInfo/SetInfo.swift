@@ -37,7 +37,7 @@ struct SetInfo: View {
         VStack{
             
             //.home is the page on entering app, also accesible by clicking the Sets header in the side bar
-            if sessionDisplay == .home {
+            if sessionDisplay == .pro {
                 SetInfoHome(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay
@@ -47,7 +47,7 @@ struct SetInfo: View {
             else if sessionDisplay == .setInfo {
                 
                 //Here we got the Editor!
-                if sessionDisplaySub == .setEditor {
+                if [.setEditor,.playListEditor].contains(sessionDisplaySub) {
                     
                     Text("Variation \(setInfoModel.setInfoLocalState.setName)")
                         .font(.largeTitle)

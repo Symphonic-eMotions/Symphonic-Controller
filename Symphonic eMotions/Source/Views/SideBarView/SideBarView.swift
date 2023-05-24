@@ -87,44 +87,52 @@ struct SideBarView: View {
     @StateObject private var viewModel = SetListViewModel()
     @State private var selectedSet: SetFile?
     
+    @State private var showingAlert = false
+    
 //    var isSelected: Bool {
 //        "false" == setInfoModel.setInfoLocalState.setName
 //    }
     
     var body: some View {
         NavigationView {
+            
             List {
                 ForEach([
-                    (name: "Start", setName: "start"),
+                    (name: "Demo", setName: "start"),
                     (name: "Active", setName: "playlists"),
                     (name: "SeM Pro", setName: "pro")
                 ], id: \.setName) { item in
                     Button(action: {
                         
-                        if item.setName == "start" {
-                            sessionDisplay = .start
-                            sessionDisplaySub = .none
-                            //We do not want to go to the next set
-                            setInfoModel.setSettings.currentPlaylist = .none
-                        }
-                        else if item.setName == "pro" {
-                            sessionDisplay = .pro
-                            sessionDisplaySub = .none
-                            //We do not want to go to the next set
-                            setInfoModel.setSettings.currentPlaylist = .none
+                        if [.setEditor,.playListEditor].contains(sessionDisplaySub) {
+                            self.showingAlert = true
                         }
                         else{
-                            sessionDisplay = .playlists
-                            sessionDisplaySub = .playlists
+                            if item.setName == "start" {
+                                sessionDisplay = .start
+                                sessionDisplaySub = .none
+                                //We do not want to go to the next set
+                                setInfoModel.setSettings.currentPlaylist = .none
+                            }
+                            else if item.setName == "pro" {
+                                sessionDisplay = .pro
+                                sessionDisplaySub = .none
+                                //We do not want to go to the next set
+                                setInfoModel.setSettings.currentPlaylist = .none
+                            }
+                            else{
+                                sessionDisplay = .playlists
+                                sessionDisplaySub = .playlists
+                            }
+                            
+                            setInfoLocalState.setName = item.setName
+                            setInfoLocalState.sideBarHead = item.name
+                            
+                            selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
+                            setInfoModel.tapStopAudioEngine()
                         }
-                        
-                        setInfoLocalState.setName = item.setName
-                        setInfoLocalState.sideBarHead = item.name
-                        
-                        selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
-                        setInfoModel.tapStopAudioEngine()
-                        
                     }) {
+                        
                         HStack {
                             VStack(alignment: .leading) {
                                 Spacer()
@@ -142,9 +150,19 @@ struct SideBarView: View {
                         .background(setInfoLocalState.setName == item.setName ? Color.accentColor : .teal)
                         .cornerRadius(10.0)
                     }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text(NSLocalizedString("Editor open", comment: "")),
+                              message: Text(NSLocalizedString("Save set to continue", comment: "")),
+                              dismissButton: .default(Text(NSLocalizedString("Will do!", comment: ""))))
+                    }
                 }
                 
-                if sessionDisplay != .playlists && sessionDisplaySub != .playlists {
+                //Pro sets, init view is .pro so sessionDisplaySub is set to .start on app init
+                if [.pro,.setInfo,.swiftUI].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
+                    
+                    
+                    let _ = print("sessionDisplay \(sessionDisplay) sessionDisplaySub \(sessionDisplaySub)")
+                    
                     ForEach(viewModel.setFiles) { setFile in
                         Button(action: {
                             

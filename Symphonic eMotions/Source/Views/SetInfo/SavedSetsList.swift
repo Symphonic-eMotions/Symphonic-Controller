@@ -103,6 +103,7 @@ struct SavedSetsList: View {
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                
                                 //Change the View
                                 sessionDisplaySub = .setEditor
                             }

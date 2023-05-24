@@ -46,8 +46,7 @@ struct EditorView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     
-    @State var imported = false
-    @State var fileUrl: URL?
+    
     @State var showEditorPart: EditorParts = .none
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
@@ -173,26 +172,6 @@ struct EditorView: View {
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart
                 )
-                
-                
-        //        Spacer()
-        //        VStack (spacing: 30) {
-        //            Button(action: {imported.toggle()}, label: {
-        //                Text("Import MIDI file")
-        //            })
-        //            if let theUrl = fileUrl {
-        //                Text("file url is \(theUrl.absoluteString)")
-        //            }
-        //        }
-        //        .fileImporter(isPresented: $imported, allowedContentTypes: [.midi]) { res in
-        //            do {
-        //                fileUrl = try res.get()
-        //                print("---> fileUrl: \(String(describing: fileUrl))")
-        //            } catch{
-        //                print ("error reading: \(error.localizedDescription)")
-        //            }
-        //        }
-                
             }
         }
         Spacer()
@@ -209,12 +188,19 @@ struct EditorView: View {
                     fileController.addSetFileURLToController(fileName: fileName)
                     
                     //Change the View
-                    sessionDisplay = .setInfo
-                    sessionDisplaySub = .none
+                    if sessionDisplaySub == .playListEditor {
+                        sessionDisplay = .playlists
+                        sessionDisplaySub = .playlists
+                    }
+                    else{
+                        sessionDisplay = .setInfo
+                        sessionDisplaySub = .none
+                    }
                     
                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
             ){ Text(NSLocalizedString("New set", comment: "")) }
             .frame(width: 130)
+            
             
             //No saving for template files wich are in the bundle
             if setInfoModel.setSettings.setURL.absoluteString != "dontOverWrite" {
@@ -245,6 +231,24 @@ struct EditorView: View {
                 ){ Text(NSLocalizedString("Save", comment: "")) }
                 .frame(width: 130)
             }
+            
+            EMButton(
+                action: {
+                    //Change the View
+                    if sessionDisplaySub == .playListEditor {
+                        sessionDisplay = .playlists
+                        sessionDisplaySub = .playlists
+                    }
+                    else{
+                        sessionDisplay = .setInfo
+                        sessionDisplaySub = .none
+                    }
+                    
+                    
+                    
+                }, color: .blue, isSolid: true, maxWidth: 130, height: 35
+            ){ Text(NSLocalizedString("Cancel", comment: "")) }
+            .frame(width: 130)
         }
         .padding()
         

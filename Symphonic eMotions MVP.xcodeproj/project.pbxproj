@@ -24,7 +24,6 @@
 		7C1FB0B829E455CB00621909 /* TrackTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B729E455CB00621909 /* TrackTypeView.swift */; };
 		7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B929E45C9F00621909 /* MidiFiles.swift */; };
 		7C1FB0BC29E52F0D00621909 /* MidiClipsInFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BB29E52F0D00621909 /* MidiClipsInFileView.swift */; };
-		7C1FB0BE29E53F3300621909 /* MidiFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BD29E53F3300621909 /* MidiFileView.swift */; };
 		7C1FB0C029E820EC00621909 /* DefaultSkinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
@@ -35,6 +34,7 @@
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
 		7C3CD115296D952A00A4C522 /* effects.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effects.json */; };
 		7C3CD118296DC19900A4C522 /* SkinDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3CD117296DC19900A4C522 /* SkinDefault.swift */; };
+		7C3EC2022A1D23A30049E4ED /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2012A1D23A30049E4ED /* StartView.swift */; };
 		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
@@ -87,7 +87,6 @@
 		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
 		7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD417FC2A07C6D7006831CE /* AreaConnection.swift */; };
 		7CD418032A095388006831CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CD418052A095388006831CE /* Localizable.strings */; };
-		7CD5F8C729F96B39001DE70F /* VersionSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CEFB9D028734205006A191F /* FullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFB9CF28734205006A191F /* FullView.swift */; };
@@ -171,7 +170,6 @@
 		7C1FB0B729E455CB00621909 /* TrackTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTypeView.swift; sourceTree = "<group>"; };
 		7C1FB0B929E45C9F00621909 /* MidiFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFiles.swift; sourceTree = "<group>"; };
 		7C1FB0BB29E52F0D00621909 /* MidiClipsInFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsInFileView.swift; sourceTree = "<group>"; };
-		7C1FB0BD29E53F3300621909 /* MidiFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFileView.swift; sourceTree = "<group>"; };
 		7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSkinView.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
@@ -182,6 +180,7 @@
 		7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSettings.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C3CD114296D952A00A4C522 /* effects.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = effects.json; sourceTree = "<group>"; };
 		7C3CD117296DC19900A4C522 /* SkinDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinDefault.swift; sourceTree = "<group>"; };
+		7C3EC2012A1D23A30049E4ED /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C4EBB9329D3505500958954 /* SavedSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSetsList.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -234,7 +233,6 @@
 		7CD417FC2A07C6D7006831CE /* AreaConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaConnection.swift; sourceTree = "<group>"; };
 		7CD418042A095388006831CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD418062A095474006831CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionSetsList.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CEFB9CF28734205006A191F /* FullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullView.swift; sourceTree = "<group>"; };
@@ -380,6 +378,14 @@
 			path = Skins;
 			sourceTree = "<group>";
 		};
+		7C3EC2002A1D236F0049E4ED /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				7C3EC2012A1D23A30049E4ED /* StartView.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
 		7C6A341C28426EDB006F2E95 /* PartFeedbackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,13 +423,13 @@
 			path = MasterTrack;
 			sourceTree = "<group>";
 		};
-		7CCFE4A72A03DC56008AE3EE /* Playlists */ = {
+		7CCFE4A72A03DC56008AE3EE /* Active */ = {
 			isa = PBXGroup;
 			children = (
 				7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */,
 				7CB2B94D2A0CF80300876CCD /* CountDown.swift */,
 			);
-			path = Playlists;
+			path = Active;
 			sourceTree = "<group>";
 		};
 		7CD417FE2A092AD1006831CE /* SetEditor */ = {
@@ -452,7 +458,6 @@
 				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
 				7CF50F1D29E888200016BAF4 /* NoteNumberToGridView.swift */,
 				7CF50F5229EEBECD0016BAF4 /* NoteNumberToLevelView.swift */,
-				7C1FB0BD29E53F3300621909 /* MidiFileView.swift */,
 				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
 				7CD417FC2A07C6D7006831CE /* AreaConnection.swift */,
 			);
@@ -567,7 +572,6 @@
 				7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */,
 				7C4EBB9329D3505500958954 /* SavedSetsList.swift */,
 				7C041D692A0990080031FF54 /* AddToPlaylistView.swift */,
-				7CD5F8C629F96B39001DE70F /* VersionSetsList.swift */,
 			);
 			path = SetInfo;
 			sourceTree = "<group>";
@@ -695,10 +699,11 @@
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
 				7C7502EA29C07C1600F55CA3 /* Editor */,
-				7CCFE4A72A03DC56008AE3EE /* Playlists */,
+				7C3EC2002A1D236F0049E4ED /* Start */,
+				7CCFE4A72A03DC56008AE3EE /* Active */,
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
-				7CCDE10228E2C61300343920 /* MasterTrack */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
+				7CCDE10228E2C61300343920 /* MasterTrack */,
 				7CEFB9CE287341DC006A191F /* FullViews */,
 				7C3CD116296DC17500A4C522 /* Skins */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
@@ -845,7 +850,6 @@
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
 				16687D8C27FF1F8A006FFD5A /* PlayerControlsViewModel.swift in Sources */,
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
-				7C1FB0BE29E53F3300621909 /* MidiFileView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
 				7C1FB0C029E820EC00621909 /* DefaultSkinView.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
@@ -888,6 +892,7 @@
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
 				7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
+				7C3EC2022A1D23A30049E4ED /* StartView.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
@@ -939,7 +944,6 @@
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7C037B3C2874306400F00B42 /* FullHomeView.swift in Sources */,
-				7CD5F8C729F96B39001DE70F /* VersionSetsList.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
 				7CF50F4D29ED84230016BAF4 /* StartTypes.swift in Sources */,
 				7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */,
@@ -1125,7 +1129,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1168,7 +1172,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
