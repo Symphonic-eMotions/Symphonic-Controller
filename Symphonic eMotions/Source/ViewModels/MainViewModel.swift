@@ -117,20 +117,4 @@ final class MainViewModel: ObservableObject {
         let tempo = self.conductor.resetTempo()
         self.mainState.setSettings.bpm = tempo
     }
-    
-    func backButton() {
-        
-        conductor.pauzeEngineAndStopTracks(setSettings: mainState.setSettings)
-        
-        mainState.buildSettings.activeView = .homeView
-    }
-    
-    func backButtonSkins() {
-        
-        print("Lets go back, but now for skins!")
-        
-        conductor.pauzeEngineAndStopTracks(setSettings: mainState.setSettings)
-        
-        mainState.buildSettings.activeView = .homeView
-    }
 }

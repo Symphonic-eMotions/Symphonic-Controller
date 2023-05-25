@@ -16,6 +16,7 @@ struct BuildSettings {
         case composer
     }
     
+    //Used for view switching AND view updates
     public enum ActiveView: String {
         case homeView
         case playView
