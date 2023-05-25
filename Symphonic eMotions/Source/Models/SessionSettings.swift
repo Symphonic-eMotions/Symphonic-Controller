@@ -70,7 +70,7 @@ struct ManageSessionSettings: Codable {
 //For the editor this same enum is used for SessionDisplaySub navigation
 enum SessionDisplay: Hashable, Codable {
     
-    case start
+    case demo
     case pro
     case countDown
     case playlists
@@ -81,35 +81,32 @@ enum SessionDisplay: Hashable, Codable {
     case setEditor
     case playListEditor
     case calibrator
-    case muur
     case none
     
     var title: String {
         switch self {
-        case .start:
-            return "Starting with SeM"
+        case .demo:
+            return "Demo"
         case .pro:
-            return "SeM Pro"
+            return "Pro"
         case .countDown:
             return "Count Down"
         case .playlists:
             return "Playlists"
         case .swiftUI:
-            return "Symphonic eMotions Pro"
+            return "Grid View"
         case .spriteKit:
             return "Game Skin"
         case .setInfo:
             return "Set information"
         case .editor:
-            return "Editor"
+            return "Editor from saved sets"
         case .playListEditor:
-            return "Editor"
+            return "Editor from playlist"
         case .setEditor:
             return "Set editor"
         case .calibrator:
             return "Kalibrator!"
-        case .muur:
-            return "SeM Wall build"
         case .none:
             return "Nothing"
         }

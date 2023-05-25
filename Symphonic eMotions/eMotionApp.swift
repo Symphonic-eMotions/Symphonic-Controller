@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 @main
 struct eMotionApp: App {
+    
+    //We need background audio for sampler loading, so we create some background audio!
+    @Environment(\.scenePhase) private var scenePhase
+    let synthesizer = AVSpeechSynthesizer()
     
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     
@@ -22,8 +27,18 @@ struct eMotionApp: App {
     )
     
     @State public var sessionDisplay: SessionDisplay = .pro
-    @State public var sessionDisplaySub: SessionDisplay = .start
-
+    @State public var sessionDisplaySub: SessionDisplay = .demo
+    
+    init() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+            try audioSession.setActive(true)
+        } catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             MainView(
@@ -49,6 +64,25 @@ struct eMotionApp: App {
                 sessionDisplaySub: $sessionDisplaySub
             )
             .statusBar(hidden: true)
+        }
+        .onChange(of: scenePhase) { phase in
+            
+            print(phase)
+            
+            if phase == .active {
+                synthesizer.stopSpeaking(at: .word)
+            }
+            
+            else if phase == .background {
+                if !synthesizer.isSpeaking {
+                    
+                    let trudy = AVSpeechUtterance(string: "Greetings, this message is conveyed by your system administrator. You may be wondering about the reason behind this communication. This necessity arises because the Apple Sampler we are using, only has the capability to reload audio samples when the 'background audio allowed' setting is enabled. When it's not turned on all you get are sinusses for audio output. Due to this setting the application can only be approved by Apple when it hears an ongoing background sound. Therefore, this message is essential for that confirmation process. We apologize for any inconvenience this may cause.")
+                    trudy.voice = AVSpeechSynthesisVoice(language: "en-AU")
+                    trudy.rate = 0.49
+                    trudy.pitchMultiplier = 1.25
+                    synthesizer.speak(trudy)
+                }
+            }
         }
     }
 }

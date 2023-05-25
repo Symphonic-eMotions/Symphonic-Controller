@@ -109,7 +109,7 @@ struct SideBarView: View {
                         }
                         else{
                             if item.setName == "start" {
-                                sessionDisplay = .start
+                                sessionDisplay = .demo
                                 sessionDisplaySub = .none
                                 //We do not want to go to the next set
                                 setInfoModel.setSettings.currentPlaylist = .none

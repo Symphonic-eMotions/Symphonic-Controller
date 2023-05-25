@@ -108,7 +108,7 @@ struct MainView: View {
         }
         
         //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.start].contains(sessionDisplay) {
+        else if [.swiftUI,.setInfo,.pro,.demo].contains(sessionDisplay) {
             
             NavigationView {
                 
@@ -157,9 +157,10 @@ struct MainView: View {
                             sessionDisplaySub: $sessionDisplaySub
                         )
                         .environmentObject(fileController)
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
-                        .edgesIgnoringSafeArea([.top, .trailing])
+                        .navigationBarTitle(viewModel.mainState.currentInstrumentsSet.title())
+                        .navigationBarHidden(false)
+//                        .edgesIgnoringSafeArea([.top, .trailing])
+                        
                         //It's not called PlayView for nothing
                         .onAppear{
                             //Start leveling over
@@ -185,7 +186,7 @@ struct MainView: View {
                     }
                 }
                 
-                else if sessionDisplay == .start {
+                else if sessionDisplay == .demo {
                     StartView(
                         setInfoModel: SetInfoModel(
                             setInfoLocalState: $setInfoLocalState,

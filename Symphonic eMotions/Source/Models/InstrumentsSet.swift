@@ -219,6 +219,15 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.tracks = tracks
     }
     
+    func title() -> String {
+        if self.customName != "" {
+            return self.customName
+        }
+        else{
+            return self.name
+        }
+    }
+    
     //For master track effetcs
     func effect(for effectType: Track.Effect.EffectType) -> Track.Effect? {
         masterTrackEffects.first { $0.effectType == effectType }
