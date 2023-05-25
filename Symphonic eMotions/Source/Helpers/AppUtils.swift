@@ -246,6 +246,7 @@ final class AppUtils {
             customName: instrumentSet.customName,
             published: instrumentSet.published ?? false,
             setURL: sessionSettings.setURL,
+            hasTempo: instrumentSet.hasTempo,
             defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
@@ -428,7 +429,7 @@ final class AppUtils {
             defaultSkin: setSettings.defaultSkin,
             //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
-            hasTempo: instrumentSet.hasTempo,
+            hasTempo: setSettings.hasTempo,
             
             //MIGHT: change skin colors according to track colors
             //Bur what if skin colors difffer from skin colors?

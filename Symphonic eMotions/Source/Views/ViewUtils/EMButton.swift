@@ -54,11 +54,3 @@ struct EMButtonBig<Content: View>: View {
         })
     }
 }
-
-struct EMButton_Previews: PreviewProvider {
-    static var previews: some View {
-        EMButton(action: {}, color: .accentColor) {
-            Text("Test")
-        }
-    }
-}

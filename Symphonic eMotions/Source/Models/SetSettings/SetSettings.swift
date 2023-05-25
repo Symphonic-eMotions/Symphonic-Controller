@@ -38,6 +38,7 @@ class SetSettings: Identifiable, ObservableObject {
     var customName: String
     var published: Bool
     var setURL: URL
+    var hasTempo: Bool
     
     var defaultSkin: SessionDisplay
     
@@ -77,6 +78,7 @@ class SetSettings: Identifiable, ObservableObject {
         customName: String,
         published: Bool,
         setURL: URL,
+        hasTempo: Bool,
         defaultSkin: SessionDisplay,
         rows: Int,
         columns: Int,
@@ -91,6 +93,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.customName = customName
         self.published = published
         self.setURL = setURL
+        self.hasTempo = hasTempo
         self.defaultSkin = defaultSkin
         self.gridRows = rows
         self.bpm = bpm

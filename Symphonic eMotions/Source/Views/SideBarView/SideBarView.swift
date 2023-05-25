@@ -100,7 +100,7 @@ struct SideBarView: View {
                 ForEach([
                     (name: "Demo", setName: "start"),
                     (name: "Active", setName: "playlists"),
-                    (name: "SeM Pro", setName: "pro")
+                    (name: "Pro", setName: "pro")
                 ], id: \.setName) { item in
                     Button(action: {
                         

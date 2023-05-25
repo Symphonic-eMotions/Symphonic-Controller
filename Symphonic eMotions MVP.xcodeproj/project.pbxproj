@@ -30,6 +30,7 @@
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
 		7C3CD115296D952A00A4C522 /* effects.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effects.json */; };
 		7C3EC2022A1D23A30049E4ED /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2012A1D23A30049E4ED /* StartView.swift */; };
+		7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */; };
 		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
@@ -67,7 +68,7 @@
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
 		7CB5834B292F9C2A000C46FF /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionSettings.swift */; };
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
-		7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */; };
+		7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */; };
 		7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58352292FAD2F000C46FF /* EditGridView.swift */; };
 		7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58354292FAD47000C46FF /* EditLevelView.swift */; };
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
@@ -169,6 +170,7 @@
 		7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSettings.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C3CD114296D952A00A4C522 /* effects.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = effects.json; sourceTree = "<group>"; };
 		7C3EC2012A1D23A30049E4ED /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheetView.swift; sourceTree = "<group>"; };
 		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C4EBB9329D3505500958954 /* SavedSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSetsList.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -205,7 +207,7 @@
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
-		7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMButtonLongPress.swift; sourceTree = "<group>"; };
+		7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonWithLongPress.swift; sourceTree = "<group>"; };
 		7CB58352292FAD2F000C46FF /* EditGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGridView.swift; sourceTree = "<group>"; };
 		7CB58354292FAD47000C46FF /* EditLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLevelView.swift; sourceTree = "<group>"; };
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
@@ -522,7 +524,7 @@
 			isa = PBXGroup;
 			children = (
 				C069592226B4F2F6002EB522 /* EMButton.swift */,
-				7CB58350292FACFE000C46FF /* EMButtonLongPress.swift */,
+				7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */,
 				7CB58356292FAE1D000C46FF /* ColorPicker.swift */,
 				7C7756F728C798BD00E73B14 /* Dial.swift */,
 			);
@@ -548,6 +550,7 @@
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
+				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 			);
 			path = PlayAndEditView;
 			sourceTree = "<group>";
@@ -808,6 +811,7 @@
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
 				7C7502F029C086AC00F55CA3 /* FilePickerView.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
+				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
 				16687D8C27FF1F8A006FFD5A /* PlayerControlsViewModel.swift in Sources */,
@@ -898,7 +902,7 @@
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
 				7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */,
 				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
-				7CB58351292FACFE000C46FF /* EMButtonLongPress.swift in Sources */,
+				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,

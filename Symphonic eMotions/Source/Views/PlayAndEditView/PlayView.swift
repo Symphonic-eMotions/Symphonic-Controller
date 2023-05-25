@@ -46,6 +46,7 @@ struct PlayView: View {
                 
                 //Transport buttons
                 PlayerControlsView(
+                    playViewModel: playViewModel,
                     viewModelPlayerControls: PlayerControlsViewModel(
                         playerControlsViewState: PlayerControlsViewState(
                             displayMode: playViewModel.playViewState.displayMode,
@@ -62,52 +63,54 @@ struct PlayView: View {
                 .zIndex(100)
                 
                //Hidden sensitivity setttings
-                if playViewModel.playViewState.buildSettings.isAdvanced {
-                    HStack {
-                        SliderView(
-                            label: "Feedback",
-                            value: Binding(
-                                get: { playViewModel.imageDifference.feedback.value },
-                                set: { playViewModel.imageDifference.feedback.send($0) }
-                            ),
-                            showsSeparator: false,
-                            withPercentage: 0.6
-                        )
-                        
-                        SliderView(
-                            label: "Max value",
-                            value:
-                                Binding(
-                                    get: { Float(playViewModel.imageDifference.maxValueSubject.value) },
-                                    set: { playViewModel.imageDifference.maxValueSubject.send(Int($0)) }
-                                ),
-                            minValue: 1,
-                            maxValue: 255,
-                            showsSeparator: false,
-                            withPercentage: 0.6
-                        )
-                    }
-                    
-                    SensitivityPlayView(
-                        playViewModel: playViewModel,
-                        label: "Sensitivity",
-                        value: Binding(
-                                get: {
-                                    playViewModel.imageDifference.sensitivitySubject.value
-                                },
-                                set: {
-                                    playViewModel.imageDifference.sensitivitySubject.send($0)
-                                    playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
-                                    playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
-                                }
-                            ),
-                        minValue: 0,
-                        maxValue: 1,
-                        showsSeparator: false,
-                        withPercentage: 0.8
-                    )
-                    
-                }
+//                if playViewModel.playViewState.buildSettings.isAdvanced {
+//
+//                    HStack {
+//                        SliderView(
+//                            label: "Feedback",
+//                            value: Binding(
+//                                get: { playViewModel.imageDifference.feedback.value },
+//                                set: { playViewModel.imageDifference.feedback.send($0) }
+//                            ),
+//                            showsSeparator: false,
+//                            withPercentage: 0.6
+//                        )
+//
+//                        SliderView(
+//                            label: "Max value",
+//                            value:
+//                                Binding(
+//                                    get: { Float(playViewModel.imageDifference.maxValueSubject.value) },
+//                                    set: { playViewModel.imageDifference.maxValueSubject.send(Int($0)) }
+//                                ),
+//                            minValue: 1,
+//                            maxValue: 255,
+//                            showsSeparator: false,
+//                            withPercentage: 0.6
+//                        )
+//                    }
+//
+//                    SensitivityPlayView(
+//                        playViewModel: playViewModel,
+//                        label: "Sensitivity",
+//                        value: Binding(
+//                                get: {
+//                                    playViewModel.imageDifference.sensitivitySubject.value
+//                                },
+//                                set: {
+//                                    playViewModel.imageDifference.sensitivitySubject.send($0)
+//                                    playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
+//                                    playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
+//                                }
+//                            ),
+//                        minValue: 0,
+//                        maxValue: 1,
+//                        showsSeparator: false,
+//                        withPercentage: 0.8
+//                    )
+//
+//                }
+//
                 
                 //Video preview and instrument locations
                 ZStack{
@@ -163,7 +166,7 @@ struct PlayView: View {
                 }
                 else {
                     Spacer()
-                    Text(playViewModel.setSettings.customName)
+                    Text("If playlist hold level and next set")
                         .foregroundColor(.gray)
                 }
                 Spacer()

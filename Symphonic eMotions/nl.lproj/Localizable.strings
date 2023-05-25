@@ -19,6 +19,7 @@
 "Add to playlist" = "Voeg aan afspeellijst toe";
 "New variation" = "Nieuwe variatie";
 "Cancel" = "Annuleer";
+"Continue" = "Ga verder";
 "Confirm Delete" = "Bevestig verwijderen";
 "Are you sure" = "Weet je het zeker dat je deze set wilt verwijderen?";
 "Delete" = "Verwijder";
@@ -26,3 +27,4 @@
 "Editor open" = "Editor is open";
 "Save set to continue" = "Bewaar of verwijder wijzigingen in de editor om door te gaan";
 "Will do!" = "Zal ik doen!";
+"Level speed" = "Level snelheid";
