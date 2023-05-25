@@ -16,14 +16,6 @@ struct BuildSettings {
         case composer
     }
     
-    //Used for view switching AND view updates
-    public enum ActiveView: String {
-        case homeView
-        case playView
-        case calibration
-        case dynamicView
-    }
-    
     public enum Playlists: String, CaseIterable {
         case none
         case minimal
@@ -48,10 +40,6 @@ struct BuildSettings {
         }
     }
     
-    //Main theme setting
-    public var mainSettings: MainSetting
-    //Switching between fulls screen views
-    public var activeView: ActiveView
     //Show settings
     public var isAdvanced: Bool
     //Show visual feedback per part
@@ -60,14 +48,10 @@ struct BuildSettings {
     public var isMasterTrack: Bool
     
     init(
-        mainSettings: MainSetting,
-        activeView: ActiveView,
         isAdvanced: Bool,
         instrumentPartEditor: Bool,
         isMasterTrack: Bool
     ){
-        self.mainSettings = mainSettings
-        self.activeView = activeView
         self.isAdvanced = isAdvanced
         self.instrumentPartEditor = instrumentPartEditor
         self.isMasterTrack = isMasterTrack

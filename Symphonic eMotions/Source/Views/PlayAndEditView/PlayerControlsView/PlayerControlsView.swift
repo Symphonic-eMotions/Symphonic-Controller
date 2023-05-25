@@ -20,14 +20,11 @@ struct VolumeSlider: UIViewRepresentable {
 struct PlayerControlsView: View {
     
     @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
-    @Binding var mainViewUpdate: BuildSettings.ActiveView
     
     init(
-        viewModelPlayerControls: PlayerControlsViewModel,
-        mainViewUpdate: Binding<BuildSettings.ActiveView>
+        viewModelPlayerControls: PlayerControlsViewModel
     ){
         self.viewModelPlayerControls = viewModelPlayerControls
-        self._mainViewUpdate = mainViewUpdate
     }
     
     var body: some View {
@@ -45,8 +42,7 @@ struct PlayerControlsView: View {
                     
                     //Settings button
                     EMButtonLongPress(
-                        viewModelPlayerControls: viewModelPlayerControls,
-                        mainViewUpdate: $mainViewUpdate
+                        viewModelPlayerControls: viewModelPlayerControls
                     )
                     
                     

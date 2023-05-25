@@ -13,10 +13,9 @@ struct eMotionApp: App {
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     
     let sessionSettings = AppUtils.setSessionSetting()
-        
+    
+    //Started as view controller, now used is view updater
     let buildSettings = BuildSettings(
-        mainSettings: .composer,
-        activeView: .homeView,
         isAdvanced: false,
         instrumentPartEditor: false,
         isMasterTrack: false
@@ -25,7 +24,6 @@ struct eMotionApp: App {
     @State public var sessionDisplay: SessionDisplay = .pro
     @State public var sessionDisplaySub: SessionDisplay = .start
 
-    
     var body: some Scene {
         WindowGroup {
             MainView(
@@ -48,8 +46,7 @@ struct eMotionApp: App {
                     partFeedback: PartFeedback(instrumentsSet: instrumentSet)
                 ),
                 sessionDisplay: $sessionDisplay,
-                sessionDisplaySub: $sessionDisplaySub,
-                mainViewUpdate: buildSettings.activeView
+                sessionDisplaySub: $sessionDisplaySub
             )
             .statusBar(hidden: true)
         }

@@ -10,7 +10,6 @@ import SwiftUI
 struct EMButtonLongPress: View {
     
     @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
-    @Binding var mainViewUpdate: BuildSettings.ActiveView
     
     let color: Color = .accentColor
     var isSolid: Bool = false
@@ -18,11 +17,9 @@ struct EMButtonLongPress: View {
     @State private var presentAlert = false
     
     init(
-        viewModelPlayerControls: PlayerControlsViewModel,
-        mainViewUpdate: Binding<BuildSettings.ActiveView>
+        viewModelPlayerControls: PlayerControlsViewModel
     ){
         self.viewModelPlayerControls = viewModelPlayerControls
-        self._mainViewUpdate = mainViewUpdate
     }
     
     var body: some View {

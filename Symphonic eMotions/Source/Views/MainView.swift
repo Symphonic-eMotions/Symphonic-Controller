@@ -15,8 +15,6 @@ struct MainView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
-    //This needs to be replaced with sessionDisplay
-    @State private var mainViewUpdate: BuildSettings.ActiveView
     //Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState()
     //Keep track of local saved SeM setting files
@@ -28,14 +26,12 @@ struct MainView: View {
     init(
         viewModel: MainViewModel,
         sessionDisplay: Binding<SessionDisplay>,
-        sessionDisplaySub: Binding<SessionDisplay>,
-        mainViewUpdate: BuildSettings.ActiveView
+        sessionDisplaySub: Binding<SessionDisplay>
     ) {
         
         self.viewModel = viewModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
-        self.mainViewUpdate = mainViewUpdate
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
@@ -157,7 +153,6 @@ struct MainView: View {
                                 partFeedbackState: PartFeedbackState(),
                                 feedbackObjectsSate: FeedbackObjectsState()
                             ),
-                            mainViewUpdate: $mainViewUpdate,
                             sessionDisplay: $sessionDisplay,
                             sessionDisplaySub: $sessionDisplaySub
                         )
