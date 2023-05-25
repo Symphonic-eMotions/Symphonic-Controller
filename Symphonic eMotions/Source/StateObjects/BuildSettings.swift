@@ -9,20 +9,12 @@ import SwiftUI
 
 struct BuildSettings {
     
-    public enum MainSetting {
-        case one
-        case daytime
-        case pro
-        case composer
-    }
-    
     public enum Playlists: String, CaseIterable {
         case none
         case minimal
         case person
 //        case group
 //        case nature
-        
         
         var color: Color {
             switch self {
