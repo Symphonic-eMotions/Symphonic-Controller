@@ -129,8 +129,10 @@ final class PlayViewModel: ObservableObject {
     
     func tapMediaControlButton() {
         
-        leveling.pauseLevel = conductor.isConductorPlayingSubject.value
+        //leveling.pauseLevel = conductor.isConductorPlayingSubject.value
         
+        //fix for system stop after 12 set changes
+        //If you remove this, video won't be passed through after 12 set changes
         if self.conductor.isConductorPlayingSubject.value {
             self.frameExtractor.stopExtracting()
             self.frameExtractor.startExtracting()

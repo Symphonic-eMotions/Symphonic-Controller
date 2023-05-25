@@ -636,10 +636,10 @@ final class Conductor {
         
         //Add Amplitude envelope for
         trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
-        trackAmpEnvelopes[trackId]!.attackDuration = 0.5
+        trackAmpEnvelopes[trackId]!.attackDuration = 0.4
         trackAmpEnvelopes[trackId]!.decayDuration = 0.01
         trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
-        trackAmpEnvelopes[trackId]!.releaseDuration = 0.5
+        trackAmpEnvelopes[trackId]!.releaseDuration = 0.4
             
         return trackAmpEnvelopes[trackId]! as Node
     }
@@ -782,16 +782,18 @@ final class Conductor {
         else {
             print("Mute here before play?")
             
-            playEngineAndTracks(
-                setSettings: setSettings,
-                level: Int(currentSetLevel)
-            )
-            
             //Fade in on master play, we need level.currentlevel here
             levelController(
                 level: Int(currentSetLevel),
                 setSettings: setSettings
             )
+            
+            playEngineAndTracks(
+                setSettings: setSettings,
+                level: Int(currentSetLevel)
+            )
+            
+            
         }
     }
     

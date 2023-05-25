@@ -66,9 +66,11 @@ struct PartFeedbackView: View {
                         
                         currentTrackID = value
                         playViewModel.partFeedback.currentTrackID.send(value)
+                        
                         playViewModel.setSettings.settingsCurrentTrackID = currentTrackID
                         
                         let settingsVolume = setSettings.tracks[value]!.instrumentVolume
+                        
                         volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(settingsVolume)))
                         playViewModel.setSettings.settingsVolume = settingsVolume
                         
@@ -96,8 +98,8 @@ struct PartFeedbackView: View {
                 .foregroundColor(.red)
                 .accentColor(.blue)
                 
+                //Select part of track
                 HStack {
-                    //Select part of track
                     Picker(
                         "Parts",
                         selection: Binding(get: {
@@ -145,7 +147,7 @@ struct PartFeedbackView: View {
                 HStack {
                     
                     VStack{
-                        //Ramped value feedback
+                        //Display ramped value feedback
                         ValueFeedback(value: .init(
                             get: {
                                 let currentBarLevel = Float(max(0, playViewModel.partFeedbackState.ramped))
@@ -225,29 +227,34 @@ struct PartFeedbackView: View {
                             playViewModel: playViewModel
                         )
                         
-                        EMButton(
-                            action: {
-                                
-                                let fileName = AppUtils.createWorkingFile(
-                                    setSettings: setSettings,
-                                    instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
-                                    duplicateLastTrack: false,
-                                    asNewFile: true
-                                )
-                                
-                                fileController.addSetFileURLToController(fileName: fileName)
-                                
-                                sessionDisplay = .setInfo
-                                sessionDisplaySub = .none
-                                
-//                                playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
-                                
-                            }, color: .orange, isSolid: true, maxWidth: 130, height: 35
-                        ){
-                            Text("New Set")
-                        }.frame(width: 130)
+                        //New set, not in playlist
+                        if sessionDisplaySub != .playlists {
+                            EMButton(
+                                action: {
+                                    
+                                    let fileName = AppUtils.createWorkingFile(
+                                        setSettings: setSettings,
+                                        instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                        duplicateLastTrack: false,
+                                        asNewFile: true
+                                    )
+                                    
+                                    fileController.addSetFileURLToController(fileName: fileName)
+                                    
+                                    sessionDisplay = .setInfo
+                                    sessionDisplaySub = .none
+                                    
+                                    //                                playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
+                                    
+                                }, color: .orange, isSolid: true, maxWidth: 130, height: 35
+                            ){
+                                Text("New Set")
+                            }.frame(width: 130)
+                        }
                         
+                        //Save set, if not a bundle file
                         if setSettings.setURL.absoluteString != "dontOverWrite" {
+                            //Save user file / playlist file
                             EMButton(
                                 action: {
                                     

@@ -17,7 +17,6 @@
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
 		7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */; };
-		7C166AD4295450750078C384 /* sets.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C166AD3295450750078C384 /* sets.json */; };
 		7C1FB0B229DDFD9A00621909 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B129DDFD9A00621909 /* LevelsView.swift */; };
 		7C1FB0B429DE0B2600621909 /* LoopsToLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */; };
 		7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B529E4429700621909 /* InLevelView.swift */; };
@@ -163,7 +162,6 @@
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
 		7C166AD0295353690078C384 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		7C166AD3295450750078C384 /* sets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sets.json; sourceTree = "<group>"; };
 		7C1FB0B129DDFD9A00621909 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopsToLevelView.swift; sourceTree = "<group>"; };
 		7C1FB0B529E4429700621909 /* InLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InLevelView.swift; sourceTree = "<group>"; };
@@ -355,7 +353,6 @@
 		7C166AD229544F8E0078C384 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				7C166AD3295450750078C384 /* sets.json */,
 				7C3CD114296D952A00A4C522 /* effects.json */,
 			);
 			path = Library;
@@ -608,10 +605,10 @@
 		C084FFD526B3115E009A4D0C /* Symphonic eMotions */ = {
 			isa = PBXGroup;
 			children = (
-				7CB2B9502A0D0D1500876CCD /* Playlists */,
 				7CD418052A095388006831CE /* Localizable.strings */,
 				7C6C11FC2A03EF3E006F8CCB /* Sets */,
 				7C6C11FD2A03EF3F006F8CCB /* Sounds */,
+				7CB2B9502A0D0D1500876CCD /* Playlists */,
 				7C166AD229544F8E0078C384 /* Library */,
 				7C69ED39295350750009F382 /* .gitignore */,
 				C0AFDD0B2705F425006EF64F /* Samples */,
@@ -815,7 +812,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C166AD4295450750078C384 /* sets.json in Resources */,
 				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
 				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,

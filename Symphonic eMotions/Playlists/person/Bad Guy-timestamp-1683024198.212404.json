@@ -1,5 +1,5 @@
 {
-  "customName" : "Bad Guy dancing",
+  "customName" : "",
   "defaultSkin" : {
     "swiftUI" : {
 
@@ -115,7 +115,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -3.0106353759765625,
+      "instrumentVolume" : 1.6436769962310791,
       "levels" : [
         3,
         0,
@@ -295,7 +295,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -4.0957417488098145,
+      "instrumentVolume" : -9.6896553039550781,
       "levels" : [
         3,
         2,
@@ -434,8 +434,8 @@
               "coolDownTime" : null,
               "levelPart" : 0.0030000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.05599999999999998,
-              "rampSpeedDown" : 0.06720000000000001,
+              "rampSpeed" : 0.094049908220767975,
+              "rampSpeedDown" : 0.14165067672729492,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -452,7 +452,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
+      "instrumentVolume" : 8.2873563766479492,
       "levels" : [
         3,
         4,
@@ -592,7 +592,7 @@
               "levelPart" : 0.0030000000000000001,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.059499999999999997,
-              "rampSpeedDown" : 0.055299999999999974,
+              "rampSpeedDown" : 0.11170824617147446,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -609,7 +609,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
+      "instrumentVolume" : 1.8390777111053467,
       "levels" : [
         4,
         5,
@@ -747,7 +747,7 @@
               "levelPart" : 0.0030000000000000001,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.10000000000000001,
-              "rampSpeedDown" : 0.032999999999999988,
+              "rampSpeedDown" : 0.15585413575172424,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -764,7 +764,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : 15,
+      "instrumentVolume" : 2.6206865310668945,
       "levels" : [
         5,
         6,
@@ -780,13 +780,13 @@
           "loopsToGrid" : [
             0,
             0,
-            1,
             0,
             1,
-            0,
             1,
-            0,
-            0
+            1,
+            1,
+            1,
+            1
           ],
           "loopsToLevel" : [
             0,
@@ -973,7 +973,7 @@
           "areaOfInterest" : [
             0,
             0,
-            0,
+            1,
             0,
             0,
             0,
@@ -989,8 +989,8 @@
               "coolDownTime" : null,
               "levelPart" : 0.0012000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.016899999999999995,
-              "rampSpeedDown" : 0.0035460994113236666,
+              "rampSpeed" : 0.060268711298704127,
+              "rampSpeedDown" : 0.021880997344851494,
               "tempoHigh" : null,
               "tempoLow" : null
             },
@@ -1090,7 +1090,7 @@
     1,
     1
   ],
-  "levelSpeed" : 0.5,
+  "levelSpeed" : 0.25952625274658203,
   "masterTrackEffects" : [
     {
       "attackTime" : {

@@ -10,8 +10,6 @@ import SwiftUI
 @main
 struct eMotionApp: App {
     
-    //Copy sets to documentsfolder
-    
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     
     let sessionSettings = AppUtils.setSessionSetting()
@@ -23,14 +21,6 @@ struct eMotionApp: App {
         instrumentPartEditor: false,
         isMasterTrack: false
     )
-    
-    //SwiftUI * Pro and Editor variables
-//    @StateObject var swiftUIState = SwiftUIState(
-//        isAdvanced: false,
-//        instrumentPartEditor: false,
-//        isMasterTrack: false,
-//        displayMode: .both
-//    )
     
     @State public var sessionDisplay: SessionDisplay = .pro
     @State public var sessionDisplaySub: SessionDisplay = .start

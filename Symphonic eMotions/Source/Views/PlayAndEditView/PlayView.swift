@@ -47,20 +47,6 @@ struct PlayView: View {
                 )
                 .padding(.trailing)
                 
-                //Level editor
-                if playViewModel.playViewState.buildSettings.instrumentPartEditor {
-                    
-                    let trackLevels: [Int] = playViewModel.setSettings.getTrackLevels(
-                        trackId: playViewModel.partFeedback.currentTrackID.value
-                    )
-                    
-                    EditLevelView(
-                        playViewModel: playViewModel,
-                        currentTrackLevels: TrackLevelsModel(trackLevels: trackLevels)
-                    )
-                    .padding(.trailing)
-                }
-                
                 //Transport buttons
                 PlayerControlsView(
                     viewModelPlayerControls: PlayerControlsViewModel(
