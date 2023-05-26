@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StartView: View {
+struct DemoView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay

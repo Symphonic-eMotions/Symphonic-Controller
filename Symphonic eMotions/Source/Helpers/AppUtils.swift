@@ -442,49 +442,6 @@ final class AppUtils {
         return storeInstrumentSet
     }
     
-    
-    
-//    //MARK: Set SESSION settings
-//    static func setSessionSetting() -> SessionSettings {
-//        
-//        let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
-//        
-//        let sessionSetting = SessionSettings(
-//            sensitivity: readSessionSettings.sensitivity,
-//            setURL: readSessionSettings.setURL ?? URL("setSessionSetting.json")
-//        )
-//        
-//        return sessionSetting
-//    }
-//    
-//    //Write Session file to disk
-//    static func createSessionFile(sensitivity: Float, setURL: URL){
-//        
-//        let fileName: String = "SeM-settings"
-//        var localSensitifity: Float = 0
-//        
-//        //When loading a set we do not have the sensitifity present, so we load it from disk
-//        if sensitivity == -1 {
-//            //Load current sensitivity before writing
-//            let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: fileName)
-//            localSensitifity = readSessionSettings.sensitivity
-//        }
-//        else{
-//            localSensitifity = sensitivity;
-//        }
-//        
-//        
-//        print("Create session file with URL: \(setURL)")
-//        
-//        let storeSettings = ManageSessionSettings(
-//            sensitivity: localSensitifity,
-//            setURL: setURL
-//        )
-//        
-//        ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
-//    }
-    
-    
     //MARK: editor
     static func letterForNumber(_ number: Int) -> String? {
         guard let scalarValue = UnicodeScalar(number + 65) else {

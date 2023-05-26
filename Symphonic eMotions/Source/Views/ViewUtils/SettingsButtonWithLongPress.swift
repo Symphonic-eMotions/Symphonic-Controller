@@ -45,16 +45,6 @@ struct SettingsButtonWithLongPress: View {
         //Present sheet
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSheetView(
-//                sensitivity: Binding(
-//                    get: {
-//                        playViewModel.imageDifference.sensitivitySubject.value
-//                    },
-//                    set: {
-//                        playViewModel.imageDifference.sensitivitySubject.send($0)
-//                        playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: $0)
-//                        playViewModel.imageDifference.sensitivityToFeedback(sensitivity: $0)
-//                    }
-//                ),
                 playViewModel: playViewModel,
                 viewModelPlayerControls: viewModelPlayerControls,
                 showingSheet: $presentSettingSheet

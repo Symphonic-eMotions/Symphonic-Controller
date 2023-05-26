@@ -96,8 +96,6 @@ struct MainView: View {
                     currentInstrumentsSetIsChanged: { instrumentsSet in
                         viewModel.currentModelInstrumentsSetChanged(
                             instrumentsSet: instrumentsSet
-//                            ,
-//                            sessionSettings: viewModel.mainState.sessionSettings
                         )
                     },
                     conductor: viewModel.conductor
@@ -123,8 +121,6 @@ struct MainView: View {
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
                                 instrumentsSet: instrumentsSet
-//                                ,
-//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor
@@ -159,9 +155,8 @@ struct MainView: View {
                             sessionDisplaySub: $sessionDisplaySub
                         )
                         .environmentObject(fileController)
-                        .navigationBarTitle(viewModel.mainState.currentInstrumentsSet.title())
+//                        .navigationBarTitle(viewModel.mainState.currentInstrumentsSet.title())
                         .navigationBarHidden(false)
-//                        .edgesIgnoringSafeArea([.top, .trailing])
                         
                         //It's not called PlayView for nothing
                         .onAppear{
@@ -189,7 +184,7 @@ struct MainView: View {
                 }
                 
                 else if sessionDisplay == .demo {
-                    StartView(
+                    DemoView(
                         setInfoModel: SetInfoModel(
                             setInfoLocalState: $setInfoLocalState,
                             setSettings: $viewModel.mainState.setSettings,
@@ -199,8 +194,6 @@ struct MainView: View {
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
                                     instrumentsSet: instrumentsSet
-//                                    ,
-//                                    sessionSettings: viewModel.mainState.sessionSettings
                                 )
                             },
                             conductor: viewModel.conductor
@@ -219,14 +212,11 @@ struct MainView: View {
                             setInfoLocalState: $setInfoLocalState,
                             setSettings: $viewModel.mainState.setSettings,
                             setInfoState: SetInfoState(
-                                //                                setCollections: viewModel.mainState.setCollection,
                                 currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                             ),
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
                                     instrumentsSet: instrumentsSet
-//                                    ,
-//                                    sessionSettings: viewModel.mainState.sessionSettings
                                 )
                             },
                             conductor: viewModel.conductor
@@ -256,8 +246,6 @@ struct MainView: View {
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
                                 instrumentsSet: instrumentsSet
-//                                ,
-//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor
@@ -278,8 +266,6 @@ struct MainView: View {
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
                                 instrumentsSet: instrumentsSet
-//                                ,
-//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor

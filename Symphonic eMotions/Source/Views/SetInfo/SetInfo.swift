@@ -95,8 +95,6 @@ struct SetInfo: View {
                                     
                                     let setSetting = AppUtils.setSettings(
                                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet
-//                                        ,
-//                                        sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
                                     )
                                     
                                     _ = AppUtils.createWorkingFile(

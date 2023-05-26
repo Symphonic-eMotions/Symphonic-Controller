@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct MainViewState {
-//    var sessionSettings: SessionSettings
     var setSettings: SetSettings
     var imageDifference: ImageDifference
-//    var setCollection: Sets
     var currentInstrumentsSet: InstrumentsSet
     var buildSettings: BuildSettings
     var masterTrackStructure: [MasterTrackEffect]?
@@ -44,14 +42,7 @@ final class MainViewModel: ObservableObject {
     
     func currentModelInstrumentsSetChanged(
         instrumentsSet: InstrumentsSet
-//        ,
-//        sessionSettings: SessionSettings
     ) {
-        
-        //Reload from file, the sensitivitySlider saves to file, not to session
-//        let sessionSettingsLoaded = AppUtils.setSessionSetting()
-        //A defaut SKIN is loaded at this point.
-        //We are going to overwrite the colors to the colors of the instrument within the set
         
         let currentSensitivity = sensitivity
         
@@ -71,8 +62,6 @@ final class MainViewModel: ObservableObject {
                         
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet
-//                ,
-//                sessionSettings: sessionSettingsLoaded
             )
             
             //Editor Instrument Part visual feedback connector
@@ -88,12 +77,10 @@ final class MainViewModel: ObservableObject {
             //Video analysis vars
             //And the loaded instrument set
             mainState = MainViewState(
-//                sessionSettings: sessionSettings,
                 setSettings: setSettings,
                 imageDifference: ImageDifference(
                     setSetting: setSettings
                 ),
-//                setCollection: mainState.setCollection,
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )

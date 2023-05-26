@@ -18,9 +18,7 @@ struct eMotionApp: App {
     //We need a set loaded into ram and @AppStorage
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "SE-set-default.json"
-    
-//    let sessionSettings = AppUtils.setSessionSetting()
-    
+        
     //Started as view controller, now used is view updater
     let buildSettings = BuildSettings(
         isAdvanced: false,
@@ -46,11 +44,8 @@ struct eMotionApp: App {
             MainView(
                 viewModel: MainViewModel(
                     mainState: MainViewState(
-//                        sessionSettings: sessionSettings,
                         setSettings: AppUtils.setSettings(
                             instrumentSet: instrumentSet
-//                            ,
-//                            sessionSettings: sessionSettings
                         ),
                         imageDifference: ImageDifference(
                             instrumentsSet: instrumentSet

@@ -15,7 +15,7 @@ struct SpriteKitView: View {
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
-    @State var showOverView: Bool = false
+    @State private var presentSettingSheet = false
     let transportHeigth: CGFloat = 50
     
     //Create the complete 2D "gaming" interface
@@ -136,6 +136,15 @@ struct SpriteKitView: View {
                         scene: scene,
                         options: [.allowsTransparency]
                     )
+                    //Present sheet
+                    .sheet(isPresented: $presentSettingSheet) {
+//                        SettingsSheetView(
+//                            playViewModel: playViewModel,
+//                            viewModelPlayerControls: viewModelPlayerControls,
+//                            showingSheet: $presentSettingSheet
+//                            
+//                        )
+                    }
                     .frame(width: width, height: height - transportHeigth - 10)
                     .ignoresSafeArea()
                     .onReceive(mainViewModel.conductor.isConductorPlayingSubject ){ ( value ) in
@@ -180,16 +189,9 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
                     .onLongPressGesture {
-//                        self.showOverView.toggle()
                         //FIXME: tap invokes setings sheet
                     }
                     
-                    //The calibrator slider and video slider
-//                    if showOverView {
-//                        SensitivityView(
-//                            playViewModel: playViewModel
-//                        )
-//                    }
                 }
             }
         }
