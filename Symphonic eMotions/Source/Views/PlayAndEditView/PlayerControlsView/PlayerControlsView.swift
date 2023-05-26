@@ -20,7 +20,6 @@ struct VolumeSlider: UIViewRepresentable {
 struct PlayerControlsView: View {
     
     @ObservedObject var playViewModel: PlayViewModel
-    @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
     
     var body: some View {
         HStack(alignment: .center, spacing: 32.0) {
@@ -30,22 +29,21 @@ struct PlayerControlsView: View {
                 HStack {
                     //Switch between video feedback modes
                     EMButton(action: {
-                        viewModelPlayerControls.tapDisplayModeChange()
+                        playViewModel.tapDisplayModeChange()
                     }, color: .accentColor, isSolid: false) {
-                        viewModelPlayerControls.playerControlsViewState.displayMode.icon
+                        playViewModel.playViewState.displayMode.icon
                     }
                     
                     //Settings button
                     SettingsButtonWithLongPress(
-                        playViewModel: playViewModel,
-                        viewModelPlayerControls: viewModelPlayerControls
+                        playViewModel: playViewModel
                     )
                     
                     
-                    if viewModelPlayerControls.playerControlsViewState.buildSettings.instrumentPartEditor {
+                    if playViewModel.playViewState.buildSettings.instrumentPartEditor {
                         //Master FX Button
                         EMButton(action: {
-                            viewModelPlayerControls.tapMasterFxButton()
+                            playViewModel.tapMasterFxButton()
                         }, color: .accentColor, isSolid: false) {
                             Image(systemName: "fx")
                         }
@@ -53,35 +51,13 @@ struct PlayerControlsView: View {
                     
                     //Start stop
                     EMButton(action: {
-                        viewModelPlayerControls.tapMediaControlButton()
+                        playViewModel.tapMediaControlButton()
                     }, color: .accentColor) {
-                        Image(systemName: viewModelPlayerControls.conductor.isConductorPlayingSubject.value ?
+                        Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
                                 "stop.fill" :
                                 "play.fill")
                     }
                 }
-                
-//                HStack {
-//                    if viewModelPlayerControls.hasTempo {
-//                        EMButton(action: {
-//                            viewModelPlayerControls.tapSetTempoMin()
-//                        }, color: .accentColor, isSolid: false, maxWidth: 100) {
-//                            Image(systemName: "minus.square")
-//                        }
-//
-//                        EMButton(action: {
-//                            viewModelPlayerControls.tapSetTempoPlus()
-//                        }, color: .accentColor, isSolid: false, maxWidth: 100) {
-//                            Image(systemName: "plus.square")
-//                        }
-//                    }
-                    
-//                    //Volume slider
-//                    VolumeSlider()
-//                       .frame(height: 10)
-//                       .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-//                       .zIndex(101)
-//                }
             }
         }
     }

@@ -14,8 +14,8 @@ import Dispatch
 
 final class Conductor {
     
-//    let speechSynthesizer = AVSpeechSynthesizer()
-//    let speechSynthesizerAudioSession = AVAudioSession.sharedInstance()
+    let autoVoice = AVSpeechSynthesizer()
+    var autoSound: AVAudioPlayer!
     
     //MARK: Var declarations
     //Audiokit AudioEngine. One engine is running at all times
@@ -429,31 +429,50 @@ final class Conductor {
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
             
-                
                 //Highest level is full and is for the first time
                 if selectedLevel == setSettings.levels.count &&  isConductorPlayingSubject.value {
                     
                     //We stop playing
                     self.pauzeEngineAndStopTracks(setSettings: setSettings)
                     
-//                    //We start the voice engine
-//                    print("Set complete speechSynthesizer")
-//                    do {
-//                        try speechSynthesizerAudioSession.setCategory(.playback, mode: .spokenAudio)
-//                        try speechSynthesizerAudioSession.setActive(true)
-//
-//                        if !speechSynthesizer.isSpeaking {
-//                            let utterance = AVSpeechUtterance(string: NSLocalizedString("Set complete", comment: ""))
-//                            utterance.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("locale",comment: ""))
-//                            speechSynthesizer.speak(utterance)
-//                        }
-//
-//                    } catch {
-//                        print("Setting category to AVAudioSessionCategoryPlayback failed.")
-//                    }
+                    playRandomApplause()
                     
+                    if !autoVoice.isSpeaking {
+                        
+                        let trudy = AVSpeechUtterance(string: "Congratulations! You've completed the set! Prepare for the next set!")
+                        trudy.voice = AVSpeechSynthesisVoice(language: "en-AU")
+                        trudy.rate = 0.50
+                        trudy.pitchMultiplier = 1.1
+                        autoVoice.speak(trudy)
+                    }
                 }
             }
+        }
+    }
+    
+    func playRandomApplause() {
+        print("playRandomApplause")
+        
+        let sounds = ["Applause01", "Applause02", "Applause03"]
+        
+        if let randomSound = sounds.randomElement() {
+            print("Random sound selected: \(randomSound)")
+            if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "wav") {
+                print("Path exists: \(path)")
+                let url = URL(fileURLWithPath: path)
+                print("URL is valid: \(url)")
+                do {
+                    autoSound = try AVAudioPlayer(contentsOf: url)
+                    autoSound?.prepareToPlay()
+                    autoSound?.play()
+                } catch {
+                    print("Error: could not play sound: \(error)")
+                }
+            } else {
+                print("Failed to get path for resource.")
+            }
+        } else {
+            print("Failed to select random sound.")
         }
     }
     

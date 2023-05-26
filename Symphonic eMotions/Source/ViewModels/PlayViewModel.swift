@@ -20,10 +20,17 @@ struct PlayViewState {
     var updateEditView: Int = 0
 }
 
+enum PlayerControlsViewAction {
+    case displayModeChange(DisplayModes)
+    case settingsChange(Bool)
+    case partFeedbackViewChange(Bool)
+    case masterTrackViewChange(Bool)
+}
+
 final class PlayViewModel: ObservableObject {
     
     private(set) var frameExtractor: FrameExtractor
-    
+    let playerControlsAction: ((PlayerControlsViewAction) -> Void)?
     let leveling: Leveling
     var conductor: Conductor
     @Published var playViewState: PlayViewState
@@ -43,24 +50,22 @@ final class PlayViewModel: ObservableObject {
         imageDifference: Binding<ImageDifference>,
         leveling: Leveling,
         setSettings: Binding<SetSettings>,
-        
         partFeedback: PartFeedback,
         partFeedbackState: PartFeedbackState,
-        
-        feedbackObjectsSate: FeedbackObjectsState
+        playerControlsAction: ((PlayerControlsViewAction) -> Void)? = nil
     ) {
         self.playViewState = playViewState
         self.conductor = conductor
         self._imageDifference = imageDifference
         self.leveling = leveling
         self._setSettings = setSettings
-        
         self.partFeedback = partFeedback
         self.partFeedbackState = partFeedbackState
-        
+        self.playerControlsAction = playerControlsAction
+
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
-        
+
         startObservingData()
     }
     
@@ -127,6 +132,7 @@ final class PlayViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
+    //SwiftUI interface controllers
     func tapMediaControlButton() {
         
         //leveling.pauseLevel = conductor.isConductorPlayingSubject.value
@@ -136,6 +142,7 @@ final class PlayViewModel: ObservableObject {
         if self.conductor.isConductorPlayingSubject.value {
             self.frameExtractor.stopExtracting()
             self.frameExtractor.startExtracting()
+            
         }
 
         conductor.togglePlayEngineAndTracks(
@@ -295,6 +302,61 @@ final class PlayViewModel: ObservableObject {
         
         //Update this var to update View
         self.playViewState.updateEditView += 1
+    }
+    
+    func tapSetTempoPlus(){
+        let currentTempo = self.conductor.setTempo(tempoChange: 5)
+        self.setSettings.bpm = currentTempo
+    }
+    
+    func tapSetTempoMin(){
+        let currentTempo = self.conductor.setTempo(tempoChange: -5)
+        self.setSettings.bpm = currentTempo
+    }
+    
+    func tapSetTempoReset(){
+        
+        let tempo = self.conductor.resetTempo()
+        self.setSettings.bpm = tempo
+    }
+
+    func tapDisplayModeChange() {
+        switch playViewState.displayMode {
+        case .off:
+            playViewState.displayMode = .video
+        case .video:
+            playViewState.displayMode = .instruments
+        case .instruments:
+            playViewState.displayMode = .both
+        case .both:
+            playViewState.displayMode = .off
+        case .refresh:
+            return
+        }
+        playerControlsAction?(.displayModeChange(playViewState.displayMode))
+    }
+    
+//    func refreshDisplayModeChange() {
+//        //FIXME: This is not working? View does not get updated
+//        playerControlsAction?(.displayModeChange(.off))
+//        playerControlsAction?(.displayModeChange(playViewState.displayMode))
+//    }
+    
+    func tapSettingsButton() {
+        playViewState.buildSettings.isAdvanced.toggle()
+        playerControlsAction?(.settingsChange(playViewState.buildSettings.isAdvanced))
+//        refreshDisplayModeChange()
+    }
+    
+    func tapMasterFxButton() {
+        playViewState.buildSettings.isMasterTrack.toggle()
+        playerControlsAction?(.masterTrackViewChange(playViewState.buildSettings.isMasterTrack))
+    }
+    
+    func tapPartFeedbackButton() {
+        playViewState.buildSettings.instrumentPartEditor.toggle()
+        playerControlsAction?(.partFeedbackViewChange(playViewState.buildSettings.instrumentPartEditor))
+//        refreshDisplayModeChange()
     }
 }
 

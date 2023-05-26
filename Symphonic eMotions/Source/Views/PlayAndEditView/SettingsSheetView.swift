@@ -13,8 +13,8 @@ struct SettingsSheetView: View {
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.5
     
     @ObservedObject var playViewModel: PlayViewModel
-    @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
     @Binding var showingSheet: Bool
+    @Binding var stopEngine: Bool
     @State private(set) var localTempo: Int = 0
     
     var body: some View {
@@ -40,7 +40,7 @@ struct SettingsSheetView: View {
                     HStack {
                         
                         EMButton(action: {
-                            viewModelPlayerControls.tapMediaControlButton()
+                            playViewModel.tapMediaControlButton()
                         }, color: .accentColor) {
                             Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
                                   "stop.fill" :
@@ -69,7 +69,7 @@ struct SettingsSheetView: View {
                         HStack{
                             
                             EMButton(action: {
-                                viewModelPlayerControls.tapSetTempoMin()
+                                playViewModel.tapSetTempoMin()
                                 localTempo -= 1
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Image(systemName: "minus")
@@ -78,13 +78,13 @@ struct SettingsSheetView: View {
                             EMButton(action: {
                                 print("Reset pressed")
                                 localTempo = 0
-                                viewModelPlayerControls.tapSetTempoReset()
+                                playViewModel.tapSetTempoReset()
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Text(String(localTempo))
                             }
                             
                             EMButton(action: {
-                                viewModelPlayerControls.tapSetTempoPlus()
+                                playViewModel.tapSetTempoPlus()
                                 localTempo += 1
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Image(systemName: "plus")
@@ -110,6 +110,11 @@ struct SettingsSheetView: View {
                 }
                 .frame(width: geometry.size.width * 0.333)
                 
+            }
+            .onAppear{
+                if stopEngine {
+                    playViewModel.tapMediaControlButton()
+                }
             }
             .padding()
         }

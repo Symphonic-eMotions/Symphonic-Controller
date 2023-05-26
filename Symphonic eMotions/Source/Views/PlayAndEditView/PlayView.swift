@@ -14,7 +14,9 @@ struct PlayView: View {
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
-    @State var showOverView: Bool = false
+    
+    @State private var presentSettingSheet = false
+    @State private var stopEngine: Bool = true
     
     init(
         playViewModel: PlayViewModel,
@@ -46,19 +48,7 @@ struct PlayView: View {
                 
                 //Transport buttons
                 PlayerControlsView(
-                    playViewModel: playViewModel,
-                    viewModelPlayerControls: PlayerControlsViewModel(
-                        playerControlsViewState: PlayerControlsViewState(
-                            displayMode: playViewModel.playViewState.displayMode,
-                            buildSettings: playViewModel.playViewState.buildSettings
-                        ),
-                        conductor: playViewModel.conductor,
-                        frameExtractor: playViewModel.frameExtractor,
-                        leveling: playViewModel.leveling,
-                        setSettings: playViewModel.setSettings,
-                        hasTempo: playViewModel.playViewState.currentInstrumentsSet.hasTempo,
-                        playerControlsAction: playViewModel.controlsViewAction(action:)
-                    )
+                    playViewModel: playViewModel
                 )
                 .zIndex(100)
                 
@@ -76,9 +66,15 @@ struct PlayView: View {
                         } else {
                             
                             PlayGridView(playViewModel: playViewModel)
-                            .onLongPressGesture {
-//                                self.showOverView.toggle()
-                                print("FIXME: short tap invokes settings sheet")
+                            .onTapGesture {
+                                presentSettingSheet.toggle()
+                            }
+                            .sheet(isPresented: $presentSettingSheet) {
+                                SettingsSheetView(
+                                    playViewModel: playViewModel,
+                                    showingSheet: $presentSettingSheet,
+                                    stopEngine: $stopEngine
+                                )
                             }
                         }
                     }

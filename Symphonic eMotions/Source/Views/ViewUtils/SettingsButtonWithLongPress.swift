@@ -10,13 +10,12 @@ import SwiftUI
 struct SettingsButtonWithLongPress: View {
     
     @ObservedObject var playViewModel: PlayViewModel
-    @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
     
     let color: Color = .accentColor
     var isSolid: Bool = false
     
     @State private var presentSettingSheet = false
-    
+    @State private var stopEngine: Bool = false
     
     var body: some View {
         
@@ -35,19 +34,19 @@ struct SettingsButtonWithLongPress: View {
         .cornerRadius(8.0)
         //Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
-            viewModelPlayerControls.tapPartFeedbackButton()
+            playViewModel.tapPartFeedbackButton()
         })
         //Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {
-            viewModelPlayerControls.tapSettingsButton()
+            playViewModel.tapSettingsButton()
             presentSettingSheet.toggle()
         })
         //Present sheet
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSheetView(
                 playViewModel: playViewModel,
-                viewModelPlayerControls: viewModelPlayerControls,
-                showingSheet: $presentSettingSheet
+                showingSheet: $presentSettingSheet,
+                stopEngine: $stopEngine
                 
             )
         }

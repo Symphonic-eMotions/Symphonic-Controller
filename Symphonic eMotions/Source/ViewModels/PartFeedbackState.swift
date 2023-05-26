@@ -22,17 +22,3 @@ struct PartFeedbackState {
         self.ramped = 0
     }
 }
-
-struct FeedbackObjectsState {
-    var objectOne: Double
-    var objectTwo: Double
-    var objectThree: Double
-    var objectFour: Double
-    
-    init() {
-        self.objectOne = 0
-        self.objectTwo = 0
-        self.objectThree = 0
-        self.objectFour = 0
-    }
-}

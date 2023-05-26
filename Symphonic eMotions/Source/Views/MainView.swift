@@ -57,15 +57,9 @@ struct MainView: View {
                     conductor: viewModel.conductor,
                     imageDifference: $viewModel.mainState.imageDifference,
                     leveling: viewModel.leveling,
-                    
                     setSettings: $viewModel.mainState.setSettings,
-                    
-                    //Part feedback is part of editor
                     partFeedback: viewModel.partFeedback,
-                    partFeedbackState: PartFeedbackState(),
-                    
-                    //Feedback objects are for custom controllable UI objects
-                    feedbackObjectsSate: FeedbackObjectsState()
+                    partFeedbackState: PartFeedbackState()
                 ),
                 mainViewModel: viewModel,
                 sessionDisplay: $sessionDisplay,
@@ -148,8 +142,7 @@ struct MainView: View {
                                 leveling: viewModel.leveling,
                                 setSettings: $viewModel.mainState.setSettings,
                                 partFeedback: viewModel.partFeedback,
-                                partFeedbackState: PartFeedbackState(),
-                                feedbackObjectsSate: FeedbackObjectsState()
+                                partFeedbackState: PartFeedbackState()
                             ),
                             sessionDisplay: $sessionDisplay,
                             sessionDisplaySub: $sessionDisplaySub

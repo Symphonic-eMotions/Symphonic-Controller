@@ -16,6 +16,8 @@ struct SpriteKitView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @State private var presentSettingSheet = false
+    @State private var stopEngine = false
+    
     let transportHeigth: CGFloat = 50
     
     //Create the complete 2D "gaming" interface
@@ -138,12 +140,11 @@ struct SpriteKitView: View {
                     )
                     //Present sheet
                     .sheet(isPresented: $presentSettingSheet) {
-//                        SettingsSheetView(
-//                            playViewModel: playViewModel,
-//                            viewModelPlayerControls: viewModelPlayerControls,
-//                            showingSheet: $presentSettingSheet
-//                            
-//                        )
+                        SettingsSheetView(
+                            playViewModel: playViewModel,
+                            showingSheet: $presentSettingSheet,
+                            stopEngine: $stopEngine
+                        )
                     }
                     .frame(width: width, height: height - transportHeigth - 10)
                     .ignoresSafeArea()
@@ -189,7 +190,12 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
                     .onLongPressGesture {
-                        //FIXME: tap invokes setings sheet
+                        stopEngine = false
+                        presentSettingSheet.toggle()
+                    }
+                    .onTapGesture {
+                        stopEngine = true
+                        presentSettingSheet.toggle()
                     }
                     
                 }
