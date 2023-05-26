@@ -9,18 +9,30 @@ import SwiftUI
 
 struct SettingsSheetView: View {
     
+    @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 0.5
+    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.5
+
     @ObservedObject var playViewModel: PlayViewModel
     @ObservedObject var viewModelPlayerControls: PlayerControlsViewModel
     @Binding var showingSheet: Bool
-    @Binding var sensitivity: Float
+//    @Binding var sensitivity: Float
     @State private(set) var localTempo: Int = 0
     
     //    @State private var sensitivity = 0.5
-    @State private var levelSpeed = 0.5
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 15) {
+        let sensitivityBinding = Binding(
+            get: { self.sensitivity },
+            set: {
+                self.sensitivity = $0
+                playViewModel.imageDifference.sensitivitySubject.send(Float($0))
+                playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: Float($0))
+                playViewModel.imageDifference.sensitivityToFeedback(sensitivity: Float($0))
+            }
+        )
+        
+        return VStack(alignment: .leading, spacing: 15) {
             
             //Section(header: Text("Settings")) {
             
@@ -38,22 +50,12 @@ struct SettingsSheetView: View {
             
             VStack(alignment: .leading){
                 Text("Sensitivity").padding(.top)
-                Slider(value: $sensitivity, in: 0...1, onEditingChanged: { changed in
-                    //Only on end of slide change
-                    if !changed {
-                        
-                        print("Sensitivity changed and stored to: \(sensitivity) \n setURL kept: \(playViewModel.setSettings.setURL)")
-                        
-                        AppUtils.createSessionFile(
-                            sensitivity: sensitivity,
-                            setURL: playViewModel.setSettings.setURL)
-                    }
-                })
+                Slider(value: sensitivityBinding, in: 0...1)
             }
             
             VStack(alignment: .leading){
-                Text(NSLocalizedString("Level speed",comment: "")).padding(.top)
-                Slider(value: $levelSpeed)
+                Text(NSLocalizedString("Level speed \(levelSpeed)",comment: "")).padding(.top)
+                Slider(value: $levelSpeed, in: 0.5...2)
             }
             
             //Tempo

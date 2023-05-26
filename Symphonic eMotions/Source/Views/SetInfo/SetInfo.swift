@@ -74,16 +74,11 @@ struct SetInfo: View {
                             //We do not want to go to the next set
                             setInfoModel.setSettings.currentPlaylist = .none
                             
-                            AppUtils.createSessionFile(
-                                sensitivity: -1,
-                                setURL: URL("dontOverWrite"))
+                            print("FIXME: here we may let know the set is a bundle url")
+//                            AppUtils.createSessionFile(
+//                                sensitivity: -1,
+//                                setURL: URL("dontOverWrite"))
                             
-                            //Load the Set
-//                            setInfoModel.tapSetRow(
-//                                selectedCollection: setInfoModel.filterSet(
-//                                    setName: setInfoModel.setInfoLocalState.setName
-//                                )
-//                            )
                             setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
                             
                             //Change the View
@@ -99,8 +94,9 @@ struct SetInfo: View {
                                 if(setInfoModel.setInfoState.currentInstrumentsSet.name != "No Set"){
                                     
                                     let setSetting = AppUtils.setSettings(
-                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                                        sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
+                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet
+//                                        ,
+//                                        sessionSettings: SessionSettings(sensitivity: -1, setURL: URL("newSetSetInfo"))
                                     )
                                     
                                     _ = AppUtils.createWorkingFile(

@@ -127,16 +127,17 @@ struct PlayView: View {
                             
                             PlayGridView(playViewModel: playViewModel)
                             .onLongPressGesture {
-                                self.showOverView.toggle()
+//                                self.showOverView.toggle()
+                                print("FIXME: short tap invokes settings sheet")
                             }
                             
                             //The calibrator slider and video slider
-                            if showOverView {
-                                SensitivityView(
-                                     playViewModel: playViewModel
-                                )
-                                .zIndex(50)
-                            }
+//                            if showOverView {
+//                                SensitivityView(
+//                                     playViewModel: playViewModel
+//                                )
+//                                .zIndex(50)
+//                            }
                         }
                     }
                     else{
@@ -243,76 +244,4 @@ struct SliderView: View {
         .frame(height: 50.0)
     }
     
-}
-
-struct SensitivityPlayView: View {
-    
-    @ObservedObject var playViewModel: PlayViewModel
-    
-    var label: LocalizedStringKey
-    @Binding var value: Float
-    var minValue: Float = 0
-    var maxValue: Float = 1
-    var showsSeparator: Bool
-    var withPercentage: CGFloat = 0.7
-    
-    init(
-        playViewModel: PlayViewModel,
-        label: LocalizedStringKey,
-        value: Binding<Float>,
-        minValue: Float = 0,
-        maxValue: Float = 1,
-        showsSeparator: Bool = true,
-        withPercentage: CGFloat = 0.7
-    ) {
-        self.playViewModel = playViewModel
-        self.label = label
-        _value = value
-        self.maxValue = minValue
-        self.maxValue = maxValue
-        self.showsSeparator = showsSeparator
-        self.withPercentage = withPercentage
-    }
-    
-    var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(label)
-                            .font(.headline)
-                        Text("\(value)")
-                            .foregroundColor(.secondary)
-                            .font(.subheadline)
-                    }
-                    
-                    Spacer()
-                    //Write to session file (Sensitivity Slider)
-                    Slider(value: $value, in: minValue...maxValue, onEditingChanged: { changed in
-                        //Only on end of slide change
-                        if !changed {
-                            
-                            print("Sensitivity changed and stored to: \(value)")
-                            
-                            AppUtils.createSessionFile(
-                                sensitivity: value,
-                                setURL: playViewModel.setSettings.setURL
-                            )
-                        }
-                    })
-                    .foregroundColor(.accentColor)
-                    .frame(width: geometry.size.width * withPercentage)
-                
-                }
-                .padding(.horizontal)
-                
-                if showsSeparator {
-                    Rectangle()
-                        .fill(Color.secondary)
-                        .frame(height: 1.0)
-                }
-            }
-        }
-        .frame(height: 50.0)
-    }
 }

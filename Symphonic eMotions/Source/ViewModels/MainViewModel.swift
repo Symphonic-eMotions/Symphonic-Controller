@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainViewState {
-    var sessionSettings: SessionSettings
+//    var sessionSettings: SessionSettings
     var setSettings: SetSettings
     var imageDifference: ImageDifference
 //    var setCollection: Sets
@@ -18,6 +18,12 @@ struct MainViewState {
 }
 
 final class MainViewModel: ObservableObject {
+    
+    private let appStorage = UserDefaults.standard
+    
+    var sensitivity: Float  {
+        appStorage.float(forKey: "sensitivity")
+    }
     
     @Published var mainState: MainViewState
     let conductor: Conductor
@@ -37,16 +43,17 @@ final class MainViewModel: ObservableObject {
     }
     
     func currentModelInstrumentsSetChanged(
-        instrumentsSet: InstrumentsSet,
-        sessionSettings: SessionSettings
+        instrumentsSet: InstrumentsSet
+//        ,
+//        sessionSettings: SessionSettings
     ) {
         
         //Reload from file, the sensitivitySlider saves to file, not to session
-        let sessionSettingsLoaded = AppUtils.setSessionSetting()
+//        let sessionSettingsLoaded = AppUtils.setSessionSetting()
         //A defaut SKIN is loaded at this point.
         //We are going to overwrite the colors to the colors of the instrument within the set
         
-        let currentSensitivity = sessionSettingsLoaded.sensitivity
+        let currentSensitivity = sensitivity
         
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
@@ -63,8 +70,9 @@ final class MainViewModel: ObservableObject {
         } else {
                         
             let setSettings = AppUtils.setSettings(
-                instrumentSet: instrumentsSet,
-                sessionSettings: sessionSettingsLoaded
+                instrumentSet: instrumentsSet
+//                ,
+//                sessionSettings: sessionSettingsLoaded
             )
             
             //Editor Instrument Part visual feedback connector
@@ -80,7 +88,7 @@ final class MainViewModel: ObservableObject {
             //Video analysis vars
             //And the loaded instrument set
             mainState = MainViewState(
-                sessionSettings: sessionSettings,
+//                sessionSettings: sessionSettings,
                 setSettings: setSettings,
                 imageDifference: ImageDifference(
                     setSetting: setSettings

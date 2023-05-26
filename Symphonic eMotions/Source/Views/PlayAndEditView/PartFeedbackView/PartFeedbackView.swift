@@ -253,7 +253,10 @@ struct PartFeedbackView: View {
                         }
                         
                         //Save set, if not a bundle file
-                        if setSettings.setURL.absoluteString != "dontOverWrite" {
+                        //FIXME: check if url is in bundle
+                        let _ = print("//FIXME: check if url is in bundle")
+                        if "dontOverWrite" == "dontOverWrite" {
+                            
                             //Save user file / playlist file
                             EMButton(
                                 action: {

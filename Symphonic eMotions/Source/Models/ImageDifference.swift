@@ -40,6 +40,7 @@ class ImageDifference {
     var values = CurrentValueSubject<[[AreaValues]], Never>([])
     
     var sensitivitySubject = CurrentValueSubject<Float, Never>(0.99)
+    
     /// Kan later aan bijvoorbeeld een slider hangen
     var maxValueSubject = CurrentValueSubject<Int, Never>(50)
     /// Kan later aan bijvoorbeeld een slider hangen

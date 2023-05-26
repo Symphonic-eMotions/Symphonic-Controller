@@ -11,7 +11,13 @@ import AudioKit
 import OrderedCollections
 
 final class AppUtils {
-        
+    
+    private static let appStorage = UserDefaults.standard
+    
+    static var setUrl: String  {
+        appStorage.string(forKey: "currentUrl") ?? "AppUtils"
+    }
+    
     static func documentDirectory() -> URL {
       let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
       return documentsDirectory
@@ -80,25 +86,7 @@ final class AppUtils {
         return instrumentSet
     }
     
-    
-//    static func createPlayListFolders() {
-//            
-//        let fileManager = FileManager.default
-//        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        
-//        let lists = BuildSettings.Playlists.allCases
-//        let partOfList = lists.filter({$0 != .none})
-//        
-//        // Loop through all the enum cases and check if a folder with that name exists
-//        for playlist in partOfList {
-//            let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
-//            if !fileManager.fileExists(atPath: playlistURL.path) {
-//                // Folder doesn't exist, create it
-//                try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
-//            }
-//        }
-//    }
-    
+    //MARK: Playists
     static func createPlayListFolders() {
         
         let fileManager = FileManager.default
@@ -139,8 +127,7 @@ final class AppUtils {
     //MARK: Set setSetings
     // - Structure to mutate and save as Instrument Set
     static func setSettings(
-        instrumentSet: InstrumentsSet,
-        sessionSettings: SessionSettings
+        instrumentSet: InstrumentsSet
     ) -> SetSettings {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = masterTrackSettings(instrumentSet: instrumentSet)
@@ -245,7 +232,7 @@ final class AppUtils {
             setName: instrumentSet.name,
             customName: instrumentSet.customName,
             published: instrumentSet.published ?? false,
-            setURL: sessionSettings.setURL,
+            setURL: URL(setUrl),
             hasTempo: instrumentSet.hasTempo,
             defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
@@ -296,7 +283,11 @@ final class AppUtils {
             fileName = setName + "-timestamp-\(timestammp)"
         }
         
-        let storeInstrumentSet: InstrumentsSet = createInstrumentSet(setSettings: setSettings, instrumentSet: instrumentSet, duplicateLastTrack: duplicateLastTrack)
+        let storeInstrumentSet: InstrumentsSet = createInstrumentSet(
+            setSettings: setSettings,
+            instrumentSet: instrumentSet,
+            duplicateLastTrack: duplicateLastTrack
+        )
         
         InstrumentsSet.writeLoadedSet(setName: fileName, instrumentSet: storeInstrumentSet)
         
@@ -453,45 +444,45 @@ final class AppUtils {
     
     
     
-    //MARK: Set SESSION settings
-    static func setSessionSetting() -> SessionSettings {
-        
-        let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
-        
-        let sessionSetting = SessionSettings(
-            sensitivity: readSessionSettings.sensitivity,
-            setURL: readSessionSettings.setURL ?? URL("setSessionSetting.json")
-        )
-        
-        return sessionSetting
-    }
-    
-    //Write Session file to disk
-    static func createSessionFile(sensitivity: Float, setURL: URL){
-        
-        let fileName: String = "SeM-settings"
-        var localSensitifity: Float = 0
-        
-        //When loading a set we do not have the sensitifity present, so we load it from disk
-        if sensitivity == -1 {
-            //Load current sensitivity before writing
-            let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: fileName)
-            localSensitifity = readSessionSettings.sensitivity
-        }
-        else{
-            localSensitifity = sensitivity;
-        }
-        
-        
-        print("Create session file with URL: \(setURL)")
-        
-        let storeSettings = ManageSessionSettings(
-            sensitivity: localSensitifity,
-            setURL: setURL
-        )
-        
-        ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
-    }
+//    //MARK: Set SESSION settings
+//    static func setSessionSetting() -> SessionSettings {
+//        
+//        let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: "SeM-settings")
+//        
+//        let sessionSetting = SessionSettings(
+//            sensitivity: readSessionSettings.sensitivity,
+//            setURL: readSessionSettings.setURL ?? URL("setSessionSetting.json")
+//        )
+//        
+//        return sessionSetting
+//    }
+//    
+//    //Write Session file to disk
+//    static func createSessionFile(sensitivity: Float, setURL: URL){
+//        
+//        let fileName: String = "SeM-settings"
+//        var localSensitifity: Float = 0
+//        
+//        //When loading a set we do not have the sensitifity present, so we load it from disk
+//        if sensitivity == -1 {
+//            //Load current sensitivity before writing
+//            let readSessionSettings = ManageSessionSettings.readSessionSettings(fileName: fileName)
+//            localSensitifity = readSessionSettings.sensitivity
+//        }
+//        else{
+//            localSensitifity = sensitivity;
+//        }
+//        
+//        
+//        print("Create session file with URL: \(setURL)")
+//        
+//        let storeSettings = ManageSessionSettings(
+//            sensitivity: localSensitifity,
+//            setURL: setURL
+//        )
+//        
+//        ManageSessionSettings.writeSessionSettings(fileName: fileName, storeSessionSettings: storeSettings)
+//    }
     
     
     //MARK: editor

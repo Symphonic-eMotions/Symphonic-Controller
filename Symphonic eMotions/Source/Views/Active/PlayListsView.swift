@@ -11,6 +11,8 @@ import SwiftUI
 
 struct PlayListsView: View {
     
+    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
+    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -69,11 +71,9 @@ struct PlayListsView: View {
                         
                         if let url = urls.first {
                             
-                            AppUtils.createSessionFile(
-                                sensitivity: -1,
-                                setURL: url)
+                            currentUrl = url.absoluteString
 
-                            print("Load Header Playlist file \(url)")
+                            print("Load Header Playlist file \(url.absoluteString)")
                             
                             //Load settngs over current
                             setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
@@ -108,9 +108,11 @@ struct PlayListsView: View {
                             .onTapGesture {
                                 
                                 //Store chosen url
-                                AppUtils.createSessionFile(
-                                    sensitivity: -1,
-                                    setURL: url)
+                                currentUrl = url.absoluteString
+                                
+//                                AppUtils.createSessionFile(
+//                                    sensitivity: -1,
+//                                    setURL: url)
                                 
                                 print("Load Playlist file \(url)")
                                 
@@ -125,10 +127,13 @@ struct PlayListsView: View {
                                 sessionDisplay = setInfoModel.setSettings.defaultSkin
                             }
                             .onLongPressGesture {
+                                
                                 //Store chosen url
-                                AppUtils.createSessionFile(
-                                    sensitivity: -1,
-                                    setURL: url)
+                                currentUrl = url.absoluteString
+                                
+//                                AppUtils.createSessionFile(
+//                                    sensitivity: -1,
+//                                    setURL: url)
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))

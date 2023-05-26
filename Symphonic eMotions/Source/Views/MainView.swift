@@ -95,8 +95,9 @@ struct MainView: View {
                     ),
                     currentInstrumentsSetIsChanged: { instrumentsSet in
                         viewModel.currentModelInstrumentsSetChanged(
-                            instrumentsSet: instrumentsSet,
-                            sessionSettings: viewModel.mainState.sessionSettings
+                            instrumentsSet: instrumentsSet
+//                            ,
+//                            sessionSettings: viewModel.mainState.sessionSettings
                         )
                     },
                     conductor: viewModel.conductor
@@ -121,8 +122,9 @@ struct MainView: View {
                         ),
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet,
-                                sessionSettings: viewModel.mainState.sessionSettings
+                                instrumentsSet: instrumentsSet
+//                                ,
+//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor
@@ -196,8 +198,9 @@ struct MainView: View {
                             ),
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
-                                    instrumentsSet: instrumentsSet,
-                                    sessionSettings: viewModel.mainState.sessionSettings
+                                    instrumentsSet: instrumentsSet
+//                                    ,
+//                                    sessionSettings: viewModel.mainState.sessionSettings
                                 )
                             },
                             conductor: viewModel.conductor
@@ -221,8 +224,9 @@ struct MainView: View {
                             ),
                             currentInstrumentsSetIsChanged: { instrumentsSet in
                                 viewModel.currentModelInstrumentsSetChanged(
-                                    instrumentsSet: instrumentsSet,
-                                    sessionSettings: viewModel.mainState.sessionSettings
+                                    instrumentsSet: instrumentsSet
+//                                    ,
+//                                    sessionSettings: viewModel.mainState.sessionSettings
                                 )
                             },
                             conductor: viewModel.conductor
@@ -251,8 +255,9 @@ struct MainView: View {
                         ),
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet,
-                                sessionSettings: viewModel.mainState.sessionSettings
+                                instrumentsSet: instrumentsSet
+//                                ,
+//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor
@@ -272,8 +277,9 @@ struct MainView: View {
                         ),
                         currentInstrumentsSetIsChanged: { instrumentsSet in
                             viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet,
-                                sessionSettings: viewModel.mainState.sessionSettings
+                                instrumentsSet: instrumentsSet
+//                                ,
+//                                sessionSettings: viewModel.mainState.sessionSettings
                             )
                         },
                         conductor: viewModel.conductor

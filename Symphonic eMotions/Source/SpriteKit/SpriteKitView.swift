@@ -180,15 +180,16 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
                     .onLongPressGesture {
-                        self.showOverView.toggle()
+//                        self.showOverView.toggle()
+                        //FIXME: tap invokes setings sheet
                     }
                     
                     //The calibrator slider and video slider
-                    if showOverView {
-                        SensitivityView(
-                            playViewModel: playViewModel
-                        )
-                    }
+//                    if showOverView {
+//                        SensitivityView(
+//                            playViewModel: playViewModel
+//                        )
+//                    }
                 }
             }
         }

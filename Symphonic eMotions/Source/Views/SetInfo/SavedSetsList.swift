@@ -14,6 +14,8 @@ struct IdentifiableURL: Identifiable {
 
 struct SavedSetsList: View {
     
+    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "SavedSetsList"
+    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -75,9 +77,12 @@ struct SavedSetsList: View {
                             .onTapGesture {
                                 
                                 //Store chosen url
-                                AppUtils.createSessionFile(
-                                    sensitivity: -1,
-                                    setURL: url)
+                                
+                                currentUrl = url.absoluteString
+                                
+//                                AppUtils.createSessionFile(
+//                                    sensitivity: -1,
+//                                    setURL: url)
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
@@ -97,9 +102,11 @@ struct SavedSetsList: View {
                             .onTapGesture {
                                 
                                 //Store chosen url
-                                AppUtils.createSessionFile(
-                                    sensitivity: -1,
-                                    setURL: url)
+                                currentUrl = url.absoluteString
+                                
+//                                AppUtils.createSessionFile(
+//                                    sensitivity: -1,
+//                                    setURL: url)
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
