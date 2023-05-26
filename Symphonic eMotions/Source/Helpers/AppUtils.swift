@@ -13,7 +13,6 @@ import OrderedCollections
 final class AppUtils {
     
     private static let appStorage = UserDefaults.standard
-    
     static var setUrl: String  {
         appStorage.string(forKey: "currentUrl") ?? "AppUtils"
     }
@@ -47,15 +46,6 @@ final class AppUtils {
         try fileManager.copyItem(at: sourceURL, to: destinationURL)
     }
     
-    //MARK: Sets
-    static func loadSets(json: String) -> Sets {
-        
-        guard let sets = Sets.withJSON(json) else {
-            preconditionFailure()
-        }
-        return sets
-    }
-    
     //MARK: Instrument Set Loading
     static func loadInstrumentSet(json: String) -> InstrumentsSet {
         
@@ -64,7 +54,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levelSpeed: 0.5, levels: [0], playViewImages: nil, tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levelSpeed: 0.5, levels: [0], tracks: [])
         }
         return instrumentSet
     }
@@ -435,7 +425,6 @@ final class AppUtils {
             columns: setSettings.gridColumns,
             levelSpeed: setSettings.levelSpeed,
             levels: setSettings.levels,
-            playViewImages: instrumentSet.playViewImages,
             tracks: storeTracks
         )
             

@@ -31,7 +31,6 @@
 		7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2012A1D23A30049E4ED /* DemoView.swift */; };
 		7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */; };
 		7C3EC2082A1FE9D40049E4ED /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2072A1FE9D40049E4ED /* UserDefaultsKeys.swift */; };
-		7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C400788287EFED900A5E5C2 /* PlayViewImages.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
@@ -170,7 +169,6 @@
 		7C3EC2012A1D23A30049E4ED /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheetView.swift; sourceTree = "<group>"; };
 		7C3EC2072A1FE9D40049E4ED /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
-		7C400788287EFED900A5E5C2 /* PlayViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewImages.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C4EBB9329D3505500958954 /* SavedSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSetsList.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C4EBB9529D4A21300958954 /* Extenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenders.swift; sourceTree = "<group>"; };
@@ -546,7 +544,6 @@
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
-				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 			);
 			path = PlayAndEditView;
 			sourceTree = "<group>";
@@ -649,7 +646,6 @@
 				7C1FB0B929E45C9F00621909 /* MidiFiles.swift */,
 				C0AFDD022705BC24006EF64F /* Effect.swift */,
 				7CF327C42989504F003D33D3 /* Skin.swift */,
-				7C400788287EFED900A5E5C2 /* PlayViewImages.swift */,
 				C069591E26B4E77E002EB522 /* AreaValues.swift */,
 				7C6A341A28425F01006F2E95 /* PartFeedback.swift */,
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
@@ -669,6 +665,7 @@
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CCDE10228E2C61300343920 /* MasterTrack */,
+				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
 			);
 			path = Views;
@@ -828,7 +825,6 @@
 				C02E54EB26B53EC2003D503E /* PlayerControlsView.swift in Sources */,
 				C0C5129E27075DAA00DE3393 /* LowPassFilterEffect.swift in Sources */,
 				C0C512A027075DB800DE3393 /* DelayEffect.swift in Sources */,
-				7C400789287EFED900A5E5C2 /* PlayViewImages.swift in Sources */,
 				7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */,
 				7C6A341B28425F01006F2E95 /* PartFeedback.swift in Sources */,
 				7CF50F5129EEB7480016BAF4 /* NoteNumberView.swift in Sources */,
@@ -1084,7 +1080,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1126,7 +1122,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

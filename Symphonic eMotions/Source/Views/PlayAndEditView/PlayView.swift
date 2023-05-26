@@ -10,6 +10,9 @@ import AudioKit
 
 struct PlayView: View {
     
+    //To shut down the conductor if going inactive
+//    @Environment(\.scenePhase) private var scenePhase
+    
     @ObservedObject var playViewModel: PlayViewModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
@@ -124,6 +127,17 @@ struct PlayView: View {
             
             
         }
+//        .onChange(of: scenePhase) { phase in
+//            if phase == .inactive {
+//                
+//                print("Before going to the background stop extracting")
+//                
+//                playViewModel.frameExtractor.stopExtracting()
+//                playViewModel.conductor.pauzeEngineAndStopTracks(
+//                    setSettings: playViewModel.setSettings
+//                )
+//            }
+//        }
     }
 }
 
@@ -181,5 +195,4 @@ struct SliderView: View {
         }
         .frame(height: 50.0)
     }
-    
 }

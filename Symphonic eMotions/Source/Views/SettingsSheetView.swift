@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsSheetView: View {
     
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
-    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.5
+    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
     
     @ObservedObject var playViewModel: PlayViewModel
     @Binding var showingSheet: Bool
@@ -58,7 +58,7 @@ struct SettingsSheetView: View {
                 
                 VStack(alignment: .leading){
                     Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
-                    Slider(value: $levelSpeed, in: 0.5...2)
+                    Slider(value: $levelSpeed, in: 0.1...4)
                 }
                 
                 //Tempo

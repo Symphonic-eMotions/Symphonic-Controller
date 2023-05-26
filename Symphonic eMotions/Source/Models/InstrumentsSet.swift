@@ -90,7 +90,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         case columns = "gridColumns"
         case levelSpeed
         case levels = "levelDurations"
-        case playViewImages
         case tracks = "instrumentsConfig"
     }
     
@@ -118,9 +117,6 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Duration could be refectored to aditional level speed per level
     let levels: [Int]
     
-    //Skins
-    let playViewImages: PlayViewImages?
-    
     //Tracks
     var tracks: [Track]
     
@@ -140,7 +136,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         columns = try container.decode(Int.self, forKey: .columns)
         levelSpeed = try container.decode(Double.self, forKey: .levelSpeed)
         levels = try container.decode([Int].self, forKey: .levels)
-        playViewImages = try container.decodeIfPresent(PlayViewImages.self, forKey: .playViewImages)
         tracks = try container.decode([Track].self, forKey: .tracks)
         if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
             skin = skinRaw
@@ -196,7 +191,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         columns: Int,
         levelSpeed: Double,
         levels: [Int],
-        playViewImages: PlayViewImages?,
         tracks: [Track]
     ) {
         self.name = name
@@ -215,7 +209,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.columns = columns
         self.levelSpeed = levelSpeed
         self.levels = levels
-        self.playViewImages = playViewImages
         self.tracks = tracks
     }
     

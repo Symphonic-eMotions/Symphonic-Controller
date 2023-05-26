@@ -189,12 +189,14 @@ struct SpriteKitView: View {
                         scene.instrumentPart3aMidiClip = value.1
                         scene.instrumentPart3aScale = CGFloat(value.2)
                     }
-                    .onLongPressGesture {
-                        stopEngine = false
+                    .onTapGesture {
+                        print("short")
+                        stopEngine = true
                         presentSettingSheet.toggle()
                     }
-                    .onTapGesture {
-                        stopEngine = true
+                    .onLongPressGesture(minimumDuration: 1) {
+                        print("long")
+                        stopEngine = false
                         presentSettingSheet.toggle()
                     }
                     

@@ -690,6 +690,7 @@ final class Conductor {
     /*
      Here we have level increment logic
      */
+    
     internal func getAndOrIncreaseCurrentSetLevel(
         levelSpeed: Double,
         currentSetLevel: Double,
@@ -697,15 +698,35 @@ final class Conductor {
             
         if value > 0.1 {
             
-            //Correlation level speed (slider in editor) increment and movement (value)
-            let levelSpeedValue = currentSetLevel + (levelSpeed/50) * value
+            // Retrieve level speed from UserDefaults
+            let userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
             
-            //Muting is not hapening in over amount of levels.
+            // Correlation level speed (slider in editor) increment and movement (value)
+            let levelSpeedValue = currentSetLevel + (levelSpeed/50) * userDefaultsLevelSpeed * value
+            
+            // Muting is not happening in over amount of levels.
             return levelSpeedValue
         }
         
         return currentSetLevel
     }
+    
+//    internal func getAndOrIncreaseCurrentSetLevel(
+//        levelSpeed: Double,
+//        currentSetLevel: Double,
+//        value: Double ) -> Double {
+//
+//        if value > 0.1 {
+//
+//            //Correlation level speed (slider in editor) increment and movement (value)
+//            let levelSpeedValue = currentSetLevel + (levelSpeed/50) * @AppStateLevelSpeed * value
+//
+//            //Muting is not hapening in over amount of levels.
+//            return levelSpeedValue
+//        }
+//
+//        return currentSetLevel
+//    }
     
     private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
         

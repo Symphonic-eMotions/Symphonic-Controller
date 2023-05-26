@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import AVFoundation
 
 struct MainView: View {
     
@@ -39,6 +40,7 @@ struct MainView: View {
     
     var body: some View {
         
+        
         //Object for Master track effect editor
         //Does this also need to go to the MainViewModel?
         let masterTrackSetting = AppUtils.masterTrackViewObject(
@@ -65,16 +67,7 @@ struct MainView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )
-            .onAppear{
-                viewModel.conductor.playEngineAndTracks(
-                    setSettings: viewModel.mainState.setSettings,
-                    level: 0
-                )
-                viewModel.conductor.levelController(
-                    level: 0,
-                    setSettings: viewModel.mainState.setSettings
-                )
-            }
+            .onAppear(perform: checkCameraAuthorization)
             .padding(.top, 20)
         }
         
@@ -148,23 +141,9 @@ struct MainView: View {
                             sessionDisplaySub: $sessionDisplaySub
                         )
                         .environmentObject(fileController)
-//                        .navigationBarTitle(viewModel.mainState.currentInstrumentsSet.title())
                         .navigationBarHidden(false)
-                        
                         //It's not called PlayView for nothing
-                        .onAppear{
-                            //Start leveling over
-                            viewModel.leveling.pauseLevel = false
-                            viewModel.conductor.levelController(
-                                level: 0,
-                                setSettings: viewModel.mainState.setSettings
-                            )
-                            //Start sequencer
-                            viewModel.conductor.playEngineAndTracks(
-                                setSettings: viewModel.mainState.setSettings,
-                                level: 0
-                            )
-                        }
+                        .onAppear( perform: checkCameraAuthorization )
                         //If levels are completed go to count down view
                         .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
                             if viewModel.mainState.setSettings.currentPlaylist != .none {
@@ -268,6 +247,34 @@ struct MainView: View {
                 )
                 .environmentObject(fileController)
             }
+        }
+    }
+    
+    func checkCameraAuthorization() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: // The user has previously granted access to the camera.
+            //Start leveling over
+            viewModel.leveling.pauseLevel = false
+            viewModel.conductor.levelController(
+                level: 0,
+                setSettings: viewModel.mainState.setSettings
+            )
+            //Start sequencer
+            viewModel.conductor.playEngineAndTracks(
+                setSettings: viewModel.mainState.setSettings,
+                level: 0
+            )
+        case .notDetermined: // The user has not yet been asked for camera access.
+            return
+
+        case .denied: // The user has previously denied access.
+            return
+
+        case .restricted: // The user can't grant access due to restrictions.
+            return
+
+        @unknown default:
+            return
         }
     }
 }
