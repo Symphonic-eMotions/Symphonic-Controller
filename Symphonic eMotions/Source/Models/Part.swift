@@ -96,9 +96,9 @@ extension InstrumentsSet.Track {
             self.set(indexes: newIndexes, for: set)
         }
         
-        func isIndexSelected(index: Index, in set: InstrumentsSet) -> Bool {
-            indexes(for: set).contains { $0.column == index.column && $0.row == index.row }
-        }
+//        func isIndexSelected(index: Index, in set: InstrumentsSet) -> Bool {
+//            indexes(for: set).contains { $0.column == index.column && $0.row == index.row }
+//        }
         
     }
     

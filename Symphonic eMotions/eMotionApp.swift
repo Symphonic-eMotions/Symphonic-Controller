@@ -11,10 +11,6 @@ import AVFoundation
 @main
 struct eMotionApp: App {
     
-    //We need background audio for sampler loading, so we create some background audio!
-    @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var audioPlayer = AudioPlayer()
-    
     //We need a set loaded into ram and @AppStorage
     let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "SE-set-default.json"
@@ -54,34 +50,12 @@ struct eMotionApp: App {
             )
             .statusBar(hidden: true)
         }
-        
-        .onChange(of: scenePhase) { newScenePhase in
-            switch newScenePhase {
-            case .background:
-                print("App is in background")
-                
-//                if !audioPlayer.isAudioPlaying() {
-//                    audioPlayer.playTrudy()
-//                }
-                
-            case .inactive:
-                print("App is inactive")
-                
-//                if !audioPlayer.isAudioPlaying() {
-//                    audioPlayer.playTrudy()
-//                }
-                
-            case .active:
-                print("App is active")
-//                if audioPlayer.isAudioPlaying() {
-//                    audioPlayer.fadeOutAndStop()
-//                }
-            @unknown default:
-                print("Unknown")
-            }
-        }
     }
-    
+}
+
+
+
+
 //    func speak() {
 //
 //        let trudy = AVSpeechUtterance(string: "Greetings, this message is conveyed by your system administrator. You may be wondering about the reason behind this communication. This necessity arises because the Apple Sampler we are using, only has the capability to reload audio samples when the 'background audio allowed' setting is enabled. When it's not turned on all you get are sinusses for audio output. Due to this setting the application can only be approved by Apple when it hears an ongoing background sound. Therefore, this message is essential for that confirmation process. We apologize for any inconvenience this may cause.")
@@ -93,53 +67,3 @@ struct eMotionApp: App {
 //            autoVoice.speak(trudy)
 //        }
 //    }
-    
-    
-}
-
-class AudioPlayer: ObservableObject {
-    
-    var autoSound: AVAudioPlayer!
-    
-    func playTrudy() {
-        print("playTrudy")
-        
-        let sounds = ["Trudy01"]
-        
-        if let randomSound = sounds.randomElement() {
-            print("Random sound selected: \(randomSound)")
-            if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "aiff") {
-                print("Path exists: \(path)")
-                let url = URL(fileURLWithPath: path)
-                print("URL is valid: \(url)")
-                do {
-                    autoSound = try AVAudioPlayer(contentsOf: url)
-                    autoSound?.prepareToPlay()
-                    autoSound?.play()
-                } catch {
-                    print("Error: could not play sound: \(error)")
-                }
-            } else {
-                print("Failed to get path for resource.")
-            }
-        } else {
-            print("Failed to select random sound.")
-        }
-    }
-    
-    func isAudioPlaying() -> Bool {
-        return autoSound?.isPlaying ?? false
-    }
-    
-    func fadeOutAndStop() {
-        let fadeDuration = 1.0  // Use your desired fade duration
-        autoSound.setVolume(0, fadeDuration: fadeDuration)
-        
-        // After the fade duration, stop the player
-        DispatchQueue.main.asyncAfter(deadline: .now() + fadeDuration) {
-            self.autoSound.stop()
-            self.autoSound.currentTime = 0  // Optional: set the player back to the start
-        }
-    }
-    
-}

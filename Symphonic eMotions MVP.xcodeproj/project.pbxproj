@@ -72,6 +72,7 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CB7028329D84E1A003399BC /* EditTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksView.swift */; };
+		7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2555B2A27865900ACA903 /* ChangeView.swift */; };
 		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
@@ -207,6 +208,7 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CB7028229D84E1A003399BC /* EditTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksView.swift; sourceTree = "<group>"; };
+		7CC2555B2A27865900ACA903 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 				C084FFE826B31216009A4D0C /* Models */,
 				C084FFE626B31216009A4D0C /* ViewModels */,
 				C084FFEA26B31216009A4D0C /* Views */,
+				7CC2555B2A27865900ACA903 /* ChangeView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				7CF50F2729ED425C0016BAF4 /* AudioBufferSampler.swift in Sources */,
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
 				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
+				7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */,
 				7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,

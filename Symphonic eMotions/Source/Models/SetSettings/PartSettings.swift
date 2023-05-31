@@ -47,19 +47,9 @@ class PartSettings: Identifiable {
         var indexes: [InstrumentsSet.Track.Part.Index] = []
         for row in 0..<rows {
             for column in 0..<columns {
-                
-                //FIXME: this check should not be needed
-                let indexToCheck = row * columns + column
-                if indexToCheck >= 0 && indexToCheck < areaOfInterest.count {
-                    if areaOfInterest[row * columns + column] == 1 {
-                        indexes.append(InstrumentsSet.Track.Part.Index(row: row, column: column))
-                    }
+                if areaOfInterest[row * columns + column] == 1 {
+                    indexes.append(InstrumentsSet.Track.Part.Index(row: row, column: column))
                 }
-                else{
-                    print("FIXME: areaOfInterest changed!");
-                }
-                
-                
             }
         }
         return indexes

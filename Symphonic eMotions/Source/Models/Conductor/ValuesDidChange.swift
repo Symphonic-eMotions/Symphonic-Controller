@@ -51,12 +51,20 @@ extension Conductor {
             partNr = 0
             
             //No parts return
-            if track.parts.count == 0 {
-                return
-            }
+//            if track.parts.count == 0 {
+//                return
+//            }
             
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
+                
+//                guard part.areaOfInterest.count > 2 else {
+//                    //Stop engine
+//                    self.pauzeEngineAndStopTracks(setSettings: setSettings)
+//                    return
+//                }
+                
+                print("\(part.areaOfInterest.count) \(setSettings.gridRows) \(setSettings.gridColumns)")
                 
                 //We get the value from the areas of interest
                 let valuesMapped = part.interestIndexes(
@@ -65,7 +73,7 @@ extension Conductor {
                         values[$0.row][$0.column].scaledValue
                 }
                 
-                guard !valuesMapped.isEmpty else { return }
+//                guard !valuesMapped.isEmpty else { return }
                 
                 //Find highest value (maximum) with it's index
                 let maxIndexPartTupple = vDSP.indexOfMaximum(valuesMapped)

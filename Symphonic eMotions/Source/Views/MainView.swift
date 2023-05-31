@@ -10,7 +10,7 @@ import SwiftUI
 import AVFoundation
 
 struct MainView: View {
-    
+        
     @ObservedObject var viewModel: MainViewModel
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
@@ -143,8 +143,6 @@ struct MainView: View {
                         .environmentObject(fileController)
                         .navigationBarHidden(false)
                         //It's not called PlayView for nothing
-//                        .onAppear( perform: checkCameraAuthorization )
-                        
                         .onAppear{
                             viewModel.conductor.playEngineAndTracks(
                                 setSettings: viewModel.mainState.setSettings,
@@ -260,33 +258,9 @@ struct MainView: View {
                 .environmentObject(fileController)
             }
         }
+        
+        ChangeView()
+        
     }
-    
-//    func checkCameraAuthorization() {
-//        switch AVCaptureDevice.authorizationStatus(for: .video) {
-//        case .authorized: // The user has previously granted access to the camera.
-//            //Start leveling over
-//            viewModel.leveling.pauseLevel = false
-//            viewModel.conductor.levelController(
-//                level: 0,
-//                setSettings: viewModel.mainState.setSettings
-//            )
-//            //Start sequencer
-//            viewModel.conductor.playEngineAndTracks(
-//                setSettings: viewModel.mainState.setSettings,
-//                level: 0
-//            )
-//        case .notDetermined: // The user has not yet been asked for camera access.
-//            return
-//
-//        case .denied: // The user has previously denied access.
-//            return
-//
-//        case .restricted: // The user can't grant access due to restrictions.
-//            return
-//
-//        @unknown default:
-//            return
-//        }
-//    }
 }
+
