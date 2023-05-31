@@ -15,19 +15,6 @@ class Leveling {
     var pauseLevel: Bool = false
     
     var trackLevels: [Int] = []
-    
-    func pauzeOpacity( isPlaying: Bool ) -> Double {
-        
-        var opacity: Double = 0
-        
-        if pauseLevel { opacity = 1 }
-        else { opacity = 0.22 }
-        
-        if !isPlaying { opacity = 0 }
-        
-        return opacity
-    }
-    
 }
 
 class TrackLevelsModel: ObservableObject {

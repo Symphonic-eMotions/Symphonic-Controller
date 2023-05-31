@@ -132,10 +132,12 @@ final class PlayViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
+    func stopPlaying(){
+        conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
+    }
+    
     //SwiftUI interface controllers
     func tapMediaControlButton() {
-        
-        //leveling.pauseLevel = conductor.isConductorPlayingSubject.value
         
         //fix for system stop after 12 set changes
         //If you remove this, video won't be passed through after 12 set changes

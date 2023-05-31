@@ -68,7 +68,6 @@
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
 		7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */; };
 		7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58352292FAD2F000C46FF /* EditGridView.swift */; };
-		7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58354292FAD47000C46FF /* EditLevelView.swift */; };
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
@@ -77,7 +76,6 @@
 		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
-		7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0333328880ED2008CE900 /* LevelSunView.swift */; };
 		7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD417FC2A07C6D7006831CE /* AreaConnection.swift */; };
 		7CD418032A095388006831CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CD418052A095388006831CE /* Localizable.strings */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
@@ -205,7 +203,6 @@
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonWithLongPress.swift; sourceTree = "<group>"; };
 		7CB58352292FAD2F000C46FF /* EditGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGridView.swift; sourceTree = "<group>"; };
-		7CB58354292FAD47000C46FF /* EditLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLevelView.swift; sourceTree = "<group>"; };
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
@@ -214,7 +211,6 @@
 		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
-		7CD0333328880ED2008CE900 /* LevelSunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSunView.swift; sourceTree = "<group>"; };
 		7CD417FC2A07C6D7006831CE /* AreaConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaConnection.swift; sourceTree = "<group>"; };
 		7CD418042A095388006831CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD418062A095474006831CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -328,9 +324,7 @@
 		7C109D7F2851FF5C008E08D2 /* LevelView */ = {
 			isa = PBXGroup;
 			children = (
-				7CB58354292FAD47000C46FF /* EditLevelView.swift */,
 				7C109D802851FF88008E08D2 /* LevelView.swift */,
-				7CD0333328880ED2008CE900 /* LevelSunView.swift */,
 			);
 			path = LevelView;
 			sourceTree = "<group>";
@@ -601,7 +595,6 @@
 				7CFA009929A74E01001D8A5D /* Helpers */,
 				7CFA00A729A759D0001D8A5D /* StateObjects */,
 				C084FFE826B31216009A4D0C /* Models */,
-				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				C084FFE626B31216009A4D0C /* ViewModels */,
 				C084FFEA26B31216009A4D0C /* Views */,
 			);
@@ -663,6 +656,7 @@
 				7C3EC2002A1D236F0049E4ED /* Demo */,
 				7CCFE4A72A03DC56008AE3EE /* Active */,
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
+				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CCDE10228E2C61300343920 /* MasterTrack */,
 				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
@@ -868,7 +862,6 @@
 				7C1FB0B829E455CB00621909 /* TrackTypeView.swift in Sources */,
 				C069591F26B4E77E002EB522 /* AreaValues.swift in Sources */,
 				C069590226B4E029002EB522 /* VideoPreviewView.swift in Sources */,
-				7CD0333428880ED2008CE900 /* LevelSunView.swift in Sources */,
 				7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */,
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
@@ -881,7 +874,6 @@
 				7CF50F1E29E888200016BAF4 /* NoteNumberToGridView.swift in Sources */,
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CF50F5329EEBECD0016BAF4 /* NoteNumberToLevelView.swift in Sources */,
-				7CB58355292FAD47000C46FF /* EditLevelView.swift in Sources */,
 				7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */,
 				7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */,
 				7CF50F4B29ED83090016BAF4 /* NoteSources.swift in Sources */,

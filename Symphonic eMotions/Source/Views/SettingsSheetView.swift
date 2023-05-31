@@ -105,6 +105,16 @@ struct SettingsSheetView: View {
                 
                 EMButton(action: {
                     showingSheet = false
+                    if !playViewModel.conductor.isConductorPlayingSubject.value {
+                        playViewModel.conductor.levelController(
+                            level: Int(playViewModel.leveling.currentSetLevelSubject.value),
+                            setSettings: playViewModel.setSettings
+                        )
+                        playViewModel.conductor.playEngineAndTracks(
+                            setSettings: playViewModel.setSettings,
+                            level: Int(playViewModel.leveling.currentSetLevelSubject.value)
+                        )
+                    }
                 }, color: .green, isSolid: true) {
                     Text(NSLocalizedString("Continue", comment: ""))
                 }
@@ -113,7 +123,7 @@ struct SettingsSheetView: View {
             }
             .onAppear{
                 if stopEngine {
-                    playViewModel.tapMediaControlButton()
+                    playViewModel.stopPlaying()
                 }
             }
             .padding()
