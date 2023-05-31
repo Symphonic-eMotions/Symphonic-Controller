@@ -158,9 +158,9 @@ struct EditorView: View {
                             setInfoModel: setInfoModel
                         )
                     }
-                    LevelSpeedView(
-                        setInfoModel: setInfoModel
-                    )
+//                    LevelSpeedView(
+//                        setInfoModel: setInfoModel
+//                    )
                     LevelsView(
                         setInfoModel: setInfoModel
                     )

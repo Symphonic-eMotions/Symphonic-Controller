@@ -15,18 +15,17 @@ struct BpmView: View {
         
         HStack{
             
-            Text("BPM")
-            .frame(width: 40)
-            .padding(.leading)
+            Text("\(Int(setInfoModel.setSettings.bpm))")
+                .frame(width: 40)
+                .padding(.leading)
             
-            TextField("BPM", text: $setInfoModel.setSettings.bpmAsString)
-//            .keyboardType(.numberPad)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .frame(width: 85)
-            
-            if !setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
-                Text("Fixed tempo set (Stems)")
-            }
+            Slider(value: $setInfoModel.setSettings.bpm, in: 40...200, step: 1)
+                .padding()
+        }
+        
+        if !setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
+            Text("Fixed tempo set (Stems)")
         }
     }
 }
+

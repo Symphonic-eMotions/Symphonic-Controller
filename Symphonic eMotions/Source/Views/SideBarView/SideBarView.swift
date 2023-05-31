@@ -160,9 +160,6 @@ struct SideBarView: View {
                 //Pro sets, init view is .pro so sessionDisplaySub is set to .start on app init
                 if [.pro,.setInfo,.swiftUI].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
                     
-                    
-                    let _ = print("sessionDisplay \(sessionDisplay) sessionDisplaySub \(sessionDisplaySub)")
-                    
                     ForEach(viewModel.setFiles) { setFile in
                         Button(action: {
                             

@@ -32,7 +32,6 @@ extension Conductor {
         
         //The level updater
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-            levelSpeed: setSettings.levelSpeed,
             currentSetLevel: currentSetLevel,
             value: averageForLevelupdate
         )
