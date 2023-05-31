@@ -443,6 +443,7 @@ final class Conductor {
                         trudy.voice = AVSpeechSynthesisVoice(language: "en-AU")
                         trudy.rate = 0.50
                         trudy.pitchMultiplier = 1.1
+                        trudy.volume = 0.5
                         autoVoice.speak(trudy)
                     }
                 }
@@ -465,6 +466,7 @@ final class Conductor {
                     autoSound = try AVAudioPlayer(contentsOf: url)
                     autoSound?.prepareToPlay()
                     autoSound?.play()
+                    autoSound?.volume = 0.07
                 } catch {
                     print("Error: could not play sound: \(error)")
                 }

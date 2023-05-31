@@ -138,6 +138,16 @@ struct SpriteKitView: View {
                         scene: scene,
                         options: [.allowsTransparency]
                     )
+                    .onAppear{
+                        playViewModel.conductor.playEngineAndTracks(
+                            setSettings: playViewModel.setSettings,
+                            level: 0
+                        )
+                        playViewModel.conductor.levelController(
+                            level: 0,
+                            setSettings: playViewModel.setSettings
+                        )
+                    }
                     //Present sheet
                     .sheet(isPresented: $presentSettingSheet) {
                         SettingsSheetView(

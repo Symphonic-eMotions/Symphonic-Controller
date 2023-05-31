@@ -47,7 +47,6 @@ struct PlayView: View {
                 LevelView(
                     playViewModel: playViewModel
                 )
-                .padding(.trailing)
                 
                 //Transport buttons
                 PlayerControlsView(
@@ -107,9 +106,23 @@ struct PlayView: View {
                     .environmentObject(fileController)
                 }
                 else {
-                    Spacer()
-                    Text("If playlist hold level and next set")
-                        .foregroundColor(.gray)
+                    HStack{
+                        
+                        EMButton(action: {
+                            playViewModel.leveling.pauseLevel.toggle()
+                        }, color: .accentColor, isSolid: playViewModel.leveling.pauseLevel) {
+                            Text(NSLocalizedString("Hold level", comment: ""))
+                        }
+                        
+                        EMButton(action: {
+                            playViewModel.leveling.pauseLevel = false
+                            let nrLevels = playViewModel.playViewState.currentInstrumentsSet.levels.count
+                            playViewModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+                        }, color: .accentColor, isSolid: false) {
+                            Text(NSLocalizedString("Finish", comment: ""))
+                        }
+                        
+                    }
                 }
                 Spacer()
             }
