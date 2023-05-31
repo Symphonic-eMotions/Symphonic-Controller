@@ -22,16 +22,11 @@ struct ChangeView: View {
             switch newScenePhase {
             case .background:
                 print("App is in background")
-                if !audioPlayer.isAudioPlaying() {
-                    audioPlayer.playTrudy()
-                }
+                    audioPlayer.enableBackground()
             case .inactive:
                 print("App is inactive")
             case .active:
                 print("App is active")
-                if audioPlayer.isAudioPlaying() {
-                    audioPlayer.fadeOutAndStop()
-                }
             @unknown default:
                 print("Unknown")
             }
@@ -42,6 +37,17 @@ struct ChangeView: View {
 class AudioPlayer: ObservableObject {
     
     var autoSound: AVAudioPlayer!
+    
+    func enableBackground(){
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
+            print("Playback OK")
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("Session is Active")
+        } catch {
+            print(error)
+        }
+    }
     
     func playTrudy() {
         print("playTrudy")
@@ -55,14 +61,7 @@ class AudioPlayer: ObservableObject {
                 let url = URL(fileURLWithPath: path)
                 print("URL is valid: \(url)")
                 
-                do {
-                    try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
-                    print("Playback OK")
-                    try AVAudioSession.sharedInstance().setActive(true)
-                    print("Session is Active")
-                } catch {
-                    print(error)
-                }
+                enableBackground()
                 
                 do {
                     autoSound = try AVAudioPlayer(contentsOf: url)
@@ -94,6 +93,5 @@ class AudioPlayer: ObservableObject {
             self.autoSound.currentTime = 0  // Optional: set the player back to the start
         }
     }
-    
 }
 
