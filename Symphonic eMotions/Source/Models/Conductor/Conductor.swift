@@ -101,9 +101,6 @@ final class Conductor {
         loadMaster(mixer: mixer)
         audioEngine.output = mixerMaster
         loadTracks(currentSetLevel: 0)
-        
-        //TODO: Don't load sound effects in .zorg
-//        loadSoundEffects()
     }
     
     //Function to reset variables, is called on change of set
@@ -196,9 +193,6 @@ final class Conductor {
         loadTracks(currentSetLevel: currentSetLevel)
         
         loadMaster(mixer: mixer)
-        
-        //TODO: Load based on build settings
-//        loadSoundEffects()
     }
     
     
@@ -264,22 +258,6 @@ final class Conductor {
             //Turn tracks off so things will be quiet to start off with
             let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
             trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: envOff)
-        }
-    }
-    
-    //Interaction sound library
-    //TODO: needs controller
-    private func loadSoundEffects(){
-        
-        let exsFile = "SoundEffects"
-        soundEffectSampler.amplitude = -10
-        mixer.addInput(soundEffectSampler)
-        
-        do {
-            
-            try soundEffectSampler.loadEXS24("Sounds/Sampler Instruments/\(exsFile)")
-        } catch {
-            print("Error loading EXS: \(exsFile)")
         }
     }
     
