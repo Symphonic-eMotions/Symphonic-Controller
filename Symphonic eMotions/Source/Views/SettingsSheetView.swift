@@ -58,7 +58,7 @@ struct SettingsSheetView: View {
                 
                 VStack(alignment: .leading){
                     Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
-                    Slider(value: $levelSpeed, in: 0.1...4)
+                    Slider(value: $levelSpeed, in: 0.1...1)
                 }
                 
                 //Tempo
