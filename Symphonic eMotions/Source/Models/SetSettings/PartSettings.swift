@@ -14,8 +14,8 @@ class PartSettings: Identifiable {
     var partNumber: Int
     var rampUp: Double
     var rampDown: Double
+    var minimalLevel: Double
     var areaOfInterest: [Int]
-//    var areaOfIntersetBoostFactor: [Int]
     var areaOfInterestColor: [Color]
     var damperTarget: InstrumentsSet.Track.Part.DamperTarget
     var dontDrawVisual: Bool
@@ -25,8 +25,8 @@ class PartSettings: Identifiable {
          partNumber: Int,
          rampUp: Double,
          rampDown: Double,
+         minimalLevel: Double,
          areaOfInterest: [Int],
-//         areaOfIntersetBoostFactor: [Int],
          areaOfInterestColor: [Color],
          damperTarget: InstrumentsSet.Track.Part.DamperTarget,
          dontDrawVisual: Bool
@@ -36,8 +36,8 @@ class PartSettings: Identifiable {
         self.partNumber = partNumber
         self.rampUp = rampUp
         self.rampDown = rampDown
+        self.minimalLevel = minimalLevel
         self.areaOfInterest = areaOfInterest
-//        self.areaOfIntersetBoostFactor = areaOfIntersetBoostFactor
         self.areaOfInterestColor = areaOfInterestColor
         self.damperTarget = damperTarget
         self.dontDrawVisual = dontDrawVisual

@@ -60,6 +60,7 @@
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
 		7C8C3D9F28D306D00051BAC9 /* PartFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */; };
+		7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
@@ -71,7 +72,7 @@
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
-		7CB7028329D84E1A003399BC /* EditTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksView.swift */; };
+		7CB7028329D84E1A003399BC /* EditTracksCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */; };
 		7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2555B2A27865900ACA903 /* ChangeView.swift */; };
 		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
@@ -196,6 +197,7 @@
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackState.swift; sourceTree = "<group>"; };
+		7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLevelView.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
@@ -207,7 +209,7 @@
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
-		7CB7028229D84E1A003399BC /* EditTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksView.swift; sourceTree = "<group>"; };
+		7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksCreatorView.swift; sourceTree = "<group>"; };
 		7CC2555B2A27865900ACA903 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -416,7 +418,7 @@
 		7CD417FF2A092AEE006831CE /* TrackEditor */ = {
 			isa = PBXGroup;
 			children = (
-				7CB7028229D84E1A003399BC /* EditTracksView.swift */,
+				7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */,
 				7C1FB0B529E4429700621909 /* InLevelView.swift */,
 				7CF50F5429EF165B0016BAF4 /* StartTypeView.swift */,
 				7C1FB0B729E455CB00621909 /* TrackTypeView.swift */,
@@ -425,6 +427,7 @@
 				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
 				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
 				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
+				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
 				7CF50F1D29E888200016BAF4 /* NoteNumberToGridView.swift */,
 				7CF50F5229EEBECD0016BAF4 /* NoteNumberToLevelView.swift */,
 				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
@@ -796,6 +799,7 @@
 				7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */,
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
+				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
 				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
@@ -901,7 +905,7 @@
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */,
-				7CB7028329D84E1A003399BC /* EditTracksView.swift in Sources */,
+				7CB7028329D84E1A003399BC /* EditTracksCreatorView.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,

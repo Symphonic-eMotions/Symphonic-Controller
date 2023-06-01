@@ -40,7 +40,6 @@ struct MainView: View {
     
     var body: some View {
         
-        
         //Object for Master track effect editor
         //Does this also need to go to the MainViewModel?
         let masterTrackSetting = AppUtils.masterTrackViewObject(

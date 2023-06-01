@@ -145,6 +145,7 @@ final class AppUtils {
                     partNumber: partNumber,
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
+                    minimalLevel: partLoaded.damperTarget.nodeSettings!.minimalLevel ?? 0.1,
                     areaOfInterest: partLoaded.areaOfInterest,
                     areaOfInterestColor: self.getPartColors(
                         trackColor: trackLoaded.instrumentColor,
@@ -254,12 +255,9 @@ final class AppUtils {
             
             //Strip extension .json
             let noExtension = setSettings.setURL.deletingPathExtension()
-            
             let parentDirectoryName = noExtension.deletingLastPathComponent().lastPathComponent
-            
             //Save to playlist
             if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
-                
                 fileName = "\(parentDirectoryName)/\(noExtension.lastPathComponent)"
             }
             else{
@@ -325,7 +323,7 @@ final class AppUtils {
             for part in track.parts {
                 
                 let storeNodeSettings = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
-                    minimalLevel: part.damperTarget.nodeSettings!.minimalLevel,
+                    minimalLevel: setSettings.tracks[track.trackId]!.parts[part.id]!.minimalLevel,
                     levelPart: part.damperTarget.nodeSettings?.levelPart,
                     tempoLow: part.damperTarget.nodeSettings?.tempoLow,
                     tempoHigh: part.damperTarget.nodeSettings?.tempoHigh,

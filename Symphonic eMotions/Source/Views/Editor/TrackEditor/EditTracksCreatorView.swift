@@ -1,5 +1,5 @@
 //
-//  EditTracks.swift
+//  EditTracksCreatorView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 01/04/2023.
@@ -7,13 +7,7 @@
 
 import SwiftUI
 
-//struct Item: Identifiable, Equatable {
-//    let id = UUID()
-//    let name: String
-//    let details: String
-//}
-
-struct EditTracksView: View {
+struct EditTracksCreatorView: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: EditorParts
@@ -109,6 +103,7 @@ struct EditTracksView: View {
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
                     }
+                    .padding(.trailing)
                 }
                 .onTapGesture {
                     withAnimation {
@@ -121,7 +116,7 @@ struct EditTracksView: View {
                     }
                 }
                 
-                //If navigation header is tapped
+                //If editor parts is selected OR If navigation header is tapped
                 if showEditorPart == editorPart || showEditorPart == .levels {
                     
                     InLevelView(
@@ -151,7 +146,7 @@ struct EditTracksView: View {
                 }
                 if showEditorPart == editorPart || showEditorPart == .variation {
                     
-                    //Variation type
+                    //Variation type (position, level)
                     TrackTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -178,6 +173,7 @@ struct EditTracksView: View {
                             )
                         }
                     }
+                    
                     else if trackTypeLocal[key] == .variationByPosition {
                         
                         if noteSourceLocal[key] == .midiFile {
@@ -189,6 +185,7 @@ struct EditTracksView: View {
                             )
                         }
                         else if noteSourceLocal[key] == .noteNumbers {
+                            
                             NoteNumberToGridView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -216,6 +213,12 @@ struct EditTracksView: View {
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
                         areaOfInterest: $areaOfInterest
+                    )
+                    
+                    MinimalLevelView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
                     )
                 }
                 Divider()

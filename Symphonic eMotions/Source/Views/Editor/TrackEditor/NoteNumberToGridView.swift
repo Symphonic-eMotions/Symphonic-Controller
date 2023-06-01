@@ -61,7 +61,7 @@ struct NoteNumberToGridView: View {
             
             HStack(){
                 
-                Text("Place note numbers in grid: \(updateView)")
+                Text("Place note numbers in grid:")
                 .frame(width: columnWidth, alignment: .leading)
         
                 let gridRows: Int = setInfoModel.setSettings.gridRows

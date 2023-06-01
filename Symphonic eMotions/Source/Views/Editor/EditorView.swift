@@ -77,7 +77,7 @@ struct EditorView: View {
                     let selectableEditorParts: [EditorParts] = setInfoModel.selectableEditorParts()
                     let trackNames: [String:String] = setInfoModel.trackNames()
                     
-                    Picker("Select  editor part", selection: $showEditorPart) {
+                    Picker("Select editor part", selection: $showEditorPart) {
                         ForEach(selectableEditorParts, id: \.self) { part in
                             if trackNames.contains(where: {$0.key == part.rawValue}) {
                                 Text(trackNames[part.rawValue] ?? "Unnamed track").tag(part)
@@ -168,7 +168,7 @@ struct EditorView: View {
                 
                 Divider()
                 
-                EditTracksView(
+                EditTracksCreatorView(
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart
                 )
