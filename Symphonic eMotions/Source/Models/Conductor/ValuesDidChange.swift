@@ -50,21 +50,8 @@ extension Conductor {
             //Reset part per track
             partNr = 0
             
-            //No parts return
-//            if track.parts.count == 0 {
-//                return
-//            }
-            
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
-                
-//                guard part.areaOfInterest.count > 2 else {
-//                    //Stop engine
-//                    self.pauzeEngineAndStopTracks(setSettings: setSettings)
-//                    return
-//                }
-                
-                print("\(part.areaOfInterest.count) \(setSettings.gridRows) \(setSettings.gridColumns)")
                 
                 //We get the value from the areas of interest
                 let valuesMapped = part.interestIndexes(
@@ -93,13 +80,13 @@ extension Conductor {
                 //TrackType -> Variation by level || position
                 if partNr == 0 {
                     
-                    //Decide WHAT to play for midi
+                    //Decide WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController
                     
-                    //For notenumner one shot play direct
+                    //We're tracking position
                     if track.trackType == .variationByPosition {
                         
-                        //Make sure its not the original but the mapped maxIndex
+                        //Position AND Midi files AND Make sure its not the original but the mapped maxIndex
                         if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
                             
                             //This is the mapped value from the editor .midiFile .variationByPosition
@@ -122,13 +109,18 @@ extension Conductor {
                             }
                         }
                         
-                        //Make sure its not the original but the mapped maxIndex
+                        //Position AND note numbers
                         else if track.noteSource == .noteNumbers {
                             
+                            //Start with movement AND Trigger single note
                             if [.loopedTrigger,.oneShot].contains(track.startType) {
                                 
-                                let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
-                                track.playThisNote = noteNumber
+                                //We trigger only if above minimalLevel treshold
+                                if value > part.minimalLevel {
+                                    
+                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+                                    track.playThisNote = noteNumber
+                                }
                             }
                         }
                         
@@ -138,15 +130,13 @@ extension Conductor {
                     
                     //Levels Midi
 //                    else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .midiFile {
-//
-//
-//
 //                        //This is the chosen note number in the editor NoteNumberToLevelView()
 //                        let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
 //                        track.playThisNote = noteNumber
 //                        track.currentLevel = Int(localCurrentSetLevel)
 //                    }
-                    //Levels Note numbers
+                    
+                    //Varition by level AND Note numbers AND level change
                     else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .noteNumbers {
                         
                         for note in track.notesArePlaying {
@@ -194,8 +184,8 @@ extension Conductor {
                         }
                         else{
                             
-                            //Play note if area active
-                            if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) {
+                            //Play note Number && note is not already playing AND movement is above minimal level
+                            if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) && value > part.minimalLevel {
                                 
                                 playNoteNumber(track, track.playThisNote)
                                 //Add it to the playing note array

@@ -215,6 +215,8 @@ struct EditTracksCreatorView: View {
                         areaOfInterest: $areaOfInterest
                     )
                     
+                    //Dampertarget view
+                    
                     MinimalLevelView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,

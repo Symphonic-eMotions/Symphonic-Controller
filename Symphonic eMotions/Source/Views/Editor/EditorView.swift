@@ -230,6 +230,7 @@ struct EditorView: View {
                     }, color: .red, isSolid: true, maxWidth: 130, height: 35
                 ){ Text(NSLocalizedString("Save", comment: "")) }
                 .frame(width: 130)
+                .padding(.trailing)
             }
             
             EMButton(
@@ -249,6 +250,7 @@ struct EditorView: View {
                 }, color: .blue, isSolid: true, maxWidth: 130, height: 35
             ){ Text(NSLocalizedString("Cancel", comment: "")) }
             .frame(width: 130)
+            .padding(.leading)
         }
         .padding()
         
