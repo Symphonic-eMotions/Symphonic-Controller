@@ -179,6 +179,25 @@ struct EditorView: View {
             
             EMButton(
                 action: {
+                    //Change the View
+                    if sessionDisplaySub == .playListEditor {
+                        sessionDisplay = .playlists
+                        sessionDisplaySub = .playlists
+                    }
+                    else{
+                        sessionDisplay = .setInfo
+                        sessionDisplaySub = .none
+                    }
+                    
+                    
+                    
+                }, color: .blue, isSolid: true, maxWidth: 130, height: 35
+            ){ Text(NSLocalizedString("Cancel", comment: "")) }
+            .frame(width: 130)
+            .padding(.trailing)
+            
+            EMButton(
+                action: {
                     let fileName = AppUtils.createWorkingFile(
                         setSettings: setInfoModel.setSettings,
                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
@@ -200,57 +219,38 @@ struct EditorView: View {
                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
             ){ Text(NSLocalizedString("New set", comment: "")) }
             .frame(width: 130)
+            .padding(.leading)
             
-            
-            //No saving for template files wich are in the bundle
-            if setInfoModel.setSettings.setURL.absoluteString != "dontOverWrite" {
-                EMButton(
-                    action: {
-                        
-                        let fileName = AppUtils.createWorkingFile(
-                            setSettings: setInfoModel.setSettings,
-                            instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                            duplicateLastTrack: false,
-                            asNewFile: false
-                        )
-                        fileController.addSetFileURLToController(fileName: fileName)
-                        
-                        //Figure out if we opened from playlists
-                        let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
-                        
-                        //Change the View (this check is doubled in createWorkingFile)
-                        if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
-                            sessionDisplay = .playlists
-                            sessionDisplaySub = .playlists
-                        } else {
-                            sessionDisplay = .setInfo
-                            sessionDisplaySub = .none
-                        }
-                        
-                    }, color: .red, isSolid: true, maxWidth: 130, height: 35
-                ){ Text(NSLocalizedString("Save", comment: "")) }
-                .frame(width: 130)
-                .padding(.trailing)
-            }
-            
+            //This editor is unreachable for editing Bundle files, so no optional save button
             EMButton(
                 action: {
-                    //Change the View
-                    if sessionDisplaySub == .playListEditor {
+                    
+                    let fileName = AppUtils.createWorkingFile(
+                        setSettings: setInfoModel.setSettings,
+                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                        duplicateLastTrack: false,
+                        asNewFile: false
+                    )
+                    fileController.addSetFileURLToController(fileName: fileName)
+                    
+                    //Figure out if we opened from playlists
+                    let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
+                    
+                    //Change the View (this check is doubled in createWorkingFile)
+                    if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
                         sessionDisplay = .playlists
                         sessionDisplaySub = .playlists
-                    }
-                    else{
+                    } else {
                         sessionDisplay = .setInfo
                         sessionDisplaySub = .none
                     }
                     
-                    
-                    
-                }, color: .blue, isSolid: true, maxWidth: 130, height: 35
-            ){ Text(NSLocalizedString("Cancel", comment: "")) }
+                }, color: .red, isSolid: true, maxWidth: 130, height: 35
+            ){ Text(NSLocalizedString("Save", comment: "")) }
             .frame(width: 130)
-            .padding(.leading)
+            
+            
+            
         }
         .padding()
         

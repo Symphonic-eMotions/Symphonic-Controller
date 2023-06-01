@@ -9,10 +9,9 @@ import SwiftUI
 
 struct PartFeedbackView: View {
     
+    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
     @ObservedObject var playViewModel: PlayViewModel
-    
     @EnvironmentObject var fileController: FileController
-    
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
@@ -253,9 +252,7 @@ struct PartFeedbackView: View {
                         }
                         
                         //Save set, if not a bundle file
-                        //FIXME: check if url is in bundle
-                        let _ = print("//FIXME: check if url is in bundle")
-                        if "dontOverWrite" == "dontOverWrite" {
+                        if currentUrl.contains("/Documents/") {
                             
                             //Save user file / playlist file
                             EMButton(

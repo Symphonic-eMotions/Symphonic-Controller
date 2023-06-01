@@ -77,13 +77,7 @@ struct SavedSetsList: View {
                             .onTapGesture {
                                 
                                 //Store chosen url
-                                
                                 currentUrl = url.absoluteString
-                                
-//                                AppUtils.createSessionFile(
-//                                    sensitivity: -1,
-//                                    setURL: url)
-                                
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
                                 //Change the View to the selected view
@@ -103,10 +97,6 @@ struct SavedSetsList: View {
                                 
                                 //Store chosen url
                                 currentUrl = url.absoluteString
-                                
-//                                AppUtils.createSessionFile(
-//                                    sensitivity: -1,
-//                                    setURL: url)
                                 
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))

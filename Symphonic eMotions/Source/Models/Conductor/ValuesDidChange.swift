@@ -86,6 +86,8 @@ extension Conductor {
                     //We're tracking position
                     if track.trackType == .variationByPosition {
                         
+                        
+                        
                         //Position AND Midi files AND Make sure its not the original but the mapped maxIndex
                         if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
                             

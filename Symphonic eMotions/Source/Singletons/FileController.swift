@@ -114,41 +114,6 @@ class FileController: ObservableObject {
         return false
     }
     
-//    public func date(url: URL) -> String{
-//        let nameParts = urlToNameParts(url: url)
-//        if nameParts.count > 1 {
-//            let date = Date(timeIntervalSince1970: Double(nameParts.last!)!)
-//            let format = date.getFormattedDate(format: "dd-MM-yyyy HH:mm")
-//            return format
-//        }
-//        return nameParts.first ?? "No name"
-//    }
-    
-//    public func date(url: URL) -> String {
-//        let nameParts = urlToNameParts(url: url)
-//        if nameParts.count > 1 {
-//            let timestamp = Double(nameParts.last!)!
-//            let date = Date(timeIntervalSince1970: timestamp)
-//
-//            // Create a RelativeDateTimeFormatter instance
-//            let formatter = RelativeDateTimeFormatter()
-//
-//            // Set the locale to the system locale to use the user's preferred language
-//            formatter.locale = .current
-//
-//            // Format the date relative to the current date
-//            let relativeDate = formatter.localizedString(for: date, relativeTo: Date())
-//
-//            // Append the time
-//            let timeFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)!
-//            let timeFormatter = DateFormatter()
-//            timeFormatter.dateFormat = timeFormat
-//            let time = timeFormatter.string(from: date)
-//            return "\(relativeDate) at \(time)"
-//        }
-//        return nameParts.first ?? "No name"
-//    }
-    
     public func date(url: URL) -> String {
         let nameParts = urlToNameParts(url: url)
         if nameParts.count > 1 {
@@ -192,7 +157,6 @@ class FileController: ObservableObject {
         
         return self.getContentsOfDirectory()
     }
-    
 }
 
 extension URL {

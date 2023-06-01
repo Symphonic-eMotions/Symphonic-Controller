@@ -74,11 +74,6 @@ struct SetInfo: View {
                             //We do not want to go to the next set
                             setInfoModel.setSettings.currentPlaylist = .none
                             
-                            print("FIXME: here we may let know the set is a bundle url")
-//                            AppUtils.createSessionFile(
-//                                sensitivity: -1,
-//                                setURL: URL("dontOverWrite"))
-                            
                             setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
                             
                             //Change the View
@@ -96,22 +91,21 @@ struct SetInfo: View {
                                     let setSetting = AppUtils.setSettings(
                                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet
                                     )
-                                    
+                                    //Add new file to document directory
                                     _ = AppUtils.createWorkingFile(
                                         setSettings: setSetting,
                                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
                                         duplicateLastTrack: false,
                                         asNewFile: true
                                     )
-                                    
+                                    //Reload view
                                     userPresets = fileController.getContentsOfDirectory()
                                 }
-                            }, color: .orange, isSolid: true, maxWidth: 150, height: 35
+                            }, color: .orange, isSolid: true, maxWidth: 170, height: 35
                         ){
                             Text(NSLocalizedString("New variation", comment: ""))
                         }
-                        .frame(width: 150, height: 50)
-//                        .padding()
+                        .frame(width: 170, height: 50)
                         Spacer()
                     }
                     
