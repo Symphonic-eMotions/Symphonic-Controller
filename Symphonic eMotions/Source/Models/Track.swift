@@ -27,8 +27,6 @@ extension InstrumentsSet {
             case noteSource
             case startType
             case trackType
-            case midiTargetTrackId
-            case masterTrackId
             case instrumentName
             case instrumentColor
             case volume = "instrumentVolume"
@@ -36,6 +34,7 @@ extension InstrumentsSet {
             case midiGroup
             case notesToGrid
             case notesToLevel
+            case notesSequenceType
             case exsFiles
             case audioFiles
             case effects
@@ -58,8 +57,6 @@ extension InstrumentsSet {
         //How can we change the note material
         var trackType: TrackType?
         
-        let midiTargetTrackId: String?
-        let masterTrackId: String?
         var instrumentName: String
         let instrumentColor: Color
         var volume: Float
@@ -69,7 +66,7 @@ extension InstrumentsSet {
         var midiGroup: [Int]?
         var notesToGrid: [Int]?
         var notesToLevel: [Int]?
-        
+        var notesSequenceType: NotesSequenceType?
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
         var effects: [Effect]?
@@ -90,9 +87,7 @@ extension InstrumentsSet {
             startType = try container.decode(StartType.self, forKey: .startType)
             trackType = try container.decodeIfPresent(TrackType.self, forKey: .trackType)
             
-            midiTargetTrackId = try container.decodeIfPresent(String.self, forKey: .midiTargetTrackId)
             muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
-            masterTrackId = try container.decodeIfPresent(String.self, forKey: .masterTrackId)
             instrumentName = try container.decode(String.self, forKey: .instrumentName)
             
             let instrumentColorString = try container.decodeIfPresent(String.self, forKey: .instrumentColor)
@@ -104,6 +99,7 @@ extension InstrumentsSet {
             midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
             notesToGrid = try container.decodeIfPresent([Int].self, forKey: .notesToGrid)
             notesToLevel = try container.decodeIfPresent([Int].self, forKey: .notesToLevel)
+            notesSequenceType = try container.decodeIfPresent(NotesSequenceType.self, forKey: .notesSequenceType)
             
             exsFiles = try container.decodeIfPresent([ExsFile].self, forKey: .exsFiles)
             audioFiles = try container.decodeIfPresent([AudioFile].self, forKey: .audioFiles)
@@ -140,8 +136,6 @@ extension InstrumentsSet {
             noteSource: NoteSource,
             startType: StartType,
             trackType: TrackType,
-            midiTargetTrackId: String?,
-            masterTrackId: String?,
             instrumentName: String,
             instrumentColor: Color,
             volume: Float,
@@ -149,6 +143,7 @@ extension InstrumentsSet {
             midiGroup: [Int]?,
             notesToGrid: [Int]?,
             notesToLevel: [Int]?,
+            notesSequenceType: NotesSequenceType,
             exsFiles: [ExsFile]?,
             audioFiles: [AudioFile]?,
             effects: [Effect]?,
@@ -163,8 +158,6 @@ extension InstrumentsSet {
             self.noteSource = noteSource
             self.startType = startType
             self.trackType = trackType
-            self.midiTargetTrackId = midiTargetTrackId
-            self.masterTrackId = masterTrackId
             self.instrumentName = instrumentName
             self.instrumentColor = instrumentColor
             self.volume = volume
@@ -172,6 +165,7 @@ extension InstrumentsSet {
             self.midiGroup = midiGroup
             self.notesToGrid = notesToGrid
             self.notesToLevel = notesToLevel
+            self.notesSequenceType = notesSequenceType
             self.exsFiles = exsFiles
             self.audioFiles = audioFiles
             self.effects = effects
@@ -197,9 +191,6 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(noteSource, forKey: .noteSource)
         try container.encode(startType, forKey: .startType)
         try container.encode(trackType, forKey: .trackType)
-        
-        try container.encode(midiTargetTrackId, forKey: .midiTargetTrackId)
-        try container.encode(masterTrackId, forKey: .masterTrackId)
         try container.encode(instrumentName, forKey: .instrumentName)
         let instrumentColors = InstrumentColors()
         try container.encode(instrumentColors.name(color: instrumentColor), forKey: .instrumentColor)
@@ -208,6 +199,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(midiGroup, forKey: .midiGroup)
         try container.encode(notesToGrid, forKey: .notesToGrid)
         try container.encode(notesToLevel, forKey: .notesToLevel)
+        try container.encode(notesSequenceType, forKey: .notesSequenceType)
         try container.encode(exsFiles, forKey: .exsFiles)
         try container.encode(audioFiles, forKey: .audioFiles)
         try container.encode(effects, forKey: .effects)

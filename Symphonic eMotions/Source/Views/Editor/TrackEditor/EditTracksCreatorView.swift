@@ -195,6 +195,23 @@ struct EditTracksCreatorView: View {
                         }
                     }
                     
+                    else if trackTypeLocal[key] == .variationSequencial {
+                        
+                        if noteSourceLocal[key] == .midiFile {
+                            Text("Currently note number only feature")
+                                .padding(.leading)
+                        }
+                        else if noteSourceLocal[key] == .noteNumbers {
+                            NoteNumberSequenceView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                noteNumbersPerTrack: $noteNumbersPerTrack
+                            )
+                        }
+                    }
+                    
+                    
                     //Sampler files
 //                    if noteSourceLocal[key] == .midiFile {
 //                        SamplerFilesView(

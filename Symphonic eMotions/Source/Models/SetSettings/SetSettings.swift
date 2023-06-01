@@ -108,7 +108,7 @@ class SetSettings: Identifiable, ObservableObject {
         let initPartSettings = PartSettings(partId: "", partName: "", partNumber: 0, rampUp: 0.5, rampDown: 0.5, minimalLevel: 0.1, areaOfInterest: [0], areaOfInterestColor: [.accentColor], damperTarget: initDamperTarget, dontDrawVisual: false)
         let partDict = OrderedDictionary<String, PartSettings>(uniqueKeysWithValues: [("part", initPartSettings)])
         
-        let initTrackSettings = TrackSettings(trackId: "", trackIndex: 0, trackName: "", noteSource: .midiFile, startType: .loopedTransport, trackType: .variationByPosition, instrumentVolume: 1, instrumentColor: .white, midiFile: "triggers.mid", midiGroup: [], notesToGrid: [], notesToGridMapped: [], notesToLevel: [], loopLength: [], loopsToLevel: [], loopsToGrid: [], loopsToGridMapped: [], levels: [], parts: partDict)
+        let initTrackSettings = TrackSettings(trackId: "", trackIndex: 0, trackName: "", noteSource: .midiFile, startType: .loopedTransport, trackType: .variationByPosition, instrumentVolume: 1, instrumentColor: .white, midiFile: "triggers.mid", midiGroup: [], notesToGrid: [], notesToGridMapped: [], notesToLevel: [], notesSequenceType: .firstNote, loopLength: [], loopsToLevel: [], loopsToGrid: [], loopsToGridMapped: [], levels: [], parts: partDict)
         let firstTrack = tracks.elements.first ?? ("track", initTrackSettings)
 
         self.settingsCurrentTrackID = firstTrack.key
@@ -127,8 +127,6 @@ class SetSettings: Identifiable, ObservableObject {
     func allIndexes(rows: Int, columns: Int) -> [InstrumentsSet.Index] {
         var indexes: [InstrumentsSet.Index] = []
         indexes.append(contentsOf: Array(repeating: InstrumentsSet.Index(row: rows, column: columns), count: (rows * columns)))
-        
-//        print(indexes)
         
         return indexes
     }

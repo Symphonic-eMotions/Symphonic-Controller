@@ -205,7 +205,7 @@ final class AppUtils {
                     cellsToGrid: notesToGrid
                 ),
                 notesToLevel: notesToLevel,
-                
+                notesSequenceType:  trackLoaded.notesSequenceType ?? .firstNote,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,
@@ -368,8 +368,6 @@ final class AppUtils {
                 noteSource: setSettings.tracks[track.trackId]!.noteSource,
                 startType: setSettings.tracks[track.trackId]!.startType,
                 trackType: setSettings.tracks[track.trackId]!.trackType,
-                midiTargetTrackId: track.midiTargetTrackId,
-                masterTrackId: track.midiTargetTrackId,
                 instrumentName: track.instrumentName,
                 instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
                 volume: setSettings.tracks[track.trackId]!.instrumentVolume,
@@ -377,6 +375,7 @@ final class AppUtils {
                 midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
                 notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
                 notesToLevel: setSettings.tracks[track.trackId]!.notesToLevel,
+                notesSequenceType: setSettings.tracks[track.trackId]!.notesSequenceType,
                 exsFiles: track.exsFiles,
                 audioFiles: track.audioFiles,
                 effects: track.effects,
@@ -406,19 +405,11 @@ final class AppUtils {
             published: setSettings.published,
             filesPath: instrumentSet.filesPath,
             defaultSkin: setSettings.defaultSkin,
-            //BPM is changed by tempo buttons
             bpm: setSettings.bpm,
             hasTempo: setSettings.hasTempo,
-            
-            //MIGHT: change skin colors according to track colors
-            //Bur what if skin colors difffer from skin colors?
             skin: setSettings.skins,
-            
             timeSignature: instrumentSet.timeSignature,
-            
-            //MasterTrack effects editor values
-            masterTrackEffects: modifiedMasterEffects,
-            
+            masterTrackEffects: modifiedMasterEffects, //MasterTrack effects editor values
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
             levelSpeed: setSettings.levelSpeed,

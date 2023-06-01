@@ -24,6 +24,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var notesToGrid: [Int]
     var notesToGridMapped: [Int]
     var notesToLevel: [Int]
+    var notesSequenceType: NotesSequenceType
     
     var midiFile: String
     var loopLength: [Double]
@@ -56,6 +57,7 @@ class TrackSettings: Identifiable, ObservableObject {
         notesToGrid: [Int],
         notesToGridMapped: [Int],
         notesToLevel: [Int],
+        notesSequenceType: NotesSequenceType,
         loopLength: [Double],
         loopsToLevel: [Int],
         loopsToGrid: [Int],
@@ -76,6 +78,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.notesToGrid = notesToGrid
         self.notesToGridMapped = notesToGridMapped
         self.notesToLevel = notesToLevel
+        self.notesSequenceType = notesSequenceType
         self.loopLength = loopLength
         self.loopsToLevel = loopsToLevel
         self.loopsToGrid = loopsToGrid
