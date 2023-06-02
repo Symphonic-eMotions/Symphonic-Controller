@@ -12,11 +12,7 @@ struct SetFile: Identifiable, Decodable, Equatable {
     var name: String = ""
     var url: URL = URL("SetFile")
     var published: Bool = false
-    
-//    init(name: String, url: URL){
-//        self.name = name
-//        self.url = url
-//    }
+    var fileGroup: FileGroup = .none
 }
 
 class SetListViewModel: ObservableObject {
@@ -46,16 +42,14 @@ class SetListViewModel: ObservableObject {
                         let data = try Data(contentsOf: fileURL)
                         let decodedFile = try decoder.decode(InstrumentsSet.self, from: data)
                         
-                        //But only if the set is published
-                        if decodedFile.published ?? true {
-                            unsortedSetFiles.append(
-                                SetFile(
-                                    name: decodedFile.name,
-                                    url: fileURL,
-                                    published: decodedFile.published ?? true
-                                )
+                        unsortedSetFiles.append(
+                            SetFile(
+                                name: decodedFile.name,
+                                url: fileURL,
+                                published: decodedFile.published ?? true,
+                                fileGroup: decodedFile.fileGroup ?? .none
                             )
-                        }
+                        )
                     } catch {
                         print("Error decoding JSON file: \(fileURL) \(error)")
                     }
@@ -72,6 +66,10 @@ class SetListViewModel: ObservableObject {
             print("Error reading contents of directory: \(error)")
         }
     }
+    
+    func getSetFiles(for group: FileGroup) -> [SetFile] {
+            return setFiles.filter { $0.fileGroup == group }
+        }
 }
 
 struct SideBarView: View {
@@ -89,18 +87,22 @@ struct SideBarView: View {
     
     @State private var showingAlert = false
     
-//    var isSelected: Bool {
-//        "false" == setInfoModel.setInfoLocalState.setName
-//    }
+    @State var fileGroup: FileGroup = .none
+    
+    func changeFileGroupAndSessionDisplay(fileGroup: FileGroup, sessionDisplay: SessionDisplay) {
+        self.fileGroup = fileGroup
+        self.sessionDisplay = sessionDisplay
+    }
     
     var body: some View {
         NavigationView {
             
             List {
                 ForEach([
-                    (name: "Demo", setName: "start"),
+                    (name: "Demo", setName: "demo"),
                     (name: "Active", setName: "playlists"),
-                    (name: "Pro", setName: "pro")
+                    (name: "Pro", setName: "pro"),
+                    (name: "Creator", setName: "creator")
                 ], id: \.setName) { item in
                     Button(action: {
                         
@@ -108,20 +110,31 @@ struct SideBarView: View {
                             self.showingAlert = true
                         }
                         else{
-                            if item.setName == "start" {
-                                sessionDisplay = .demo
+                            if item.setName == "demo" {
+                                setInfoLocalState.sideBarHead = "Demo"
+                                changeFileGroupAndSessionDisplay(fileGroup: .demo, sessionDisplay: .demo)
                                 sessionDisplaySub = .none
                                 //We do not want to go to the next set
                                 setInfoModel.setSettings.currentPlaylist = .none
                             }
                             else if item.setName == "pro" {
-                                sessionDisplay = .pro
+                                setInfoLocalState.sideBarHead = "Pro"
+                                changeFileGroupAndSessionDisplay(fileGroup: .pro, sessionDisplay: .pro)
+                                sessionDisplaySub = .none
+                                //We do not want to go to the next set
+                                setInfoModel.setSettings.currentPlaylist = .none
+                            }
+                            else if item.setName == "creator" {
+                                setInfoLocalState.sideBarHead = "Creator"
+                                changeFileGroupAndSessionDisplay(fileGroup: .template, sessionDisplay: .creator)
+
                                 sessionDisplaySub = .none
                                 //We do not want to go to the next set
                                 setInfoModel.setSettings.currentPlaylist = .none
                             }
                             else{
-                                sessionDisplay = .playlists
+                                setInfoLocalState.sideBarHead = "Active"
+                                changeFileGroupAndSessionDisplay(fileGroup: .pro, sessionDisplay: .playlists)
                                 sessionDisplaySub = .playlists
                             }
                             
@@ -158,40 +171,44 @@ struct SideBarView: View {
                 }
                 
                 //Pro sets, init view is .pro so sessionDisplaySub is set to .start on app init
-                if [.pro,.setInfo,.swiftUI].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
+                if [.pro,.setInfo,.swiftUI,.creator,.demo].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
                     
-                    ForEach(viewModel.setFiles) { setFile in
-                        Button(action: {
+                    ForEach(viewModel.getSetFiles(for: fileGroup)) { setFile in
+                        
+                        if setFile.fileGroup == fileGroup {
                             
-                            selectedSet = setFile
-                            setInfoModel.tapStopAudioEngine()
-                            
-                            setInfoLocalState.setName = setFile.name
-                            setInfoLocalState.setConfig = setFile.url.lastPathComponent
-                            setInfoLocalState.setURL = setFile.url.absoluteString
-                            
-                            sessionDisplay = .setInfo
-                            sessionDisplaySub = .none
-                            
-                            setInfoLocalState.sideBarHead = "SeM Pro"
-                        }) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Spacer()
-                                    Text(setFile.name)
-                                        .foregroundColor(selectedSet == setFile ? .white : .primary)
-                                        .font(.headline)
-                                        .padding(.trailing)
-                                        .padding(.leading)
+                            Button(action: {
+                                
+                                selectedSet = setFile
+                                setInfoModel.tapStopAudioEngine()
+                                
+                                setInfoLocalState.setName = setFile.name
+                                setInfoLocalState.setConfig = setFile.url.lastPathComponent
+                                setInfoLocalState.setURL = setFile.url.absoluteString
+                                
+                                sessionDisplay = .setInfo
+                                sessionDisplaySub = .none
+                                
+                                
+                            }) {
+                                
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Spacer()
+                                        Text(setFile.name)
+                                            .foregroundColor(selectedSet == setFile ? .white : .primary)
+                                            .font(.headline)
+                                            .padding(.trailing)
+                                            .padding(.leading)
+                                        Spacer()
+                                    }
                                     Spacer()
                                 }
-                                Spacer()
+                                .padding(.vertical, 4.0)
+                                .padding(.leading, 4.0)
+                                .background(selectedSet == setFile ? Color.accentColor : .secondary)
+                                .cornerRadius(10.0)
                             }
-                            .padding(.vertical, 4.0)
-                            .padding(.leading, 4.0)
-                            .background(selectedSet == setFile ? Color.accentColor : .secondary)
-                            .cornerRadius(10.0)
-                            
                         }
                     }
                 }

@@ -93,7 +93,7 @@ struct MainView: View {
         }
         
         //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.demo].contains(sessionDisplay) {
+        else if [.swiftUI,.setInfo,.pro,.demo,.creator].contains(sessionDisplay) {
             
             NavigationView {
                 
@@ -186,7 +186,7 @@ struct MainView: View {
                 }
                 
                 //Selected set info View
-                else if sessionDisplay == .setInfo || sessionDisplay == .pro {
+                else if [.setInfo,.pro,.creator].contains(sessionDisplay) {
                     
                     SetInfo(
                         setInfoModel: SetInfoModel(

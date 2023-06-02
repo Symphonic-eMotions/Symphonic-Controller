@@ -91,8 +91,6 @@ extension Conductor {
                     //We're tracking position
                     if track.trackType == .variationByPosition {
                         
-                        
-                        
                         //Position AND Midi files AND Make sure its not the original but the mapped maxIndex
                         if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
                             
@@ -135,16 +133,10 @@ extension Conductor {
                         track.currentMaxIndex = maxIndex
                     }
                     
-                    //Levels Midi
-//                    else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .midiFile {
-//                        //This is the chosen note number in the editor NoteNumberToLevelView()
-//                        let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-//                        track.playThisNote = noteNumber
-//                        track.currentLevel = Int(localCurrentSetLevel)
-//                    }
-                    
                     //Varition by level AND Note numbers AND level change
-                    else if track.trackType == .variationByLevel && Int(localCurrentSetLevel) != track.currentLevel && track.noteSource == .noteNumbers {
+                    else if track.trackType == .variationByLevel &&
+                                Int(localCurrentSetLevel) != track.currentLevel &&
+                                track.noteSource == .noteNumbers {
                         
                         for note in track.notesArePlaying {
                             stopNoteNumber(track, note)
@@ -157,9 +149,9 @@ extension Conductor {
                     }
                     
                     
-                    
                     //Midi File Position Wave player, start with movement
-                    if track.noteSource == .midiFile && [.loopedTrigger,.oneShot].contains(track.startType) {
+                    if track.noteSource == .midiFile &&
+                        [.loopedTrigger,.oneShot].contains(track.startType) {
                         if setSettings.isWavePlaying {
                             //End wave under treshold
                             if value < setSettings.waveThreshold {

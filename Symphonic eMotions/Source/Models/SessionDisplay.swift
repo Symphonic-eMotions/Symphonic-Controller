@@ -14,6 +14,7 @@ enum SessionDisplay: Hashable, Codable {
     
     case demo
     case pro
+    case creator
     case countDown
     case playlists
     case swiftUI
@@ -31,6 +32,8 @@ enum SessionDisplay: Hashable, Codable {
             return "Demo"
         case .pro:
             return "Pro"
+        case .creator:
+            return "Creator"
         case .countDown:
             return "Count Down"
         case .playlists:

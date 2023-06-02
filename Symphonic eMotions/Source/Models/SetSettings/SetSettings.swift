@@ -37,6 +37,7 @@ class SetSettings: Identifiable, ObservableObject {
     var setName: String
     var customName: String
     var published: Bool
+    var fileGroup: FileGroup
     var setURL: URL
     var hasTempo: Bool
     
@@ -77,6 +78,7 @@ class SetSettings: Identifiable, ObservableObject {
         setName: String,
         customName: String,
         published: Bool,
+        fileGroup: FileGroup,
         setURL: URL,
         hasTempo: Bool,
         defaultSkin: SessionDisplay,
@@ -92,6 +94,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.setName = setName
         self.customName = customName
         self.published = published
+        self.fileGroup = fileGroup
         self.setURL = setURL
         self.hasTempo = hasTempo
         self.defaultSkin = defaultSkin

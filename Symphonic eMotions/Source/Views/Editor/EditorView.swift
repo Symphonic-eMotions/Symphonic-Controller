@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct SetEditState {
-
-    let setCollections: Sets
-}
-
 enum EditorParts: String, CaseIterable {
     case none
     case set
@@ -127,7 +122,7 @@ struct EditorView: View {
                             
                     }
                     HStack{
-                        Text("Default skin")
+                        Text("Skin")
                             .font(.system(size: headingSize))
                             .padding()
                             .frame(width: columnWidth, alignment: .leading)
