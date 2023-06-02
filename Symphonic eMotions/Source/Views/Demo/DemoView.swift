@@ -44,6 +44,7 @@ struct DemoView: View {
                         .foregroundColor(.white)
                         .font(.headline)
                         .padding(.trailing)
+                        .disabled(true)
                 }
                 .padding()
                 .background(Color.accentColor)
@@ -73,6 +74,8 @@ struct DemoView: View {
                 }
                 
             }
+            
+            Text("\nDemo set not implemented yet")
             
             Spacer()
             

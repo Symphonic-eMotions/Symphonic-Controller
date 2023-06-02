@@ -1074,7 +1074,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Intern";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Creator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
@@ -1088,9 +1088,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
+				MARKETING_VERSION = 2.3.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproCreator";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacCreator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1116,7 +1116,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Intern";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Creator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
@@ -1130,9 +1130,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
+				MARKETING_VERSION = 2.3.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproCreator";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacCreator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;

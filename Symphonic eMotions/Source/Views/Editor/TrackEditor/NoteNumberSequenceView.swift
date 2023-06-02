@@ -58,7 +58,7 @@ struct NoteNumberSequenceView: View {
             
             HStack(){
                 
-                Text("Note sequence: ")
+                Text("Note sequence:")
                     .frame(width: columnWidth, alignment: .leading)
                 
                 Picker("Select sequence type", selection: $noteNumberSequenceLocal) {
@@ -69,17 +69,10 @@ struct NoteNumberSequenceView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .onChange(of: noteNumberSequenceLocal) { sequenceType in
                     withAnimation {
-                        
-                        print("onChange -> \(sequenceType)")
-                        
                         //Store to file
                         currentTrack.notesSequenceType = sequenceType
-                        //Tell parent
-//                        noteSourceParent[trackId] = noteSource
                         //Keep local state
                         noteNumberSequenceLocal = sequenceType
-                        //Reset clip
-                        
                     }
                 }
             }
@@ -87,5 +80,4 @@ struct NoteNumberSequenceView: View {
         .padding(.leading)
         .padding(.trailing)
     }
-    
 }

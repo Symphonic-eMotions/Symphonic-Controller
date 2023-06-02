@@ -22,26 +22,50 @@ extension Conductor {
         partFeedbackPartID: String
     ) -> Double {
         
-        //Levels are updated with movement
+//        //Levels are updated with movement
         var localCurrentSetLevel: Double = currentSetLevel
+//
+//        //Level update is done the average value
+//        let averageForLevelupdate: Double = values.flatMap { $0 }
+//            .map { $0.average }
+//            .reduce(0, +) / Double(values.flatMap { $0 }.count)
+//
+//        //The level updater
+//        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
+//            currentSetLevel: currentSetLevel,
+//            value: averageForLevelupdate
+//        )
+//
+//        //Make a global maxIndex to go in and out of if areaOfInterest is just 1 cell
+//        let scaledValues = values.flatMap { $0.map { $0.scaledValue } }
+//
+//
+//        let maxIndexTupple = vDSP.indexOfMaximum(scaledValues)
+//        //We only need the index for triggering
+//        let maxIndex = Int(maxIndexTupple.0)
         
-        //Level update is done the average value
-        let averageForLevelupdate: Double = values.flatMap { $0 }
-            .map { $0.average }
-            .reduce(0, +) / Double(values.flatMap { $0 }.count)
+        // Flatten the 2D list and compute the sum, count and maximum in a single pass
+        var sum = 0.0
+        var count = 0
+        var scaledValues: [Double] = []
+        values.forEach { areaValues in
+            areaValues.forEach { value in
+                sum += value.average
+                count += 1
+                scaledValues.append(value.scaledValue)
+            }
+        }
+
+        // Compute average
+        let averageForLevelUpdate = sum / Double(count)
+
+        // Update the current level
+        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(currentSetLevel: currentSetLevel, value: averageForLevelUpdate)
+
+        // Find the maximum index
+        let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
+        let maxIndex = Int(maxIndexTuple.0)
         
-        //The level updater
-        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-            currentSetLevel: currentSetLevel,
-            value: averageForLevelupdate
-        )
-        
-        //Make a global maxIndex to go in and out of if areaOfInterest is just 1 cell
-        let scaledValues = values.flatMap { $0.map { $0.scaledValue } }
-        let maxIndexTupple = vDSP.indexOfMaximum(scaledValues)
-        //We only need the index for triggering
-        let maxIndex = Int(maxIndexTupple.0)
-    
         //We iterate through all tracks and its parts
         var trackNr: Int = 0
         var partNr: Int = 0
