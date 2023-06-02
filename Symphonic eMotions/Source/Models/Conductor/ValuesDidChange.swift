@@ -22,28 +22,9 @@ extension Conductor {
         partFeedbackPartID: String
     ) -> Double {
         
-//        //Levels are updated with movement
+        //Levels are updated with movement
         var localCurrentSetLevel: Double = currentSetLevel
-//
-//        //Level update is done the average value
-//        let averageForLevelupdate: Double = values.flatMap { $0 }
-//            .map { $0.average }
-//            .reduce(0, +) / Double(values.flatMap { $0 }.count)
-//
-//        //The level updater
-//        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-//            currentSetLevel: currentSetLevel,
-//            value: averageForLevelupdate
-//        )
-//
-//        //Make a global maxIndex to go in and out of if areaOfInterest is just 1 cell
-//        let scaledValues = values.flatMap { $0.map { $0.scaledValue } }
-//
-//
-//        let maxIndexTupple = vDSP.indexOfMaximum(scaledValues)
-//        //We only need the index for triggering
-//        let maxIndex = Int(maxIndexTupple.0)
-        
+
         // Flatten the 2D list and compute the sum, count and maximum in a single pass
         var sum = 0.0
         var count = 0
@@ -264,6 +245,7 @@ extension Conductor {
             }
             trackNr += 1
         }
+        
         return localCurrentSetLevel
     }
     
