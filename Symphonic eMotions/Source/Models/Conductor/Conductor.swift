@@ -20,7 +20,7 @@ final class Conductor {
     //MARK: Var declarations
     //Audiokit AudioEngine. One engine is running at all times
     //Gets pauzed on set change
-    private var audioEngine: AudioEngine
+    internal var audioEngine: AudioEngine
     //First mixer mixes the output of the effect chains per instrument
     internal var mixer: Mixer
     //Second mixer is the output of the first mixer's effect chain output
@@ -69,7 +69,10 @@ final class Conductor {
     //Amplitude enelopes for muting tracks for levels
     //TODO: init of these needs to be at 0 (-90Db)
     private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
-
+    
+    // Keep track of currently playing notes and their end times (playNoteNumberLength)
+    internal var endTimesNotes: [String: [Int: Duration]] = [:]
+    
     //MARK: Combine variables for communication to user interface
     //Global for the status control and feedback of this class
     var isConductorPlayingSubject = CurrentValueSubject<Bool, Never>(false)
@@ -231,6 +234,9 @@ final class Conductor {
                 }
             }
             velocities[track.id] = startVelocity
+            
+            //NoteEndTimes
+            endTimesNotes[track.id] = [:]
             
             //Load sequencers
             //Within this function the EXS is also loaded
@@ -814,23 +820,21 @@ final class Conductor {
             //Fire up the audio engine
             try audioEngine.start()
             
-            setSettings.tracks.values.filter { [.loopedTransport].contains($0.startType) }.forEach {
+            setSettings.tracks.values.filter { [.loopedTransport,.oneShot].contains($0.startType) }.forEach {
                 
                 //Midi files have level note data already loaded
                 if $0.noteSource == .midiFile { playTrack($0) }
                 
                 if $0.noteSource == .noteNumbers {
+                    
                     if $0.trackType == .variationByLevel {
                         //Get current level note number
                         let noteNumber = $0.notesToLevel[level]
                         playNoteNumber($0, noteNumber)
                     }
-                    else if $0.trackType == .variationByPosition {
-                        //Play all checked positions
-                        let uniqueNotes = Set($0.notesToGrid)
-                        for noteNumber in uniqueNotes {
-                            playNoteNumber($0, noteNumber)
-                        }
+                    if $0.trackType == .variationByPosition {
+                        //Play sequencers for time calculation
+                        playTrack($0)
                     }
                 }
             }

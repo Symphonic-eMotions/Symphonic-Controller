@@ -29,7 +29,10 @@ class SetSettings: Identifiable, ObservableObject {
     
     //Keep track of wave playing
     var isWavePlaying: Bool = false
-    var waveThreshold: Double = 0.1
+    
+    //Get loaded with firstPart.value.damperTarget.nodeSettings.minimalLevel
+    //Which has a slider in the editor
+    var waveUnderLevel: Double = 0.1
     
     //Use tracks own ID to ommit use of indeces
     //Id comes from loaded struct
@@ -117,6 +120,8 @@ class SetSettings: Identifiable, ObservableObject {
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!
+        let firstMinimalLevel = firstPart.value.damperTarget.nodeSettings?.minimalLevel ?? 0.1
+        self.waveUnderLevel = firstMinimalLevel - (firstMinimalLevel * 0.1)
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown

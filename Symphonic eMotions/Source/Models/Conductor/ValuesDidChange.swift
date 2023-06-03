@@ -85,10 +85,13 @@ extension Conductor {
                 //TrackType -> Variation by level || position
                 if partNr == 0 {
                     
-                    //Decide WHAT to play for midi and note numbers
+                    //Calculate underl level (end wave) based on minimal level pasrt 1
+                    //let underLevel = part.minimalLevel - (0.1 * part.minimalLevel)
+                    
+                    //MARK: WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController
                     
-                    //We're tracking position
+                    //Varition by position
                     if track.trackType == .variationByPosition {
                         
                         //Position AND Midi files AND Make sure its not the original but the mapped maxIndex
@@ -133,10 +136,10 @@ extension Conductor {
                         track.currentMaxIndex = maxIndex
                     }
                     
-                    //Varition by level AND Note numbers AND level change
+                    //Varition by level just note numbers
                     else if track.trackType == .variationByLevel &&
-                                Int(localCurrentSetLevel) != track.currentLevel &&
-                                track.noteSource == .noteNumbers {
+                                track.noteSource == .noteNumbers &&
+                                Int(localCurrentSetLevel) != track.currentLevel {
                         
                         for note in track.notesArePlaying {
                             stopNoteNumber(track, note)
@@ -146,15 +149,19 @@ extension Conductor {
                         let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
                         track.playThisNote = noteNumber
                         track.currentLevel = Int(localCurrentSetLevel)
+                        
+                        print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
                     }
                     
                     
                     //Midi File Position Wave player, start with movement
                     if track.noteSource == .midiFile &&
-                        [.loopedTrigger,.oneShot].contains(track.startType) {
+                        [.loopedTrigger].contains(track.startType) {
+                        
+                        
                         if setSettings.isWavePlaying {
-                            //End wave under treshold
-                            if value < setSettings.waveThreshold {
+                            //End wave under minimal leel first part
+                            if value < setSettings.waveUnderLevel{
                                 //looped is always for all tracks
                                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                                      stopTrack($0)
@@ -164,7 +171,7 @@ extension Conductor {
                         }
                         //No wave
                         else {
-                            if value > setSettings.waveThreshold {
+                            if value > part.minimalLevel {
                                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                                     playTrack($0)
                                 }
@@ -174,23 +181,48 @@ extension Conductor {
                     }
                     
                     //Note Number / Wave player = start with movement
-                    else if track.noteSource == .noteNumbers && [.loopedTrigger,.oneShot].contains(track.startType) {
+                    else if track.noteSource == .noteNumbers {
                         
-                        //End all notes:
-                        if value < setSettings.waveThreshold {
-                            for note in track.notesArePlaying { stopNoteNumber(track, note) }
-                            track.notesArePlaying = []
+                        //Play with wave, end all notes after wave
+                        if [.loopedTrigger].contains(track.startType) {
+                            
+                            //End all notes when a 10% lower than first part minimalLevel
+                            if value < setSettings.waveUnderLevel {
+                                                                
+                                for note in track.notesArePlaying {
+                                    stopNoteNumber(track, note)
+                                    print("stopping \(note)")
+                                }
+                                track.notesArePlaying = []
+                            }
+                            else{
+                                
+                                //Play note Number && note is not already playing AND movement is above minimal level
+                                if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) && value > part.minimalLevel {
+                                    
+                                    playNoteNumber(track, track.playThisNote)
+                                    
+                                    //Add it to the playing note array
+                                    if !track.notesArePlaying.contains(track.playThisNote) {
+                                        
+                                        print("NM loopedTrigger WAVE PLAY \(track.playThisNote)")
+                                        
+                                        track.notesArePlaying.append(track.playThisNote)
+                                    }
+                                }
+                            }
                         }
-                        else{
+                        //Play with length connected to value
+                        if [.oneShot].contains(track.startType) {
                             
                             //Play note Number && note is not already playing AND movement is above minimal level
-                            if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) && value > part.minimalLevel {
+                            if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
+                                //value to note length convertion
+                                playNoteNumberLength(track, track.playThisNote, value)
                                 
-                                playNoteNumber(track, track.playThisNote)
-                                //Add it to the playing note array
-                                if !track.notesArePlaying.contains(track.playThisNote) {
-                                    track.notesArePlaying.append(track.playThisNote)
-                                }
+                                
+                                
+                                //Record to sewuencer
                             }
                         }
                     }

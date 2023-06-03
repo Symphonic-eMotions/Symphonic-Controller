@@ -57,6 +57,8 @@ extension InstrumentsSet {
         //How can we change the note material
         var trackType: TrackType?
         
+        var firstMinimalLevel: Double
+        
         var instrumentName: String
         let instrumentColor: Color
         var volume: Float
@@ -124,6 +126,9 @@ extension InstrumentsSet {
             }
             parts = partWithRange
             
+            //first part minimal level
+            firstMinimalLevel = (partsRaw.first!.damperTarget.nodeSettings?.minimalLevel)!
+            
             levels = try container.decode([Int].self, forKey: .levels)
             scoreWalkDuration = try container.decodeIfPresent([Int].self, forKey: .scoreWalkDuration)
         }
@@ -171,7 +176,8 @@ extension InstrumentsSet {
             self.effects = effects
             self.parts = parts
             self.levels = levels
-            self.scoreWalkDuration = scoreWalkDuration
+            self.scoreWalkDuration = scoreWalkDuration//first part minimal level
+            self.firstMinimalLevel = 0.1
         }
         
         func effect(for effectType: Effect.EffectType) -> Effect? {
