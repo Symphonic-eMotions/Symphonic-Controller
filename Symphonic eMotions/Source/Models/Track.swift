@@ -69,6 +69,7 @@ extension InstrumentsSet {
         var notesToGrid: [Int]?
         var notesToLevel: [Int]?
         var notesSequenceType: NotesSequenceType?
+        
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
         var effects: [Effect]?

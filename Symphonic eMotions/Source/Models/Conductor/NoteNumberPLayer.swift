@@ -44,17 +44,17 @@ extension Conductor {
                 return
             }
         }
-        
+                
         // Schedule the note-on event
         let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
         trackSamplers[track.trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-
+        
         // Calculate the offset for the note-off event based on value, adjust the multiplier as needed.
         // This example assumes your audio engine's sample rate is 44.1kHz, and value ranges from 0.1 to 1
         // Adjust the sample rate and the multiplier as needed to fit your app's settings
         let sampleRate: Double = Settings.sampleRate
         //This is how long the note on will persist, this time a new note is not possible
-        let noteLength: Double = (value * 0.75)
+        let noteLength: Double = (value * 3)
         let offset: UInt64 = UInt64(noteLength * sampleRate)
         
         // Convert the offset to Duration and store for comparison

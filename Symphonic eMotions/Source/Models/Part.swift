@@ -28,9 +28,6 @@ extension InstrumentsSet.Track {
         //Do not draw this instrument part within the grid interface
         var dontDrawVisual: Bool?
         
-        //Map area of interest reletive indexes to custom order
-//        var mapMaxIndex: [Int]?
-        
         var damperTarget: DamperTarget
         
         init(from decoder: Decoder) throws {
@@ -64,19 +61,7 @@ extension InstrumentsSet.Track {
             }
             return indexes
         }
-        
-//        func indexes(for setSettings: SetSettings) -> [Index]{
-//            var indexes: [Index] = []
-//            for row in 0..<setSettings.rows {
-//                for column in ..<setSettings.columns {
-//                    if setSettings.
-//                }
-//            }
-//            
-//            
-//            return indexes
-//        }
-        
+    
         mutating private func set(indexes: [Index], for set: InstrumentsSet) {
             var newAreaOfInterest: [Int] = Array(repeating: 0, count: set.rows * set.columns)
             indexes.forEach {
@@ -95,11 +80,6 @@ extension InstrumentsSet.Track {
             }
             self.set(indexes: newIndexes, for: set)
         }
-        
-//        func isIndexSelected(index: Index, in set: InstrumentsSet) -> Bool {
-//            indexes(for: set).contains { $0.column == index.column && $0.row == index.row }
-//        }
-        
     }
     
 }
@@ -141,7 +121,6 @@ extension InstrumentsSet.Track.Part {
         private enum TargetKeys: String, CodingKey {
             case trackId
             case nodeType
-//            case scoreWandererType
             case nodeName
             case parameter
             //Copy effect range to DamperTarget if it conserns an effect
@@ -153,8 +132,6 @@ extension InstrumentsSet.Track.Part {
         
         var trackId: String
         var nodeType: NodeType
-//        var scoreWandererType: ScoreWandererType?
-//        var midiClipVariation: MidiClipVariations?
         var nodeName: String
         var parameter: String
         var parameterRange: [Double]
@@ -166,7 +143,6 @@ extension InstrumentsSet.Track.Part {
             let container = try decoder.container(keyedBy: TargetKeys.self)
             trackId = try container.decode(String.self, forKey: .trackId)
             nodeType = try container.decode(NodeType.self, forKey: .nodeType)
-//            scoreWandererType = try container.decodeIfPresent(ScoreWandererType.self, forKey: .scoreWandererType)
             nodeName = try container.decode(String.self, forKey: .nodeName)
             parameter = try container.decode(String.self, forKey: .parameter)
             parameterRange = [0,1]
@@ -188,8 +164,6 @@ extension InstrumentsSet.Track.Part {
         init(
             trackId: String,
             nodeType: NodeType,
-//            scoreWandererType: ScoreWandererType?,
-//            midiClipVariation: MidiClipVariations?,
             nodeName: String,
             parameter: String,
             parameterRange: [Double],
@@ -199,8 +173,6 @@ extension InstrumentsSet.Track.Part {
         ) {
             self.trackId = trackId
             self.nodeType = nodeType
-//            self.scoreWandererType = scoreWandererType
-//            self.midiClipVariation = midiClipVariation
             self.nodeName = nodeName
             self.parameter = parameter
             self.parameterRange = parameterRange
@@ -233,33 +205,12 @@ extension InstrumentsSet.Track.Part.DamperTarget: Encodable{
         var container = encoder.container(keyedBy: TargetKeys.self)
         try container.encode(trackId, forKey: .trackId)
         try container.encode(nodeType, forKey: .nodeType)
-//        try container.encode(scoreWandererType, forKey: .scoreWandererType)
         try container.encode(nodeName, forKey: .nodeName)
         try container.encode(parameter, forKey: .parameter)
         try container.encode(parameterRange, forKey: .parameterRange)
         try container.encode(midiData, forKey: .midiData)
         try container.encode(nodeSettings, forKey: .nodeSettings)
         try container.encode(dampMode, forKey: .dampMode)
-    }
-}
-
-extension InstrumentsSet.Track.Part.DamperTarget {
-    
-    enum ScoreWandererType: String, Codable{
-        case beatsToMIDIclip
-        case valueToMIDIclip
-        case rampToMIDIclip
-    }
-}
-
-extension InstrumentsSet.Track.Part.DamperTarget {
-    
-    enum MidiClipVariations: String, Codable{
-        case any
-        case anyButFirst
-        case nextLoop
-        case nextLoopReverse
-        case increaseWithValue
     }
 }
 

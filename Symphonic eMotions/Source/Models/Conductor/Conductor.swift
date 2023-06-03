@@ -72,6 +72,8 @@ final class Conductor {
     
     // Keep track of currently playing notes and their end times (playNoteNumberLength)
     internal var endTimesNotes: [String: [Int: Duration]] = [:]
+    //Keep track of current note for note sequences
+    internal var sequenceNote: [String: Int] = [:]
     
     //MARK: Combine variables for communication to user interface
     //Global for the status control and feedback of this class
@@ -237,6 +239,8 @@ final class Conductor {
             
             //NoteEndTimes
             endTimesNotes[track.id] = [:]
+            //sequenceNotes
+            sequenceNote[track.id] = 0
             
             //Load sequencers
             //Within this function the EXS is also loaded
@@ -820,21 +824,49 @@ final class Conductor {
             //Fire up the audio engine
             try audioEngine.start()
             
-            setSettings.tracks.values.filter { [.loopedTransport,.oneShot].contains($0.startType) }.forEach {
+            setSettings.tracks.forEach { track in
                 
-                //Midi files have level note data already loaded
-                if $0.noteSource == .midiFile { playTrack($0) }
+                print(track.value.noteSource)
                 
-                if $0.noteSource == .noteNumbers {
+                if track.value.noteSource == .midiFile {
                     
-                    if $0.trackType == .variationByLevel {
-                        //Get current level note number
-                        let noteNumber = $0.notesToLevel[level]
-                        playNoteNumber($0, noteNumber)
+                    if track.value.startType == .loopedTransport {
+                        if track.value.trackType == .variationByLevel {
+                            
+                            //FIXME: Copy correct MIDI
+                        }
+                        playTrack(track.value)
                     }
-                    if $0.trackType == .variationByPosition {
-                        //Play sequencers for time calculation
-                        playTrack($0)
+                }
+                else if track.value.noteSource == .noteNumbers {
+                    
+                    if [.loopedTransport].contains(track.value.startType) {
+                        
+                        if track.value.trackType == .variationByLevel {
+                            //Get current level note number
+                            let noteNumber = track.value.notesToLevel[level]
+                            playNoteNumber(track.value, noteNumber)
+                        }
+                        if track.value.trackType == .variationSequencial {
+                            let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
+                            let noteNumber = getNextSequenceNote(
+                                currentNote,
+                                track.value.notesSequenceType,
+                                track.value.midiGroup,
+                                0.5
+                            )
+                            playNoteNumber(track.value, noteNumber)
+                        }
+                    }
+                    else if [.oneShot].contains(track.value.startType) {
+                                
+                        if track.value.trackType == .variationByPosition {
+                            //Play sequencers for time calculation
+                            
+                            print("PLAY TRACK \(track.value)")
+                            
+                            playTrack(track.value)
+                        }
                     }
                 }
             }

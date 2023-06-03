@@ -85,73 +85,99 @@ extension Conductor {
                 //TrackType -> Variation by level || position
                 if partNr == 0 {
                     
-                    //Calculate underl level (end wave) based on minimal level pasrt 1
-                    //let underLevel = part.minimalLevel - (0.1 * part.minimalLevel)
+//                    track.currentMaxIndex = maxIndex
                     
                     //MARK: WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController
                     
-                    //Varition by position
-                    if track.trackType == .variationByPosition {
+                    //What to play MidiFile tracks
+                    if track.noteSource == .midiFile {
                         
-                        //Position AND Midi files AND Make sure its not the original but the mapped maxIndex
-                        if track.noteSource == .midiFile && track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
+                        if track.trackType == .variationByPosition {
                             
-                            //This is the mapped value from the editor .midiFile .variationByPosition
-                            let loopIndex = track.loopsToGridMapped[maxIndexPart]
-                            
-                            if loopIndex != track.currentLoopIndex {
+                            //We have a new postition
+                            if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
+                                //This is the mapped value from the editor .midiFile .variationByPosition
+                                let loopIndex = track.loopsToGridMapped[maxIndexPart]
                                 
-                                let nextMIDIstartTime = calculateMIDIstartTime(
-                                    for: loopIndex,
-                                    in: track.loopLength
-                                )
-                                
-                                copyMIDIfromMemory(
-                                    trackId: track.trackId,
-                                    midiStartTime: nextMIDIstartTime,
-                                    loopLength: track.loopLength[loopIndex])
-                                
-                                track.currentLoopIndex = loopIndex
-                                track.currentPartMaxIndex = maxIndexPart
+                                if loopIndex != track.currentLoopIndex {
+                                    
+                                    let nextMIDIstartTime = calculateMIDIstartTime(
+                                        for: loopIndex,
+                                        in: track.loopLength
+                                    )
+                                    
+                                    copyMIDIfromMemory(
+                                        trackId: track.trackId,
+                                        midiStartTime: nextMIDIstartTime,
+                                        loopLength: track.loopLength[loopIndex])
+                                    
+                                    track.currentLoopIndex = loopIndex
+                                    track.currentPartMaxIndex = maxIndexPart
+                                }
                             }
                         }
                         
-                        //Position AND note numbers
-                        else if track.noteSource == .noteNumbers {
+                    }
+                    //Note number tracks
+                    else if track.noteSource == .noteNumbers {
+                        
+                        //Note number position
+                        if track.trackType == .variationByPosition {
                             
-                            //Start with movement AND Trigger single note
+//                            //Start with movement AND Trigger single note (not tracnsport)
+//                            if [.loopedTrigger,.oneShot].contains(track.startType) {
+//
+//                                //We trigger only if above minimalLevel treshold
+//                                if value > part.minimalLevel {
+                                    
+//                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+//                                    track.playThisNote = noteNumber
+                            
+                            
+//                                    print("Will play note \(noteNumber)")
+//                                }
+//                            }
+                        }
+                        //Note number sequencial
+                        else if track.trackType == .variationSequencial {
+                            
+                            //Start with movement AND Trigger single note (not tracnsport)
                             if [.loopedTrigger,.oneShot].contains(track.startType) {
                                 
                                 //We trigger only if above minimalLevel treshold
                                 if value > part.minimalLevel {
                                     
-                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
-                                    track.playThisNote = noteNumber
+                                    if let currentNote = sequenceNote[track.trackId] {
+                                        track.playThisNote = getNextSequenceNote(
+                                            currentNote,
+                                            track.notesSequenceType,
+                                            track.midiGroup,
+                                            value)
+                                        sequenceNote[track.trackId] = track.playThisNote
+                                    }
                                 }
                             }
                         }
-                        
-                        track.currentPartMaxIndex = maxIndexPart
-                        track.currentMaxIndex = maxIndex
+                        //Note number levels
+                        else if track.trackType == .variationByLevel {
+                                    
+                            if Int(localCurrentSetLevel) != track.currentLevel {
+                                
+                                for note in track.notesArePlaying {
+                                    stopNoteNumber(track, note)
+                                }
+                                
+                                //This is the chosen note number in the editor NoteNumberToLevelView()
+                                let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
+                                track.playThisNote = noteNumber
+                                track.currentLevel = Int(localCurrentSetLevel)
+                                
+                                print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
+                            }
+                        }
                     }
                     
-                    //Varition by level just note numbers
-                    else if track.trackType == .variationByLevel &&
-                                track.noteSource == .noteNumbers &&
-                                Int(localCurrentSetLevel) != track.currentLevel {
-                        
-                        for note in track.notesArePlaying {
-                            stopNoteNumber(track, note)
-                        }
-                        
-                        //This is the chosen note number in the editor NoteNumberToLevelView()
-                        let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-                        track.playThisNote = noteNumber
-                        track.currentLevel = Int(localCurrentSetLevel)
-                        
-                        print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
-                    }
                     
                     
                     //Midi File Position Wave player, start with movement
@@ -191,7 +217,7 @@ extension Conductor {
                                                                 
                                 for note in track.notesArePlaying {
                                     stopNoteNumber(track, note)
-                                    print("stopping \(note)")
+//                                    print("stopping \(note)")
                                 }
                                 track.notesArePlaying = []
                             }
@@ -205,20 +231,24 @@ extension Conductor {
                                     //Add it to the playing note array
                                     if !track.notesArePlaying.contains(track.playThisNote) {
                                         
-                                        print("NM loopedTrigger WAVE PLAY \(track.playThisNote)")
+//                                        print("NM loopedTrigger WAVE PLAY \(track.playThisNote)")
                                         
                                         track.notesArePlaying.append(track.playThisNote)
                                     }
                                 }
                             }
                         }
+                        
                         //Play with length connected to value
-                        if [.oneShot].contains(track.startType) {
+                        else if [.oneShot].contains(track.startType) {
                             
                             //Play note Number && note is not already playing AND movement is above minimal level
                             if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
+                                
+                                let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+                                
                                 //value to note length convertion
-                                playNoteNumberLength(track, track.playThisNote, value)
+                                playNoteNumberLength(track, noteNumber, value)
                                 
                                 
                                 
