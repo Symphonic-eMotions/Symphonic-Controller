@@ -860,11 +860,8 @@ final class Conductor {
                     }
                     else if [.oneShot].contains(track.value.startType) {
                                 
-                        if track.value.trackType == .variationByPosition {
+                        if [.variationByPosition,.variationSequencial].contains(track.value.trackType) {
                             //Play sequencers for time calculation
-                            
-                            print("PLAY TRACK \(track.value)")
-                            
                             playTrack(track.value)
                         }
                     }

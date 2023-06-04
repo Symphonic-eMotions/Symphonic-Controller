@@ -51,7 +51,6 @@
 		7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4652747DF6200BD64D6 /* Genres.swift */; };
 		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
 		7C7502F029C086AC00F55CA3 /* FilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */; };
-		7C7502F229C08B8400F55CA3 /* EditorHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
 		7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */; };
@@ -190,7 +189,6 @@
 		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerView.swift; sourceTree = "<group>"; };
-		7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorHomeView.swift; sourceTree = "<group>"; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
 		7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanhDistortionEffect.swift; sourceTree = "<group>"; };
@@ -372,7 +370,6 @@
 		7C7502EA29C07C1600F55CA3 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				7C7502F129C08B8400F55CA3 /* EditorHomeView.swift */,
 				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
 				7CD417FE2A092AD1006831CE /* SetEditor */,
 				7CD417FF2A092AEE006831CE /* TrackEditor */,
@@ -821,7 +818,6 @@
 				7C3EC2082A1FE9D40049E4ED /* UserDefaultsKeys.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
 				7C1FB0B229DDFD9A00621909 /* LevelsView.swift in Sources */,
-				7C7502F229C08B8400F55CA3 /* EditorHomeView.swift in Sources */,
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
 				7C1FB0BC29E52F0D00621909 /* MidiClipsInFileView.swift in Sources */,
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,

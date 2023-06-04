@@ -122,25 +122,7 @@ extension Conductor {
                     //Note number tracks
                     else if track.noteSource == .noteNumbers {
                         
-                        //Note number position
-                        if track.trackType == .variationByPosition {
-                            
-//                            //Start with movement AND Trigger single note (not tracnsport)
-//                            if [.loopedTrigger,.oneShot].contains(track.startType) {
-//
-//                                //We trigger only if above minimalLevel treshold
-//                                if value > part.minimalLevel {
-                                    
-//                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
-//                                    track.playThisNote = noteNumber
-                            
-                            
-//                                    print("Will play note \(noteNumber)")
-//                                }
-//                            }
-                        }
-                        //Note number sequencial
-                        else if track.trackType == .variationSequencial {
+                         if track.trackType == .variationSequencial {
                             
                             //Start with movement AND Trigger single note (not tracnsport)
                             if [.loopedTrigger,.oneShot].contains(track.startType) {
@@ -148,14 +130,7 @@ extension Conductor {
                                 //We trigger only if above minimalLevel treshold
                                 if value > part.minimalLevel {
                                     
-                                    if let currentNote = sequenceNote[track.trackId] {
-                                        track.playThisNote = getNextSequenceNote(
-                                            currentNote,
-                                            track.notesSequenceType,
-                                            track.midiGroup,
-                                            value)
-                                        sequenceNote[track.trackId] = track.playThisNote
-                                    }
+                                    
                                 }
                             }
                         }
@@ -245,14 +220,30 @@ extension Conductor {
                             //Play note Number && note is not already playing AND movement is above minimal level
                             if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
                                 
-                                let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+                                if track.trackType == .variationSequencial {
+                                    
+                                    if let currentNote = sequenceNote[track.trackId] {
+                                        
+                                        print("current note \(currentNote)")
+                                        
+                                        let noteNumber:Int = getNextSequenceNote(
+                                            currentNote,
+                                            track.notesSequenceType,
+                                            track.midiGroup,
+                                            value)
+                                        sequenceNote[track.trackId] = noteNumber
+                                        
+                                        print("sequnced note \(noteNumber)")
+                                        
+                                        playNoteNumberLength(track, noteNumber, value)
+                                    }
+                                }
+                                else if track.trackType == .variationByPosition {
+                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+                                    playNoteNumberLength(track, noteNumber, value)
+                                }
                                 
-                                //value to note length convertion
-                                playNoteNumberLength(track, noteNumber, value)
-                                
-                                
-                                
-                                //Record to sewuencer
+                                //Record to sequencer
                             }
                         }
                     }
