@@ -20,10 +20,10 @@ enum StartType: String, Codable, CaseIterable {
             return "Start with transport"
         //Midi file and Note numbers
         case .loopedTrigger:
-            return "Start with movement"
+            return "Movement looped"
         //Note numbers
         case .oneShot:
-            return  "Trigger single note"
+            return  "Movement single"
         }
     }
 }
