@@ -82,7 +82,7 @@ extension Conductor {
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
                 //StartType -> Transport || Wave (loopedTriger)
-                //TrackType -> Variation by level || position
+                //VariationType -> Variation by level || position
                 if partNr == 0 {
                     
 //                    track.currentMaxIndex = maxIndex
@@ -93,7 +93,7 @@ extension Conductor {
                     //What to play MidiFile tracks
                     if track.noteSource == .midiFile {
                         
-                        if track.trackType == .variationByPosition {
+                        if track.variationType == .variationByPosition {
                             
                             //We have a new postition
                             if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
@@ -122,7 +122,7 @@ extension Conductor {
                     //Note number tracks
                     else if track.noteSource == .noteNumbers {
                         
-                         if track.trackType == .variationSequencial {
+                         if track.variationType == .variationSequencial {
                             
                             //Start with movement AND Trigger single note (not tracnsport)
                             if [.loopedTrigger,.oneShot].contains(track.startType) {
@@ -135,7 +135,7 @@ extension Conductor {
                             }
                         }
                         //Note number levels
-                        else if track.trackType == .variationByLevel {
+                        else if track.variationType == .variationByLevel {
                                     
                             if Int(localCurrentSetLevel) != track.currentLevel {
                                 
@@ -220,7 +220,7 @@ extension Conductor {
                             //Play note Number && note is not already playing AND movement is above minimal level
                             if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
                                 
-                                if track.trackType == .variationSequencial {
+                                if track.variationType == .variationSequencial {
                                     
                                     if let currentNote = sequenceNote[track.trackId] {
                                         
@@ -238,7 +238,7 @@ extension Conductor {
                                         playNoteNumberLength(track, noteNumber, value)
                                     }
                                 }
-                                else if track.trackType == .variationByPosition {
+                                else if track.variationType == .variationByPosition {
                                     let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
                                     playNoteNumberLength(track, noteNumber, value)
                                 }

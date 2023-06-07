@@ -26,7 +26,7 @@ extension InstrumentsSet {
             case instrumentType
             case noteSource
             case startType
-            case trackType
+            case variationType = "trackType"
             case instrumentName
             case instrumentColor
             case volume = "instrumentVolume"
@@ -55,7 +55,7 @@ extension InstrumentsSet {
         var startType: StartType
         //To be refeactored to NoteVariation
         //How can we change the note material
-        var trackType: TrackType?
+        var variationType: VariationType?
         
         var firstMinimalLevel: Double
         
@@ -88,7 +88,7 @@ extension InstrumentsSet {
             
             noteSource = try container.decodeIfPresent(NoteSource.self, forKey: .noteSource)
             startType = try container.decode(StartType.self, forKey: .startType)
-            trackType = try container.decodeIfPresent(TrackType.self, forKey: .trackType)
+            variationType = try container.decodeIfPresent(VariationType.self, forKey: .variationType)
             
             muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
             instrumentName = try container.decode(String.self, forKey: .instrumentName)
@@ -141,7 +141,7 @@ extension InstrumentsSet {
             instrumentType: InstrumentType,
             noteSource: NoteSource,
             startType: StartType,
-            trackType: TrackType,
+            variationType: VariationType,
             instrumentName: String,
             instrumentColor: Color,
             volume: Float,
@@ -163,7 +163,7 @@ extension InstrumentsSet {
             self.instrumentType = instrumentType
             self.noteSource = noteSource
             self.startType = startType
-            self.trackType = trackType
+            self.variationType = variationType
             self.instrumentName = instrumentName
             self.instrumentColor = instrumentColor
             self.volume = volume
@@ -197,7 +197,7 @@ extension InstrumentsSet.Track: Encodable {
         
         try container.encode(noteSource, forKey: .noteSource)
         try container.encode(startType, forKey: .startType)
-        try container.encode(trackType, forKey: .trackType)
+        try container.encode(variationType, forKey: .variationType)
         try container.encode(instrumentName, forKey: .instrumentName)
         let instrumentColors = InstrumentColors()
         try container.encode(instrumentColors.name(color: instrumentColor), forKey: .instrumentColor)

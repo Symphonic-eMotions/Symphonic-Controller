@@ -1,5 +1,5 @@
 //
-//  TrackTypes.swift
+//  VariationType.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 17/04/2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TrackType: String, Codable, CaseIterable {
+enum VariationType: String, Codable, CaseIterable {
     
     case variationByLevel
     case variationByPosition
@@ -20,6 +20,7 @@ enum TrackType: String, Codable, CaseIterable {
             return "Variation by level"
         case .variationByPosition:
             return "Variation by position"
+            
         case .variationByIntensity:
             return "Variation by intensity"
         case .variationSequencial:

@@ -11,7 +11,7 @@ struct EditTracksCreatorView: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showEditorPart: EditorParts
-    @State var trackTypeLocal: [String: TrackType]
+    @State var variationTypeLocal: [String: VariationType]
     @State var noteSourceLocal: [String: NoteSource]
     //Linear representation of the midi clips.
     //Modified by MidiClipsInFile
@@ -29,14 +29,14 @@ struct EditTracksCreatorView: View {
         self.setInfoModel = setInfoModel
         _showEditorPart = showEditorPart
         
-        var tmpTrackType = [String: TrackType]()
+        var tmpVariationType = [String: VariationType]()
         var tmpNoteSource = [String: NoteSource]()
-        //Make for all tracks a shared trackType and noteSource dictionary
+        //Make for all tracks a shared variationType and noteSource dictionary
         for track in setInfoModel.setSettings.tracks {
-            tmpTrackType[track.value.trackId] = track.value.trackType
+            tmpVariationType[track.value.trackId] = track.value.variationType
             tmpNoteSource[track.value.trackId] = track.value.noteSource
         }
-        _trackTypeLocal = State(initialValue: tmpTrackType)
+        _variationTypeLocal = State(initialValue: tmpVariationType)
         _noteSourceLocal = State(initialValue: tmpNoteSource)
         
         //Translate loopLengths its clipLetters Counterpart
@@ -99,7 +99,7 @@ struct EditTracksCreatorView: View {
                         Text(track.noteSource.description)
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
-                        Text(track.trackType.description)
+                        Text(track.variationType.description)
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
                     }
@@ -109,7 +109,7 @@ struct EditTracksCreatorView: View {
                     withAnimation {
                         if showEditorPart != editorPart {
                             showEditorPart = editorPart ?? .none
-                            trackTypeLocal[key] = setInfoModel.setSettings.tracks[key]!.trackType
+                            variationTypeLocal[key] = setInfoModel.setSettings.tracks[key]!.variationType
                         } else {
                             showEditorPart = .none
                         }
@@ -147,14 +147,14 @@ struct EditTracksCreatorView: View {
                 if showEditorPart == editorPart || showEditorPart == .variation {
                     
                     //Variation type (position, level)
-                    TrackTypeView(
+                    VariationTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
-                        trackTypeParent: $trackTypeLocal
+                        variationTypeParent: $variationTypeLocal
                     )
                     
-                    if trackTypeLocal[key] == .variationByLevel {
+                    if variationTypeLocal[key] == .variationByLevel {
                         
                         if noteSourceLocal[key] == .midiFile {
                             LoopsToLevelView(
@@ -174,7 +174,7 @@ struct EditTracksCreatorView: View {
                         }
                     }
                     
-                    else if trackTypeLocal[key] == .variationByPosition {
+                    else if variationTypeLocal[key] == .variationByPosition {
                         
                         if noteSourceLocal[key] == .midiFile {
                             LoopsToGridView(
@@ -195,7 +195,7 @@ struct EditTracksCreatorView: View {
                         }
                     }
                     
-                    else if trackTypeLocal[key] == .variationSequencial {
+                    else if variationTypeLocal[key] == .variationSequencial {
                         
                         if noteSourceLocal[key] == .midiFile {
                             Text("Currently note number only feature")

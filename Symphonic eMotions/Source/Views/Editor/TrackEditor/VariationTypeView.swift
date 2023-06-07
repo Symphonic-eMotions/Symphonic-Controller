@@ -1,5 +1,5 @@
 //
-//  TrackTypeView.swift
+//  VariationTypeView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 10/04/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrackTypeView: View{
+struct VariationTypeView: View{
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
@@ -17,20 +17,20 @@ struct TrackTypeView: View{
     let columnWidth: CGFloat = 150
 //    let color: Color = .accentColor
 
-    @Binding var trackTypeParent: [String: TrackType]
-    @State var localTrackType: TrackType
+    @Binding var variationTypeParent: [String: VariationType]
+    @State var localVariationType: VariationType
 
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
-        trackTypeParent: Binding<[String: TrackType]>
+        variationTypeParent: Binding<[String: VariationType]>
     ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        _trackTypeParent = trackTypeParent
-        _localTrackType = State(initialValue: currentTrack.trackType)
+        _variationTypeParent = variationTypeParent
+        _localVariationType = State(initialValue: currentTrack.variationType)
     }
     
     var body: some View {
@@ -44,24 +44,24 @@ struct TrackTypeView: View{
                 Text("Variation")
                     .frame(width: columnWidth, alignment: .leading)
                 
-                let availableTypes: [TrackType] = [.variationByLevel,.variationByPosition,.variationSequencial]
+                let availableTypes: [VariationType] = [.variationByLevel,.variationByPosition,.variationSequencial]
                 
                 //Level, Position, sequencial
-                Picker("Select track type", selection: $localTrackType) {
+                Picker("Select track type", selection: $localVariationType) {
                     ForEach(availableTypes, id: \.self) { type in
                         
                         Text(type.description).tag(type)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: localTrackType) { trackType in
+                .onChange(of: localVariationType) { type in
                     withAnimation {
                         //Store to file
-                        currentTrack.trackType = trackType
+                        currentTrack.variationType = type
                         //Tell parent
-                        trackTypeParent[trackId] = trackType
+                        variationTypeParent[trackId] = type
                         //Keep local state
-                        localTrackType = trackType
+                        localVariationType = type
                     }
                 }
             }

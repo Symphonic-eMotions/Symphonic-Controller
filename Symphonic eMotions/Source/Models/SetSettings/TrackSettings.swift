@@ -16,7 +16,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var trackName: String
     var noteSource: NoteSource
     var startType: StartType
-    var trackType: TrackType
+    var variationType: VariationType
     var instrumentVolume: Float
     var instrumentColor: Color
     
@@ -49,7 +49,7 @@ class TrackSettings: Identifiable, ObservableObject {
         trackName: String,
         noteSource: NoteSource,
         startType: StartType,
-        trackType: TrackType,
+        variationType: VariationType,
         instrumentVolume: Float,
         instrumentColor: Color,
         midiFile: String,
@@ -70,7 +70,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.trackName = trackName
         self.noteSource = noteSource
         self.startType = startType
-        self.trackType = trackType
+        self.variationType = variationType
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.midiFile = midiFile

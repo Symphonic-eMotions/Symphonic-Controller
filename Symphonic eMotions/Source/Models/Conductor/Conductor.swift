@@ -400,7 +400,7 @@ final class Conductor {
         setSettings.tracks.forEach { track in
             
             //Variation by level and midiFile, select loopsToLevel for current level
-            if track.value.trackType == .variationByLevel && track.value.noteSource == .midiFile {
+            if track.value.variationType == .variationByLevel && track.value.noteSource == .midiFile {
                 
                 levelMidiClipVariation(in: selectedLevel, on: track.value)
             }
@@ -831,7 +831,7 @@ final class Conductor {
                 if track.value.noteSource == .midiFile {
                     
                     if track.value.startType == .loopedTransport {
-                        if track.value.trackType == .variationByLevel {
+                        if track.value.variationType == .variationByLevel {
                             
                             //FIXME: Copy correct MIDI
                         }
@@ -842,12 +842,12 @@ final class Conductor {
                     
                     if [.loopedTransport].contains(track.value.startType) {
                         
-                        if track.value.trackType == .variationByLevel {
+                        if track.value.variationType == .variationByLevel {
                             //Get current level note number
                             let noteNumber = track.value.notesToLevel[level]
                             playNoteNumber(track.value, noteNumber)
                         }
-                        if track.value.trackType == .variationSequencial {
+                        if track.value.variationType == .variationSequencial {
                             let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
                             let noteNumber = getNextSequenceNote(
                                 currentNote,
@@ -860,7 +860,7 @@ final class Conductor {
                     }
                     else if [.oneShot].contains(track.value.startType) {
                                 
-                        if [.variationByPosition,.variationSequencial].contains(track.value.trackType) {
+                        if [.variationByPosition,.variationSequencial].contains(track.value.variationType) {
                             //Play sequencers for time calculation
                             playTrack(track.value)
                         }
