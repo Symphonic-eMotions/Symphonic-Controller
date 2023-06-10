@@ -54,7 +54,9 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levelSpeed: 0.5, levels: [0], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1,
+//                                  levelSpeed: 0.5,
+                                  levels: [0], tracks: [])
         }
         return instrumentSet
     }
@@ -229,7 +231,7 @@ final class AppUtils {
             defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
-            levelSpeed: instrumentSet.levelSpeed,
+//            levelSpeed: instrumentSet.levelSpeed,
             levels: instrumentSet.levels,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
@@ -414,7 +416,7 @@ final class AppUtils {
             masterTrackEffects: modifiedMasterEffects, //MasterTrack effects editor values
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
-            levelSpeed: setSettings.levelSpeed,
+//            levelSpeed: setSettings.levelSpeed,
             levels: setSettings.levels,
             tracks: storeTracks
         )

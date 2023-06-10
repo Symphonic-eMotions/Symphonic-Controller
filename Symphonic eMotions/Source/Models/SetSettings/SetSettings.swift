@@ -64,7 +64,8 @@ class SetSettings: Identifiable, ObservableObject {
     }
     
     //Level speed
-    var levelSpeed: Double
+//    var levelSpeed: Double
+    
     //Levels
     @Published var levels: [Int]
     
@@ -87,7 +88,6 @@ class SetSettings: Identifiable, ObservableObject {
         defaultSkin: SessionDisplay,
         rows: Int,
         columns: Int,
-        levelSpeed: Double,
         levels: [Int],
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
@@ -104,7 +104,6 @@ class SetSettings: Identifiable, ObservableObject {
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns
-        self.levelSpeed = levelSpeed
         self.levels = levels
         self.masterEffects = masterEffects
         self.tracks = tracks

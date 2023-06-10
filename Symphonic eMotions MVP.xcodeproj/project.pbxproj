@@ -62,6 +62,7 @@
 		7C8D758E2A28DC2B00DF2417 /* NoteNumberSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */; };
 		7C8D75902A28E0B900DF2417 /* NotesSequenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8D758F2A28E0B900DF2417 /* NotesSequenceType.swift */; };
 		7C8D75922A2A4D0500DF2417 /* FileGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8D75912A2A4D0500DF2417 /* FileGroup.swift */; };
+		7C9123AA2A3290D500C1DB94 /* AudioBufferTimePitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9123A92A3290D500C1DB94 /* AudioBufferTimePitch.swift */; };
 		7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
@@ -109,7 +110,6 @@
 		7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */; };
 		7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */; };
 		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
-		7CFB298129DB322200DFA32E /* LevelSpeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298029DB322200DFA32E /* LevelSpeedView.swift */; };
 		7CFB298329DCA90100DFA32E /* LoopsToGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
@@ -200,6 +200,7 @@
 		7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberSequenceView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C8D758F2A28E0B900DF2417 /* NotesSequenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSequenceType.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C8D75912A2A4D0500DF2417 /* FileGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGroup.swift; sourceTree = "<group>"; };
+		7C9123A92A3290D500C1DB94 /* AudioBufferTimePitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferTimePitch.swift; sourceTree = "<group>"; };
 		7C9E3B4F27AC0657002AE6B6 /* EaseInCircularDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseInCircularDamper.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
@@ -248,7 +249,6 @@
 		7CFA00AC29A75AF2001D8A5D /* SetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfo.swift; sourceTree = "<group>"; };
 		7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoadAndPlay.swift; sourceTree = "<group>"; };
 		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
-		7CFB298029DB322200DFA32E /* LevelSpeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSpeedView.swift; sourceTree = "<group>"; };
 		7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopsToGridView.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
@@ -410,7 +410,6 @@
 				7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */,
 				7C4EBB9B29D83BCB00958954 /* BpmView.swift */,
 				7C1FB0B129DDFD9A00621909 /* LevelsView.swift */,
-				7CFB298029DB322200DFA32E /* LevelSpeedView.swift */,
 				7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */,
 			);
 			path = SetEditor;
@@ -445,6 +444,7 @@
 				7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */,
 				7CF50F2429ED41CE0016BAF4 /* ExsSampler.swift */,
 				7CF50F2629ED425C0016BAF4 /* AudioBufferSampler.swift */,
+				7C9123A92A3290D500C1DB94 /* AudioBufferTimePitch.swift */,
 			);
 			path = InstrumentTypes;
 			sourceTree = "<group>";
@@ -842,6 +842,7 @@
 				7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */,
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
+				7C9123AA2A3290D500C1DB94 /* AudioBufferTimePitch.swift in Sources */,
 				7CF50F2929ED458A0016BAF4 /* ValuesDidChange.swift in Sources */,
 				C06958FB26B4D9E4002EB522 /* PlayView.swift in Sources */,
 				7CFB298329DCA90100DFA32E /* LoopsToGridView.swift in Sources */,
@@ -917,7 +918,6 @@
 				7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */,
 				7CF50F4929ED7D210016BAF4 /* VariationType.swift in Sources */,
 				7CF50F5529EF165B0016BAF4 /* StartTypeView.swift in Sources */,
-				7CFB298129DB322200DFA32E /* LevelSpeedView.swift in Sources */,
 				7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

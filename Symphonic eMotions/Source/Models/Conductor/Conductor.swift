@@ -687,8 +687,14 @@ final class Conductor {
             
         if value > 0.1 {
             
-            // Retrieve level speed from UserDefaults
-            let userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
+            //Hack to get initial value after first install
+            //Problem is this triggering every frame
+            var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
+            
+            if userDefaultsLevelSpeed == 0 {
+                userDefaultsLevelSpeed = 1
+            }
+            
             //Level speed slider from sheet correlation
             let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
             

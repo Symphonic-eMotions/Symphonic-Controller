@@ -93,7 +93,7 @@ struct MainView: View {
         }
         
         //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.demo,.creator].contains(sessionDisplay) {
+        else if [.swiftUI,.setInfo,.pro,.demo,.creator,.home].contains(sessionDisplay) {
             
             NavigationView {
                 

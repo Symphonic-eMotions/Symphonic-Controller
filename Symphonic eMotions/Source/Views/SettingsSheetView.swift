@@ -51,14 +51,16 @@ struct SettingsSheetView: View {
                     }
                 }
                 
+                //Sensitivity
                 VStack(alignment: .leading){
                     Text("Sensitivity").padding(.top)
                     Slider(value: sensitivityBinding, in: 0...1)
                 }
                 
+                //Level speed
                 VStack(alignment: .leading){
                     Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
-                    Slider(value: $levelSpeed, in: 0.1...1)
+                    Slider(value: $levelSpeed, in: 0.1...1.5)
                 }
                 
                 //Tempo
@@ -93,6 +95,7 @@ struct SettingsSheetView: View {
                     }
                 }
                 
+                //Volume
                 VStack(alignment: .leading){
                     Text("Volume").padding(.top)
                     VolumeSlider()
@@ -103,6 +106,7 @@ struct SettingsSheetView: View {
                 
                 Spacer()
                 
+                //Start stop
                 EMButton(action: {
                     showingSheet = false
                     if !playViewModel.conductor.isConductorPlayingSubject.value {

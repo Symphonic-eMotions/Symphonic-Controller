@@ -10,7 +10,7 @@ import SwiftUI
 struct SetFile: Identifiable, Decodable, Equatable {
     var id = UUID()
     var name: String = ""
-    var url: URL = URL("SetFile")
+    var url: URL = URL(string: "SetFile")!
     var published: Bool = false
     var fileGroup: FileGroup = .none
 }
@@ -92,6 +92,9 @@ struct SideBarView: View {
     func changeFileGroupAndSessionDisplay(fileGroup: FileGroup, sessionDisplay: SessionDisplay) {
         self.fileGroup = fileGroup
         self.sessionDisplay = sessionDisplay
+        
+        // Update the fileGroup property of the selectedSet
+        selectedSet?.fileGroup = fileGroup
     }
     
     var body: some View {
@@ -99,6 +102,7 @@ struct SideBarView: View {
             
             List {
                 ForEach([
+                    (name: "Home", setName: "home"),
                     (name: "Demo", setName: "demo"),
                     (name: "Active", setName: "playlists"),
                     (name: "Pro", setName: "pro"),
@@ -110,7 +114,17 @@ struct SideBarView: View {
                             self.showingAlert = true
                         }
                         else{
-                            if item.setName == "demo" {
+                            
+                            setInfoModel.tapStopAudioEngine()
+                            
+                            if item.setName == "home" {
+                                setInfoLocalState.sideBarHead = "Home"
+                                changeFileGroupAndSessionDisplay(fileGroup: .home, sessionDisplay: .home)
+                                sessionDisplaySub = .none
+                                //We do not want to go to the next set
+                                setInfoModel.setSettings.currentPlaylist = .none
+                            }
+                            else if item.setName == "demo" {
                                 setInfoLocalState.sideBarHead = "Demo"
                                 changeFileGroupAndSessionDisplay(fileGroup: .demo, sessionDisplay: .demo)
                                 sessionDisplaySub = .none
@@ -132,17 +146,17 @@ struct SideBarView: View {
                                 //We do not want to go to the next set
                                 setInfoModel.setSettings.currentPlaylist = .none
                             }
-                            else{
+                            else if item.setName == "playlists" {
                                 setInfoLocalState.sideBarHead = "Active"
-                                changeFileGroupAndSessionDisplay(fileGroup: .pro, sessionDisplay: .playlists)
+                                changeFileGroupAndSessionDisplay(fileGroup: .playlists, sessionDisplay: .playlists)
                                 sessionDisplaySub = .playlists
                             }
                             
                             setInfoLocalState.setName = item.setName
                             setInfoLocalState.sideBarHead = item.name
                             
-                            selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
-                            setInfoModel.tapStopAudioEngine()
+//                            selectedSet = SetFile(name: item.name, url: URL(item.setName), published: false)
+//                            setInfoModel.tapStopAudioEngine()
                         }
                     }) {
                         

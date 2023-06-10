@@ -89,7 +89,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         case masterTrackEffects
         case rows = "gridRows"
         case columns = "gridColumns"
-        case levelSpeed
         case levels = "levelDurations"
         case tracks = "instrumentsConfig"
     }
@@ -113,8 +112,6 @@ struct InstrumentsSet: Identifiable, Decodable {
     //The row and colums used in imageDifference
     internal let rows: Int
     internal let columns: Int
-    //Level variables
-    let levelSpeed: Double
     //Level duration keeps the amount of levels with an int
     //Duration could be refectored to aditional level speed per level
     let levels: [Int]
@@ -137,7 +134,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         masterTrackEffects = masterTrackEffectsRaw
         rows = try container.decode(Int.self, forKey: .rows)
         columns = try container.decode(Int.self, forKey: .columns)
-        levelSpeed = try container.decode(Double.self, forKey: .levelSpeed)
         levels = try container.decode([Int].self, forKey: .levels)
         tracks = try container.decode([Track].self, forKey: .tracks)
         if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
@@ -193,7 +189,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         masterTrackEffects: [Track.Effect],
         rows: Int,
         columns: Int,
-        levelSpeed: Double,
         levels: [Int],
         tracks: [Track]
     ) {
@@ -212,7 +207,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         
         self.rows = rows
         self.columns = columns
-        self.levelSpeed = levelSpeed
         self.levels = levels
         self.tracks = tracks
     }
@@ -267,7 +261,6 @@ extension InstrumentsSet: Encodable {
         try container.encode(masterTrackEffects, forKey: .masterTrackEffects)
         try container.encode(rows, forKey: .rows)
         try container.encode(columns, forKey: .columns)
-        try container.encode(levelSpeed, forKey: .levelSpeed)
         try container.encode(levels, forKey: .levels)
         try container.encode(tracks, forKey: .tracks)
         try container.encode(skin, forKey: .skin)

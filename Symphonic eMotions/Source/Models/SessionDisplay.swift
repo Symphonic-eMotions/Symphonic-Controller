@@ -12,6 +12,7 @@ import SwiftUI
 //For the editor this same enum is used for SessionDisplaySub navigation
 enum SessionDisplay: Hashable, Codable {
     
+    case home
     case demo
     case pro
     case creator
@@ -28,6 +29,8 @@ enum SessionDisplay: Hashable, Codable {
     
     var title: String {
         switch self {
+        case .home:
+            return "Home"
         case .demo:
             return "Demo"
         case .pro:
