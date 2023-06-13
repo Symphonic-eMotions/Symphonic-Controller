@@ -367,7 +367,7 @@
 			path = PartFeedbackView;
 			sourceTree = "<group>";
 		};
-		7C7502EA29C07C1600F55CA3 /* Editor */ = {
+		7C7502EA29C07C1600F55CA3 /* EditorOrg */ = {
 			isa = PBXGroup;
 			children = (
 				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
@@ -375,7 +375,7 @@
 				7CD417FF2A092AEE006831CE /* TrackEditor */,
 				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
-			path = Editor;
+			path = EditorOrg;
 			sourceTree = "<group>";
 		};
 		7CB2B9502A0D0D1500876CCD /* Playlists */ = {
@@ -385,6 +385,13 @@
 				7CB2B9512A0D0E0500876CCD /* person */,
 			);
 			path = Playlists;
+			sourceTree = "<group>";
+		};
+		7CCBF8FC2A38B75B00360E21 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Editor;
 			sourceTree = "<group>";
 		};
 		7CCDE10228E2C61300343920 /* MasterTrack */ = {
@@ -661,7 +668,8 @@
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
-				7C7502EA29C07C1600F55CA3 /* Editor */,
+				7C7502EA29C07C1600F55CA3 /* EditorOrg */,
+				7CCBF8FC2A38B75B00360E21 /* Editor */,
 				7C3EC2002A1D236F0049E4ED /* Demo */,
 				7CCFE4A72A03DC56008AE3EE /* Active */,
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
