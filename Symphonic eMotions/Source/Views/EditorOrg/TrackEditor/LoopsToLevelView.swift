@@ -61,14 +61,14 @@ struct LoopsToLevelView: View {
             Divider()
             //MIDI clips in file AND MIDi clip lengths
             //This is located here for _loopLengthLocal relation instead of higher up
-            MidiClipsInFileView(
-                setInfoModel: setInfoModel,
-                currentTrack: currentTrack,
-                trackId: trackId,
-                loopLengthLocal: $loopLengthLocal,
-                clipLetters: $clipLetters,
-                updateView: $updateView
-            )
+//            MidiClipsView(
+//                setInfoModel: setInfoModel,
+//                currentTrack: currentTrack,
+//                trackId: trackId,
+//                loopLengthLocal: $loopLengthLocal,
+//                clipLetters: $clipLetters,
+//                updateView: $updateView
+//            )
 
             //Place clips in level
             HStack(){

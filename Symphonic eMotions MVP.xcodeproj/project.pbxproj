@@ -19,7 +19,7 @@
 		7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B529E4429700621909 /* InLevelView.swift */; };
 		7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B729E455CB00621909 /* VariationTypeView.swift */; };
 		7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B929E45C9F00621909 /* MidiFiles.swift */; };
-		7C1FB0BC29E52F0D00621909 /* MidiClipsInFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BB29E52F0D00621909 /* MidiClipsInFileView.swift */; };
+		7C1FB0BC29E52F0D00621909 /* MidiClipsInFileViewOrg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BB29E52F0D00621909 /* MidiClipsInFileViewOrg.swift */; };
 		7C1FB0C029E820EC00621909 /* DefaultSkinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
@@ -54,6 +54,9 @@
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
 		7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */; };
+		7C7A07152A3B0D1E007F7385 /* TrackEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07142A3B0D1E007F7385 /* TrackEditorView.swift */; };
+		7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07162A3B2161007F7385 /* EditorParts.swift */; };
+		7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */; };
 		7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */; };
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
@@ -74,10 +77,11 @@
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
-		7CB7028329D84E1A003399BC /* EditTracksCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */; };
+		7CB7028329D84E1A003399BC /* EditTracksViewORG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */; };
 		7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2555B2A27865900ACA903 /* ChangeView.swift */; };
 		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
+		7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBF8FE2A39159700360E21 /* SetEditorView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
 		7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD417FC2A07C6D7006831CE /* AreaConnection.swift */; };
@@ -158,7 +162,7 @@
 		7C1FB0B529E4429700621909 /* InLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InLevelView.swift; sourceTree = "<group>"; };
 		7C1FB0B729E455CB00621909 /* VariationTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationTypeView.swift; sourceTree = "<group>"; };
 		7C1FB0B929E45C9F00621909 /* MidiFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFiles.swift; sourceTree = "<group>"; };
-		7C1FB0BB29E52F0D00621909 /* MidiClipsInFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsInFileView.swift; sourceTree = "<group>"; };
+		7C1FB0BB29E52F0D00621909 /* MidiClipsInFileViewOrg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsInFileViewOrg.swift; sourceTree = "<group>"; };
 		7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSkinView.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
@@ -192,6 +196,9 @@
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
 		7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanhDistortionEffect.swift; sourceTree = "<group>"; };
+		7C7A07142A3B0D1E007F7385 /* TrackEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEditorView.swift; sourceTree = "<group>"; };
+		7C7A07162A3B2161007F7385 /* EditorParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorParts.swift; sourceTree = "<group>"; };
+		7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsView.swift; sourceTree = "<group>"; };
 		7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseOutCubicDamper.swift; sourceTree = "<group>"; };
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
@@ -212,10 +219,11 @@
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
-		7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksCreatorView.swift; sourceTree = "<group>"; };
+		7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksViewORG.swift; sourceTree = "<group>"; };
 		7CC2555B2A27865900ACA903 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CCBF8FE2A39159700360E21 /* SetEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEditorView.swift; sourceTree = "<group>"; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
 		7CD417FC2A07C6D7006831CE /* AreaConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaConnection.swift; sourceTree = "<group>"; };
@@ -370,12 +378,22 @@
 		7C7502EA29C07C1600F55CA3 /* EditorOrg */ = {
 			isa = PBXGroup;
 			children = (
-				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
 				7CD417FE2A092AD1006831CE /* SetEditor */,
 				7CD417FF2A092AEE006831CE /* TrackEditor */,
 				7C7502EF29C086AC00F55CA3 /* FilePickerView.swift */,
 			);
 			path = EditorOrg;
+			sourceTree = "<group>";
+		};
+		7C7A07132A3B0CFB007F7385 /* TrackEditor */ = {
+			isa = PBXGroup;
+			children = (
+				7C7A07142A3B0D1E007F7385 /* TrackEditorView.swift */,
+				7C1FB0B529E4429700621909 /* InLevelView.swift */,
+				7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */,
+				7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */,
+			);
+			path = TrackEditor;
 			sourceTree = "<group>";
 		};
 		7CB2B9502A0D0D1500876CCD /* Playlists */ = {
@@ -390,8 +408,20 @@
 		7CCBF8FC2A38B75B00360E21 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				7C7502EB29C07C4D00F55CA3 /* EditorView.swift */,
+				7CCBF8FD2A39158400360E21 /* SetEditor */,
+				7C7A07132A3B0CFB007F7385 /* TrackEditor */,
+				7C7A07162A3B2161007F7385 /* EditorParts.swift */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		7CCBF8FD2A39158400360E21 /* SetEditor */ = {
+			isa = PBXGroup;
+			children = (
+				7CCBF8FE2A39159700360E21 /* SetEditorView.swift */,
+			);
+			path = SetEditor;
 			sourceTree = "<group>";
 		};
 		7CCDE10228E2C61300343920 /* MasterTrack */ = {
@@ -425,12 +455,10 @@
 		7CD417FF2A092AEE006831CE /* TrackEditor */ = {
 			isa = PBXGroup;
 			children = (
-				7CB7028229D84E1A003399BC /* EditTracksCreatorView.swift */,
-				7C1FB0B529E4429700621909 /* InLevelView.swift */,
+				7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */,
 				7CF50F5429EF165B0016BAF4 /* StartTypeView.swift */,
 				7C1FB0B729E455CB00621909 /* VariationTypeView.swift */,
-				7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */,
-				7C1FB0BB29E52F0D00621909 /* MidiClipsInFileView.swift */,
+				7C1FB0BB29E52F0D00621909 /* MidiClipsInFileViewOrg.swift */,
 				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
 				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
 				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
@@ -808,6 +836,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */,
+				7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */,
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
@@ -827,7 +856,7 @@
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
 				7C1FB0B229DDFD9A00621909 /* LevelsView.swift in Sources */,
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
-				7C1FB0BC29E52F0D00621909 /* MidiClipsInFileView.swift in Sources */,
+				7C1FB0BC29E52F0D00621909 /* MidiClipsInFileViewOrg.swift in Sources */,
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
@@ -857,6 +886,7 @@
 				7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */,
 				7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
+				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
 				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
 				7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */,
@@ -864,6 +894,7 @@
 				7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
+				7C7A07152A3B0D1E007F7385 /* TrackEditorView.swift in Sources */,
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
@@ -878,6 +909,7 @@
 				C069592326B4F2F6002EB522 /* EMButton.swift in Sources */,
 				C069590626B4E150002EB522 /* InstrumentsSet.swift in Sources */,
 				7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */,
+				7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */,
 				C069591F26B4E77E002EB522 /* AreaValues.swift in Sources */,
 				C069590226B4E029002EB522 /* VideoPreviewView.swift in Sources */,
 				7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */,
@@ -918,7 +950,7 @@
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */,
-				7CB7028329D84E1A003399BC /* EditTracksCreatorView.swift in Sources */,
+				7CB7028329D84E1A003399BC /* EditTracksViewORG.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
@@ -1081,7 +1113,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Creator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1123,7 +1155,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Creator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "I need the camera! :)";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;

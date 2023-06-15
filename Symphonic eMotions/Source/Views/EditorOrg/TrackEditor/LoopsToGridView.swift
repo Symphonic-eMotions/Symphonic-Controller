@@ -41,14 +41,14 @@ struct LoopsToGridView: View {
             
             Divider()
             
-            MidiClipsInFileView(
-                setInfoModel: setInfoModel,
-                currentTrack: currentTrack,
-                trackId: trackId,
-                loopLengthLocal: $loopLengthLocal,
-                clipLetters: $clipLetters,
-                updateView: $updateView
-            )
+//            MidiClipsInFileView(
+//                setInfoModel: setInfoModel,
+//                currentTrack: currentTrack,
+//                trackId: trackId,
+//                loopLengthLocal: $loopLengthLocal,
+//                clipLetters: $clipLetters,
+//                updateView: $updateView
+//            )
             
             HStack(){
                 

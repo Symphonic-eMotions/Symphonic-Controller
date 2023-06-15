@@ -33,7 +33,7 @@ final class Conductor {
     internal var trackSequencers: [String: AppleSequencer] = [:]
     //To move the playhead to another part in the score:
     //Copy part to move to current length playing
-    private var trackSequencersMemory: [String: AppleSequencer] = [:]
+    internal var trackSequencersMemory: [String: AppleSequencer] = [:]
     //Modifying midi like velocity
     private var trackSequencersCallbackers: [String: MIDICallbackInstrument] = [:]
     //Velocities per track to be controlled by intrumentParts
@@ -94,7 +94,7 @@ final class Conductor {
     
     //The main instrument set structure. A Musical set is loaded into this struct
     internal var set: InstrumentsSet
-
+    
     //MARK: Init
     init(set: InstrumentsSet) {
         
@@ -154,9 +154,6 @@ final class Conductor {
                 } catch {
                     print("Error loading EXS: trigger")
                 }
-                
-                
-                
                 
                 trackSamplers[track.id]!.destroyEndpoint()
                 trackSamplers.removeValue(forKey: track.id)
@@ -247,18 +244,18 @@ final class Conductor {
             trackSequencersCallbackers[track.id] = nil
             trackSequencers[track.id] = midiSequencer(
                 for: track,
-                   length: "loop",
-                   currentSetLevel: currentSetLevel,
-                   midiChannels: &midiChannels
+                length: "loop",
+                currentSetLevel: currentSetLevel,
+                midiChannels: &midiChannels
             )
             
             //Make dummy connectors for memory sequences to silence them in triggers module
             var midiChannelsDummy: [String: Int] = [:]
             trackSequencersMemory[track.id] = midiSequencer(
                 for: track,
-                   length: "all",
-                   currentSetLevel: currentSetLevel,
-                   midiChannels: &midiChannelsDummy
+                length: "all",
+                currentSetLevel: currentSetLevel,
+                midiChannels: &midiChannelsDummy
             )
             
             soundModuleParam01[track.id] = 0
@@ -283,7 +280,7 @@ final class Conductor {
         let samples = UInt64(3 * Settings.sampleRate)
         soundEffectSampler.scheduleMIDIEvent(event: noteOff, offset: samples)
     }
-
+    
     //MARK: EDITOR
     public func previewSingleTrack(trackId: String){
         if trackSequencers[trackId] != nil {
@@ -299,15 +296,15 @@ final class Conductor {
                 trackSequencers[trackId]?.rewind()
                 trackSequencers[trackId]?.preroll()
                 
-//                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
-
+                //                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+                //                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
                 
-//                audioEngine.pause()
+                
+                //                audioEngine.pause()
             }
             else{
                 playEngineUIEffect()
-//                unMuteTrack(trackId: trackId)
+                //                unMuteTrack(trackId: trackId)
                 let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: envOn)
                 
@@ -340,7 +337,7 @@ final class Conductor {
     }
     
     public func copyMidiSingleTrack(trackId:String,nextVariation:Int,loopLength:[Double]){
-    
+        
         let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: loopLength)
         
         print("nextMIDIstartTime \(nextMIDIstartTime) nextVariation \(nextVariation) loopLength \(loopLength)")
@@ -360,16 +357,16 @@ final class Conductor {
             
             let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
             trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
-
+            
             let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
             trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-        
+            
         } else {
             let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
             trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             
-//            let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
+            //            let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+            //            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
         }
     }
     
@@ -416,7 +413,7 @@ final class Conductor {
                 
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
-            
+                
                 //Highest level is full and is for the first time
                 if selectedLevel == setSettings.levels.count &&  isConductorPlayingSubject.value {
                     
@@ -512,7 +509,36 @@ final class Conductor {
             }
             
             let sequencer = AppleSequencer()
-            sequencer.loadMIDIFile("Sounds/MIDI/\(set.filesPath)/\(midiFile.fileName)")
+            
+            // Try loading MIDI file from the app bundle first
+            if let bundlePath = Bundle.main.path(forResource: "Sounds/MIDI/\(set.filesPath)/\(midiFile.fileName)", ofType: "mid"),
+               FileManager.default.fileExists(atPath: bundlePath) {
+                sequencer.loadMIDIFile("Sounds/MIDI/\(set.filesPath)/\(midiFile.fileName)")
+            } else {
+                
+                // If the file does not exist in the app bundle, try loading it from the documents directory
+                let documentsDirectory = try? FileManager.default.url(
+                    for: .documentDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil,
+                    create: false)
+                if let documentsDirectory = documentsDirectory {
+                    
+                    let fileURL = documentsDirectory.appendingPathComponent("\(set.filesPath)/\(midiFile.fileName)")
+                    
+                    // Check if file exists at the destination URL
+                    if FileManager.default.fileExists(atPath: fileURL.path) {
+                        sequencer.loadMIDIFile(fromURL: fileURL)
+                    } else {
+                        print("MIDI file \(midiFile.fileName) does not exist at expected location: \(fileURL.path)")
+                        return nil
+                    }
+                } else {
+                    print("Couldn't find the documents directory.")
+                    return nil
+                }
+            }
+            
             sequencer.setTempo(set.bpm)
             
             //Default length of 1 loop, for midi memory we need the length of "all" loops, thus the sum of loops
@@ -524,12 +550,12 @@ final class Conductor {
             
             sequencer.setLoopInfo(duration, loopCount: 0)
             sequencer.enableLooping()
-
+            
             //loop means, we have an actual instrument, not a sequencer loaded for copy reference
-            if length == "loop" {	
+            if length == "loop" {
                 
                 switch track.instrumentType {
-                
+                    
                 case .exsSampler:
                     
                     //Create EXS sampler
@@ -540,13 +566,13 @@ final class Conductor {
                     
                     
                     if isVelocitySensitive {
-                                                    
+                        
                         //Create MIDI callback instrument
                         //track is used for just the ID
                         trackSequencersCallbackers[track.id] = callBackInstrument(
                             for: track.id,
-                               controlling: trackSamplers[track.id]!,
-                               on: midiChannels[track.id]!)
+                            controlling: trackSamplers[track.id]!,
+                            on: midiChannels[track.id]!)
                         
                         sequencer.setGlobalMIDIOutput(trackSequencersCallbackers[track.id]!.midiIn)
                     }
@@ -600,45 +626,45 @@ final class Conductor {
         controlling sampler: MIDISampler,
         on midiChannel: Int
     ) -> MIDICallbackInstrument {
-                        
-            //Sequencer to callback to play sampler
-            let midiCallBackInstrument =  MIDICallbackInstrument { [self] status, note, velocity in
-                
-                guard let midiStatus = MIDIStatusType.from(byte: status) else {
-                    return
-                }
-                
-                if midiStatus == .noteOn {
-                    
-                    //NOTE: midiStatus == .noteOn does not pass chords, just single notes
-                    //NOTE: if note off event is on same moment as note on, there will be no note on event
-                    
-                    let newVelocity = UInt8( max(Double(velocity) * velocities[trackId]!, 0 ))
-                    
-                    sampler.play(noteNumber: note, velocity: newVelocity, channel: MIDIChannel(midiChannel))
-                }
-                else if midiStatus == .noteOff {
-                    
-                    sampler.stop(noteNumber: note, channel: MIDIChannel(midiChannel))
-                }
+        
+        //Sequencer to callback to play sampler
+        let midiCallBackInstrument =  MIDICallbackInstrument { [self] status, note, velocity in
+            
+            guard let midiStatus = MIDIStatusType.from(byte: status) else {
+                return
             }
-            return midiCallBackInstrument
+            
+            if midiStatus == .noteOn {
+                
+                //NOTE: midiStatus == .noteOn does not pass chords, just single notes
+                //NOTE: if note off event is on same moment as note on, there will be no note on event
+                
+                let newVelocity = UInt8( max(Double(velocity) * velocities[trackId]!, 0 ))
+                
+                sampler.play(noteNumber: note, velocity: newVelocity, channel: MIDIChannel(midiChannel))
+            }
+            else if midiStatus == .noteOff {
+                
+                sampler.stop(noteNumber: note, channel: MIDIChannel(midiChannel))
+            }
         }
+        return midiCallBackInstrument
+    }
     
     
     //MARK: Chain effects per track
     internal func chainEffects(
         for track: InstrumentsSet.Track,
         startingNode: Node) -> Node {
-        
-        guard let effects = track.effects else { return startingNode }
-        var finalNode = startingNode
-        effects.forEach { effect in
-            finalNode = effect.chain(to: finalNode)
+            
+            guard let effects = track.effects else { return startingNode }
+            var finalNode = startingNode
+            effects.forEach { effect in
+                finalNode = effect.chain(to: finalNode)
+            }
+            
+            return finalNode as Node
         }
-        
-        return finalNode as Node
-    }
     
     //MARK: Add track amplitude envelopes
     internal func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
@@ -649,7 +675,7 @@ final class Conductor {
         trackAmpEnvelopes[trackId]!.decayDuration = 0.01
         trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
         trackAmpEnvelopes[trackId]!.releaseDuration = 0.4
-            
+        
         return trackAmpEnvelopes[trackId]! as Node
     }
     
@@ -658,13 +684,13 @@ final class Conductor {
         for effects: [InstrumentsSet.Track.Effect],
         startingNode: Node) -> Node {
             
-        var finalNode = startingNode
-        effects.forEach { effect in
-            finalNode = effect.chain(to: finalNode)
-        }
+            var finalNode = startingNode
+            effects.forEach { effect in
+                finalNode = effect.chain(to: finalNode)
+            }
             
-        return finalNode as Node
-    }
+            return finalNode as Node
+        }
     
     //MARK: Forward Master Track
     public func forwardMasterTrackEffect(value: Double, nodeName: String, parameter: String, parameterRange: [Double] ) {
@@ -685,25 +711,25 @@ final class Conductor {
         currentSetLevel: Double,
         value: Double ) -> Double {
             
-        if value > 0.1 {
-            
-            //Hack to get initial value after first install
-            //Problem is this triggering every frame
-            var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
-            
-            if userDefaultsLevelSpeed == 0 {
-                userDefaultsLevelSpeed = 1
+            if value > 0.1 {
+                
+                //Hack to get initial value after first install
+                //Problem is this triggering every frame
+                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
+                
+                if userDefaultsLevelSpeed == 0 {
+                    userDefaultsLevelSpeed = 1
+                }
+                
+                //Level speed slider from sheet correlation
+                let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
+                
+                // Muting is not happening in over amount of levels.
+                return levelSpeedValue
             }
             
-            //Level speed slider from sheet correlation
-            let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
-            
-            // Muting is not happening in over amount of levels.
-            return levelSpeedValue
+            return currentSetLevel
         }
-        
-        return currentSetLevel
-    }
     
     private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
         
@@ -732,7 +758,7 @@ final class Conductor {
         for currentTimeScore: Int,
         in loopLengths: [Double]
     ) -> Double {
-
+        
         var currentMIDIstartTime: Double = 0.0
         if currentTimeScore > 0 {
             for (index,loopLength) in loopLengths.enumerated() {
@@ -821,7 +847,7 @@ final class Conductor {
         
         guard !isConductorPlayingSubject.value else { return }
         
-//        speechSynthesizer.stopSpeaking(at: .word)
+        //        speechSynthesizer.stopSpeaking(at: .word)
         
         do {
             //Variable for use in View (SwiftUI)
@@ -865,7 +891,7 @@ final class Conductor {
                         }
                     }
                     else if [.oneShot].contains(track.value.startType) {
-                                
+                        
                         if [.variationByPosition,.variationSequencial].contains(track.value.variationType) {
                             //Play sequencers for time calculation
                             playTrack(track.value)
@@ -897,9 +923,9 @@ final class Conductor {
         }
         
         //No ticks between tracks, but there are audio tailes
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            self.audioEngine.pause()
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        //            self.audioEngine.pause()
+        //        }
     }
     
     private func playEngineUIEffect() {

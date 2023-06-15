@@ -196,10 +196,10 @@ final class AppUtils {
                 noteSource: trackLoaded.noteSource ?? .midiFile,
                 startType: trackLoaded.startType,
                 variationType: trackLoaded.variationType ?? .variationByPosition,
+                instrumentType: trackLoaded.instrumentType,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
-                
                 midiGroup: midiGroup,
                 notesToGrid: notesToGrid,
                 notesToGridMapped: AppUtils.areaOfInterestGridMapped(
@@ -367,7 +367,7 @@ final class AppUtils {
                 id: track.id,
                 trackId: track.trackId,
                 muted: track.muted,
-                instrumentType: track.instrumentType,
+                instrumentType: setSettings.tracks[track.trackId]!.instrumentType,
                 noteSource: setSettings.tracks[track.trackId]!.noteSource,
                 startType: setSettings.tracks[track.trackId]!.startType,
                 variationType: setSettings.tracks[track.trackId]!.variationType,

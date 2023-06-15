@@ -79,4 +79,8 @@ final class SetInfoModel: ObservableObject {
     func tapSetTempoBPMMin(){
         self.setSettings.bpm += 1
     }
+    
+    func loadMidiFile(midiFile: URL, trackId: String){
+        self.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: midiFile)
+    }
 }

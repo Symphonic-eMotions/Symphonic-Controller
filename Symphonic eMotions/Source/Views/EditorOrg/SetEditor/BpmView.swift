@@ -23,9 +23,9 @@ struct BpmView: View {
                 .padding()
         }
         
-        if !setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
-            Text("Fixed tempo set (Stems)")
-        }
+//        if !setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
+//            Text("Fixed tempo set (Stems)")
+//        }
     }
 }
 

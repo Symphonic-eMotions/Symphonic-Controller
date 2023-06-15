@@ -15,7 +15,7 @@ struct DontPlayGridView: View{
             .fill(Color.black)
             .overlay(RoundedRectangle(cornerRadius: 7.0).stroke(Color("GridBorderColor")))
             .cornerRadius(7.0)
-            Image("Logo")
+            Image("LogoGrey")
         }.aspectRatio(1.77777, contentMode: .fit)
     }
 }
