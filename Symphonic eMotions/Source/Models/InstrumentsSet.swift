@@ -99,8 +99,9 @@ struct InstrumentsSet: Identifiable, Decodable {
     let customName: String
     let published: Bool?
     var fileGroup: FileGroup?
-    //Depricate filesPath, it's not used?
+    //Depricate filesPath, it's not used
     let filesPath: String
+    //Path for custom files (.mid, .wav, .aif)
     var defaultSkin: SessionDisplay?
     //Sequencer objects variables
     var bpm: Double

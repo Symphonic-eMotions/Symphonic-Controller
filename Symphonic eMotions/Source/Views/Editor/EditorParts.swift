@@ -12,6 +12,7 @@ enum EditorParts: String, CaseIterable {
     case set
     case levels
     case source
+    case sound
     case start
     case variation
     case location
@@ -43,10 +44,12 @@ enum EditorParts: String, CaseIterable {
             return "Levels"
         case .source:
             return "Note source"
+        case .sound:
+            return "Sound source"
         case .start:
-            return "Start type"
+            return "Start method"
         case .variation:
-            return "Variation type"
+            return "Variation method"
         case .location:
             return "Position in camera view"
         default:

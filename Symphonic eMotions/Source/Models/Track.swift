@@ -218,13 +218,28 @@ extension InstrumentsSet.Track: Encodable {
 
 extension InstrumentsSet.Track {
     
-    enum InstrumentType: String, Codable {
-        case audioBuffer
+    enum InstrumentType: String, Codable, CaseIterable {
         case exsSampler
+        case audioBuffer
+        case audioBufferTimed
         case pulseWidthSynth
         case phaseSynth
+        
+        var description: String {
+            switch self{
+            case .exsSampler:
+                return "EXS sampler"
+            case .audioBuffer:
+                return "Buffer sampler"
+            case .audioBufferTimed:
+                return "Stretched buffer sampler"
+            case .pulseWidthSynth:
+                return "Pulse Width Modulation Synth"
+            case .phaseSynth:
+                return "Phase Synth"
+            }
+        }
     }
-    
 }
 
 extension InstrumentsSet.Track {

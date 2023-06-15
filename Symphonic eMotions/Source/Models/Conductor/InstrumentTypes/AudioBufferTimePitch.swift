@@ -1,5 +1,5 @@
 //
-//  AudioBufferTimePitch.swift
+//  createAudioBufferTimePitch.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 09/06/2023.
@@ -11,7 +11,7 @@ import AVFAudio
 
 extension Conductor {
     
-    internal func AudioBufferTimePitch(
+    internal func createAudioBufferTimePitch(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
         currentSetLevel: Double,

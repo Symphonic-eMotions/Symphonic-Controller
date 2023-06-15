@@ -61,25 +61,30 @@ struct TrackEditorView: View {
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                     }
                     .padding(.leading)
-
-                    Text("Track \(track.trackName)")
-                        .font(.system(size: 20))
-                        .padding()
                     
-                    Spacer()
-                    
-                    VStack(alignment: .trailing){
-                        Text(track.startType.description)
-                            .font(.system(size: 14))
-                            .foregroundColor(.gray)
-                        Text(track.noteSource.description)
-                            .font(.system(size: 14))
-                            .foregroundColor(.gray)
-                        Text(track.variationType.description)
-                            .font(.system(size: 14))
-                            .foregroundColor(.gray)
+                    if showEditorPart == editorPart {
+                        TextField(
+                            "Track name",
+                            text: Binding(
+                                get: { self.setInfoModel.setSettings.tracks[key]?.trackName ?? "" },
+                                set: {
+                                    if self.setInfoModel.setSettings.tracks[key] != nil {
+                                        self.setInfoModel.setSettings.tracks[key]?.trackName = $0
+                                    }
+                                }
+                            )
+                        )
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading)
+                        .padding(.trailing)
+                        //Explude TextField from parent onTapGesture
+                        .onTapGesture{}
                     }
-                    .padding(.trailing)
+                    else{
+                        Text("Track \(track.trackName)")
+                            .font(.system(size: 20))
+                            .padding()
+                    }
                 }
                 .onTapGesture {
                     withAnimation {
@@ -115,6 +120,15 @@ struct TrackEditorView: View {
                         midiClipsLevels: $midiClipsLevels,
                         midiClipspositions: $midiClipPositions
                     )
+                }
+                if showEditorPart == editorPart || showEditorPart == .sound {
+                    
+                    SoundSourceView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showEditorPart: $showEditorPart,
+                        soundSources: $instrumentTypes)
                 }
             }
         }

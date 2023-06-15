@@ -263,8 +263,12 @@ final class Conductor {
             soundModuleVolume[track.id] = 0
             
             //Turn tracks off so things will be quiet to start off with
-            let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-            trackAmpEnvelopes[track.id]!.scheduleMIDIEvent(event: envOff)
+                if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
+                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+                trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
+            } else {
+                print("trackAmpEnvelopes[track.id] is nil")
+            }
         }
     }
     
@@ -511,9 +515,9 @@ final class Conductor {
             let sequencer = AppleSequencer()
             
             // Try loading MIDI file from the app bundle first
-            if let bundlePath = Bundle.main.path(forResource: "Sounds/MIDI/\(set.filesPath)/\(midiFile.fileName)", ofType: "mid"),
+            if let bundlePath = Bundle.main.path(forResource: "Sounds/MIDI/\(midiFile.fileName)", ofType: "mid"),
                FileManager.default.fileExists(atPath: bundlePath) {
-                sequencer.loadMIDIFile("Sounds/MIDI/\(set.filesPath)/\(midiFile.fileName)")
+                sequencer.loadMIDIFile("Sounds/MIDI/\(midiFile.fileName)")
             } else {
                 
                 // If the file does not exist in the app bundle, try loading it from the documents directory
@@ -581,6 +585,8 @@ final class Conductor {
                     }
                 case .audioBuffer:
                     trackSamplers[track.id] = createAudioBufferSampler(for: track, and: sequencer, currentSetLevel: currentSetLevel)
+                case .audioBufferTimed:
+                    trackSamplers[track.id] = createAudioBufferTimePitch(for: track, and: sequencer, currentSetLevel: currentSetLevel, targetBPM: set.bpm)
                 case .pulseWidthSynth:
                     trackInstruments[track.id] = createPulseWidthSynth(for: track, and: sequencer)
                 case .phaseSynth:
@@ -800,8 +806,13 @@ final class Conductor {
     internal func stopNotesTrackId(for trackId: String) {
         
         //Shut down all note on's
-        for note in 0...127 {
-            trackSamplers[trackId]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
+        if let trackSampler = trackSamplers[trackId] {
+            // Shut down all note on's
+            for note in 0...127 {
+                trackSampler.stop(noteNumber: MIDINoteNumber(note), channel: 1)
+            }
+        } else {
+            print("trackSamplers[\(trackId)] is nil")
         }
     }
     

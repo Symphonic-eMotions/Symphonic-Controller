@@ -71,18 +71,18 @@ struct SetEditorView: View {
         }
         
         if showEditorPart == .set {
-            HStack{
-                Text("Publish set")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                Toggle("", isOn: $setInfoModel.setSettings.published)
-                    .frame(width: 50)
-                    .padding(.leading)
-                
-                Spacer()
-            }
+//            HStack{
+//                Text("Publish set")
+//                    .font(.system(size: headingSize))
+//                    .padding()
+//                    .frame(width: columnWidth, alignment: .leading)
+//                
+//                Toggle("", isOn: $setInfoModel.setSettings.published)
+//                    .frame(width: 50)
+//                    .padding(.leading)
+//                
+//                Spacer()
+//            }
             HStack{
                 Text("Name")
                     .font(.system(size: headingSize))
@@ -90,6 +90,18 @@ struct SetEditorView: View {
                     .frame(width: columnWidth, alignment: .leading)
                 
                 TextField("Custom name", text: $setInfoModel.setSettings.customName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.leading)
+                    .padding(.trailing)
+                    
+            }
+            HStack{
+                Text("Project folder")
+                    .font(.system(size: headingSize))
+                    .padding()
+                    .frame(width: columnWidth, alignment: .leading)
+                
+                TextField("Folder name", text: $setInfoModel.setSettings.filesPath)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.leading)
                     .padding(.trailing)
@@ -126,9 +138,7 @@ struct SetEditorView: View {
                 BpmView(
                     setInfoModel: setInfoModel
                 )
-            }
-            HStack{
-                Text("User can change tempo")
+                Text("Dynamic tempo")
                     .font(.system(size: headingSize))
                     .padding()
                     .frame(width: columnWidth, alignment: .leading)
@@ -136,9 +146,12 @@ struct SetEditorView: View {
                 Toggle("", isOn: $setInfoModel.setSettings.hasTempo)
                     .frame(width: 50)
                     .padding(.leading)
-                
-                Spacer()
             }
+//            HStack{
+//                
+//                
+//                Spacer()
+//            }
             LevelsView(
                 setInfoModel: setInfoModel
             )

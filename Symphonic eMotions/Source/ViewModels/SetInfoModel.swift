@@ -80,7 +80,7 @@ final class SetInfoModel: ObservableObject {
         self.setSettings.bpm += 1
     }
     
-    func loadMidiFile(midiFile: URL, trackId: String){
-        self.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: midiFile)
-    }
+//    func loadMidiFile(midiFile: URL, trackId: String){
+//        self.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: midiFile)
+//    }
 }

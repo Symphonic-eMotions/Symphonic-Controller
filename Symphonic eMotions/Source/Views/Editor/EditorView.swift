@@ -152,10 +152,20 @@ struct EditorView: View {
     
     var body: some View {
         
-//        ScrollView {
-            VStack(alignment: .leading){
-                
-                SetEditorView(
+        VStack(alignment: .leading){
+            
+            SetEditorView(
+                setInfoModel: setInfoModel,
+                showEditorPart: $showEditorPart,
+                trackLevels: $trackLevels,
+                noteNumbersLevels: $noteNumbersLevels,
+                midiClipsLevels: $midiClipsLevels,
+                gridRow: $gridRow,
+                noteNumbersPositions: $noteNumbersPositions,
+                midiClipPositions: $midiClipPositions
+            )
+            ScrollView{
+                TrackEditorView(
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart,
                     trackLevels: $trackLevels,
@@ -163,37 +173,21 @@ struct EditorView: View {
                     midiClipsLevels: $midiClipsLevels,
                     gridRow: $gridRow,
                     noteNumbersPositions: $noteNumbersPositions,
-                    midiClipPositions: $midiClipPositions
+                    midiClipPositions: $midiClipPositions,
+                    noteNumbers: $noteNumbers,
+                    noteNumberLetters: $noteNumberLetters,
+                    midiClips: $midiClips,
+                    midiClipLetters: $midiClipLetters,
+                    noteSources: $noteSources,
+                    startTypes: $startTypes,
+                    variationTypes: $variationTypes,
+                    instrumentTypes: $instrumentTypes,
+                    areaOfInterest: $areaOfInterest,
+                    minimalLevel: $minimalLevel
                 )
-                
-                Divider()
-                ScrollView{
-                    TrackEditorView(
-                        setInfoModel: setInfoModel,
-                        showEditorPart: $showEditorPart,
-                        trackLevels: $trackLevels,
-                        noteNumbersLevels: $noteNumbersLevels,
-                        midiClipsLevels: $midiClipsLevels,
-                        gridRow: $gridRow,
-                        noteNumbersPositions: $noteNumbersPositions,
-                        midiClipPositions: $midiClipPositions,
-                        noteNumbers: $noteNumbers,
-                        noteNumberLetters: $noteNumberLetters,
-                        midiClips: $midiClips,
-                        midiClipLetters: $midiClipLetters,
-                        noteSources: $noteSources,
-                        startTypes: $startTypes,
-                        variationTypes: $variationTypes,
-                        instrumentTypes: $instrumentTypes,
-                        areaOfInterest: $areaOfInterest,
-                        minimalLevel: $minimalLevel
-                    )
-                }
             }
-//        }
-        
-        Spacer()
-        
+        }
+
         //Cancel, New set, Save buttons
         HStack {
             

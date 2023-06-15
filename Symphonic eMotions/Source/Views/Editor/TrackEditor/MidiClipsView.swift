@@ -25,8 +25,8 @@ struct MidiClipsView: View {
     @State var clipLength: Int
     
     //Midi files
-    @State var imported = false
-    @State var urlString: String?
+    @State var importing = false
+    @State var isNewMidi: Bool = false
     
     let columnWidth: CGFloat = 150
     
@@ -120,18 +120,18 @@ struct MidiClipsView: View {
             ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
                 
                 Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-                    .foregroundColor(.white)
-                    .frame(width: 40, height: 30)
-                    .padding(.vertical, 5.0)
-                    .padding(.horizontal, 5.0)
-                    .background(Color.accentColor)
-                    .cornerRadius(5.0)
-                    .onTapGesture {
-                        isPlaying[index].toggle()
-                        setInfoModel.conductor.copyMidiSingleTrack(trackId: trackId, nextVariation: index, loopLength: currentTrack.loopLength)
-                        setInfoModel.conductor.previewSingleTrack(trackId: trackId)
-                    }
+                .foregroundColor(.white)
+                .frame(width: 40, height: 30)
+                .padding(.vertical, 5.0)
+                .padding(.horizontal, 5.0)
+                .background(Color.accentColor)
+                .cornerRadius(5.0)
+                .onTapGesture {
+                    isPlaying[index].toggle()
+                    setInfoModel.conductor.copyMidiSingleTrack(trackId: trackId, nextVariation: index, loopLength: currentTrack.loopLength)
+                    setInfoModel.conductor.previewSingleTrack(trackId: trackId)
                 
+                }
             }
         }
         
@@ -144,7 +144,9 @@ struct MidiClipsView: View {
             TextField("Cliplength", text: Binding(
                 get:{ String(clipLength) },
                 set:{ if let value = Double($0) {
+                    //State
                     clipLength = Int(value)
+                    //Save to file
                     currentTrack.loopLength = Array(repeating: value, count: currentTrack.loopLength.count)
                 }}
             ))
@@ -162,17 +164,21 @@ struct MidiClipsView: View {
                 .frame(width: columnWidth, alignment: .leading)
             
             HStack (spacing: 30) {
-                Button(action: {imported.toggle()}, label: {
+                Button(action: {importing.toggle()}, label: {
                     Text("Import MIDI file")
                 })
-//                if urlString != nil {
-                    Text("Save and reopen set to active new midi files")
-//                }
+                if isNewMidi {
+                    Text(NSLocalizedString("Save and reopen", comment: ""))
+                }
             }
-            .fileImporter(isPresented: $imported, allowedContentTypes: [.midi]) { file in
+            .fileImporter(isPresented: $importing, allowedContentTypes: [.midi]) { file in
                 do {
                     let fileUrl: URL = try file.get()
-                    let fileName = fileUrl.lastPathComponent
+                    let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
+                    let fileName = "\(fileUrl.lastPathComponent)"
+                    
+                    print("fileUrl: \(fileUrl)")
+                    
 //                    let fileNameNoExtension = fileUrl.deletingPathExtension().lastPathComponent
                     
                     // define destination URL in your app's documents directory
@@ -182,7 +188,7 @@ struct MidiClipsView: View {
                          appropriateFor: nil,
                          create: false
                     )
-                    let destinationUrl = documentsDirectory.appendingPathComponent(fileName)
+                    let destinationUrl = documentsDirectory.appendingPathComponent(folderAndFileName)
                     
                     // Ensure that file exists at the destination URL
                     guard FileManager.default.fileExists(atPath: destinationUrl.path) else {
@@ -196,11 +202,16 @@ struct MidiClipsView: View {
                     setInfoModel.conductor.trackSequencersMemory[trackId]?.loadMIDIFile(fromURL: destinationUrl)
                     
                     setInfoModel.setSettings.tracks[trackId]?.midiFile = fileName
-                
+                    
+                    isNewMidi = true
+                    
                     print("Loaded MIDI file: \(fileName)")
                     
                 } catch{
-                    print ("error reading: \(error.localizedDescription)")
+                    
+                    isNewMidi = false
+                    
+                    print ("MidiClipsView error reading: \(error.localizedDescription)")
                 }
             }
             
