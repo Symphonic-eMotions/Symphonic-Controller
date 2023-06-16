@@ -31,3 +31,4 @@
 "Hold level" = "Hold level";
 "Finish" = "Finish";
 "Save and reopen" = "Save and reopen set to activate new midi file";
+"One part" = "Velocity is the only controller and yhus connot be removed";

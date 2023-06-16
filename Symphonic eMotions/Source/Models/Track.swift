@@ -40,7 +40,6 @@ extension InstrumentsSet {
             case effects
             case parts = "instrumentParts"
             case levels
-            case scoreWalkDuration
         }
         
         var id: String
@@ -76,8 +75,6 @@ extension InstrumentsSet {
 //        var effectRanges: [EffectRanges]?
         var parts: [Part]
         let levels: [Int]
-        //Amount of beats before increment to next MIDI start point
-        let scoreWalkDuration: [Int]?
         
         init(from decoder: Decoder) throws {
             
@@ -131,7 +128,6 @@ extension InstrumentsSet {
             firstMinimalLevel = (partsRaw.first!.damperTarget.nodeSettings?.minimalLevel)!
             
             levels = try container.decode([Int].self, forKey: .levels)
-            scoreWalkDuration = try container.decodeIfPresent([Int].self, forKey: .scoreWalkDuration)
         }
         
         init(
@@ -154,8 +150,7 @@ extension InstrumentsSet {
             audioFiles: [AudioFile]?,
             effects: [Effect]?,
             parts: [Part],
-            levels: [Int],
-            scoreWalkDuration: [Int]?
+            levels: [Int]
         ) {
             self.id = id
             self.trackId = trackId
@@ -177,8 +172,7 @@ extension InstrumentsSet {
             self.effects = effects
             self.parts = parts
             self.levels = levels
-            self.scoreWalkDuration = scoreWalkDuration//first part minimal level
-            self.firstMinimalLevel = 0.1
+            self.firstMinimalLevel = 0.1 //first part minimal level
         }
         
         func effect(for effectType: Effect.EffectType) -> Effect? {
@@ -212,7 +206,6 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(effects, forKey: .effects)
         try container.encode(parts, forKey: .parts)
         try container.encode(levels, forKey: .levels)
-        try container.encode(scoreWalkDuration, forKey: .scoreWalkDuration)
     }
 }
 
@@ -258,6 +251,11 @@ extension InstrumentsSet.Track {
             let container = try decoder.container(keyedBy: ExsKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
+        }
+        
+        init(fileName: String){
+            self.fileName = fileName
+            self.fileExtension = "exs"
         }
     }
 }

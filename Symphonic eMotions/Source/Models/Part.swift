@@ -231,55 +231,32 @@ extension InstrumentsSet.Track.Part.DamperTarget {
         
         private enum NodeSettingKeys: String, CodingKey {
             case minimalLevel
-            case levelPart
-            case tempoLow
-            case tempoHigh
             case rampSpeed
             case rampSpeedDown
             case coolDownTime
         }
         
         var minimalLevel: Double?
-        //Multiplier level, lower is less influence
-        var levelPart: Double?
-        //Tempo range
-        var tempoLow: Double?
-        var tempoHigh: Double?
         //Ramp vars
         var rampSpeed: Double?
         var rampSpeedDown: Double?
-        //Trigger vars
-        //coolDownTime in Duration.beats
-        var coolDownTime: Double?
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: NodeSettingKeys.self)
             self.minimalLevel = try container.decodeIfPresent(Double.self, forKey: .minimalLevel)
-            self.levelPart = try container.decodeIfPresent(Double.self, forKey: .levelPart)
-            self.tempoLow = try container.decodeIfPresent(Double.self, forKey: .tempoLow)
-            self.tempoHigh = try container.decodeIfPresent(Double.self, forKey: .tempoHigh)
             self.rampSpeed = try container.decodeIfPresent(Double.self, forKey: .rampSpeed)
             self.rampSpeedDown = try container.decodeIfPresent(Double.self, forKey: .rampSpeedDown)
-            self.coolDownTime = try container.decodeIfPresent(Double.self, forKey: .coolDownTime)
         }
         
         //Init for encoding to file
         init(
             minimalLevel: Double?,
-            levelPart: Double?,
-            tempoLow: Double?,
-            tempoHigh: Double?,
             rampSpeed: Double?,
-            rampSpeedDown: Double?,
-            coolDownTime: Double?
+            rampSpeedDown: Double?
         ) {
             self.minimalLevel = minimalLevel
-            self.levelPart = levelPart
-            self.tempoLow = tempoLow
-            self.tempoHigh = tempoHigh
             self.rampSpeed = rampSpeed
             self.rampSpeedDown = rampSpeedDown
-            self.coolDownTime = coolDownTime
         }
     }
 }
@@ -288,12 +265,8 @@ extension InstrumentsSet.Track.Part.DamperTarget.NodeSettings: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: NodeSettingKeys.self)
         try container.encode(minimalLevel, forKey: .minimalLevel)
-        try container.encode(levelPart, forKey: .levelPart)
-        try container.encode(tempoLow, forKey: .tempoLow)
-        try container.encode(tempoHigh, forKey: .tempoHigh)
         try container.encode(rampSpeed, forKey: .rampSpeed)
         try container.encode(rampSpeedDown, forKey: .rampSpeedDown)
-        try container.encode(coolDownTime, forKey: .coolDownTime)
     }
 }
 

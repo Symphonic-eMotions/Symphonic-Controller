@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OrderedCollections
 
 struct SetInfoState {
 
@@ -46,6 +47,72 @@ final class SetInfoModel: ObservableObject {
         }
         
         return selectableEditorParts
+    }
+    
+    func addVelocityPart(velocitySensitive: Bool, trackId: String) -> PartSettings? {
+        
+        var returnPart: PartSettings?
+        
+        let numberOfParts = self.setSettings.tracks[trackId]?.parts.count ?? 0
+        
+        if velocitySensitive {
+            
+            //add velocity part
+            let partId: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+            
+            let newNodeSetting = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
+                minimalLevel: 0.1,
+                rampSpeed: 0.15,
+                rampSpeedDown: 0.14
+            )
+            
+            let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
+                trackId: trackId,
+                nodeType: .sequencer,
+                nodeName: "",
+                parameter: "velocity",
+                parameterRange: [0,1],
+                midiData: nil,
+                nodeSettings: newNodeSetting,
+                dampMode: .easeInCubic
+            )
+            
+            let cells = self.setSettings.gridRows * self.setSettings.gridColumns
+            
+            let newPart = PartSettings(
+                partId: partId,
+                partName: "Velocity",
+                partNumber: numberOfParts + 1,
+                rampUp: newNodeSetting.rampSpeed!,
+                rampDown: newNodeSetting.rampSpeedDown!,
+                minimalLevel: newNodeSetting.minimalLevel!,
+                areaOfInterest: Array(repeating: 1, count: cells),
+                areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
+                damperTarget: newDamperTarget,
+                dontDrawVisual: false
+            )
+            
+            returnPart = newPart
+        }
+        //
+//        else{
+//            
+//            if numberOfParts > 1 {
+//                
+//                if let track = self.setSettings.tracks[trackId] {
+//                    
+//                    var updatedParts = OrderedDictionary<String, PartSettings>()
+//                    for (partId, part) in track.parts {
+//                        if part.damperTarget.parameter != "velocity" {
+//                            updatedParts[partId] = part
+//                        }
+//                    }
+//                    self.setSettings.tracks[trackId]?.parts = updatedParts
+//                }
+//            }
+//        }
+        
+        return returnPart
     }
     
     func trackNames() -> [String: String] {

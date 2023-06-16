@@ -50,13 +50,13 @@ struct SoundSourceView: View {
                 ZStack {
                     
                     Rectangle()
-                        .frame(width: 120, height: 34)
+                        .frame(width: 130, height: 34)
                         .foregroundColor(.clear)
                         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                         .background( showEditorPart == .sound ? .clear : color )
                     
                     Text("Sound source")
-                        .frame(width: 120, height: 34)
+                        .frame(width: 130, height: 34)
                     
                 }
                 .frame(width: columnWidth, alignment: .leading)
@@ -66,7 +66,7 @@ struct SoundSourceView: View {
                     }
                 }
                 
-                Picker("Select source of sound", selection: $soundSource) {
+                Picker("Sources of sound", selection: $soundSource) {
                     ForEach(InstrumentsSet.Track.InstrumentType.allCases, id: \.self) { type in
                         Text(type.description).tag(type)
                     }
@@ -81,6 +81,27 @@ struct SoundSourceView: View {
                         soundSources[trackId] = type
                         //State
                         soundSource = type
+                    }
+                }
+            }
+            if soundSource == .exsSampler {
+                
+                HStack {
+                    
+                    Text("EXS preset")
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    let excludedCases: [ExsFiles] = [.trigger]
+                    Picker("Presets", selection: $currentTrack.exsFile) {
+                        ForEach(ExsFiles.allCases.filter { !excludedCases.contains($0) }, id: \.self) { type in
+                            Text(type.rawValue.capitalized).tag(type)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    .frame(height: 100)
+                    .onChange(of: soundSource) { type in
+                        withAnimation {
+                        }
                     }
                 }
             }

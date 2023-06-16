@@ -18,6 +18,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var startType: StartType
     var variationType: VariationType
     var instrumentType: InstrumentsSet.Track.InstrumentType
+    var exsFile: ExsFiles
     var instrumentVolume: Float
     var instrumentColor: Color
     
@@ -34,7 +35,17 @@ class TrackSettings: Identifiable, ObservableObject {
     var loopsToGridMapped: [Int]
     
     var levels: [Int]
-    var parts: OrderedDictionary<String, PartSettings>
+    
+    //TODO: Check if @Published and objectWillChange.send() is needed
+    
+//    @Published var parts: OrderedDictionary<String, PartSettings>
+    
+    
+    @Published var parts: OrderedDictionary<String, PartSettings> = OrderedDictionary<String, PartSettings>() {
+        didSet {
+            objectWillChange.send()
+        }
+    }
     
     //PlayStatus vars
     var playThisNote: Int = 0
@@ -52,6 +63,7 @@ class TrackSettings: Identifiable, ObservableObject {
         startType: StartType,
         variationType: VariationType,
         instrumentType: InstrumentsSet.Track.InstrumentType,
+        exsFile: ExsFiles,
         instrumentVolume: Float,
         instrumentColor: Color,
         midiFile: String,
@@ -74,6 +86,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.startType = startType
         self.variationType = variationType
         self.instrumentType = instrumentType
+        self.exsFile = exsFile
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.midiFile = midiFile

@@ -164,11 +164,18 @@ struct MidiClipsView: View {
                 .frame(width: columnWidth, alignment: .leading)
             
             HStack (spacing: 30) {
-                Button(action: {importing.toggle()}, label: {
-                    Text("Import MIDI file")
-                })
+                
+                Text(currentTrack.midiFile)
+                    .padding()
+                
                 if isNewMidi {
                     Text(NSLocalizedString("Save and reopen", comment: ""))
+                        .foregroundStyle(.red)
+                }
+                else{
+                    Button(action: {importing.toggle()}, label: {
+                        Text("Replace current MIDI file")
+                    })
                 }
             }
             .fileImporter(isPresented: $importing, allowedContentTypes: [.midi]) { file in
@@ -176,10 +183,6 @@ struct MidiClipsView: View {
                     let fileUrl: URL = try file.get()
                     let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
                     let fileName = "\(fileUrl.lastPathComponent)"
-                    
-                    print("fileUrl: \(fileUrl)")
-                    
-//                    let fileNameNoExtension = fileUrl.deletingPathExtension().lastPathComponent
                     
                     // define destination URL in your app's documents directory
                     let documentsDirectory = try FileManager.default.url(

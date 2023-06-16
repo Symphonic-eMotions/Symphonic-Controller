@@ -189,6 +189,11 @@ final class AppUtils {
                 notesToGrid = Array(repeating: midiGroup.min()!, count: cells)
             }
             
+            var exsFile: ExsFiles = .trigger
+            if let loaded = trackLoaded.exsFiles, !loaded.isEmpty {
+                exsFile = ExsFiles(rawValue: loaded.first!.fileName)!
+            }
+            
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackIndex: trackIndex,
@@ -197,6 +202,7 @@ final class AppUtils {
                 startType: trackLoaded.startType,
                 variationType: trackLoaded.variationType ?? .variationByPosition,
                 instrumentType: trackLoaded.instrumentType,
+                exsFile: exsFile,
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
@@ -232,7 +238,6 @@ final class AppUtils {
             defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
-//            levelSpeed: instrumentSet.levelSpeed,
             levels: instrumentSet.levels,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
@@ -321,87 +326,153 @@ final class AppUtils {
         // - instrumentColor (InstrumentsSet.Track.instrumentColor)
         // - areaOfInterest (InstrumentsSet.Track.Part.areaOfInterest
         var storeTracks: [InstrumentsSet.Track] = []
-        for track in instrumentSet.tracks {
+        
+        //Problem! this needs to be generated from setSettings:
+        
+        //New
+        for track in setSettings.tracks {
             
             var storeParts: [InstrumentsSet.Track.Part] = []
-            for part in track.parts {
+            for part in track.value.parts {
                 
                 let storeNodeSettings = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
-                    minimalLevel: setSettings.tracks[track.trackId]!.parts[part.id]!.minimalLevel,
-                    levelPart: part.damperTarget.nodeSettings?.levelPart,
-                    tempoLow: part.damperTarget.nodeSettings?.tempoLow,
-                    tempoHigh: part.damperTarget.nodeSettings?.tempoHigh,
-                    rampSpeed: setSettings.tracks[track.trackId]!.parts[part.id]!.rampUp,
-                    rampSpeedDown: setSettings.tracks[track.trackId]!.parts[part.id]!.rampDown,
-                    coolDownTime: part.damperTarget.nodeSettings?.coolDownTime
+                    minimalLevel: part.value.minimalLevel,
+                    rampSpeed: part.value.rampUp,
+                    rampSpeedDown: part.value.rampDown
                 )
                 
                 let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
-                    trackId: part.damperTarget.trackId,
-                    nodeType: part.damperTarget.nodeType,
-                    nodeName: part.damperTarget.nodeName,
-                    parameter: part.damperTarget.parameter,
-                    parameterRange: part.damperTarget.parameterRange,
-                    midiData: part.damperTarget.midiData,
+                    trackId: part.value.damperTarget.trackId,
+                    nodeType: part.value.damperTarget.nodeType,
+                    nodeName: part.value.damperTarget.nodeName,
+                    parameter: part.value.damperTarget.parameter,
+                    parameterRange: part.value.damperTarget.parameterRange,
+                    midiData: part.value.damperTarget.midiData,
                     nodeSettings: storeNodeSettings,
-                    dampMode: part.damperTarget.dampMode
+                    dampMode: part.value.damperTarget.dampMode
                 )
                 
                 let storePart = InstrumentsSet.Track.Part(
-                    instrumentPartName: part.instrumentPartName,
-                    areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
-                    dontDrawVisual: part.dontDrawVisual,
+                    instrumentPartName: part.value.partName,
+                    areaOfInterest: part.value.areaOfInterest,
+                    dontDrawVisual: part.value.dontDrawVisual,
                     damperTarget: storeDamperTarget
                 )
                 storeParts.append(storePart)
             }
             
             let midiFiles = [InstrumentsSet.Track.MidiFile(
-                fileName: setSettings.tracks[track.trackId]!.midiFile,
-                fileExtension: track.midiFiles![0].fileExtension,
-                loopLength: setSettings.tracks[track.trackId]!.loopLength,
-                loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
-                loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
+                fileName: track.value.midiFile,
+                fileExtension: "mid",
+                loopLength: track.value.loopLength,
+                loopsToLevel: track.value.loopsToLevel,
+                loopsToGrid: track.value.loopsToGrid
             )]
             
-            var storeTrack = InstrumentsSet.Track(
-                id: track.id,
-                trackId: track.trackId,
-                muted: track.muted,
-                instrumentType: setSettings.tracks[track.trackId]!.instrumentType,
-                noteSource: setSettings.tracks[track.trackId]!.noteSource,
-                startType: setSettings.tracks[track.trackId]!.startType,
-                variationType: setSettings.tracks[track.trackId]!.variationType,
-                instrumentName: setSettings.tracks[track.id]!.trackName,
-                instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
-                volume: setSettings.tracks[track.trackId]!.instrumentVolume,
+            let storeTrack = InstrumentsSet.Track(
+                id: track.value.trackId,
+                trackId: track.value.trackId,
+                muted: false,
+                instrumentType: track.value.instrumentType,
+                noteSource: track.value.noteSource,
+                startType: track.value.startType,
+                variationType: track.value.variationType,
+                instrumentName: track.value.trackName,
+                instrumentColor: track.value.instrumentColor,
+                volume: track.value.instrumentVolume,
                 midiFiles: midiFiles,
-                midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
-                notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
-                notesToLevel: setSettings.tracks[track.trackId]!.notesToLevel,
-                notesSequenceType: setSettings.tracks[track.trackId]!.notesSequenceType,
-                exsFiles: track.exsFiles,
-                audioFiles: track.audioFiles,
-                effects: track.effects,
+                midiGroup: track.value.midiGroup,
+                notesToGrid: track.value.notesToGrid,
+                notesToLevel: track.value.notesToLevel,
+                notesSequenceType: track.value.notesSequenceType,
+                exsFiles: [InstrumentsSet.Track.ExsFile(fileName: track.value.exsFile.rawValue)],
+                audioFiles: [],
+                effects: instrumentSet.tracks[track.value.trackIndex].effects, //track.effects,
                 parts: storeParts,
-                levels: setSettings.tracks[track.trackId]!.levels,
-                scoreWalkDuration: track.scoreWalkDuration
+                levels: track.value.levels
             )
             storeTracks.append(storeTrack)
-            
-            //Duplicate last track
-            if duplicateLastTrack && track.trackId == instrumentSet.tracks.last!.trackId {
-                storeTrack.trackId = storeTrack.trackId+"2"
-                storeTrack.id = storeTrack.id+"2"
-                storeTrack.instrumentName = storeTrack.instrumentName+"(2)"
-                let storePartsIndex = storeParts.enumerated()
-                for (index, _) in storePartsIndex {
-                    storeTrack.parts[index].damperTarget.trackId = storeTrack.id
-                }
-                let duplicateTrack = storeTrack
-                storeTracks.append(duplicateTrack)
-            }
         }
+        
+        
+        //OLD
+//        for track in instrumentSet.tracks {
+//            
+//            var storeParts: [InstrumentsSet.Track.Part] = []
+//            for part in track.parts {
+//                
+//                let storeNodeSettings = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
+//                    minimalLevel: setSettings.tracks[track.trackId]!.parts[part.id]!.minimalLevel,
+//                    rampSpeed: setSettings.tracks[track.trackId]!.parts[part.id]!.rampUp,
+//                    rampSpeedDown: setSettings.tracks[track.trackId]!.parts[part.id]!.rampDown
+//                )
+//                
+//                let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
+//                    trackId: part.damperTarget.trackId,
+//                    nodeType: part.damperTarget.nodeType,
+//                    nodeName: part.damperTarget.nodeName,
+//                    parameter: part.damperTarget.parameter,
+//                    parameterRange: part.damperTarget.parameterRange,
+//                    midiData: part.damperTarget.midiData,
+//                    nodeSettings: storeNodeSettings,
+//                    dampMode: part.damperTarget.dampMode
+//                )
+//                
+//                let storePart = InstrumentsSet.Track.Part(
+//                    instrumentPartName: part.instrumentPartName,
+//                    areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
+//                    dontDrawVisual: part.dontDrawVisual,
+//                    damperTarget: storeDamperTarget
+//                )
+//                storeParts.append(storePart)
+//            }
+//            
+//            let midiFiles = [InstrumentsSet.Track.MidiFile(
+//                fileName: setSettings.tracks[track.trackId]!.midiFile,
+//                fileExtension: track.midiFiles![0].fileExtension,
+//                loopLength: setSettings.tracks[track.trackId]!.loopLength,
+//                loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
+//                loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
+//            )]
+//            
+//            var storeTrack = InstrumentsSet.Track(
+//                id: track.id,
+//                trackId: track.trackId,
+//                muted: track.muted,
+//                instrumentType: setSettings.tracks[track.trackId]!.instrumentType,
+//                noteSource: setSettings.tracks[track.trackId]!.noteSource,
+//                startType: setSettings.tracks[track.trackId]!.startType,
+//                variationType: setSettings.tracks[track.trackId]!.variationType,
+//                instrumentName: setSettings.tracks[track.id]!.trackName,
+//                instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
+//                volume: setSettings.tracks[track.trackId]!.instrumentVolume,
+//                midiFiles: midiFiles,
+//                midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
+//                notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
+//                notesToLevel: setSettings.tracks[track.trackId]!.notesToLevel,
+//                notesSequenceType: setSettings.tracks[track.trackId]!.notesSequenceType,
+//                exsFiles: [InstrumentsSet.Track.ExsFile(fileName: setSettings.tracks[track.trackId]!.exsFile.rawValue)],
+//                audioFiles: track.audioFiles,
+//                effects: track.effects,
+//                parts: storeParts,
+//                levels: setSettings.tracks[track.trackId]!.levels
+//            )
+//            storeTracks.append(storeTrack)
+//            
+//            //Duplicate last track
+//            if duplicateLastTrack && track.trackId == instrumentSet.tracks.last!.trackId {
+//                storeTrack.trackId = storeTrack.trackId+"2"
+//                storeTrack.id = storeTrack.id+"2"
+//                storeTrack.instrumentName = storeTrack.instrumentName+"(2)"
+//                let storePartsIndex = storeParts.enumerated()
+//                for (index, _) in storePartsIndex {
+//                    storeTrack.parts[index].damperTarget.trackId = storeTrack.id
+//                }
+//                let duplicateTrack = storeTrack
+//                storeTracks.append(duplicateTrack)
+//            }
+//        }
+        
         
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,

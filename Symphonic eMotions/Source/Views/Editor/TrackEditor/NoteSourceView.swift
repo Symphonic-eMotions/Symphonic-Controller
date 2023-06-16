@@ -24,6 +24,8 @@ struct NoteSourceView: View {
     
     //States
     @State var noteSource: NoteSource
+    @State var countedParts: Int
+    @State var hasVelocity: Bool
     
     init(
         setInfoModel: SetInfoModel,
@@ -47,6 +49,12 @@ struct NoteSourceView: View {
         _midiClipsLevels = midiClipsLevels
         _midiClipspositions = midiClipspositions
         _noteSource = State(initialValue: noteSources[trackId].wrappedValue!)
+        _countedParts = State(initialValue: currentTrack.parts.count)
+        
+        let hasVelocityPart = currentTrack.parts.contains { (_, part) in
+            part.damperTarget.parameter == "velocity"
+        }
+        _hasVelocity = State(initialValue: hasVelocityPart)
     }
     
     let columnWidth: CGFloat = 150
@@ -111,6 +119,34 @@ struct NoteSourceView: View {
                     midiClipsLevels: $midiClipsLevels,
                     midiClipspositions: $midiClipspositions
                 )
+            }
+            
+            HStack(){
+                
+                Text("Velocity sensitive")
+                    .frame(width: columnWidth, alignment: .leading)
+                
+                Toggle("", isOn: $hasVelocity)
+                .frame(width: 50)
+                .padding(.leading)
+                .disabled(hasVelocity && countedParts == 1)
+                .onChange(of: hasVelocity) { newValue in
+                    
+                    // Call the function when the toggle value changes
+                    if newValue == true {
+                        if let newPart = setInfoModel.addVelocityPart(
+                            velocitySensitive: newValue,
+                            trackId: trackId
+                        ) {
+                            currentTrack.parts[newPart.partId] = newPart
+                            setInfoModel.setSettings.tracks[trackId]?.parts[newPart.partId] = newPart
+                        }
+                    }
+                }
+                
+                if hasVelocity && countedParts == 1 {
+                    Text(NSLocalizedString("One part", comment: ""))
+                }
             }
         }
         .padding(.leading)
