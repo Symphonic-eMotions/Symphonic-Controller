@@ -16,6 +16,9 @@ struct EditorView: View {
     
     @State var showEditorPart: EditorParts = .none
     
+    //Set
+    @State var numberOfTracks: Int
+    
     //Levels
     @State var trackLevels: [String: [Int]]
     @State var noteNumbersLevels: [String: [Int]]
@@ -62,6 +65,8 @@ struct EditorView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         _showEditorPart = State(initialValue: .none)
+        
+        var numberOfTracks = Int()
         
         var trackLevelsInit = [String: [Int]]()
         var noteNumbersLevelsInit = [String: [Int]]()
@@ -132,6 +137,7 @@ struct EditorView: View {
             }
         }
         
+        _numberOfTracks = State(initialValue: setInfoModel.setSettings.tracks.count)
         _trackLevels = State(initialValue: trackLevelsInit)
         _noteNumbersLevels = State(initialValue: noteNumbersLevelsInit)
         _midiClipsLevels = State(initialValue: midiClipsLevelsInit)
@@ -168,6 +174,7 @@ struct EditorView: View {
                 TrackEditorView(
                     setInfoModel: setInfoModel,
                     showEditorPart: $showEditorPart,
+                    numberOfTracks: $numberOfTracks,
                     trackLevels: $trackLevels,
                     noteNumbersLevels: $noteNumbersLevels,
                     midiClipsLevels: $midiClipsLevels,
@@ -187,7 +194,7 @@ struct EditorView: View {
                 )
             }
         }
-
+        
         //Cancel, New set, Save buttons
         HStack {
             

@@ -71,7 +71,13 @@ class SetSettings: Identifiable, ObservableObject {
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
     
     //Tracks
-    var tracks: OrderedDictionary<String,TrackSettings>
+//    var tracks: OrderedDictionary<String,TrackSettings>
+    
+    @Published var tracks: OrderedDictionary<String, TrackSettings> = OrderedDictionary<String, TrackSettings>() {
+        didSet {
+            objectWillChange.send()
+        }
+    }
     
     //Skins
     var skins: InstrumentsSet.Skin

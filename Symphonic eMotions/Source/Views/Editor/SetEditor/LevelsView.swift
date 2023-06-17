@@ -40,33 +40,32 @@ struct LevelsView: View {
     var body: some View {
         
         HStack() {
-            
-            VStack{
                 
-                Text("Nr. of levels")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                HStack{
-                    Button("-") {
-                        if setInfoModel.setSettings.levels.count > 1 {
-                            setInfoModel.setSettings.levels.removeLast()
-                            levels.removeLast()
-                            setInfoModel.setSettings.updateTrackClipInLevel()
-                        }
-                    }
-                    .disabled(setInfoModel.setSettings.levels.count == 1)
-                    .font(.system(size: 30))
-                    
-                    Button("+") {
-                        setInfoModel.setSettings.levels.append(1)
-                        let _ = print(setInfoModel.setSettings.levels.count)
-                        levels.append(1)
+            Text("Nr. of levels")
+                .font(.system(size: headingSize))
+                .padding()
+                .frame(width: columnWidth, alignment: .leading)
+            
+            HStack{
+                Button("-") {
+                    if setInfoModel.setSettings.levels.count > 1 {
+                        setInfoModel.setSettings.levels.removeLast()
+                        levels.removeLast()
                         setInfoModel.setSettings.updateTrackClipInLevel()
                     }
-                    .font(.system(size: 30))
-                }   
+                }
+                .disabled(setInfoModel.setSettings.levels.count == 1)
+                .font(.system(size: 45))
+                
+                Button("+") {
+                    setInfoModel.setSettings.levels.append(1)
+                    let _ = print(setInfoModel.setSettings.levels.count)
+                    levels.append(1)
+                    setInfoModel.setSettings.updateTrackClipInLevel()
+                }
+                .font(.system(size: 45))
             }
+            
             ForEach(0..<levels.count, id: \.self) { index in
                 LevelBox(value: index)
             }

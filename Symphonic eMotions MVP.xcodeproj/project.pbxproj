@@ -394,6 +394,7 @@
 				7C1FB0B529E4429700621909 /* InLevelView.swift */,
 				7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */,
 				7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */,
+				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
 				7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */,
 			);
 			path = TrackEditor;
@@ -423,6 +424,10 @@
 			isa = PBXGroup;
 			children = (
 				7CCBF8FE2A39159700360E21 /* SetEditorView.swift */,
+				7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */,
+				7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */,
+				7C4EBB9B29D83BCB00958954 /* BpmView.swift */,
+				7C1FB0B129DDFD9A00621909 /* LevelsView.swift */,
 			);
 			path = SetEditor;
 			sourceTree = "<group>";
@@ -447,10 +452,6 @@
 		7CD417FE2A092AD1006831CE /* SetEditor */ = {
 			isa = PBXGroup;
 			children = (
-				7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */,
-				7C4EBB9B29D83BCB00958954 /* BpmView.swift */,
-				7C1FB0B129DDFD9A00621909 /* LevelsView.swift */,
-				7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */,
 			);
 			path = SetEditor;
 			sourceTree = "<group>";
@@ -463,7 +464,6 @@
 				7C1FB0B729E455CB00621909 /* VariationTypeView.swift */,
 				7C1FB0B329DE0B2600621909 /* LoopsToLevelView.swift */,
 				7CFB298229DCA90100DFA32E /* LoopsToGridView.swift */,
-				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
 				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
 				7CF50F1D29E888200016BAF4 /* NoteNumberToGridView.swift */,
 				7CF50F5229EEBECD0016BAF4 /* NoteNumberToLevelView.swift */,

@@ -14,10 +14,12 @@ struct NoteNumberView: View {
     //This is a 1 track View
     @State var trackId: String
     
-    @Binding var noteNumbersLocal: [Int]
-    @Binding var noteNumbersPerTrack: [String:[Int]]
+    //Bindings
+    @Binding var noteNumbers: [String: [Int]]
+    @Binding var noteNumberLetters: [String: [Int]]
+    
+    //State
     @State var isPlaying: [Bool]
-    @Binding var updateView: Int
     
     let columnWidth: CGFloat = 150
     
@@ -25,17 +27,21 @@ struct NoteNumberView: View {
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
-        noteNumbersLocal: Binding<[Int]>,
-        noteNumbersPerTrack: Binding<[String:[Int]]>,
-        updateView: Binding<Int>
+        noteNumbers: Binding<[String:[Int]]>,
+        noteNumberLetters: Binding<[String:[Int]]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        _noteNumbersLocal = noteNumbersLocal
-        _noteNumbersPerTrack = noteNumbersPerTrack
-        _isPlaying = State(initialValue: Array(repeating: false, count: noteNumbersLocal.count))
-        _updateView = updateView
+        _noteNumbers = noteNumbers
+        _noteNumberLetters = noteNumberLetters
+        
+        _isPlaying = State(
+            initialValue: Array(
+                repeating: false,
+                count: noteNumbers.wrappedValue[trackId]!.count
+            )
+        )
     }
     
     var body: some View {
@@ -51,21 +57,21 @@ struct NoteNumberView: View {
                     
                     //Remove note button
                     Button("-") {
-                        if (noteNumbersLocal.count) > 1 {
+                        if (noteNumbers.count) > 1 {
                             
-                            let oldLength: Int = noteNumbersLocal.count-1
-                            let oldNote: Int = noteNumbersLocal[oldLength]
+                            let oldLength: Int = noteNumbers[trackId]!.count-1
+                            let oldNote: Int = noteNumbers[trackId]![oldLength]
                             //Mutate in file databse
                             currentTrack.midiGroup.removeLast()
                             //Binding structure
-                            noteNumbersPerTrack[trackId]!.removeLast()
+                            noteNumberLetters[trackId]!.removeLast()
                             //Interface
-                            noteNumbersLocal.removeLast()
+                            noteNumbers[trackId]!.removeLast()
                             //Note number player
                             isPlaying.removeLast()
                             
-                            let newLength: Int = noteNumbersLocal.count-1
-                            let newNote: Int = noteNumbersLocal[newLength]
+                            let newLength: Int = noteNumbers[trackId]!.count-1
+                            let newNote: Int = noteNumbers[trackId]![newLength]
                             
                             //Replace note in level
                             for (i, n) in currentTrack.notesToLevel.enumerated() {
@@ -79,32 +85,30 @@ struct NoteNumberView: View {
                                     currentTrack.notesToGrid[i] = newNote
                                 }
                             }
-                            updateView += 1
                         }
                     }
-                    .disabled(noteNumbersLocal.count == 1)
-                    .font(.system(size: 35))
+                    .disabled(noteNumbers[trackId]!.count == 1)
+                    .font(.system(size: 45))
                     
                     //Add note button
                     Button("+") {
                         
                         let increment:Int = (currentTrack.midiGroup.last ?? 47) + 1
                         currentTrack.midiGroup.append(increment)
-                        noteNumbersLocal.append(increment)
+                        noteNumbers[trackId]!.append(increment)
                         isPlaying.append(false)
-                        noteNumbersPerTrack[trackId]!.append(increment)
-                        updateView += 1
+                        noteNumberLetters[trackId]!.append(increment)
                     }
-                    .font(.system(size: 35))
+                    .font(.system(size: 45))
                 }
             }
             
-            //Note number ingterface
+            //Note number interface
             ScrollView(.horizontal) {
                 
                 HStack{
                     
-                    ForEach(0..<noteNumbersLocal.count, id: \.self) { index in
+                    ForEach(0..<noteNumbers[trackId]!.count, id: \.self) { index in
                         
                         VStack{
                             
@@ -120,7 +124,7 @@ struct NoteNumberView: View {
                                     
                                     setInfoModel.conductor.playNoteNumberSingleTrack(
                                         trackId: trackId,
-                                        noteNumber: noteNumbersLocal[index],
+                                        noteNumber: noteNumbers[trackId]![index],
                                         noteOn: isPlaying[index])
                                     
                                     isPlaying[index].toggle()
@@ -133,99 +137,98 @@ struct NoteNumberView: View {
                                     if isPlaying[index] {
                                         setInfoModel.conductor.playNoteNumberSingleTrack(
                                             trackId: trackId,
-                                            noteNumber: noteNumbersLocal[index],
+                                            noteNumber: noteNumbers[trackId]![index],
                                             noteOn: isPlaying[index])
                                         isPlaying[index] = false;
                                     }
                                     //Decrease note number up to number which not exists yet
-                                    if noteNumbersLocal[index] > 0 {
+                                    if noteNumbers[trackId]![index] > 0 {
                                         
-                                        let oldNote = noteNumbersLocal[index]
+                                        let oldNote = noteNumbers[trackId]![index]
                                         
-                                        noteNumbersLocal[index] -= 1
-                                        while(currentTrack.midiGroup.contains(noteNumbersLocal[index])){
-                                            noteNumbersLocal[index] -= 1
+                                        noteNumbers[trackId]![index] -= 1
+                                        while(currentTrack.midiGroup.contains(noteNumbers[trackId]![index])){
+                                            noteNumbers[trackId]![index] -= 1
                                         }
                                         //Store new value
-                                        currentTrack.midiGroup[index] = noteNumbersLocal[index]
+                                        currentTrack.midiGroup[index] = noteNumbers[trackId]![index]
                                         
                                         //Replace note in level
                                         for (i, n) in currentTrack.notesToLevel.enumerated() {
                                             if n == oldNote {
-                                                currentTrack.notesToLevel[i] = noteNumbersLocal[index]
+                                                currentTrack.notesToLevel[i] = noteNumbers[trackId]![index]
                                             }
                                         }
                                         //Replace note in grid
                                         for (i, n) in currentTrack.notesToGrid.enumerated() {
                                             if n == oldNote {
-                                                currentTrack.notesToGrid[i] = noteNumbersLocal[index]
+                                                currentTrack.notesToGrid[i] = noteNumbers[trackId]![index]
                                             }
                                         }
                                         //Tell parent View
-                                        for (i, n) in noteNumbersPerTrack[trackId]!.enumerated() {
+                                        for (i, n) in noteNumberLetters[trackId]!.enumerated() {
                                             if n == oldNote {
-                                                noteNumbersPerTrack[trackId]![i] = noteNumbersLocal[index]
+                                                noteNumberLetters[trackId]![i] = noteNumbers[trackId]![index]
                                             }
                                         }
-                                        updateView += 1
                                     }
                                 }
-                                .font(.system(size: 35))
-                                .disabled(noteNumbersLocal[index] == 1)
+                                .font(.system(size: 45))
+                                .disabled(noteNumbers[trackId]![index] == 1)
                                 .padding(.leading)
                                 
-                                Text(String(self.noteNumbersLocal[index]))
+                                Text(String(self.noteNumbers[trackId]![index]))
                                 .frame(width: 50)
                                 
+                                //Increment current note
                                 Button("+") {
                                     //Stop if playing
                                     if isPlaying[index] {
                                         setInfoModel.conductor.playNoteNumberSingleTrack(
                                             trackId: trackId,
-                                            noteNumber: noteNumbersLocal[index],
+                                            noteNumber: noteNumbers[trackId]![index],
                                             noteOn: isPlaying[index])
                                         isPlaying[index] = false;
                                     }
                                     //Increae note number up to number which not exists yet
-                                    if noteNumbersLocal[index] < 127 {
+                                    if noteNumbers[trackId]![index] < 127 {
                                         
-                                        let oldNote = noteNumbersLocal[index]
+                                        let oldNote = noteNumbers[trackId]![index]
                                         
                                         //No double note numbers alowed
-                                        noteNumbersLocal[index] += 1
-                                        while(currentTrack.midiGroup.contains(noteNumbersLocal[index])){
-                                            noteNumbersLocal[index] += 1
+                                        noteNumbers[trackId]![index] += 1
+                                        while(currentTrack.midiGroup.contains(noteNumbers[trackId]![index])){
+                                            noteNumbers[trackId]![index] += 1
                                         }
                                         //Store new value
-                                        currentTrack.midiGroup[index] = noteNumbersLocal[index]
+                                        currentTrack.midiGroup[index] = noteNumbers[trackId]![index]
                                         
                                         //Replace note in level
                                         for (i, n) in currentTrack.notesToLevel.enumerated() {
                                             if n == oldNote {
-                                                currentTrack.notesToLevel[i] = noteNumbersLocal[index]
+                                                currentTrack.notesToLevel[i] = noteNumbers[trackId]![index]
                                             }
                                         }
                                         //Replace note in grid
                                         for (i, n) in currentTrack.notesToGrid.enumerated() {
                                             if n == oldNote {
-                                                currentTrack.notesToGrid[i] = noteNumbersLocal[index]
+                                                currentTrack.notesToGrid[i] = noteNumbers[trackId]![index]
                                             }
                                         }
                                         //Tell parent View
-                                        for (i, n) in noteNumbersPerTrack[trackId]!.enumerated() {
+                                        for (i, n) in noteNumberLetters[trackId]!.enumerated() {
                                             if n == oldNote {
-                                                noteNumbersPerTrack[trackId]![i] = noteNumbersLocal[index]
+                                                noteNumberLetters[trackId]![i] = noteNumbers[trackId]![index]
                                             }
                                         }
-                                        updateView += 1
                                     }
                                 }
-                                .font(.system(size: 35))
-                                .disabled(noteNumbersLocal[index] == 127)
+                                .font(.system(size: 45))
+                                .disabled(noteNumbers[trackId]![index] == 127)
                                 .padding(.trailing)
                             }
                             
-                            let letter: String = AppUtils.midiNoteName(for: self.noteNumbersLocal[index])
+                            let letter: String = AppUtils.midiNoteName(for: self.noteNumbers[trackId]![index])
                             Text("\(letter)").foregroundColor(.blue)
                         }
                     }

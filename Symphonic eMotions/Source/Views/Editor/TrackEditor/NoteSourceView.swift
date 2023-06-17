@@ -21,6 +21,8 @@ struct NoteSourceView: View {
     @Binding var midiClipLetters: [String:[Int]]
     @Binding var midiClipsLevels: [String:[Int]]
     @Binding var midiClipspositions: [String:[Int]]
+    @Binding var noteNumbers: [String: [Int]]
+    @Binding var noteNumberLetters: [String: [Int]]
     
     //States
     @State var noteSource: NoteSource
@@ -36,21 +38,25 @@ struct NoteSourceView: View {
         midiClips: Binding<[String: [Double]]>,
         midiClipLetters: Binding<[String:[Int]]>,
         midiClipsLevels: Binding<[String:[Int]]>,
-        midiClipspositions: Binding<[String:[Int]]>
-        
+        midiClipspositions: Binding<[String:[Int]]>,
+        noteNumbers: Binding<[String:[Int]]>,
+        noteNumberLetters: Binding<[String:[Int]]>
     ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
+        
         _showEditorPart = showEditorPart
         _noteSources = noteSources
         _midiClips = midiClips
         _midiClipLetters = midiClipLetters
         _midiClipsLevels = midiClipsLevels
         _midiClipspositions = midiClipspositions
+        _noteNumbers = noteNumbers
+        _noteNumberLetters = noteNumberLetters
+        
         _noteSource = State(initialValue: noteSources[trackId].wrappedValue!)
         _countedParts = State(initialValue: currentTrack.parts.count)
-        
         let hasVelocityPart = currentTrack.parts.contains { (_, part) in
             part.damperTarget.parameter == "velocity"
         }
@@ -107,6 +113,13 @@ struct NoteSourceView: View {
             
             if noteSource == .noteNumbers {
                 
+                NoteNumberView(
+                    setInfoModel: setInfoModel,
+                    currentTrack: currentTrack,
+                    trackId: trackId,
+                    noteNumbers: $noteNumbers,
+                    noteNumberLetters: $noteNumberLetters
+                )
             }
             else if noteSource == .midiFile {
                 

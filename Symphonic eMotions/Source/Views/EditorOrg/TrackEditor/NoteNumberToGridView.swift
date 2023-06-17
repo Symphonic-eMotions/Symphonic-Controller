@@ -57,14 +57,14 @@ struct NoteNumberToGridView: View {
             }
             else{
                 
-                NoteNumberView(
-                    setInfoModel: setInfoModel,
-                    currentTrack: currentTrack,
-                    trackId: trackId,
-                    noteNumbersLocal: $noteNumbersLocal,
-                    noteNumbersPerTrack: $noteNumbersPerTrack,
-                    updateView: $updateView
-                )
+//                NoteNumberView(
+//                    setInfoModel: setInfoModel,
+//                    currentTrack: currentTrack,
+//                    trackId: trackId,
+//                    noteNumbersLocal: $noteNumbersLocal,
+//                    noteNumbersPerTrack: $noteNumbersPerTrack,
+//                    updateView: $updateView
+//                )
                 
                 HStack(){
                     

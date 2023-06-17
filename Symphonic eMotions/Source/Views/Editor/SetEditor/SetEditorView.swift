@@ -138,7 +138,7 @@ struct SetEditorView: View {
                 BpmView(
                     setInfoModel: setInfoModel
                 )
-                Text("Dynamic tempo")
+                Text("User controlled")
                     .font(.system(size: headingSize))
                     .padding()
                     .frame(width: columnWidth, alignment: .leading)
