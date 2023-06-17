@@ -13,6 +13,7 @@ struct MidiClipsView: View {
     @ObservedObject var currentTrack: TrackSettings
     //This is a 1 track View
     @State var trackId: String
+    @Binding var soundSources: [String: InstrumentsSet.Track.InstrumentType]
     
     //Bindings
     @Binding var midiClips: [String:[Double]]
@@ -34,6 +35,7 @@ struct MidiClipsView: View {
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
+        soundSources: Binding<[String: InstrumentsSet.Track.InstrumentType]>,
         midiClips: Binding<[String:[Double]]>,
         midiClipLetters: Binding<[String:[Int]]>,
         midiClipsLevels: Binding<[String:[Int]]>,
@@ -42,6 +44,7 @@ struct MidiClipsView: View {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
+        _soundSources = soundSources
         _midiClips = midiClips
         _midiClipLetters = midiClipLetters
         _midiClipsLevels = midiClipsLevels
@@ -128,9 +131,15 @@ struct MidiClipsView: View {
                 .cornerRadius(5.0)
                 .onTapGesture {
                     isPlaying[index].toggle()
-                    setInfoModel.conductor.copyMidiSingleTrack(trackId: trackId, nextVariation: index, loopLength: currentTrack.loopLength)
-                    setInfoModel.conductor.previewSingleTrack(trackId: trackId)
-                
+                    setInfoModel.conductor.copyMidiSingleTrack(
+                        trackId: trackId,
+                        nextVariation: index,
+                        loopLength: currentTrack.loopLength
+                    )
+                    setInfoModel.conductor.previewSingleTrack(
+                        trackId: trackId,
+                        soundSource: soundSources[trackId]!
+                    )
                 }
             }
         }

@@ -17,6 +17,7 @@ struct NoteNumberView: View {
     //Bindings
     @Binding var noteNumbers: [String: [Int]]
     @Binding var noteNumberLetters: [String: [Int]]
+    @Binding var soundSources: [String: InstrumentsSet.Track.InstrumentType]
     
     //State
     @State var isPlaying: [Bool]
@@ -28,13 +29,15 @@ struct NoteNumberView: View {
         currentTrack: TrackSettings,
         trackId: String,
         noteNumbers: Binding<[String:[Int]]>,
-        noteNumberLetters: Binding<[String:[Int]]>
+        noteNumberLetters: Binding<[String:[Int]]>,
+        soundSources: Binding<[String: InstrumentsSet.Track.InstrumentType]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
         _noteNumbers = noteNumbers
         _noteNumberLetters = noteNumberLetters
+        _soundSources = soundSources
         
         _isPlaying = State(
             initialValue: Array(
@@ -124,6 +127,7 @@ struct NoteNumberView: View {
                                     
                                     setInfoModel.conductor.playNoteNumberSingleTrack(
                                         trackId: trackId,
+                                        soundSource: soundSources[trackId]!,
                                         noteNumber: noteNumbers[trackId]![index],
                                         noteOn: isPlaying[index])
                                     
@@ -137,6 +141,7 @@ struct NoteNumberView: View {
                                     if isPlaying[index] {
                                         setInfoModel.conductor.playNoteNumberSingleTrack(
                                             trackId: trackId,
+                                            soundSource: soundSources[trackId]!,
                                             noteNumber: noteNumbers[trackId]![index],
                                             noteOn: isPlaying[index])
                                         isPlaying[index] = false;
@@ -186,6 +191,7 @@ struct NoteNumberView: View {
                                     if isPlaying[index] {
                                         setInfoModel.conductor.playNoteNumberSingleTrack(
                                             trackId: trackId,
+                                            soundSource: soundSources[trackId]!,
                                             noteNumber: noteNumbers[trackId]![index],
                                             noteOn: isPlaying[index])
                                         isPlaying[index] = false;

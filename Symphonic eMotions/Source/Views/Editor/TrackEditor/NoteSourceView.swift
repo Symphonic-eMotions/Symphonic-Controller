@@ -17,6 +17,7 @@ struct NoteSourceView: View {
     //Bindings
     @Binding var showEditorPart: EditorParts
     @Binding var noteSources: [String: NoteSource]
+    @Binding var soundSources: [String: InstrumentsSet.Track.InstrumentType]
     @Binding var midiClips: [String: [Double]]
     @Binding var midiClipLetters: [String:[Int]]
     @Binding var midiClipsLevels: [String:[Int]]
@@ -35,6 +36,7 @@ struct NoteSourceView: View {
         trackId: String,
         showEditorPart: Binding<EditorParts>,
         noteSources: Binding<[String: NoteSource]>,
+        soundSources: Binding<[String: InstrumentsSet.Track.InstrumentType]>,
         midiClips: Binding<[String: [Double]]>,
         midiClipLetters: Binding<[String:[Int]]>,
         midiClipsLevels: Binding<[String:[Int]]>,
@@ -48,6 +50,7 @@ struct NoteSourceView: View {
         
         _showEditorPart = showEditorPart
         _noteSources = noteSources
+        _soundSources = soundSources
         _midiClips = midiClips
         _midiClipLetters = midiClipLetters
         _midiClipsLevels = midiClipsLevels
@@ -118,7 +121,8 @@ struct NoteSourceView: View {
                     currentTrack: currentTrack,
                     trackId: trackId,
                     noteNumbers: $noteNumbers,
-                    noteNumberLetters: $noteNumberLetters
+                    noteNumberLetters: $noteNumberLetters,
+                    soundSources: $soundSources
                 )
             }
             else if noteSource == .midiFile {
@@ -127,6 +131,7 @@ struct NoteSourceView: View {
                     setInfoModel: setInfoModel,
                     currentTrack: currentTrack,
                     trackId: trackId,
+                    soundSources: $soundSources,
                     midiClips: $midiClips,
                     midiClipLetters: $midiClipLetters,
                     midiClipsLevels: $midiClipsLevels,

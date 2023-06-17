@@ -263,7 +263,7 @@ final class Conductor {
             soundModuleVolume[track.id] = 0
             
             //Turn tracks off so things will be quiet to start off with
-                if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
+            if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
                 trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
             } else {
@@ -286,15 +286,21 @@ final class Conductor {
     }
     
     //MARK: EDITOR
-    public func previewSingleTrack(trackId: String){
+    public func previewSingleTrack(
+        trackId: String,
+        soundSource: InstrumentsSet.Track.InstrumentType
+    ){
+        
         if trackSequencers[trackId] != nil {
             
             let isPLaying = trackSequencers[trackId]!.isPlaying
             
             if isPLaying {
                 
-                for note in 0...127 {
-                    trackSamplers[trackId]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
+                if [.exsSampler,.audioBuffer,.audioBufferTimed].contains(soundSource){
+                    for note in 0...127 {
+                        trackSamplers[trackId]!.stop(noteNumber: MIDINoteNumber(note), channel: 1)
+                    }
                 }
                 trackSequencers[trackId]?.stop()
                 trackSequencers[trackId]?.rewind()
@@ -356,10 +362,10 @@ final class Conductor {
     
     public func playNoteNumberSingleTrack(
         trackId:String,
+        soundSource: InstrumentsSet.Track.InstrumentType,
         noteNumber:Int,
         noteOn:Bool
     ){
-        
         if !noteOn {
             playEngineUIEffect()
             
@@ -367,14 +373,29 @@ final class Conductor {
             trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
             
             let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
-            trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+            
+            if [.exsSampler, .audioBuffer, .audioBufferTimed].contains(soundSource){
+                trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+            }
+            else if [.pulseWidthSynth, .phaseSynth].contains(soundSource) {
+                
+                print(noteOn)
+                
+                trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+            }
             
         } else {
             let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
-            trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             
-            //            let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-            //            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
+            if [.exsSampler, .audioBuffer, .audioBufferTimed].contains(soundSource){
+                trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+            }
+            else if [.pulseWidthSynth, .phaseSynth].contains(soundSource) {
+                
+                print(noteOff)
+                
+                trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+            }
         }
     }
     

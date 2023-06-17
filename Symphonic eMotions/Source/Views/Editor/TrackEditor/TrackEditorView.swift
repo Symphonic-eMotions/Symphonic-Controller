@@ -174,6 +174,7 @@ struct TrackEditorView: View {
                         trackId: key,
                         showEditorPart: $showEditorPart,
                         noteSources: $noteSources,
+                        soundSources: $instrumentTypes,
                         midiClips: $midiClips,
                         midiClipLetters: $midiClipLetters,
                         midiClipsLevels: $midiClipsLevels,
