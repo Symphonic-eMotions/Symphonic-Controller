@@ -354,7 +354,11 @@ final class Conductor {
             loopLength: loopLength[nextVariation])
     }
     
-    public func playNoteNumberSingleTrack(trackId:String,noteNumber:Int,noteOn:Bool){
+    public func playNoteNumberSingleTrack(
+        trackId:String,
+        noteNumber:Int,
+        noteOn:Bool
+    ){
         
         if !noteOn {
             playEngineUIEffect()

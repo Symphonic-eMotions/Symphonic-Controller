@@ -10,8 +10,8 @@ import SwiftUI
 struct SetEditorView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding var editorParts: [EditorParts]
     @Binding var showEditorPart: EditorParts
-    
     @Binding var trackLevels: [String: [Int]]
     @Binding var noteNumbersLevels: [String: [Int]]
     @Binding var midiClipsLevels: [String: [Int]]
@@ -43,11 +43,10 @@ struct SetEditorView: View {
             
             Spacer()
             
-            let selectableEditorParts: [EditorParts] = setInfoModel.selectableEditorParts()
             let trackNames: [String:String] = setInfoModel.trackNames()
             
             Picker("Select editor part", selection: $showEditorPart) {
-                ForEach(selectableEditorParts, id: \.self) { part in
+                ForEach(editorParts, id: \.self) { part in
                     if trackNames.contains(where: {$0.key == part.rawValue}) {
                         Text(trackNames[part.rawValue] ?? "Unnamed track").tag(part)
                     }

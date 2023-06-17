@@ -18,6 +18,7 @@ struct EditorView: View {
     
     //Set
     @State var numberOfTracks: Int
+    @State var editorParts: [EditorParts]
     
     //Levels
     @State var trackLevels: [String: [Int]]
@@ -67,6 +68,7 @@ struct EditorView: View {
         _showEditorPart = State(initialValue: .none)
         
         var numberOfTracks = Int()
+        var editorParts = [EditorParts]()
         
         var trackLevelsInit = [String: [Int]]()
         var noteNumbersLevelsInit = [String: [Int]]()
@@ -138,6 +140,7 @@ struct EditorView: View {
         }
         
         _numberOfTracks = State(initialValue: setInfoModel.setSettings.tracks.count)
+        _editorParts = State(initialValue: setInfoModel.selectableEditorParts())
         _trackLevels = State(initialValue: trackLevelsInit)
         _noteNumbersLevels = State(initialValue: noteNumbersLevelsInit)
         _midiClipsLevels = State(initialValue: midiClipsLevelsInit)
@@ -162,6 +165,7 @@ struct EditorView: View {
             
             SetEditorView(
                 setInfoModel: setInfoModel,
+                editorParts: $editorParts,
                 showEditorPart: $showEditorPart,
                 trackLevels: $trackLevels,
                 noteNumbersLevels: $noteNumbersLevels,
@@ -173,6 +177,7 @@ struct EditorView: View {
             ScrollView{
                 TrackEditorView(
                     setInfoModel: setInfoModel,
+                    editorParts: $editorParts,
                     showEditorPart: $showEditorPart,
                     numberOfTracks: $numberOfTracks,
                     trackLevels: $trackLevels,

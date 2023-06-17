@@ -207,6 +207,7 @@ final class SetInfoModel: ObservableObject {
     func trackNames() -> [String: String] {
         var trackNames: [String: String] = [:]
         for track in setSettings.tracks {
+            //translate EditorPart track name by its enum case (i.e. track15)
             trackNames["track\(track.value.trackIndex)"] = track.value.trackName
         }
         return trackNames
