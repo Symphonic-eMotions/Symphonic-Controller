@@ -19,7 +19,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var variationType: VariationType
     var instrumentType: InstrumentsSet.Track.InstrumentType
     var exsFile: ExsFiles
-//    var audioFiles: [AudioFile]
+    var audioFiles: [InstrumentsSet.Track.AudioFile]
     
     var instrumentVolume: Float
     var instrumentColor: Color
@@ -66,6 +66,7 @@ class TrackSettings: Identifiable, ObservableObject {
         variationType: VariationType,
         instrumentType: InstrumentsSet.Track.InstrumentType,
         exsFile: ExsFiles,
+        audioFiles: [InstrumentsSet.Track.AudioFile],
         instrumentVolume: Float,
         instrumentColor: Color,
         midiFile: String,
@@ -89,6 +90,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.variationType = variationType
         self.instrumentType = instrumentType
         self.exsFile = exsFile
+        self.audioFiles = audioFiles
         self.instrumentVolume = instrumentVolume
         self.instrumentColor = instrumentColor
         self.midiFile = midiFile

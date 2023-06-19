@@ -116,6 +116,7 @@ final class SetInfoModel: ObservableObject {
             variationType: .variationByPosition,
             instrumentType: .phaseSynth,
             exsFile: ExsFiles(rawValue: "trigger")!,
+            audioFiles: [],
             instrumentVolume: 0,
             instrumentColor: Color("InstrumentColor000"),
             midiFile: "trigger",

@@ -187,14 +187,19 @@ struct SoundSourceView: View {
                                               userInfo: [NSFilePathErrorKey: destinationUrl.path])
                             }
                             
-                            //FIXME: Hier ben ik
-                            
-                            // Load the MIDI file into the sequencer
-                            //setInfoModel.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: destinationUrl)
-                            //setInfoModel.conductor.trackSequencersMemory[trackId]?.loadMIDIFile(fromURL: destinationUrl)
-                            
-                            //                        setInfoModel.setSettings.tracks[trackId]?. = fileName
-                            
+                            // Create a new AudioFile object
+//                            let midiNote: UInt8 = 60  // Replace with your logic to determine midiNote
+//                            let lengthInBeats: Double = 4.0  // Replace with your logic to determine lengthInBeats
+//                            let newAudioFile = InstrumentsSet.Track.AudioFile(
+//                                fileName: fileName,
+//                                fileExtension: fileExtension,
+//                                midiNote: midiNote,
+//                                lengthInBeats: lengthInBeats
+//                            )
+//                            
+//                            // Add it to your array of AudioFile objects
+//                            trackSettings.audioFiles.append(newAudioFile)
+                    
                             isNewAudio = true
                             
                             print("Loaded Audio file: \(fileName)")

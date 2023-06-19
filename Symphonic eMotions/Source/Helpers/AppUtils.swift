@@ -203,6 +203,7 @@ final class AppUtils {
                 variationType: trackLoaded.variationType ?? .variationByPosition,
                 instrumentType: trackLoaded.instrumentType,
                 exsFile: exsFile,
+                audioFiles: trackLoaded.audioFiles ?? [],
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
                 midiFile: trackLoaded.midiFiles!.first!.fileName,
@@ -386,7 +387,7 @@ final class AppUtils {
                 notesToLevel: track.value.notesToLevel,
                 notesSequenceType: track.value.notesSequenceType,
                 exsFiles: [InstrumentsSet.Track.ExsFile(fileName: track.value.exsFile.rawValue)],
-                audioFiles: [],
+                audioFiles: track.value.audioFiles,
                 effects: instrumentSet.tracks[track.value.trackIndex].effects, //track.effects,
                 parts: storeParts,
                 levels: track.value.levels
