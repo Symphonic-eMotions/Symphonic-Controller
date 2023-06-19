@@ -21,6 +21,7 @@ struct SoundSourceView: View {
     //States
     @State var soundSource: InstrumentsSet.Track.InstrumentType
     @State private var infoVisibility: [String: Bool] = [:]
+    @State var audioFiles: [InstrumentsSet.Track.AudioFile]
     
     //Audio files
     @State var importing = false
@@ -39,6 +40,7 @@ struct SoundSourceView: View {
         _showEditorPart = showEditorPart
         _soundSources = soundSources
         _soundSource = State(initialValue: soundSources[trackId].wrappedValue ?? .exsSampler)
+        _audioFiles = State(initialValue: currentTrack.audioFiles)
     }
     
     private func toggleInfoVisibility(for key: String) {
@@ -131,13 +133,26 @@ struct SoundSourceView: View {
                             
                             VStack {
                                 VStack {
-                                    ForEach(currentTrack.audioFiles, id: \.fileName) { audioFile in
+                                    ForEach(audioFiles.indices, id: \.self) { index in
                                         VStack(alignment: .leading) {
-                                            Text("\(audioFile.fileName).\(audioFile.fileExtension)")
-                                            Text("MIDI Note: \(audioFile.midiNote)")
-                                            //Text("Length in Beats: \(audioFile.lengthInBeats)")
+                                            HStack{
+                                                VStack{
+                                                    Text("\(audioFiles[index].fileName).\(audioFiles[index].fileExtension)")
+                                                    Text("MIDI Note: \(audioFiles[index].midiNote)")
+                                                    //Text("Length in Beats: \(audioFiles[index].lengthInBeats)")
+                                                }
+                                                Spacer()
+                                                Button("-") {
+                                                    //From file
+                                                    setInfoModel.setSettings.tracks[trackId]?.audioFiles.remove(at: index)
+                                                    //From state
+                                                    audioFiles.remove(at: index)
+                                                }
+                                                .font(.system(size: 45))
+                                                .foregroundColor(.red)
+                                            }
                                         }
-                                        Divider()  // optional, for visual separation
+                                        Divider()
                                     }
                                 }
                             }
@@ -150,11 +165,11 @@ struct SoundSourceView: View {
                                         .foregroundStyle(.red)
                                 }
                                 //Button new audio file
-                                else{
+//                                else{
                                     Button(action: {importing.toggle()}, label: {
                                         Text("Add audio file")
                                     })
-                                }
+//                                }
                                 
                                 //Info about where to keep the audio files
                                 Button(action: {
@@ -206,6 +221,8 @@ struct SoundSourceView: View {
                             )
                             
                             setInfoModel.setSettings.tracks[trackId]?.audioFiles.append(newAudioFile)
+                            
+                            audioFiles.append(newAudioFile)
 
                             isNewAudio = true
                             
