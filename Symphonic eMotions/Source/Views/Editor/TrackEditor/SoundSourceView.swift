@@ -20,6 +20,11 @@ struct SoundSourceView: View {
     
     //States
     @State var soundSource: InstrumentsSet.Track.InstrumentType
+    @State private var infoVisibility: [String: Bool] = [:]
+    
+    //Audio files
+    @State var importing = false
+    @State var isNewAudio: Bool = false
     
     init(
         setInfoModel: SetInfoModel,
@@ -34,6 +39,10 @@ struct SoundSourceView: View {
         _showEditorPart = showEditorPart
         _soundSources = soundSources
         _soundSource = State(initialValue: soundSources[trackId].wrappedValue ?? .exsSampler)
+    }
+    
+    private func toggleInfoVisibility(for key: String) {
+        infoVisibility[key, default: false].toggle()
     }
     
     let columnWidth: CGFloat = 150
@@ -67,7 +76,8 @@ struct SoundSourceView: View {
                 }
                 
                 Picker("Sources of sound", selection: $soundSource) {
-                    ForEach(InstrumentsSet.Track.InstrumentType.allCases, id: \.self) { type in
+                    let workingTypes: [InstrumentsSet.Track.InstrumentType] = [.exsSampler,.audioBuffer]
+                    ForEach(workingTypes, id: \.self) { type in
                         Text(type.description).tag(type)
                     }
                 }
@@ -103,6 +113,100 @@ struct SoundSourceView: View {
                         withAnimation {
                         }
                     }
+                }
+            }
+            else if soundSource == .audioBuffer {
+                
+                HStack(){
+                    
+                    Text("Audio files")
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    //Info about file locations
+                    HStack (spacing: 30) {
+                        //Current audio files
+                        //Button new audio file
+                        //Button more info
+                        VStack{
+                            
+                            Text("** current audio files **")
+                                .padding()
+                            
+                            HStack{
+                                //Notice we need to reload
+                                if isNewAudio {
+                                    //Notice we need to reload engine
+                                    Text(NSLocalizedString("Save and reopen", comment: ""))
+                                        .foregroundStyle(.red)
+                                }
+                                //Button new audio file
+                                else{
+                                    Button(action: {importing.toggle()}, label: {
+                                        Text("Add audio file")
+                                    })
+                                }
+                                
+                                //Info about where to keep the audio files
+                                Button(action: {
+                                    toggleInfoVisibility(for: "addAudio")
+                                }) {
+                                    Image(systemName: "info.circle")
+                                        .font(.title)
+                                        .foregroundColor(.blue)
+                                }
+                                .padding()
+                            }
+                            
+                            if infoVisibility["addAudio", default: false] {
+                                
+                                if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+                                    Text("Keep .wav and .aiff files in \"\(displayName)/\(setInfoModel.setSettings.filesPath)/\"")
+                                }
+                            }
+                        }
+                    }
+                    .fileImporter(isPresented: $importing, allowedContentTypes: [.wav,.aiff]) { file in
+                        do {
+                            let fileUrl: URL = try file.get()
+                            let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
+                            let fileName = "\(fileUrl.lastPathComponent)"
+                            
+                            // define destination URL in your app's documents directory
+                            let documentsDirectory = try FileManager.default.url(
+                                for: .documentDirectory,
+                                in: .userDomainMask,
+                                appropriateFor: nil,
+                                create: false
+                            )
+                            let destinationUrl = documentsDirectory.appendingPathComponent(folderAndFileName)
+                            
+                            // Ensure that file exists at the destination URL
+                            guard FileManager.default.fileExists(atPath: destinationUrl.path) else {
+                                throw NSError(domain: NSCocoaErrorDomain,
+                                              code: NSFileReadNoSuchFileError,
+                                              userInfo: [NSFilePathErrorKey: destinationUrl.path])
+                            }
+                            
+                            //FIXME: Hier ben ik
+                            
+                            // Load the MIDI file into the sequencer
+                            //setInfoModel.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: destinationUrl)
+                            //setInfoModel.conductor.trackSequencersMemory[trackId]?.loadMIDIFile(fromURL: destinationUrl)
+                            
+                            //                        setInfoModel.setSettings.tracks[trackId]?. = fileName
+                            
+                            isNewAudio = true
+                            
+                            print("Loaded Audio file: \(fileName)")
+                            
+                        } catch{
+                            
+                            isNewAudio = false
+                            
+                            print ("SoundSourceView error reading: \(error.localizedDescription)")
+                        }
+                    }
+                    
                 }
             }
         }

@@ -19,6 +19,8 @@ class TrackSettings: Identifiable, ObservableObject {
     var variationType: VariationType
     var instrumentType: InstrumentsSet.Track.InstrumentType
     var exsFile: ExsFiles
+//    var audioFiles: [AudioFile]
+    
     var instrumentVolume: Float
     var instrumentColor: Color
     

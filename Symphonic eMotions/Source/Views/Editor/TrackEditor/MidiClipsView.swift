@@ -24,6 +24,7 @@ struct MidiClipsView: View {
     //Sate
     @State var isPlaying: [Bool]
     @State var clipLength: Int
+    @State private var infoVisibility: [String: Bool] = [:]
     
     //Midi files
     @State var importing = false
@@ -56,6 +57,10 @@ struct MidiClipsView: View {
             )
         )
         _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
+    }
+    
+    private func toggleInfoVisibility(for key: String) {
+        infoVisibility[key, default: false].toggle()
     }
     
     var body: some View {
@@ -173,18 +178,43 @@ struct MidiClipsView: View {
                 .frame(width: columnWidth, alignment: .leading)
             
             HStack (spacing: 30) {
-                
-                Text(currentTrack.midiFile)
-                    .padding()
-                
-                if isNewMidi {
-                    Text(NSLocalizedString("Save and reopen", comment: ""))
-                        .foregroundStyle(.red)
-                }
-                else{
-                    Button(action: {importing.toggle()}, label: {
-                        Text("Replace current MIDI file")
-                    })
+                VStack{
+                    HStack{
+                        //Current midi file loaded
+                        Text(currentTrack.midiFile)
+                            .padding()
+                        
+                        //Notice we need to reload engine
+                        if isNewMidi {
+                            Text(NSLocalizedString("Save and reopen", comment: ""))
+                                .foregroundStyle(.red)
+                        }
+                        else{
+                            //Button replace midi file
+                            Button(action: {importing.toggle()}, label: {
+                                Text("Replace current MIDI file")
+                            })
+                        }
+                        //Info about where to keep the midi files
+                        Button(action: {
+                            toggleInfoVisibility(for: "addMidi")
+                        }) {
+                            Image(systemName: "info.circle")
+                                .font(.title)
+                                .foregroundColor(.blue)
+                        }
+                        .padding()
+                    }
+                    
+                        
+                    if infoVisibility["addMidi", default: false] {
+                        
+                        if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+                            Text("Keep midi files in \"\(displayName)/\(setInfoModel.setSettings.filesPath)/\"")
+                        }
+                    }
+                    
+                    
                 }
             }
             .fileImporter(isPresented: $importing, allowedContentTypes: [.midi]) { file in
@@ -226,9 +256,6 @@ struct MidiClipsView: View {
                     print ("MidiClipsView error reading: \(error.localizedDescription)")
                 }
             }
-            
-            //            Text(currentTrack.midiFile)
-            //                .frame(width: columnWidth, alignment: .leading)
         }
     }
 }

@@ -306,11 +306,6 @@ final class Conductor {
                 trackSequencers[trackId]?.rewind()
                 trackSequencers[trackId]?.preroll()
                 
-                //                let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-                //                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOff)
-                
-                
-                //                audioEngine.pause()
             }
             else{
                 playEngineUIEffect()
