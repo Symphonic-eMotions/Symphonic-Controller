@@ -14,7 +14,8 @@ extension Conductor {
     internal func createAudioBufferSampler(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
-        currentSetLevel: Double) -> MIDISampler? {
+        currentSetLevel: Double,
+        samplePath: String) -> MIDISampler? {
         
         guard let audioFiles = track.audioFiles else {
             print("No audio files for track id: \(track.id)")
@@ -32,7 +33,7 @@ extension Conductor {
         var lengthInBeats: Double = 1
         for audioFile in audioFiles {
             
-            let audioFileURL = documentDirectory.appendingPathComponent("Samples/\(audioFile.fileName).\(audioFile.fileExtension)")
+            let audioFileURL = documentDirectory.appendingPathComponent("\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)")
             
             if audioFile.lengthInBeats > lengthInBeats {
                 lengthInBeats = audioFile.lengthInBeats

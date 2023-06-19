@@ -129,8 +129,18 @@ struct SoundSourceView: View {
                         //Button more info
                         VStack{
                             
-                            Text("** current audio files **")
-                                .padding()
+                            VStack {
+                                VStack {
+                                    ForEach(currentTrack.audioFiles, id: \.fileName) { audioFile in
+                                        VStack(alignment: .leading) {
+                                            Text("\(audioFile.fileName).\(audioFile.fileExtension)")
+                                            Text("MIDI Note: \(audioFile.midiNote)")
+                                            //Text("Length in Beats: \(audioFile.lengthInBeats)")
+                                        }
+                                        Divider()  // optional, for visual separation
+                                    }
+                                }
+                            }
                             
                             HStack{
                                 //Notice we need to reload
@@ -169,7 +179,9 @@ struct SoundSourceView: View {
                         do {
                             let fileUrl: URL = try file.get()
                             let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
-                            let fileName = "\(fileUrl.lastPathComponent)"
+                            
+                            let fileName = fileUrl.deletingPathExtension().lastPathComponent
+                            let fileExtension = fileUrl.pathExtension
                             
                             // define destination URL in your app's documents directory
                             let documentsDirectory = try FileManager.default.url(
@@ -188,18 +200,13 @@ struct SoundSourceView: View {
                             }
                             
                             // Create a new AudioFile object
-//                            let midiNote: UInt8 = 60  // Replace with your logic to determine midiNote
-//                            let lengthInBeats: Double = 4.0  // Replace with your logic to determine lengthInBeats
-//                            let newAudioFile = InstrumentsSet.Track.AudioFile(
-//                                fileName: fileName,
-//                                fileExtension: fileExtension,
-//                                midiNote: midiNote,
-//                                lengthInBeats: lengthInBeats
-//                            )
-//                            
-//                            // Add it to your array of AudioFile objects
-//                            trackSettings.audioFiles.append(newAudioFile)
-                    
+                            let midiNote: UInt8 = 60  // Replace with your logic to determine midiNote
+                            let lengthInBeats: Double = 4.0  // Replace with your logic to determine lengthInBeats
+                            let newAudioFile = InstrumentsSet.Track.AudioFile(fileName: fileName, fileExtension: fileExtension, midiNote: midiNote, lengthInBeats: lengthInBeats
+                            )
+                            
+                            setInfoModel.setSettings.tracks[trackId]?.audioFiles.append(newAudioFile)
+
                             isNewAudio = true
                             
                             print("Loaded Audio file: \(fileName)")
@@ -219,3 +226,4 @@ struct SoundSourceView: View {
         .padding(.trailing)
     }
 }
+

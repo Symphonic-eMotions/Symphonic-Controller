@@ -291,6 +291,18 @@ extension InstrumentsSet.Track {
             midiNote = try container.decode(UInt8.self, forKey: .midiNote)
             lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
         }
+        
+        init(
+            fileName: String,
+            fileExtension: String,
+            midiNote: UInt8,
+            lengthInBeats: Double
+        ){
+            self.fileName = fileName
+            self.fileExtension = fileExtension
+            self.midiNote = midiNote
+            self.lengthInBeats = lengthInBeats
+        }
     }
 }
 
@@ -303,4 +315,3 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
         try container.encode(lengthInBeats, forKey: .lengthInBeats)
     }
 }
-

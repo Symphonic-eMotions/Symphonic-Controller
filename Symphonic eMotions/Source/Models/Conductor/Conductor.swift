@@ -246,7 +246,8 @@ final class Conductor {
                 for: track,
                 length: "loop",
                 currentSetLevel: currentSetLevel,
-                midiChannels: &midiChannels
+                midiChannels: &midiChannels,
+                samplePath: set.filesPath
             )
             
             //Make dummy connectors for memory sequences to silence them in triggers module
@@ -255,7 +256,8 @@ final class Conductor {
                 for: track,
                 length: "all",
                 currentSetLevel: currentSetLevel,
-                midiChannels: &midiChannelsDummy
+                midiChannels: &midiChannelsDummy,
+                samplePath: set.filesPath
             )
             
             soundModuleParam01[track.id] = 0
@@ -524,7 +526,8 @@ final class Conductor {
         for track: InstrumentsSet.Track,
         length: String,
         currentSetLevel: Double,
-        midiChannels: inout [String: Int]) -> AppleSequencer? {
+        midiChannels: inout [String: Int],
+        samplePath: String) -> AppleSequencer? {
             
             // Use the 1st midi file defined.
             guard let midiFile = track.midiFiles?.first else {
@@ -604,7 +607,12 @@ final class Conductor {
                         sequencer.setGlobalMIDIOutput(trackSamplers[track.id]!.midiIn)
                     }
                 case .audioBuffer:
-                    trackSamplers[track.id] = createAudioBufferSampler(for: track, and: sequencer, currentSetLevel: currentSetLevel)
+                    
+                    trackSamplers[track.id] = createAudioBufferSampler(
+                        for: track, and: sequencer,
+                        currentSetLevel: currentSetLevel,
+                        samplePath: samplePath
+                    )
                 case .audioBufferTimed:
                     trackSamplers[track.id] = createAudioBufferTimePitch(for: track, and: sequencer, currentSetLevel: currentSetLevel, targetBPM: set.bpm)
                 case .pulseWidthSynth:
