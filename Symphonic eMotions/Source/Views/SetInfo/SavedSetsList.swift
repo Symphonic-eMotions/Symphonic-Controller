@@ -143,7 +143,7 @@ struct SavedSetsList: View {
                         }
                         
                         //The file name and date
-                        let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.name(url: url))
+                        let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.nameFromUrl(url: url))
                         VStack(alignment: .leading){
                             Text(filesName)
                                 .font(.title2)

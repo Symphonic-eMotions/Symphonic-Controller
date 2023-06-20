@@ -42,6 +42,7 @@ struct EditorView: View {
     @State var noteSources: [String: NoteSource]
     @State var startTypes: [String: StartType]
     @State var variationTypes: [String: VariationType]
+    @State var availableVariationTypes: [String: [VariationType]]
     @State var instrumentTypes: [String: InstrumentsSet.Track.InstrumentType]
     
     //TODO: 
@@ -86,6 +87,8 @@ struct EditorView: View {
         var noteSourcesInit = [String: NoteSource]()
         var startTypesInit = [String: StartType]()
         var variationTypesInit = [String: VariationType]()
+        var availableVariationTypesInit = [String: [VariationType]]()
+        
         var instrumentTypesInit = [String: InstrumentsSet.Track.InstrumentType]()
         
         var areaOfInterestInit = [String: [Int]]()
@@ -130,6 +133,21 @@ struct EditorView: View {
             let variation = track.value.variationType
             variationTypesInit[track.value.trackId] = variation
             
+            if noteSource == .midiFile {
+                availableVariationTypesInit[track.value.trackId] = [
+                    .variationByLevel,
+                    .variationByPosition
+                ]
+            }
+            //Note numbers
+            else{
+                availableVariationTypesInit[track.value.trackId] = [
+                    .variationByLevel,
+                    .variationByPosition,
+                    .variationSequencial
+                ]
+            }
+            
             let instrumentType = track.value.instrumentType
             instrumentTypesInit[track.value.trackId] = instrumentType
                 
@@ -154,6 +172,7 @@ struct EditorView: View {
         _noteSources = State(initialValue: noteSourcesInit)
         _startTypes = State(initialValue: startTypesInit)
         _variationTypes = State(initialValue: variationTypesInit)
+        _availableVariationTypes = State(initialValue: availableVariationTypesInit)
         _instrumentTypes = State(initialValue: instrumentTypesInit)
         _areaOfInterest = State(initialValue: areaOfInterestInit)
         _minimalLevel = State(initialValue: minimalLevelInit)
@@ -193,6 +212,7 @@ struct EditorView: View {
                     noteSources: $noteSources,
                     startTypes: $startTypes,
                     variationTypes: $variationTypes,
+                    availableVariationTypes: $availableVariationTypes,
                     instrumentTypes: $instrumentTypes,
                     areaOfInterest: $areaOfInterest,
                     minimalLevel: $minimalLevel

@@ -65,112 +65,6 @@ struct MidiClipsView: View {
     
     var body: some View {
         
-        //MIDI clips in file
-        HStack() {
-            
-            HStack{
-                
-                Text("MIDI clips")
-                    .frame(width: columnWidth, alignment: .leading)
-                
-            }
-            
-            HStack{
-                
-                //Remove clip button
-                Button("-") {
-                    if (midiClips.count) > 1 {
-                        
-                        let oldClip: Int = midiClipLetters[trackId]!.last!
-                        //Mutate in file databse
-                        currentTrack.loopLength.removeLast()
-                        //Binding structure
-                        midiClipLetters[trackId]!.removeLast()
-                        midiClips[trackId]!.removeLast()
-                        //Midiclip player
-                        isPlaying.removeLast()
-                        
-                        //Replace clip in level
-                        for (i, m) in currentTrack.loopsToLevel.enumerated() {
-                            if m == oldClip {
-                                //Store to file
-                                currentTrack.loopsToLevel[i] = currentTrack.loopsToLevel.first!
-                                //Binding
-                                midiClipsLevels[trackId]![i] = currentTrack.loopsToLevel.first!
-                            }
-                        }
-                        //Remove clip from midi clip grid
-                        for (i, m) in currentTrack.loopsToGrid.enumerated() {
-                            if m == oldClip {
-                                //Store to file
-                                currentTrack.loopsToGrid[i] = currentTrack.loopsToGrid.first!
-                                //Binding
-                                midiClipspositions[trackId]![i] = currentTrack.loopsToGrid.first!
-                            }
-                        }
-                    }
-                }
-                .disabled(midiClips.count == 1)
-                .font(.system(size: 45))
-                
-                //Add clip button
-                Button("+") {
-                    
-                    currentTrack.loopLength.append(16)
-                    //Binding structure
-                    midiClipLetters[trackId]!.append(midiClipLetters[trackId]!.count)
-                    midiClips[trackId]!.append(16)
-                    isPlaying.append(false)
-                }
-                .font(.system(size: 45))
-            }
-            
-            ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
-                
-                Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-                .foregroundColor(.white)
-                .frame(width: 40, height: 30)
-                .padding(.vertical, 5.0)
-                .padding(.horizontal, 5.0)
-                .background(Color.accentColor)
-                .cornerRadius(5.0)
-                .onTapGesture {
-                    isPlaying[index].toggle()
-                    setInfoModel.conductor.copyMidiSingleTrack(
-                        trackId: trackId,
-                        nextVariation: index,
-                        loopLength: currentTrack.loopLength
-                    )
-                    setInfoModel.conductor.previewSingleTrack(
-                        trackId: trackId,
-                        soundSource: soundSources[trackId]!
-                    )
-                }
-            }
-        }
-        
-        //MIDI clip length
-        HStack(){
-            
-            Text("MIDI Clip length")
-                .frame(width: columnWidth, alignment: .leading)
-            
-            TextField("Cliplength", text: Binding(
-                get:{ String(clipLength) },
-                set:{ if let value = Double($0) {
-                    //State
-                    clipLength = Int(value)
-                    //Save to file
-                    currentTrack.loopLength = Array(repeating: value, count: currentTrack.loopLength.count)
-                }}
-            ))
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .frame(width: 40, height: 25)
-            
-            Text("beats")
-                .frame(width: columnWidth, alignment: .leading)
-        }
-        
         //MIDI file
         HStack(){
             
@@ -254,6 +148,127 @@ struct MidiClipsView: View {
                     isNewMidi = false
                     
                     print ("MidiClipsView error reading: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        //MIDI clip length
+        HStack(){
+            
+            Text("MIDI Clip length")
+                .frame(width: columnWidth, alignment: .leading)
+            
+            TextField("Cliplength", text: Binding(
+                get:{ String(clipLength) },
+                set:{ if let value = Double($0) {
+                    //State
+                    clipLength = Int(value)
+                    //Save to file
+                    currentTrack.loopLength = Array(repeating: value, count: currentTrack.loopLength.count)
+                }}
+            ))
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .frame(width: 40, height: 25)
+            
+            Text("beats")
+                .frame(width: columnWidth, alignment: .leading)
+        }
+        
+        //MIDI clips in file
+        HStack() {
+            
+            HStack{
+                
+                Text("MIDI clips")
+                    .frame(width: columnWidth, alignment: .leading)
+            }
+            
+            HStack{
+                
+                //Remove clip button
+                Button("-") {
+                    if (midiClips.count) > 1 {
+                        
+                        let oldClip: Int = midiClipLetters[trackId]!.last!
+                        //Mutate in file databse
+                        currentTrack.loopLength.removeLast()
+                        //Binding structure
+                        midiClipLetters[trackId]!.removeLast()
+                        midiClips[trackId]!.removeLast()
+                        //Midiclip player
+                        isPlaying.removeLast()
+                        
+                        //Replace clip in level
+                        for (i, m) in currentTrack.loopsToLevel.enumerated() {
+                            if m == oldClip {
+                                //Store to file
+                                currentTrack.loopsToLevel[i] = currentTrack.loopsToLevel.first!
+                                //Binding
+                                midiClipsLevels[trackId]![i] = currentTrack.loopsToLevel.first!
+                            }
+                        }
+                        //Remove clip from midi clip grid
+                        for (i, m) in currentTrack.loopsToGrid.enumerated() {
+                            if m == oldClip {
+                                //Store to file
+                                currentTrack.loopsToGrid[i] = currentTrack.loopsToGrid.first!
+                                //Binding
+                                midiClipspositions[trackId]![i] = currentTrack.loopsToGrid.first!
+                            }
+                        }
+                    }
+                }
+                .disabled(midiClips.count == 1)
+                .font(.system(size: 45))
+                
+                //Add clip button
+                Button("+") {
+                    
+                    currentTrack.loopLength.append(16)
+                    //Binding structure
+                    midiClipLetters[trackId]!.append(midiClipLetters[trackId]!.count)
+                    midiClips[trackId]!.append(16)
+                    isPlaying.append(false)
+                }
+                .font(.system(size: 45))
+            }
+            
+            ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
+                
+                VStack{
+                    
+                    ZStack {
+                        
+//                        Rectangle()
+//                            .frame(width: 50, height: 50)
+//                            .foregroundColor(.clear)
+//                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.gray))
+//
+                        let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
+                        
+                        Text("\(clipLetter)")
+                            .foregroundColor(.blue)
+                    }
+                    
+                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+                        .foregroundColor(.white)
+                        .frame(width: 40, height: 30)
+                        .padding(.vertical, 5.0)
+                        .padding(.horizontal, 5.0)
+                        .background(Color.accentColor)
+                        .cornerRadius(5.0)
+                        .onTapGesture {
+                            isPlaying[index].toggle()
+                            setInfoModel.conductor.copyMidiSingleTrack(
+                                trackId: trackId,
+                                nextVariation: index,
+                                loopLength: currentTrack.loopLength
+                            )
+                            setInfoModel.conductor.previewSingleTrack(
+                                trackId: trackId,
+                                soundSource: soundSources[trackId]!
+                            )
+                        }
                 }
             }
         }

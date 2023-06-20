@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteNumberToGridView: View {
+struct NoteNumberPositionsView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings

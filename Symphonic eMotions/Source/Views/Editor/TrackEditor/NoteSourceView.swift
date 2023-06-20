@@ -24,6 +24,7 @@ struct NoteSourceView: View {
     @Binding var midiClipspositions: [String:[Int]]
     @Binding var noteNumbers: [String: [Int]]
     @Binding var noteNumberLetters: [String: [Int]]
+    @Binding var availableVariationTypes: [String: [VariationType]]
     
     //States
     @State var noteSource: NoteSource
@@ -42,7 +43,8 @@ struct NoteSourceView: View {
         midiClipsLevels: Binding<[String:[Int]]>,
         midiClipspositions: Binding<[String:[Int]]>,
         noteNumbers: Binding<[String:[Int]]>,
-        noteNumberLetters: Binding<[String:[Int]]>
+        noteNumberLetters: Binding<[String:[Int]]>,
+        availableVariationTypes: Binding<[String:[VariationType]]>
     ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -57,6 +59,7 @@ struct NoteSourceView: View {
         _midiClipspositions = midiClipspositions
         _noteNumbers = noteNumbers
         _noteNumberLetters = noteNumberLetters
+        _availableVariationTypes = availableVariationTypes
         
         _noteSource = State(initialValue: noteSources[trackId].wrappedValue!)
         _countedParts = State(initialValue: currentTrack.parts.count)
@@ -110,6 +113,13 @@ struct NoteSourceView: View {
                         noteSources[trackId] = type
                         //State
                         noteSource = type
+                        
+                        if type == .midiFile {
+                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition]
+                        }
+                        else{
+                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
+                        }
                     }
                 }
             }

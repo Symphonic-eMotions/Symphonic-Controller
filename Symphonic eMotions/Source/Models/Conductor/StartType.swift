@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StartType: String, Codable, CaseIterable {
+enum StartType: String, Codable, CaseIterable, Equatable {
     
     case loopedTransport
     case loopedTrigger

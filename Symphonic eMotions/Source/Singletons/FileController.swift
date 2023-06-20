@@ -81,12 +81,6 @@ class FileController: ObservableObject {
         
     }
     
-//    public func fileNameOrCustomNameNew( url: URL ){
-//        
-//        
-//        
-//    }
-    
     public func fileContents(url: URL) -> InstrumentsSet? {
         if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
                 return instrumentSet
@@ -107,8 +101,10 @@ class FileController: ObservableObject {
     }
     
     public func isURLInGroup( url: URL, name: String ) -> Bool {
+        
         let nameParts = urlToNameParts(url: url)
-        if nameParts.first! == name {
+        //Name is in file but not a folder with this name
+        if nameParts.first! == name && nameParts.count > 1 {
             return true
         }
         return false
@@ -139,12 +135,12 @@ class FileController: ObservableObject {
         return nameParts.first ?? "No name"
     }
     
-    public func name(url: URL) -> String{
+    public func nameFromUrl(url: URL) -> String{
         let nameParts = urlToNameParts(url: url)
         if nameParts.count > 1 {
             return nameParts.first!
         }
-        return "Mismatch"
+        return "Mismatch \(url.lastPathComponent)"
     }
     
     public func deleteFile(url: URL) -> [URL] {

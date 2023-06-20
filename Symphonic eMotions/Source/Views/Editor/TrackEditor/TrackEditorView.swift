@@ -38,6 +38,7 @@ struct TrackEditorView: View {
     @Binding var noteSources: [String: NoteSource]
     @Binding var startTypes: [String: StartType]
     @Binding var variationTypes: [String: VariationType]
+    @Binding var availableVariationTypes: [String: [VariationType]]
     @Binding var instrumentTypes: [String: InstrumentsSet.Track.InstrumentType]
     
     //Part variables
@@ -166,6 +167,26 @@ struct TrackEditorView: View {
                         trackLevels: $trackLevels
                     )
                 }
+                if showEditorPart == editorPart || showEditorPart == .start {
+                    
+                    StartTypeView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showEditorPart: $showEditorPart,
+                        startTypes: $startTypes
+                    )
+                }
+                if showEditorPart == editorPart || showEditorPart == .sound {
+                    
+                    SoundSourceView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showEditorPart: $showEditorPart,
+                        soundSources: $instrumentTypes
+                    )
+                }
                 if showEditorPart == editorPart || showEditorPart == .source {
                     
                     NoteSourceView(
@@ -180,17 +201,52 @@ struct TrackEditorView: View {
                         midiClipsLevels: $midiClipsLevels,
                         midiClipspositions: $midiClipPositions,
                         noteNumbers: $noteNumbers,
-                        noteNumberLetters: $noteNumberLetters
+                        noteNumberLetters: $noteNumberLetters,
+                        availableVariationTypes: $availableVariationTypes
                     )
                 }
-                if showEditorPart == editorPart || showEditorPart == .sound {
+                
+                if showEditorPart == editorPart || showEditorPart == .variation {
                     
-                    SoundSourceView(
+                    VariationTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,
                         showEditorPart: $showEditorPart,
-                        soundSources: $instrumentTypes)
+                        noteSources: $noteSources,
+                        variationTypes: $variationTypes,
+                        availableVariationTypes: $availableVariationTypes
+                    )
+                }
+                if showEditorPart == editorPart || showEditorPart == .location{
+                    
+                    if noteSources[key] == .midiFile {
+                        
+                        if variationTypes[key] == .variationByPosition {
+                            
+                            MidiClipsPositionsView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                midiClips: $midiClips,
+                                midiClipLetters: $midiClipLetters,
+                                midiClipsPositions: $midiClipPositions
+                            )
+                        }
+                        else if variationTypes[key] == .variationByLevel {
+                            
+                            MidiClipLevelView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                trackLevels: $trackLevels,
+                                midiClips: $midiClips,
+                                midiClipLetters: $midiClipLetters,
+                                midiClipsLevels: $midiClipsLevels
+                            )
+                            
+                        }
+                    }
                 }
             }
         }
