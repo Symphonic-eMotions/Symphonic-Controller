@@ -247,6 +247,9 @@ struct TrackEditorView: View {
                             
                         }
                     }
+                    if noteSources[key] == .noteNumbers {
+                        
+                    }
                 }
             }
         }

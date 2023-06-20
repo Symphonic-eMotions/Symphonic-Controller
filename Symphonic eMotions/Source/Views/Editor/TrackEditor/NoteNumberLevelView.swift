@@ -1,5 +1,5 @@
 //
-//  NoteNumberToLevelView.swift
+//  NoteNumberLevelView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 18/04/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteNumberToLevelView: View {
+struct NoteNumberLevelView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
