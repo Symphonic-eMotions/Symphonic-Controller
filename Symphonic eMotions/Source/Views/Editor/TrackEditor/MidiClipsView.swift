@@ -238,12 +238,7 @@ struct MidiClipsView: View {
                 VStack{
                     
                     ZStack {
-                        
-//                        Rectangle()
-//                            .frame(width: 50, height: 50)
-//                            .foregroundColor(.clear)
-//                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.gray))
-//
+  
                         let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
                         
                         Text("\(clipLetter)")

@@ -244,11 +244,23 @@ struct TrackEditorView: View {
                                 midiClipLetters: $midiClipLetters,
                                 midiClipsLevels: $midiClipsLevels
                             )
-                            
                         }
                     }
                     if noteSources[key] == .noteNumbers {
                         
+                        if variationTypes[key] == .variationByPosition {
+                            
+                        }
+                        else  if variationTypes[key] == .variationByLevel {
+                            NoteNumberLevelView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                trackLevels: $trackLevels,
+                                noteNumbersLevels: $noteNumbersLevels,
+                                noteNumbers: $noteNumbers
+                            )
+                        }
                     }
                 }
             }

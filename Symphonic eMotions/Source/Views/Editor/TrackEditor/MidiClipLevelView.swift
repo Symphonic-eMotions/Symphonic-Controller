@@ -7,23 +7,6 @@
 
 import SwiftUI
 
-struct MidiClipName: View {
-
-    var value: String
-
-    var body: some View {
-        ZStack {
-
-            Rectangle()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.blue)
-                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-            Text("\(value)")
-                .foregroundColor(.primary)
-        }
-    }
-}
-
 struct MidiClipLevelView: View {
 
     @ObservedObject var setInfoModel: SetInfoModel
@@ -72,7 +55,11 @@ struct MidiClipLevelView: View {
                 ForEach(0..<trackLevels[trackId]!.count, id: \.self) { index in
 
                     VStack{
-
+                        
+                        let levelNumber = index+1
+                        Text("\(levelNumber)")
+                            .foregroundColor(.blue)
+                        
                         ZStack {
 
                             let levelClip = midiClipsLevels[trackId]![index]
