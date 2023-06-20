@@ -249,7 +249,13 @@ struct TrackEditorView: View {
                     if noteSources[key] == .noteNumbers {
                         
                         if variationTypes[key] == .variationByPosition {
-                            
+                            NoteNumberPositionsView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                noteNumbers: $noteNumbers,
+                                noteNumbersPositions: $noteNumbersPositions
+                            )
                         }
                         else  if variationTypes[key] == .variationByLevel {
                             NoteNumberLevelView(
@@ -260,6 +266,9 @@ struct TrackEditorView: View {
                                 noteNumbersLevels: $noteNumbersLevels,
                                 noteNumbers: $noteNumbers
                             )
+                        }
+                        else if variationTypes[key] == .variationSequencial {
+                            
                         }
                     }
                 }

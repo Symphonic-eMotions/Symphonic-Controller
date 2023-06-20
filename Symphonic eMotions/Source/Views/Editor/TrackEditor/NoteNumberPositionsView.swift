@@ -11,38 +11,27 @@ struct NoteNumberPositionsView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    
-    //Higher level states with track id
-    @Binding var noteNumbersPerTrack: [String:[Int]]
-    
     //This is a 1 track View
     @State var trackId: String
     
-    //These are the stored note numbers in midiGroup
-    @State var noteNumbersLocal: [Int]
-    //Keep track of note numbers for the View refresh
-    @State var notesToGridLocal: [Int]
-    
-    @State private var updateView: Int = 0
-    
-    let columnWidth: CGFloat = 150
+    @Binding var noteNumbers: [String: [Int]]
+    @Binding var noteNumbersPositions: [String: [Int]]
     
     init(
         setInfoModel:SetInfoModel,
         currentTrack:TrackSettings,
         trackId: String,
-        noteNumbersPerTrack: Binding<[String:[Int]]>
+        noteNumbers: Binding<[String:[Int]]>,
+        noteNumbersPositions: Binding<[String:[Int]]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        //We keep track of all note numbers on track level
-        _noteNumbersPerTrack = noteNumbersPerTrack
-        //These are the available note numbers for te view
-        _noteNumbersLocal = State(initialValue: currentTrack.midiGroup)
-        //These are placed note numbers in the grid
-        _notesToGridLocal = State(initialValue: currentTrack.notesToGrid)
+        _noteNumbers = noteNumbers
+        _noteNumbersPositions = noteNumbersPositions
     }
+    
+    let columnWidth: CGFloat = 150
     
     var body: some View {
         
@@ -50,67 +39,50 @@ struct NoteNumberPositionsView: View {
             
             Divider()
             
-            if currentTrack.noteSource == .noteNumbers && currentTrack.startType == .loopedTransport {
+            HStack(){
                 
-                Text("Note number start with transport has no positions")
-                    
-            }
-            else{
+                Text("Place notes in grid:")
+                    .frame(width: columnWidth, alignment: .leading)
                 
-//                NoteNumberView(
-//                    setInfoModel: setInfoModel,
-//                    currentTrack: currentTrack,
-//                    trackId: trackId,
-//                    noteNumbersLocal: $noteNumbersLocal,
-//                    noteNumbersPerTrack: $noteNumbersPerTrack,
-//                    updateView: $updateView
-//                )
+                let gridRows: Int = setInfoModel.setSettings.gridRows
+                let gridColumns: Int = setInfoModel.setSettings.gridColumns
                 
-                HStack(){
-                    
-                    Text("Place note numbers in grid:")
-                        .frame(width: columnWidth, alignment: .leading)
-                    
-                    let gridRows: Int = setInfoModel.setSettings.gridRows
-                    let gridColumns: Int = setInfoModel.setSettings.gridColumns
-                    
-                    //Note number grid
-                    VStack(spacing: 0) {
-                        ForEach(0..<gridRows, id: \.self) { row in
-                            HStack(spacing: 0) {
-                                ForEach(0..<gridColumns, id: \.self) { column in
+                //Note number grid
+                VStack(spacing: 0) {
+                    ForEach(0..<gridRows, id: \.self) { row in
+                        HStack(spacing: 0) {
+                            ForEach(0..<gridColumns, id: \.self) { column in
+                                
+                                //Current cell index
+                                let cellIndex =  row * gridColumns + column
+                                
+                                //The cell buttons
+                                ZStack {
                                     
-                                    //Current cell index
-                                    let cellIndex =  row * gridColumns + column
+                                    Rectangle()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.blue)
+                                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                     
-                                    //The cell buttons
-                                    ZStack {
-                                        
-                                        Rectangle()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(.clear)
-                                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                        
-                                        let gridNote = notesToGridLocal[cellIndex]
-                                        let noteName: String = AppUtils.midiNoteName(for: gridNote)
-                                        
-                                        Text("\(noteName)")
-                                            .foregroundColor(.blue)
-                                    }
-                                    .onTapGesture {
-                                        //Loop through available notenumbers
-                                        let currentValue = notesToGridLocal[cellIndex]
-                                        if let noteIndex = noteNumbersLocal.firstIndex(where: {$0 == currentValue}){
-                                            //Increment index
-                                            var incrementNoteIndex = noteIndex + 1
-                                            //If index is higher then count then index = 0
-                                            if incrementNoteIndex >= noteNumbersLocal.count {
-                                                incrementNoteIndex = 0
-                                            }
-                                            
-                                            currentTrack.notesToGrid[cellIndex] = noteNumbersLocal[incrementNoteIndex]
-                                            notesToGridLocal[cellIndex] = noteNumbersLocal[incrementNoteIndex]
+                                    let gridNote = noteNumbersPositions[trackId]![cellIndex]
+                                    let noteName: String = AppUtils.midiNoteName(for: gridNote)
+                                    
+                                    Text("\(noteName)")
+                                        .foregroundColor(.white)
+                                }
+                                .onTapGesture {
+                                    //Loop through available notenumbers
+                                    let currentValue = noteNumbersPositions[trackId]![cellIndex]
+                                    if let noteIndex = noteNumbers[trackId]!.firstIndex(where: {$0 == currentValue}){
+                                        //Increment index
+                                        var incrementNoteIndex = noteIndex + 1
+                                        //If index is higher then count then index = 0
+                                        if incrementNoteIndex >= noteNumbers[trackId]!.count {
+                                            incrementNoteIndex = 0
                                         }
+                                        
+                                        currentTrack.notesToGrid[cellIndex] = noteNumbers[trackId]![incrementNoteIndex]
+                                        noteNumbersPositions[trackId]![cellIndex] = noteNumbers[trackId]![incrementNoteIndex]
                                     }
                                 }
                             }
@@ -120,8 +92,5 @@ struct NoteNumberPositionsView: View {
             }
         }
         .padding(.leading)
-        .onChange(of: updateView) { _ in
-            notesToGridLocal = currentTrack.notesToGrid
-        }
     }
 }
