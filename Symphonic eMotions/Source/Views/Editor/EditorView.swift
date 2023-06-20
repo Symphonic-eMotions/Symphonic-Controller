@@ -64,9 +64,6 @@ struct EditorView: View {
         self._sessionDisplaySub = sessionDisplaySub
         _showEditorPart = State(initialValue: .none)
         
-        var numberOfTracks = Int()
-        var editorParts = [EditorParts]()
-        
         var trackLevelsInit = [String: [Int]]()
         var noteNumbersLevelsInit = [String: [Int]]()
         var midiClipsLevelsInit = [String: [Int]]()

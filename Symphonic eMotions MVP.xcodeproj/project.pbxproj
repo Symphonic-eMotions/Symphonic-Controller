@@ -84,7 +84,6 @@
 		7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBF8FE2A39159700360E21 /* SetEditorView.swift */; };
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
-		7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD417FC2A07C6D7006831CE /* AreaConnection.swift */; };
 		7CD418032A095388006831CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CD418052A095388006831CE /* Localizable.strings */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
@@ -226,7 +225,6 @@
 		7CCBF8FE2A39159700360E21 /* SetEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEditorView.swift; sourceTree = "<group>"; };
 		7CCDE10328E2C65100343920 /* MasterTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackModel.swift; sourceTree = "<group>"; };
 		7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
-		7CD417FC2A07C6D7006831CE /* AreaConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaConnection.swift; sourceTree = "<group>"; };
 		7CD418042A095388006831CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD418062A095474006831CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
@@ -400,6 +398,8 @@
 				7CF50F5229EEBECD0016BAF4 /* NoteNumberLevelView.swift */,
 				7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */,
 				7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */,
+				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
+				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
 			);
 			path = TrackEditor;
 			sourceTree = "<group>";
@@ -464,9 +464,6 @@
 		7CD417FF2A092AEE006831CE /* TrackEditor */ = {
 			isa = PBXGroup;
 			children = (
-				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
-				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
-				7CD417FC2A07C6D7006831CE /* AreaConnection.swift */,
 			);
 			path = TrackEditor;
 			sourceTree = "<group>";
@@ -887,7 +884,6 @@
 				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
 				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
-				7CD417FD2A07C6D7006831CE /* AreaConnection.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
 				7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,

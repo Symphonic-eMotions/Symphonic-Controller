@@ -11,24 +11,27 @@ struct AreaOfInterestView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    
-    @Binding var areaOfInterest: [String:[Int]]
-    @State var areaOfInterestColorLocal: [String:[Color]]
-    
     //This is a 1 track View
     @State var trackId: String
     
-    let columnWidth: CGFloat = 150
+    //Binding
+    @Binding var showEditorPart: EditorParts
+    @Binding var areaOfInterest: [String:[Int]]
+    
+    //State
+    @State var areaOfInterestColorLocal: [String:[Color]]
     
     init(
         setInfoModel:SetInfoModel,
         currentTrack:TrackSettings,
         trackId: String,
+        showEditorPart: Binding<EditorParts>,
         areaOfInterest: Binding<[String:[Int]]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
+        _showEditorPart = showEditorPart
         _areaOfInterest = areaOfInterest
         
         var tmpAreaOfColorInterest: [String:[Color]] = [:]
@@ -37,6 +40,9 @@ struct AreaOfInterestView: View {
         }
         _areaOfInterestColorLocal = State(initialValue: tmpAreaOfColorInterest)
     }
+    
+    let columnWidth: CGFloat = 150
+    let color: Color = .accentColor
     
     //Grid interface per Part
     func activeAreasView(for part: PartSettings, gridRows: Int, gridColumns: Int) -> some View {
@@ -144,8 +150,25 @@ struct AreaOfInterestView: View {
             
             HStack(){
                 
-                Text("Active areas")
-                    .frame(width: columnWidth, alignment: .leading)
+                ZStack {
+                    
+                    Rectangle()
+                        .frame(width: 130, height: 34)
+                        .foregroundColor(.clear)
+                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                        .background( showEditorPart == .location ? .clear : color )
+                    
+                    Text("Instr. position")
+                        .frame(width: 130, height: 34)
+                    
+                }
+                .frame(width: columnWidth, alignment: .leading)
+                .onTapGesture {
+                    withAnimation {
+                        showEditorPart = .location
+                    }
+                }
+                
                 
                 let gridRows: Int = setInfoModel.setSettings.gridRows
                 let gridColumns: Int = setInfoModel.setSettings.gridColumns

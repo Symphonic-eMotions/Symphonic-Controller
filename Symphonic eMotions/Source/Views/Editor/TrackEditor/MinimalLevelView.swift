@@ -11,7 +11,6 @@ struct MinimalLevelView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    
     //This is a 1 track View
     @State var trackId: String
     @State private var minimalLocal: [Double]

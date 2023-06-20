@@ -131,6 +131,7 @@ struct TrackEditorView: View {
                                         noteNumbersPositions.removeValue(forKey: trackKey)
                                         midiClipPositions.removeValue(forKey: trackKey)
                                         noteNumbers.removeValue(forKey: trackKey)
+                                        notesSequenceType.removeValue(forKey: trackKey)
                                         noteNumberLetters.removeValue(forKey: trackKey)
                                         midiClips.removeValue(forKey: trackKey)
                                         midiClipLetters.removeValue(forKey: trackKey)
@@ -208,7 +209,6 @@ struct TrackEditorView: View {
                         availableVariationTypes: $availableVariationTypes
                     )
                 }
-                
                 if showEditorPart == editorPart || showEditorPart == .variation {
                     
                     VariationTypeView(
@@ -279,10 +279,26 @@ struct TrackEditorView: View {
                         }
                     }
                 }
-                
-                if showEditorPart == editorPart || showEditorPart == .position {
+                if showEditorPart == editorPart || showEditorPart == .location {
+                    AreaOfInterestView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showEditorPart: $showEditorPart,
+                        areaOfInterest: $areaOfInterest
+                    )
                     
+                    //Dampertarget view
+                    MinimalLevelView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key
+                    )
                 }
+                
+                Divider()
+                
+            //End each key in setInfoModel.setSettings.tracks
             }
         }
         
