@@ -114,7 +114,7 @@ final class SetInfoModel: ObservableObject {
             noteSource: .noteNumbers,
             startType: .oneShot,
             variationType: .variationByPosition,
-            instrumentType: .phaseSynth,
+            instrumentType: .audioBuffer,
             exsFile: ExsFiles(rawValue: "trigger")!,
             audioFiles: [],
             instrumentVolume: 0,

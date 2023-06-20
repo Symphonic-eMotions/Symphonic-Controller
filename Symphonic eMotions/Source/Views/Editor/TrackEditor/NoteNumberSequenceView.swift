@@ -11,68 +11,56 @@ struct NoteNumberSequenceView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    //This is a 1 track View
+    //This is a 1 track view
     @State var trackId: String
     
-    //Higher level states with track id
-    @Binding var noteNumbersPerTrack: [String:[Int]]
+    //Bindings
+    @Binding var noteNumbers: [String: [Int]]
+    @Binding var notesSequenceType: [String: NotesSequenceType]
     
-    //These are the stored note numbers in midiGroup
-    @State var noteNumbersLocal: [Int]
-    
-    @State var noteNumberSequenceLocal: NotesSequenceType
-    
-    @State var updateView: Int = 0
-        
-    let columnWidth: CGFloat = 150
-    
+    //States
+    @State private var selectedSequenceType: NotesSequenceType
+
     init(
         setInfoModel:SetInfoModel,
         currentTrack:TrackSettings,
         trackId: String,
-        noteNumbersPerTrack: Binding<[String:[Int]]>
+        noteNumbers: Binding<[String:[Int]]>,
+        notesSequenceType: Binding<[String:NotesSequenceType]>
     ){
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
-        _noteNumbersPerTrack = noteNumbersPerTrack
-        _noteNumbersLocal = State(initialValue: currentTrack.midiGroup)
+        _noteNumbers = noteNumbers
+        _notesSequenceType = notesSequenceType
         
-        _noteNumberSequenceLocal = State(initialValue: currentTrack.notesSequenceType)
+        _selectedSequenceType = State(initialValue: notesSequenceType.wrappedValue[trackId] ?? .nextForward)
     }
-    
+
+    let columnWidth: CGFloat = 150
+
     var body: some View {
-        
         VStack(alignment: .leading){
             
             Divider()
-            
-//            NoteNumberView(
-//                setInfoModel: setInfoModel,
-//                currentTrack: currentTrack,
-//                trackId: trackId,
-//                noteNumbersLocal: $noteNumbersLocal,
-//                noteNumbersPerTrack: $noteNumbersPerTrack,
-//                updateView: $updateView
-//            )
-            
+
             HStack(){
-                
                 Text("Note sequence:")
                     .frame(width: columnWidth, alignment: .leading)
-                
-                Picker("Select sequence type", selection: $noteNumberSequenceLocal) {
+
+                Picker("Select sequence type", selection: $selectedSequenceType) {
                     ForEach(NotesSequenceType.allCases, id: \.self) { type in
                         Text(type.description).tag(type)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: noteNumberSequenceLocal) { sequenceType in
+                .pickerStyle(.inline)
+                .frame(width:350, height: 100)
+                .onChange(of: selectedSequenceType) { sequenceType in
                     withAnimation {
                         //Store to file
                         currentTrack.notesSequenceType = sequenceType
                         //Keep local state
-                        noteNumberSequenceLocal = sequenceType
+                        notesSequenceType[trackId] = sequenceType
                     }
                 }
             }

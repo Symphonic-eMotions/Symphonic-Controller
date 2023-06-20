@@ -32,6 +32,8 @@ struct EditorView: View {
     
     //Note numbers per track
     @State var noteNumbers: [String: [Int]]
+    @State var notesSequenceType: [String: NotesSequenceType]
+    //Obsolete?
     @State var noteNumberLetters: [String: [Int]]
     
     //Midi cips per track
@@ -44,12 +46,6 @@ struct EditorView: View {
     @State var variationTypes: [String: VariationType]
     @State var availableVariationTypes: [String: [VariationType]]
     @State var instrumentTypes: [String: InstrumentsSet.Track.InstrumentType]
-    
-    //TODO: 
-    //waveRange
-    //instrumentPreset
-    //instrumentMidiFile
-    //instrumentAudioFiles
     
     //Part variables
     @State var areaOfInterest: [String: [Int]]
@@ -79,6 +75,7 @@ struct EditorView: View {
         var midiClipPositionsInit = [String: [Int]]()
         
         var noteNumbersInit = [String: [Int]]()
+        var notesSequenceTypeInit = [String: NotesSequenceType]()
         var noteNumberLettersInit = [String: [Int]]()
         
         var midiClipsInit = [String: [Double]]()
@@ -114,6 +111,9 @@ struct EditorView: View {
             
             let noteNumber = track.value.midiGroup
             noteNumbersInit[track.value.trackId] = noteNumber
+            
+            let noteSequenceType = track.value.notesSequenceType
+            notesSequenceTypeInit[track.value.trackId] = noteSequenceType
             
             let nclips = track.value.midiGroup
             noteNumberLettersInit[track.value.trackId] = Array(0..<nclips.count).map{$0}
@@ -166,6 +166,7 @@ struct EditorView: View {
         _noteNumbersPositions = State(initialValue: noteNumbersPositionsInit)
         _midiClipPositions = State(initialValue: midiClipPositionsInit)
         _noteNumbers = State(initialValue: noteNumbersInit)
+        _notesSequenceType = State(initialValue: notesSequenceTypeInit)
         _noteNumberLetters = State(initialValue: noteNumberLettersInit)
         _midiClips = State(initialValue: midiClipsInit)
         _midiClipLetters = State(initialValue: midiClipLettersInit)
@@ -206,6 +207,7 @@ struct EditorView: View {
                     noteNumbersPositions: $noteNumbersPositions,
                     midiClipPositions: $midiClipPositions,
                     noteNumbers: $noteNumbers,
+                    notesSequenceType: $notesSequenceType,
                     noteNumberLetters: $noteNumberLetters,
                     midiClips: $midiClips,
                     midiClipLetters: $midiClipLetters,
@@ -296,7 +298,5 @@ struct EditorView: View {
             
         }
         .padding()
-        
-//        Text("Editing: \(setInfoModel.setSettings.setURL)")
     }
 }

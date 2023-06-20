@@ -110,7 +110,7 @@ struct SoundSourceView: View {
                         }
                     }
                     .pickerStyle(.inline)
-                    .frame(width:300, height: 100)
+                    .frame(width:350, height: 100)
                     .onChange(of: soundSource) { type in
                         withAnimation {
                         }

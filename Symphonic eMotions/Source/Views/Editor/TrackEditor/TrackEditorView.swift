@@ -28,6 +28,8 @@ struct TrackEditorView: View {
     
     //Note numbers per track
     @Binding var noteNumbers: [String: [Int]]
+    @Binding var notesSequenceType: [String: NotesSequenceType]
+    //Obsolete?
     @Binding var noteNumberLetters: [String: [Int]]
     
     //Midi cips per track
@@ -48,6 +50,7 @@ struct TrackEditorView: View {
     //State
     @State private var showRemoveConfirmation: Bool = false
     @State private var trackKeyToRemove: String? = nil
+    @State private var pleaseSave: Bool = false
     
     var body: some View {
         
@@ -217,8 +220,6 @@ struct TrackEditorView: View {
                         variationTypes: $variationTypes,
                         availableVariationTypes: $availableVariationTypes
                     )
-                }
-                if showEditorPart == editorPart || showEditorPart == .location{
                     
                     if noteSources[key] == .midiFile {
                         
@@ -268,11 +269,26 @@ struct TrackEditorView: View {
                             )
                         }
                         else if variationTypes[key] == .variationSequencial {
-                            
+                            NoteNumberSequenceView(
+                                setInfoModel: setInfoModel,
+                                currentTrack: setInfoModel.setSettings.tracks[key]!,
+                                trackId: key,
+                                noteNumbers: $noteNumbers,
+                                notesSequenceType: $notesSequenceType
+                            )
                         }
                     }
                 }
+                
+                if showEditorPart == editorPart || showEditorPart == .position {
+                    
+                }
             }
+        }
+        
+        if pleaseSave {
+            Text("Please save en re-open the set to continue.")
+                .foregroundColor(.red)
         }
         
         //New track
@@ -298,6 +314,7 @@ struct TrackEditorView: View {
                     noteNumbersPositions[newTrack.trackId] = newTrack.notesToGrid
                     midiClipPositions[newTrack.trackId] = newTrack.loopsToGrid
                     noteNumbers[newTrack.trackId] = newTrack.midiGroup
+                    notesSequenceType[newTrack.trackId] = newTrack.notesSequenceType
                     let nclips = newTrack.midiGroup
                     noteNumberLetters[newTrack.trackId] = Array(0..<nclips.count).map{$0}
                     midiClips[newTrack.trackId] = newTrack.loopLength
@@ -306,6 +323,7 @@ struct TrackEditorView: View {
                     noteSources[newTrack.trackId] = newTrack.noteSource
                     startTypes[newTrack.trackId] = newTrack.startType
                     variationTypes[newTrack.trackId] = newTrack.variationType
+                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
                     instrumentTypes[newTrack.trackId] = newTrack.instrumentType
                     //Insert bindings parts
                     let part = newTrack.parts.values.first!
@@ -315,10 +333,14 @@ struct TrackEditorView: View {
                     editorParts = setInfoModel.selectableEditorParts()
                     
                     numberOfTracks += 1
+                    
+                    pleaseSave = true
                 }
             }
             .font(.system(size: 45))
             Spacer()
         }
+        
+        
     }
 }
