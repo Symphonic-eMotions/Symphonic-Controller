@@ -49,6 +49,7 @@ struct eMotionApp: App {
                 sessionDisplaySub: $sessionDisplaySub
             )
             .statusBar(hidden: true)
+            .preferredColorScheme(.dark)
         }
     }
 }
