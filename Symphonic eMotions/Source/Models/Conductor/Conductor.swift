@@ -446,12 +446,13 @@ final class Conductor {
                     //We stop playing
                     self.pauzeEngineAndStopTracks(setSettings: setSettings)
                     
-                    playRandomApplause()
+                    let sounds = ["Applause01", "Applause02", "Applause03"]
+                    playInterfaceSounds(sounds: sounds, volume: 0.6)
                     
                     if !autoVoice.isSpeaking {
                         
-                        let trudy = AVSpeechUtterance(string: "Congratulations! You've completed the set! Prepare for the next set!")
-                        trudy.voice = AVSpeechSynthesisVoice(language: "en-AU")
+                        let trudy = AVSpeechUtterance(string: NSLocalizedString("Set complete", comment: ""))
+                        trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
                         trudy.rate = 0.50
                         trudy.pitchMultiplier = 1.1
                         trudy.volume = 0.5
@@ -462,11 +463,7 @@ final class Conductor {
         }
     }
     
-    func playRandomApplause() {
-        print("playRandomApplause")
-        
-        let sounds = ["Applause01", "Applause02", "Applause03"]
-        
+    func playInterfaceSounds(sounds: [String], volume: Float) {
         if let randomSound = sounds.randomElement() {
             print("Random sound selected: \(randomSound)")
             if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "wav") {
@@ -475,9 +472,10 @@ final class Conductor {
                 print("URL is valid: \(url)")
                 do {
                     autoSound = try AVAudioPlayer(contentsOf: url)
+                    autoSound?.delegate = self.autoSound as? any AVAudioPlayerDelegate
                     autoSound?.prepareToPlay()
                     autoSound?.play()
-                    autoSound?.volume = 0.07
+                    autoSound?.volume = volume
                 } catch {
                     print("Error: could not play sound: \(error)")
                 }
@@ -487,6 +485,10 @@ final class Conductor {
         } else {
             print("Failed to select random sound.")
         }
+    }
+    
+    func stopInterfaceSounds(){
+        autoSound?.stop()
     }
     
     public func setTempo( tempoChange: Double) -> Double{

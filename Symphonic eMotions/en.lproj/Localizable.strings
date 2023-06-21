@@ -6,32 +6,36 @@
   
 */
 "locale" = "en-US";
-"Set complete" = "Gongratulations! You have finished the last level!";
-"Count down to" = "Set completed! The next set starts in:";
-"Same song" = "Play the same song again!";
+"accent" = "en-AU";
+
 "Welcome" = "Welcome";
 "New set" = "New set";
-"Save" = "Save";
+"Level speed" = "Level speed";
+"User sets" = "User sets";
+
+//Playlist
 "minimal" = "Minimal movement";
 "person" = "More movement";
-//"group" = "Group up to 3 persons";
-//"nature" = "Nature";
 "Add to playlist" = "Add to playlist";
 "New variation" = "New variation";
+"Hold level" = "Hold level";
+"Finish" = "Finish";
+"Set complete" = "Gongratulations!... You have finished the last level!";
+"Count down to" = "Set completed! The next set starts in:";
+"Same song" = "Play the same song again!";
+
+//Interface
+"Will do!" = "Will do!";
+"Save" = "Save";
 "Cancel" = "Cancel";
-"Confirm Delete" = "Confirm Delete";
 "Continue" = "Continue";
 "Are you sure" = "Are you sure you want to delete this set?";
 "Delete" = "Delete";
-"User sets" = "User sets";
-"Editor open" = "Editor is open";
-"Save set to continue" = "Please save or dismiss changes to continue";
-"Will do!" = "Will do!";
-"Level speed" = "Level speed";
-"Hold level" = "Hold level";
-"Finish" = "Finish";
+"Confirm Delete" = "Confirm Delete";
 
 //Editor
+"Save set to continue" = "Please save or dismiss changes to continue";
+"Editor open" = "Editor is open";
 "Save and reopen" = "Save and reopen set to activate new midi file";
 "One part" = "Velocity is the only controller and yhus connot be removed";
 
@@ -42,3 +46,5 @@
 "Connect audio" = "Connect the audio speaker to the iPad";
 "Enough light" = "Make sure there is enough light";
 "Specift distance" = "Specify from where you will play Symphonic eMotions.";
+"Test audio" = "Test audio";
+"Audio is playing" = "Audio is playing";

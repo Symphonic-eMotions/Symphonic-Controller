@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Introduction: View {
     
-    @ObservedObject var setInfoModel: SetInfoModel
+    @ObservedObject var playViewModel: PlayViewModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
@@ -27,7 +27,7 @@ struct Introduction: View {
                 
                 Spacer()
                 
-                Text("TEST A")
+                Text(" ")
                     .padding()
                 
                 Spacer()
@@ -52,7 +52,28 @@ struct Introduction: View {
                 
                 Spacer()
                 
-                Text("Play sound")
+                //Start stop
+                VStack(alignment: .leading){
+                    HStack {
+                        
+                        EMButton(action: {
+                            playViewModel.tapMediaControlButton()
+                        }, color: .accentColor) {
+                            Text(NSLocalizedString("Test audio", comment: ""))
+                        }
+                        .frame(width: UIScreen.main.bounds.width * 0.333)
+                        Spacer()
+                    }
+                }
+                
+                //Volume
+                VStack(alignment: .leading){
+                    Text("Volume").padding(.top)
+                    VolumeSlider()
+                        .frame(height: 10)
+                        .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                        .zIndex(101)
+                }
                 
                 Spacer()
                 
@@ -138,7 +159,7 @@ struct IntroductionImage: View {
             
             Spacer()
         }
-        .padding(.top)
+        .padding(.top, 40)
 //        .border(.red)
     }
 }

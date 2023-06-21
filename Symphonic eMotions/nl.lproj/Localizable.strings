@@ -6,32 +6,36 @@
   
 */
 "locale" = "nl-NL";
-"Set complete" = "Gefeliciteerd! je hebt de laatste level uitgespeeld.";
-"Count down to" = "Set uitgespeeld! De volgende set start over";
-"Same song" = "Speel dezelfde set nog eens!";
+"accent" = "nl-BE";
+
 "Welcome" = "Welkom";
 "New set" = "Nieuwe set";
-"Save" = "Bewaar";
+"Level speed" = "Level snelheid";
+"User sets" = "Gebruiker sets";
+
+//Playlist
 "minimal" = "Minimale beweging";
 "person" = "Meer beweging";
-//"group" = "Groepje personen";
-//"nature" = "Natuur";
 "Add to playlist" = "Voeg aan afspeellijst toe";
 "New variation" = "Nieuwe variatie";
-"Cancel" = "Annuleer";
-"Continue" = "Ga verder";
-"Confirm Delete" = "Bevestig verwijderen";
-"Are you sure" = "Weet je het zeker dat je deze set wilt verwijderen?";
-"Delete" = "Verwijder";
-"User sets" = "Gebruiker sets";
-"Editor open" = "Editor is open";
-"Save set to continue" = "Bewaar of verwijder wijzigingen in de editor om door te gaan";
-"Will do!" = "Zal ik doen!";
-"Level speed" = "Level snelheid";
 "Hold level" = "Hou level vast";
 "Finish" = "Eindigen";
+"Set complete" = "Gefeliciteerd!... Je hebt het laatste level uitgespeeld.";
+"Count down to" = "Set uitgespeeld! De volgende set start over";
+"Same song" = "Speel dezelfde set nog eens!";
+
+//Interface
+"Will do!" = "Zal ik doen!";
+"Save" = "Bewaar";
+"Cancel" = "Annuleer";
+"Continue" = "Ga verder";
+"Are you sure" = "Weet je het zeker dat je deze set wilt verwijderen?";
+"Delete" = "Verwijder";
+"Confirm Delete" = "Bevestig verwijderen";
 
 //Editor
+"Save set to continue" = "Bewaar of verwijder wijzigingen in de editor om door te gaan";
+"Editor open" = "Editor is open";
 "Save and reopen" = "Bewaar en heropen set om midi file te activeren";
 "One part" = "Velocity is de enige aansturing en kan niet verwijderd worden";
 
@@ -42,5 +46,7 @@
 "Connect audio" = "Koppel de luidspreker aan de iPad";
 "Enough light" = "Zorg voor voldoende licht";
 "Specift distance" = "Specify from where you will be.";
+"Test audio" = "Test audio";
+"Audio is playing" = "Audio is playing";
 
 

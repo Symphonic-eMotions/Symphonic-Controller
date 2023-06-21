@@ -49,36 +49,6 @@ class AudioPlayer: ObservableObject {
         }
     }
     
-    func playTrudy() {
-        print("playTrudy")
-        
-        let sounds = ["Trudy01"]
-        
-        if let randomSound = sounds.randomElement() {
-            print("Random sound selected: \(randomSound)")
-            if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "aiff") {
-                print("Path exists: \(path)")
-                let url = URL(fileURLWithPath: path)
-                print("URL is valid: \(url)")
-                
-                enableBackground()
-                
-                do {
-                    autoSound = try AVAudioPlayer(contentsOf: url)
-                    autoSound?.prepareToPlay()
-                    autoSound?.play()
-                    autoSound?.volume = 0.5
-                } catch {
-                    print("Error: could not play sound: \(error)")
-                }
-            } else {
-                print("Failed to get path for resource.")
-            }
-        } else {
-            print("Failed to select random sound.")
-        }
-    }
-    
     func isAudioPlaying() -> Bool {
         return autoSound?.isPlaying ?? false
     }
