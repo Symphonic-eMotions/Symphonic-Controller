@@ -92,8 +92,28 @@ struct MainView: View {
             .environmentObject(fileController)
         }
         
+        if sessionDisplay == .home {
+            
+            Introduction(
+                setInfoModel: SetInfoModel(
+                    setInfoLocalState: $setInfoLocalState,
+                    setSettings: $viewModel.mainState.setSettings,
+                    setInfoState: SetInfoState(
+                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                    ),
+                    currentInstrumentsSetIsChanged: { instrumentsSet in
+                        viewModel.currentModelInstrumentsSetChanged(
+                            instrumentsSet: instrumentsSet
+                        )
+                    },
+                    conductor: viewModel.conductor
+                ),
+                sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub
+            )
+        }
         //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.demo,.creator,.home].contains(sessionDisplay) {
+        else if [.swiftUI,.setInfo,.pro,.demo,.creator].contains(sessionDisplay) {
             
             NavigationView {
                 

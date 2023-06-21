@@ -53,18 +53,3 @@ struct eMotionApp: App {
         }
     }
 }
-
-
-
-
-//    func speak() {
-//
-//        let trudy = AVSpeechUtterance(string: "Greetings, this message is conveyed by your system administrator. You may be wondering about the reason behind this communication. This necessity arises because the Apple Sampler we are using, only has the capability to reload audio samples when the 'background audio allowed' setting is enabled. When it's not turned on all you get are sinusses for audio output. Due to this setting the application can only be approved by Apple when it hears an ongoing background sound. Therefore, this message is essential for that confirmation process. We apologize for any inconvenience this may cause.")
-//
-//        if let voice = AVSpeechSynthesisVoice(language: "en-AU") {
-//            trudy.voice = voice
-//            trudy.rate = 0.49
-//            trudy.pitchMultiplier = 1.25
-//            autoVoice.speak(trudy)
-//        }
-//    }

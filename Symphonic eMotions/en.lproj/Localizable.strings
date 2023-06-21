@@ -30,5 +30,15 @@
 "Level speed" = "Level speed";
 "Hold level" = "Hold level";
 "Finish" = "Finish";
+
+//Editor
 "Save and reopen" = "Save and reopen set to activate new midi file";
 "One part" = "Velocity is the only controller and yhus connot be removed";
+
+//Introduction
+"Continue" = "Continue";
+"End" = "Finish set up";
+"iPad in stand" = "Put the iPad on a stand";
+"Connect audio" = "Connect the audio speaker to the iPad";
+"Enough light" = "Make sure there is enough light";
+"Specift distance" = "Specify from where you will play Symphonic eMotions.";

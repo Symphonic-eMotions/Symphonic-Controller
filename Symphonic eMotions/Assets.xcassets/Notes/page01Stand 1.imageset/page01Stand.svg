@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1920 1080" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Untitled" vectornator:layerName="Untitled">
+<path d="M826.6 867L1039.8 867C1039.8 867 1072 866.1 1072 834.6C1072 803.1 1085.6 749.3 1085.6 749.3L1042.3 524.9L964.7 524.9L931.2 700.7L816.5 828.1C816.5 828.1 783.7 864.8 826.6 867Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="path"/>
+<path d="M1025.4 490.8L948 490.8L858.5 673.7L1017.5 673.7L1039.8 490.8L1025.4 490.8Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="polygon"/>
+<path d="M1019.5 514.9C1019.5 501.59 1028.59 490.8 1039.8 490.8C1051.01 490.8 1060.1 501.59 1060.1 514.9C1060.1 528.21 1051.01 539 1039.8 539C1028.59 539 1019.5 528.21 1019.5 514.9Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="ellipse"/>
+</g>
+<g id="Laag_4" vectornator:layerName="Laag_4">
+<g opacity="1" vectornator:layerName="g">
+<path d="M829.8 658.5L885.1 658.5L885.1 658.5L885.1 673.7L885.1 673.7L829.8 673.7L829.8 673.7L829.8 658.5L829.8 658.5Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="rect"/>
+<path d="M985 658.5L1040.3 658.5L1040.3 658.5L1040.3 673.7L1040.3 673.7L985 673.7L985 673.7L985 658.5L985 658.5Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="rect"/>
+</g>
+</g>
+</svg>

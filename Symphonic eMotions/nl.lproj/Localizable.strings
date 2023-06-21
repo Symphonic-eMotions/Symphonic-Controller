@@ -30,5 +30,17 @@
 "Level speed" = "Level snelheid";
 "Hold level" = "Hou level vast";
 "Finish" = "Eindigen";
+
+//Editor
 "Save and reopen" = "Bewaar en heropen set om midi file te activeren";
 "One part" = "Velocity is de enige aansturing en kan niet verwijderd worden";
+
+//Introduction
+"Continue" = "Ga verder";
+"End" = "Klaar met opstellen";
+"iPad in stand" = "Plaats de iPad in een standaard";
+"Connect audio" = "Koppel de luidspreker aan de iPad";
+"Enough light" = "Zorg voor voldoende licht";
+"Specift distance" = "Specify from where you will be.";
+
+

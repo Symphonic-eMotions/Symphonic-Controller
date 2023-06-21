@@ -26,6 +26,10 @@ enum SessionDisplay: Hashable, Codable {
     case playListEditor
     case calibrator
     case none
+    case page01
+    case page02
+    case page03
+    case page04
     
     var title: String {
         switch self {
@@ -57,6 +61,14 @@ enum SessionDisplay: Hashable, Codable {
             return "Kalibrator!"
         case .none:
             return "Nothing"
+        case .page01:
+            return "Introduction sheet 1"
+        case .page02:
+            return "Introduction sheet 2"
+        case .page03:
+            return "Introduction sheet 3"
+        case .page04:
+            return "Introduction sheet 4"
         }
     }
 }

@@ -98,8 +98,16 @@ struct SideBarView: View {
                             self.showingAlert = true
                         } else {
                             setInfoModel.tapStopAudioEngine()
-                            changeFileGroupAndSessionDisplay(item)
-                            sessionDisplaySub = (item.setName == "playlists") ? .playlists : .none
+                            changeFileGroupAndSessionDisplay(item)                            
+                            if item.sessionDisplay == .playlists {
+                                sessionDisplaySub = .playlists
+                            }
+                            else if item.sessionDisplay == .home {
+                                sessionDisplaySub = .page01
+                            }
+                            else{
+                                sessionDisplaySub = .none
+                            }
                             setInfoModel.setSettings.currentPlaylist = .none
                         }
                     }) {
@@ -110,7 +118,7 @@ struct SideBarView: View {
                     }
                 }
                 
-//                if sessionDisplay.isIn([.pro, .setInfo, .swiftUI, .creator, .demo]) && sessionDisplaySub.isIn([.none, .setEditor]) {
+                //Show sets within group
                 if [.pro,.setInfo,.swiftUI,.creator,.demo].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
                     ForEach(viewModel.getSetFiles(for: fileGroup)) { setFile in
                         if setFile.fileGroup == fileGroup {
