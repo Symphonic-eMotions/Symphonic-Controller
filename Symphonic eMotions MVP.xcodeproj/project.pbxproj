@@ -76,7 +76,6 @@
 		7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58356292FAE1D000C46FF /* ColorPicker.swift */; };
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
-		7CB7028329D84E1A003399BC /* EditTracksViewORG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */; };
 		7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2555B2A27865900ACA903 /* ChangeView.swift */; };
 		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC8EDCA2A3C42520085C77B /* ExsFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC8EDC92A3C42520085C77B /* ExsFiles.swift */; };
@@ -217,7 +216,6 @@
 		7CB58356292FAE1D000C46FF /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
-		7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTracksViewORG.swift; sourceTree = "<group>"; };
 		7CC2555B2A27865900ACA903 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC8EDC92A3C42520085C77B /* ExsFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExsFiles.swift; sourceTree = "<group>"; };
@@ -373,15 +371,6 @@
 			path = PartFeedbackView;
 			sourceTree = "<group>";
 		};
-		7C7502EA29C07C1600F55CA3 /* EditorOrg */ = {
-			isa = PBXGroup;
-			children = (
-				7CD417FE2A092AD1006831CE /* SetEditor */,
-				7CD417FF2A092AEE006831CE /* TrackEditor */,
-			);
-			path = EditorOrg;
-			sourceTree = "<group>";
-		};
 		7C7A07132A3B0CFB007F7385 /* TrackEditor */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,21 +440,6 @@
 				7CB2B94D2A0CF80300876CCD /* CountDown.swift */,
 			);
 			path = Active;
-			sourceTree = "<group>";
-		};
-		7CD417FE2A092AD1006831CE /* SetEditor */ = {
-			isa = PBXGroup;
-			children = (
-				7CB7028229D84E1A003399BC /* EditTracksViewORG.swift */,
-			);
-			path = SetEditor;
-			sourceTree = "<group>";
-		};
-		7CD417FF2A092AEE006831CE /* TrackEditor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TrackEditor;
 			sourceTree = "<group>";
 		};
 		7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */ = {
@@ -693,7 +667,6 @@
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				7CFA00AB29A75ADC001D8A5D /* SetInfo */,
-				7C7502EA29C07C1600F55CA3 /* EditorOrg */,
 				7CCBF8FC2A38B75B00360E21 /* Editor */,
 				7C3EC2002A1D236F0049E4ED /* Demo */,
 				7CCFE4A72A03DC56008AE3EE /* Active */,
@@ -946,7 +919,6 @@
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */,
-				7CB7028329D84E1A003399BC /* EditTracksViewORG.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
@@ -1120,7 +1092,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproCreator";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacCreator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1162,7 +1134,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproCreator";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacCreator";
 				PRODUCT_NAME = "$(TARGET_NAME)";

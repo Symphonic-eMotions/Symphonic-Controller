@@ -22,6 +22,9 @@ struct SoundSourceView: View {
     @State var soundSource: InstrumentsSet.Track.InstrumentType
     @State private var infoVisibility: [String: Bool] = [:]
     @State var audioFiles: [InstrumentsSet.Track.AudioFile]
+    @State var selectedExsFile: ExsFiles
+    @State var selectedExsFileMemory: ExsFiles
+    @State private var hasChanged = false
     
     //Audio files
     @State var importing = false
@@ -41,6 +44,8 @@ struct SoundSourceView: View {
         _soundSources = soundSources
         _soundSource = State(initialValue: soundSources[trackId].wrappedValue ?? .exsSampler)
         _audioFiles = State(initialValue: currentTrack.audioFiles)
+        _selectedExsFile = State(initialValue: currentTrack.exsFile)
+        _selectedExsFileMemory = State(initialValue: currentTrack.exsFile)
     }
     
     private func toggleInfoVisibility(for key: String) {
@@ -104,16 +109,38 @@ struct SoundSourceView: View {
                         .frame(width: columnWidth, alignment: .leading)
                     
                     let excludedCases: [ExsFiles] = [.trigger]
-                    Picker("Presets", selection: $currentTrack.exsFile) {
+                    Picker("Presets", selection: $selectedExsFile) {
                         ForEach(ExsFiles.allCases.filter { !excludedCases.contains($0) }, id: \.self) { type in
                             Text(type.rawValue.capitalized).tag(type)
                         }
                     }
                     .pickerStyle(.inline)
-                    .frame(width:350, height: 100)
-                    .onChange(of: soundSource) { type in
+                    .frame(width:330, height: 100)
+                    .onChange(of: selectedExsFile) { type in
                         withAnimation {
+                            
+                            hasChanged = (type != selectedExsFileMemory)
+                            
+                            //to file
+                            currentTrack.exsFile = type
                         }
+                    }
+                    
+                    Button(action: {
+                        withAnimation {
+                            selectedExsFile = selectedExsFileMemory 
+                            hasChanged = false
+                        }
+                    }) {
+                        Image(systemName: "arrow.uturn.backward.circle")
+                            .font(.title)
+                            .foregroundColor( hasChanged ? .blue : .gray)
+                    }
+                    .disabled(!hasChanged)
+                    
+                    if hasChanged {
+                        Text("Please save and re-open set")
+                            .foregroundColor(.red)
                     }
                 }
             }
