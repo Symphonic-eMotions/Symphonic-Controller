@@ -53,3 +53,9 @@
 "Distance" = "Distance";
 "Sensitivity" = "Sensitivity";
 "Test set" = "Try it out";
+
+//Resume
+"Resume or start over" = "Start over or continue?";
+"Resume text" = "Would you like to continue or start over and calibrate?";
+"Resume" = "Continue";
+"Opnieuw begeinnen" = "Start all over";

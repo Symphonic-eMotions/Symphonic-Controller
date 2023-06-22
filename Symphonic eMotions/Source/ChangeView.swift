@@ -12,7 +12,12 @@ struct ChangeView: View {
     
     //We need background audio for sampler loading, so we create some background audio!
     @Environment(\.scenePhase) private var scenePhase
+    
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+    
     @StateObject private var audioPlayer = AudioPlayer()
+    @State private var showingAlert = false
     
     var body: some View {
         
@@ -22,14 +27,38 @@ struct ChangeView: View {
             switch newScenePhase {
             case .background:
                 print("App is in background")
-                    audioPlayer.enableBackground()
+                audioPlayer.enableBackground()
             case .inactive:
                 print("App is inactive")
+                
             case .active:
+                
+                print(sessionDisplay)
+                
+//                if sessionDisplay != .home {
+                    showingAlert = true
+//                }
+                
+                
                 print("App is active")
             @unknown default:
-                print("Unknown")
+                print("Unknown scenePhase")
             }
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text(NSLocalizedString("Resume or start over", comment: "")),
+                message: Text(NSLocalizedString("Resume text", comment: "")),
+                primaryButton: .default(Text(NSLocalizedString("Resume", comment: ""))),
+                secondaryButton: .default(Text(NSLocalizedString("Opnieuw beginnen", comment: ""))) {
+                    
+                    //TODO: connect to engine
+                    print("Stop ENGINE and start over!")
+                    
+                    sessionDisplay = .home
+                    sessionDisplaySub = .page01
+                }
+            )
         }
     }
 }

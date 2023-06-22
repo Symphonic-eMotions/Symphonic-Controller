@@ -278,8 +278,10 @@ struct MainView: View {
             }
         }
         
-        ChangeView()
-        
+        ChangeView(
+            sessionDisplay: $sessionDisplay,
+            sessionDisplaySub: $sessionDisplaySub
+        )
     }
 }
 

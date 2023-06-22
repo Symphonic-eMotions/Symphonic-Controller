@@ -240,7 +240,17 @@ struct IntroductionView: View {
                 else if sessionDisplaySub == .page05 {
                     
                     VStack{
+                        
+                        let imageWidth = UIScreen.main.bounds.width * 0.5
+                        let imageHeight = UIScreen.main.bounds.height * 0.5
+                        
+                        Image("demoBlob")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: imageWidth, height: imageHeight, alignment: .center)
+                        
                         Spacer()
+                        
                         HStack {
                             IntroductionSlider(
                                 label: "Distance",

@@ -53,3 +53,9 @@
 "Distance" = "Afstand";
 "Sensitivity" = "Gevoeligheid";
 "Test set" = "Probeer uit";
+
+//Resume
+"Resume or start over" = "Opniew beginnen of doorgaan?";
+"Resume text" = "Wil je opnieuw beginnen met instellen of doorgaan met de huidige sessie?";
+"Resume" = "Doorgaan";
+"Opnieuw beginnen" = "Opnieuw beginnen";
