@@ -95,18 +95,18 @@ struct MainView: View {
         if sessionDisplay == .home {
             
             Introduction(
-                playViewModel: PlayViewModel(
-                    playViewState: PlayViewState(
-                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                        buildSettings: viewModel.mainState.buildSettings,
-                        masterTrackStructure: masterTrackSetting
-                    ),
-                    conductor: viewModel.conductor,
-                    imageDifference: $viewModel.mainState.imageDifference,
-                    leveling: viewModel.leveling,
+                setInfoModel: SetInfoModel(
+                    setInfoLocalState: $setInfoLocalState,
                     setSettings: $viewModel.mainState.setSettings,
-                    partFeedback: viewModel.partFeedback,
-                    partFeedbackState: PartFeedbackState()
+                    setInfoState: SetInfoState(
+                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                    ),
+                    currentInstrumentsSetIsChanged: { instrumentsSet in
+                        viewModel.currentModelInstrumentsSetChanged(
+                            instrumentsSet: instrumentsSet
+                        )
+                    },
+                    conductor: viewModel.conductor
                 ),
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub

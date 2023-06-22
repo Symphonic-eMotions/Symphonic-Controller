@@ -12,8 +12,9 @@ import AVFoundation
 struct eMotionApp: App {
     
     //We need a set loaded into ram and @AppStorage
-    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "SE-set-default.json"
+//    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
+    let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
+    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
         

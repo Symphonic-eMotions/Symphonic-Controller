@@ -95,6 +95,10 @@ final class Conductor {
     //The main instrument set structure. A Musical set is loaded into this struct
     internal var set: InstrumentsSet
     
+    //Timer for introduction repeater:
+    var timer: Timer?
+    var lastNoteNumber: Int?
+    
     //MARK: Init
     init(set: InstrumentsSet) {
         
@@ -392,6 +396,52 @@ final class Conductor {
                 print(noteOff)
                 
                 trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+            }
+        }
+    }
+    
+    public func playNoteNumbersIntroduction(
+        trackId:String,
+        soundSource: InstrumentsSet.Track.InstrumentType,
+        noteNumbers: [Int],
+        noteOn:Bool
+    ){
+        if !noteOn {
+            playEngineUIEffect()
+            
+            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
+            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
+            
+            
+            if let noteNumber = noteNumbers.randomElement() {
+                self.lastNoteNumber = noteNumber
+                let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
+                self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+            }
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 2.8, repeats: true) { _ in
+                //Never play same note twice
+                var newNoteNumber: Int? = nil
+                repeat {
+                    newNoteNumber = noteNumbers.randomElement()
+                } while newNoteNumber == self.lastNoteNumber
+                
+                if let noteNumber = newNoteNumber {
+                    self.lastNoteNumber = noteNumber
+                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
+                    self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+                }
+            }
+        } else {
+            
+            timer?.invalidate()
+            timer = nil
+            
+            for noteNumber in noteNumbers {
+                
+                let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
+                
+                trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             }
         }
     }

@@ -186,7 +186,7 @@
 		7C6A34182840F609006F2E95 /* BandPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandPassFilterEffect.swift; sourceTree = "<group>"; };
 		7C6A341A28425F01006F2E95 /* PartFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedback.swift; sourceTree = "<group>"; };
 		7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackView.swift; sourceTree = "<group>"; };
-		7C6A8CEF2A4303280056BED3 /* Introduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
+		7C6A8CEF2A4303280056BED3 /* Introduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C6C11FC2A03EF3E006F8CCB /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sets; path = Source/Sets; sourceTree = "<group>"; };
 		7C6C11FD2A03EF3F006F8CCB /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Source/Sounds; sourceTree = "<group>"; };
 		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
