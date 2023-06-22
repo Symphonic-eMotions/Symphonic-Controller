@@ -1,5 +1,5 @@
 //
-//  Introduction.swift
+//  IntroductionView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 21/06/2023.
@@ -7,62 +7,14 @@
 
 import SwiftUI
 
-class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
-    @Published var image: CIImage? = nil
-    let frameExtractor: FrameExtractor
-    
-    init() {
-        self.frameExtractor = FrameExtractor.shared
-        self.frameExtractor.delegate = self
-    }
-    
-    func captured(image: CIImage) {
-        DispatchQueue.main.async {
-            self.image = image
-        }
-    }
-    
-    func calculateAvgWhiteValue(_ image: CIImage) -> Double {
-        // Convert image to grayscale
-        let grayImage = image.applyingFilter(CIFilter.colorMonochrome().name , parameters: [
-            kCIInputImageKey: image,
-            kCIInputIntensityKey: 1.0,
-            "inputColor": CIColor(red: 0.5, green: 0.5, blue: 0.5)
-        ])
-        // Calculate average white value
-        if let cgImage = CIContext().createCGImage(grayImage, from: grayImage.extent) {
-            return self.calculateAvgWhiteValue(cgImage)
-        }
-        return 0.0
-    }
-    
-    private func calculateAvgWhiteValue(_ image: CGImage) -> Double {
-        let pixelData = image.dataProvider?.data
-        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-        
-        var sum: UInt64 = 0
-        let height = image.height
-        let width = image.width
-        let bytesPerRow = image.bytesPerRow
-        
-        for y in 0 ..< height {
-            let i = y * bytesPerRow
-            for x in 0 ..< width {
-                let index = i + x * 4
-                let pixel: UInt32 = UInt32(data[index])
-                sum += UInt64(pixel)
-            }
-        }
-        let totalPixels = width * height
-        let avgValue = Double(sum) / Double(totalPixels)
-        return avgValue
-    }
-}
-
-struct Introduction: View {
+struct IntroductionView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    
+    //Cannot save in Float
+    @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
+    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
+
+
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -242,31 +194,84 @@ struct Introduction: View {
                     
                     Spacer()
                 }
-                
+                //Afstand
                 else if sessionDisplaySub == .page04 {
                     
-                    IntroductionImage(
-                        imageName: "page04",
-                        customWidth: 1.0,
-                        customHeight: 0.8
-                    )
+                    ZStack(alignment: .topLeading){
+                        
+                        VStack{
+                            IntroductionImage(
+                                imageName: "page04",
+                                customWidth: 1.0,
+                                customHeight: 0.8
+                            )
+                            
+                            Spacer()
+                            
+                            IntroductionTitle(
+                                setInfoModel: setInfoModel,
+                                sessionDisplay: $sessionDisplay,
+                                sessionDisplaySub: $sessionDisplaySub,
+                                localizedString: "Specift distance",
+                                nextPage: .page05,
+                                introductionNoteNumbers: []
+                            )
+                            
+                            Spacer()
+                        }
+                        
+                        GeometryReader { geometry in
+                            IntroductionSlider(
+                                label: "Distance",
+                                value: $videoFeedback,
+                                minValue: 0,
+                                maxValue: 1,
+                                //This is the lenght of the slider
+                                withPercentage: 0.55
+                            )
+                            //This is the roo from the top of the screen
+                            .padding(.top, geometry.size.height * 0.6)
+                            //And from the left
+                            .padding(.leading, geometry.size.width * 0.1)
+                        }
+                    }
+                }
+                //Test
+                else if sessionDisplaySub == .page05 {
                     
-                    Spacer()
-                    
-                    Text("Set feedback")
-                    
-                    Spacer()
-                    
-                    IntroductionTitle(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
-                        localizedString: "Specift distance",
-                        nextPage: .none,
-                        introductionNoteNumbers: []
-                    )
-                    
-                    Spacer()
+                    VStack{
+                        Spacer()
+                        HStack {
+                            IntroductionSlider(
+                                label: "Distance",
+                                value: $videoFeedback,
+                                minValue: 0,
+                                maxValue: 1,
+                                //This is the lenght of the slider
+                                withPercentage: 0.8
+                            )
+                            IntroductionSlider(
+                                label: "Sensitivity",
+                                value: $sensitivity,
+                                minValue: 0,
+                                maxValue: 1,
+                                //This is the lenght of the slider
+                                withPercentage: 0.8
+                            )
+                        }
+                        .padding(.bottom, 95)
+                        .padding(.leading, 50)
+                        
+                        IntroductionTitle(
+                            setInfoModel: setInfoModel,
+                            sessionDisplay: $sessionDisplay,
+                            sessionDisplaySub: $sessionDisplaySub,
+                            localizedString: "Test set",
+                            nextPage: .demo,
+                            introductionNoteNumbers: []
+                        )
+                        .padding(.bottom)
+                    }
                 }
             }
             .onAppear{
@@ -281,28 +286,17 @@ struct Introduction: View {
             
             //Back button
             if sessionDisplaySub != .page01 {
-                
                 ZStack {
-                    
                     Image(systemName: "arrowshape.backward")
                     .font(.system(size: 40))
                     .foregroundColor(.blue)
-                    
-//                    Rectangle()
-//                        .frame(width: 200, height: 60)
-//                        .foregroundColor(.clear)
-//                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-//                        .background( Color.accentColor )
-//
-//                    Text(NSLocalizedString("Back", comment: ""))
-//                        .font(.system(size: 30))
-//                        .padding()
                 }
                 .padding(.top, 20)
                 .padding(.leading, 20)
                 .onTapGesture {
                     withAnimation {
-                        let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]
+                        //Paginering
+                        let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03,.page05:.page04]
                         if let prevPage = pages[sessionDisplaySub] {
                             sessionDisplaySub = prevPage
                         }
@@ -310,85 +304,5 @@ struct Introduction: View {
                 }
             }
         }
-    }
-}
-
-struct IntroductionImage: View {
-    
-    public var imageName: String
-    public var customWidth: Double
-    public var customHeight: Double
-    
-    var body: some View {
-        let imageWidth = UIScreen.main.bounds.width * customWidth
-        let imageHeight = UIScreen.main.bounds.height * customHeight
-        
-        HStack {
-            Spacer()
-            
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: imageWidth, height: imageHeight, alignment: .center)
-            
-            Spacer()
-        }
-        .padding(.top, 40)
-    }
-}
-
-struct IntroductionTitle: View {
-    @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    public var localizedString: String
-    public var nextPage: SessionDisplay
-    var introductionNoteNumbers: [Int]
-    
-    var body: some View {
-        
-        HStack{
-            
-            Spacer()
-            
-            Text(NSLocalizedString(localizedString, comment: ""))
-                .font(.system(size: 40))
-                .padding()
-            
-            ZStack {
-                Rectangle()
-                    .frame(width: 200, height: 60)
-                    .foregroundColor(.clear)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                    .background( Color.accentColor )
-                
-                Text(NSLocalizedString("Continue", comment: ""))
-                    .font(.system(size: 30))
-                    .padding()
-            }
-            .onTapGesture {
-                withAnimation {
-                    //Shit down audio test notes
-                    if nextPage == .page03 {
-                        setInfoModel.conductor.playNoteNumbersIntroduction(
-                            trackId: "realLife",
-                            soundSource: .audioBuffer,
-                            noteNumbers: introductionNoteNumbers,
-                            noteOn: true
-                        )
-                    }
-                    
-                    //At the end of the introduction go to the demo
-                    if nextPage == .none {
-                        sessionDisplay = .demo
-                    }
-                    else {
-                        sessionDisplaySub = nextPage
-                    }
-                }
-            }
-            Spacer()
-        }
-        .padding(.bottom)
     }
 }

@@ -94,7 +94,7 @@ struct MainView: View {
         
         if sessionDisplay == .home {
             
-            Introduction(
+            IntroductionView(
                 setInfoModel: SetInfoModel(
                     setInfoLocalState: $setInfoLocalState,
                     setSettings: $viewModel.mainState.setSettings,

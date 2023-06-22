@@ -30,6 +30,7 @@ enum SessionDisplay: Hashable, Codable {
     case page02
     case page03
     case page04
+    case page05
     
     var title: String {
         switch self {
@@ -69,6 +70,8 @@ enum SessionDisplay: Hashable, Codable {
             return "Introduction sheet 3"
         case .page04:
             return "Introduction sheet 4"
+        case .page05:
+            return "Introduction sheet 5"
         }
     }
 }

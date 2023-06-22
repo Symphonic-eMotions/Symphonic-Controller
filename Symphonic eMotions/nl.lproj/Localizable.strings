@@ -48,6 +48,8 @@
 "Enough light" = "Zorg voor voldoende licht";
 "Specift distance" = "Geef aan hoe ver je wilt staan";
 "Test audio" = "Test audio";
-"Audio is playing" = "Audio is playing";
+"Audio is playing" = "Geluid speelt af";
 "Text light" = "Test licht";
-
+"Distance" = "Afstand";
+"Sensitivity" = "Gevoeligheid";
+"Test set" = "Probeer uit";

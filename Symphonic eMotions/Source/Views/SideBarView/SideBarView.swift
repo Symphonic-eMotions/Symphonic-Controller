@@ -94,17 +94,23 @@ struct SideBarView: View {
             List {
                 ForEach(sidebarItems, id: \.setName) { item in
                     Button(action: {
+                        //Editor open?
                         if [.setEditor, .playListEditor].contains(sessionDisplaySub) {
                             self.showingAlert = true
                         } else {
+                            //Stop audio
                             setInfoModel.tapStopAudioEngine()
-                            changeFileGroupAndSessionDisplay(item)                            
+                            //Let the sysem know what files to show
+                            changeFileGroupAndSessionDisplay(item)
+                            //Playlist and sub
                             if item.sessionDisplay == .playlists {
                                 sessionDisplaySub = .playlists
                             }
+                            //Home and sub
                             else if item.sessionDisplay == .home {
                                 sessionDisplaySub = .page01
                             }
+                            //Default no sub
                             else{
                                 sessionDisplaySub = .none
                             }

@@ -25,8 +25,8 @@ struct eMotionApp: App {
         isMasterTrack: false
     )
     
-    @State public var sessionDisplay: SessionDisplay = .pro
-    @State public var sessionDisplaySub: SessionDisplay = .demo
+    @State public var sessionDisplay: SessionDisplay = .home
+    @State public var sessionDisplaySub: SessionDisplay = .page01
     
     var body: some Scene {
         WindowGroup {

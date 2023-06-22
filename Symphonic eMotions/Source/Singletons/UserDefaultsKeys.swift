@@ -13,4 +13,5 @@ struct UserDefaultsKeys {
     static let sensitivity = "sensitivity"
     static let persistance = "persistance"
     static let tempo = "tempo"
+    static let videoFeedback = "videoFeedback"
 }
