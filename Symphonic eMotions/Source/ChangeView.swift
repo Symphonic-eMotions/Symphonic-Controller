@@ -36,7 +36,7 @@ struct ChangeView: View {
                 print(sessionDisplay)
                 
 //                if sessionDisplay != .home {
-                    showingAlert = true
+//                    showingAlert = true
 //                }
                 
                 
@@ -45,22 +45,22 @@ struct ChangeView: View {
                 print("Unknown scenePhase")
             }
         }
-        .alert(isPresented: $showingAlert) {
-            Alert(
-                title: Text(NSLocalizedString("Resume or start over", comment: "")),
-                message: Text(NSLocalizedString("Resume text", comment: "")),
-                primaryButton: .default(Text(NSLocalizedString("Resume", comment: ""))),
-                secondaryButton: .default(Text(NSLocalizedString("Opnieuw beginnen", comment: ""))) {
-                    
-                    //TODO: connect to engine
-                    print("Stop ENGINE and start over!")
-                    
-                    sessionDisplay = .home
-                    sessionDisplaySub = .page01
-                }
-            )
-        }
-    }
+//        .alert(isPresented: $showingAlert) {
+//            Alert(
+//                title: Text(NSLocalizedString("Resume or start over", comment: "")),
+//                message: Text(NSLocalizedString("Resume text", comment: "")),
+//                primaryButton: .default(Text(NSLocalizedString("Resume", comment: ""))),
+//                secondaryButton: .default(Text(NSLocalizedString("Opnieuw beginnen", comment: ""))) {
+//                    
+//                    //TODO: connect to engine
+//                    print("Stop ENGINE and start over!")
+//                    
+//                    sessionDisplay = .home
+//                    sessionDisplaySub = .page01
+//                }
+//            )
+//        }
+//    }
 }
 
 class AudioPlayer: ObservableObject {

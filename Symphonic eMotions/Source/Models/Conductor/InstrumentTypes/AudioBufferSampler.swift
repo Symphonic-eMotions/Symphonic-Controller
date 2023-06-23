@@ -17,24 +17,36 @@ extension Conductor {
         currentSetLevel: Double,
         samplePath: String) -> MIDISampler? {
         
+        //Get audioFiles config
         guard let audioFiles = track.audioFiles else {
             print("No audio files for track id: \(track.id)")
             return nil
         }
     
-        
+        //Get ready for user files
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("Document directory not found")
             return nil
         }
         
+        //Store files in RAM
         var avAudioFiles = [AVAudioFile]()
         
+        //TODO: Solve for looping stems
+        //Create midiSequence in real time based on given midinumber
         var lengthInBeats: Double = 1
+        
         for audioFile in audioFiles {
             
+            //Load System file
+            if track.audioFiles
+            
+            //Load User file
             let audioFileURL = documentDirectory.appendingPathComponent("\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)")
             
+            
+            
+            //Get the longest length in beat
             if audioFile.lengthInBeats > lengthInBeats {
                 lengthInBeats = audioFile.lengthInBeats
             }
