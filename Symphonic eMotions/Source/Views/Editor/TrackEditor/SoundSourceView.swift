@@ -238,7 +238,7 @@ struct SoundSourceView: View {
                             // Create a new AudioFile object
                             let midiNote: UInt8 = 60  // Replace with your logic to determine midiNote
                             let lengthInBeats: Double = 4.0  // Replace with your logic to determine lengthInBeats
-                            let newAudioFile = InstrumentsSet.Track.AudioFile(fileName: fileName, fileExtension: fileExtension, midiNote: midiNote, lengthInBeats: lengthInBeats
+                            let newAudioFile = InstrumentsSet.Track.AudioFile(fileName: fileName, fileExtension: fileExtension, midiNote: midiNote, lengthInBeats: lengthInBeats, source: .user
                             )
                             
                             setInfoModel.setSettings.tracks[trackId]?.audioFiles.append(newAudioFile)

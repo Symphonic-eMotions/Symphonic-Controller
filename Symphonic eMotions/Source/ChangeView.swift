@@ -60,7 +60,7 @@ struct ChangeView: View {
 //                }
 //            )
 //        }
-//    }
+    }
 }
 
 class AudioPlayer: ObservableObject {

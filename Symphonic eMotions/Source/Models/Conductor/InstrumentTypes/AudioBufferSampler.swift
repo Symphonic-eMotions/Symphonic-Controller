@@ -35,16 +35,25 @@ extension Conductor {
         //TODO: Solve for looping stems
         //Create midiSequence in real time based on given midinumber
         var lengthInBeats: Double = 1
-        
+            
         for audioFile in audioFiles {
             
+            var audioFileURL = URL("noPath")
+            
             //Load System file
-            if track.audioFiles
-            
-            //Load User file
-            let audioFileURL = documentDirectory.appendingPathComponent("\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)")
-            
-            
+            if audioFile.source == .bundle {
+                audioFileURL = Bundle.main.url(
+                    forResource: audioFile.fileName,
+                    withExtension: audioFile.fileExtension,
+                    subdirectory: "Samples/\(samplePath)"
+                ) ?? URL("errorFileName")
+                
+            } else {
+                //Load User file
+                audioFileURL = documentDirectory.appendingPathComponent(
+                    "\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)"
+                )
+            }
             
             //Get the longest length in beat
             if audioFile.lengthInBeats > lengthInBeats {
@@ -64,7 +73,7 @@ extension Conductor {
         for audioFile in audioFiles {
             sequencer.tracks.first?.add(
                 noteNumber: audioFile.midiNote,
-                velocity: 120,
+                velocity: 127,
                 position: Duration(beats: 0),
                 duration: Duration(beats: (audioFile.lengthInBeats - 0.0001))
             )
