@@ -21,8 +21,12 @@ struct IntroductionView: View {
     
     @ObservedObject var frameExtractorViewModel = FrameExtractorViewModel()
     
-    @State var avgWhiteValue: Double = 0
-    @State var whiteTestResult: String = "? %"
+    @State private var whiteTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
+    @State var averageBrightness: Double = 0
+    @State var averageBrightnessResult: String = ""
+    @State var image: UIImage = UIImage()
+    @State var showPreview: Bool = false
+    
     @State private var testSoundPlaying: Bool = false
     internal var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
     
@@ -133,52 +137,55 @@ struct IntroductionView: View {
                     
                     HStack{
                         
-                        //Test licht
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 220, height: 60)
-                                .foregroundColor(.clear)
-                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                .background( Color.accentColor )
-                            
-                            Text( NSLocalizedString("Text light", comment: ""))
-                                .font(.system(size: 30))
-                                .padding()
-                        }
-                        .onTapGesture {
-                            //Do white average calculation here
-                            self.avgWhiteValue = self.frameExtractorViewModel.calculateAvgWhiteValue(self.frameExtractorViewModel.image ?? CIImage())
-                            whiteTestResult = "\(Int(avgWhiteValue/2.55))%"
-                            
-                            print("Connect to sensitivity")
-                            
-                        }
-                        .padding()
-                        
                         HStack {
-                            Rectangle()
-                                .fill(Color.black)
-                                .frame(width: 100, height: 100)
-                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            
                             ZStack{
                                 Rectangle()
                                     .fill(Color(
-                                        red: avgWhiteValue / 255.0,
-                                        green: avgWhiteValue / 255.0,
-                                        blue: avgWhiteValue / 255.0
+                                        red: averageBrightness / 255.0,
+                                        green: averageBrightness / 255.0,
+                                        blue: averageBrightness / 255.0
                                     ))
                                     .frame(width: 100, height: 100)
-                                    .border(Color.blue, width: 2)
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                Text(whiteTestResult)
+                                Text(averageBrightnessResult)
                                     .font(.system(size: 30))
                             }
-                            Rectangle()
-                                .fill(Color.white)
+                            .padding()
+                            .onTapGesture {
+                                withAnimation{
+                                    showPreview.toggle()
+                                }
+                            }
+                            
+                            // Add this Image view for the preview
+                            if showPreview {
+                                Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .frame(width: 100, height: 100)
-                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                .padding()
+                            }
                         }
-                        .padding()
+                        .onReceive(whiteTimer) { _ in
+                            
+                            //The image to analyse
+                            let ciImage = self.frameExtractorViewModel.image ?? CIImage()
+                            
+                            //Do white average calculation here
+                            self.averageBrightness = self.frameExtractorViewModel.calculateAverageBrightness(
+                                ciImage: ciImage
+                            )
+                            averageBrightnessResult = "\(Int(averageBrightness/2.55))%"
+                            
+                            // Convert CIImage to UIImage for preview
+                            let context = CIContext(options: nil)
+                            if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
+                                self.image = UIImage(cgImage: cgImage)
+                            }
+                            
+                            print("Connect or set ready for sensitivity")
+                        }
                     }
                     
                     Spacer()

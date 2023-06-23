@@ -26,63 +26,49 @@ struct VolumeButtonsView: View {
 
     var body: some View {
 
-//        GeometryReader { geometry in
-            VStack {
+        VStack {
+            
+            HStack(spacing: 20) {
                 
-                HStack(spacing: 20) {
+                ZStack {
+                    Rectangle()
+                        .frame(width: 90, height: 90)
+                        .foregroundColor(.clear)
+                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                        .background( Color.accentColor )
                     
-                    
-                    ZStack {
-                        Rectangle()
-                            .frame(width: 90, height: 90)
-                            .foregroundColor(.clear)
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .background( Color.accentColor )
-                        
-                        Button(action: {
-                            self.decreaseVolume()
-                        }) {
-                            Image(systemName: "speaker.minus.fill")
-                                .font(.system(size: 50))
-                                .foregroundColor(.white)
-                        }
+                    Button(action: {
+                        self.decreaseVolume()
+                    }) {
+                        Image(systemName: "speaker.minus.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.white)
                     }
-                    
-                    ZStack {
-                        Rectangle()
-                            .frame(width: 90, height: 90)
-                            .foregroundColor(.clear)
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .background( Color.accentColor )
-                        
-                        Button(action: {
-                            self.increaseVolume()
-                        }) {
-                            Image(systemName: "speaker.plus.fill")
-                                .font(.system(size: 50))
-                                .foregroundColor(.white)
-                        }
-                    }
-                
-                    SpeakerView(
-                        sliderValue: $sliderValue
-                    )
-                    .padding(.leading, 90)
-                    .frame(width: 90, height: 90)
-                    
                 }
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: 90, height: 90)
+                        .foregroundColor(.clear)
+                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                        .background( Color.accentColor )
                     
-//                SpeakerView(
-//                    sliderValue: $sliderValue
-//                )
-//                .offset(
-//                    x: UIScreen.main.bounds.width * 0.80,
-//                    y: UIScreen.main.bounds.height * 0.35
-//                )
+                    Button(action: {
+                        self.increaseVolume()
+                    }) {
+                        Image(systemName: "speaker.plus.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.white)
+                    }
+                }
+            
+                SpeakerView(
+                    sliderValue: $sliderValue
+                )
+                .padding(.leading, 90)
+                .frame(width: 90, height: 90)
             }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            .border(.red)
-//        }
+        }
     }
 
     private func increaseVolume() {
