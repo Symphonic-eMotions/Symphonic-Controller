@@ -21,7 +21,10 @@ struct IntroductionView: View {
     
     @ObservedObject var frameExtractorViewModel = FrameExtractorViewModel()
     
-    @State private var whiteTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
+//    @State private var whiteTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
+    @State private var whiteTimer: Timer? = nil
+
+    
     @State var averageBrightness: Double = 0
     @State var averageBrightnessResult: String = ""
     @State var image: UIImage = UIImage()
@@ -167,24 +170,28 @@ struct IntroductionView: View {
                                 .padding()
                             }
                         }
-                        .onReceive(whiteTimer) { _ in
-                            
-                            //The image to analyse
-                            let ciImage = self.frameExtractorViewModel.image ?? CIImage()
-                            
-                            //Do white average calculation here
-                            self.averageBrightness = self.frameExtractorViewModel.calculateAverageBrightness(
-                                ciImage: ciImage
-                            )
-                            averageBrightnessResult = "\(Int(averageBrightness/2.55))%"
-                            
-                            // Convert CIImage to UIImage for preview
-                            let context = CIContext(options: nil)
-                            if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
-                                self.image = UIImage(cgImage: cgImage)
+                        .onAppear {
+                            self.whiteTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+                                //The image to analyse
+                                let ciImage = self.frameExtractorViewModel.image ?? CIImage()
+
+                                //Do white average calculation here
+                                self.averageBrightness = self.frameExtractorViewModel.calculateAverageBrightness(
+                                    ciImage: ciImage
+                                )
+                                averageBrightnessResult = "\(Int(averageBrightness/2.55))%"
+
+                                // Convert CIImage to UIImage for preview
+                                let context = CIContext(options: nil)
+                                if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
+                                    self.image = UIImage(cgImage: cgImage)
+                                }
+                                print("Connect or set ready for sensitivity")
                             }
-                            
-                            print("Connect or set ready for sensitivity")
+                        }
+                        .onDisappear {
+                            self.whiteTimer?.invalidate()
+                            self.whiteTimer = nil
                         }
                     }
                     

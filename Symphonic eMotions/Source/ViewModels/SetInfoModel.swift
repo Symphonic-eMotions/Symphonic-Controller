@@ -9,8 +9,6 @@ import SwiftUI
 import OrderedCollections
 
 struct SetInfoState {
-
-//    let setCollections: Sets
     var currentInstrumentsSet: InstrumentsSet
 }
 
