@@ -26,26 +26,63 @@ struct VolumeButtonsView: View {
 
     var body: some View {
 
-            HStack {
-                Button(action: {
-                    self.decreaseVolume()
-                }) {
-                    Image(systemName: "speaker.minus.fill")
-                    .font(.system(size: 50))
-                }
-
-                Button(action: {
-                    self.increaseVolume()
-                }) {
-                    Image(systemName: "speaker.plus.fill")
-                    .font(.system(size: 50))
-                }
+//        GeometryReader { geometry in
+            VStack {
                 
-                SpeakerView(
-                    sliderValue: $sliderValue
-                )
-                .padding()
+                HStack(spacing: 20) {
+                    
+                    
+                    ZStack {
+                        Rectangle()
+                            .frame(width: 90, height: 90)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( Color.accentColor )
+                        
+                        Button(action: {
+                            self.decreaseVolume()
+                        }) {
+                            Image(systemName: "speaker.minus.fill")
+                                .font(.system(size: 50))
+                                .foregroundColor(.white)
+                        }
+                    }
+                    
+                    ZStack {
+                        Rectangle()
+                            .frame(width: 90, height: 90)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( Color.accentColor )
+                        
+                        Button(action: {
+                            self.increaseVolume()
+                        }) {
+                            Image(systemName: "speaker.plus.fill")
+                                .font(.system(size: 50))
+                                .foregroundColor(.white)
+                        }
+                    }
+                
+                    SpeakerView(
+                        sliderValue: $sliderValue
+                    )
+                    .padding(.leading, 90)
+                    .frame(width: 90, height: 90)
+                    
+                }
+                    
+//                SpeakerView(
+//                    sliderValue: $sliderValue
+//                )
+//                .offset(
+//                    x: UIScreen.main.bounds.width * 0.80,
+//                    y: UIScreen.main.bounds.height * 0.35
+//                )
             }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            .border(.red)
+//        }
     }
 
     private func increaseVolume() {

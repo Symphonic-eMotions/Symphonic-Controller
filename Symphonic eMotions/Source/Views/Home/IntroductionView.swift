@@ -102,11 +102,6 @@ struct IntroductionView: View {
                         //Volume
                         VStack(alignment: .leading){
                             
-//                            VolumeSlider()
-//                                .frame(width: UIScreen.main.bounds.width * 0.6, height: 10)
-//                                .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-//                                .zIndex(101)
-                            
                             VolumeButtonsView()
                                 .padding(.top)
                             
