@@ -10,7 +10,6 @@ import SwiftUI
 struct IntroductionView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    //Cannot save in Float
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
 
@@ -118,48 +117,6 @@ struct IntroductionView: View {
                     Spacer()
                 }
                 
-                //Afstand
-                else if sessionDisplaySub == .page04 {
-                    
-                    ZStack(alignment: .topLeading){
-                        
-                        VStack{
-                            IntroductionImage(
-                                imageName: "page04",
-                                customWidth: 1.0,
-                                customHeight: 0.8
-                            )
-                            
-                            Spacer()
-                            
-                            IntroductionTitle(
-                                setInfoModel: setInfoModel,
-                                sessionDisplay: $sessionDisplay,
-                                sessionDisplaySub: $sessionDisplaySub,
-                                localizedString: "Specift distance",
-                                nextPage: .page05,
-                                introductionNoteNumbers: []
-                            )
-                            
-                            Spacer()
-                        }
-                        
-                        GeometryReader { geometry in
-                            IntroductionSlider(
-                                label: "Distance",
-                                value: $videoFeedback,
-                                minValue: 0,
-                                maxValue: 1,
-                                //This is the lenght of the slider
-                                withPercentage: 0.55
-                            )
-                            //This is the roo from the top of the screen
-                            .padding(.top, geometry.size.height * 0.6)
-                            //And from the left
-                            .padding(.leading, geometry.size.width * 0.1)
-                        }
-                    }
-                }
                 //Test
                 else if sessionDisplaySub == .page05 {
                     
@@ -207,21 +164,21 @@ struct IntroductionView: View {
                         .padding(.bottom)
                         .onTapGesture {
                             
-                            setInfoModel.tapControlConductor()
+                            setInfoModel.tapToggleConductor()
                             
                         }
                     }
                 }
             }
-            .onAppear{
-                //Load introduction set
-                if currentUrl != "Introductie.json" {
-                    //Load set
-                    setInfoModel.tapSetRow(filePath: "Introductie.json")
-                    //Let @AppStorage know what is current
-                    currentUrl = "Introductie.json"
-                }
-            }
+//            .onAppear{
+//                //Load introduction set
+//                if currentUrl != "Introductie.json" {
+//                    //Load set
+//                    setInfoModel.tapSetRow(filePath: "Introductie.json")
+//                    //Let @AppStorage know what is current
+//                    currentUrl = "Introductie.json"
+//                }
+//            }
             
             //Back button
             if sessionDisplaySub != .page01 {

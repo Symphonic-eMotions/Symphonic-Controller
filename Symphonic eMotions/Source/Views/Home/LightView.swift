@@ -81,7 +81,10 @@ struct LightView: View {
                             }
                         }
                         .onAppear {
-                            self.whiteTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+                            self.whiteTimer = Timer.scheduledTimer(
+                                withTimeInterval: 0.04167,
+                                repeats: true
+                            ) { timer in
                                 //The image to analyse
                                 let ciImage = self.frameExtractorViewModel.image ?? CIImage()
 

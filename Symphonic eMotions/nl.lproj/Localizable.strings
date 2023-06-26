@@ -46,13 +46,14 @@
 "iPad in stand" = "Plaats de iPad in een standaard";
 "Connect audio" = "Koppel de luidspreker aan de iPad";
 "Enough light" = "Zorg voor voldoende licht";
-"Specift distance" = "Geef aan hoe ver je wilt staan";
+"Movement amount" = "Geef je bewegingsvrijheid aan";
 "Test audio" = "Test geluid";
 "Stop audio" = "Stop geluid";
 "Text light" = "Test licht";
 "Distance" = "Afstand";
 "Sensitivity" = "Gevoeligheid";
 "Test set" = "Probeer uit";
+"Stop set" = "Stop";
 
 //Resume
 "Resume or start over" = "Opniew beginnen of doorgaan?";

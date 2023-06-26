@@ -46,13 +46,14 @@
 "iPad in stand" = "Put the iPad on a stand";
 "Connect audio" = "Connect the audio speaker to the iPad";
 "Enough light" = "Make sure there is enough light";
-"Specift distance" = "Specify your distance to the iPad";
+"Movement amount" = "Specify your freedom of movement";
 "Test audio" = "Test audio";
 "Stop audio" = "Stop audio";
 "Text light" = "Test light";
 "Distance" = "Distance";
 "Sensitivity" = "Sensitivity";
 "Test set" = "Try it out";
+"Stop set" = "Stop playing";
 
 //Resume
 "Resume or start over" = "Start over or continue?";

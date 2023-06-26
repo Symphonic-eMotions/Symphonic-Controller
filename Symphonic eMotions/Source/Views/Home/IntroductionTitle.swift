@@ -25,22 +25,22 @@ struct IntroductionTitle: View {
             
             Spacer()
             
-            Text(NSLocalizedString(localizedString, comment: ""))
-                .font(.system(size: 40))
-                .padding()
-            
-            ZStack {
-                Rectangle()
-                    .frame(width: 200, height: 60)
-                    .foregroundColor(.clear)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                    .background( Color.accentColor )
-                
-                Text(NSLocalizedString("Continue", comment: ""))
-                    .font(.system(size: 30))
+                Text(NSLocalizedString(localizedString, comment: ""))
+                    .font(.system(size: 40))
                     .padding()
-            }
-            .onTapGesture {
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: 200, height: 60)
+                        .foregroundColor(.clear)
+                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                        .background( Color.accentColor )
+                    
+                    Text(NSLocalizedString("Continue", comment: ""))
+                        .font(.system(size: 30))
+                        .padding()
+                }
+                .onTapGesture {
                 withAnimation {
                     //Shut down audio test notes
                     if nextPage == .page03 {

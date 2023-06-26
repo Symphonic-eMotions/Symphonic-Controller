@@ -10,7 +10,7 @@ import SwiftUI
 import AVFoundation
 
 struct MainView: View {
-        
+    
     @ObservedObject var viewModel: MainViewModel
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
@@ -66,7 +66,7 @@ struct MainView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )
-//            .onAppear(perform: checkCameraAuthorization)
+            //            .onAppear(perform: checkCameraAuthorization)
             .padding(.top, 20)
         }
         
@@ -115,6 +115,26 @@ struct MainView: View {
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
+                )
+            }
+            else if sessionDisplaySub == .page04 {
+                MovementView( setInfoModel: SetInfoModel(
+                    setInfoLocalState: $setInfoLocalState,
+                    setSettings: $viewModel.mainState.setSettings,
+                    imageDifference: $viewModel.mainState.imageDifference,
+                    setInfoState: SetInfoState(
+                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                    ),
+                    currentInstrumentsSetIsChanged: { instrumentsSet in
+                        viewModel.currentModelInstrumentsSetChanged(
+                            instrumentsSet: instrumentsSet
+                        )
+                    },
+                    conductor: viewModel.conductor,
+                    leveling: viewModel.leveling
+                ),
+                              sessionDisplay: $sessionDisplay,
+                              sessionDisplaySub: $sessionDisplaySub
                 )
             }
             else {
@@ -170,7 +190,6 @@ struct MainView: View {
                 if sessionDisplay == .swiftUI {
                     
                     ZStack{
-                        
                         PlayView(
                             playViewModel: PlayViewModel(
                                 playViewState: PlayViewState(

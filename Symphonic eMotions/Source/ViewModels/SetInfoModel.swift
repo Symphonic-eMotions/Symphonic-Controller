@@ -50,6 +50,23 @@ final class SetInfoModel: ObservableObject {
         startObservingData()
     }
     
+    func movementSetting(id: Int) -> Double{
+        
+        let feedbackPresets: [Int:Double] = [
+            0: 0.7,
+            1: 0.5,
+            2: 0.3,
+            3: 0.1
+        ]
+        if let presetValue = feedbackPresets[id] {
+            print("Set feedback based on table \(id) is feedback \(feedbackPresets)")
+            return presetValue
+        }
+        else{
+            return 0.5
+        }
+    }
+    
     func startObservingData() {
         
         //Levels
@@ -109,7 +126,7 @@ final class SetInfoModel: ObservableObject {
     }
     
     
-    func tapControlConductor() {
+    func tapToggleConductor() {
         
         //fix for system stop after 12 set changes
         //If you remove this, video won't be passed through after 12 set changes
@@ -124,6 +141,13 @@ final class SetInfoModel: ObservableObject {
             setSettings: self.setSettings
         )
     }
+//
+//    func tapStopConductor() {
+//        conductor.togglePlayEngineAndTracks(
+//            currentSetLevel: leveling.currentSetLevelSubject.value,
+//            setSettings: self.setSettings
+//        )
+//    }
     
     
     
