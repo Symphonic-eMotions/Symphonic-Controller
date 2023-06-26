@@ -6,33 +6,128 @@
 //
 
 import SwiftUI
+import Combine
 import OrderedCollections
 
 struct SetInfoState {
     var currentInstrumentsSet: InstrumentsSet
+    var currentLevel: Double = 0.0 //Leveling
+    var values: [[AreaValues]] = []
 }
 
 final class SetInfoModel: ObservableObject {
     
+    private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var setSettings: SetSettings
+    @Binding var imageDifference: ImageDifference
     @Published var setInfoState: SetInfoState
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
     var conductor: Conductor
+    let leveling: Leveling
+    var cancellables = Swift.Set<AnyCancellable>()
     
     init(
         setInfoLocalState: Binding<SetInfoLocalState>,
         setSettings: Binding<SetSettings>,
+        imageDifference: Binding<ImageDifference>,
         setInfoState: SetInfoState,
         currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void,
-        conductor: Conductor
+        conductor: Conductor,
+        leveling: Leveling
     ) {
         self._setInfoLocalState = setInfoLocalState
         self._setSettings = setSettings
+        self._imageDifference = imageDifference
         self.setInfoState = setInfoState
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
         self.conductor = conductor
+        self.leveling = leveling
+        
+        frameExtractor = FrameExtractor.shared
+        frameExtractor.delegate = self
+        
+        startObservingData()
     }
+    
+    func startObservingData() {
+        
+        //Levels
+        self.leveling.currentSetLevelSubject.sink { value in
+
+            let oldLevel = Int(self.setInfoState.currentLevel)
+            self.setInfoState.currentLevel = value
+            let currentLevel = Int(self.setInfoState.currentLevel)
+
+            //On level change mute and un-mute tracks accordingly
+            if oldLevel != currentLevel {
+
+                //Mute and unmutes tracks to level settings
+                //
+                // Switch View logic sits in MainView / PlayView.onReceive
+                //
+                self.conductor.levelController(
+                    level: Int(currentLevel),
+                    setSettings: self.setSettings
+                )
+            }
+        }
+        .store(in: &cancellables)
+        
+        //Image difference values
+//        self.imageDifference.values.sink { values in
+            
+        self.imageDifference.values.sink { [weak self] values in
+                
+            guard self!.conductor.isConductorPlayingSubject.value else { return }
+            
+            DispatchQueue.main.async {
+            
+//            DispatchQueue.main.sync { [weak self] in
+                
+                self?.setInfoState.values = values
+                
+                let levelValue = self?.conductor.valuesDidSetInfoChanged(
+                    //These are the main values for controlling
+                    values: values,
+                    //Dynamic area's of interest
+                    setSettings: self!.setSettings,
+                    //These 3 are for advanced view monitoring
+                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0
+                )
+                
+                if self?.leveling.pauseLevel == false {
+                    self?.leveling.currentSetLevelSubject.send(levelValue ?? 0)
+                }
+            }
+        }
+        .store(in: &cancellables)
+    }
+    
+    func stopObservingData() {
+        cancellables.removeAll()
+    }
+    
+    
+    func tapControlConductor() {
+        
+        //fix for system stop after 12 set changes
+        //If you remove this, video won't be passed through after 12 set changes
+        if self.conductor.isConductorPlayingSubject.value {
+            self.frameExtractor.stopExtracting()
+            self.frameExtractor.startExtracting()
+            
+        }
+
+        conductor.togglePlayEngineAndTracks(
+            currentSetLevel: leveling.currentSetLevelSubject.value,
+            setSettings: self.setSettings
+        )
+    }
+    
+    
+    
+    
     
     
     func selectableEditorParts() -> [EditorParts] {
@@ -239,4 +334,12 @@ final class SetInfoModel: ObservableObject {
 //    func loadMidiFile(midiFile: URL, trackId: String){
 //        self.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: midiFile)
 //    }
+}
+
+extension SetInfoModel: FrameExtractorDelegate {
+    
+    func captured(image: CIImage) {
+        guard conductor.isConductorPlayingSubject.value else { return }
+        imageDifference.updateImageData(image: image)
+    }
 }

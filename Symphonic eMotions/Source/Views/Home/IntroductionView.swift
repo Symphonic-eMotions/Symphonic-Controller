@@ -14,24 +14,14 @@ struct IntroductionView: View {
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
 
-
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
-    @ObservedObject var frameExtractorViewModel = FrameExtractorViewModel()
-    
-//    @State private var whiteTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
-    @State private var whiteTimer: Timer? = nil
-
-    
-    @State var averageBrightness: Double = 0
-    @State var averageBrightnessResult: String = ""
-    @State var image: UIImage = UIImage()
-    @State var showPreview: Bool = false
-    
     @State private var testSoundPlaying: Bool = false
     internal var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
+    
+    @State var setIsPlaying: Bool = false;
     
     var body: some View {
         
@@ -127,87 +117,7 @@ struct IntroductionView: View {
                     
                     Spacer()
                 }
-                //Licht
-                else if sessionDisplaySub == .page03 {
-                    
-                    IntroductionImage(
-                        imageName: "page03",
-                        customWidth: 0.8,
-                        customHeight: 0.6
-                    )
-                    
-                    Spacer()
-                    
-                    HStack{
-                        
-                        HStack {
-                            
-                            ZStack{
-                                Rectangle()
-                                    .fill(Color(
-                                        red: averageBrightness / 255.0,
-                                        green: averageBrightness / 255.0,
-                                        blue: averageBrightness / 255.0
-                                    ))
-                                    .frame(width: 100, height: 100)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                Text(averageBrightnessResult)
-                                    .font(.system(size: 30))
-                            }
-                            .padding()
-                            .onTapGesture {
-                                withAnimation{
-                                    showPreview.toggle()
-                                }
-                            }
-                            
-                            // Add this Image view for the preview
-                            if showPreview {
-                                Image(uiImage: image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 100, height: 100)
-                                .padding()
-                            }
-                        }
-                        .onAppear {
-                            self.whiteTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
-                                //The image to analyse
-                                let ciImage = self.frameExtractorViewModel.image ?? CIImage()
-
-                                //Do white average calculation here
-                                self.averageBrightness = self.frameExtractorViewModel.calculateAverageBrightness(
-                                    ciImage: ciImage
-                                )
-                                averageBrightnessResult = "\(Int(averageBrightness/2.55))%"
-
-                                // Convert CIImage to UIImage for preview
-                                let context = CIContext(options: nil)
-                                if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
-                                    self.image = UIImage(cgImage: cgImage)
-                                }
-                                print("Connect or set ready for sensitivity")
-                            }
-                        }
-                        .onDisappear {
-                            self.whiteTimer?.invalidate()
-                            self.whiteTimer = nil
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    IntroductionTitle(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
-                        localizedString: "Enough light",
-                        nextPage: .page04,
-                        introductionNoteNumbers: []
-                    )
-                    
-                    Spacer()
-                }
+                
                 //Afstand
                 else if sessionDisplaySub == .page04 {
                     
@@ -295,6 +205,11 @@ struct IntroductionView: View {
                             introductionNoteNumbers: []
                         )
                         .padding(.bottom)
+                        .onTapGesture {
+                            
+                            setInfoModel.tapControlConductor()
+                            
+                        }
                     }
                 }
             }

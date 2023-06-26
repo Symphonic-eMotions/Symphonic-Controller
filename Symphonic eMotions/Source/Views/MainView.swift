@@ -76,6 +76,7 @@ struct MainView: View {
                 setInfoModel: SetInfoModel(
                     setInfoLocalState: $setInfoLocalState,
                     setSettings: $viewModel.mainState.setSettings,
+                    imageDifference: $viewModel.mainState.imageDifference,
                     setInfoState: SetInfoState(
                         currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                     ),
@@ -84,7 +85,8 @@ struct MainView: View {
                             instrumentsSet: instrumentsSet
                         )
                     },
-                    conductor: viewModel.conductor
+                    conductor: viewModel.conductor,
+                    leveling: viewModel.leveling
                 ),
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
@@ -94,23 +96,48 @@ struct MainView: View {
         
         if sessionDisplay == .home {
             
-            IntroductionView(
-                setInfoModel: SetInfoModel(
-                    setInfoLocalState: $setInfoLocalState,
-                    setSettings: $viewModel.mainState.setSettings,
-                    setInfoState: SetInfoState(
-                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+            if sessionDisplaySub == .page03 {
+                LightView(
+                    setInfoModel: SetInfoModel(
+                        setInfoLocalState: $setInfoLocalState,
+                        setSettings: $viewModel.mainState.setSettings,
+                        imageDifference: $viewModel.mainState.imageDifference,
+                        setInfoState: SetInfoState(
+                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet
+                            )
+                        },
+                        conductor: viewModel.conductor,
+                        leveling: viewModel.leveling
                     ),
-                    currentInstrumentsSetIsChanged: { instrumentsSet in
-                        viewModel.currentModelInstrumentsSetChanged(
-                            instrumentsSet: instrumentsSet
-                        )
-                    },
-                    conductor: viewModel.conductor
-                ),
-                sessionDisplay: $sessionDisplay,
-                sessionDisplaySub: $sessionDisplaySub
-            )
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub
+                )
+            }
+            else {
+                IntroductionView(
+                    setInfoModel: SetInfoModel(
+                        setInfoLocalState: $setInfoLocalState,
+                        setSettings: $viewModel.mainState.setSettings,
+                        imageDifference: $viewModel.mainState.imageDifference,
+                        setInfoState: SetInfoState(
+                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
+                        ),
+                        currentInstrumentsSetIsChanged: { instrumentsSet in
+                            viewModel.currentModelInstrumentsSetChanged(
+                                instrumentsSet: instrumentsSet
+                            )
+                        },
+                        conductor: viewModel.conductor,
+                        leveling: viewModel.leveling
+                    ),
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub
+                )
+            }
         }
         //SwiftUI Interface with Part editor
         else if [.swiftUI,.setInfo,.pro,.demo,.creator].contains(sessionDisplay) {
@@ -121,6 +148,7 @@ struct MainView: View {
                     setInfoModel: SetInfoModel(
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,
+                        imageDifference: $viewModel.mainState.imageDifference,
                         setInfoState: SetInfoState(
                             currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                         ),
@@ -129,7 +157,8 @@ struct MainView: View {
                                 instrumentsSet: instrumentsSet
                             )
                         },
-                        conductor: viewModel.conductor
+                        conductor: viewModel.conductor,
+                        leveling: viewModel.leveling
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
@@ -189,6 +218,7 @@ struct MainView: View {
                         setInfoModel: SetInfoModel(
                             setInfoLocalState: $setInfoLocalState,
                             setSettings: $viewModel.mainState.setSettings,
+                            imageDifference: $viewModel.mainState.imageDifference,
                             setInfoState: SetInfoState(
                                 currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                             ),
@@ -197,7 +227,8 @@ struct MainView: View {
                                     instrumentsSet: instrumentsSet
                                 )
                             },
-                            conductor: viewModel.conductor
+                            conductor: viewModel.conductor,
+                            leveling: viewModel.leveling
                         ),
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
@@ -212,6 +243,7 @@ struct MainView: View {
                         setInfoModel: SetInfoModel(
                             setInfoLocalState: $setInfoLocalState,
                             setSettings: $viewModel.mainState.setSettings,
+                            imageDifference: $viewModel.mainState.imageDifference,
                             setInfoState: SetInfoState(
                                 currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                             ),
@@ -220,7 +252,8 @@ struct MainView: View {
                                     instrumentsSet: instrumentsSet
                                 )
                             },
-                            conductor: viewModel.conductor
+                            conductor: viewModel.conductor,
+                            leveling: viewModel.leveling
                         ),
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub,
@@ -241,6 +274,7 @@ struct MainView: View {
                     setInfoModel: SetInfoModel(
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,
+                        imageDifference: $viewModel.mainState.imageDifference,
                         setInfoState: SetInfoState(
                             currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                         ),
@@ -249,7 +283,8 @@ struct MainView: View {
                                 instrumentsSet: instrumentsSet
                             )
                         },
-                        conductor: viewModel.conductor
+                        conductor: viewModel.conductor,
+                        leveling: viewModel.leveling
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
@@ -261,6 +296,7 @@ struct MainView: View {
                     setInfoModel: SetInfoModel(
                         setInfoLocalState: $setInfoLocalState,
                         setSettings: $viewModel.mainState.setSettings,
+                        imageDifference: $viewModel.mainState.imageDifference,
                         setInfoState: SetInfoState(
                             currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
                         ),
@@ -269,7 +305,8 @@ struct MainView: View {
                                 instrumentsSet: instrumentsSet
                             )
                         },
-                        conductor: viewModel.conductor
+                        conductor: viewModel.conductor,
+                        leveling: viewModel.leveling
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub

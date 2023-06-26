@@ -938,7 +938,6 @@ final class Conductor {
         
         guard !isConductorPlayingSubject.value else { return }
         
-        //        speechSynthesizer.stopSpeaking(at: .word)
         
         do {
             //Variable for use in View (SwiftUI)
@@ -991,7 +990,8 @@ final class Conductor {
                 }
             }
         } catch {
-            isConductorPlayingSubject.send(false)
+//            isConductorPlayingSubject.send(false)
+            print("Catched \(error)")
         }
     }
     

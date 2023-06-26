@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct IntroductionTitle: View {
+    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
+    
     public var localizedString: String
     public var nextPage: SessionDisplay
     var introductionNoteNumbers: [Int]
+    
+//    @State var setIsPlaying: Bool = false;
     
     var body: some View {
         
@@ -47,6 +51,35 @@ struct IntroductionTitle: View {
                             noteOn: true
                         )
                     }
+                    
+//                    if nextPage == .page05 {
+//                        if setIsPlaying {
+//
+//                            print("Stop tracks")
+//
+//                            setInfoModel.conductor.pauzeEngineAndStopTracks(
+//                                setSettings: setInfoModel.setSettings
+//                            )
+//
+//                            setIsPlaying = false
+//                        }
+//                        else{
+//
+//                            print("Start tracks")
+//
+//                            setInfoModel.conductor.playEngineAndTracks(
+//                                setSettings: setInfoModel.setSettings,
+//                                level: 0
+//                            )
+//
+//                            setInfoModel.conductor.levelController(
+//                                level: 0,
+//                                setSettings: setInfoModel.setSettings
+//                            )
+//
+//                            setIsPlaying = true
+//                        }
+//                    }
                     
                     //At the end of the introduction go to the demo
                     if nextPage == .demo {

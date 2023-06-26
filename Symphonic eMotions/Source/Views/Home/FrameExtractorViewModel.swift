@@ -8,11 +8,12 @@
 import SwiftUI
 
 class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
-    @Published var image: CIImage? = nil
-    let frameExtractor: FrameExtractor
     
+    @Published var image: CIImage? = nil
+    
+    let frameExtractor: FrameExtractor = FrameExtractor.shared
+        
     init() {
-        self.frameExtractor = FrameExtractor.shared
         self.frameExtractor.delegate = self
     }
     
@@ -22,13 +23,26 @@ class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
         }
     }
     
+//    let frameExtractor: FrameExtractor
+//
+//    init() {
+//        self.frameExtractor = FrameExtractor.shared
+//        self.frameExtractor.delegate = self
+//    }
+//
+//    func captured(image: CIImage) {
+//        DispatchQueue.main.async {
+//            self.image = image
+//        }
+//    }
+    
     func calculateAverageBrightness(ciImage: CIImage) -> Double {
         // Create a 1x1 bitmap image context for sampling from the image
         let context = CIContext(options: nil)
         let pixelSize = CGSize(width: 1, height: 1)
         
         let outputImage = ciImage.transformed(by: CGAffineTransform(scaleX: 1/ciImage.extent.size.width, y: 1/ciImage.extent.size.height))
-
+        
         guard let cgImage = context.createCGImage(outputImage, from: CGRect(origin: .zero, size: pixelSize)) else {
             return 0.0
         }
@@ -50,9 +64,9 @@ class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
         free(bitmapData)
         
         // Return the average brightness (assuming RGB values are in the range 0-255)
-        return (red + green + blue) / 3.0 
+        return (red + green + blue) / 3.0
     }
-
+}
     
     
     
@@ -92,4 +106,4 @@ class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
 //        let avgValue = Double(sum) / Double(totalPixels)
 //        return avgValue
 //    }
-}
+
