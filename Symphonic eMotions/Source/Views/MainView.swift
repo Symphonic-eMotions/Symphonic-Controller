@@ -11,6 +11,8 @@ import AVFoundation
 
 struct MainView: View {
     
+    @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
+    
     @ObservedObject var viewModel: MainViewModel
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
@@ -23,6 +25,8 @@ struct MainView: View {
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
+    // Initialize sidebarItems as @State
+    @State var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = []
     
     init(
         viewModel: MainViewModel,
@@ -33,6 +37,19 @@ struct MainView: View {
         self.viewModel = viewModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
+        
+        var items = [
+            (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
+            // (name: "Demo", setName: "demo", fileGroup: FileGroup.demo, sessionDisplay: SessionDisplay.demo),
+            (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
+            (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
+        ]
+
+        if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.creator.rawValue) == .creator {
+            items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
+        }
+        
+        _sidebarItems = State(initialValue: items)
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
@@ -182,7 +199,8 @@ struct MainView: View {
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-                    setInfoLocalState: $setInfoLocalState
+                    setInfoLocalState: $setInfoLocalState,
+                    sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
                 
@@ -307,7 +325,8 @@ struct MainView: View {
                     ),
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-                    setInfoLocalState: $setInfoLocalState
+                    setInfoLocalState: $setInfoLocalState,
+                    sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
                 

@@ -74,6 +74,12 @@
 		7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */; };
 		7C9FB76D2A498F2B00490C59 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76C2A498F2B00490C59 /* LightView.swift */; };
 		7C9FB76F2A49AEB300490C59 /* MovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76E2A49AEB300490C59 /* MovementView.swift */; };
+		7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7702A49E10400490C59 /* AmoebaView.swift */; };
+		7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7722A49E33400490C59 /* AmoebaScene.swift */; };
+		7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */; };
+		7C9FB7772A4AE95C00490C59 /* SetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */; };
+		7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7782A4AECCD00490C59 /* FooterView.swift */; };
+		7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77A2A4AED3400490C59 /* UserCode.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
@@ -222,6 +228,12 @@
 		7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeButtonsView.swift; sourceTree = "<group>"; };
 		7C9FB76C2A498F2B00490C59 /* LightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		7C9FB76E2A49AEB300490C59 /* MovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementView.swift; sourceTree = "<group>"; };
+		7C9FB7702A49E10400490C59 /* AmoebaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmoebaView.swift; sourceTree = "<group>"; };
+		7C9FB7722A49E33400490C59 /* AmoebaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmoebaScene.swift; sourceTree = "<group>"; };
+		7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AmoebaShader.fsh; sourceTree = "<group>"; };
+		7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListViewModel.swift; sourceTree = "<group>"; };
+		7C9FB7782A4AECCD00490C59 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		7C9FB77A2A4AED3400490C59 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
@@ -343,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				7CC9089629F809E700AB1F30 /* SideBarView.swift */,
+				7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */,
 			);
 			path = SideBarView;
 			sourceTree = "<group>";
@@ -375,6 +388,8 @@
 			isa = PBXGroup;
 			children = (
 				7C3EC2012A1D23A30049E4ED /* DemoView.swift */,
+				7C9FB7782A4AECCD00490C59 /* FooterView.swift */,
+				7C9FB77A2A4AED3400490C59 /* UserCode.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -398,6 +413,9 @@
 				7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */,
 				7C9FB76C2A498F2B00490C59 /* LightView.swift */,
 				7C9FB76E2A49AEB300490C59 /* MovementView.swift */,
+				7C9FB7702A49E10400490C59 /* AmoebaView.swift */,
+				7C9FB7722A49E33400490C59 /* AmoebaScene.swift */,
+				7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -823,6 +841,7 @@
 				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
 				7CB2B9532A0D0E0500876CCD /* person in Resources */,
 				7CD418032A095388006831CE /* Localizable.strings in Resources */,
+				7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */,
 				7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
 				7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */,
@@ -844,8 +863,10 @@
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
 				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
+				7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
+				7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
@@ -889,8 +910,10 @@
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
 				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
 				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
+				7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
+				7C9FB7772A4AE95C00490C59 /* SetListViewModel.swift in Sources */,
 				7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */,
 				C0C512A627075E9F00DE3393 /* Damper.swift in Sources */,
 				7CFA00A029A74FA2001D8A5D /* TrackSettings.swift in Sources */,
@@ -899,6 +922,7 @@
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
+				7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,
 				7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */,
 				7C6A8CF42A4481520056BED3 /* FrameExtractorViewModel.swift in Sources */,
@@ -1132,7 +1156,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.0;
+				MARKETING_VERSION = 2.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1174,7 +1198,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.0;
+				MARKETING_VERSION = 2.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

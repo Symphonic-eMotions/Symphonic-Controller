@@ -17,6 +17,7 @@ struct MovementView: View {
     
     @State private var selectedButton: Int? = nil
     @State var setIsPlaying: Bool = false;
+    @State var hasTested: Bool = false
     
     var body: some View {
         
@@ -24,17 +25,20 @@ struct MovementView: View {
             
             VStack(spacing: 0) {
                 
-                let imageWidth = UIScreen.main.bounds.width * 0.5
-                let imageHeight = UIScreen.main.bounds.height * 0.5
+                //Visual Feedback
+                AmoebaView(setInfoModel: setInfoModel)
                 
-                HStack{
-                    Spacer()
-                    Image("demoBlob")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: imageWidth, height: imageHeight, alignment: .center)
-                    Spacer()
-                }
+//                let imageWidth = UIScreen.main.bounds.width * 0.5
+//                let imageHeight = UIScreen.main.bounds.height * 0.5
+//
+//                HStack{
+//                    Spacer()
+//                    Image("demoBlob")
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: imageWidth, height: imageHeight, alignment: .center)
+//                    Spacer()
+//                }
                 Spacer()
                 
                 ZStack(alignment: .topLeading){
@@ -53,7 +57,7 @@ struct MovementView: View {
                                             .frame(width: imageSide, height: imageSide)
                                             .foregroundColor(.clear)
                                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                            .background( self.selectedButton == column ? Color.gray : Color.accentColor)
+                                            .background( self.selectedButton == column ? Color.accentColor : Color.gray)
 
                                         Image("movementId\(column)")
                                             .resizable()
@@ -90,6 +94,9 @@ struct MovementView: View {
                                 }
                             }
                             .onTapGesture {
+                                
+                                hasTested = true
+                                
                                 if setIsPlaying {
                                     setInfoModel.tapToggleConductor()
                                     self.setIsPlaying = false
@@ -105,7 +112,7 @@ struct MovementView: View {
                                     .frame(width: 200, height: 60)
                                     .foregroundColor(.clear)
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                    .background( Color.accentColor )
+                                    .background( hasTested ? Color.gray : Color.accentColor )
                                 
                                 Text(NSLocalizedString("Continue", comment: ""))
                                     .font(.system(size: 30))
@@ -117,6 +124,7 @@ struct MovementView: View {
                                     sessionDisplaySub = .demo
                                 }
                             }
+                            .disabled(!hasTested)
                         }
                         Spacer()
                     }

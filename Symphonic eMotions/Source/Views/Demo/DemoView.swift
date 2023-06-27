@@ -33,52 +33,42 @@ struct DemoView: View {
                     .padding(.leading, 40)
             }
             Spacer().frame(height:35)
+            
+            //Play demo set button
             HStack(spacing: 20){
                 
-                HStack {
-                    Image(systemName: "play.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 30))
-                    
-                    Text(NSLocalizedString("Demo set", comment: ""))
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .padding(.trailing)
-                        .disabled(true)
-                }
-                .padding()
-                .background(Color.accentColor)
-                .cornerRadius(10.0)
-                .onTapGesture {
-                    
-                    print("Play first start set")
-                    
-//                        if let url = urls.first {
+//                HStack {
+//                    Image(systemName: "play.fill")
+//                        .foregroundColor(.white)
+//                        .font(.system(size: 30))
 //
-//                            AppUtils.createSessionFile(
-//                                sensitivity: -1,
-//                                setURL: url)
+//                    Text(NSLocalizedString("Demo set", comment: ""))
+//                        .foregroundColor(.white)
+//                        .font(.headline)
+//                        .padding(.trailing)
+//                        .disabled(true)
+//                }
+//                .padding()
+//                .background(Color.accentColor)
+//                .cornerRadius(10.0)
+//                .onTapGesture {
 //
-//                            print("Load Header Playlist file \(url)")
-//
-//                            //Load settngs over current
-//                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
-//
-//                            //Keep track for next in playlist after loading new set
-//                            setInfoModel.setSettings.currentSetInList = url
-//                            setInfoModel.setSettings.currentPlaylist = playlist
-//
-//                            //Change the View
-//                            sessionDisplay = setInfoModel.setSettings.defaultSkin
-//                        }
-                }
+//                    print("Play demo set")
+//                }
                 
             }
             
-            Text("\nDemo set not implemented yet")
-            
+            HStack{
+                Text(NSLocalizedString("Welcome home", comment: ""))
+                    .font(.headline)
+                    .padding(.top, 70)
+                    .padding(.trailing, 70)
+                    .padding(.leading, 70)
+                
+            }
             Spacer()
             
+            FooterView()
         }
     }
 }

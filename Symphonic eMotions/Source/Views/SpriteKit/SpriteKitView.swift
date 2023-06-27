@@ -156,11 +156,7 @@ struct SpriteKitView: View {
                                 stopEngine: $stopEngine
                             )
                         }
-//                        .frame(width: width, height: height - transportHeigth - 10)
-                        
                         .frame(width: geometry.size.width, height: geometry.size.height)
-
-                        
                         .ignoresSafeArea()
                         .onReceive(mainViewModel.conductor.isConductorPlayingSubject ){ ( value ) in
                             scene.isPlaying = value

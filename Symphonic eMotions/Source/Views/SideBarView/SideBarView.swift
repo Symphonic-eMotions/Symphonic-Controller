@@ -19,68 +19,60 @@ struct SetFile: Identifiable, Decodable, Equatable {
     }
 }
 
-class SetListViewModel: ObservableObject {
-    @Published var setFiles: [SetFile] = []
-    
-    init() {
-        loadSetFiles()
-    }
-    
-    func loadSetFiles() {
-        guard let url = Bundle.main.url(forResource: "Sets", withExtension: nil) else {
-            print("Failed to find Sets folder")
-            return
-        }
-        
-        do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
-            let decoder = JSONDecoder()
-            
-            var unsortedSetFiles: [SetFile] = []
-            
-            for fileURL in fileURLs where fileURL.pathExtension == "json" {
-                do {
-                    let data = try Data(contentsOf: fileURL)
-                    let decodedFile = try decoder.decode(InstrumentsSet.self, from: data)
-                    
-                    unsortedSetFiles.append(SetFile(name: decodedFile.name, url: fileURL, published: decodedFile.published ?? true, fileGroup: decodedFile.fileGroup ?? .none))
-                } catch {
-                    print("Error decoding JSON file: \(fileURL) \(error)")
-                }
-            }
-            
-            setFiles = unsortedSetFiles.sorted { $0.name < $1.name }
-            
-        } catch {
-            print("Error reading contents of directory: \(error)")
-        }
-    }
-    
-    func getSetFiles(for group: FileGroup) -> [SetFile] {
-        return setFiles.filter { $0.fileGroup == group }
+// This function converts sessionDisplay to fileGroup
+func getFileGroup(for session: SessionDisplay) -> FileGroup {
+    // This logic should be based on your mapping
+    switch session {
+    case .pro:
+        return .pro
+    case .playlists:
+        return .none
+    case .setInfo:
+        return .pro
+//    case .swiftUI:
+//        return .pro
+    case .creator:
+        return .template
+    case .demo:
+        return .demo
+    default:
+        return .none
     }
 }
 
 struct SideBarView: View {
+
     @EnvironmentObject var fileController: FileController
     @ObservedObject var setInfoModel: SetInfoModel
-    
+
     @Binding var sessionDisplay: SessionDisplay
     @Binding var sessionDisplaySub: SessionDisplay
     @Binding var setInfoLocalState: SetInfoLocalState
+    @Binding var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]
     
     @StateObject private var viewModel = SetListViewModel()
     @State private var selectedSet: SetFile?
     @State private var showingAlert = false
     @State var fileGroup: FileGroup = .none
     
-    let sidebarItems = [
-        (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
-        (name: "Demo", setName: "demo", fileGroup: FileGroup.demo, sessionDisplay: SessionDisplay.demo),
-        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
-        (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro),
-        (name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator)
-    ]
+    @State private var selectedMainItem: SessionDisplay = .none
+
+    
+    init(
+        setInfoModel: SetInfoModel,
+        sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>,
+        setInfoLocalState: Binding<SetInfoLocalState>,
+        sidebarItems: Binding<[(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]>
+        
+    ) {
+        self.setInfoModel = setInfoModel
+        _sessionDisplay = sessionDisplay
+        _sessionDisplaySub = sessionDisplaySub
+        _setInfoLocalState = setInfoLocalState
+        _sidebarItems = sidebarItems
+        
+    }
     
     private func changeFileGroupAndSessionDisplay(_ item: (name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)) {
         self.fileGroup = item.fileGroup
@@ -90,6 +82,7 @@ struct SideBarView: View {
     }
     
     var body: some View {
+        
         NavigationView {
             List {
                 ForEach(sidebarItems, id: \.setName) { item in
@@ -102,6 +95,7 @@ struct SideBarView: View {
                             setInfoModel.tapStopAudioEngine()
                             //Let the sysem know what files to show
                             changeFileGroupAndSessionDisplay(item)
+                            
                             //Playlist and sub
                             if item.sessionDisplay == .playlists {
                                 sessionDisplaySub = .playlists
@@ -110,28 +104,46 @@ struct SideBarView: View {
                             else if item.sessionDisplay == .home {
                                 sessionDisplaySub = .page01
                             }
-                            //Default no sub
+                            //Default
                             else{
-                                sessionDisplaySub = .none
+                                sessionDisplaySub = sessionDisplay
                             }
+                            
                             setInfoModel.setSettings.currentPlaylist = .none
+                            
+                            selectedMainItem = item.sessionDisplay
                         }
                     }) {
-                        SidebarItemView(item: item, active: setInfoLocalState.setName == item.setName)
+//                        SidebarItemView(item: item, active: setInfoLocalState.setName == item.setName)
+                        SidebarItemView(item: item, active: selectedMainItem == item.sessionDisplay)
                     }
                     .alert(isPresented: $showingAlert) {
                         Alert(title: Text("Editor open"), message: Text("Save set to continue"), dismissButton: .default(Text("Will do!")))
                     }
                 }
                 
-                //Show sets within group
-                if [.pro,.setInfo,.swiftUI,.creator,.demo].contains(sessionDisplay) && [.none,.setEditor].contains(sessionDisplaySub) {
-                    ForEach(viewModel.getSetFiles(for: fileGroup)) { setFile in
-                        if setFile.fileGroup == fileGroup {
-                            SetFileButtonView(setFile: setFile, selectedSet: $selectedSet, sessionDisplay: $sessionDisplay, sessionDisplaySub: $sessionDisplaySub, setInfoLocalState: $setInfoLocalState, setInfoModel: setInfoModel)
+                // Show sets within group
+//                if [.pro, .setInfo, .swiftUI, .creator, .demo].contains(sessionDisplay) && [.none, .setEditor].contains(sessionDisplaySub) {
+                
+                let _ = print(sessionDisplaySub)
+                
+//                if [.pro, .setInfo, .swiftUI, .creator, .demo].contains(sessionDisplay) {
+                    
+                    
+                    
+                    ForEach(viewModel.getSetFiles(for: getFileGroup(for: sessionDisplaySub))) { setFile in
+                        if setFile.fileGroup == getFileGroup(for: sessionDisplaySub) {
+                            SetFileButtonView(
+                                setFile: setFile,
+                                selectedSet: $selectedSet,
+                                sessionDisplay: $sessionDisplay,
+                                sessionDisplaySub: $sessionDisplaySub,
+                                setInfoLocalState: $setInfoLocalState,
+                                setInfoModel: setInfoModel
+                            )
                         }
                     }
-                }
+//                }
             }
             .navigationTitle(setInfoLocalState.sideBarHead)
         }
@@ -143,6 +155,9 @@ struct SidebarItemView: View {
     let active: Bool
     
     var body: some View {
+        
+        
+        
         HStack {
             VStack(alignment: .leading) {
                 Spacer()
@@ -168,7 +183,6 @@ struct SetFileButtonView: View {
     @Binding var sessionDisplaySub: SessionDisplay
     @Binding var setInfoLocalState: SetInfoLocalState
     var setInfoModel: SetInfoModel
-    
     var body: some View {
         Button(action: {
             selectedSet = setFile
@@ -178,8 +192,14 @@ struct SetFileButtonView: View {
             setInfoLocalState.setConfig = setFile.url.lastPathComponent
             setInfoLocalState.setURL = setFile.url.absoluteString
             
+            if sessionDisplay == .pro {
+                sessionDisplaySub = .pro
+            }
+            if sessionDisplay == .creator {
+                sessionDisplaySub = .creator
+            }
+            
             sessionDisplay = .setInfo
-            sessionDisplaySub = .none
             
         }) {
             HStack {

@@ -150,10 +150,6 @@ final class SetInfoModel: ObservableObject {
 //    }
     
     
-    
-    
-    
-    
     func selectableEditorParts() -> [EditorParts] {
         var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
         
@@ -355,9 +351,21 @@ final class SetInfoModel: ObservableObject {
         self.setSettings.bpm += 1
     }
     
-//    func loadMidiFile(midiFile: URL, trackId: String){
-//        self.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: midiFile)
-//    }
+    func scale(
+        input: Double,
+        fromInputRange: (Double, Double),
+        toOutputRange: (Double, Double)) -> Double {
+        let (A, B) = fromInputRange
+        let (C, D) = toOutputRange
+        
+        // Translate the input range to [0, 1]
+        let normalizedInput = (input - A) / (B - A)
+        
+        // Translate from [0, 1] to the output range
+        let output = C + (D - C) * normalizedInput
+        
+        return output
+    }
 }
 
 extension SetInfoModel: FrameExtractorDelegate {
