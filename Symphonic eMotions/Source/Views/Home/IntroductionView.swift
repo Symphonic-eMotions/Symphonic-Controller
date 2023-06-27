@@ -170,15 +170,15 @@ struct IntroductionView: View {
                     }
                 }
             }
-//            .onAppear{
-//                //Load introduction set
-//                if currentUrl != "Introductie.json" {
-//                    //Load set
-//                    setInfoModel.tapSetRow(filePath: "Introductie.json")
-//                    //Let @AppStorage know what is current
-//                    currentUrl = "Introductie.json"
-//                }
-//            }
+            .onAppear{
+                //Load introduction set for audio preview playNoteNumbersIntroduction
+                if currentUrl != "Introductie.json" {
+                    //Load set
+                    setInfoModel.tapSetRow(filePath: "Introductie.json")
+                    //Let @AppStorage know what is current
+                    currentUrl = "Introductie.json"
+                }
+            }
             
             //Back button
             if sessionDisplaySub != .page01 {

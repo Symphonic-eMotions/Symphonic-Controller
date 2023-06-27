@@ -186,11 +186,13 @@ class SetSettings: Identifiable, ObservableObject {
     //Editor
     func resetGridArrays(cells: Int) {
         
+        print("CELLS \(cells)")
+        
         for( index, _ ) in tracks {
             
             for( partIndex, _ ) in tracks[index]!.parts {
                 
-                let zeroArray:[Int] = Array(repeating: 0, count: cells)
+                let zeroArray:[Int] = Array(repeating: 1, count: cells)
                 
                 tracks[index]!.parts[partIndex]?.areaOfInterest = zeroArray
                 tracks[index]!.parts[partIndex]?.areaOfInterestColor = AppUtils.getPartColors(

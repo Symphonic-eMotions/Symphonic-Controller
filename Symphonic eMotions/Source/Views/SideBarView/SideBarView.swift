@@ -121,29 +121,18 @@ struct SideBarView: View {
                         Alert(title: Text("Editor open"), message: Text("Save set to continue"), dismissButton: .default(Text("Will do!")))
                     }
                 }
-                
-                // Show sets within group
-//                if [.pro, .setInfo, .swiftUI, .creator, .demo].contains(sessionDisplay) && [.none, .setEditor].contains(sessionDisplaySub) {
-                
-                let _ = print(sessionDisplaySub)
-                
-//                if [.pro, .setInfo, .swiftUI, .creator, .demo].contains(sessionDisplay) {
-                    
-                    
-                    
-                    ForEach(viewModel.getSetFiles(for: getFileGroup(for: sessionDisplaySub))) { setFile in
-                        if setFile.fileGroup == getFileGroup(for: sessionDisplaySub) {
-                            SetFileButtonView(
-                                setFile: setFile,
-                                selectedSet: $selectedSet,
-                                sessionDisplay: $sessionDisplay,
-                                sessionDisplaySub: $sessionDisplaySub,
-                                setInfoLocalState: $setInfoLocalState,
-                                setInfoModel: setInfoModel
-                            )
-                        }
+                ForEach(viewModel.getSetFiles(for: getFileGroup(for: sessionDisplaySub))) { setFile in
+                    if setFile.fileGroup == getFileGroup(for: sessionDisplaySub) {
+                        SetFileButtonView(
+                            setFile: setFile,
+                            selectedSet: $selectedSet,
+                            sessionDisplay: $sessionDisplay,
+                            sessionDisplaySub: $sessionDisplaySub,
+                            setInfoLocalState: $setInfoLocalState,
+                            setInfoModel: setInfoModel
+                        )
                     }
-//                }
+                }
             }
             .navigationTitle(setInfoLocalState.sideBarHead)
         }
