@@ -12,6 +12,7 @@ struct TrackEditorView: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var editorParts: [EditorParts]
     @Binding var showEditorPart: EditorParts
+    @State var showTrackNameEditor: EditorParts = .none
     
     //Set
     @Binding var numberOfTracks: Int
@@ -75,7 +76,8 @@ struct TrackEditorView: View {
                     }
                     .padding(.leading)
                     
-                    if showEditorPart == editorPart {
+                    //Track name editor
+                    if showTrackNameEditor == editorPart {
                         TextField(
                             "Track name",
                             text: Binding(
@@ -90,9 +92,8 @@ struct TrackEditorView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.leading)
                         .padding(.trailing)
-                        //Exclude TextField from parent onTapGesture
-                        .onTapGesture{}
                     }
+                    //Just the track name
                     else{
                         Text("\(track.trackName)")
                             .font(.system(size: 20))
@@ -150,6 +151,7 @@ struct TrackEditorView: View {
                         }
                     }
                 }
+                //Edit track action
                 .onTapGesture {
                     withAnimation {
                         if showEditorPart != editorPart {
@@ -157,6 +159,15 @@ struct TrackEditorView: View {
                         } else {
                             showEditorPart = .none
                         }
+                    }
+                }
+                //Edito track name action
+                .onLongPressGesture{
+                    if showTrackNameEditor == editorPart {
+                        showTrackNameEditor = .none
+                    }
+                    else{
+                        showTrackNameEditor = editorPart ?? .none
                     }
                 }
                 

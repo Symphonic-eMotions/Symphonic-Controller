@@ -497,15 +497,15 @@ final class Conductor {
                     self.pauzeEngineAndStopTracks(setSettings: setSettings)
                     
                     let sounds = ["Applause01", "Applause02", "Applause03"]
-                    playInterfaceSounds(sounds: sounds, volume: 0.6)
+                    playInterfaceSounds(sounds: sounds, volume: 0.30)
                     
                     if !autoVoice.isSpeaking {
                         
                         let trudy = AVSpeechUtterance(string: NSLocalizedString("Set complete", comment: ""))
                         trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
-                        trudy.rate = 0.50
-                        trudy.pitchMultiplier = 1.1
-                        trudy.volume = 0.5
+                        trudy.rate = 0.55
+                        trudy.pitchMultiplier = 1.01
+                        trudy.volume = 0.78
                         autoVoice.speak(trudy)
                     }
                 }

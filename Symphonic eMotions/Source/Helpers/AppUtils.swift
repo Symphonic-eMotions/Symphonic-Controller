@@ -96,25 +96,22 @@ final class AppUtils {
             if !fileManager.fileExists(atPath: playlistURL.path) {
                 // Folder doesn't exist, create it
                 try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
-            }
+                
+                do {
+                    // Get the content of the playlist folder in the bundle
+                    let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
 
-            do {
-                // Get the content of the playlist folder in the bundle
-                let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
-
-                // Copy each item in the playlist folder to the new playlist folder in the Documents directory
-                for item in playlistContent {
-                    let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
-                    if !fileManager.fileExists(atPath: destinationURL.path) {
+                    // Copy each item in the playlist folder to the new playlist folder in the Documents directory
+                    for item in playlistContent {
+                        let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
                         try fileManager.copyItem(at: item, to: destinationURL)
                     }
+                } catch {
+                    print("Error copying playlist files: \(error)")
                 }
-            } catch {
-                print("Error copying playlist files: \(error)")
             }
         }
     }
-
     
     //MARK: Set setSetings
     // - Structure to mutate and save as Instrument Set

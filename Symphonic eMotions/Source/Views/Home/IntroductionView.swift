@@ -171,13 +171,16 @@ struct IntroductionView: View {
                 }
             }
             .onAppear{
+                
+                setInfoModel.tapStopAudioEngine()
+                
                 //Load introduction set for audio preview playNoteNumbersIntroduction
-                if currentUrl != "Introductie.json" {
+//                if currentUrl != "Introductie.json" {
                     //Load set
                     setInfoModel.tapSetRow(filePath: "Introductie.json")
                     //Let @AppStorage know what is current
                     currentUrl = "Introductie.json"
-                }
+//                }
             }
             
             //Back button
@@ -197,6 +200,19 @@ struct IntroductionView: View {
                             sessionDisplaySub = prevPage
                         }
                     }
+                }
+            }
+            ZStack {
+                Image("LogoColor")
+                .resizable()
+                .frame(width: 100, height: 100)
+                .cornerRadius(10)
+            }
+            .padding(.top, UIScreen.main.bounds.height * 0.08)
+            .padding(.leading, UIScreen.main.bounds.width * 0.85)
+            .onLongPressGesture {
+                withAnimation {
+                    sessionDisplay = .demo
                 }
             }
         }

@@ -1,0 +1,863 @@
+{
+  "customName" : "Strauss Waltz horizontaal",
+  "defaultSkin" : {
+    "swiftUI" : {
+
+    }
+  },
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "gridColumns" : 4,
+  "gridRows" : 4,
+  "hasTempo" : true,
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.4
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "BassoonSoloLegato"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor602",
+      "instrumentName" : "Bassoon",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.1424,
+              "rampSpeedDown" : 0.0361
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "bassoon"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 2,
+      "levels" : [
+        0,
+        1,
+        2,
+        3
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            108
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "waltz-bassoon-short"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "bassoon",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.4
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "BassoonSoloLegato"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Clarinet",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.1327,
+              "rampSpeedDown" : 0.0177
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "clarinet"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        0,
+        1,
+        2,
+        3
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            108
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "waltz-clarinet-short"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "clarinet",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.4
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "CellosLegato"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor701",
+      "instrumentName" : "Cello",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.004200000000000001,
+              "rampSpeedDown" : 0.06599999999999999
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "cello"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 2,
+      "levels" : [
+        3
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            108,
+            108
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "waltz-cello-v2-1-2"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "cello",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.4
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "Glockenspiel"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor700",
+      "instrumentName" : "Bells",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.1643,
+              "rampSpeedDown" : 0.0507
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "bells"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -5,
+      "levels" : [
+        1,
+        2,
+        3
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            108
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "waltz-bells"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "bells",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.4
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.85
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "PiccoloLegato"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor300",
+      "instrumentName" : "Flute",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInOutCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.1071,
+              "rampSpeedDown" : 0.0818
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "flute"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -2.8297896,
+      "levels" : [
+        2,
+        3
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            108
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "waltz-flute"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "flute",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDurations" : [
+    108,
+    108,
+    108,
+    108
+  ],
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.2
+        ],
+        "value" : 0.001
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.1,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 10
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    }
+  ],
+  "published" : true,
+  "setBPM" : 187,
+  "setName" : "Strauss Waltz",
+  "setPath" : "",
+  "setTimeSignature" : 3,
+  "skin" : {
+    "instruments" : [
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioA",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioB",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioC",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioD",
+        "shape" : "circle"
+      }
+    ],
+    "name" : "default"
+  }
+}

@@ -24,6 +24,8 @@
 "Set complete" = "Gongratulations!... You have finished the last level!";
 "Count down to" = "Set completed! The next set starts in:";
 "Same song" = "Play the same song again!";
+"Remove Set" = "Remove set";
+"Confirmation remove set" = "Remove this set from this playlist?";
 
 //Interface
 "Will do!" = "Will do!";

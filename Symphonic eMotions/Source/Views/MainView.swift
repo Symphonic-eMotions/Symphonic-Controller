@@ -38,13 +38,14 @@ struct MainView: View {
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         
+        //Main navigation
         var items = [
             (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
             // (name: "Demo", setName: "demo", fileGroup: FileGroup.demo, sessionDisplay: SessionDisplay.demo),
             (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
             (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
         ]
-
+        
         if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.creator.rawValue) == .creator {
             items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
         }

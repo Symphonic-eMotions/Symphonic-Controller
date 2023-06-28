@@ -24,6 +24,8 @@
 "Set complete" = "Gefeliciteerd!... Je hebt het laatste level uitgespeeld.";
 "Count down to" = "Set uitgespeeld! De volgende set start over";
 "Same song" = "Speel dezelfde set nog eens!";
+"Remove Set" = "Set verwijderen";
+"Confirmation remove set" = "Set uit deze playlist verwijderen?";
 
 //Interface
 "Will do!" = "Zal ik doen!";

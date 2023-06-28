@@ -80,6 +80,8 @@
 		7C9FB7772A4AE95C00490C59 /* SetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */; };
 		7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7782A4AECCD00490C59 /* FooterView.swift */; };
 		7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77A2A4AED3400490C59 /* UserCode.swift */; };
+		7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77C2A4B698300490C59 /* PlaylistView.swift */; };
+		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
@@ -234,6 +236,8 @@
 		7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListViewModel.swift; sourceTree = "<group>"; };
 		7C9FB7782A4AECCD00490C59 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		7C9FB77A2A4AED3400490C59 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
+		7C9FB77C2A4B698300490C59 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
+		7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
@@ -485,7 +489,9 @@
 		7CCFE4A72A03DC56008AE3EE /* Active */ = {
 			isa = PBXGroup;
 			children = (
+				7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */,
 				7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */,
+				7C9FB77C2A4B698300490C59 /* PlaylistView.swift */,
 				7CB2B94D2A0CF80300876CCD /* CountDown.swift */,
 			);
 			path = Active;
@@ -922,6 +928,7 @@
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
+				7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */,
 				7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,
 				7CF50F2529ED41CE0016BAF4 /* ExsSampler.swift in Sources */,
@@ -970,6 +977,7 @@
 				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
+				7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
 				7CF50F4D29ED84230016BAF4 /* StartType.swift in Sources */,
@@ -1142,7 +1150,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Intern";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
@@ -1156,9 +1164,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
+				MARKETING_VERSION = 2.5.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1184,7 +1192,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Intern";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
@@ -1198,9 +1206,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
+				MARKETING_VERSION = 2.5.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
