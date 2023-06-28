@@ -76,84 +76,89 @@ struct PlaylistView: View {
                         
                         HStack(spacing:15){
                             
-                            //Play this set
-                            Image(systemName: "play.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 18))
-                                .frame(width: 30, height: 24)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.accentColor)
-                                .cornerRadius(5.0)
-                                .onTapGesture {
-                                    
-                                    //Store chosen url
-                                    currentUrl = url.absoluteString
-                                    
-                                    print("Load Playlist file \(url)")
-                                    
-                                    //Load settngs over current
-                                    setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
-                                    
-                                    //Keep track for next in playlist after loading new set
-                                    setInfoModel.setSettings.currentSetInList = url
-                                    setInfoModel.setSettings.currentPlaylist = viewModel.playlist
-                                    
-                                    //Change the View to the selected view
-                                    sessionDisplay = setInfoModel.setSettings.defaultSkin
-                                    
-                                }
-                                .onLongPressGesture {
-                                    
-                                    //Edit file
-                                    currentUrl = url.absoluteString
-                                    
-                                    //Load settings over current
-                                    setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                            Group{
+                                
+                                //Play this set
+                                Image(systemName: "play.fill")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 18))
+                                    .frame(width: 30, height: 24)
+                                    .padding(.vertical, 5.0)
+                                    .padding(.horizontal, 5.0)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(5.0)
+                                    .onLongPressGesture {
                                         
-                                    //Change the View
-                                   sessionDisplay = .setInfo
-                                   sessionDisplaySub = .playListEditor
-                                }
-    
-                            //The file name and date
-                            let filesName = fileController.setNameCustomName(url: url)
-                            
-                            ZStack(alignment: .trailing) {
+                                        //Edit file
+                                        currentUrl = url.absoluteString
+                                        
+                                        //Load settings over current
+                                        setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                                        
+                                        //Change the View
+                                        sessionDisplay = .setInfo
+                                        sessionDisplaySub = .playListEditor
+                                    }
                                 
-                                HStack{
-                                    Text(filesName)
-                                        .font(.title2)
-                                    Spacer()
-                                }
+                                //The file name and date
+                                let filesName = fileController.setNameCustomName(url: url)
                                 
-                                HStack{
-                                    Spacer()
-                                    //Remove set
-                                    Button("-") {
-                                       viewModel.removeSetUrl = url
-                                       viewModel.showRemoveConfirmation = true
-                                   }
-                                   .font(.system(size: 45))
-                                   .foregroundColor(viewModel.urls.count == 1 ? .gray : .red)
-                                   .padding(.trailing)
-                                   .disabled(viewModel.urls.count == 1)
-                                   .alert(isPresented: $viewModel.showRemoveConfirmation) {
-                                       Alert(
-                                           title: Text(NSLocalizedString("Remove Set", comment: "")),
-//                                           message: Text(NSLocalizedString("Confirmation remove set", comment: "")),
-                                           message: Text(NSLocalizedString(fileController.urlToPlayListFileName(url: url), comment: "")),
-                                           primaryButton: .destructive(Text("Remove")) {
-                                                                        
-                                               if let url = viewModel.removeSetUrl {
-                                                   viewModel.deleteUrl(url)
-                                               }
-                                           },
-                                           secondaryButton: .cancel()
-                                       )
-                                   }
+                                ZStack(alignment: .trailing) {
+                                    
+                                    HStack{
+                                        Text(filesName)
+                                            .font(.title2)
+                                        Spacer()
+                                    }
+                                    
+                                    HStack{
+                                        Spacer()
+                                        //Remove set
+                                        Button("-") {
+                                            viewModel.removeSetUrl = url
+                                            viewModel.showRemoveConfirmation = true
+                                        }
+                                        .font(.system(size: 45))
+                                        .foregroundColor(viewModel.urls.count == 1 ? .gray : .red)
+                                        .padding(.trailing)
+                                        .disabled(viewModel.urls.count == 1)
+                                        .alert(isPresented: $viewModel.showRemoveConfirmation) {
+                                            Alert(
+                                                title: Text(NSLocalizedString("Remove Set", comment: "")),
+                                                //                                           message: Text(NSLocalizedString("Confirmation remove set", comment: "")),
+                                                message: Text(NSLocalizedString(fileController.urlToPlayListFileName(url: url), comment: "")),
+                                                primaryButton: .destructive(Text("Remove")) {
+                                                    
+                                                    if let url = viewModel.removeSetUrl {
+                                                        viewModel.deleteUrl(url)
+                                                    }
+                                                },
+                                                secondaryButton: .cancel()
+                                            )
+                                        }
+                                    }
                                 }
                             }
+                            .onTapGesture {
+                                
+                                //App storage
+                                currentUrl = url.absoluteString
+                                
+                                print("Load Playlist file \(url)")
+                                
+                                //Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                                
+                                //Keep track for next in playlist after loading new set
+                                setInfoModel.setSettings.currentSetInList = url
+                                setInfoModel.setSettings.currentPlaylist = viewModel.playlist
+                                
+                                //Change the View to the view in the skin settings
+                                sessionDisplay = setInfoModel.setSettings.defaultSkin
+                                
+                            }
+                            
+                            
                         }
                         .frame(height: 55)
                     }

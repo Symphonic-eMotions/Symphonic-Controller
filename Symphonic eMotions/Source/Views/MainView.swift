@@ -46,7 +46,7 @@ struct MainView: View {
             (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
         ]
         
-        if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.creator.rawValue) == .creator {
+        if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
             items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
         }
         
