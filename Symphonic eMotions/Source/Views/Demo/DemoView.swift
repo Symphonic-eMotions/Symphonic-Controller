@@ -23,12 +23,14 @@ struct DemoView: View {
                 
                 Image("LogoColor")
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 120, height: 120)
                     .cornerRadius(10)
+                    .padding(.trailing)
                 
                 
                 Text("Symphonic eMotions")
                     .font(.largeTitle)
+                    .scaleEffect(1.2)
                     .fontWeight(.regular)
                     .padding(.leading, 40)
             }
@@ -60,10 +62,11 @@ struct DemoView: View {
             
             HStack{
                 Text(NSLocalizedString("Welcome home", comment: ""))
-                    .font(.headline)
+                    .font(.title)
+                    .scaleEffect(1.1)
                     .padding(.top, 70)
-                    .padding(.trailing, 70)
-                    .padding(.leading, 70)
+                    .padding(.trailing, 100)
+                    .padding(.leading, 100)
                 
             }
             Spacer()
@@ -72,4 +75,3 @@ struct DemoView: View {
         }
     }
 }
-

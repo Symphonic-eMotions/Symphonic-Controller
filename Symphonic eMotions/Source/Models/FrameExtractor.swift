@@ -6,6 +6,10 @@ import AVFoundation
 import Combine
 import CoreImage.CIFilterBuiltins
 
+enum CameraError: Error {
+    case noCameraAvailable
+}
+
 private let _shared = FrameExtractor()
 
 protocol FrameExtractorDelegate: AnyObject {
@@ -94,35 +98,77 @@ class FrameExtractor: NSObject {
             self.sessionQueue.resume()
         }
     }
-    
+  
     private func configureSession() {
         guard permissionGranted else {
             print("Error: No permissionGranted")
             return
         }
         captureSession.sessionPreset = quality
-        guard let captureDevice = selectCaptureDevice() else {
-            print("Error: No captureDevice")
-            return
+        
+        switch selectCaptureDevice() {
+        case .success(let captureDevice):
+            do {
+                let captureDeviceInput = try AVCaptureDeviceInput(device: captureDevice)
+                
+                guard captureSession.canAddInput(captureDeviceInput) else {
+                    print("Error: No captureSession")
+                    return
+                }
+                captureSession.addInput(captureDeviceInput)
+                
+                let videoOutput = AVCaptureVideoDataOutput()
+                videoOutput.setSampleBufferDelegate(self, queue: bufferQueue)
+                
+                guard captureSession.canAddOutput(videoOutput) else {
+                    print("Error: No captureSession.canAddOutput")
+                    return
+                }
+                captureSession.addOutput(videoOutput)
+                setConnectionOrientation()
+                
+            } catch {
+                print("Error: Unable to initialize captureDeviceInput:", error)
+            }
+            
+        case .failure(let error):
+            switch error {
+            case .noCameraAvailable:
+                print("Error: No captureDevice")
+            }
         }
-        guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else {
-            print("Error: No captureDeviceInput")
-            return
-        }
-        guard captureSession.canAddInput(captureDeviceInput) else {
-            print("Error: No captureSession")
-            return
-        }
-        captureSession.addInput(captureDeviceInput)
-        let videoOutput = AVCaptureVideoDataOutput()
-        videoOutput.setSampleBufferDelegate(self, queue: bufferQueue)
-        guard captureSession.canAddOutput(videoOutput) else {
-            print("Error: No captureSession.canAddOutput")
-            return
-        }
-        captureSession.addOutput(videoOutput)
-        setConnectionOrientation()
     }
+
+    
+//    private func configureSession() {
+//        guard permissionGranted else {
+//            print("Error: No permissionGranted")
+//            return
+//        }
+//        captureSession.sessionPreset = quality
+//
+//        guard let captureDevice = selectCaptureDevice() else {
+//            print("Error: No captureDevice")
+//            return
+//        }
+//        guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else {
+//            print("Error: No captureDeviceInput")
+//            return
+//        }
+//        guard captureSession.canAddInput(captureDeviceInput) else {
+//            print("Error: No captureSession")
+//            return
+//        }
+//        captureSession.addInput(captureDeviceInput)
+//        let videoOutput = AVCaptureVideoDataOutput()
+//        videoOutput.setSampleBufferDelegate(self, queue: bufferQueue)
+//        guard captureSession.canAddOutput(videoOutput) else {
+//            print("Error: No captureSession.canAddOutput")
+//            return
+//        }
+//        captureSession.addOutput(videoOutput)
+//        setConnectionOrientation()
+//    }
     
     private func setConnectionOrientation() {
         guard let videoOutput = captureSession.outputs.first else { return }
@@ -151,16 +197,17 @@ class FrameExtractor: NSObject {
         connection.isVideoMirrored = position == .front
     }
     
-    private func selectCaptureDevice() -> AVCaptureDevice? {
+    private func selectCaptureDevice() -> Result<AVCaptureDevice, CameraError>  {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
             print("builtInWideAngleCamera")
-            return device
+            return .success(device)
         } else if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .front) {
             print("builtInDualCamera")
-            return device
+            return .success(device)
         } else {
             print("Error: No selectCaptureDevice (.video .front)")
-            fatalError("Missing expected front camera device.")
+//            fatalError("Missing expected front camera device.")
+            return .failure(.noCameraAvailable)
         }
     }
     

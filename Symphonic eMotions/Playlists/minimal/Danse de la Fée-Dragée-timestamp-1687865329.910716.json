@@ -60,7 +60,7 @@
             "nodeSettings" : {
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.012800000000000001,
-              "rampSpeedDown" : 0.030100000000000009
+              "rampSpeedDown" : 0.022648751735687256
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -201,8 +201,8 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.1202,
-              "rampSpeedDown" : 0.048399999999999999
+              "rampSpeed" : 0.034165065735578537,
+              "rampSpeedDown" : 0.016506718471646309
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -228,8 +228,8 @@
             "nodeName" : "delay",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.1202,
-              "rampSpeedDown" : 0.048399999999999999
+              "rampSpeed" : 0.044145874679088593,
+              "rampSpeedDown" : 0.0042226486839354038
             },
             "nodeType" : "effect",
             "parameter" : "dryWetMix",
@@ -362,8 +362,8 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.13170000000000001,
-              "rampSpeedDown" : 0.066799999999999998
+              "rampSpeed" : 0.059117086231708527,
+              "rampSpeedDown" : 0.018042227253317833
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -473,8 +473,8 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.040000000000000001,
-              "rampSpeedDown" : 0.079799999999999996
+              "rampSpeed" : 0.027255279943346977,
+              "rampSpeedDown" : 0.033013436943292618
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -623,8 +623,8 @@
             "nodeName" : "delay",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.044700000000000004,
-              "rampSpeedDown" : 0.0117
+              "rampSpeed" : 0.033397313207387924,
+              "rampSpeedDown" : 0.0088291754946112633
             },
             "nodeType" : "effect",
             "parameter" : "dryWetMix",

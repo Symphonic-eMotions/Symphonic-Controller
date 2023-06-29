@@ -79,7 +79,7 @@ struct LightView: View {
                 }
                 .onAppear {
                     self.whiteTimer = Timer.scheduledTimer(
-                        withTimeInterval: 0.04167,
+                        withTimeInterval: 0.25,
                         repeats: true
                     ) { timer in
                         
@@ -91,7 +91,7 @@ struct LightView: View {
                             ciImage: ciImage
                         )
                         let averageBrightnessInt: Int = Int(averageBrightness/2.55)
-                        isAbove30 = averageBrightnessInt >= 30
+                        isAbove30 = averageBrightnessInt >= 10
                         averageBrightnessResult = "\(averageBrightnessInt)%"
                         
                         // Convert CIImage to UIImage for preview

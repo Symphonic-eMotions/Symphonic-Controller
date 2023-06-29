@@ -49,8 +49,11 @@ extension Conductor {
         sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: lengthInBeats))
             
         for audioFile in audioFiles {
+            
+            let noteNumber = midiNoteNumber(fromFileName: audioFile.fileName) ?? 48
+            
             sequencer.tracks.first?.add(
-                noteNumber: audioFile.midiNote,
+                noteNumber: MIDINoteNumber(noteNumber),
                 velocity: 120,
                 position: Duration(beats: 0),
                 duration: Duration(beats: (audioFile.lengthInBeats - 0.0001))

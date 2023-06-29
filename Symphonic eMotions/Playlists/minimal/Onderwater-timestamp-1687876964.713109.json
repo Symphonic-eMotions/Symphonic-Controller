@@ -59,7 +59,7 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.018,
+              "rampSpeed" : 0.017999999999999999,
               "rampSpeedDown" : 0.02
             },
             "nodeType" : "effect",
@@ -75,7 +75,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : 2.6536324,
+      "instrumentVolume" : 2.6536324024200439,
       "levels" : [
         0,
         1,
@@ -183,8 +183,8 @@
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.02699846401810646,
-              "rampSpeedDown" : 0.017981866374611855
+              "rampSpeed" : 0.0061420346610248089,
+              "rampSpeedDown" : 0.00076775433262810111
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequencyInverted",
@@ -290,8 +290,8 @@
             "nodeName" : "",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.01913323439657688,
-              "rampSpeedDown" : 0.01931317336857319
+              "rampSpeed" : 0.019133234396576881,
+              "rampSpeedDown" : 0.019313173368573189
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
@@ -398,7 +398,7 @@
             "nodeName" : "",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.03133162483572961,
+              "rampSpeed" : 0.031331624835729613,
               "rampSpeedDown" : 0.019522063434123993
             },
             "nodeType" : "sequencer",
@@ -510,7 +510,7 @@
               0,
               2
             ],
-            "value" : 0.563
+            "value" : 0.56300002336502075
           }
         }
       ],
@@ -676,8 +676,8 @@
             "nodeName" : "",
             "nodeSettings" : {
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.03,
-              "rampSpeedDown" : 0.05
+              "rampSpeed" : 0.029999999999999999,
+              "rampSpeedDown" : 0.050000000000000003
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
@@ -770,7 +770,7 @@
               0,
               1
             ],
-            "value" : 0.1
+            "value" : 0.10000000149011612
           },
           "phaserDryWetMixer" : {
             "range" : [
@@ -784,7 +784,7 @@
               0,
               1
             ],
-            "value" : 0.1
+            "value" : 0.10000000149011612
           },
           "phaserInverted" : {
             "range" : [
@@ -798,14 +798,14 @@
               24,
               360
             ],
-            "value" : 42.33
+            "value" : 42.330001831054688
           },
           "phaserNotchFrequency" : {
             "range" : [
-              1.1,
+              1.1000000000000001,
               4
             ],
-            "value" : 0.4
+            "value" : 0.40000000596046448
           },
           "phaserNotchMaximumFrequency" : {
             "range" : [
@@ -875,7 +875,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -24.17021,
+      "instrumentVolume" : -24.170209884643555,
       "levels" : [
         4,
         5,
@@ -984,7 +984,7 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -11.872337,
+      "instrumentVolume" : -11.872337341308594,
       "levels" : [
         4,
         5,
@@ -1065,14 +1065,14 @@
       "attackTime" : {
         "range" : [
           0.0001,
-          0.2
+          0.20000000000000001
         ],
-        "value" : 0.001
+        "value" : 0.0010000000474974513
       },
       "effectName" : "compressor",
       "headRoom" : {
         "range" : [
-          0.1,
+          0.10000000000000001,
           40
         ],
         "value" : 4
@@ -1082,14 +1082,14 @@
           -40,
           40
         ],
-        "value" : 29.893236
+        "value" : 29.89323616027832
       },
       "releaseTime" : {
         "range" : [
           0.01,
           3
         ],
-        "value" : 0.05
+        "value" : 0.05000000074505806
       },
       "threshold" : {
         "range" : [
@@ -1106,14 +1106,14 @@
           0,
           1
         ],
-        "value" : 0.8
+        "value" : 0.80000001192092896
       },
       "reverbPreset" : {
         "range" : [
           0,
           12
         ],
-        "value" : 11.263346
+        "value" : 11.263345718383789
       }
     }
   ],

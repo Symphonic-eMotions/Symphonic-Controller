@@ -11,6 +11,27 @@ import AVFAudio
 
 extension Conductor {
     
+    func midiNoteNumber(fromFileName fileName: String) -> Int? {
+        let noteNameToMidi: [String: Int] = [
+            "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "F": 5,
+            "F#": 6, "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11
+        ]
+        let baseMidiNoteNumberForC0 = 12
+
+        // Split the string into components using "_" as the separator
+        let components = fileName.split(separator: "_")
+        guard let lastComponent = components.last else { return nil }
+
+        // Split the last component into note and octave
+        let noteAndOctave = lastComponent.split(separator: ".").first?.split(separator: "#")
+        guard let note = noteAndOctave?.first, let octave = noteAndOctave?.last else { return nil }
+        
+        guard let noteValue = noteNameToMidi[String(note).uppercased()] else { return nil }
+        guard let octaveValue = Int(octave) else { return nil }
+
+        return baseMidiNoteNumberForC0 + (octaveValue * 12) + noteValue
+    }
+    
     internal func createAudioBufferSampler(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
@@ -69,10 +90,15 @@ extension Conductor {
         }
             
         sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: lengthInBeats))
+        
+        //This could be used to cennect to editor note numbers, looping can be done
             
         for audioFile in audioFiles {
+            
+            let noteNumber = midiNoteNumber(fromFileName: audioFile.fileName) ?? 48
+            
             sequencer.tracks.first?.add(
-                noteNumber: audioFile.midiNote,
+                noteNumber: MIDINoteNumber(noteNumber),
                 velocity: 127,
                 position: Duration(beats: 0),
                 duration: Duration(beats: (audioFile.lengthInBeats - 0.0001))

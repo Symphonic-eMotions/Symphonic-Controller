@@ -17,30 +17,28 @@ struct IntroductionTitle: View {
     public var nextPage: SessionDisplay
     var introductionNoteNumbers: [Int]
     
-//    @State var setIsPlaying: Bool = false;
-    
     var body: some View {
         
         HStack{
             
             Spacer()
             
-                Text(NSLocalizedString(localizedString, comment: ""))
-                    .font(.system(size: 40))
-                    .padding()
+            Text(NSLocalizedString(localizedString, comment: ""))
+                .font(.system(size: 40))
+                .padding()
+            
+            ZStack {
+                Rectangle()
+                    .frame(width: 200, height: 60)
+                    .foregroundColor(.clear)
+                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                    .background( Color.accentColor )
                 
-                ZStack {
-                    Rectangle()
-                        .frame(width: 200, height: 60)
-                        .foregroundColor(.clear)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( Color.accentColor )
-                    
-                    Text(NSLocalizedString("Continue", comment: ""))
-                        .font(.system(size: 30))
-                        .padding()
-                }
-                .onTapGesture {
+                Text(NSLocalizedString("Continue", comment: ""))
+                    .font(.system(size: 30))
+                    .padding()
+            }
+            .onTapGesture {
                 withAnimation {
                     //Shut down audio test notes
                     if nextPage == .page03 {
@@ -51,36 +49,6 @@ struct IntroductionTitle: View {
                             noteOn: true
                         )
                     }
-                    
-//                    if nextPage == .page05 {
-//                        if setIsPlaying {
-//
-//                            print("Stop tracks")
-//
-//                            setInfoModel.conductor.pauzeEngineAndStopTracks(
-//                                setSettings: setInfoModel.setSettings
-//                            )
-//
-//                            setIsPlaying = false
-//                        }
-//                        else{
-//
-//                            print("Start tracks")
-//
-//                            setInfoModel.conductor.playEngineAndTracks(
-//                                setSettings: setInfoModel.setSettings,
-//                                level: 0
-//                            )
-//
-//                            setInfoModel.conductor.levelController(
-//                                level: 0,
-//                                setSettings: setInfoModel.setSettings
-//                            )
-//
-//                            setIsPlaying = true
-//                        }
-//                    }
-                    
                     //At the end of the introduction go to the demo
                     if nextPage == .demo {
                         sessionDisplay = .demo

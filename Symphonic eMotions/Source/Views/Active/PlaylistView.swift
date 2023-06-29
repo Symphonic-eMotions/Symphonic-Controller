@@ -87,19 +87,7 @@ struct PlaylistView: View {
                                     .padding(.horizontal, 5.0)
                                     .background(Color.accentColor)
                                     .cornerRadius(5.0)
-                                    .onLongPressGesture {
-                                        
-                                        //Edit file
-                                        currentUrl = url.absoluteString
-                                        
-                                        //Load settings over current
-                                        setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
-                                        
-                                        //Change the View
-                                        sessionDisplay = .setInfo
-                                        sessionDisplaySub = .playListEditor
-                                    }
-                                
+                                    
                                 //The file name and date
                                 let filesName = fileController.setNameCustomName(url: url)
                                 
@@ -156,6 +144,18 @@ struct PlaylistView: View {
                                 //Change the View to the view in the skin settings
                                 sessionDisplay = setInfoModel.setSettings.defaultSkin
                                 
+                            }
+                            .onLongPressGesture {
+                                
+                                //Edit file
+                                currentUrl = url.absoluteString
+                                
+                                //Load settings over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                                
+                                //Change the View
+                                sessionDisplay = .setInfo
+                                sessionDisplaySub = .playListEditor
                             }
                             
                             

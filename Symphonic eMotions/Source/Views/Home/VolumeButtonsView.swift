@@ -22,14 +22,18 @@ struct VolumeView: UIViewRepresentable {
 
 struct VolumeButtonsView: View {
     
+    @ObservedObject var setInfoModel: SetInfoModel
     @State private var sliderValue: Float = AVAudioSession.sharedInstance().outputVolume
-
+    @Binding public var testSoundPlaying: Bool
+    internal var testSoundNoteNumbers: [Int]
+    
     var body: some View {
 
         VStack {
             
             HStack(spacing: 20) {
                 
+                //Volume down
                 ZStack {
                     Rectangle()
                         .frame(width: 90, height: 90)
@@ -46,6 +50,7 @@ struct VolumeButtonsView: View {
                     }
                 }
                 
+                //Volume up
                 ZStack {
                     Rectangle()
                         .frame(width: 90, height: 90)
@@ -54,6 +59,20 @@ struct VolumeButtonsView: View {
                         .background( Color.accentColor )
                     
                     Button(action: {
+                        
+                        if !testSoundPlaying {
+                            
+                            //Direct connection Introductie set
+                            setInfoModel.conductor.playNoteNumbersIntroduction(
+                                trackId: "realLife",
+                                soundSource: .audioBuffer,
+                                noteNumbers: testSoundNoteNumbers,
+                                noteOn: testSoundPlaying
+                            )
+                            
+                            testSoundPlaying = true
+                        }
+                        
                         self.increaseVolume()
                     }) {
                         Image(systemName: "speaker.plus.fill")
@@ -61,7 +80,8 @@ struct VolumeButtonsView: View {
                             .foregroundColor(.white)
                     }
                 }
-            
+                
+                //Speaker visual
                 SpeakerView(
                     sliderValue: $sliderValue
                 )

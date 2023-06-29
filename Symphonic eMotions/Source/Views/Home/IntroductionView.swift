@@ -17,8 +17,8 @@ struct IntroductionView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
-    @State private var testSoundPlaying: Bool = false
-    internal var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
+    @State public var testSoundPlaying: Bool = false
+    var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
     
     @State var setIsPlaying: Bool = false;
     
@@ -67,52 +67,94 @@ struct IntroductionView: View {
                     Spacer()
                     
                     VStack{
-                        //Start stop
                         
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 220, height: 60)
-                                .foregroundColor(.clear)
-                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                .background( Color.accentColor )
-                            
-                            Text( testSoundPlaying ?
-                                  NSLocalizedString("Stop audio", comment: "") :
-                                    NSLocalizedString("Test audio", comment: "")
-                            )
-                            .font(.system(size: 30))
-                            .padding()
-                        }
-                        .onTapGesture {
-                            //Direct connection Introductie set
-                            setInfoModel.conductor.playNoteNumbersIntroduction(
-                                trackId: "realLife",
-                                soundSource: .audioBuffer,
-                                noteNumbers: testSoundNoteNumbers,
-                                noteOn: testSoundPlaying
-                            )
-                            
-                            testSoundPlaying.toggle()
-                        }
+                        //Start stop on buttons itself
+                        
+//                        ZStack {
+//                            Rectangle()
+//                                .frame(width: 220, height: 60)
+//                                .foregroundColor(.clear)
+//                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+//                                .background( Color.accentColor )
+//
+//                            Text( testSoundPlaying ?
+//                                  NSLocalizedString("Stop audio", comment: "") :
+//                                    NSLocalizedString("Test audio", comment: "")
+//                            )
+//                            .font(.system(size: 30))
+//                            .padding()
+//                        }
+//                        .onTapGesture {
+//                            //Direct connection Introductie set
+//                            setInfoModel.conductor.playNoteNumbersIntroduction(
+//                                trackId: "realLife",
+//                                soundSource: .audioBuffer,
+//                                noteNumbers: testSoundNoteNumbers,
+//                                noteOn: testSoundPlaying
+//                            )
+//
+//                            testSoundPlaying.toggle()
+//                        }
                         
                         //Volume
                         VStack(alignment: .leading){
                             
-                            VolumeButtonsView()
-                                .padding(.top)
-                            
+                            VolumeButtonsView(
+                                setInfoModel: setInfoModel,
+                                testSoundPlaying: $testSoundPlaying,
+                                testSoundNoteNumbers: testSoundNoteNumbers
+                            )
+                            .padding(.top)
+                                
                         }
                     }
                     Spacer()
                     
-                    IntroductionTitle(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
-                        localizedString: "Connect audio",
-                        nextPage: .page03,
-                        introductionNoteNumbers: testSoundNoteNumbers
-                    )
+//                    IntroductionTitle(
+//                        setInfoModel: setInfoModel,
+//                        sessionDisplay: $sessionDisplay,
+//                        sessionDisplaySub: $sessionDisplaySub,
+//                        localizedString: "Connect audio",
+//                        nextPage: .page03,
+//                        introductionNoteNumbers: testSoundNoteNumbers
+//                    )
+//
+                    HStack{
+                        
+                        Spacer()
+                        
+                        Text(NSLocalizedString("Connect audio", comment: ""))
+                            .font(.system(size: 40))
+                            .padding()
+                        
+                        ZStack {
+                            Rectangle()
+                                .frame(width: 200, height: 60)
+                                .foregroundColor(.clear)
+                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                .background( testSoundPlaying ? Color.accentColor : .gray )
+                                
+                            Text(NSLocalizedString("Continue", comment: ""))
+                                .font(.system(size: 30))
+                                .padding()
+                        }
+                        .disabled( !testSoundPlaying )
+                        .onTapGesture {
+                            withAnimation {
+                                //Shut down audio test notes
+                                setInfoModel.conductor.playNoteNumbersIntroduction(
+                                    trackId: "realLife",
+                                    soundSource: .audioBuffer,
+                                    noteNumbers: testSoundNoteNumbers,
+                                    noteOn: true
+                                )
+                                
+                                sessionDisplaySub = .page03
+                            }
+                        }
+                        Spacer()
+                    }
+                    .padding(.bottom)
                     
                     Spacer()
                 }

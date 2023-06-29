@@ -161,12 +161,12 @@ struct SoundSourceView: View {
                             ForEach(audioFiles.indices, id: \.self) { index in
                                 VStack(alignment: .leading) {
                                     HStack{
-                                        VStack(alignment: .leading){
-                                            Text("\(audioFiles[index].fileName).\(audioFiles[index].fileExtension)")
-                                            //Text("MIDI Note: \(audioFiles[index].midiNote)")
-                                            //Text("Length in Beats: \(audioFiles[index].lengthInBeats)")
-                                        }
+                                        Text("\(audioFiles[index].fileName).\(audioFiles[index].fileExtension)")
+                                        
+                                        Text("Length in Beats: \(audioFiles[index].lengthInBeats)")
+                                        
                                         Spacer()
+                                        
                                         Button("-") {
                                             //From file
                                             setInfoModel.setSettings.tracks[trackId]?.audioFiles.remove(at: index)

@@ -279,14 +279,12 @@ extension InstrumentsSet.Track {
         private enum AudioFileKeys: String, CodingKey {
             case fileName
             case fileExtension
-            case midiNote
             case lengthInBeats
             case source
         }
 
         let fileName: String
         let fileExtension: String
-        let midiNote: UInt8
         let lengthInBeats: Double
         let source: Source
 
@@ -294,7 +292,6 @@ extension InstrumentsSet.Track {
             let container = try decoder.container(keyedBy: AudioFileKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
-            midiNote = try container.decode(UInt8.self, forKey: .midiNote)
             lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
             source = try container.decodeIfPresent(Source.self, forKey: .source) ?? .user
         }
@@ -308,7 +305,6 @@ extension InstrumentsSet.Track {
         ){
             self.fileName = fileName
             self.fileExtension = fileExtension
-            self.midiNote = midiNote
             self.lengthInBeats = lengthInBeats
             self.source = source
         }
@@ -320,7 +316,6 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
         var container = encoder.container(keyedBy: AudioFileKeys.self)
         try container.encode(fileName, forKey: .fileName)
         try container.encode(fileExtension, forKey: .fileExtension)
-        try container.encode(midiNote, forKey: .midiNote)
         try container.encode(lengthInBeats, forKey: .lengthInBeats)
         try container.encode(source, forKey: .source)
     }
@@ -347,19 +342,16 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
 //            let container = try decoder.container(keyedBy: AudioFileKeys.self)
 //            fileName = try container.decode(String.self, forKey: .fileName)
 //            fileExtension = try container.decode(String.self, forKey: .fileExtension)
-//            midiNote = try container.decode(UInt8.self, forKey: .midiNote)
 //            lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
 //        }
 //
 //        init(
 //            fileName: String,
 //            fileExtension: String,
-//            midiNote: UInt8,
 //            lengthInBeats: Double
 //        ){
 //            self.fileName = fileName
 //            self.fileExtension = fileExtension
-//            self.midiNote = midiNote
 //            self.lengthInBeats = lengthInBeats
 //        }
 //    }
@@ -370,7 +362,6 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
 //        var container = encoder.container(keyedBy: AudioFileKeys.self)
 //        try container.encode(fileName, forKey: .fileName)
 //        try container.encode(fileExtension, forKey: .fileExtension)
-//        try container.encode(midiNote, forKey: .midiNote)
 //        try container.encode(lengthInBeats, forKey: .lengthInBeats)
 //    }
 //}
