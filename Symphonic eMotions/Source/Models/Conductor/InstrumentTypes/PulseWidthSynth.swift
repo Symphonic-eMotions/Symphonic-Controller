@@ -61,7 +61,6 @@ extension Conductor {
                 env.sustainLevel = 0
                 env.releaseDuration = 0.005
                 
-                
                 let noteOn = MIDIEvent(noteOn: note, velocity: newVelocity, channel: 1)
                 env.scheduleMIDIEvent(event: noteOn)
                 

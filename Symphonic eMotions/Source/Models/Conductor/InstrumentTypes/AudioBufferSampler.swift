@@ -55,7 +55,7 @@ extension Conductor {
         
         //TODO: Solve for looping stems
         //Create midiSequence in real time based on given midinumber
-        var lengthInBeats: Double = 1
+        var longestLengthInBeats: Double = 1
             
         for audioFile in audioFiles {
             
@@ -76,9 +76,9 @@ extension Conductor {
                 )
             }
             
-            //Get the longest length in beat
-            if audioFile.lengthInBeats > lengthInBeats {
-                lengthInBeats = audioFile.lengthInBeats
+            //clearRange
+            if audioFile.lengthInBeats > longestLengthInBeats {
+                longestLengthInBeats = audioFile.lengthInBeats
             }
             
             do {
@@ -88,28 +88,40 @@ extension Conductor {
                 print("Error loading audio file at \(audioFileURL): \(error)")
             }
         }
-            
-        sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: lengthInBeats))
         
-        //This could be used to cennect to editor note numbers, looping can be done
+        //Clear range is the reason there are 2 audioFile loops
+        sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: longestLengthInBeats))
+        
+        //Fill sequencer with midi info from file name and setting
+        let startBeat: MusicTimeStamp = 0
+        var interval: MusicTimeStamp = 0
             
-        for audioFile in audioFiles {
+        for (index, audioFile) in audioFiles.enumerated() {
             
             let noteNumber = midiNoteNumber(fromFileName: audioFile.fileName) ?? 48
+            let lengthInBeats = audioFile.lengthInBeats
+            
+            //position start with 0 adds PREVIOUS value
+            let startTime = startBeat + (interval * Double(index))
+            //Remember for next loop
+            interval = audioFile.lengthInBeats
+            
+            print("AudioBuffer sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
             
             sequencer.tracks.first?.add(
                 noteNumber: MIDINoteNumber(noteNumber),
                 velocity: 127,
-                position: Duration(beats: 0),
-                duration: Duration(beats: (audioFile.lengthInBeats - 0.0001))
+                position: Duration(beats: startTime),
+                duration: Duration(beats: (lengthInBeats - 0.0001))
             )
         }
         
         let sampler = MIDISampler(name: track.instrumentName)
         sampler.amplitude = track.volume
-            
+        
+        //No velocity
         sequencer.setGlobalMIDIOutput(sampler.midiIn)
-    
+        
         let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
         let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
         

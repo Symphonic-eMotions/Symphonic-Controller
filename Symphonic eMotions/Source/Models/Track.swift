@@ -285,7 +285,7 @@ extension InstrumentsSet.Track {
 
         let fileName: String
         let fileExtension: String
-        let lengthInBeats: Double
+        var lengthInBeats: Double
         let source: Source
 
         init(from decoder: Decoder) throws {

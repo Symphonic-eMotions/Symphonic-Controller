@@ -152,9 +152,11 @@ struct SetEditorView: View {
 //                Spacer()
 //            }
             LevelsView(
-                setInfoModel: setInfoModel
+                setInfoModel: setInfoModel,
+                trackLevels: $trackLevels,
+                noteNumbersLevels: $noteNumbersLevels,
+                midiClipsLevels: $midiClipsLevels
             )
         }
-        
     }
 }

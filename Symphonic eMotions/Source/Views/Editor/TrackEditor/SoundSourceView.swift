@@ -63,6 +63,7 @@ struct SoundSourceView: View {
             
             HStack(){
                 
+                //Sound Source
                 ZStack {
                     
                     Rectangle()
@@ -148,22 +149,61 @@ struct SoundSourceView: View {
                 
                 HStack(){
                     
-                    Text("Audio files")
-                        .frame(width: columnWidth, alignment: .leading)
-                    
                     //Info about file locations
                     HStack (spacing: 30) {
                         //Current audio files
                         //Button new audio file
                         //Button more info
-                        VStack{
+                        VStack(alignment: .leading, spacing: 20){
+                            
+                            HStack{
+                                Text("Audio files")
+                                HStack{
+                                    //Notice we need to reload
+                                    if isNewAudio {
+                                        //Notice we need to reload engine
+                                        Text(NSLocalizedString("Save and reopen", comment: ""))
+                                            .foregroundStyle(.red)
+                                    }
+                                    
+                                    //Button new audio file
+                                    Button(action: {importing.toggle()}, label: {
+                                        Text("Add audio file")
+                                    })
+                                    
+                                    //Info about where to keep the audio files
+                                    Button(action: {
+                                        toggleInfoVisibility(for: "addAudio")
+                                    }) {
+                                        Image(systemName: "info.circle")
+                                            .font(.title)
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                            }
+                            
                             //Current audio files
                             ForEach(audioFiles.indices, id: \.self) { index in
+                                
                                 VStack(alignment: .leading) {
                                     HStack{
                                         Text("\(audioFiles[index].fileName).\(audioFiles[index].fileExtension)")
                                         
-                                        Text("Length in Beats: \(audioFiles[index].lengthInBeats)")
+                                        let binding = Binding<Int>(
+                                            get: {
+                                                Int(currentTrack.audioFiles[index].lengthInBeats)
+                                            },
+                                            set: { newValue in
+                                                currentTrack.audioFiles[index].lengthInBeats = Double(newValue)
+                                            }
+                                        )
+
+                                        TextField("Length in Beats", value: binding, formatter: NumberFormatter())
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            .padding()
+                                            .frame(width: 80)
+                                        
+                                        Text("Beats")
                                         
                                         Spacer()
                                         
@@ -177,37 +217,14 @@ struct SoundSourceView: View {
                                         .foregroundColor(.red)
                                     }
                                 }
+                                .frame(height: 60)
                             }
-                            HStack{
-                                //Notice we need to reload
-                                if isNewAudio {
-                                    //Notice we need to reload engine
-                                    Text(NSLocalizedString("Save and reopen", comment: ""))
-                                        .foregroundStyle(.red)
-                                }
-                                //Button new audio file
-//                                else{
-                                    Button(action: {importing.toggle()}, label: {
-                                        Text("Add audio file")
-                                    })
-//                                }
-                                
-                                //Info about where to keep the audio files
-                                Button(action: {
-                                    toggleInfoVisibility(for: "addAudio")
-                                }) {
-                                    Image(systemName: "info.circle")
-                                        .font(.title)
-                                        .foregroundColor(.blue)
-                                }
-                                .padding()
-                            }
+                        }
+                        
+                        if infoVisibility["addAudio", default: false] {
                             
-                            if infoVisibility["addAudio", default: false] {
-                                
-                                if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
-                                    Text("Keep .wav and .aiff files in \"\(displayName)/\(setInfoModel.setSettings.filesPath)/\"")
-                                }
+                            if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+                                Text("Keep .wav and .aiff files in \"\(displayName)/\(setInfoModel.setSettings.filesPath)/\"")
                             }
                         }
                     }
