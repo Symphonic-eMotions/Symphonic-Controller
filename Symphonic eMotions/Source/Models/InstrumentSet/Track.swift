@@ -275,20 +275,23 @@ extension InstrumentsSet.Track {
         case user
     }
 
-    struct AudioFile: Decodable {
+    struct AudioFile: Decodable, Identifiable {
         private enum AudioFileKeys: String, CodingKey {
+            case id
             case fileName
             case fileExtension
             case lengthInBeats
             case source
         }
-
+        
+        let id: UUID
         let fileName: String
         let fileExtension: String
         var lengthInBeats: Double
         let source: Source
 
         init(from decoder: Decoder) throws {
+            self.id = UUID()
             let container = try decoder.container(keyedBy: AudioFileKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
@@ -299,10 +302,10 @@ extension InstrumentsSet.Track {
         init(
             fileName: String,
             fileExtension: String,
-            midiNote: UInt8,
             lengthInBeats: Double,
             source: Source
         ){
+            self.id = UUID()
             self.fileName = fileName
             self.fileExtension = fileExtension
             self.lengthInBeats = lengthInBeats
@@ -321,47 +324,3 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
     }
 }
 
-
-//extension InstrumentsSet.Track {
-//
-//    struct AudioFile: Decodable {
-//
-//        private enum AudioFileKeys: String, CodingKey {
-//            case fileName
-//            case fileExtension
-//            case midiNote
-//            case lengthInBeats
-//        }
-//
-//        let fileName: String
-//        let fileExtension: String
-//        let midiNote: UInt8
-//        let lengthInBeats: Double
-//
-//        init(from decoder: Decoder) throws {
-//            let container = try decoder.container(keyedBy: AudioFileKeys.self)
-//            fileName = try container.decode(String.self, forKey: .fileName)
-//            fileExtension = try container.decode(String.self, forKey: .fileExtension)
-//            lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
-//        }
-//
-//        init(
-//            fileName: String,
-//            fileExtension: String,
-//            lengthInBeats: Double
-//        ){
-//            self.fileName = fileName
-//            self.fileExtension = fileExtension
-//            self.lengthInBeats = lengthInBeats
-//        }
-//    }
-//}
-//
-//extension InstrumentsSet.Track.AudioFile: Encodable {
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: AudioFileKeys.self)
-//        try container.encode(fileName, forKey: .fileName)
-//        try container.encode(fileExtension, forKey: .fileExtension)
-//        try container.encode(lengthInBeats, forKey: .lengthInBeats)
-//    }
-//}

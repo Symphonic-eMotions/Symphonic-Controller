@@ -114,13 +114,13 @@ struct SideBarView: View {
                             selectedMainItem = item.sessionDisplay
                         }
                     }) {
-//                        SidebarItemView(item: item, active: setInfoLocalState.setName == item.setName)
                         SidebarItemView(item: item, active: selectedMainItem == item.sessionDisplay)
                     }
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text("Editor open"), message: Text("Save set to continue"), dismissButton: .default(Text("Will do!")))
-                    }
+//                    .alert(isPresented: $showingAlert) {
+//                        Alert(title: Text("Editor open"), message: Text("Save set to continue"), dismissButton: .default(Text("Will do!")))
+//                    }
                 }
+                
                 ForEach(viewModel.getSetFiles(for: getFileGroup(for: sessionDisplaySub))) { setFile in
                     if setFile.fileGroup == getFileGroup(for: sessionDisplaySub) {
                         SetFileButtonView(

@@ -49,8 +49,8 @@ struct InLevelView: View{
                 
                 ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in
                     
-                    let inLevel: Bool = trackLevels[trackId]!.contains(level) ? true : false
-                    
+                    let inLevel: Bool = (trackLevels[trackId]?.contains(level) == true)
+
                     ZStack {
                         
                         Rectangle()

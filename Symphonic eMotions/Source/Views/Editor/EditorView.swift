@@ -9,11 +9,16 @@ import SwiftUI
 
 struct EditorView: View {
     
+    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "EditorView"
+    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     
+    @State var reloadView: Bool = false
+    
+    //What are we editing?
     @State var showEditorPart: EditorParts = .none
     
     //Set
@@ -275,16 +280,25 @@ struct EditorView: View {
                     )
                     fileController.addSetFileURLToController(fileName: fileName)
                     
+                    //Reopen the file
+                    setInfoModel.reloadSet(fileName: fileController.urlToFileName(url: URL(currentUrl)))
+                    
+                    
+                    
                     //Figure out if we opened from playlists
                     let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
-                    
-                    //Change the View (this check is doubled in createWorkingFile)
                     if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
                         sessionDisplay = .playlists
                         sessionDisplaySub = .playlists
                     } else {
-                        sessionDisplay = .setInfo
-                        sessionDisplaySub = .none
+                        
+                        
+                        self.reloadView.toggle()
+                        
+                        showEditorPart = .none
+                        
+                        sessionDisplaySub = .setInfo
+//                        sessionDisplaySub = .none
                     }
                     
                 }, color: .red, isSolid: true, maxWidth: 130, height: 35

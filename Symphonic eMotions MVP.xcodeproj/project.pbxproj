@@ -22,6 +22,7 @@
 		7C1FB0C029E820EC00621909 /* DefaultSkinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
+		7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */; };
 		7C2DDCB92A04F858001FE14F /* AreaOfInterestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */; };
 		7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */; };
 		7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */; };
@@ -52,7 +53,6 @@
 		7C6A8CFA2A4481BE0056BED3 /* IntroductionSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */; };
 		7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FC2A03EF3E006F8CCB /* Sets */; };
 		7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FD2A03EF3F006F8CCB /* Sounds */; };
-		7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6FC4652747DF6200BD64D6 /* Genres.swift */; };
 		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
@@ -179,6 +179,7 @@
 		7C1FB0BF29E820EC00621909 /* DefaultSkinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSkinView.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
+		7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNameUtils.swift; sourceTree = "<group>"; };
 		7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOfInterestView.swift; sourceTree = "<group>"; };
 		7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRangeCompressorEffect.swift; sourceTree = "<group>"; };
@@ -208,7 +209,6 @@
 		7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionSlider.swift; sourceTree = "<group>"; };
 		7C6C11FC2A03EF3E006F8CCB /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sets; path = Source/Sets; sourceTree = "<group>"; };
 		7C6C11FD2A03EF3F006F8CCB /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Source/Sounds; sourceTree = "<group>"; };
-		7C6FC4652747DF6200BD64D6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
@@ -380,6 +380,19 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		7C29AA152A4EE6070070D901 /* InstrumentSet */ = {
+			isa = PBXGroup;
+			children = (
+				C069590526B4E150002EB522 /* InstrumentsSet.swift */,
+				C069590326B4E0C7002EB522 /* Track.swift */,
+				7C1FB0B929E45C9F00621909 /* MidiFiles.swift */,
+				C0AFDD002705BC08006EF64F /* Part.swift */,
+				C0AFDD022705BC24006EF64F /* Effect.swift */,
+				7CF327C42989504F003D33D3 /* Skin.swift */,
+			);
+			path = InstrumentSet;
+			sourceTree = "<group>";
+		};
 		7C2EF60628B8CC7F00B75BE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +551,7 @@
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
 				7CCDE10328E2C65100343920 /* MasterTrackModel.swift */,
 				7CF50F4429ED52B80016BAF4 /* Forwarders.swift */,
+				7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */,
 			);
 			path = Conductor;
 			sourceTree = "<group>";
@@ -698,16 +712,10 @@
 			children = (
 				7CFA009B29A74F62001D8A5D /* SetSettings */,
 				7CFA009A29A74E5A001D8A5D /* Conductor */,
+				7C29AA152A4EE6070070D901 /* InstrumentSet */,
 				C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */,
 				C069591C26B4E6A2002EB522 /* ImageDifference.swift */,
 				7CB5834A292F9C2A000C46FF /* SessionDisplay.swift */,
-				7C6FC4652747DF6200BD64D6 /* Genres.swift */,
-				C069590526B4E150002EB522 /* InstrumentsSet.swift */,
-				C069590326B4E0C7002EB522 /* Track.swift */,
-				C0AFDD002705BC08006EF64F /* Part.swift */,
-				7C1FB0B929E45C9F00621909 /* MidiFiles.swift */,
-				C0AFDD022705BC24006EF64F /* Effect.swift */,
-				7CF327C42989504F003D33D3 /* Skin.swift */,
 				C069591E26B4E77E002EB522 /* AreaValues.swift */,
 				7C6A341A28425F01006F2E95 /* PartFeedback.swift */,
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
@@ -912,7 +920,6 @@
 				7CFB298329DCA90100DFA32E /* MidiClipsPositionsView.swift in Sources */,
 				7C9FB76D2A498F2B00490C59 /* LightView.swift in Sources */,
 				7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */,
-				7C6FC4662747DF6200BD64D6 /* Genres.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
 				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
 				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
@@ -928,6 +935,7 @@
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
+				7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */,
 				7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */,
 				7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */,
 				7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */,

@@ -146,11 +146,6 @@ struct SetEditorView: View {
                     .frame(width: 50)
                     .padding(.leading)
             }
-//            HStack{
-//                
-//                
-//                Spacer()
-//            }
             LevelsView(
                 setInfoModel: setInfoModel,
                 trackLevels: $trackLevels,

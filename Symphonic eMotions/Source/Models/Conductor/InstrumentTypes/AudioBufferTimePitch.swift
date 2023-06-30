@@ -50,7 +50,7 @@ extension Conductor {
             
         for audioFile in audioFiles {
             
-            let noteNumber = midiNoteNumber(fromFileName: audioFile.fileName) ?? 48
+            let noteNumber = midiNoteNumberFromFileName(audioFile.fileName) ?? 48
             
             sequencer.tracks.first?.add(
                 noteNumber: MIDINoteNumber(noteNumber),

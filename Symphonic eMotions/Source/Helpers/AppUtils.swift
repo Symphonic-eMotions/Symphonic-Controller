@@ -289,6 +289,30 @@ final class AppUtils {
         return fileName
     }
     
+    static func adjustArray(target: [Int], example: [Int]) -> [Int] {
+        var newTarget = target
+        if newTarget.count > example.count {
+            // If noteLevels is longer, remove the extra elements from the end
+            newTarget = Array(newTarget[..<example.count])
+        } else if newTarget.count < example.count {
+            // If noteLevels is shorter, append the last value until they're the same length
+            let lastValue = newTarget.last ?? 48
+            let addIndeces = example.count - newTarget.count
+            
+            print("ADD \(addIndeces) indeces")
+            
+            newTarget.append(contentsOf: Array(repeating: lastValue, count: addIndeces))
+        }
+        return newTarget
+    }
+    static func adjustArrayLevels(target: [Int], example: [Int]) -> [Int] {
+        if target.count == example.count {
+            return target
+        } else {
+            return Array(0..<example.count)
+        }
+    }
+    
     //Instrument set from current state
     static func createInstrumentSet(
         setSettings: SetSettings,
@@ -359,11 +383,17 @@ final class AppUtils {
                 storeParts.append(storePart)
             }
             
+            //Fix is length don't match current level length
+            let loopsToLevel = adjustArray(target: track.value.loopsToLevel, example: setSettings.levels)
+            let notesToLevel = adjustArray(target: track.value.notesToLevel, example: setSettings.levels)
+            let trackLevels = adjustArrayLevels(target: track.value.levels, example: setSettings.levels)
+            
             let midiFiles = [InstrumentsSet.Track.MidiFile(
                 fileName: track.value.midiFile,
                 fileExtension: "mid",
                 loopLength: track.value.loopLength,
-                loopsToLevel: track.value.loopsToLevel,
+                //Fix length anomalies
+                loopsToLevel: loopsToLevel,
                 loopsToGrid: track.value.loopsToGrid
             )]
             
@@ -381,13 +411,13 @@ final class AppUtils {
                 midiFiles: midiFiles,
                 midiGroup: track.value.midiGroup,
                 notesToGrid: track.value.notesToGrid,
-                notesToLevel: track.value.notesToLevel,
+                notesToLevel: notesToLevel,
                 notesSequenceType: track.value.notesSequenceType,
                 exsFiles: [InstrumentsSet.Track.ExsFile(fileName: track.value.exsFile.rawValue)],
                 audioFiles: track.value.audioFiles,
                 effects: instrumentSet.tracks[track.value.trackIndex].effects, //track.effects,
                 parts: storeParts,
-                levels: track.value.levels
+                levels: trackLevels
             )
             storeTracks.append(storeTrack)
         }

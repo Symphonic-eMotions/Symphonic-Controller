@@ -254,7 +254,8 @@ struct IntroductionView: View {
             .padding(.leading, UIScreen.main.bounds.width * 0.85)
             .onLongPressGesture {
                 withAnimation {
-                    sessionDisplay = .demo
+                    sessionDisplay = .pro
+                    sessionDisplaySub = .pro
                 }
             }
         }

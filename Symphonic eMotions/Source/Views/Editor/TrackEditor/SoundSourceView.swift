@@ -183,35 +183,42 @@ struct SoundSourceView: View {
                             }
                             
                             //Current audio files
-                            ForEach(audioFiles.indices, id: \.self) { index in
-                                
+                            ForEach(audioFiles) { audioFile in
                                 VStack(alignment: .leading) {
                                     HStack{
-                                        Text("\(audioFiles[index].fileName).\(audioFiles[index].fileExtension)")
+                                        Text("\(audioFile.fileName).\(audioFile.fileExtension)")
                                         
-                                        let binding = Binding<Int>(
-                                            get: {
-                                                Int(currentTrack.audioFiles[index].lengthInBeats)
-                                            },
-                                            set: { newValue in
-                                                currentTrack.audioFiles[index].lengthInBeats = Double(newValue)
-                                            }
-                                        )
+                                        if let index = audioFiles.firstIndex(where: { $0.id == audioFile.id }) {
+                                            
+                                            let binding = Binding<Int>(
+                                                get: {
+                                                    Int(audioFile.lengthInBeats)
+                                                },
+                                                set: { newValue in
+                                                    currentTrack.audioFiles[index].lengthInBeats = Double(newValue)
+                                                }
+                                            )
 
-                                        TextField("Length in Beats", value: binding, formatter: NumberFormatter())
-                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                            .padding()
-                                            .frame(width: 80)
+                                            TextField("Length in Beats", value: binding, formatter: NumberFormatter())
+                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                .padding()
+                                                .frame(width: 80)
+                                        }
                                         
                                         Text("Beats")
                                         
                                         Spacer()
                                         
                                         Button("-") {
-                                            //From file
-                                            setInfoModel.setSettings.tracks[trackId]?.audioFiles.remove(at: index)
                                             //From state
-                                            audioFiles.remove(at: index)
+                                            if let index = audioFiles.firstIndex(where: { $0.id == audioFile.id }) {
+                                                audioFiles.remove(at: index)
+                                            }
+                                            
+                                            //From file
+                                            if let index = setInfoModel.setSettings.tracks[trackId]?.audioFiles.firstIndex(where: { $0.id == audioFile.id }) {
+                                                setInfoModel.setSettings.tracks[trackId]?.audioFiles.remove(at: index)
+                                            }
                                         }
                                         .font(.system(size: 45))
                                         .foregroundColor(.red)
@@ -219,6 +226,7 @@ struct SoundSourceView: View {
                                 }
                                 .frame(height: 60)
                             }
+
                         }
                         
                         if infoVisibility["addAudio", default: false] {
@@ -251,17 +259,19 @@ struct SoundSourceView: View {
                                               code: NSFileReadNoSuchFileError,
                                               userInfo: [NSFilePathErrorKey: destinationUrl.path])
                             }
-                            
-                            // Create a new AudioFile object
-                            let midiNote: UInt8 = 60  // Replace with your logic to determine midiNote
-                            let lengthInBeats: Double = 4.0  // Replace with your logic to determine lengthInBeats
-                            let newAudioFile = InstrumentsSet.Track.AudioFile(fileName: fileName, fileExtension: fileExtension, midiNote: midiNote, lengthInBeats: lengthInBeats, source: .user
+                            //Create a new AudioFile object
+                            //File name input
+                            let midiNote = setInfoModel.conductor.midiNoteNumberFromFileName(fileName) ?? 48
+                            let lengthInBeats = setInfoModel.conductor.lengthInBeatsFromFileName(fileName: fileName) ?? 4
+                            let newAudioFile = InstrumentsSet.Track.AudioFile(
+                                fileName: fileName,
+                                fileExtension: fileExtension,
+                                lengthInBeats: lengthInBeats,
+                                source: .user
                             )
                             
                             setInfoModel.setSettings.tracks[trackId]?.audioFiles.append(newAudioFile)
-                            
                             audioFiles.append(newAudioFile)
-
                             isNewAudio = true
                             
                             print("Loaded Audio file: \(fileName)")
