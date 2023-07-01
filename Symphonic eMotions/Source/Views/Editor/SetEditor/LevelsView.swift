@@ -59,34 +59,33 @@ struct LevelsView: View {
             
             HStack{
                 Button("-") {
-//                    if setInfoModel.setSettings.levels.count > 1 {
                         
-                        setInfoModel.setSettings.levels.removeLast()
-                        levels.removeLast()
-                        
-                        let maxLevelIndex = setInfoModel.setSettings.levels.count
-                        
-                        //Remove this level from all track levels
-                        for key in $trackLevels.wrappedValue.keys {
-                            if var value = $trackLevels.wrappedValue[key] {
-                                value.removeAll { $0 == maxLevelIndex-1 }
-                                $trackLevels.wrappedValue[key] = value
-                            }
+                    setInfoModel.setSettings.levels.removeLast()
+                    levels.removeLast()
+                    
+                    let maxLevelIndex = setInfoModel.setSettings.levels.count - 1
+                    
+                    //Remove this level from all track levels
+                    for key in $trackLevels.wrappedValue.keys {
+                        if var value = $trackLevels.wrappedValue[key] {
+                            value.removeAll { $0 == maxLevelIndex }
+                            $trackLevels.wrappedValue[key] = value
                         }
-                        
-                        for key in $noteNumbersLevels.wrappedValue.keys {
-                            if var value = $noteNumbersLevels.wrappedValue[key] {
-                                value = AppUtils.adjustArray(target: value, example: setInfoModel.setSettings.levels)
-                                $noteNumbersLevels.wrappedValue[key] = value
-                            }
+                    }
+                    
+                    //Run through all tracks
+                    for key in $noteNumbersLevels.wrappedValue.keys {
+                        if var value = $noteNumbersLevels.wrappedValue[key] {
+                            value = AppUtils.adjustArray(target: value, example: setInfoModel.setSettings.levels)
+                            $noteNumbersLevels.wrappedValue[key] = value
                         }
-                        for key in $midiClipsLevels.wrappedValue.keys {
-                            if var value = $midiClipsLevels.wrappedValue[key], !value.isEmpty {
-                                value = AppUtils.adjustArray(target: value, example: setInfoModel.setSettings.levels)
-                                $midiClipsLevels.wrappedValue[key] = value
-                            }
+                    }
+                    for key in $midiClipsLevels.wrappedValue.keys {
+                        if var value = $midiClipsLevels.wrappedValue[key], !value.isEmpty {
+                            value = AppUtils.adjustArray(target: value, example: setInfoModel.setSettings.levels)
+                            $midiClipsLevels.wrappedValue[key] = value
                         }
-//                    }
+                    }
                 }
                 .disabled(setInfoModel.setSettings.levels.count == 1)
                 .font(.system(size: 45))

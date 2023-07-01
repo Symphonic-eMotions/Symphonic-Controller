@@ -18,14 +18,35 @@ struct NoteNumberLevelView: View {
     //trackLevels is this track in this level [0,3] == track is in the first and fourth lvel
     @Binding var trackLevels: [String: [Int]]
     //This will be the clip number for a level
-    //noteNumbersLevels is as long as levels [0,2] == first level will play 1st clip, second level 3th clip
+    //noteNumbersLevels has the generated sequence index within noteNumbersClips
     @Binding var noteNumbersLevels: [String: [Int]]
     //noteNumbersClips correlation between audio files (A,B,C) and its clip number
     //This is what we cycle in NoteNumberLevelView
     @Binding var noteNumbersClips: [String: [Int]]
-
+    
+    @State var nnLevels: [Int]
     
     let columnWidth: CGFloat = 150
+    
+    init(
+        setInfoModel: SetInfoModel,
+        currentTrack: TrackSettings,
+        trackId: String,
+        trackLevels: Binding<[String: [Int]]>,
+        noteNumbersLevels: Binding<[String: [Int]]>,
+        noteNumbersClips: Binding<[String: [Int]]>
+    ) {
+        self.setInfoModel = setInfoModel
+        self.currentTrack = currentTrack
+        self._trackId = State(initialValue: trackId)
+        self._trackLevels = trackLevels
+        self._noteNumbersLevels = noteNumbersLevels
+        self._noteNumbersClips = noteNumbersClips
+
+        // We initialize nnLevels with value from noteNumbersLevels[trackId]
+        let levels = noteNumbersLevels.wrappedValue[trackId] ?? []
+        self._nnLevels = State(initialValue: levels)
+    }
     
     var body: some View {
         
@@ -41,8 +62,12 @@ struct NoteNumberLevelView: View {
                 //Replace note numbers with midi clip
                 //TODO: Name Samples ABC
                 
+//                Text("\($trackLevels.wrappedValue.description)")
+//                Text("\($noteNumbersLevels.wrappedValue.description)")
+//                Text("\($noteNumbersClips.wrappedValue.description)")
+                
                 //Loop over levels
-                ForEach(0..<trackLevels[trackId]!.count, id: \.self) { level in
+                ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in
                     
                     //Show button per level
                     VStack{
@@ -55,7 +80,10 @@ struct NoteNumberLevelView: View {
                         //Make increment button to select note number midi clip
                         ZStack {
 
-                            let clipNumber = noteNumbersLevels[trackId]![level]
+                            //noteNumbersLevels has active levels [1,6]
+                            let clipNumber = noteNumbersLevels[trackId]?[level] ?? 0
+                            
+//                            let clipNumber = [trackId]![level]
                             let clipLetter: String = AppUtils.letterForNumber(clipNumber) ?? "-"
 
                             Rectangle()

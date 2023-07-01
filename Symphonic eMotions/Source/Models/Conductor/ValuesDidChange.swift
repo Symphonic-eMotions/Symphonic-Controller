@@ -153,8 +153,6 @@ extension Conductor {
 //                        }
                     }
                     
-                    
-                    
                     //Midi File Position Wave player, start with movement
                     if track.noteSource == .midiFile &&
                         [.loopedTrigger].contains(track.startType) {

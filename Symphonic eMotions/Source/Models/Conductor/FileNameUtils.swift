@@ -10,6 +10,9 @@ import Foundation
 extension Conductor {
     
     public func midiNoteNumberFromFileName(_ fileName: String, separators: [Character] = ["_", "-", "/"]) -> Int? {
+        
+//        print("fileName: \(fileName)")
+        
         let noteNameToMidi: [String: Int] = [
             "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "F": 5,
             "F#": 6, "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11
@@ -20,11 +23,22 @@ extension Conductor {
         let components = fileName.split{ separators.contains($0) }
         guard let lastComponent = components.last else { return nil }
         
-        // Split the last component into note and octave
-        let noteAndOctave = lastComponent.split(separator: ".").first?.split(separator: "#")
-        guard let note = noteAndOctave?.first, let octave = noteAndOctave?.last else { return nil }
+//        print("lastComponent: \(lastComponent)")
         
-        guard let noteValue = noteNameToMidi[String(note).uppercased()] else { return nil }
+        // Get the note and octave parts
+        var note = ""
+        var octave = ""
+        for char in lastComponent {
+            if char.isLetter || char == "#" {
+                note.append(char)
+            } else if char.isNumber {
+                octave.append(char)
+            }
+        }
+        
+//        print("Note: \(note) - Octave: \(octave)")
+        
+        guard let noteValue = noteNameToMidi[note] else { return nil }
         guard let octaveValue = Int(octave) else { return nil }
         
         return baseMidiNoteNumberForC0 + (octaveValue * 12) + noteValue

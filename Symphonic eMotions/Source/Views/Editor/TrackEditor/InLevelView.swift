@@ -17,6 +17,26 @@ struct InLevelView: View{
     @Binding var showEditorPart: EditorParts
     @Binding var trackLevels: [String: [Int]]
     
+    @State var tLevels: [Int]
+    
+    init(
+        setInfoModel: SetInfoModel,
+        currentTrack: TrackSettings,
+        trackId: String,
+        showEditorPart: Binding<EditorParts>,
+        trackLevels: Binding<[String: [Int]]>
+    ) {
+        self.setInfoModel = setInfoModel
+        self.currentTrack = currentTrack
+        self.trackId = trackId
+        self._showEditorPart = showEditorPart
+        self._trackLevels = trackLevels
+        
+        // Initialize tLevels with value from trackLevels[trackId]
+        let levels = trackLevels.wrappedValue[trackId] ?? []
+        self._tLevels = State(initialValue: levels)
+    }
+    
     let columnWidth: CGFloat = 150
     let color: Color = .accentColor
     
@@ -49,7 +69,8 @@ struct InLevelView: View{
                 
                 ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in
                     
-                    let inLevel: Bool = (trackLevels[trackId]?.contains(level) == true)
+                    //This should be based of a @State
+                    let inLevel: Bool = (tLevels.contains(level) == true)
 
                     ZStack {
                         
@@ -66,18 +87,32 @@ struct InLevelView: View{
                     }
                     .onTapGesture {
                         //For saving
-                        setInfoModel.setSettings.updateLevelIndex(trackId: trackId, level: level)
-                        //For UI
-                        if let i = trackLevels[trackId]!.firstIndex(of: level) {
-                            trackLevels[trackId]!.remove(at: i)
+//                        setInfoModel.setSettings.updateLevelIndex(trackId: trackId, level: level)
+                        
+                        //Local state
+                        if self.tLevels.contains(level) {
+                            self.tLevels.removeAll { $0 == level }
                         }
-                        else{
-                            trackLevels[trackId]!.append(level)
+                        else {
+                            self.tLevels.append(level)
                         }
+                        
+                        print("tLevels: \(tLevels)")
+                        
+                        //Store to disk
+                        currentTrack.levels = tLevels
+                        //Let binding know
+                        trackLevels[trackId] = tLevels
                     }
                 }
             }
         }
         .padding(.leading)
+        .onAppear {
+            // Ensure currentLevels is updated whenever the View appears
+            tLevels = currentTrack.levels
+            
+            print("currentTrack.levels: \(currentTrack.levels)")
+        }
     }
 }

@@ -222,13 +222,20 @@ class SetSettings: Identifiable, ObservableObject {
         }
     }
     
-    //Editor
-    func updateLevelIndex(trackId: String, level: Int){
-        if let index = self.tracks[trackId]!.levels.firstIndex(of: level) {
-            self.tracks[trackId]?.levels.remove(at: index)
-        }
-        else{
-            self.tracks[trackId]!.levels.append(level)
-        }
-    }
+//    //Editor
+//    func updateLevelIndex(trackId: String, level: Int){
+//        
+//        if let index = self.tracks[trackId]!.levels.firstIndex(of: level) {
+//            
+//            print("updateLevelIndex trackId: \(trackId) remove level: \(level)")
+//            
+//            self.tracks[trackId]?.levels.remove(at: index)
+//        }
+//        else{
+//            
+//            print("updateLevelIndex trackId: \(trackId) add level: \(level)")
+//            
+//            self.tracks[trackId]!.levels.append(level)
+//        }
+//    }
 }

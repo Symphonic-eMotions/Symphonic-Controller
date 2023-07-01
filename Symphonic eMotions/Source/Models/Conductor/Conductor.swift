@@ -488,7 +488,7 @@ final class Conductor {
                 let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOn)
             }
-            //Mute all other occasions, als after last level
+            //Mute all other occasions is after last level
             else {
                 
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
@@ -643,6 +643,7 @@ final class Conductor {
                         for audioFile in audioFiles {
                             
                             let noteNumber = midiNoteNumberFromFileName(audioFile.fileName) ?? 48
+                            
                             let lengthInBeats = lengthInBeatsFromFileName(fileName: audioFile.fileName) ?? audioFile.lengthInBeats
                             
                             //position start with 0 adds PREVIOUS value
@@ -650,7 +651,7 @@ final class Conductor {
                             //Remember for next loop
                             interval = interval + lengthInBeats
                             
-                            print("AudioBufferALL sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
+                            print("AudioBufferALL sequencer startTime: \(startTime) audioFileName: \(audioFile.fileName) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
                             
                             sequencer.tracks.first?.add(
                                 noteNumber: MIDINoteNumber(noteNumber),
@@ -703,6 +704,7 @@ final class Conductor {
                         currentSetLevel: currentSetLevel,
                         samplePath: samplePath
                     )
+                    
                 case .audioBufferTimed:
                     trackSamplers[track.id] = createAudioBufferTimePitch(
                         for: track,
@@ -888,17 +890,27 @@ final class Conductor {
     private func levelNoteNumberVariation(in level: Int, on track: TrackSettings) -> Void {
         if track.levels.contains(level) {
             
+            print("levelNoteNumberVariation -> copyMIDIfromMemory ")
+            
             guard track.notesToLevel.contains(level) else{
                 return
             }
             
             //Get length in beats from audio filws
             let clipLengths: [Double] = track.audioFiles.map { Double($0.lengthInBeats) }
+            
+            print("clipLengths: \(clipLengths)")
+            
             let nextVariation = track.notesToLevel[level]
+            
+            print("nextVariation: \(nextVariation)")
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
-            stopNotesTrackId(for: track.trackId)
+//            stopNotesTrackId(for: track.trackId)
+            
+            print("nextMIDIstartTime: \(nextMIDIstartTime)")
+            print("loopLength: \(clipLengths[nextVariation])")
             
             copyMIDIfromMemory(
                 trackId: track.trackId,
@@ -1019,7 +1031,9 @@ final class Conductor {
             
             setSettings.tracks.forEach { track in
                 //Both midi file and audioBuffer note numbers
+                
                 if track.value.startType == .loopedTransport {
+                    print("--> We're playing <--")
                     playTrack(track.value)
                 }
                 

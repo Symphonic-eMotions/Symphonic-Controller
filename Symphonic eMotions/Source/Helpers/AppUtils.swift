@@ -296,27 +296,33 @@ final class AppUtils {
     }
     
     static func adjustArray(target: [Int], example: [Int]) -> [Int] {
-        var newTarget = target
-        if newTarget.count > example.count {
+        var result = target
+        if result.count > example.count {
             // If noteLevels is longer, remove the extra elements from the end
-            newTarget = Array(newTarget[..<example.count])
-        } else if newTarget.count < example.count {
+            result = Array(result[..<example.count])
+        } else if result.count < example.count {
             // If noteLevels is shorter, append the last value until they're the same length
-            let lastValue = newTarget.last ?? 48
-            let addIndeces = example.count - newTarget.count
-            
-            print("ADD \(addIndeces) indeces")
-            
-            newTarget.append(contentsOf: Array(repeating: lastValue, count: addIndeces))
+            let lastValue = result.last ?? 48
+            let addIndeces = example.count - result.count
+            result.append(contentsOf: Array(repeating: lastValue, count: addIndeces))
         }
-        return newTarget
+        return result
     }
+    
     static func adjustArrayLevels(target: [Int], example: [Int]) -> [Int] {
-        if target.count == example.count {
-            return target
-        } else {
-            return Array(0..<example.count)
+        
+        var result = target
+
+        if result.count < example.count {
+            // If the target array is shorter, append the last value until they're the same length.
+            let lastValue = result.last ?? 0
+            result.append(contentsOf: Array(repeating: lastValue, count: example.count - target.count))
+        } else if result.count > example.count {
+            // If the target array is longer, remove the extra elements from the end.
+            result = Array(result[..<example.count])
         }
+
+        return result
     }
     
     //Instrument set from current state
@@ -391,8 +397,8 @@ final class AppUtils {
             
             //Fix is length don't match current level length
             let loopsToLevel = adjustArray(target: track.value.loopsToLevel, example: setSettings.levels)
+            
             let notesToLevel = adjustArray(target: track.value.notesToLevel, example: setSettings.levels)
-            let trackLevels = adjustArrayLevels(target: track.value.levels, example: setSettings.levels)
             
             let midiFiles = [InstrumentsSet.Track.MidiFile(
                 fileName: track.value.midiFile,
@@ -424,90 +430,10 @@ final class AppUtils {
                 audioFiles: track.value.audioFiles,
                 effects: instrumentSet.tracks[track.value.trackIndex].effects, //track.effects,
                 parts: storeParts,
-                levels: trackLevels
+                levels: track.value.levels
             )
             storeTracks.append(storeTrack)
         }
-        
-        
-        //OLD
-//        for track in instrumentSet.tracks {
-//            
-//            var storeParts: [InstrumentsSet.Track.Part] = []
-//            for part in track.parts {
-//                
-//                let storeNodeSettings = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
-//                    minimalLevel: setSettings.tracks[track.trackId]!.parts[part.id]!.minimalLevel,
-//                    rampSpeed: setSettings.tracks[track.trackId]!.parts[part.id]!.rampUp,
-//                    rampSpeedDown: setSettings.tracks[track.trackId]!.parts[part.id]!.rampDown
-//                )
-//                
-//                let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
-//                    trackId: part.damperTarget.trackId,
-//                    nodeType: part.damperTarget.nodeType,
-//                    nodeName: part.damperTarget.nodeName,
-//                    parameter: part.damperTarget.parameter,
-//                    parameterRange: part.damperTarget.parameterRange,
-//                    midiData: part.damperTarget.midiData,
-//                    nodeSettings: storeNodeSettings,
-//                    dampMode: part.damperTarget.dampMode
-//                )
-//                
-//                let storePart = InstrumentsSet.Track.Part(
-//                    instrumentPartName: part.instrumentPartName,
-//                    areaOfInterest: setSettings.tracks[track.trackId]!.parts[part.id]!.areaOfInterest,
-//                    dontDrawVisual: part.dontDrawVisual,
-//                    damperTarget: storeDamperTarget
-//                )
-//                storeParts.append(storePart)
-//            }
-//            
-//            let midiFiles = [InstrumentsSet.Track.MidiFile(
-//                fileName: setSettings.tracks[track.trackId]!.midiFile,
-//                fileExtension: track.midiFiles![0].fileExtension,
-//                loopLength: setSettings.tracks[track.trackId]!.loopLength,
-//                loopsToLevel: setSettings.tracks[track.trackId]!.loopsToLevel,
-//                loopsToGrid: setSettings.tracks[track.trackId]!.loopsToGrid
-//            )]
-//            
-//            var storeTrack = InstrumentsSet.Track(
-//                id: track.id,
-//                trackId: track.trackId,
-//                muted: track.muted,
-//                instrumentType: setSettings.tracks[track.trackId]!.instrumentType,
-//                noteSource: setSettings.tracks[track.trackId]!.noteSource,
-//                startType: setSettings.tracks[track.trackId]!.startType,
-//                variationType: setSettings.tracks[track.trackId]!.variationType,
-//                instrumentName: setSettings.tracks[track.id]!.trackName,
-//                instrumentColor: setSettings.tracks[track.trackId]!.instrumentColor,
-//                volume: setSettings.tracks[track.trackId]!.instrumentVolume,
-//                midiFiles: midiFiles,
-//                midiGroup: setSettings.tracks[track.trackId]!.midiGroup,
-//                notesToGrid: setSettings.tracks[track.trackId]!.notesToGrid,
-//                notesToLevel: setSettings.tracks[track.trackId]!.notesToLevel,
-//                notesSequenceType: setSettings.tracks[track.trackId]!.notesSequenceType,
-//                exsFiles: [InstrumentsSet.Track.ExsFile(fileName: setSettings.tracks[track.trackId]!.exsFile.rawValue)],
-//                audioFiles: track.audioFiles,
-//                effects: track.effects,
-//                parts: storeParts,
-//                levels: setSettings.tracks[track.trackId]!.levels
-//            )
-//            storeTracks.append(storeTrack)
-//            
-//            //Duplicate last track
-//            if duplicateLastTrack && track.trackId == instrumentSet.tracks.last!.trackId {
-//                storeTrack.trackId = storeTrack.trackId+"2"
-//                storeTrack.id = storeTrack.id+"2"
-//                storeTrack.instrumentName = storeTrack.instrumentName+"(2)"
-//                let storePartsIndex = storeParts.enumerated()
-//                for (index, _) in storePartsIndex {
-//                    storeTrack.parts[index].damperTarget.trackId = storeTrack.id
-//                }
-//                let duplicateTrack = storeTrack
-//                storeTracks.append(duplicateTrack)
-//            }
-//        }
-        
         
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,

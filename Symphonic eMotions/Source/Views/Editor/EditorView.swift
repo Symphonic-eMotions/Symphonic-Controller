@@ -16,19 +16,22 @@ struct EditorView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     
+    //Not working...
     @State var reloadView: Bool = false
-    
-    //What are we editing?
-    @State var showEditorPart: EditorParts = .none
     
     //Set
     @State var numberOfTracks: Int
+    //What are we editing?
+    @State var showEditorPart: EditorParts = .none
+    //All editor groups including tracks
     @State var editorParts: [EditorParts]
     
     //Levels
+    //!!!trackLevels have JUST the level indexes where yhe track is in!!!!!!!!!!!!!!
     @State var trackLevels: [String: [Int]]
+    //Keeps track of the midi index generated within the sequencer
     @State var noteNumbersLevels: [String: [Int]]
-    @State var noteNumbersClips: [String: [Int]]
+    //Same as noteNumbersLevels for midi files in bundle or sandbox
     @State var midiClipsLevels: [String: [Int]]
     
     //Position
@@ -39,6 +42,9 @@ struct EditorView: View {
     //Note numbers per track
     @State var noteNumbers: [String: [Int]]
     @State var notesSequenceType: [String: NotesSequenceType]
+    //What clips do we have as buffer sanpler audio files
+    @State var noteNumbersClips: [String: [Int]]
+    
     //Obsolete?
     @State var noteNumberLetters: [String: [Int]]
     

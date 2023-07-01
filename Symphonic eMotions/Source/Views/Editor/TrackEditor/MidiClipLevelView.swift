@@ -52,20 +52,17 @@ struct MidiClipLevelView: View {
                 Text("Place clip in level:")
                 .frame(width: columnWidth, alignment: .leading)
                 
-                //This is cranky if trackLevels changes it's index is used in
-                // - midiClipsLevels
-                // - midiClipLetters
-                ForEach(0..<trackLevels[trackId]!.count, id: \.self) { index in
+                ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in
 
                     VStack{
                         
-                        let levelNumber = index+1
+                        let levelNumber = level+1
                         Text("\(levelNumber)")
                             .foregroundColor(.blue)
                         
                         ZStack {
 
-                            let levelClip = midiClipsLevels[trackId]![index]
+                            let levelClip = midiClipsLevels[trackId]![level]
                             let clipLetter: String = AppUtils.letterForNumber(levelClip) ?? "-"
                             
                             Rectangle()
@@ -78,13 +75,13 @@ struct MidiClipLevelView: View {
                         }
                         .onTapGesture {
                             
-                            let increment = midiClipsLevels[trackId]![index] + 1
+                            let increment = midiClipsLevels[trackId]![level] + 1
                             let incrementModulo = increment % midiClipLetters[trackId]!.count
                             
-                            print("clipLetters Mifi Files \(midiClipLetters[trackId]!.map(String.init).joined(separator: ", ")) index \(index) updated with \(increment) % \(midiClipLetters[trackId]!.count) = \(incrementModulo)")
+                            print("clipLetters Mifi Files \(midiClipLetters[trackId]!.map(String.init).joined(separator: ", ")) index \(level) updated with \(increment) % \(midiClipLetters[trackId]!.count) = \(incrementModulo)")
                             
-                            currentTrack.loopsToLevel[index] = incrementModulo
-                            midiClipsLevels[trackId]![index] = incrementModulo
+                            currentTrack.loopsToLevel[level] = incrementModulo
+                            midiClipsLevels[trackId]![level] = incrementModulo
                         }
                     }
                 }
