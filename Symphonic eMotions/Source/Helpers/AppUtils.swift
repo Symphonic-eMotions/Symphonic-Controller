@@ -180,6 +180,11 @@ final class AppUtils {
                 notesToLevel = Array(repeating: midiGroup.min()!, count: instrumentSet.levels.count)
             }
             
+            var noteNumbersClips:[Int] = trackLoaded.noteNumbersClips ?? []
+            if noteNumbersClips.count != instrumentSet.levels.count {
+                noteNumbersClips = Array(repeating: 0, count: instrumentSet.levels.count)
+            }
+            
             var notesToGrid:[Int] = trackLoaded.notesToGrid ?? []
             if notesToGrid.count != cells {
                 //We have a another amount of cells, reset
@@ -211,6 +216,7 @@ final class AppUtils {
                     cellsToGrid: notesToGrid
                 ),
                 notesToLevel: notesToLevel,
+                noteNumbersClips: noteNumbersClips,
                 notesSequenceType:  trackLoaded.notesSequenceType ?? .firstNote,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
@@ -412,6 +418,7 @@ final class AppUtils {
                 midiGroup: track.value.midiGroup,
                 notesToGrid: track.value.notesToGrid,
                 notesToLevel: notesToLevel,
+                noteNumbersClips: track.value.noteNumbersClips,
                 notesSequenceType: track.value.notesSequenceType,
                 exsFiles: [InstrumentsSet.Track.ExsFile(fileName: track.value.exsFile.rawValue)],
                 audioFiles: track.value.audioFiles,

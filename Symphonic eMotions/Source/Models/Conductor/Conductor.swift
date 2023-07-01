@@ -472,10 +472,14 @@ final class Conductor {
         //Run over all tracks
         setSettings.tracks.forEach { track in
             
-            //Variation by level and midiFile, select loopsToLevel for current level
-            if track.value.variationType == .variationByLevel && track.value.noteSource == .midiFile {
-                
-                levelMidiClipVariation(in: selectedLevel, on: track.value)
+            //Variation by level  select loops/notenumber toLevel for current level
+            if track.value.variationType == .variationByLevel {
+                if track.value.noteSource == .midiFile {
+                    levelMidiClipVariation(in: selectedLevel, on: track.value)
+                }
+                else if track.value.noteSource == .noteNumbers {
+                    levelNoteNumberVariation(in: selectedLevel, on: track.value)
+                }
             }
             
             //UN-Mute if track is within level
@@ -593,9 +597,11 @@ final class Conductor {
             if let bundlePath = Bundle.main.path(forResource: "Sounds/MIDI/\(midiFile.fileName)", ofType: "mid"),
                FileManager.default.fileExists(atPath: bundlePath) {
                 sequencer.loadMIDIFile("Sounds/MIDI/\(midiFile.fileName)")
-            } else {
+            }
+            
+            // If the file does not exist in the app bundle, try loading it from the documents directory
+            else {
                 
-                // If the file does not exist in the app bundle, try loading it from the documents directory
                 let documentsDirectory = try? FileManager.default.url(
                     for: .documentDirectory,
                     in: .userDomainMask,
@@ -622,11 +628,42 @@ final class Conductor {
             
             //Default length of 1 loop, for midi memory we need the length of "all" loops, thus the sum of loops
             var duration = Duration(beats: midiFile.loopLength.first ?? 0)
-            if length == "all" {
-                duration = Duration(beats: midiFile.loopLength.reduce(0, {sum, value in sum + value}) )
-            }
-            sequencer.setLength(duration)
             
+            if length == "all" {
+                
+                //Over write loop duration
+                duration = Duration(beats: midiFile.loopLength.reduce(0, {sum, value in sum + value}) )
+                
+                if [.audioBuffer,.audioBufferTimed].contains(track.instrumentType){
+                    
+                    if let audioFiles = track.audioFiles {
+                        
+                        var interval: MusicTimeStamp = 0
+                        
+                        for audioFile in audioFiles {
+                            
+                            let noteNumber = midiNoteNumberFromFileName(audioFile.fileName) ?? 48
+                            let lengthInBeats = lengthInBeatsFromFileName(fileName: audioFile.fileName) ?? audioFile.lengthInBeats
+                            
+                            //position start with 0 adds PREVIOUS value
+                            let startTime = interval
+                            //Remember for next loop
+                            interval = interval + lengthInBeats
+                            
+                            print("AudioBufferALL sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
+                            
+                            sequencer.tracks.first?.add(
+                                noteNumber: MIDINoteNumber(noteNumber),
+                                velocity: 127,
+                                position: Duration(beats: startTime),
+                                duration: Duration(beats: (lengthInBeats - 0.0001))
+                            )
+                        }
+                    }
+                }
+            }
+            
+            sequencer.setLength(duration)
             sequencer.setLoopInfo(duration, loopCount: 0)
             sequencer.enableLooping()
             
@@ -661,12 +698,19 @@ final class Conductor {
                 case .audioBuffer:
                     
                     trackSamplers[track.id] = createAudioBufferSampler(
-                        for: track, and: sequencer,
+                        for: track,
+                        and: sequencer,
                         currentSetLevel: currentSetLevel,
                         samplePath: samplePath
                     )
                 case .audioBufferTimed:
-                    trackSamplers[track.id] = createAudioBufferTimePitch(for: track, and: sequencer, currentSetLevel: currentSetLevel, targetBPM: set.bpm)
+                    trackSamplers[track.id] = createAudioBufferTimePitch(
+                        for: track,
+                        and: sequencer,
+                        currentSetLevel: currentSetLevel,
+                        targetBPM: set.bpm,
+                        samplePath: samplePath
+                    )
                 case .pulseWidthSynth:
                     trackInstruments[track.id] = createPulseWidthSynth(for: track, and: sequencer)
                 case .phaseSynth:
@@ -817,7 +861,7 @@ final class Conductor {
             return currentSetLevel
         }
     
-    private func levelMidiClipVariation( in level: Int, on track: TrackSettings) -> Void {
+    private func levelMidiClipVariation(in level: Int, on track: TrackSettings) -> Void {
         
         if track.levels.contains(level) {
             
@@ -825,8 +869,32 @@ final class Conductor {
                 return
             }
             
+            //Midi clip looplength
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
+            
+            let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
+            
+            stopNotesTrackId(for: track.trackId)
+            
+            copyMIDIfromMemory(
+                trackId: track.trackId,
+                midiStartTime: nextMIDIstartTime,
+                loopLength: clipLengths[nextVariation]
+            )
+        }
+    }
+    
+    private func levelNoteNumberVariation(in level: Int, on track: TrackSettings) -> Void {
+        if track.levels.contains(level) {
+            
+            guard track.notesToLevel.contains(level) else{
+                return
+            }
+            
+            //Get length in beats from audio filws
+            let clipLengths: [Double] = track.audioFiles.map { Double($0.lengthInBeats) }
+            let nextVariation = track.notesToLevel[level]
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
@@ -863,12 +931,15 @@ final class Conductor {
         // isolate the segment for looping and shift it to the start of the track
         let loopSegment = contentFromMemory?.filter { midiStartTime ..< (midiStartTime + loopLength) ~= $0.position.beats }
         
-        let shiftedSegment = loopSegment?.map { MIDINoteData(noteNumber: $0.noteNumber,
-                                                             velocity: $0.velocity,
-                                                             channel: $0.channel,
-                                                             duration: $0.duration,
-                                                             position: Duration(beats: $0.position.beats - midiStartTime))
+        let shiftedSegment = loopSegment?.map { MIDINoteData(
+                noteNumber: $0.noteNumber,
+                velocity: $0.velocity,
+                channel: $0.channel,
+                duration: $0.duration,
+                position: Duration(beats: $0.position.beats - midiStartTime)
+            )
         }
+        
         //All notes off is moved one layer up
         // replace the track contents with the loop, and assert the looping behaviour
         trackSequencers[trackId]?.tracks[0].replaceMIDINoteData(with: shiftedSegment!)
@@ -947,46 +1018,21 @@ final class Conductor {
             try audioEngine.start()
             
             setSettings.tracks.forEach { track in
-                
-                print(track.value.noteSource)
-                
-                if track.value.noteSource == .midiFile {
-                    
-                    if track.value.startType == .loopedTransport {
-                        if track.value.variationType == .variationByLevel {
-                            
-                            //FIXME: Copy correct MIDI
-                        }
-                        playTrack(track.value)
-                    }
+                //Both midi file and audioBuffer note numbers
+                if track.value.startType == .loopedTransport {
+                    playTrack(track.value)
                 }
-                else if track.value.noteSource == .noteNumbers {
+                
+                if track.value.variationType == .variationSequencial {
                     
-                    if [.loopedTransport].contains(track.value.startType) {
-                        
-                        if track.value.variationType == .variationByLevel {
-                            //Get current level note number
-                            let noteNumber = track.value.notesToLevel[level]
-                            playNoteNumber(track.value, noteNumber)
-                        }
-                        if track.value.variationType == .variationSequencial {
-                            let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
-                            let noteNumber = getNextSequenceNote(
-                                currentNote,
-                                track.value.notesSequenceType,
-                                track.value.midiGroup,
-                                0.5
-                            )
-                            playNoteNumber(track.value, noteNumber)
-                        }
-                    }
-                    else if [.oneShot].contains(track.value.startType) {
-                        
-                        if [.variationByPosition,.variationSequencial].contains(track.value.variationType) {
-                            //Play sequencers for time calculation
-                            playTrack(track.value)
-                        }
-                    }
+                    let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
+                    let noteNumber = getNextSequenceNote(
+                        currentNote,
+                        track.value.notesSequenceType,
+                        track.value.midiGroup,
+                        0.5
+                    )
+                    playNoteNumber(track.value, noteNumber)
                 }
             }
         } catch {

@@ -240,6 +240,7 @@ final class SetInfoModel: ObservableObject {
                 cellsToGrid: Array(repeating: noteNumber, count: cells)
             ),
             notesToLevel: Array(repeating: noteNumber, count: self.setSettings.levels.count),
+            noteNumbersClips: [],
             notesSequenceType: .nextForward,
             loopLength: [16],
             loopsToLevel: [],

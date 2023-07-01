@@ -28,6 +28,7 @@ struct EditorView: View {
     //Levels
     @State var trackLevels: [String: [Int]]
     @State var noteNumbersLevels: [String: [Int]]
+    @State var noteNumbersClips: [String: [Int]]
     @State var midiClipsLevels: [String: [Int]]
     
     //Position
@@ -71,6 +72,7 @@ struct EditorView: View {
         
         var trackLevelsInit = [String: [Int]]()
         var noteNumbersLevelsInit = [String: [Int]]()
+        var noteNumbersClipsInit = [String: [Int]]()
         var midiClipsLevelsInit = [String: [Int]]()
         
         var noteNumbersPositionsInit = [String: [Int]]()
@@ -117,14 +119,17 @@ struct EditorView: View {
             let noteSequenceType = track.value.notesSequenceType
             notesSequenceTypeInit[track.value.trackId] = noteSequenceType
             
-            let nclips = track.value.midiGroup
-            noteNumberLettersInit[track.value.trackId] = Array(0..<nclips.count).map{$0}
+            let midis = track.value.midiGroup
+            noteNumberLettersInit[track.value.trackId] = Array(0..<midis.count).map{$0}
             
             let midiClip = track.value.loopLength
             midiClipsInit[track.value.trackId] = midiClip
             
             let mclips = track.value.loopLength
             midiClipLettersInit[track.value.trackId] = Array(0..<mclips.count).map{$0}
+            
+            let nnClips = track.value.noteNumbersClips
+            noteNumbersClipsInit[track.value.trackId] = nnClips
             
             let noteSource = track.value.noteSource
             noteSourcesInit[track.value.trackId] = noteSource
@@ -169,6 +174,7 @@ struct EditorView: View {
         _midiClipPositions = State(initialValue: midiClipPositionsInit)
         _noteNumbers = State(initialValue: noteNumbersInit)
         _notesSequenceType = State(initialValue: notesSequenceTypeInit)
+        _noteNumbersClips = State(initialValue: noteNumbersClipsInit)
         _noteNumberLetters = State(initialValue: noteNumberLettersInit)
         _midiClips = State(initialValue: midiClipsInit)
         _midiClipLetters = State(initialValue: midiClipLettersInit)
@@ -196,28 +202,38 @@ struct EditorView: View {
                 noteNumbersPositions: $noteNumbersPositions,
                 midiClipPositions: $midiClipPositions
             )
+            
             ScrollView{
                 TrackEditorView(
                     setInfoModel: setInfoModel,
                     editorParts: $editorParts,
                     showEditorPart: $showEditorPart,
+
                     numberOfTracks: $numberOfTracks,
+
                     trackLevels: $trackLevels,
                     noteNumbersLevels: $noteNumbersLevels,
+                    noteNumbersClips: $noteNumbersClips,
                     midiClipsLevels: $midiClipsLevels,
+                    noteNumberLetters: $noteNumberLetters,
+
                     gridRow: $gridRow,
                     noteNumbersPositions: $noteNumbersPositions,
                     midiClipPositions: $midiClipPositions,
+
                     noteNumbers: $noteNumbers,
                     notesSequenceType: $notesSequenceType,
-                    noteNumberLetters: $noteNumberLetters,
+
+
                     midiClips: $midiClips,
                     midiClipLetters: $midiClipLetters,
+
                     noteSources: $noteSources,
                     startTypes: $startTypes,
                     variationTypes: $variationTypes,
                     availableVariationTypes: $availableVariationTypes,
                     instrumentTypes: $instrumentTypes,
+
                     areaOfInterest: $areaOfInterest,
                     minimalLevel: $minimalLevel
                 )

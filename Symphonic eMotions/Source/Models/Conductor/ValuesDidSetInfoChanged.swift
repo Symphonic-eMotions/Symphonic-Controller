@@ -1,8 +1,8 @@
 //
-//  ValuesDidChange.swift
+//  valuesDidSetInfoChanged.swift
 //  Symphonic eMotions Pro
 //
-//  Created by Frans-Jan Wind on 17/04/2023.
+//  Created by Frans-Jan Wind on 30/06/2023.
 //
 
 import AudioKit
@@ -10,16 +10,14 @@ import Accelerate
 
 extension Conductor {
     
-    internal func valuesDidChange(
+    internal func valuesDidSetInfoChanged(
         //Values for movement calculations
         values: [[AreaValues]],
         //Dynamic area's of interest
         setSettings: SetSettings,
         //Is track present in current level
-        currentSetLevel: Double,
-        //Do we want to show this part in part feedback visualisation
-        partFeedbackTrackID: String,
-        partFeedbackPartID: String
+        currentSetLevel: Double
+
     ) -> Double {
         
         //Levels are updated with movement
@@ -84,8 +82,6 @@ extension Conductor {
                 //StartType -> Transport || Wave (loopedTriger)
                 //VariationType -> Variation by level || position
                 if partNr == 0 {
-                    
-//                    track.currentMaxIndex = maxIndex
                     
                     //MARK: WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController
@@ -263,29 +259,6 @@ extension Conductor {
                     currentSetLevel: localCurrentSetLevel
                 )
                 
-                //User interface feedback
-                if setSettings.defaultSkin == .spriteKit {
-                    
-                    let maxIndexMapped = track.loopsToGridMapped[maxIndexPart]
-                    //Send 0 for a value if not in level
-                    let inLevel: Double = track.levels.contains([Int(localCurrentSetLevel)]) ? 1 : 0
-                    forwardSpriteKit(
-                        trackNr: trackNr,
-                        partNr: partNr,
-                        ramped: value * inLevel,
-                        areaOfInterest: part.areaOfInterest,
-                        maxIndex: maxIndexPart,
-                        mappedIndex: maxIndexMapped
-                    )
-                }
-                else if setSettings.defaultSkin == .swiftUI {
-                    //Check part feedback interface state for part feedback visualisation
-                    if partFeedbackTrackID == trackIndex && partFeedbackPartID == partIndex {
-                        forwardPartFeedback(
-                            ramped: value
-                        )
-                    }
-                }
                 partNr += 1
             }
             trackNr += 1

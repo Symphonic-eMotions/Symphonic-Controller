@@ -20,7 +20,10 @@ struct TrackEditorView: View {
     //Levels
     @Binding var trackLevels: [String: [Int]]
     @Binding var noteNumbersLevels: [String: [Int]]
+    @Binding var noteNumbersClips: [String: [Int]]
     @Binding var midiClipsLevels: [String: [Int]]
+    //Obsolete?
+    @Binding var noteNumberLetters: [String: [Int]]
     
     //Position
     @Binding var gridRow: Int
@@ -30,8 +33,6 @@ struct TrackEditorView: View {
     //Note numbers per track
     @Binding var noteNumbers: [String: [Int]]
     @Binding var notesSequenceType: [String: NotesSequenceType]
-    //Obsolete?
-    @Binding var noteNumberLetters: [String: [Int]]
     
     //Midi cips per track
     @Binding var midiClips: [String: [Double]]
@@ -270,13 +271,14 @@ struct TrackEditorView: View {
                             )
                         }
                         else  if variationTypes[key] == .variationByLevel {
+                            
                             NoteNumberLevelView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
                                 trackId: key,
                                 trackLevels: $trackLevels,
                                 noteNumbersLevels: $noteNumbersLevels,
-                                noteNumbers: $noteNumbers
+                                noteNumbersClips: $noteNumbersClips
                             )
                         }
                         else if variationTypes[key] == .variationSequencial {

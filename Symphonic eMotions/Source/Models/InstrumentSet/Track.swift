@@ -34,6 +34,7 @@ extension InstrumentsSet {
             case midiGroup
             case notesToGrid
             case notesToLevel
+            case noteNumbersClips
             case notesSequenceType
             case exsFiles
             case audioFiles
@@ -67,6 +68,7 @@ extension InstrumentsSet {
         var midiGroup: [Int]?
         var notesToGrid: [Int]?
         var notesToLevel: [Int]?
+        var noteNumbersClips: [Int]?
         var notesSequenceType: NotesSequenceType?
         
         let exsFiles: [ExsFile]?
@@ -99,6 +101,7 @@ extension InstrumentsSet {
             midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
             notesToGrid = try container.decodeIfPresent([Int].self, forKey: .notesToGrid)
             notesToLevel = try container.decodeIfPresent([Int].self, forKey: .notesToLevel)
+            noteNumbersClips = try container.decodeIfPresent([Int].self, forKey: .noteNumbersClips)
             notesSequenceType = try container.decodeIfPresent(NotesSequenceType.self, forKey: .notesSequenceType)
             
             exsFiles = try container.decodeIfPresent([ExsFile].self, forKey: .exsFiles)
@@ -145,6 +148,7 @@ extension InstrumentsSet {
             midiGroup: [Int]?,
             notesToGrid: [Int]?,
             notesToLevel: [Int]?,
+            noteNumbersClips: [Int]?,
             notesSequenceType: NotesSequenceType,
             exsFiles: [ExsFile]?,
             audioFiles: [AudioFile]?,
@@ -166,6 +170,7 @@ extension InstrumentsSet {
             self.midiGroup = midiGroup
             self.notesToGrid = notesToGrid
             self.notesToLevel = notesToLevel
+            self.noteNumbersClips = noteNumbersClips
             self.notesSequenceType = notesSequenceType
             self.exsFiles = exsFiles
             self.audioFiles = audioFiles
@@ -200,6 +205,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(midiGroup, forKey: .midiGroup)
         try container.encode(notesToGrid, forKey: .notesToGrid)
         try container.encode(notesToLevel, forKey: .notesToLevel)
+        try container.encode(noteNumbersClips, forKey: .noteNumbersClips)
         try container.encode(notesSequenceType, forKey: .notesSequenceType)
         try container.encode(exsFiles, forKey: .exsFiles)
         try container.encode(audioFiles, forKey: .audioFiles)
