@@ -51,7 +51,10 @@ struct MidiClipLevelView: View {
 
                 Text("Place clip in level:")
                 .frame(width: columnWidth, alignment: .leading)
-
+                
+                //This is cranky if trackLevels changes it's index is used in
+                // - midiClipsLevels
+                // - midiClipLetters
                 ForEach(0..<trackLevels[trackId]!.count, id: \.self) { index in
 
                     VStack{
@@ -78,7 +81,7 @@ struct MidiClipLevelView: View {
                             let increment = midiClipsLevels[trackId]![index] + 1
                             let incrementModulo = increment % midiClipLetters[trackId]!.count
                             
-                            print("clipLetters \(midiClipLetters[trackId]!.map(String.init).joined(separator: ", ")) index \(index) updated with \(increment) % \(midiClipLetters[trackId]!.count) = \(incrementModulo)")
+                            print("clipLetters Mifi Files \(midiClipLetters[trackId]!.map(String.init).joined(separator: ", ")) index \(index) updated with \(increment) % \(midiClipLetters[trackId]!.count) = \(incrementModulo)")
                             
                             currentTrack.loopsToLevel[index] = incrementModulo
                             midiClipsLevels[trackId]![index] = incrementModulo
@@ -88,13 +91,6 @@ struct MidiClipLevelView: View {
             }
         }
         .padding(.leading)
-//        .onAppear {
-//            // Set initial value of syncedValue to value from observed object
-//            loopLengthLocal = setInfoModel.setSettings.tracks[trackId]!.loopLength
-//        }
-//        .onChange(of: updateView) { _ in
-//            loopsToLevelLocal = currentTrack.loopsToLevel
-//        }
     }
 
 }
