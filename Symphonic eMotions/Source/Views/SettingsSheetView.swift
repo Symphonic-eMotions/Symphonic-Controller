@@ -12,7 +12,7 @@ struct SettingsSheetView: View {
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
     @Binding var stopEngine: Bool
     @State private(set) var localTempo: Int = 0
@@ -23,9 +23,9 @@ struct SettingsSheetView: View {
             get: { self.sensitivity },
             set: {
                 self.sensitivity = $0
-                playViewModel.imageDifference.sensitivitySubject.send(Float($0))
-                playViewModel.imageDifference.sensitivityToMaxValue(sensitivity: Float($0))
-                playViewModel.imageDifference.sensitivityToFeedback(sensitivity: Float($0))
+                setInfoModel.imageDifference.sensitivitySubject.send(Float($0))
+                setInfoModel.imageDifference.sensitivityToMaxValue(sensitivity: Float($0))
+                setInfoModel.imageDifference.sensitivityToFeedback(sensitivity: Float($0))
             }
         )
         
@@ -40,9 +40,9 @@ struct SettingsSheetView: View {
                     HStack {
                         
                         EMButton(action: {
-                            playViewModel.tapMediaControlButton()
+                            setInfoModel.tapMediaControlButton()
                         }, color: .accentColor) {
-                            Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
+                            Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
                                   "stop.fill" :
                                     "play.fill")
                         }
@@ -64,14 +64,14 @@ struct SettingsSheetView: View {
                 }
                 
                 //Tempo
-                if playViewModel.setSettings.hasTempo {
+                if setInfoModel.setSettings.hasTempo {
                     
                     VStack(alignment: .leading){
                         Text("Tempo").padding(.top)
                         HStack{
                             
                             EMButton(action: {
-                                playViewModel.tapSetTempoMin()
+                                setInfoModel.tapSetTempoBPMMin()
                                 localTempo -= 1
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Image(systemName: "minus")
@@ -80,13 +80,13 @@ struct SettingsSheetView: View {
                             EMButton(action: {
                                 print("Reset pressed")
                                 localTempo = 0
-                                playViewModel.tapSetTempoReset()
+                                setInfoModel.tapSetTempoReset()
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Text(String(localTempo))
                             }
                             
                             EMButton(action: {
-                                playViewModel.tapSetTempoPlus()
+                                setInfoModel.tapSetTempoBPMPlus()
                                 localTempo += 1
                             }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
                                 Image(systemName: "plus")
@@ -109,14 +109,14 @@ struct SettingsSheetView: View {
                 //Start stop
                 EMButton(action: {
                     showingSheet = false
-                    if !playViewModel.conductor.isConductorPlayingSubject.value {
-                        playViewModel.conductor.levelController(
-                            level: Int(playViewModel.leveling.currentSetLevelSubject.value),
-                            setSettings: playViewModel.setSettings
+                    if !setInfoModel.conductor.isConductorPlayingSubject.value {
+                        setInfoModel.conductor.levelController(
+                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
+                            setSettings: setInfoModel.setSettings
                         )
-                        playViewModel.conductor.playEngineAndTracks(
-                            setSettings: playViewModel.setSettings,
-                            level: Int(playViewModel.leveling.currentSetLevelSubject.value)
+                        setInfoModel.conductor.playEngineAndTracks(
+                            setSettings: setInfoModel.setSettings,
+                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value)
                         )
                     }
                 }, color: .green, isSolid: true) {
@@ -127,7 +127,7 @@ struct SettingsSheetView: View {
             }
             .onAppear{
                 if stopEngine {
-                    playViewModel.stopPlaying()
+                    setInfoModel.tapStopAudioEngine()
                 }
             }
             .padding()

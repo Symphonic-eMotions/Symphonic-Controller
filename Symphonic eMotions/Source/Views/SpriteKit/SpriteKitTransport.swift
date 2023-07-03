@@ -10,7 +10,7 @@ import SwiftUI
 struct SpriteKitTransport: View {
     
     @ObservedObject var mainViewModel: MainViewModel
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     let transportHeigth: CGFloat
@@ -18,13 +18,13 @@ struct SpriteKitTransport: View {
     
     init(
         mainViewModel: MainViewModel,
-        playViewModel: PlayViewModel,
+        setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>,
         transportHeigth: CGFloat
     ) {
         self.mainViewModel = mainViewModel
-        self.playViewModel = playViewModel
+        self.setInfoModel = setInfoModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         self.transportHeigth = transportHeigth
@@ -56,7 +56,7 @@ struct SpriteKitTransport: View {
                     Image(systemName: "arrowshape.backward")
                 }
                 
-                if playViewModel.playViewState.currentInstrumentsSet.hasTempo {
+                if setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
                     
                     EMButton(action: {
                         mainViewModel.tapSetTempoMin()
@@ -83,16 +83,16 @@ struct SpriteKitTransport: View {
                 
                 //Start stop
                 EMButton(action: {
-                    playViewModel.tapMediaControlButton()
+                    setInfoModel.tapMediaControlButton()
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {
-                    Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
+                    Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
                             "stop.fill" :
                             "play.fill")
                 }
                 
                 //Level progress and interface
                 LevelView(
-                    playViewModel: playViewModel
+                    setInfoModel: setInfoModel
                 )
                 
                 VStack(){

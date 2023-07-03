@@ -9,33 +9,32 @@ import SwiftUI
 
 struct VideoPreviewViewRepresetable: UIViewRepresentable {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     
     func makeUIView(context: Context) -> some UIView {
         let view = UIView(frame: .zero)
-        try? playViewModel.frameExtractor.displayPreview(on: view)
+        try? setInfoModel.frameExtractor.displayPreview(on: view)
         return view
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         
-        if playViewModel.playViewState.displayMode == .video || playViewModel.playViewState.displayMode == .both {
-            
-            try? playViewModel.frameExtractor.displayPreview(on: uiView)
+        if setInfoModel.setInfoState.displayMode == .video || setInfoModel.setInfoState.displayMode == .both {
+                try? setInfoModel.frameExtractor.displayPreview(on: uiView)
         }
-        else if playViewModel.playViewState.displayMode == .refresh {
+        else if setInfoModel.setInfoState.displayMode == .refresh {
             let view = UIView(frame: UIScreen.main.bounds)
             view.backgroundColor = UIColor.black.withAlphaComponent(0)
             
-            try? playViewModel.frameExtractor.displayPreview(on: view)
+            try? setInfoModel.frameExtractor.displayPreview(on: view)
             
-            playViewModel.playViewState.displayMode = .both
+            setInfoModel.setInfoState.displayMode = .both
         }
         else {
             let view = UIView(frame: UIScreen.main.bounds)
             view.backgroundColor = UIColor.black.withAlphaComponent(0)
             
-            try? playViewModel.frameExtractor.displayPreview(on: view)
+            try? setInfoModel.frameExtractor.displayPreview(on: view)
         }
     }
     

@@ -14,12 +14,12 @@ struct MainView: View {
     @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
     
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     //Highest lvel View control
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
-    //Set info page vars from navigation
-    @State var setInfoLocalState = SetInfoLocalState()
+    
     //Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
     @State var userPresets: [URL] = []
@@ -30,11 +30,13 @@ struct MainView: View {
     
     init(
         viewModel: MainViewModel,
+        setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>
     ) {
         
         self.viewModel = viewModel
+        self.setInfoModel = setInfoModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         
@@ -60,26 +62,15 @@ struct MainView: View {
         
         //Object for Master track effect editor
         //Does this also need to go to the MainViewModel?
-        let masterTrackSetting = AppUtils.masterTrackViewObject(
-            instrumentSet: viewModel.mainState.currentInstrumentsSet,
-            setSettings:  viewModel.mainState.setSettings
-        )
+//        let masterTrackSetting = AppUtils.masterTrackViewObject(
+//            instrumentSet: viewModel.mainState.currentInstrumentsSet,
+//            setSettings:  viewModel.mainState.setSettings
+//        )
         
         //SpriteKit (2D Game) interface
         if sessionDisplay == .spriteKit {
             SpriteKitView(
-                playViewModel: PlayViewModel(
-                    playViewState: PlayViewState(
-                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                        buildSettings: viewModel.mainState.buildSettings
-                    ),
-                    conductor: viewModel.conductor,
-                    imageDifference: $viewModel.mainState.imageDifference,
-                    leveling: viewModel.leveling,
-                    setSettings: $viewModel.mainState.setSettings,
-                    partFeedback: viewModel.partFeedback,
-                    partFeedbackState: PartFeedbackState()
-                ),
+                setInfoModel: setInfoModel,
                 mainViewModel: viewModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
@@ -91,21 +82,7 @@ struct MainView: View {
         if sessionDisplay == .countDown {
             
             CountDown(
-                setInfoModel: SetInfoModel(
-                    setInfoLocalState: $setInfoLocalState,
-                    setSettings: $viewModel.mainState.setSettings,
-                    imageDifference: $viewModel.mainState.imageDifference,
-                    setInfoState: SetInfoState(
-                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                    ),
-                    currentInstrumentsSetIsChanged: { instrumentsSet in
-                        viewModel.currentModelInstrumentsSetChanged(
-                            instrumentsSet: instrumentsSet
-                        )
-                    },
-                    conductor: viewModel.conductor,
-                    leveling: viewModel.leveling
-                ),
+                setInfoModel: setInfoModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )
@@ -116,62 +93,20 @@ struct MainView: View {
             
             if sessionDisplaySub == .page03 {
                 LightView(
-                    setInfoModel: SetInfoModel(
-                        setInfoLocalState: $setInfoLocalState,
-                        setSettings: $viewModel.mainState.setSettings,
-                        imageDifference: $viewModel.mainState.imageDifference,
-                        setInfoState: SetInfoState(
-                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet
-                            )
-                        },
-                        conductor: viewModel.conductor,
-                        leveling: viewModel.leveling
-                    ),
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )
             }
             else if sessionDisplaySub == .page04 {
-                MovementView( setInfoModel: SetInfoModel(
-                    setInfoLocalState: $setInfoLocalState,
-                    setSettings: $viewModel.mainState.setSettings,
-                    imageDifference: $viewModel.mainState.imageDifference,
-                    setInfoState: SetInfoState(
-                        currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                    ),
-                    currentInstrumentsSetIsChanged: { instrumentsSet in
-                        viewModel.currentModelInstrumentsSetChanged(
-                            instrumentsSet: instrumentsSet
-                        )
-                    },
-                    conductor: viewModel.conductor,
-                    leveling: viewModel.leveling
-                ),
+                MovementView( setInfoModel: setInfoModel,
                               sessionDisplay: $sessionDisplay,
                               sessionDisplaySub: $sessionDisplaySub
                 )
             }
             else {
                 IntroductionView(
-                    setInfoModel: SetInfoModel(
-                        setInfoLocalState: $setInfoLocalState,
-                        setSettings: $viewModel.mainState.setSettings,
-                        imageDifference: $viewModel.mainState.imageDifference,
-                        setInfoState: SetInfoState(
-                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet
-                            )
-                        },
-                        conductor: viewModel.conductor,
-                        leveling: viewModel.leveling
-                    ),
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )
@@ -183,24 +118,10 @@ struct MainView: View {
             NavigationView {
                 
                 SideBarView(
-                    setInfoModel: SetInfoModel(
-                        setInfoLocalState: $setInfoLocalState,
-                        setSettings: $viewModel.mainState.setSettings,
-                        imageDifference: $viewModel.mainState.imageDifference,
-                        setInfoState: SetInfoState(
-                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet
-                            )
-                        },
-                        conductor: viewModel.conductor,
-                        leveling: viewModel.leveling
-                    ),
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-                    setInfoLocalState: $setInfoLocalState,
+//                    setInfoLocalState: $setInfoLocalState,
                     sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
@@ -210,19 +131,7 @@ struct MainView: View {
                     
                     ZStack{
                         PlayView(
-                            playViewModel: PlayViewModel(
-                                playViewState: PlayViewState(
-                                    currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                                    buildSettings: viewModel.mainState.buildSettings,
-                                    masterTrackStructure: masterTrackSetting
-                                ),
-                                conductor: viewModel.conductor,
-                                imageDifference: $viewModel.mainState.imageDifference,
-                                leveling: viewModel.leveling,
-                                setSettings: $viewModel.mainState.setSettings,
-                                partFeedback: viewModel.partFeedback,
-                                partFeedbackState: PartFeedbackState()
-                            ),
+                            setInfoModel: setInfoModel,
                             sessionDisplay: $sessionDisplay,
                             sessionDisplaySub: $sessionDisplaySub
                         )
@@ -253,21 +162,7 @@ struct MainView: View {
                 
                 else if sessionDisplay == .demo {
                     DemoView(
-                        setInfoModel: SetInfoModel(
-                            setInfoLocalState: $setInfoLocalState,
-                            setSettings: $viewModel.mainState.setSettings,
-                            imageDifference: $viewModel.mainState.imageDifference,
-                            setInfoState: SetInfoState(
-                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                            ),
-                            currentInstrumentsSetIsChanged: { instrumentsSet in
-                                viewModel.currentModelInstrumentsSetChanged(
-                                    instrumentsSet: instrumentsSet
-                                )
-                            },
-                            conductor: viewModel.conductor,
-                            leveling: viewModel.leveling
-                        ),
+                        setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
                     )
@@ -278,21 +173,7 @@ struct MainView: View {
                 else if [.setInfo,.pro,.creator].contains(sessionDisplay) {
                     
                     SetInfo(
-                        setInfoModel: SetInfoModel(
-                            setInfoLocalState: $setInfoLocalState,
-                            setSettings: $viewModel.mainState.setSettings,
-                            imageDifference: $viewModel.mainState.imageDifference,
-                            setInfoState: SetInfoState(
-                                currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                            ),
-                            currentInstrumentsSetIsChanged: { instrumentsSet in
-                                viewModel.currentModelInstrumentsSetChanged(
-                                    instrumentsSet: instrumentsSet
-                                )
-                            },
-                            conductor: viewModel.conductor,
-                            leveling: viewModel.leveling
-                        ),
+                        setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub,
                         userPresets: $userPresets
@@ -309,44 +190,16 @@ struct MainView: View {
             NavigationView {
                 
                 SideBarView(
-                    setInfoModel: SetInfoModel(
-                        setInfoLocalState: $setInfoLocalState,
-                        setSettings: $viewModel.mainState.setSettings,
-                        imageDifference: $viewModel.mainState.imageDifference,
-                        setInfoState: SetInfoState(
-                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet
-                            )
-                        },
-                        conductor: viewModel.conductor,
-                        leveling: viewModel.leveling
-                    ),
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-                    setInfoLocalState: $setInfoLocalState,
+//                    setInfoLocalState: $setInfoLocalState,
                     sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
                 
                 PlayListsView(
-                    setInfoModel: SetInfoModel(
-                        setInfoLocalState: $setInfoLocalState,
-                        setSettings: $viewModel.mainState.setSettings,
-                        imageDifference: $viewModel.mainState.imageDifference,
-                        setInfoState: SetInfoState(
-                            currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet
-                        ),
-                        currentInstrumentsSetIsChanged: { instrumentsSet in
-                            viewModel.currentModelInstrumentsSetChanged(
-                                instrumentsSet: instrumentsSet
-                            )
-                        },
-                        conductor: viewModel.conductor,
-                        leveling: viewModel.leveling
-                    ),
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )

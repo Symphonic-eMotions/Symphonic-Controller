@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PlayGridView: View {
         
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     
     var body: some View {
         VStack {
-            ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.rows, id: \.self) { row in
+            ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.rows, id: \.self) { row in
                 HStack {
-                    ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.columns, id: \.self) { column in
+                    ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.columns, id: \.self) { column in
                         ZStack {
                             
                             RoundedRectangle(cornerRadius: 7.0)
@@ -23,7 +23,7 @@ struct PlayGridView: View {
                             
                             HStack(spacing: 0.0) {
                                 
-                                let colorsTypes = playViewModel.colorTypes(
+                                let colorsTypes = setInfoModel.colorTypes(
                                     row: row,
                                     column: column
                                 )

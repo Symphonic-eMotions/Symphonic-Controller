@@ -10,16 +10,16 @@ import OrderedCollections
 
 struct MasterTrackView: View {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     
     //@State for slider status
     @State var masterEffectState: [[Float]] = []
     
     init(
-        playViewModel: PlayViewModel,
+        setInfoModel: SetInfoModel,
         masterEffect: State<[[Float]]>
     ){
-        self.playViewModel = playViewModel
+        self.setInfoModel = setInfoModel
         self._masterEffectState = masterEffect
     }
     
@@ -29,7 +29,7 @@ struct MasterTrackView: View {
             Spacer()
             ScrollView (.vertical){
                 //Struct with effects, contains [struct] with parameters per effect
-                let masterTrackStructure = playViewModel.playViewState.masterTrackStructure!
+                let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure!
                 ForEach( Array(masterTrackStructure.enumerated()), id: \.element ) { index, effect in
                     //Stack per effect
                     ZStack {
@@ -58,7 +58,7 @@ struct MasterTrackView: View {
 //                                            let _ = print("newVal: \(newVal)")
                                             
                                             //Send to conductor for real time modification
-                                            playViewModel.conductor.forwardMasterTrackEffect(
+                                            setInfoModel.conductor.forwardMasterTrackEffect(
                                                 value: Double(newVal),
                                                 nodeName: effect.effectName,
                                                 parameter: parameter.name,
@@ -67,8 +67,8 @@ struct MasterTrackView: View {
                                             
                                             
                                             //Store in object for writing to file (encoder)
-                                            let rangedValue = playViewModel.setSettings.masterEffects[index]!.parameters[i]!.range
-                                            playViewModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
+                                            let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                            setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
                                                 RangeConverter.valueToRange(range: rangedValue, value: Double(newVal))
                                             )
                                         }
@@ -77,8 +77,8 @@ struct MasterTrackView: View {
                                     showsLabel: false
                                 ).onAppear {
                                     
-                                    let rangedValue = playViewModel.setSettings.masterEffects[index]!.parameters[i]!.value
-                                    let rangedRange = playViewModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                    let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value
+                                    let rangedRange = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
                                     
                                     
                                     

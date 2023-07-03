@@ -30,7 +30,7 @@ struct eMotionApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView(
+            MainViewContainer(
                 viewModel: MainViewModel(
                     mainState: MainViewState(
                         setSettings: AppUtils.setSettings(

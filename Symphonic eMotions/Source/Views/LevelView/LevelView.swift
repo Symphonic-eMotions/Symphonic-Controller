@@ -35,7 +35,7 @@ struct ProgressBarButton: View {
 
 struct LevelView: View {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     
     var body: some View {
         //Horizontal level
@@ -43,19 +43,19 @@ struct LevelView: View {
             
             //Progress bars
             HStack {
-                ForEach(0..<playViewModel.playViewState.currentInstrumentsSet.levels.count, id: \.self) { index in
+                ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.levels.count, id: \.self) { index in
                     
                     //Index is the number of the current available level
                     ProgressBarButton(
                         value: .init(
                             get: {
-                                let currentBarLevel = Float(max(0, playViewModel.leveling.currentSetLevelSubject.value - Double(index)))
+                                let currentBarLevel = Float(max(0, setInfoModel.leveling.currentSetLevelSubject.value - Double(index)))
                                 return max(0, min(1, currentBarLevel))
                             },
                             set: { _ in }),
                         level: index,
                         action: { selectedLevel in
-                            playViewModel.leveling.currentSetLevelSubject.value = Double(selectedLevel)
+                            setInfoModel.leveling.currentSetLevelSubject.value = Double(selectedLevel)
                         }
                     ).frame(height: 30.0)
                 }

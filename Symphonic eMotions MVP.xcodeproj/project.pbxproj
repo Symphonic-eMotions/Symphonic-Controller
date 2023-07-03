@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */; };
 		7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D692A0990080031FF54 /* AddToPlaylistView.swift */; };
-		7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */; };
 		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
@@ -104,6 +103,7 @@
 		7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE10328E2C65100343920 /* MasterTrackModel.swift */; };
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
 		7CD418032A095388006831CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CD418052A095388006831CE /* Localizable.strings */; };
+		7CD7DCD42A52CE7D00A8E1FE /* MainViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
@@ -169,7 +169,6 @@
 /* Begin PBXFileReference section */
 		7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		7C041D692A0990080031FF54 /* AddToPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistView.swift; sourceTree = "<group>"; };
-		7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitZonesView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
 		7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leveling.swift; sourceTree = "<group>"; };
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
@@ -265,6 +264,7 @@
 		7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
 		7CD418042A095388006831CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD418062A095474006831CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewContainer.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
@@ -586,7 +586,6 @@
 			children = (
 				7C645CA429A91260000C5861 /* CellScene.swift */,
 				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
-				7C07FBCD2992ECD0002F9C5B /* SpriteKitZonesView.swift */,
 				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
 				7C645CA829AF4BB9000C5861 /* MagicParticle.sks */,
 				7C645CA929AF4BB9000C5861 /* Assets.xcassets */,
@@ -751,6 +750,7 @@
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CCDE10228E2C61300343920 /* MasterTrack */,
 				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
+				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
 			);
 			path = Views;
@@ -949,6 +949,7 @@
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
+				7CD7DCD42A52CE7D00A8E1FE /* MainViewContainer.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
 				7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */,
 				7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */,
@@ -995,7 +996,6 @@
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
-				7C07FBCE2992ECD0002F9C5B /* SpriteKitZonesView.swift in Sources */,
 				7C8D75922A2A4D0500DF2417 /* FileGroup.swift in Sources */,
 				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,

@@ -11,7 +11,7 @@ import SwiftUI
 //SwiftUI creating a SpriteKit scene and sizing it
 struct SpriteKitView: View {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -23,7 +23,7 @@ struct SpriteKitView: View {
     //Create the complete 2D "gaming" interface
     var scene = CellScene()
     
-    init( playViewModel: PlayViewModel,
+    init( setInfoModel: SetInfoModel,
           mainViewModel: MainViewModel,
           sessionDisplay: Binding<SessionDisplay>,
           sessionDisplaySub: Binding<SessionDisplay>
@@ -47,7 +47,7 @@ struct SpriteKitView: View {
         scene.columns = columns
         scene.instrumentPartAreas = instrumentAreas
         scene.levels = levels
-        scene.sceneSkin = playViewModel.setSettings.skins
+        scene.sceneSkin = setInfoModel.setSettings.skins
         
         //For now we have 4 instruments who control unique named variables in the SKScene
         var instruments = mainViewModel.mainState.setSettings.spriteKitInstruments(
@@ -94,7 +94,7 @@ struct SpriteKitView: View {
             instrumentAreas: instrumentAreas
         )
         
-        self.playViewModel = playViewModel
+        self.setInfoModel = setInfoModel
         self.mainViewModel = mainViewModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
@@ -114,7 +114,7 @@ struct SpriteKitView: View {
             VStack{
                 SpriteKitTransport(
                     mainViewModel: mainViewModel,
-                    playViewModel: playViewModel,
+                    setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
                     transportHeigth: transportHeigth
@@ -125,12 +125,12 @@ struct SpriteKitView: View {
                         //Video (Camera), first is by default the bottom View in ZStack
                         //Adjustable through displayOpacity
                         VideoPreviewViewRepresetable(
-                            playViewModel: playViewModel
+                            setInfoModel: setInfoModel
                         )
                         .aspectRatio(1.666666, contentMode: .fit)
                         .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                         .cornerRadius(10.0)
-                        .opacity( Double(playViewModel.playViewState.displayOpacity) )
+                        .opacity( Double(setInfoModel.setInfoState.displayOpacity) )
                         
                         
                         //The SpriteKit interface with layered SwiftUI calibrator
@@ -139,19 +139,19 @@ struct SpriteKitView: View {
                             options: [.allowsTransparency]
                         )
                         .onAppear{
-                            playViewModel.conductor.playEngineAndTracks(
-                                setSettings: playViewModel.setSettings,
+                            setInfoModel.conductor.playEngineAndTracks(
+                                setSettings: setInfoModel.setSettings,
                                 level: 0
                             )
-                            playViewModel.conductor.levelController(
+                            setInfoModel.conductor.levelController(
                                 level: 0,
-                                setSettings: playViewModel.setSettings
+                                setSettings: setInfoModel.setSettings
                             )
                         }
                         //Present sheet
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
-                                playViewModel: playViewModel,
+                                setInfoModel: setInfoModel,
                                 showingSheet: $presentSettingSheet,
                                 stopEngine: $stopEngine
                             )
@@ -172,28 +172,28 @@ struct SpriteKitView: View {
                         }
                         //Again 4 static instruments
                         //First configured instrument (GO Cello)
-                        .onReceive(playViewModel.conductor.spriteKitParts0a){ ( value ) in
+                        .onReceive(setInfoModel.conductor.spriteKitParts0a){ ( value ) in
                             
                             scene.instrumentPart0aMaxIndex = value.0
                             scene.instrumentPart0aMidiClip = value.1
                             scene.instrumentPart0aScale = CGFloat(value.2)
                         }
                         //Second configured instrument (GO Drums)
-                        .onReceive(playViewModel.conductor.spriteKitParts1a){ ( value ) in
+                        .onReceive(setInfoModel.conductor.spriteKitParts1a){ ( value ) in
                             
                             scene.instrumentPart1aMaxIndex = value.0
                             scene.instrumentPart1aMidiClip = value.1
                             scene.instrumentPart1aScale = CGFloat(value.2)
                         }
                         //Bassline
-                        .onReceive(playViewModel.conductor.spriteKitParts2a){ ( value ) in
+                        .onReceive(setInfoModel.conductor.spriteKitParts2a){ ( value ) in
                             
                             scene.instrumentPart2aMaxIndex = value.0
                             scene.instrumentPart2aMidiClip = value.1
                             scene.instrumentPart2aScale = CGFloat(value.2)
                         }
                         //Synth
-                        .onReceive(playViewModel.conductor.spriteKitParts3a){ ( value ) in
+                        .onReceive(setInfoModel.conductor.spriteKitParts3a){ ( value ) in
                             
                             scene.instrumentPart3aMaxIndex = value.0
                             scene.instrumentPart3aMidiClip = value.1
@@ -214,15 +214,15 @@ struct SpriteKitView: View {
                 
                 HStack{
                     EMButton(action: {
-                        playViewModel.leveling.pauseLevel.toggle()
-                    }, color: .accentColor, isSolid: playViewModel.leveling.pauseLevel) {
+                        setInfoModel.leveling.pauseLevel.toggle()
+                    }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
                         Text(NSLocalizedString("Hold level", comment: ""))
                     }
                     
                     EMButton(action: {
-                        playViewModel.leveling.pauseLevel = false
-                        let nrLevels = playViewModel.playViewState.currentInstrumentsSet.levels.count
-                        playViewModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+                        setInfoModel.leveling.pauseLevel = false
+                        let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
+                        setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
                     }, color: .accentColor, isSolid: false) {
                         Text(NSLocalizedString("Finish", comment: ""))
                     }

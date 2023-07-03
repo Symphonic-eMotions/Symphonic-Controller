@@ -13,7 +13,7 @@ struct PlayView: View {
     //To shut down the conductor if going inactive
 //    @Environment(\.scenePhase) private var scenePhase
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -22,11 +22,11 @@ struct PlayView: View {
     @State private var stopEngine: Bool = true
     
     init(
-        playViewModel: PlayViewModel,
+        setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>
     ){
-        self.playViewModel = playViewModel
+        self.setInfoModel = setInfoModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
     }
@@ -45,12 +45,12 @@ struct PlayView: View {
                 #endif
                 
                 LevelView(
-                    playViewModel: playViewModel
+                    setInfoModel: setInfoModel
                 )
                 
                 //Transport buttons
                 PlayerControlsView(
-                    playViewModel: playViewModel
+                    setInfoModel: setInfoModel
                 )
                 .zIndex(100)
                 
@@ -58,22 +58,22 @@ struct PlayView: View {
                 ZStack{
                     
                     //Instruments
-                    if playViewModel.playViewState.displayMode == .instruments ||
-                       playViewModel.playViewState.displayMode == .both {
+                    if setInfoModel.setInfoState.displayMode == .instruments ||
+                        setInfoModel.setInfoState.displayMode == .both {
                         
-                        if playViewModel.playViewState.buildSettings.instrumentPartEditor && !playViewModel.conductor.isConductorPlayingSubject.value {
+                        if setInfoModel.setInfoState.buildSettings.instrumentPartEditor && !setInfoModel.conductor.isConductorPlayingSubject.value {
                             
-                            EditGridView(playViewModel: playViewModel)
+                            EditGridView(setInfoModel: setInfoModel)
                             
                         } else {
                             
-                            PlayGridView(playViewModel: playViewModel)
+                            PlayGridView(setInfoModel: setInfoModel)
                             .onTapGesture {
                                 presentSettingSheet.toggle()
                             }
                             .sheet(isPresented: $presentSettingSheet) {
                                 SettingsSheetView(
-                                    playViewModel: playViewModel,
+                                    setInfoModel: setInfoModel,
                                     showingSheet: $presentSettingSheet,
                                     stopEngine: $stopEngine
                                 )
@@ -86,20 +86,20 @@ struct PlayView: View {
                     
                     //Video
                     VideoPreviewViewRepresetable(
-                        playViewModel: playViewModel
+                        setInfoModel: setInfoModel
                     )
                     //.frame(width: 180.0, height: 120.0)
                     .aspectRatio(1.77777, contentMode: .fit)
                     .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                     .cornerRadius(10.0)
-                    .opacity( playViewModel.playViewState.displayMode == .both ? 0.15 : 1.0)
+                    .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                 }
                 //Instrument Part editor
-                if playViewModel.playViewState.buildSettings.instrumentPartEditor {
+                if setInfoModel.setInfoState.buildSettings.instrumentPartEditor {
 
                     //Editing modee visual parameter value feedback
                     PartFeedbackView(
-                        playViewModel: playViewModel,
+                        setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
                     )
@@ -109,15 +109,15 @@ struct PlayView: View {
                     HStack{
                         
                         EMButton(action: {
-                            playViewModel.leveling.pauseLevel.toggle()
-                        }, color: .accentColor, isSolid: playViewModel.leveling.pauseLevel) {
+                            setInfoModel.leveling.pauseLevel.toggle()
+                        }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
                             Text(NSLocalizedString("Hold level", comment: ""))
                         }
                         
                         EMButton(action: {
-                            playViewModel.leveling.pauseLevel = false
-                            let nrLevels = playViewModel.playViewState.currentInstrumentsSet.levels.count
-                            playViewModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+                            setInfoModel.leveling.pauseLevel = false
+                            let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
+                            setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
                         }, color: .accentColor, isSolid: false) {
                             Text(NSLocalizedString("Finish", comment: ""))
                         }
@@ -129,28 +129,14 @@ struct PlayView: View {
             .padding(.horizontal)
             .navigationBarTitleDisplayMode(.inline)
             
-            if playViewModel.playViewState.buildSettings.isMasterTrack {
+            if setInfoModel.setInfoState.buildSettings.isMasterTrack {
                 
                 MasterTrackView(
-                    playViewModel: playViewModel,
-                    masterEffect: State(initialValue: AppUtils.masterTrackStateObject(viewObject: playViewModel.playViewState.masterTrackStructure!))
-
+                    setInfoModel: setInfoModel,
+                    masterEffect: State(initialValue: AppUtils.masterTrackStateObject(viewObject: setInfoModel.setInfoState.masterTrackStructure!))
                 )
             }
-            
-            
         }
-//        .onChange(of: scenePhase) { phase in
-//            if phase == .inactive {
-//                
-//                print("Before going to the background stop extracting")
-//                
-//                playViewModel.frameExtractor.stopExtracting()
-//                playViewModel.conductor.pauzeEngineAndStopTracks(
-//                    setSettings: playViewModel.setSettings
-//                )
-//            }
-//        }
     }
 }
 

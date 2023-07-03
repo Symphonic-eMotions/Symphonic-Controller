@@ -19,7 +19,7 @@ struct VolumeSlider: UIViewRepresentable {
 
 struct PlayerControlsView: View {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     
     var body: some View {
         HStack(alignment: .center, spacing: 32.0) {
@@ -29,21 +29,21 @@ struct PlayerControlsView: View {
                 HStack {
                     //Switch between video feedback modes
                     EMButton(action: {
-                        playViewModel.tapDisplayModeChange()
+                        setInfoModel.tapDisplayModeChange()
                     }, color: .accentColor, isSolid: false) {
-                        playViewModel.playViewState.displayMode.icon
+                        setInfoModel.setInfoState.displayMode.icon
                     }
                     
                     //Settings button
                     SettingsButtonWithLongPress(
-                        playViewModel: playViewModel
+                        setInfoModel: setInfoModel
                     )
                     
                     
-                    if playViewModel.playViewState.buildSettings.instrumentPartEditor {
+                    if setInfoModel.setInfoState.buildSettings.instrumentPartEditor {
                         //Master FX Button
                         EMButton(action: {
-                            playViewModel.tapMasterFxButton()
+                            setInfoModel.tapMasterFxButton()
                         }, color: .accentColor, isSolid: false) {
                             Image(systemName: "fx")
                         }
@@ -51,9 +51,9 @@ struct PlayerControlsView: View {
                     
                     //Start stop
                     EMButton(action: {
-                        playViewModel.tapMediaControlButton()
+                        setInfoModel.tapMediaControlButton()
                     }, color: .accentColor) {
-                        Image(systemName: playViewModel.conductor.isConductorPlayingSubject.value ?
+                        Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
                                 "stop.fill" :
                                 "play.fill")
                     }

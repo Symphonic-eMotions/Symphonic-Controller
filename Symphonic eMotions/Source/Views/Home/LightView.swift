@@ -131,8 +131,11 @@ struct LightView: View {
                     .onTapGesture {
                         withAnimation {
                             
-                            sessionDisplay = .demo
-                            sessionDisplaySub = .none
+//                            sessionDisplay = .demo
+//                            sessionDisplaySub = .none
+                            
+                            sessionDisplay = .home
+                            sessionDisplaySub = .page05
                         }
                     }
                     .disabled(!isAbove30)

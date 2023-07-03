@@ -13,6 +13,15 @@ struct SetInfoState {
     var currentInstrumentsSet: InstrumentsSet
     var currentLevel: Double = 0.0 //Leveling
     var values: [[AreaValues]] = []
+    //SpriteKit
+    var displayOpacity: Float = 0.12
+    //Pro
+    var buildSettings: BuildSettings
+    var displayMode: DisplayModes = .both
+    //Part editor
+    var updateEditView: Int = 0
+    //Master
+    var masterTrackStructure: [MasterTrackEffect]?
 }
 
 final class SetInfoModel: ObservableObject {
@@ -25,6 +34,11 @@ final class SetInfoModel: ObservableObject {
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
     var conductor: Conductor
     let leveling: Leveling
+    
+    let partFeedback: PartFeedback
+    @Published var partFeedbackState: PartFeedbackState
+    let playerControlsAction: ((PlayerControlsViewAction) -> Void)?
+    
     var cancellables = Swift.Set<AnyCancellable>()
     
     init(
@@ -34,7 +48,10 @@ final class SetInfoModel: ObservableObject {
         setInfoState: SetInfoState,
         currentInstrumentsSetIsChanged: @escaping (InstrumentsSet) -> Void,
         conductor: Conductor,
-        leveling: Leveling
+        leveling: Leveling,
+        partFeedback: PartFeedback,
+        partFeedbackState: PartFeedbackState,
+        playerControlsAction: ((PlayerControlsViewAction) -> Void)? = nil
     ) {
         self._setInfoLocalState = setInfoLocalState
         self._setSettings = setSettings
@@ -43,6 +60,10 @@ final class SetInfoModel: ObservableObject {
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
         self.conductor = conductor
         self.leveling = leveling
+        
+        self.partFeedback = partFeedback
+        self.partFeedbackState = partFeedbackState
+        self.playerControlsAction = playerControlsAction
         
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
@@ -125,7 +146,6 @@ final class SetInfoModel: ObservableObject {
         cancellables.removeAll()
     }
     
-    
     func tapToggleConductor() {
         
         //fix for system stop after 12 set changes
@@ -149,6 +169,21 @@ final class SetInfoModel: ObservableObject {
 //        )
 //    }
     
+    func tapMediaControlButton() {
+        
+        //fix for system stop after 12 set changes
+        //If you remove this, video won't be passed through after 12 set changes
+        if self.conductor.isConductorPlayingSubject.value {
+            self.frameExtractor.stopExtracting()
+            self.frameExtractor.startExtracting()
+            
+        }
+
+        conductor.togglePlayEngineAndTracks(
+            currentSetLevel: leveling.currentSetLevelSubject.value,
+            setSettings: self.setSettings
+        )
+    }
     
     func selectableEditorParts() -> [EditorParts] {
         var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
@@ -350,7 +385,36 @@ final class SetInfoModel: ObservableObject {
         )
     }
     
+    func tapDisplayModeChange() {
+        switch setInfoState.displayMode {
+        case .off:
+            setInfoState.displayMode = .video
+        case .video:
+            setInfoState.displayMode = .instruments
+        case .instruments:
+            setInfoState.displayMode = .both
+        case .both:
+            setInfoState.displayMode = .off
+        case .refresh:
+            return
+        }
+        playerControlsAction?(.displayModeChange(setInfoState.displayMode))
+    }
     
+    func tapSettingsButton() {
+        setInfoState.buildSettings.isAdvanced.toggle()
+        playerControlsAction?(.settingsChange(setInfoState.buildSettings.isAdvanced))
+    }
+    
+    func tapMasterFxButton() {
+        setInfoState.buildSettings.isMasterTrack.toggle()
+        playerControlsAction?(.masterTrackViewChange(setInfoState.buildSettings.isMasterTrack))
+    }
+    
+    func tapPartFeedbackButton() {
+        setInfoState.buildSettings.instrumentPartEditor.toggle()
+        playerControlsAction?(.partFeedbackViewChange(setInfoState.buildSettings.instrumentPartEditor))
+    }
     
     func tapStopAudioEngine(){
         conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
@@ -362,6 +426,12 @@ final class SetInfoModel: ObservableObject {
     
     func tapSetTempoBPMMin(){
         self.setSettings.bpm += 1
+    }
+    
+    func tapSetTempoReset(){
+        
+        let tempo = self.conductor.resetTempo()
+        self.setSettings.bpm = tempo
     }
     
     func scale(
@@ -378,6 +448,149 @@ final class SetInfoModel: ObservableObject {
         let output = C + (D - C) * normalizedInput
         
         return output
+    }
+    
+    
+    
+    
+    
+    //Part editor
+    public func partColor(row: Int, column: Int) -> Color {
+        
+        let trackId = self.partFeedback.currentTrackID.value
+        
+        if trackId == "" {
+//            print("partColor: No track selected")
+            return .black.opacity(0.01)
+        }
+        
+        let partId = self.partFeedback.currentPartID.value
+        
+        if partId == "" {
+//            print("partColor: No part selected")
+            return .black.opacity(0.01)
+        }
+        
+        let index: Int = row * setSettings.gridColumns + column
+        
+        let color = setSettings.tracks[trackId]?.parts[partId]?.areaOfInterestColor[index] ?? .red
+        
+        return color
+    }
+    
+    public func partDegree(row: Int, column: Int) -> Double {
+
+        let trackId = self.partFeedback.currentTrackID.value
+        if trackId == "" {
+//            print("partDegree: No track selected")
+            return 0
+        }
+
+        let partId = self.partFeedback.currentPartID.value
+        if partId == "" {
+//            print("partDegree: No part selected")
+            return 0
+        }
+
+        if setSettings.tracks[trackId]?.parts[partId]?.partNumber == 1 {
+            return 25
+        }
+        else if setSettings.tracks[trackId]?.parts[partId]?.partNumber == 2 {
+            return -25
+        }
+
+        return 0
+    }
+    
+    public func tapOnCell(row: Int, column: Int){
+        
+        let trackId = self.partFeedback.currentTrackID.value
+        if trackId == "" {
+            print("tapOnCell No track selected")
+            return
+        }
+        
+        let partId = self.partFeedback.currentPartID.value
+        if partId == "" {
+            print("tapOnCell No part selected")
+            return
+        }
+        
+        let index: Int = row * setSettings.gridColumns + column
+        
+        //Update areaOfInterest and areaOfInterestColor for storage
+        if self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] == 1 {
+            self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] = 0
+            self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterestColor[index] = .white.opacity(0.01)
+        }
+        else {
+            self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest[index] = 1
+            self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterestColor[index] = self.setSettings.tracks[trackId]!.instrumentColor
+        }
+        
+        //Get new connection with clip positions
+        self.setSettings.tracks[trackId]!.loopsToGridMapped = AppUtils.areaOfInterestGridMapped(
+            areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
+            cellsToGrid: self.setSettings.tracks[trackId]!.loopsToGrid)
+        
+        //Get new connections with note positions
+        self.setSettings.tracks[trackId]!.notesToGridMapped = AppUtils.areaOfInterestGridMapped(
+            areaOfInterest: self.setSettings.tracks[trackId]!.parts[partId]!.areaOfInterest,
+            cellsToGrid: self.setSettings.tracks[trackId]!.notesToGrid)
+        
+        //Update this var to update View
+        self.setInfoState.updateEditView += 1
+    }
+
+    //PlayGridView AlL Track / Part colors at correct Indexes
+    public func colorTypes(row: Int, column: Int) -> [ColorType] {
+        
+        let colors = colorsPerTrack(
+            row: row, column: column, currentLevel: Int( self.leveling.currentSetLevelSubject.value )
+        )
+        
+        guard conductor.isConductorPlayingSubject.value else { return colors }
+        
+        if row < self.setInfoState.values.count {
+            if column < self.setInfoState.values[row].count {
+                return colors.map {
+                    ColorType(color: $0.color.opacity(CGFloat(self.setInfoState.values[row][column].scaledValue)))
+                }
+            }
+        }
+        return colors
+    }
+    
+    //PlayGridView Get colors per track, ColorTypes make iterating in a SwiftUI View possible
+    func colorsPerTrack(row: Int, column: Int, currentLevel: Int) -> [ColorType] {
+        
+        var colors: [ColorType] = []
+        
+        for settingsTrack in setSettings.tracks {
+            
+            if settingsTrack.value.levels.contains(currentLevel){
+                
+                let trackColor = settingsTrack.value.instrumentColor
+                
+                for setPart in settingsTrack.value.parts {
+                    
+                    //FIXME: add currentLevel
+                    if !setPart.value.dontDrawVisual {
+                        
+                        if setPart.value.isIndexSelected(
+                            row: row,
+                            column: column,
+                            gridRows: setSettings.gridRows,
+                            gridColumns: setSettings.gridColumns){
+                            
+                            colors.append(ColorType(color: trackColor))
+                        }
+                    }
+                }
+            }
+        }
+        
+        return colors.isEmpty ? [ColorType(color: .black.opacity(0.01))] : colors
     }
 }
 

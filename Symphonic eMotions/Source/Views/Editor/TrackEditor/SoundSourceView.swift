@@ -261,7 +261,7 @@ struct SoundSourceView: View {
                             }
                             //Create a new AudioFile object
                             //File name input
-                            let midiNote = setInfoModel.conductor.midiNoteNumberFromFileName(fileName) ?? 48
+//                            let midiNote = setInfoModel.conductor.midiNoteNumberFromFileName(fileName) ?? 48
                             let lengthInBeats = setInfoModel.conductor.lengthInBeatsFromFileName(fileName: fileName) ?? 4
                             let newAudioFile = InstrumentsSet.Track.AudioFile(
                                 fileName: fileName,

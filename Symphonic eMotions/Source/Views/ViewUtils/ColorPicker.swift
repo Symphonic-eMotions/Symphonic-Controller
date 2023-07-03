@@ -10,7 +10,7 @@ import SwiftUI
 
 struct InsrtumentColorPicker: View {
     
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     var color: InstrumentColors = InstrumentColors()
     
     var body: some View {
@@ -19,8 +19,8 @@ struct InsrtumentColorPicker: View {
             HStack{
                 ForEach(color.palet, id:\.self) { color in
                     
-                    let trackId = playViewModel.partFeedback.currentTrackID.value
-                    let trackColor = playViewModel.setSettings.tracks[trackId]?.instrumentColor
+                    let trackId = setInfoModel.partFeedback.currentTrackID.value
+                    let trackColor = setInfoModel.setSettings.tracks[trackId]?.instrumentColor
                     
                     Circle()
                         .foregroundColor(color)
@@ -28,9 +28,9 @@ struct InsrtumentColorPicker: View {
                         .opacity(color == trackColor ? 0.5 : 1.0)
                         .scaleEffect(color == trackColor ? 1.1 : 1.0)
                         .onTapGesture {
-                            playViewModel.setSettings.tracks[trackId]?.instrumentColor = color
-                            playViewModel.setSettings.tracks[trackId]?.changeAreaOfInterestColor(newColor: color)
-                            playViewModel.playViewState.updateEditView += 1
+                            setInfoModel.setSettings.tracks[trackId]?.instrumentColor = color
+                            setInfoModel.setSettings.tracks[trackId]?.changeAreaOfInterestColor(newColor: color)
+                            setInfoModel.setInfoState.updateEditView += 1
                         }
                 }
             }

@@ -10,7 +10,7 @@ import SwiftUI
 struct PartFeedbackView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
-    @ObservedObject var playViewModel: PlayViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -24,25 +24,25 @@ struct PartFeedbackView: View {
     var setSettings: SetSettings
     
     init(
-        playViewModel: PlayViewModel,
+        setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>
     ){
         
-        self.playViewModel = playViewModel
+        self.setInfoModel = setInfoModel
         
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         
         //Set Settings for building interface
-        self.setSettings = playViewModel.setSettings
+        self.setSettings = setInfoModel.setSettings
         
         //Set the first track active in the editor
         self.currentTrackID = setSettings.settingsCurrentTrackID
-        playViewModel.partFeedback.currentTrackID.value = setSettings.settingsCurrentTrackID
+        setInfoModel.partFeedback.currentTrackID.value = setSettings.settingsCurrentTrackID
 
         self.currentPartID = setSettings.settingsCurrentPartID
-        playViewModel.partFeedback.currentPartID.value = setSettings.settingsCurrentPartID
+        setInfoModel.partFeedback.currentPartID.value = setSettings.settingsCurrentPartID
         
         self.rampUp = Float(setSettings.settingsRampUp)
         self.rampDown = Float(setSettings.settingsRampDown)
@@ -64,28 +64,28 @@ struct PartFeedbackView: View {
                     }, set: { value in
                         
                         currentTrackID = value
-                        playViewModel.partFeedback.currentTrackID.send(value)
+                        setInfoModel.partFeedback.currentTrackID.send(value)
                         
-                        playViewModel.setSettings.settingsCurrentTrackID = currentTrackID
+                        setInfoModel.setSettings.settingsCurrentTrackID = currentTrackID
                         
                         let settingsVolume = setSettings.tracks[value]!.instrumentVolume
                         
                         volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(settingsVolume)))
-                        playViewModel.setSettings.settingsVolume = settingsVolume
+                        setInfoModel.setSettings.settingsVolume = settingsVolume
                         
                         currentPartID = setSettings.tracks[currentTrackID]!.parts.keys.first!
-                        playViewModel.partFeedback.currentPartID.send(currentPartID)
-                        playViewModel.setSettings.settingsCurrentPartID = currentPartID
+                        setInfoModel.partFeedback.currentPartID.send(currentPartID)
+                        setInfoModel.setSettings.settingsCurrentPartID = currentPartID
                         
                         let settingRampUp  = setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp
                         rampUp = Float(settingRampUp)
-                        playViewModel.setSettings.settingsRampUp = settingRampUp
+                        setInfoModel.setSettings.settingsRampUp = settingRampUp
                         
                         let settingsRampDown = setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown
                         rampDown = Float(settingsRampDown)
-                        playViewModel.setSettings.settingsRampDown = settingsRampDown
+                        setInfoModel.setSettings.settingsRampDown = settingsRampDown
                         
-                        playViewModel.playViewState.updateEditView += 1
+                        setInfoModel.setInfoState.updateEditView += 1
                     }),
                     content: {
                         ForEach(setSettings.tracks.keys, id: \.self) { key in
@@ -108,18 +108,18 @@ struct PartFeedbackView: View {
                         }, set: { value in
                             
                             currentPartID = value
-                            playViewModel.partFeedback.currentPartID.send(value)
-                            playViewModel.setSettings.settingsCurrentPartID = currentPartID
+                            setInfoModel.partFeedback.currentPartID.send(value)
+                            setInfoModel.setSettings.settingsCurrentPartID = currentPartID
                             
                             let settingRampUp  = setSettings.tracks[currentTrackID]!.parts[value]!.rampUp
                             rampUp = Float(settingRampUp)
-                            playViewModel.setSettings.settingsRampUp = settingRampUp
+                            setInfoModel.setSettings.settingsRampUp = settingRampUp
                             
                             let settingsRampDown = setSettings.tracks[currentTrackID]!.parts[value]!.rampDown
                             rampDown = Float(settingsRampDown)
-                            playViewModel.setSettings.settingsRampDown = settingsRampDown
+                            setInfoModel.setSettings.settingsRampDown = settingsRampDown
                             
-                            playViewModel.playViewState.updateEditView += 1
+                            setInfoModel.setInfoState.updateEditView += 1
                         }),
                         content: {
                             let track = setSettings.tracks[currentTrackID] ?? nil
@@ -149,7 +149,7 @@ struct PartFeedbackView: View {
                         //Display ramped value feedback
                         ValueFeedback(value: .init(
                             get: {
-                                let currentBarLevel = Float(max(0, playViewModel.partFeedbackState.ramped))
+                                let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
                                 return max(0, min(1, currentBarLevel))
                             },
                             set: {
@@ -166,7 +166,7 @@ struct PartFeedbackView: View {
                                     //Set State var for slider itself
                                     self.volume = newVal
                                     //Change value within audio engine
-                                    playViewModel.conductor.forwardInstrumment(
+                                    setInfoModel.conductor.forwardInstrumment(
                                         value: Double(newVal),
                                         on: currentTrackID,
                                         for: "amplitude"
@@ -194,7 +194,7 @@ struct PartFeedbackView: View {
                                 set: { (newVal) in
                                     self.rampUp = newVal
 
-                                    playViewModel.conductor.rampUp[currentPartID] = Double(newVal)
+                                    setInfoModel.conductor.rampUp[currentPartID] = Double(newVal)
                                     setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = Double(newVal)
                                 }
                             ),
@@ -209,7 +209,7 @@ struct PartFeedbackView: View {
                                 set: { (newVal) in
                                     self.rampDown = newVal
 
-                                    playViewModel.conductor.rampDown[currentPartID] = Double(newVal)
+                                    setInfoModel.conductor.rampDown[currentPartID] = Double(newVal)
                                     setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = Double(newVal)
                                 }
                             ),
@@ -223,7 +223,7 @@ struct PartFeedbackView: View {
                     
                     HStack {
                         InsrtumentColorPicker(
-                            playViewModel: playViewModel
+                            setInfoModel: setInfoModel
                         )
                         
                         //New set, not in playlist
@@ -233,7 +233,7 @@ struct PartFeedbackView: View {
                                     
                                     let fileName = AppUtils.createWorkingFile(
                                         setSettings: setSettings,
-                                        instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
                                         duplicateLastTrack: false,
                                         asNewFile: true
                                     )
@@ -260,13 +260,13 @@ struct PartFeedbackView: View {
                                     
                                     let fileName = AppUtils.createWorkingFile(
                                         setSettings: setSettings,
-                                        instrumentSet: playViewModel.playViewState.currentInstrumentsSet,
+                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
                                         duplicateLastTrack: false,
                                         asNewFile: false
                                     )
                                     fileController.addSetFileURLToController(fileName: fileName)
                                     
-                                    playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
+                                    setInfoModel.setInfoState.buildSettings.instrumentPartEditor.toggle()
                                     
                                 }, color: .red, isSolid: true, maxWidth: 130, height: 35
                             ){

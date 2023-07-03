@@ -47,7 +47,7 @@ struct SideBarView: View {
 
     @Binding var sessionDisplay: SessionDisplay
     @Binding var sessionDisplaySub: SessionDisplay
-    @Binding var setInfoLocalState: SetInfoLocalState
+//    @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]
     
     @StateObject private var viewModel = SetListViewModel()
@@ -62,14 +62,14 @@ struct SideBarView: View {
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>,
-        setInfoLocalState: Binding<SetInfoLocalState>,
+//        setInfoLocalState: Binding<SetInfoLocalState>,
         sidebarItems: Binding<[(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]>
         
     ) {
         self.setInfoModel = setInfoModel
         _sessionDisplay = sessionDisplay
         _sessionDisplaySub = sessionDisplaySub
-        _setInfoLocalState = setInfoLocalState
+//        _setInfoLocalState = setInfoLocalState
         _sidebarItems = sidebarItems
         
     }
@@ -77,8 +77,8 @@ struct SideBarView: View {
     private func changeFileGroupAndSessionDisplay(_ item: (name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)) {
         self.fileGroup = item.fileGroup
         self.sessionDisplay = item.sessionDisplay
-        setInfoLocalState.sideBarHead = item.name
-        setInfoLocalState.setName = item.setName
+        setInfoModel.setInfoLocalState.sideBarHead = item.name
+        setInfoModel.setInfoLocalState.setName = item.setName
     }
     
     var body: some View {
@@ -128,13 +128,13 @@ struct SideBarView: View {
                             selectedSet: $selectedSet,
                             sessionDisplay: $sessionDisplay,
                             sessionDisplaySub: $sessionDisplaySub,
-                            setInfoLocalState: $setInfoLocalState,
+                            setInfoLocalState: $setInfoModel.setInfoLocalState,
                             setInfoModel: setInfoModel
                         )
                     }
                 }
             }
-            .navigationTitle(setInfoLocalState.sideBarHead)
+            .navigationTitle(setInfoModel.setInfoLocalState.sideBarHead)
         }
     }
 }
