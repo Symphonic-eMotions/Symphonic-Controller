@@ -51,7 +51,7 @@ struct PlayerControlsView: View {
                     
                     //Start stop
                     EMButton(action: {
-                        setInfoModel.tapMediaControlButton()
+                        setInfoModel.tapToggleConductor()
                     }, color: .accentColor) {
                         Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
                                 "stop.fill" :

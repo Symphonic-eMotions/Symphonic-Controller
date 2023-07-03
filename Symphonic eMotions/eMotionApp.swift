@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import Combine
 
 @main
 struct eMotionApp: App {
@@ -27,7 +28,7 @@ struct eMotionApp: App {
     
     @State public var sessionDisplay: SessionDisplay = .home
     @State public var sessionDisplaySub: SessionDisplay = .page01
-    
+        
     var body: some Scene {
         WindowGroup {
             MainViewContainer(

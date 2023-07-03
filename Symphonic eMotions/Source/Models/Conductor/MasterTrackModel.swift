@@ -28,13 +28,13 @@ struct MasterViewState {
 final class MasterViewModel: ObservableObject {
     
     var conductor: Conductor
-    @Published var playViewState: PlayViewState
+    @Published var setInfoState: SetInfoState
     
     init(
-        playViewState: PlayViewState,
+        setInfoState: SetInfoState,
         conductor: Conductor
     ) {
-        self.playViewState = playViewState
+        self.setInfoState = setInfoState
         self.conductor = conductor
     }
 }

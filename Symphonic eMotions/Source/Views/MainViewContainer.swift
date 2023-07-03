@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MainViewContainer: View {
     
@@ -18,6 +19,7 @@ struct MainViewContainer: View {
     @State var setInfoLocalState = SetInfoLocalState()
     
     var body: some View {
+                
         MainView(
             viewModel: viewModel,
             setInfoModel: SetInfoModel(
@@ -26,7 +28,11 @@ struct MainViewContainer: View {
                 imageDifference: $viewModel.mainState.imageDifference,
                 setInfoState: SetInfoState(
                     currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                    buildSettings: viewModel.mainState.buildSettings
+                    buildSettings: viewModel.mainState.buildSettings,
+                    masterTrackStructure: AppUtils.masterTrackViewObject(
+                        instrumentSet: viewModel.mainState.currentInstrumentsSet,
+                        setSettings:  viewModel.mainState.setSettings
+                    )
                 ),
                 currentInstrumentsSetIsChanged: { instrumentsSet in
                     viewModel.currentModelInstrumentsSetChanged(

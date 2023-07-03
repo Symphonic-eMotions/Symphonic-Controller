@@ -24,6 +24,13 @@ struct SetInfoState {
     var masterTrackStructure: [MasterTrackEffect]?
 }
 
+enum PlayerControlsViewAction {
+    case displayModeChange(DisplayModes)
+    case settingsChange(Bool)
+    case partFeedbackViewChange(Bool)
+    case masterTrackViewChange(Bool)
+}
+
 final class SetInfoModel: ObservableObject {
     
     private(set) var frameExtractor: FrameExtractor
@@ -39,7 +46,14 @@ final class SetInfoModel: ObservableObject {
     @Published var partFeedbackState: PartFeedbackState
     let playerControlsAction: ((PlayerControlsViewAction) -> Void)?
     
-    var cancellables = Swift.Set<AnyCancellable>()
+//    var cancellablesLevels = Swift.Set<AnyCancellable>()
+//    var cancellablesImageDifference = Swift.Set<AnyCancellable>()
+//    var cancellablesPartFeedback = Swift.Set<AnyCancellable>()
+    
+    private var cancellableLevels: AnyCancellable? = nil
+    private var cancellableImageDifference: AnyCancellable? = nil
+    private var cancellablePartFeddback: AnyCancellable? = nil
+    
     
     init(
         setInfoLocalState: Binding<SetInfoLocalState>,
@@ -63,6 +77,7 @@ final class SetInfoModel: ObservableObject {
         
         self.partFeedback = partFeedback
         self.partFeedbackState = partFeedbackState
+        
         self.playerControlsAction = playerControlsAction
         
         frameExtractor = FrameExtractor.shared
@@ -70,6 +85,7 @@ final class SetInfoModel: ObservableObject {
         
         startObservingData()
     }
+    
     
     func movementSetting(id: Int) -> Double{
         
@@ -90,15 +106,20 @@ final class SetInfoModel: ObservableObject {
     
     func startObservingData() {
         
+        print("startObservingData subscription")
+        
+        cancellableLevels?.cancel()
+        
         //Levels
-        self.leveling.currentSetLevelSubject.sink { value in
-
+        cancellableLevels = self.leveling.currentSetLevelSubject.sink { value in
+            
             let oldLevel = Int(self.setInfoState.currentLevel)
             self.setInfoState.currentLevel = value
             let currentLevel = Int(self.setInfoState.currentLevel)
 
             //On level change mute and un-mute tracks accordingly
             if oldLevel != currentLevel {
+                print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
 
                 //Mute and unmutes tracks to level settings
                 //
@@ -110,40 +131,56 @@ final class SetInfoModel: ObservableObject {
                 )
             }
         }
-        .store(in: &cancellables)
         
-        //Image difference values
-//        self.imageDifference.values.sink { values in
-            
-        self.imageDifference.values.sink { [weak self] values in
-                
+        cancellableImageDifference?.cancel()
+        
+        cancellableImageDifference = self.imageDifference.values.sink { [weak self] values in
+        
             guard self!.conductor.isConductorPlayingSubject.value else { return }
             
             DispatchQueue.main.async {
             
-//            DispatchQueue.main.sync { [weak self] in
-                
                 self?.setInfoState.values = values
                 
-                let levelValue = self?.conductor.valuesDidSetInfoChanged(
+//                let levelValue = self?.conductor.valuesDidSetInfoChanged(
+//                    //These are the main values for controlling
+//                    values: values,
+//                    //Dynamic area's of interest
+//                    setSettings: self!.setSettings,
+//                    //These 3 are for advanced view monitoring
+//                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0
+//                )
+                
+                let levelValue = self?.conductor.valuesDidChange(
                     //These are the main values for controlling
                     values: values,
                     //Dynamic area's of interest
                     setSettings: self!.setSettings,
                     //These 3 are for advanced view monitoring
-                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0
+                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0,
+                    partFeedbackTrackID: self?.partFeedback.currentTrackID.value ?? "",
+                    partFeedbackPartID: self?.partFeedback.currentPartID.value ?? ""
                 )
                 
+                
                 if self?.leveling.pauseLevel == false {
-                    self?.leveling.currentSetLevelSubject.send(levelValue ?? 0)
+//                    self?.leveling.currentSetLevelSubject.send(levelValue ?? 0)
+                    let newLevel = levelValue ?? 0
+                    let currentLevel = self?.leveling.currentSetLevelSubject.value ?? 0
+                    if newLevel != currentLevel {
+                        self?.leveling.currentSetLevelSubject.send(newLevel)
+                    }
                 }
             }
         }
-        .store(in: &cancellables)
-    }
-    
-    func stopObservingData() {
-        cancellables.removeAll()
+        
+        cancellablePartFeddback?.cancel()
+        
+        //Intermediair for part value monitoring preview
+        cancellablePartFeddback = self.conductor.forwardRampedPartFeedback.sink { value in
+            
+            self.partFeedbackState.ramped = Double(value)
+        }
     }
     
     func tapToggleConductor() {
@@ -153,7 +190,6 @@ final class SetInfoModel: ObservableObject {
         if self.conductor.isConductorPlayingSubject.value {
             self.frameExtractor.stopExtracting()
             self.frameExtractor.startExtracting()
-            
         }
 
         conductor.togglePlayEngineAndTracks(
@@ -161,29 +197,33 @@ final class SetInfoModel: ObservableObject {
             setSettings: self.setSettings
         )
     }
+    
+    func tapStopAudioEngine(){
+        
+        conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
+    }
+    
+//    func tapMediaControlButton() {
 //
-//    func tapStopConductor() {
+//        print("OnTapMediaControlButton")
+//
+//        //fix for system stop after 12 set changes
+//        //If you remove this, video won't be passed through after 12 set changes
+//        if self.conductor.isConductorPlayingSubject.value {
+//            self.frameExtractor.stopExtracting()
+//            self.frameExtractor.startExtracting()
+//
+//            stopObservingData()
+//        }
+//        else{
+//            keepOneRunning()
+//        }
+//
 //        conductor.togglePlayEngineAndTracks(
 //            currentSetLevel: leveling.currentSetLevelSubject.value,
 //            setSettings: self.setSettings
 //        )
 //    }
-    
-    func tapMediaControlButton() {
-        
-        //fix for system stop after 12 set changes
-        //If you remove this, video won't be passed through after 12 set changes
-        if self.conductor.isConductorPlayingSubject.value {
-            self.frameExtractor.stopExtracting()
-            self.frameExtractor.startExtracting()
-            
-        }
-
-        conductor.togglePlayEngineAndTracks(
-            currentSetLevel: leveling.currentSetLevelSubject.value,
-            setSettings: self.setSettings
-        )
-    }
     
     func selectableEditorParts() -> [EditorParts] {
         var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
@@ -414,10 +454,6 @@ final class SetInfoModel: ObservableObject {
     func tapPartFeedbackButton() {
         setInfoState.buildSettings.instrumentPartEditor.toggle()
         playerControlsAction?(.partFeedbackViewChange(setInfoState.buildSettings.instrumentPartEditor))
-    }
-    
-    func tapStopAudioEngine(){
-        conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
     }
     
     func tapSetTempoBPMPlus(){

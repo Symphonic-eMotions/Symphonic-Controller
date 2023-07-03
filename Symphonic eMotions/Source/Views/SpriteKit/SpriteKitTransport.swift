@@ -83,7 +83,7 @@ struct SpriteKitTransport: View {
                 
                 //Start stop
                 EMButton(action: {
-                    setInfoModel.tapMediaControlButton()
+                    setInfoModel.tapToggleConductor()
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {
                     Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
                             "stop.fill" :

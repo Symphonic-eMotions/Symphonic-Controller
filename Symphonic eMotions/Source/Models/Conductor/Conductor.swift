@@ -457,7 +457,7 @@ final class Conductor {
     
     //What does levelController do?
     //Called from
-    //- PlayViewModel.startObservingData -> Level change
+    //- SetInfoModel.startObservingData -> Level change
     //- Conductor.togglePlayEngineAndTracks -> Transport play and stop
     //- MainView SpriteKitView.onAppear -> spriteKitOnAppear
     //- Control if midiClips are controlled by level number
@@ -890,7 +890,7 @@ final class Conductor {
     private func levelNoteNumberVariation(in level: Int, on track: TrackSettings) -> Void {
         if track.levels.contains(level) {
             
-            print("levelNoteNumberVariation -> copyMIDIfromMemory ")
+//            print("levelNoteNumberVariation -> copyMIDIfromMemory ")
             
             guard track.notesToLevel.contains(level) else{
                 return
@@ -899,18 +899,18 @@ final class Conductor {
             //Get length in beats from audio filws
             let clipLengths: [Double] = track.audioFiles.map { Double($0.lengthInBeats) }
             
-            print("clipLengths: \(clipLengths)")
+//            print("clipLengths: \(clipLengths)")
             
             let nextVariation = track.notesToLevel[level]
             
-            print("nextVariation: \(nextVariation)")
+//            print("nextVariation: \(nextVariation)")
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
 //            stopNotesTrackId(for: track.trackId)
             
-            print("nextMIDIstartTime: \(nextMIDIstartTime)")
-            print("loopLength: \(clipLengths[nextVariation])")
+//            print("nextMIDIstartTime: \(nextMIDIstartTime)")
+//            print("loopLength: \(clipLengths[nextVariation])")
             
             copyMIDIfromMemory(
                 trackId: track.trackId,
