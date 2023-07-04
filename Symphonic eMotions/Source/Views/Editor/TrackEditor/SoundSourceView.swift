@@ -115,7 +115,7 @@ struct SoundSourceView: View {
                             Text(type.rawValue.capitalized).tag(type)
                         }
                     }
-                    .pickerStyle(.inline)
+                    .pickerStyle(.menu)
                     .frame(width:330, height: 100)
                     .onChange(of: selectedExsFile) { type in
                         withAnimation {
