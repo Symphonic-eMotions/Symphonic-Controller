@@ -1188,9 +1188,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
+				MARKETING_VERSION = 2.5.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1230,9 +1230,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
+				MARKETING_VERSION = 2.5.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
