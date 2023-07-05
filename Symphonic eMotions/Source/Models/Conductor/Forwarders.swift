@@ -41,6 +41,8 @@ extension Conductor {
         //Reverse maxIndexes for inverted Y axis in SpriteKit
 //        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
         
+//        print("*** forwardSpriteKit trackNr: \(trackNr) partNr: \(partNr) ramped: \(ramped) areaOfInterest: \(areaOfInterest) maxIndex: \(maxIndex) mappedIndex: \(mappedIndex) ")
+//        
         if trackNr == 0 {
             if partNr == 0 {
                 spriteKitParts0a.send((maxIndex,mappedIndex,ramped))

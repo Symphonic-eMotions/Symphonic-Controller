@@ -112,7 +112,7 @@ struct MovementView: View {
                                     .frame(width: 200, height: 60)
                                     .foregroundColor(.clear)
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                    .background( hasTested ? Color.gray : Color.accentColor )
+                                    .background( Color.accentColor )
                                 
                                 Text(NSLocalizedString("Continue", comment: ""))
                                     .font(.system(size: 30))
@@ -130,16 +130,17 @@ struct MovementView: View {
                     }
                 }
             }
-//            .onAppear{
-//                //Load introduction set
-//                if currentUrl != "Introductie.json" {
-//                    //Load set
-//                    setInfoModel.tapSetRow(filePath: "Introductie.json")
-//                    //Let @AppStorage know what is current
-//                    currentUrl = "Introductie.json"
-//                }
-//            }
-            
+            .onAppear{
+                
+                print("MovementView page: \(sessionDisplay) / \(sessionDisplaySub)")
+                
+                setInfoModel.tapStopAudioEngine()
+                
+                //Load set
+                setInfoModel.tapSetRow(filePath: "Introductie.json")
+                //Let @AppStorage know what is current
+                currentUrl = "Introductie.json"
+            }
             //Back button
             ZStack {
                 Image(systemName: "arrowshape.backward")

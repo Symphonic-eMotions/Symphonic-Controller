@@ -63,15 +63,15 @@ enum SessionDisplay: Hashable, Codable {
         case .none:
             return "Nothing"
         case .page01:
-            return "Introduction sheet 1"
+            return "Introduction Standaard"
         case .page02:
-            return "Introduction sheet 2"
+            return "Introduction Volume"
         case .page03:
-            return "Introduction sheet 3"
+            return "Introduction Light"
         case .page04:
-            return "Introduction sheet 4"
+            return "Introduction Movement AND Test"
         case .page05:
-            return "Introduction sheet 5"
+            return "Another test"
         }
     }
 }

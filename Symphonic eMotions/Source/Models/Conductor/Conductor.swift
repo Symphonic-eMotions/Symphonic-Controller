@@ -1029,11 +1029,12 @@ final class Conductor {
             //Fire up the audio engine
             try audioEngine.start()
             
+            print("--> We're playing <--")
+            
             setSettings.tracks.forEach { track in
                 //Both midi file and audioBuffer note numbers
                 
                 if track.value.startType == .loopedTransport {
-                    print("--> We're playing <--")
                     playTrack(track.value)
                 }
                 

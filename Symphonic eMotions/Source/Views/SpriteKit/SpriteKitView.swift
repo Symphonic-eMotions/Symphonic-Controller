@@ -174,6 +174,8 @@ struct SpriteKitView: View {
                         //First configured instrument (GO Cello)
                         .onReceive(setInfoModel.conductor.spriteKitParts0a){ ( value ) in
                             
+//                            print("XXXX Receiving first instrument \(value)")
+                            
                             scene.instrumentPart0aMaxIndex = value.0
                             scene.instrumentPart0aMidiClip = value.1
                             scene.instrumentPart0aScale = CGFloat(value.2)

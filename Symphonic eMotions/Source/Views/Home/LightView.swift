@@ -135,7 +135,7 @@ struct LightView: View {
 //                            sessionDisplaySub = .none
                             
                             sessionDisplay = .home
-                            sessionDisplaySub = .page05
+                            sessionDisplaySub = .page04
                         }
                     }
                     .disabled(!isAbove30)

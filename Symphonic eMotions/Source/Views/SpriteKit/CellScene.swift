@@ -286,6 +286,7 @@ class CellScene: SKScene {
             //First configured instrument
             position = self.instrument0Positions[instrumentPart0aMaxIndex]
             partScale = instrumentPart0aScale ?? 0
+            
             if !self.isPlaying { partScale = 0 }
             updateInstrument(
                 container: instrumentPart0a,
