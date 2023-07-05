@@ -116,7 +116,7 @@ struct SoundSourceView: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .frame(width:330, height: 100)
+                    .frame(width:300, height: 100)
                     .onChange(of: selectedExsFile) { type in
                         withAnimation {
                             
@@ -127,17 +127,17 @@ struct SoundSourceView: View {
                         }
                     }
                     
-                    Button(action: {
-                        withAnimation {
-                            selectedExsFile = selectedExsFileMemory 
-                            hasChanged = false
-                        }
-                    }) {
-                        Image(systemName: "arrow.uturn.backward.circle")
-                            .font(.title)
-                            .foregroundColor( hasChanged ? .blue : .gray)
-                    }
-                    .disabled(!hasChanged)
+//                    Button(action: {
+//                        withAnimation {
+//                            selectedExsFile = selectedExsFileMemory
+//                            hasChanged = false
+//                        }
+//                    }) {
+//                        Image(systemName: "arrow.uturn.backward.circle")
+//                            .font(.title)
+//                            .foregroundColor( hasChanged ? .blue : .gray)
+//                    }
+//                    .disabled(!hasChanged)
                     
                     if hasChanged {
                         Text("Please save and re-open set")

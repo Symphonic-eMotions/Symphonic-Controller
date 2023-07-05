@@ -83,36 +83,21 @@ final class SetInfoModel: ObservableObject {
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
         
-        startObservingData()
+//        startObservingData()
+        
+        subscribeToLevels()
+        subscribeToImageDifference()
+        subscribeToPartFeedback()
     }
     
-    
-    func movementSetting(id: Int) -> Double{
-        
-        let feedbackPresets: [Int:Double] = [
-            0: 0.7,
-            1: 0.5,
-            2: 0.3,
-            3: 0.1
-        ]
-        if let presetValue = feedbackPresets[id] {
-            print("Set feedback based on table \(id) is feedback \(feedbackPresets)")
-            return presetValue
-        }
-        else{
-            return 0.5
-        }
-    }
-    
-    func startObservingData() {
-        
-        print("startObservingData subscription")
-        
+    func subscribeToLevels() {
         cancellableLevels?.cancel()
-        
-        //Levels
-        cancellableLevels = self.leveling.currentSetLevelSubject.sink { value in
+        //Reset to prevend memory leak
+        cancellableLevels = nil
+        cancellableLevels = self.leveling.currentSetLevelSubject.sink { [weak self] value in
             
+            guard let self = self else { return }
+
             let oldLevel = Int(self.setInfoState.currentLevel)
             self.setInfoState.currentLevel = value
             let currentLevel = Int(self.setInfoState.currentLevel)
@@ -131,55 +116,68 @@ final class SetInfoModel: ObservableObject {
                 )
             }
         }
+    }
+    
+    func subscribeToImageDifference() {
         
         cancellableImageDifference?.cancel()
+        cancellableImageDifference = nil
         
         cancellableImageDifference = self.imageDifference.values.sink { [weak self] values in
-        
-            guard self!.conductor.isConductorPlayingSubject.value else { return }
+            guard let self = self else { return }
+
+            guard self.conductor.isConductorPlayingSubject.value else { return }
             
             DispatchQueue.main.async {
-            
-                self?.setInfoState.values = values
+                self.setInfoState.values = values
                 
-//                let levelValue = self?.conductor.valuesDidSetInfoChanged(
-//                    //These are the main values for controlling
-//                    values: values,
-//                    //Dynamic area's of interest
-//                    setSettings: self!.setSettings,
-//                    //These 3 are for advanced view monitoring
-//                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0
-//                )
-                
-                let levelValue = self?.conductor.valuesDidChange(
-                    //These are the main values for controlling
+                let levelValue = self.conductor.valuesDidChange(
+                    // These are the main values for controlling
                     values: values,
-                    //Dynamic area's of interest
-                    setSettings: self!.setSettings,
-                    //These 3 are for advanced view monitoring
-                    currentSetLevel: self?.leveling.currentSetLevelSubject.value ?? 0,
-                    partFeedbackTrackID: self?.partFeedback.currentTrackID.value ?? "",
-                    partFeedbackPartID: self?.partFeedback.currentPartID.value ?? ""
+                    // Dynamic area's of interest
+                    setSettings: self.setSettings,
+                    // These 3 are for advanced view monitoring
+                    currentSetLevel: self.leveling.currentSetLevelSubject.value,
+                    partFeedbackTrackID: self.partFeedback.currentTrackID.value,
+                    partFeedbackPartID: self.partFeedback.currentPartID.value
                 )
                 
-                
-                if self?.leveling.pauseLevel == false {
-//                    self?.leveling.currentSetLevelSubject.send(levelValue ?? 0)
-                    let newLevel = levelValue ?? 0
-                    let currentLevel = self?.leveling.currentSetLevelSubject.value ?? 0
+                if self.leveling.pauseLevel == false {
+                    let newLevel = levelValue
+                    let currentLevel = self.leveling.currentSetLevelSubject.value
                     if newLevel != currentLevel {
-                        self?.leveling.currentSetLevelSubject.send(newLevel)
+                        self.leveling.currentSetLevelSubject.send(newLevel)
                     }
                 }
             }
         }
+    }
+    
+    func subscribeToPartFeedback() {
         
         cancellablePartFeddback?.cancel()
+        cancellablePartFeddback = nil
         
-        //Intermediair for part value monitoring preview
-        cancellablePartFeddback = self.conductor.forwardRampedPartFeedback.sink { value in
-            
+        cancellablePartFeddback = self.conductor.forwardRampedPartFeedback.sink { [weak self] value in
+            guard let self = self else { return }
             self.partFeedbackState.ramped = Double(value)
+        }
+    }
+    
+    func movementSetting(id: Int) -> Double{
+        
+        let feedbackPresets: [Int:Double] = [
+            0: 0.7,
+            1: 0.5,
+            2: 0.3,
+            3: 0.1
+        ]
+        if let presetValue = feedbackPresets[id] {
+            print("Set feedback based on table \(id) is feedback \(feedbackPresets)")
+            return presetValue
+        }
+        else{
+            return 0.5
         }
     }
     
@@ -202,28 +200,6 @@ final class SetInfoModel: ObservableObject {
         
         conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
     }
-    
-//    func tapMediaControlButton() {
-//
-//        print("OnTapMediaControlButton")
-//
-//        //fix for system stop after 12 set changes
-//        //If you remove this, video won't be passed through after 12 set changes
-//        if self.conductor.isConductorPlayingSubject.value {
-//            self.frameExtractor.stopExtracting()
-//            self.frameExtractor.startExtracting()
-//
-//            stopObservingData()
-//        }
-//        else{
-//            keepOneRunning()
-//        }
-//
-//        conductor.togglePlayEngineAndTracks(
-//            currentSetLevel: leveling.currentSetLevelSubject.value,
-//            setSettings: self.setSettings
-//        )
-//    }
     
     func selectableEditorParts() -> [EditorParts] {
         var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
