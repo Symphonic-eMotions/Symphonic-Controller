@@ -57,7 +57,7 @@ extension InstrumentsSet {
         //How can we change the note material
         var variationType: VariationType?
         
-        var firstMinimalLevel: Double
+        var firstMinimalLevel: Double?
         
         var instrumentName: String
         let instrumentColor: Color
@@ -112,9 +112,11 @@ extension InstrumentsSet {
             effects = effectsRaw
             
             //Loop through parts to get ranges and overwrite decoded parts
-            let partsRaw = try container.decode([Part].self, forKey: .parts)
+            let partsRaw = try container.decodeIfPresent([Part].self, forKey: .parts) ?? []
             var partWithRange: [Part] = []
+            var parIndex = 0
             for var partRaw in partsRaw {
+                
                 effectsRaw?.forEach { effectRaw in
                     //Next find the correct parameter
                     let parameter = partRaw.damperTarget.parameter
@@ -124,11 +126,16 @@ extension InstrumentsSet {
                     }
                 }
                 partWithRange.append(partRaw)
+                if parIndex == 0 {
+                    firstMinimalLevel = partRaw.damperTarget.nodeSettings?.minimalLevel ?? 0.1
+                }
+                parIndex += 1
             }
             parts = partWithRange
             
-            //first part minimal level
-            firstMinimalLevel = (partsRaw.first!.damperTarget.nodeSettings?.minimalLevel)!
+            if firstMinimalLevel == nil {
+                firstMinimalLevel = 0.1
+            }
             
             levels = try container.decode([Int].self, forKey: .levels)
         }

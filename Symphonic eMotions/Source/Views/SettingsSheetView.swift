@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsSheetView: View {
     
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
     
@@ -42,7 +43,7 @@ struct SettingsSheetView: View {
                         EMButton(action: {
                             setInfoModel.tapToggleConductor()
                         }, color: .accentColor) {
-                            Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
+                            Image(systemName: isSetPlaying ?
                                   "stop.fill" :
                                     "play.fill")
                         }
@@ -109,7 +110,7 @@ struct SettingsSheetView: View {
                 //Start stop
                 EMButton(action: {
                     showingSheet = false
-                    if !setInfoModel.conductor.isConductorPlayingSubject.value {
+                    if !isSetPlaying {
                         setInfoModel.conductor.levelController(
                             level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
                             setSettings: setInfoModel.setSettings

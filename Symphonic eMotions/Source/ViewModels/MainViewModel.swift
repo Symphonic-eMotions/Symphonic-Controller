@@ -17,8 +17,9 @@ struct MainViewState {
 
 final class MainViewModel: ObservableObject {
     
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    //Convert to Float
     private let appStorage = UserDefaults.standard
-    
     var sensitivity: Float  {
         appStorage.float(forKey: "sensitivity")
     }
@@ -50,7 +51,7 @@ final class MainViewModel: ObservableObject {
         leveling.currentSetLevelSubject.send(0)
         
         //If we're playing first stop playing
-        if conductor.isConductorPlayingSubject.value {
+        if isSetPlaying {
             
             leveling.pauseLevel = true
             conductor.togglePlayEngineAndTracks(

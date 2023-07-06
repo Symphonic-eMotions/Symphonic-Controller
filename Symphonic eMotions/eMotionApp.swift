@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 import Combine
 
+
 @main
 struct eMotionApp: App {
     
@@ -18,7 +19,10 @@ struct eMotionApp: App {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
-        
+    
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+
+
     //Started as view controller, now used is view updater
     let buildSettings = BuildSettings(
         isAdvanced: false,

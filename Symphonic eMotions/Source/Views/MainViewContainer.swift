@@ -10,7 +10,7 @@ import Combine
 
 struct MainViewContainer: View {
     
-    //Add SetInfoModel in continer for single instance of Swift.Set<AnyCancellable>()
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     
     @ObservedObject var viewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay

@@ -19,6 +19,8 @@ struct VolumeSlider: UIViewRepresentable {
 
 struct PlayerControlsView: View {
     
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    
     @ObservedObject var setInfoModel: SetInfoModel
     
     var body: some View {
@@ -53,7 +55,7 @@ struct PlayerControlsView: View {
                     EMButton(action: {
                         setInfoModel.tapToggleConductor()
                     }, color: .accentColor) {
-                        Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
+                        Image(systemName: isSetPlaying ?
                                 "stop.fill" :
                                 "play.fill")
                     }

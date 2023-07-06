@@ -37,7 +37,7 @@ struct SpriteKitView: View {
         let instrumentAreas = mainViewModel.mainState.setSettings.getInstrumentAreas()
         let levels = mainViewModel.mainState.setSettings.getLevels()
         
-        scene.isPlaying = mainViewModel.conductor.isConductorPlayingSubject.value
+//        scene.isPlaying = appModel.isPlaying
         scene.backgroundColor = .clear
         scene.size = size
         scene.scaleMode = .fill
@@ -158,9 +158,9 @@ struct SpriteKitView: View {
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .ignoresSafeArea()
-                        .onReceive(mainViewModel.conductor.isConductorPlayingSubject ){ ( value ) in
-                            scene.isPlaying = value
-                        }
+//                        .onReceive(appModel.isPlaying ){ ( value ) in
+//                            scene.isPlaying = value
+//                        }
                         .onReceive(mainViewModel.leveling.currentSetLevelSubject ){ ( value ) in
                             scene.currentLevel = value
                             

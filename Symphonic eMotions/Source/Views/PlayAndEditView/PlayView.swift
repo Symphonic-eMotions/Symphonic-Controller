@@ -10,8 +10,7 @@ import AudioKit
 
 struct PlayView: View {
     
-    //To shut down the conductor if going inactive
-//    @Environment(\.scenePhase) private var scenePhase
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
@@ -61,7 +60,7 @@ struct PlayView: View {
                     if setInfoModel.setInfoState.displayMode == .instruments ||
                         setInfoModel.setInfoState.displayMode == .both {
                         
-                        if setInfoModel.setInfoState.buildSettings.instrumentPartEditor && !setInfoModel.conductor.isConductorPlayingSubject.value {
+                        if setInfoModel.setInfoState.buildSettings.instrumentPartEditor && !isSetPlaying {
                             
                             EditGridView(setInfoModel: setInfoModel)
                             

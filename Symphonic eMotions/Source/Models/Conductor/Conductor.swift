@@ -11,8 +11,11 @@ import AVFAudio
 import Accelerate
 import Combine
 import Dispatch
+import SwiftUI
 
 final class Conductor {
+    
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     
     let autoVoice = AVSpeechSynthesizer()
     var autoSound: AVAudioPlayer!
@@ -77,7 +80,7 @@ final class Conductor {
     
     //MARK: Combine variables for communication to user interface
     //Global for the status control and feedback of this class
-    var isConductorPlayingSubject = CurrentValueSubject<Bool, Never>(false)
+//    var isConductorPlayingSubject = CurrentValueSubject<Bool, Never>(false)
     
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
@@ -495,7 +498,7 @@ final class Conductor {
                 trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
                 
                 //Highest level is full and is for the first time
-                if selectedLevel == setSettings.levels.count &&  isConductorPlayingSubject.value {
+                if selectedLevel == setSettings.levels.count &&  isSetPlaying {
                     
                     //We stop playing
                     self.pauzeEngineAndStopTracks(setSettings: setSettings)
@@ -984,7 +987,7 @@ final class Conductor {
         setSettings: SetSettings
     ) {
         
-        if isConductorPlayingSubject.value {
+        if isSetPlaying {
             
             //Fade out
             levelController(
@@ -1019,12 +1022,11 @@ final class Conductor {
         level: Int
     ) {
         
-        guard !isConductorPlayingSubject.value else { return }
-        
+//        guard !isConductorPlayingSubject.value else { return }
         
         do {
-            //Variable for use in View (SwiftUI)
-            isConductorPlayingSubject.send(true)
+            //Variable for use Everywhere
+            isSetPlaying = true
             
             //Fire up the audio engine
             try audioEngine.start()
@@ -1051,16 +1053,15 @@ final class Conductor {
                 }
             }
         } catch {
-//            isConductorPlayingSubject.send(false)
             print("Catched \(error)")
         }
     }
     
     public func pauzeEngineAndStopTracks(setSettings: SetSettings) {
         
-        guard isConductorPlayingSubject.value else { return }
+        isSetPlaying = false
         
-        self.isConductorPlayingSubject.send(false)
+        print("SET ID PLAYING 001 \(isSetPlaying)")
         
         setSettings.tracks.values.forEach {
             

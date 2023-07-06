@@ -19,6 +19,8 @@ struct MovementView: View {
     @State var setIsPlaying: Bool = false;
     @State var hasTested: Bool = false
     
+    @State private var rotationSpeed: Double = 0
+    
     var body: some View {
         
         ZStack(alignment: .topLeading){
@@ -26,25 +28,22 @@ struct MovementView: View {
             VStack(spacing: 0) {
                 
                 //Visual Feedback
-                AmoebaView(setInfoModel: setInfoModel)
+//                AmoebaView(setInfoModel: setInfoModel)
                 
-//                let imageWidth = UIScreen.main.bounds.width * 0.5
-//                let imageHeight = UIScreen.main.bounds.height * 0.5
-//
-//                HStack{
-//                    Spacer()
-//                    Image("demoBlob")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: imageWidth, height: imageHeight, alignment: .center)
-//                    Spacer()
-//                }
+                VStack {
+                    WarpHoleView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                .background(Color.black)
+                .edgesIgnoringSafeArea(.all)
+                
                 Spacer()
                 
                 ZStack(alignment: .topLeading){
                     
                     VStack{
                         
+                        //4 movement buttons
                         let imageSide = UIScreen.main.bounds.width * 0.12
                         HStack(spacing: 20) {
                             ForEach(0..<4) { column in
@@ -67,12 +66,10 @@ struct MovementView: View {
                             }
                         }
                         
-                        Text(NSLocalizedString("Movement amount", comment: ""))
-                            .font(.system(size: 40))
-                            .padding()
-                        
+                        //Play and continue
                         HStack {
                             
+                            //Play / stop button
                             ZStack {
                                 Rectangle()
                                     .frame(width: 200, height: 60)
@@ -81,13 +78,11 @@ struct MovementView: View {
                                     .background( Color.accentColor )
                                 
                                 if setIsPlaying {
-                                    
                                     Text(NSLocalizedString("Stop set", comment: ""))
                                         .font(.system(size: 30))
                                         .padding()
                                 }
                                 else{
-                                    
                                     Text(NSLocalizedString("Test set", comment: ""))
                                         .font(.system(size: 30))
                                         .padding()
@@ -107,6 +102,11 @@ struct MovementView: View {
                                 }
                             }
                             
+                            //Title
+                            Text(NSLocalizedString("Movement amount", comment: ""))
+                                .font(.system(size: 40))
+                                .padding()
+                            
                             ZStack {
                                 Rectangle()
                                     .frame(width: 200, height: 60)
@@ -120,13 +120,15 @@ struct MovementView: View {
                             }
                             .onTapGesture {
                                 withAnimation {
+                                    
+                                    setInfoModel.tapStopAudioEngine()
+                                    
                                     sessionDisplay = .demo
                                     sessionDisplaySub = .demo
                                 }
                             }
                             .disabled(!hasTested)
                         }
-                        Spacer()
                     }
                 }
             }
@@ -138,9 +140,11 @@ struct MovementView: View {
                 
                 //Load set
                 setInfoModel.tapSetRow(filePath: "Introductie.json")
+                
                 //Let @AppStorage know what is current
                 currentUrl = "Introductie.json"
             }
+            
             //Back button
             ZStack {
                 Image(systemName: "arrowshape.backward")

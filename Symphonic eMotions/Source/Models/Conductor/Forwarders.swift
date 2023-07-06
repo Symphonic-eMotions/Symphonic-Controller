@@ -46,6 +46,9 @@ extension Conductor {
         if trackNr == 0 {
             if partNr == 0 {
                 spriteKitParts0a.send((maxIndex,mappedIndex,ramped))
+                
+//                rotationSpeedSubject.send(ramped)
+                
             }
             else if partNr == 1 {
                 spriteKitParts0b.send((maxIndex,mappedIndex,ramped))
@@ -53,7 +56,12 @@ extension Conductor {
         }
         else if trackNr == 1 {
             if partNr == 0 {
-                spriteKitParts1a.send((maxIndex,mappedIndex,ramped))
+//                spriteKitParts1a.send((maxIndex,mappedIndex,ramped))
+                
+                print("Track 2 Part 0 ramped \(ramped)")
+                
+                rotationSpeedSubject.send(ramped)
+                
             }
             else if partNr == 1 {
                 spriteKitParts1b.send((maxIndex,mappedIndex,ramped))

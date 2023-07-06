@@ -68,10 +68,10 @@ struct MainView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )
-            //            .onAppear(perform: checkCameraAuthorization)
             .padding(.top, 20)
         }
         
+        //Playlist full screen count down
         if sessionDisplay == .countDown {
             
             CountDown(
@@ -82,6 +82,7 @@ struct MainView: View {
             .environmentObject(fileController)
         }
         
+        //Introdcution
         if sessionDisplay == .home {
             
             if sessionDisplaySub == .page03 {
@@ -92,9 +93,10 @@ struct MainView: View {
                 )
             }
             else if sessionDisplaySub == .page04 {
-                MovementView( setInfoModel: setInfoModel,
-                              sessionDisplay: $sessionDisplay,
-                              sessionDisplaySub: $sessionDisplaySub
+                MovementView(
+                    setInfoModel: setInfoModel,
+                    sessionDisplay: $sessionDisplay,
+                    sessionDisplaySub: $sessionDisplaySub
                 )
             }
             else {

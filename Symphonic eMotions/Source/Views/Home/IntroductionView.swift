@@ -216,13 +216,10 @@ struct IntroductionView: View {
                 
                 setInfoModel.tapStopAudioEngine()
                 
-                //Load introduction set for audio preview playNoteNumbersIntroduction
-//                if currentUrl != "Introductie.json" {
-                    //Load set
-                    setInfoModel.tapSetRow(filePath: "Introductie.json")
-                    //Let @AppStorage know what is current
-                    currentUrl = "Introductie.json"
-//                }
+                //Load set
+                setInfoModel.tapSetRow(filePath: "Introductie.json")
+                //Let @AppStorage know what is current
+                currentUrl = "Introductie.json"
             }
             
             //Back button

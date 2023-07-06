@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SpriteKitTransport: View {
     
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    
     @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -85,7 +87,7 @@ struct SpriteKitTransport: View {
                 EMButton(action: {
                     setInfoModel.tapToggleConductor()
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {
-                    Image(systemName: setInfoModel.conductor.isConductorPlayingSubject.value ?
+                    Image(systemName: isSetPlaying ?
                             "stop.fill" :
                             "play.fill")
                 }

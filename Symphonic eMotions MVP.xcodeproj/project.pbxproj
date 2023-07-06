@@ -133,13 +133,13 @@
 		7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */; };
 		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
 		7CFB298329DCA90100DFA32E /* MidiClipsPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298229DCA90100DFA32E /* MidiClipsPositionsView.swift */; };
+		7CFD4B662A55E589005ACEF3 /* WarpHoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
 		7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4F28EF045500B6BD5F /* ReverbEffect.swift */; };
 		C02E54E226B50920003D503E /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02E54E126B50920003D503E /* AppUtils.swift */; };
 		C02E54EB26B53EC2003D503E /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02E54EA26B53EC2003D503E /* PlayerControlsView.swift */; };
-		C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06958F726B4D969002EB522 /* PlayViewModel.swift */; };
 		C06958FB26B4D9E4002EB522 /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06958FA26B4D9E4002EB522 /* PlayView.swift */; };
 		C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */; };
 		C069590226B4E029002EB522 /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C069590126B4E029002EB522 /* VideoPreviewView.swift */; };
@@ -294,13 +294,13 @@
 		7CFA00AE29A75B20001D8A5D /* SetLoadAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoadAndPlay.swift; sourceTree = "<group>"; };
 		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
 		7CFB298229DCA90100DFA32E /* MidiClipsPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsPositionsView.swift; sourceTree = "<group>"; };
+		7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarpHoleView.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CFDDD4F28EF045500B6BD5F /* ReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C02E54E126B50920003D503E /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C02E54EA26B53EC2003D503E /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
-		C06958F726B4D969002EB522 /* PlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewModel.swift; sourceTree = "<group>"; };
 		C06958FA26B4D9E4002EB522 /* PlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
 		C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameExtractor.swift; sourceTree = "<group>"; };
 		C069590026B4DD0D002EB522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -439,6 +439,7 @@
 				7C9FB76C2A498F2B00490C59 /* LightView.swift */,
 				7C9FB76E2A49AEB300490C59 /* MovementView.swift */,
 				7C9FB7702A49E10400490C59 /* AmoebaView.swift */,
+				7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */,
 				7C9FB7722A49E33400490C59 /* AmoebaScene.swift */,
 				7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */,
 			);
@@ -700,7 +701,6 @@
 			isa = PBXGroup;
 			children = (
 				7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */,
-				C06958F726B4D969002EB522 /* PlayViewModel.swift */,
 				7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */,
 				7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */,
 			);
@@ -888,7 +888,6 @@
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
-				C06958F826B4D969002EB522 /* PlayViewModel.swift in Sources */,
 				7C29AA192A4F4A830070D901 /* ValuesDidSetInfoChanged.swift in Sources */,
 				7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
@@ -974,6 +973,7 @@
 				7C7A071B2A3BB6D4007F7385 /* SoundSourceView.swift in Sources */,
 				7C8D758E2A28DC2B00DF2417 /* NoteNumberSequenceView.swift in Sources */,
 				7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */,
+				7CFD4B662A55E589005ACEF3 /* WarpHoleView.swift in Sources */,
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
 				7CF50F4729ED54F70016BAF4 /* NoteNumberPLayer.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,

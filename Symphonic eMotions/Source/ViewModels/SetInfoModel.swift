@@ -33,6 +33,8 @@ enum PlayerControlsViewAction {
 
 final class SetInfoModel: ObservableObject {
     
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    
     private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var setSettings: SetSettings
@@ -105,7 +107,7 @@ final class SetInfoModel: ObservableObject {
             //On level change mute and un-mute tracks accordingly
             if oldLevel != currentLevel {
                 print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
-
+                
                 //Mute and unmutes tracks to level settings
                 //
                 // Switch View logic sits in MainView / PlayView.onReceive
@@ -114,6 +116,11 @@ final class SetInfoModel: ObservableObject {
                     level: Int(currentLevel),
                     setSettings: self.setSettings
                 )
+                
+                if(currentLevel == leveling.trackLevels.count) {
+                    //Engine is of, reset to level 0
+                    leveling.currentSetLevelSubject.send(0)
+                }
             }
         }
     }
@@ -124,11 +131,11 @@ final class SetInfoModel: ObservableObject {
         cancellableImageDifference = nil
         
         cancellableImageDifference = self.imageDifference.values.sink { [weak self] values in
+            
             guard let self = self else { return }
 
-            guard self.conductor.isConductorPlayingSubject.value else { return }
-            
             DispatchQueue.main.async {
+                
                 self.setInfoState.values = values
                 
                 let levelValue = self.conductor.valuesDidChange(
@@ -185,10 +192,10 @@ final class SetInfoModel: ObservableObject {
         
         //fix for system stop after 12 set changes
         //If you remove this, video won't be passed through after 12 set changes
-        if self.conductor.isConductorPlayingSubject.value {
-            self.frameExtractor.stopExtracting()
-            self.frameExtractor.startExtracting()
-        }
+//        if self.conductor.isConductorPlayingSubject.value {
+//            self.frameExtractor.stopExtracting()
+//            self.frameExtractor.startExtracting()
+//        }
 
         conductor.togglePlayEngineAndTracks(
             currentSetLevel: leveling.currentSetLevelSubject.value,
@@ -561,7 +568,7 @@ final class SetInfoModel: ObservableObject {
             row: row, column: column, currentLevel: Int( self.leveling.currentSetLevelSubject.value )
         )
         
-        guard conductor.isConductorPlayingSubject.value else { return colors }
+        guard isSetPlaying else { return colors }
         
         if row < self.setInfoState.values.count {
             if column < self.setInfoState.values[row].count {
@@ -609,7 +616,7 @@ final class SetInfoModel: ObservableObject {
 extension SetInfoModel: FrameExtractorDelegate {
     
     func captured(image: CIImage) {
-        guard conductor.isConductorPlayingSubject.value else { return }
+        guard isSetPlaying else { return }
         imageDifference.updateImageData(image: image)
     }
 }

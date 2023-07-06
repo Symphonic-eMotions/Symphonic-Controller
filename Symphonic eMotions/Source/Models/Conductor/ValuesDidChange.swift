@@ -262,20 +262,32 @@ extension Conductor {
                 )
                 
                 //User interface feedback
-                if setSettings.defaultSkin == .spriteKit {
+                if setSettings.defaultSkin == .home {
                     
-                    let maxIndexMapped = track.loopsToGridMapped[maxIndexPart]
-                    //Send 0 for a value if not in level
-                    let inLevel: Double = track.levels.contains([Int(localCurrentSetLevel)]) ? 1 : 0
-                    forwardSpriteKit(
-                        trackNr: trackNr,
-                        partNr: partNr,
-                        ramped: value * inLevel,
-                        areaOfInterest: part.areaOfInterest,
-                        maxIndex: maxIndexPart,
-                        mappedIndex: maxIndexMapped
-                    )
+                    if trackNr == 1 {
+                        let isPlaying: Double = isSetPlaying ? 1 : 0
+                        print("ISPLAYING: \(isPlaying)")
+                        rotationSpeedSubject.send(value * isPlaying)
+                    }
                 }
+                if setSettings.defaultSkin == .spriteKit {
+                        
+                    print("track.loopsToGridMapped \(track.loopsToGridMapped)")
+                    
+//                    let maxIndexMapped = track.loopsToGridMapped[maxIndexPart]
+//
+//                    //Send 0 for a value if not in level
+//                    let inLevel: Double = track.levels.contains([Int(localCurrentSetLevel)]) ? 1 : 0
+//                    forwardSpriteKit(
+//                        trackNr: trackNr,
+//                        partNr: partNr,
+//                        ramped: value * inLevel,
+//                        areaOfInterest: part.areaOfInterest,
+//                        maxIndex: maxIndexPart,
+//                        mappedIndex: maxIndexMapped
+//                    )
+                }
+                //Koppelen aan sessionViewSub
                 else if setSettings.defaultSkin == .swiftUI {
                     //Check part feedback interface state for part feedback visualisation
                     if partFeedbackTrackID == trackIndex && partFeedbackPartID == partIndex {
