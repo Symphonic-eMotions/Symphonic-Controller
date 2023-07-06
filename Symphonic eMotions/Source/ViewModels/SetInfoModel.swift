@@ -48,14 +48,9 @@ final class SetInfoModel: ObservableObject {
     @Published var partFeedbackState: PartFeedbackState
     let playerControlsAction: ((PlayerControlsViewAction) -> Void)?
     
-//    var cancellablesLevels = Swift.Set<AnyCancellable>()
-//    var cancellablesImageDifference = Swift.Set<AnyCancellable>()
-//    var cancellablesPartFeedback = Swift.Set<AnyCancellable>()
-    
     private var cancellableLevels: AnyCancellable? = nil
     private var cancellableImageDifference: AnyCancellable? = nil
     private var cancellablePartFeddback: AnyCancellable? = nil
-    
     
     init(
         setInfoLocalState: Binding<SetInfoLocalState>,
@@ -84,8 +79,6 @@ final class SetInfoModel: ObservableObject {
         
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
-        
-//        startObservingData()
         
         subscribeToLevels()
         subscribeToImageDifference()
@@ -117,7 +110,10 @@ final class SetInfoModel: ObservableObject {
                     setSettings: self.setSettings
                 )
                 
-                if(currentLevel == leveling.trackLevels.count) {
+                print("\(currentLevel) == \(setSettings.levels.count)")
+                
+                if(currentLevel == setSettings.levels.count) {
+                    conductor.pauzeEngineAndStopTracks(setSettings: setSettings)
                     //Engine is of, reset to level 0
                     leveling.currentSetLevelSubject.send(0)
                 }

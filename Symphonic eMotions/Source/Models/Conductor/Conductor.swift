@@ -202,6 +202,12 @@ final class Conductor {
         loadTracks(currentSetLevel: currentSetLevel)
         
         loadMaster(mixer: mixer)
+        
+        //Fade out
+        levelController(
+            level: -1,
+            setSettings: setSettings
+        )
     }
     
     
@@ -850,7 +856,7 @@ final class Conductor {
                 
                 //Hack to get initial value after first install
                 //Problem is this triggering every frame
-                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.4
+                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
                 
                 if userDefaultsLevelSpeed == 0 {
                     userDefaultsLevelSpeed = 0.1
@@ -964,10 +970,10 @@ final class Conductor {
     }
     
     //MARK: Transport
-    private func envDownTracks(_ track: TrackSettings) {
-        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-        trackAmpEnvelopes[track.trackId]!.scheduleMIDIEvent(event: trackOff)
-    }
+//    private func envDownTracks(_ track: TrackSettings) {
+//        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+//        trackAmpEnvelopes[track.trackId]!.scheduleMIDIEvent(event: trackOff)
+//    }
     
     internal func stopNotesTrackId(for trackId: String) {
         
@@ -1061,11 +1067,7 @@ final class Conductor {
         
         isSetPlaying = false
         
-        print("SET ID PLAYING 001 \(isSetPlaying)")
-        
         setSettings.tracks.values.forEach {
-            
-            envDownTracks($0)
             
             if $0.noteSource == .midiFile { stopTrack($0) }
             if $0.noteSource == .noteNumbers {
@@ -1074,11 +1076,6 @@ final class Conductor {
                 }
             }
         }
-        
-        //No ticks between tracks, but there are audio tailes
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        //            self.audioEngine.pause()
-        //        }
     }
     
     private func playEngineUIEffect() {

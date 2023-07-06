@@ -92,25 +92,4 @@ final class MainViewModel: ObservableObject {
             mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
         }
     }
-    
-    //These function are for the SwiftUI View also available in PlayerControlsModel
-    func tapStopAudioEngine(){
-        conductor.pauzeEngineAndStopTracks(setSettings: self.mainState.setSettings)
-    }
-    
-    func tapSetTempoPlus(){
-        let currentTempo = self.conductor.setTempo(tempoChange: 5)
-        self.mainState.setSettings.bpm = currentTempo
-    }
-    
-    func tapSetTempoMin(){
-        let currentTempo = self.conductor.setTempo(tempoChange: -5)
-        self.mainState.setSettings.bpm = currentTempo
-    }
-    
-    func tapSetTempoReset(){
-        
-        let tempo = self.conductor.resetTempo()
-        self.mainState.setSettings.bpm = tempo
-    }
 }

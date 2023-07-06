@@ -40,7 +40,7 @@ struct SpriteKitTransport: View {
                 
                 EMButton(action: {
                     
-                    mainViewModel.tapStopAudioEngine()
+                    setInfoModel.tapStopAudioEngine()
                     //Check if back is playlists or set info
                     let parentDirectoryName = mainViewModel.mainState.setSettings.setURL.deletingLastPathComponent().lastPathComponent
                     if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
@@ -61,7 +61,7 @@ struct SpriteKitTransport: View {
                 if setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
                     
                     EMButton(action: {
-                        mainViewModel.tapSetTempoMin()
+                        setInfoModel.tapSetTempoBPMMin()
                         localTempo -= 1
                     }, color: .accentColor, isSolid: false, maxWidth: 70) {
                         Image(systemName: "minus")
@@ -70,13 +70,13 @@ struct SpriteKitTransport: View {
                     EMButton(action: {
                         print("Reset")
                         localTempo = 0
-                        mainViewModel.tapSetTempoReset()
+                        setInfoModel.tapSetTempoReset()
                     }, color: .accentColor, isSolid: false, maxWidth: 65) {
                         Text(String(localTempo))
                     }
 
                     EMButton(action: {
-                        mainViewModel.tapSetTempoPlus()
+                        setInfoModel.tapSetTempoBPMPlus()
                         localTempo += 1
                     }, color: .accentColor, isSolid: false, maxWidth: 70) {
                         Image(systemName: "plus")

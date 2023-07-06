@@ -14,14 +14,14 @@ class Leveling {
     var currentSetLevelSubject = CurrentValueSubject<Double, Never>(0)
     var pauseLevel: Bool = false
     
-    var trackLevels: [Int] = []
+//    var trackLevels: [Int] = []
 }
 
-class TrackLevelsModel: ObservableObject {
-    
-    var levels: [Int] = []
-    
-    init(trackLevels: [Int]){
-        self.levels = trackLevels
-    }
-}
+//class TrackLevelsModel: ObservableObject {
+//
+//    var levels: [Int] = []
+//
+//    init(trackLevels: [Int]){
+//        self.levels = trackLevels
+//    }
+//}
