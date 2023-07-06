@@ -31,14 +31,4 @@ struct BuildSettings {
             }
         }
     }
-    
-    //Show visual feedback per part
-    //Show master track
-    public var isMasterTrack: Bool
-    
-    init(
-        isMasterTrack: Bool
-    ){
-        self.isMasterTrack = isMasterTrack
-    }
 }

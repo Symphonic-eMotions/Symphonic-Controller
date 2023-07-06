@@ -188,7 +188,7 @@ class ImageDifference {
             }
         }
         
-        print("ImageDifference FEEDBACK \(self.feedback.value)")
+//        print("ImageDifference FEEDBACK \(self.feedback.value)")
         
         self.values.value = tempAreaValues
         //self.valueDelegate?.newValueAvailable(values)

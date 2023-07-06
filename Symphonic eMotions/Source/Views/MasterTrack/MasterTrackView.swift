@@ -11,89 +11,101 @@ import OrderedCollections
 struct MasterTrackView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding var showMasterTrack: Bool
     
     //@State for slider status
     @State var masterEffectState: [[Float]] = []
     
     init(
         setInfoModel: SetInfoModel,
-        masterEffect: State<[[Float]]>
+        masterEffect: State<[[Float]]>,
+        showMasterTrack: Binding<Bool>
     ){
         self.setInfoModel = setInfoModel
         self._masterEffectState = masterEffect
+        self._showMasterTrack = showMasterTrack
     }
     
     var body: some View {
         
-        VStack{
-            Spacer()
-            ScrollView (.vertical){
-                //Struct with effects, contains [struct] with parameters per effect
-                let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure!
-                ForEach( Array(masterTrackStructure.enumerated()), id: \.element ) { index, effect in
-                    //Stack per effect
-                    ZStack {
-                        //Background color
-                        RoundedRectangle(cornerRadius: 7)
-                            .fill(Color(UIColor.darkGray))
-                        
-                        VStack(alignment: .leading) {
+        return GeometryReader { geometry in
+            
+            VStack{
+                ScrollView (.vertical){
+                    //Struct with effects, contains [struct] with parameters per effect
+                    let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure!
+                    ForEach( Array(masterTrackStructure.enumerated()), id: \.element ) { index, effect in
+                        //Stack per effect
+                        ZStack {
+                            //Background color
+                            RoundedRectangle(cornerRadius: 7)
+                                .fill(Color(UIColor.darkGray))
                             
-                            Text(effect.effectName)
-                                .font(.headline)
-                                .padding(.vertical)
-                            
-                            ForEach( Array(effect.parameters!.enumerated()), id: \.element) { i, parameter in
+                            VStack(alignment: .leading) {
                                 
-                                Text("\(parameter.name) \(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
+                                Text(effect.effectName)
+                                    .font(.headline)
+                                    .padding(.vertical)
                                 
-                                MasterSliderView(
-                                    label: parameter.name,
-                                    value: Binding(
-                                        get: { self.masterEffectState[index][i] },
-                                        set: { (newVal) in
-                                            //Set @State for local binding
-                                            self.masterEffectState[index][i] = newVal
-                                            
-//                                            let _ = print("newVal: \(newVal)")
-                                            
-                                            //Send to conductor for real time modification
-                                            setInfoModel.conductor.forwardMasterTrackEffect(
-                                                value: Double(newVal),
-                                                nodeName: effect.effectName,
-                                                parameter: parameter.name,
-                                                parameterRange: parameter.range
-                                            )
-                                            
-                                            
-                                            //Store in object for writing to file (encoder)
-                                            let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
-                                            setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
-                                                RangeConverter.valueToRange(range: rangedValue, value: Double(newVal))
-                                            )
-                                        }
-                                    ),
-                                    range: parameter.range,
-                                    showsLabel: false
-                                ).onAppear {
+                                ForEach( Array(effect.parameters!.enumerated()), id: \.element) { i, parameter in
                                     
-                                    let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value
-                                    let rangedRange = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                    Text("\(parameter.name) \(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
                                     
-                                    
-                                    
-                                    masterEffectState[index][i] = RangeConverter.rangedToSlider(range: rangedRange, value: rangedValue)
-//
-//                                    let _ = print("after: \(masterEffectState[index][i]) before: \(rangedRange) \(rangedValue)")
-//
+                                    MasterSliderView(
+                                        label: parameter.name,
+                                        value: Binding(
+                                            get: { self.masterEffectState[index][i] },
+                                            set: { (newVal) in
+                                                //Set @State for local binding
+                                                self.masterEffectState[index][i] = newVal
+                                                
+                                                //                                            let _ = print("newVal: \(newVal)")
+                                                
+                                                //Send to conductor for real time modification
+                                                setInfoModel.conductor.forwardMasterTrackEffect(
+                                                    value: Double(newVal),
+                                                    nodeName: effect.effectName,
+                                                    parameter: parameter.name,
+                                                    parameterRange: parameter.range
+                                                )
+                                                
+                                                
+                                                //Store in object for writing to file (encoder)
+                                                let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                                setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
+                                                    RangeConverter.valueToRange(range: rangedValue, value: Double(newVal))
+                                                )
+                                            }
+                                        ),
+                                        range: parameter.range,
+                                        showsLabel: false
+                                    ).onAppear {
+                                        
+                                        let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value
+                                        let rangedRange = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                        
+                                        
+                                        
+                                        masterEffectState[index][i] = RangeConverter.rangedToSlider(range: rangedRange, value: rangedValue)
+                                        
+                                    }
                                 }
-                            }
-                            
-                        }.padding()
+                                
+                            }.padding()
+                        }
                     }
                 }
-            }.padding()
-            .frame(width: 800, height: 550)
+                .padding()
+                
+                //Continue
+                EMButton(action: {
+                    showMasterTrack = false
+                    
+                }, color: .green, isSolid: true) {
+                    Text(NSLocalizedString("Continue", comment: ""))
+                }
+                .frame(width: geometry.size.width * 0.333)
+            }
         }
     }
 }

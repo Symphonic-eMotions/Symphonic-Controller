@@ -110,7 +110,7 @@ struct SettingsSheetView: View {
                 
                 Spacer()
                 
-                //Start stop
+                //Continue
                 EMButton(action: {
                     showingSheet = false
                     if !isSetPlaying {

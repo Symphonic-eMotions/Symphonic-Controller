@@ -22,12 +22,6 @@ struct eMotionApp: App {
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 
-
-    //Started as view controller, now used is view updater
-    let buildSettings = BuildSettings(
-        isMasterTrack: false
-    )
-    
     @State public var sessionDisplay: SessionDisplay = .home
     @State public var sessionDisplaySub: SessionDisplay = .page01
         
@@ -43,7 +37,7 @@ struct eMotionApp: App {
                             instrumentsSet: instrumentSet
                         ),
                         currentInstrumentsSet: instrumentSet,
-                        buildSettings: buildSettings
+                        buildSettings: BuildSettings()
                     ),
                     conductor: Conductor(set: instrumentSet),
                     leveling: Leveling(),

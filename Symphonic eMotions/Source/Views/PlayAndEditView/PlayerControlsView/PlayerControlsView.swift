@@ -23,6 +23,7 @@ struct PlayerControlsView: View {
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding var showMasterTrack: Bool
     
     var body: some View {
         HStack(alignment: .center, spacing: 32.0) {
@@ -42,17 +43,19 @@ struct PlayerControlsView: View {
                         setInfoModel: setInfoModel
                     )
                     
-                    
+                    //Master FX Button only available in part editor
                     if showPartEditor {
-                        //Master FX Button
                         EMButton(action: {
-                            setInfoModel.tapMasterFxButton()
+                            showMasterTrack.toggle()
                         }, color: .accentColor, isSolid: false) {
                             Image(systemName: "fx")
                         }
                     }
                     
                     //Start stop
+                    
+                    //Dit moet aan actieve aan uit keuze worden, toggle verliest de race voor note offs
+                    
                     EMButton(action: {
                         setInfoModel.tapToggleConductor()
                     }, color: .accentColor) {

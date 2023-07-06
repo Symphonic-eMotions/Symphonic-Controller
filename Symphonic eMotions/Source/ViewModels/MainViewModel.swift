@@ -86,7 +86,7 @@ final class MainViewModel: ObservableObject {
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )
-            print("*** loading sensitivity \(sensitivity) and feedback \(videoFeedback) to imageDifference ***")
+            print("*** loading sensitivity \(sensitivity) and feedback \(videoFeedback) to imageDifference subjects")
             
             mainState.imageDifference.feedback.send(videoFeedback)
             mainState.imageDifference.sensitivityToMaxValue(sensitivity: sensitivity)

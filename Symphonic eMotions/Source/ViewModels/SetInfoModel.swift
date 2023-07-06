@@ -110,8 +110,6 @@ final class SetInfoModel: ObservableObject {
                     setSettings: self.setSettings
                 )
                 
-                print("\(currentLevel) == \(setSettings.levels.count)")
-                
                 if(currentLevel == setSettings.levels.count) {
                     conductor.pauzeEngineAndStopTracks(setSettings: setSettings)
                     //Engine is of, reset to level 0
@@ -426,11 +424,6 @@ final class SetInfoModel: ObservableObject {
             return
         }
         playerControlsAction?(.displayModeChange(setInfoState.displayMode))
-    }
-    
-    func tapMasterFxButton() {
-        setInfoState.buildSettings.isMasterTrack.toggle()
-        playerControlsAction?(.masterTrackViewChange(setInfoState.buildSettings.isMasterTrack))
     }
     
     func tapSetTempoBPMPlus(){

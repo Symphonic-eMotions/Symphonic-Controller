@@ -1006,6 +1006,9 @@ final class Conductor {
             
         }
         else {
+            
+            
+            
             print("Mute here before play?")
             
             //Fade in on master play, we need level.currentlevel here

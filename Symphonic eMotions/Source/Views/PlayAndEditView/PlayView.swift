@@ -20,6 +20,7 @@ struct PlayView: View {
     
     @State private var presentSettingSheet = false
     @State private var stopEngine: Bool = true
+    @State private var showMasterTrack: Bool = false
     
     init(
         setInfoModel: SetInfoModel,
@@ -50,7 +51,8 @@ struct PlayView: View {
                 
                 //Transport buttons
                 PlayerControlsView(
-                    setInfoModel: setInfoModel
+                    setInfoModel: setInfoModel,
+                    showMasterTrack: $showMasterTrack
                 )
                 .zIndex(100)
                 
@@ -127,12 +129,15 @@ struct PlayView: View {
             }
             .padding(.horizontal)
             .navigationBarTitleDisplayMode(.inline)
-            
-            if setInfoModel.setInfoState.buildSettings.isMasterTrack {
-                
+            .sheet(isPresented: $showMasterTrack) {
                 MasterTrackView(
                     setInfoModel: setInfoModel,
-                    masterEffect: State(initialValue: AppUtils.masterTrackStateObject(viewObject: setInfoModel.setInfoState.masterTrackStructure!))
+                    masterEffect: State(
+                        initialValue: AppUtils.masterTrackStateObject(
+                            viewObject: setInfoModel.setInfoState.masterTrackStructure!
+                        )
+                    ),
+                    showMasterTrack: $showMasterTrack
                 )
             }
         }
