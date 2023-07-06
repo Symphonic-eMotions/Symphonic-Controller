@@ -134,6 +134,7 @@
 		7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */; };
 		7CFB298329DCA90100DFA32E /* MidiClipsPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB298229DCA90100DFA32E /* MidiClipsPositionsView.swift */; };
 		7CFD4B662A55E589005ACEF3 /* WarpHoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */; };
+		7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFD4B692A56FA8C005ACEF3 /* FeedbackButtonsView.swift */; };
 		7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */; };
 		7CFDDD4C28EEF13E00B6BD5F /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */; };
 		7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */; };
@@ -295,6 +296,7 @@
 		7CFA00B029A75B3A001D8A5D /* SetInfoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoHome.swift; sourceTree = "<group>"; };
 		7CFB298229DCA90100DFA32E /* MidiClipsPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsPositionsView.swift; sourceTree = "<group>"; };
 		7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarpHoleView.swift; sourceTree = "<group>"; };
+		7CFD4B692A56FA8C005ACEF3 /* FeedbackButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackButtonsView.swift; sourceTree = "<group>"; };
 		7CFDDD4928EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4B28EEF13E00B6BD5F /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
 		7CFDDD4D28EEF75C00B6BD5F /* DistortionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -438,6 +440,7 @@
 				7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */,
 				7C9FB76C2A498F2B00490C59 /* LightView.swift */,
 				7C9FB76E2A49AEB300490C59 /* MovementView.swift */,
+				7CFD4B692A56FA8C005ACEF3 /* FeedbackButtonsView.swift */,
 				7C9FB7702A49E10400490C59 /* AmoebaView.swift */,
 				7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */,
 				7C9FB7722A49E33400490C59 /* AmoebaScene.swift */,
@@ -907,6 +910,7 @@
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
+				7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
 				7C29AA1F2A501E6C0070D901 /* DebugView.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,

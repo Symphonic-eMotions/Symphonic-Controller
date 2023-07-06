@@ -80,6 +80,7 @@ class ImageDifference {
     //MARK: Video DSP location
     
     func updateImageData(image: CIImage) {
+        
         var tempAreaValues = values.value
         
         //Add edges for more sensitivity
@@ -186,6 +187,9 @@ class ImageDifference {
                 )
             }
         }
+        
+        print("ImageDifference FEEDBACK \(self.feedback.value)")
+        
         self.values.value = tempAreaValues
         //self.valueDelegate?.newValueAvailable(values)
 
@@ -226,10 +230,10 @@ class ImageDifference {
         self.maxValueSubject.send( lineairReverserd(sensitivity: sensitivity) )
     }
     
-    func sensitivityToFeedback(sensitivity: Float) -> Void {
-        
-        self.feedback.send(exponetialRanged(sensitivity: sensitivity))
-    }
+//    func sensitivityToFeedback(sensitivity: Float) -> Void {
+//
+//        self.feedback.send(exponetialRanged(sensitivity: sensitivity))
+//    }
     
     
 }

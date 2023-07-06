@@ -266,7 +266,6 @@ extension Conductor {
                     
                     if trackNr == 1 {
                         let isPlaying: Double = isSetPlaying ? 1 : 0
-                        print("ISPLAYING: \(isPlaying)")
                         rotationSpeedSubject.send(value * isPlaying)
                     }
                 }

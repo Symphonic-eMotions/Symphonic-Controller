@@ -11,7 +11,7 @@ struct SettingsSheetView: View {
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
-    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
+    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
@@ -21,19 +21,17 @@ struct SettingsSheetView: View {
     var body: some View {
         
         let sensitivityBinding = Binding(
-            get: { self.sensitivity },
+            get: { self.sensitivitySession },
             set: {
-                self.sensitivity = $0
+                self.sensitivitySession = $0
                 setInfoModel.imageDifference.sensitivitySubject.send(Float($0))
                 setInfoModel.imageDifference.sensitivityToMaxValue(sensitivity: Float($0))
-                setInfoModel.imageDifference.sensitivityToFeedback(sensitivity: Float($0))
+//                setInfoModel.imageDifference.sensitivityToFeedback(sensitivity: Float($0))
             }
         )
         
         return GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 15) {
-                
-                //Section(header: Text("Settings")) {
                 
                 //Start stop
                 VStack(alignment: .leading){
@@ -57,6 +55,11 @@ struct SettingsSheetView: View {
                     Text("Sensitivity").padding(.top)
                     Slider(value: sensitivityBinding, in: 0...1)
                 }
+                
+                FeedbackButtonsView(
+                    setInfoModel: setInfoModel,
+                    imageSide: UIScreen.main.bounds.width * 0.05
+                )
                 
                 //Level speed
                 VStack(alignment: .leading){

@@ -11,6 +11,7 @@ struct MovementView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
+    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -21,6 +22,9 @@ struct MovementView: View {
     
     @State private var rotationSpeed: Double = 0
     
+    @State private var presentSettingSheet = false
+    @State private var stopEngine = false
+    
     var body: some View {
         
         ZStack(alignment: .topLeading){
@@ -28,43 +32,40 @@ struct MovementView: View {
             VStack(spacing: 0) {
                 
                 //Visual Feedback
-//                AmoebaView(setInfoModel: setInfoModel)
-                
                 VStack {
                     WarpHoleView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .onTapGesture {
+                            print("short")
+                            stopEngine = true
+                            presentSettingSheet = true
+                        }
+                        .onLongPressGesture(minimumDuration: 1) {
+                            print("long")
+                            stopEngine = false
+                            presentSettingSheet = true
+                        }
+                        .sheet(isPresented: $presentSettingSheet) {
+                            SettingsSheetView(
+                                setInfoModel: setInfoModel,
+                                showingSheet: $presentSettingSheet,
+                                stopEngine: $stopEngine
+                            )
+                        }
                 }
                 .background(Color.black)
                 .edgesIgnoringSafeArea(.all)
                 
                 Spacer()
                 
-                ZStack(alignment: .topLeading){
+//                ZStack(alignment: .topLeading){
                     
                     VStack{
                         
-                        //4 movement buttons
-                        let imageSide = UIScreen.main.bounds.width * 0.12
-                        HStack(spacing: 20) {
-                            ForEach(0..<4) { column in
-                                Button(action: {
-                                    self.selectedButton = column
-                                    self.videoFeedback = self.setInfoModel.movementSetting(id: column)
-                                }) {
-                                    ZStack{
-                                        Rectangle()
-                                            .frame(width: imageSide, height: imageSide)
-                                            .foregroundColor(.clear)
-                                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                            .background( self.selectedButton == column ? Color.accentColor : Color.gray)
-
-                                        Image("movementId\(column)")
-                                            .resizable()
-                                            .frame(width: imageSide, height: imageSide)
-                                    }
-                                }
-                            }
-                        }
+                        FeedbackButtonsView(
+                            setInfoModel: setInfoModel,
+                            imageSide:  UIScreen.main.bounds.width * 0.12
+                        )
                         
                         //Play and continue
                         HStack {
@@ -130,7 +131,8 @@ struct MovementView: View {
                             .disabled(!hasTested)
                         }
                     }
-                }
+                
+//                }
             }
             .onAppear{
                 

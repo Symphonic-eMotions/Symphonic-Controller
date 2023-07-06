@@ -12,7 +12,7 @@ struct LightView: View {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
     //Cannot save in Float
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
-    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
+    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay

@@ -18,7 +18,7 @@ struct eMotionApp: App {
     let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
-    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
+    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 

@@ -23,6 +23,9 @@ final class MainViewModel: ObservableObject {
     var sensitivity: Float  {
         appStorage.float(forKey: "sensitivity")
     }
+    var videoFeedback: Float  {
+        appStorage.float(forKey: "videoFeedback")
+    }
     
     @Published var mainState: MainViewState
     let conductor: Conductor
@@ -44,9 +47,7 @@ final class MainViewModel: ObservableObject {
     func currentModelInstrumentsSetChanged(
         instrumentsSet: InstrumentsSet
     ) {
-        
-        let currentSensitivity = sensitivity
-        
+    
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
         
@@ -85,11 +86,10 @@ final class MainViewModel: ObservableObject {
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )
-            print("YYY loading sensitivity \(currentSensitivity) to imageDifference subjects")
+            print("*** loading sensitivity \(sensitivity) and feedback \(videoFeedback) to imageDifference ***")
             
-            mainState.imageDifference.sensitivitySubject.value = currentSensitivity
-            mainState.imageDifference.sensitivityToFeedback(sensitivity: currentSensitivity)
-            mainState.imageDifference.sensitivityToMaxValue(sensitivity: currentSensitivity)
+            mainState.imageDifference.feedback.send(videoFeedback)
+            mainState.imageDifference.sensitivityToMaxValue(sensitivity: sensitivity)
         }
     }
 }

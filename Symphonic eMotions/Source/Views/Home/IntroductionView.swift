@@ -11,7 +11,7 @@ struct IntroductionView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
-    @AppStorage(UserDefaultsKeys.sensitivity) var sensitivity: Double = 0.8
+    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -185,7 +185,7 @@ struct IntroductionView: View {
                             )
                             IntroductionSlider(
                                 label: "Sensitivity",
-                                value: $sensitivity,
+                                value: $sensitivitySession,
                                 minValue: 0,
                                 maxValue: 1,
                                 //This is the lenght of the slider

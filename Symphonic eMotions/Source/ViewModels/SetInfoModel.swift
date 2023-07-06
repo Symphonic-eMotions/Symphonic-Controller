@@ -167,21 +167,29 @@ final class SetInfoModel: ObservableObject {
         }
     }
     
-    func movementSetting(id: Int) -> Double{
-        
-        let feedbackPresets: [Int:Double] = [
-            0: 0.7,
-            1: 0.5,
-            2: 0.3,
-            3: 0.1
-        ]
-        if let presetValue = feedbackPresets[id] {
-            print("Set feedback based on table \(id) is feedback \(feedbackPresets)")
-            return presetValue
+    let presets: [(button: Int, feedback: Double)] = [
+        (0, 0.89),
+        (1, 0.80),
+        (2, 0.75),
+        (3, 0.65)
+    ]
+
+    func buttonToFeedback(id: Int) -> Double {
+        for preset in presets {
+            if preset.button == id {
+                return preset.feedback
+            }
         }
-        else{
-            return 0.5
+        return 0.5
+    }
+
+    func feedbackToButton(feedback: Double) -> Int {
+        for preset in presets {
+            if preset.feedback == feedback {
+                return preset.button
+            }
         }
+        return 1
     }
     
     func tapToggleConductor() {

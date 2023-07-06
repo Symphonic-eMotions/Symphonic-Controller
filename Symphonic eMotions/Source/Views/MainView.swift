@@ -85,6 +85,7 @@ struct MainView: View {
         //Introdcution
         if sessionDisplay == .home {
             
+            //Light measurment
             if sessionDisplaySub == .page03 {
                 LightView(
                     setInfoModel: setInfoModel,
@@ -92,6 +93,7 @@ struct MainView: View {
                     sessionDisplaySub: $sessionDisplaySub
                 )
             }
+            //Movment settings
             else if sessionDisplaySub == .page04 {
                 MovementView(
                     setInfoModel: setInfoModel,
