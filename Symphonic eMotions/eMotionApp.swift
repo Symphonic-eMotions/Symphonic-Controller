@@ -19,14 +19,12 @@ struct eMotionApp: App {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
-    
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 
 
     //Started as view controller, now used is view updater
     let buildSettings = BuildSettings(
-        isAdvanced: false,
-        instrumentPartEditor: false,
         isMasterTrack: false
     )
     

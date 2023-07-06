@@ -15,4 +15,5 @@ struct UserDefaultsKeys {
     static let tempo = "tempo"
     static let videoFeedback = "videoFeedback"
     static let isSetPlaying = "isSetPlaying"
+    static let showPartEditor = "showPartEditor"
 }

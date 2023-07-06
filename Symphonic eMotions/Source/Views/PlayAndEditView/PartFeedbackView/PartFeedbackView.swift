@@ -10,6 +10,8 @@ import SwiftUI
 struct PartFeedbackView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
+
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
@@ -242,9 +244,6 @@ struct PartFeedbackView: View {
                                     
                                     sessionDisplay = .setInfo
                                     sessionDisplaySub = .none
-                                    
-                                    //                                playViewModel.playViewState.buildSettings.instrumentPartEditor.toggle()
-                                    
                                 }, color: .orange, isSolid: true, maxWidth: 130, height: 35
                             ){
                                 Text("New Set")
@@ -266,7 +265,7 @@ struct PartFeedbackView: View {
                                     )
                                     fileController.addSetFileURLToController(fileName: fileName)
                                     
-                                    setInfoModel.setInfoState.buildSettings.instrumentPartEditor.toggle()
+                                    showPartEditor = false
                                     
                                 }, color: .red, isSolid: true, maxWidth: 130, height: 35
                             ){

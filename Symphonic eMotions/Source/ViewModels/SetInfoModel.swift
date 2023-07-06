@@ -428,19 +428,9 @@ final class SetInfoModel: ObservableObject {
         playerControlsAction?(.displayModeChange(setInfoState.displayMode))
     }
     
-    func tapSettingsButton() {
-        setInfoState.buildSettings.isAdvanced.toggle()
-        playerControlsAction?(.settingsChange(setInfoState.buildSettings.isAdvanced))
-    }
-    
     func tapMasterFxButton() {
         setInfoState.buildSettings.isMasterTrack.toggle()
         playerControlsAction?(.masterTrackViewChange(setInfoState.buildSettings.isMasterTrack))
-    }
-    
-    func tapPartFeedbackButton() {
-        setInfoState.buildSettings.instrumentPartEditor.toggle()
-        playerControlsAction?(.partFeedbackViewChange(setInfoState.buildSettings.instrumentPartEditor))
     }
     
     func tapSetTempoBPMPlus(){

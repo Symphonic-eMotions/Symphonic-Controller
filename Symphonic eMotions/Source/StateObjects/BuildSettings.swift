@@ -32,20 +32,13 @@ struct BuildSettings {
         }
     }
     
-    //Show settings
-    public var isAdvanced: Bool
     //Show visual feedback per part
-    public var instrumentPartEditor: Bool
     //Show master track
     public var isMasterTrack: Bool
     
     init(
-        isAdvanced: Bool,
-        instrumentPartEditor: Bool,
         isMasterTrack: Bool
     ){
-        self.isAdvanced = isAdvanced
-        self.instrumentPartEditor = instrumentPartEditor
         self.isMasterTrack = isMasterTrack
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsButtonWithLongPress: View {
     
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
+    
     @ObservedObject var setInfoModel: SetInfoModel
     
     let color: Color = .accentColor
@@ -34,11 +36,10 @@ struct SettingsButtonWithLongPress: View {
         .cornerRadius(8.0)
         //Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
-            setInfoModel.tapPartFeedbackButton()
+            showPartEditor.toggle()
         })
         //Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {
-            setInfoModel.tapSettingsButton()
             presentSettingSheet.toggle()
         })
         //Present sheet

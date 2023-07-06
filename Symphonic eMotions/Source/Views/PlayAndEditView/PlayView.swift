@@ -11,6 +11,7 @@ import AudioKit
 struct PlayView: View {
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
@@ -57,10 +58,9 @@ struct PlayView: View {
                 ZStack{
                     
                     //Instruments
-                    if setInfoModel.setInfoState.displayMode == .instruments ||
-                        setInfoModel.setInfoState.displayMode == .both {
+                    if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
                         
-                        if setInfoModel.setInfoState.buildSettings.instrumentPartEditor && !isSetPlaying {
+                        if showPartEditor  {
                             
                             EditGridView(setInfoModel: setInfoModel)
                             
@@ -94,7 +94,7 @@ struct PlayView: View {
                     .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                 }
                 //Instrument Part editor
-                if setInfoModel.setInfoState.buildSettings.instrumentPartEditor {
+                if showPartEditor {
 
                     //Editing modee visual parameter value feedback
                     PartFeedbackView(

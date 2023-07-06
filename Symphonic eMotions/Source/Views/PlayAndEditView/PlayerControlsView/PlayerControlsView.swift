@@ -20,6 +20,7 @@ struct VolumeSlider: UIViewRepresentable {
 struct PlayerControlsView: View {
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
     
@@ -42,7 +43,7 @@ struct PlayerControlsView: View {
                     )
                     
                     
-                    if setInfoModel.setInfoState.buildSettings.instrumentPartEditor {
+                    if showPartEditor {
                         //Master FX Button
                         EMButton(action: {
                             setInfoModel.tapMasterFxButton()
