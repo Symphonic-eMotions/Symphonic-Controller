@@ -11,19 +11,18 @@ struct MovementView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     
     @State private var selectedButton: Int? = nil
-    @State var setIsPlaying: Bool = false;
     @State var hasTested: Bool = false
     
     @State private var rotationSpeed: Double = 0
     
     @State private var presentSettingSheet = false
-    @State private var stopEngine = false
     
     var body: some View {
         
@@ -37,19 +36,16 @@ struct MovementView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .onTapGesture {
                             print("short")
-                            stopEngine = true
                             presentSettingSheet = true
                         }
                         .onLongPressGesture(minimumDuration: 1) {
                             print("long")
-                            stopEngine = false
                             presentSettingSheet = true
                         }
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
                                 setInfoModel: setInfoModel,
-                                showingSheet: $presentSettingSheet,
-                                stopEngine: $stopEngine
+                                showingSheet: $presentSettingSheet
                             )
                         }
                 }
@@ -78,7 +74,7 @@ struct MovementView: View {
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                     .background( Color.accentColor )
                                 
-                                if setIsPlaying {
+                                if isSetPlaying {
                                     Text(NSLocalizedString("Stop set", comment: ""))
                                         .font(.system(size: 30))
                                         .padding()
@@ -93,13 +89,16 @@ struct MovementView: View {
                                 
                                 hasTested = true
                                 
-                                if setIsPlaying {
-                                    setInfoModel.tapToggleConductor()
-                                    self.setIsPlaying = false
+                                if isSetPlaying {
+                                    isSetPlaying = false
+                                    rotationSpeedSubject.send(0)
+                                    setInfoModel.tapStopAudioEngine()
+                                    
+                                    
                                 }
                                 else{
-                                    setInfoModel.tapToggleConductor()
-                                    self.setIsPlaying = true
+                                    setInfoModel.tapStartAudioEngine()
+                                    isSetPlaying = true
                                 }
                             }
                             
@@ -123,6 +122,8 @@ struct MovementView: View {
                                 withAnimation {
                                     
                                     setInfoModel.tapStopAudioEngine()
+                                    
+                                    isSetPlaying = false
                                     
                                     sessionDisplay = .demo
                                     sessionDisplaySub = .demo
@@ -157,6 +158,11 @@ struct MovementView: View {
             .padding(.leading, 20)
             .onTapGesture {
                 withAnimation {
+                    
+                    setInfoModel.tapStopAudioEngine()
+                    
+                    isSetPlaying = false
+                    
                     //Paginering
                     let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03,.page05:.page04]
                     if let prevPage = pages[sessionDisplaySub] {

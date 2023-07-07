@@ -138,7 +138,6 @@ final class Conductor {
         currentSetLevel: Double,
         setSettings: SetSettings
     ) {
-        pauzeEngineAndStopTracks(setSettings:setSettings)
         
         currentTempo = newInstrumentsSet.bpm
         
@@ -203,11 +202,7 @@ final class Conductor {
         
         loadMaster(mixer: mixer)
         
-        //Fade out
-        levelController(
-            level: -1,
-            setSettings: setSettings
-        )
+        
     }
     
     
@@ -507,7 +502,10 @@ final class Conductor {
                 if selectedLevel == setSettings.levels.count &&  isSetPlaying {
                     
                     //We stop playing
-                    self.pauzeEngineAndStopTracks(setSettings: setSettings)
+                    self.pauzeEngineAndStopTracks(
+                        setSettings: setSettings,
+                        resetLevels: true
+                    )
                     
                     let sounds = ["Applause01", "Applause02", "Applause03"]
                     playInterfaceSounds(sounds: sounds, volume: 0.30)
@@ -856,7 +854,7 @@ final class Conductor {
                 
                 //Hack to get initial value after first install
                 //Problem is this triggering every frame
-                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed")
+                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.5
                 
                 if userDefaultsLevelSpeed == 0 {
                     userDefaultsLevelSpeed = 0.1
@@ -970,11 +968,6 @@ final class Conductor {
     }
     
     //MARK: Transport
-//    private func envDownTracks(_ track: TrackSettings) {
-//        let trackOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//        trackAmpEnvelopes[track.trackId]!.scheduleMIDIEvent(event: trackOff)
-//    }
-    
     internal func stopNotesTrackId(for trackId: String) {
         
         //Shut down all note on's
@@ -988,51 +981,11 @@ final class Conductor {
         }
     }
     
-    internal func togglePlayEngineAndTracks(
-        currentSetLevel: Double,
-        setSettings: SetSettings
-    ) {
-        
-        if isSetPlaying {
-            
-            //Fade out
-            levelController(
-                level: -1,
-                setSettings: setSettings
-            )
-            
-            //We stop playing
-            self.pauzeEngineAndStopTracks(setSettings: setSettings)
-            
-        }
-        else {
-            
-            
-            
-            print("Mute here before play?")
-            
-            //Fade in on master play, we need level.currentlevel here
-            levelController(
-                level: Int(currentSetLevel),
-                setSettings: setSettings
-            )
-            
-            playEngineAndTracks(
-                setSettings: setSettings,
-                level: Int(currentSetLevel)
-            )
-            
-            
-        }
-    }
-    
     internal func playEngineAndTracks(
         setSettings: SetSettings,
         level: Int
     ) {
-        
-//        guard !isConductorPlayingSubject.value else { return }
-        
+                
         do {
             //Variable for use Everywhere
             isSetPlaying = true
@@ -1066,17 +1019,25 @@ final class Conductor {
         }
     }
     
-    public func pauzeEngineAndStopTracks(setSettings: SetSettings) {
+    public func pauzeEngineAndStopTracks(
+        setSettings: SetSettings,
+        resetLevels: Bool
+    ) {
         
-        isSetPlaying = false
+        //Fade out
+        if resetLevels {
+            levelController(
+                level: -1,
+                setSettings: setSettings
+            )
+        }
         
         setSettings.tracks.values.forEach {
             
-            if $0.noteSource == .midiFile { stopTrack($0) }
-            if $0.noteSource == .noteNumbers {
-                for note in $0.notesArePlaying {
-                    stopNoteNumber($0, note)
-                }
+            stopTrack($0)
+            
+            for noteNumber in 0...127 {
+                stopNoteNumber($0, noteNumber)
             }
         }
     }

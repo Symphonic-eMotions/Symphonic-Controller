@@ -12,6 +12,7 @@ struct IntroductionView: View {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
     @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
+    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -206,8 +207,14 @@ struct IntroductionView: View {
                         .padding(.bottom)
                         .onTapGesture {
                             
-                            setInfoModel.tapToggleConductor()
-                            
+                            if setIsPlaying {
+                                setInfoModel.tapStopAudioEngine()
+                                setIsPlaying = false
+                            }
+                            else{
+                                setInfoModel.tapStartAudioEngine()
+                                setIsPlaying = true
+                            }
                         }
                     }
                 }

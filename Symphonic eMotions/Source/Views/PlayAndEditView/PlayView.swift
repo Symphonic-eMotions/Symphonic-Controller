@@ -19,7 +19,6 @@ struct PlayView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     
     @State private var presentSettingSheet = false
-    @State private var stopEngine: Bool = true
     @State private var showMasterTrack: Bool = false
     
     init(
@@ -52,6 +51,7 @@ struct PlayView: View {
                 //Transport buttons
                 PlayerControlsView(
                     setInfoModel: setInfoModel,
+                    sessionDisplaySub: $sessionDisplaySub,
                     showMasterTrack: $showMasterTrack
                 )
                 .zIndex(100)
@@ -75,8 +75,7 @@ struct PlayView: View {
                             .sheet(isPresented: $presentSettingSheet) {
                                 SettingsSheetView(
                                     setInfoModel: setInfoModel,
-                                    showingSheet: $presentSettingSheet,
-                                    stopEngine: $stopEngine
+                                    showingSheet: $presentSettingSheet
                                 )
                             }
                         }

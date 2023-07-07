@@ -136,6 +136,7 @@ struct MainView: View {
                         .navigationBarHidden(false)
                         //It's not called PlayView for nothing
                         .onAppear{
+                            sessionDisplaySub = .playing
                             viewModel.conductor.playEngineAndTracks(
                                 setSettings: viewModel.mainState.setSettings,
                                 level: 0
@@ -143,6 +144,13 @@ struct MainView: View {
                             viewModel.conductor.levelController(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings
+                            )
+                        }
+                        .onDisappear{
+                            sessionDisplaySub = .stopped
+                            viewModel.conductor.pauzeEngineAndStopTracks(
+                                setSettings: viewModel.mainState.setSettings,
+                                resetLevels: true
                             )
                         }
                         

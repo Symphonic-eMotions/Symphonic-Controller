@@ -53,12 +53,11 @@ final class MainViewModel: ObservableObject {
         
         //If we're playing first stop playing
         if isSetPlaying {
-            
-            leveling.pauseLevel = true
-            conductor.togglePlayEngineAndTracks(
-                currentSetLevel: leveling.currentSetLevelSubject.value,
-                setSettings: mainState.setSettings
+            conductor.pauzeEngineAndStopTracks(
+                setSettings: self.mainState.setSettings,
+                resetLevels: true
             )
+            self.isSetPlaying = false
             
         } else {
                         

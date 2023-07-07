@@ -16,7 +16,6 @@ struct SpriteKitView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @State private var presentSettingSheet = false
-    @State private var stopEngine = false
     
     let transportHeigth: CGFloat = 50
     
@@ -148,12 +147,18 @@ struct SpriteKitView: View {
                                 setSettings: setInfoModel.setSettings
                             )
                         }
+                        .onDisappear{
+                            sessionDisplaySub = .stopped
+                            setInfoModel.conductor.pauzeEngineAndStopTracks(
+                                setSettings: setInfoModel.setSettings,
+                                resetLevels: true
+                            )
+                        }
                         //Present sheet
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
                                 setInfoModel: setInfoModel,
-                                showingSheet: $presentSettingSheet,
-                                stopEngine: $stopEngine
+                                showingSheet: $presentSettingSheet
                             )
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
@@ -203,12 +208,10 @@ struct SpriteKitView: View {
                         }
                         .onTapGesture {
                             print("short")
-                            stopEngine = true
                             presentSettingSheet = true
                         }
                         .onLongPressGesture(minimumDuration: 1) {
                             print("long")
-                            stopEngine = false
                             presentSettingSheet = true
                         }
                     }

@@ -17,7 +17,6 @@ struct SettingsButtonWithLongPress: View {
     var isSolid: Bool = false
     
     @State private var presentSettingSheet = false
-    @State private var stopEngine: Bool = false
     
     var body: some View {
         
@@ -46,8 +45,7 @@ struct SettingsButtonWithLongPress: View {
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSheetView(
                 setInfoModel: setInfoModel,
-                showingSheet: $presentSettingSheet,
-                stopEngine: $stopEngine
+                showingSheet: $presentSettingSheet
                 
             )
         }

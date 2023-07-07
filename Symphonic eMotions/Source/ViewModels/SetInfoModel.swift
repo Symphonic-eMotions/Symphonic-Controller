@@ -111,7 +111,13 @@ final class SetInfoModel: ObservableObject {
                 )
                 
                 if(currentLevel == setSettings.levels.count) {
-                    conductor.pauzeEngineAndStopTracks(setSettings: setSettings)
+                    
+                    //Stop engine
+                    conductor.pauzeEngineAndStopTracks(
+                        setSettings: setSettings,
+                        resetLevels: true
+                    )
+                    isSetPlaying = false
                     //Engine is of, reset to level 0
                     leveling.currentSetLevelSubject.send(0)
                 }
@@ -190,24 +196,25 @@ final class SetInfoModel: ObservableObject {
         return 1
     }
     
-    func tapToggleConductor() {
-        
-        //fix for system stop after 12 set changes
-        //If you remove this, video won't be passed through after 12 set changes
-//        if self.conductor.isConductorPlayingSubject.value {
-//            self.frameExtractor.stopExtracting()
-//            self.frameExtractor.startExtracting()
-//        }
-
-        conductor.togglePlayEngineAndTracks(
-            currentSetLevel: leveling.currentSetLevelSubject.value,
-            setSettings: self.setSettings
+    func tapStopAudioEngine(){
+        conductor.pauzeEngineAndStopTracks(
+            setSettings: self.setSettings,
+            resetLevels: false
         )
     }
     
-    func tapStopAudioEngine(){
+    func tapStartAudioEngine(){
         
-        conductor.pauzeEngineAndStopTracks(setSettings: self.setSettings)
+        //Fade in on master play, we need level.currentlevel here
+        conductor.levelController(
+            level: Int(leveling.currentSetLevelSubject.value),
+            setSettings: self.setSettings
+        )
+
+        conductor.playEngineAndTracks(
+            setSettings: self.setSettings,
+            level: Int(leveling.currentSetLevelSubject.value)
+        )
     }
     
     func selectableEditorParts() -> [EditorParts] {
@@ -455,10 +462,6 @@ final class SetInfoModel: ObservableObject {
         
         return output
     }
-    
-    
-    
-    
     
     //Part editor
     public func partColor(row: Int, column: Int) -> Color {

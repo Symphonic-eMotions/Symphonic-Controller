@@ -15,7 +15,7 @@ struct SettingsSheetView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
-    @Binding var stopEngine: Bool
+//    @Binding var stopEngine: Bool
     @State private(set) var localTempo: Int = 0
     
     var body: some View {
@@ -35,15 +35,25 @@ struct SettingsSheetView: View {
                 
                 //Start stop
                 VStack(alignment: .leading){
-                    Text("Play / Stop").padding(.top)
+                    
+                    Text( self.isSetPlaying ? "Stop" : "Play").padding(.top)
                     HStack {
                         
                         EMButton(action: {
-                            setInfoModel.tapToggleConductor()
+                            
+                            if isSetPlaying {
+                                setInfoModel.tapStopAudioEngine()
+                                self.isSetPlaying = false
+                            }
+                            else{
+                                setInfoModel.tapStartAudioEngine()
+                                self.isSetPlaying = true
+                            }
+                            
                         }, color: .accentColor) {
                             Image(systemName: isSetPlaying ?
-                                  "stop.fill" :
-                                    "play.fill")
+                                "stop.fill" :
+                                "play.fill")
                         }
                         .frame(width: geometry.size.width * 0.333)
                         Spacer()
@@ -113,27 +123,27 @@ struct SettingsSheetView: View {
                 //Continue
                 EMButton(action: {
                     showingSheet = false
-                    if !isSetPlaying {
-                        setInfoModel.conductor.levelController(
-                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
-                            setSettings: setInfoModel.setSettings
-                        )
-                        setInfoModel.conductor.playEngineAndTracks(
-                            setSettings: setInfoModel.setSettings,
-                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value)
-                        )
-                    }
+//                    if !isSetPlaying {
+//                        setInfoModel.conductor.levelController(
+//                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
+//                            setSettings: setInfoModel.setSettings
+//                        )
+//                        setInfoModel.conductor.playEngineAndTracks(
+//                            setSettings: setInfoModel.setSettings,
+//                            level: Int(setInfoModel.leveling.currentSetLevelSubject.value)
+//                        )
+//                    }
                 }, color: .green, isSolid: true) {
                     Text(NSLocalizedString("Continue", comment: ""))
                 }
                 .frame(width: geometry.size.width * 0.333)
                 
             }
-            .onAppear{
-                if stopEngine {
-                    setInfoModel.tapStopAudioEngine()
-                }
-            }
+//            .onAppear{
+//                if stopEngine {
+//                    setInfoModel.tapStopAudioEngine()
+//                }
+//            }
             .padding()
         }
     }

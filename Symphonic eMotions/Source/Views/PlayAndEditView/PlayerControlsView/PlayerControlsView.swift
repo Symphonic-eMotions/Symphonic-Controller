@@ -23,6 +23,7 @@ struct PlayerControlsView: View {
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool
     
     var body: some View {
@@ -48,16 +49,24 @@ struct PlayerControlsView: View {
                         EMButton(action: {
                             showMasterTrack.toggle()
                         }, color: .accentColor, isSolid: false) {
-                            Image(systemName: "fx")
+                            Text("Master")
                         }
                     }
                     
                     //Start stop
-                    
-                    //Dit moet aan actieve aan uit keuze worden, toggle verliest de race voor note offs
-                    
                     EMButton(action: {
-                        setInfoModel.tapToggleConductor()
+                        
+                        if isSetPlaying {
+                            sessionDisplaySub = .stopped
+                            setInfoModel.tapStopAudioEngine()
+                            self.isSetPlaying = false
+                        }
+                        else{
+                            sessionDisplaySub = .playing
+                            setInfoModel.tapStartAudioEngine()
+                            self.isSetPlaying = true
+                        }
+                        
                     }, color: .accentColor) {
                         Image(systemName: isSetPlaying ?
                                 "stop.fill" :
@@ -67,5 +76,4 @@ struct PlayerControlsView: View {
             }
         }
     }
-    
 }
