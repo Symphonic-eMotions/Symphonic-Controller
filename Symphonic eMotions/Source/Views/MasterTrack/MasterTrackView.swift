@@ -59,8 +59,6 @@ struct MasterTrackView: View {
                                                 //Set @State for local binding
                                                 self.masterEffectState[index][i] = newVal
                                                 
-                                                //                                            let _ = print("newVal: \(newVal)")
-                                                
                                                 //Send to conductor for real time modification
                                                 setInfoModel.conductor.forwardMasterTrackEffect(
                                                     value: Double(newVal),
@@ -68,7 +66,6 @@ struct MasterTrackView: View {
                                                     parameter: parameter.name,
                                                     parameterRange: parameter.range
                                                 )
-                                                
                                                 
                                                 //Store in object for writing to file (encoder)
                                                 let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range

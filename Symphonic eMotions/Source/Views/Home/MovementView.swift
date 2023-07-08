@@ -47,6 +47,7 @@ struct MovementView: View {
                                 setInfoModel: setInfoModel,
                                 showingSheet: $presentSettingSheet
                             )
+                            .background(Color.black.opacity(0.5))
                         }
                 }
                 .background(Color.black)
@@ -164,7 +165,7 @@ struct MovementView: View {
                     isSetPlaying = false
                     
                     //Paginering
-                    let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03,.page05:.page04]
+                    let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]
                     if let prevPage = pages[sessionDisplaySub] {
                         sessionDisplaySub = prevPage
                     }

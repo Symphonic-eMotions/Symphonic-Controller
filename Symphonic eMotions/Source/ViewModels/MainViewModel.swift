@@ -20,8 +20,11 @@ final class MainViewModel: ObservableObject {
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     //Convert to Float
     private let appStorage = UserDefaults.standard
-    var sensitivity: Float  {
-        appStorage.float(forKey: "sensitivity")
+    var sensitivitySession: Float  {
+        appStorage.float(forKey: "sensitivitySession")
+    }
+    var sensitivityDeviation: Float  {
+        appStorage.float(forKey: "sensitivityDeviation")
     }
     var videoFeedback: Float  {
         appStorage.float(forKey: "videoFeedback")
@@ -85,10 +88,10 @@ final class MainViewModel: ObservableObject {
                 currentInstrumentsSet: instrumentsSet,
                 buildSettings: mainState.buildSettings
             )
-            print("*** loading sensitivity \(sensitivity) and feedback \(videoFeedback) to imageDifference subjects")
+            print("*** sending sensitivity + deviation \(sensitivitySession) + \(sensitivityDeviation) and feedback \(videoFeedback) ***")
             
             mainState.imageDifference.feedback.send(videoFeedback)
-            mainState.imageDifference.sensitivityToMaxValue(sensitivity: sensitivity)
+            mainState.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivitySession + sensitivityDeviation)
         }
     }
 }

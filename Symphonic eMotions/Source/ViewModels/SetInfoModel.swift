@@ -171,15 +171,15 @@ final class SetInfoModel: ObservableObject {
         }
     }
     
-    let presets: [(button: Int, feedback: Double)] = [
-        (0, 0.89),
-        (1, 0.80),
-        (2, 0.75),
-        (3, 0.65)
+    let feedbackPresets: [(button: Int, feedback: Double)] = [
+        (0, 0.80), // Meeste feedback
+        (1, 0.70),
+        (2, 0.60),
+        (3, 0.50)  // Minste feedback
     ]
-
+    
     func buttonToFeedback(id: Int) -> Double {
-        for preset in presets {
+        for preset in feedbackPresets {
             if preset.button == id {
                 return preset.feedback
             }
@@ -188,12 +188,28 @@ final class SetInfoModel: ObservableObject {
     }
 
     func feedbackToButton(feedback: Double) -> Int {
-        for preset in presets {
+        for preset in feedbackPresets {
             if preset.feedback == feedback {
                 return preset.button
             }
         }
         return 1
+    }
+    
+    let sensitivityPreset: [(button: Int, sensitivity: Double)] = [
+        (0, 0.70), // Minste gevoeligheid
+        (1, 0.80),
+        (2, 0.90),
+        (3, 0.95)  // Meeste gevoeligheid
+    ]
+    
+    func buttonToSensitivity(id: Int) -> Double {
+        for preset in sensitivityPreset {
+            if preset.button == id {
+                return preset.sensitivity
+            }
+        }
+        return 0.5
     }
     
     func tapStopAudioEngine(){

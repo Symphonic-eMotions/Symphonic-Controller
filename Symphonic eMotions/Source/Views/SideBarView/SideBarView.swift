@@ -70,14 +70,10 @@ struct SideBarView: View {
     }
     
     private func changeFileGroupAndSessionDisplay(
-        _ item: (
-            name: String,
-            setName: String,
-            fileGroup: FileGroup,
-            sessionDisplay: SessionDisplay
-        )
+        _ item: (name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)
     ) {
         self.fileGroup = item.fileGroup
+        self.sessionDisplay = item.sessionDisplay
         setInfoModel.setInfoLocalState.sideBarHead = item.name
         setInfoModel.setInfoLocalState.setName = item.setName
     }

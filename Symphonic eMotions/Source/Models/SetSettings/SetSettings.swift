@@ -186,8 +186,6 @@ class SetSettings: Identifiable, ObservableObject {
     //Editor
     func resetGridArrays(cells: Int) {
         
-        print("CELLS \(cells)")
-        
         for( index, _ ) in tracks {
             
             for( partIndex, _ ) in tracks[index]!.parts {
@@ -221,21 +219,4 @@ class SetSettings: Identifiable, ObservableObject {
             }
         }
     }
-    
-//    //Editor
-//    func updateLevelIndex(trackId: String, level: Int){
-//        
-//        if let index = self.tracks[trackId]!.levels.firstIndex(of: level) {
-//            
-//            print("updateLevelIndex trackId: \(trackId) remove level: \(level)")
-//            
-//            self.tracks[trackId]?.levels.remove(at: index)
-//        }
-//        else{
-//            
-//            print("updateLevelIndex trackId: \(trackId) add level: \(level)")
-//            
-//            self.tracks[trackId]!.levels.append(level)
-//        }
-//    }
 }

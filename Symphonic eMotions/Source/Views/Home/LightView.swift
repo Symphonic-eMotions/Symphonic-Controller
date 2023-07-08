@@ -10,9 +10,6 @@ import SwiftUI
 struct LightView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    //Cannot save in Float
-    @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
-    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -156,7 +153,7 @@ struct LightView: View {
             .onTapGesture {
                 withAnimation {
                     //Paginering
-                    let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03,.page05:.page04]
+                    let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]
                     if let prevPage = pages[sessionDisplaySub] {
                         sessionDisplaySub = prevPage
                     }

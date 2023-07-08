@@ -39,7 +39,7 @@ class ImageDifference {
     
     var values = CurrentValueSubject<[[AreaValues]], Never>([])
     
-    var sensitivitySubject = CurrentValueSubject<Float, Never>(0.99)
+    var sensitivityDeviationSubject = CurrentValueSubject<Float, Never>(0.99)
     
     /// Kan later aan bijvoorbeeld een slider hangen
     var maxValueSubject = CurrentValueSubject<Int, Never>(50)
@@ -224,10 +224,12 @@ class ImageDifference {
         return scaledValue
     }
     
-    //Mark Sensitivity calculations
-    func sensitivityToMaxValue(sensitivity: Float) -> Void {
+    //MARK: 0...1 to 200 and 15
+    func sensitivityToMaxValue(sensitivityPlusDeviation: Float) -> Void {
         
-        self.maxValueSubject.send( lineairReverserd(sensitivity: sensitivity) )
+        self.maxValueSubject.send(
+            lineairReverserd(sensitivity: sensitivityPlusDeviation)
+        )
     }
     
 //    func sensitivityToFeedback(sensitivity: Float) -> Void {

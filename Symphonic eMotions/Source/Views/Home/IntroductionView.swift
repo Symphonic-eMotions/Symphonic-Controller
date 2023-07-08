@@ -10,9 +10,6 @@ import SwiftUI
 struct IntroductionView: View {
     
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
-    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -160,64 +157,6 @@ struct IntroductionView: View {
                     Spacer()
                 }
                 
-                //Test
-                else if sessionDisplaySub == .page05 {
-                    
-                    VStack{
-                        
-                        let imageWidth = UIScreen.main.bounds.width * 0.5
-                        let imageHeight = UIScreen.main.bounds.height * 0.5
-                        
-                        Image("demoBlob")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: imageWidth, height: imageHeight, alignment: .center)
-                        
-                        Spacer()
-                        
-                        HStack {
-                            IntroductionSlider(
-                                label: "Distance",
-                                value: $videoFeedback,
-                                minValue: 0,
-                                maxValue: 1,
-                                //This is the lenght of the slider
-                                withPercentage: 0.8
-                            )
-                            IntroductionSlider(
-                                label: "Sensitivity",
-                                value: $sensitivitySession,
-                                minValue: 0,
-                                maxValue: 1,
-                                //This is the lenght of the slider
-                                withPercentage: 0.8
-                            )
-                        }
-                        .padding(.bottom, 95)
-                        .padding(.leading, 50)
-                        
-                        IntroductionTitle(
-                            setInfoModel: setInfoModel,
-                            sessionDisplay: $sessionDisplay,
-                            sessionDisplaySub: $sessionDisplaySub,
-                            localizedString: "Test set",
-                            nextPage: .demo,
-                            introductionNoteNumbers: []
-                        )
-                        .padding(.bottom)
-                        .onTapGesture {
-                            
-                            if setIsPlaying {
-                                setInfoModel.tapStopAudioEngine()
-                                setIsPlaying = false
-                            }
-                            else{
-                                setInfoModel.tapStartAudioEngine()
-                                setIsPlaying = true
-                            }
-                        }
-                    }
-                }
             }
             .onAppear{
                 
@@ -241,7 +180,7 @@ struct IntroductionView: View {
                 .onTapGesture {
                     withAnimation {
                         //Paginering
-                        let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03,.page05:.page04]
+                        let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]
                         if let prevPage = pages[sessionDisplaySub] {
                             sessionDisplaySub = prevPage
                         }

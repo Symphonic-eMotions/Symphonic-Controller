@@ -93,7 +93,7 @@ struct MainView: View {
                     sessionDisplaySub: $sessionDisplaySub
                 )
             }
-            //Movment settings
+            //Movement settings
             else if sessionDisplaySub == .page04 {
                 MovementView(
                     setInfoModel: setInfoModel,
@@ -110,7 +110,7 @@ struct MainView: View {
             }
         }
         //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.demo,.creator].contains(sessionDisplay) {
+        else if [.swiftUI,.setInfo,.pro,.demo,.creator,.playlists].contains(sessionDisplay) {
             
             NavigationView {
                 
@@ -174,6 +174,15 @@ struct MainView: View {
                     .environmentObject(fileController)
                 }
                 
+                else if sessionDisplay == .playlists {
+                    PlayListsView(
+                        setInfoModel: setInfoModel,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
+                    )
+                    .environmentObject(fileController)
+                }
+                
                 //Selected set info View
                 else if [.setInfo,.pro,.creator].contains(sessionDisplay) {
                     
@@ -188,30 +197,7 @@ struct MainView: View {
             }
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
-        
-        //Playlists!
-        else if sessionDisplay == .playlists {
-            
-            NavigationView {
-                
-                SideBarView(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay,
-                    sessionDisplaySub: $sessionDisplaySub,
-//                    setInfoLocalState: $setInfoLocalState,
-                    sidebarItems: $sidebarItems
-                )
-                .environmentObject(fileController)
-                
-                PlayListsView(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay,
-                    sessionDisplaySub: $sessionDisplaySub
-                )
-                .environmentObject(fileController)
-            }
-        }
-        
+
         ChangeView(
             sessionDisplay: $sessionDisplay,
             sessionDisplaySub: $sessionDisplaySub
