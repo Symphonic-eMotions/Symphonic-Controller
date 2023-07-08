@@ -1171,7 +1171,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1192,7 +1192,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.4;
+				MARKETING_VERSION = 2.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1213,7 +1213,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1234,7 +1234,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.4;
+				MARKETING_VERSION = 2.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
