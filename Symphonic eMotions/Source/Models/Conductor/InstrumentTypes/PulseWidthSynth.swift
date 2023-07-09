@@ -33,8 +33,7 @@ extension Conductor {
         
         let compressor = Compressor(env)
             
-        //Waarde met aanstuurbare functie vervangen
-        let freqRampDuration: AUValue = 0.025
+        
         
         //Sequencer to callback to play sampler
         let callbacker = MIDICallbackInstrument { [self] status, note, velocity in
@@ -42,6 +41,9 @@ extension Conductor {
                 return
             }
             if midiStatus == .noteOn {
+                
+                //Waarde met aanstuurbare functie vervangen
+                let freqRampDuration: AUValue = 0.025
                 
                 if !isPlaying {
                     osc.start()
@@ -80,7 +82,6 @@ extension Conductor {
                 let volume = soundModuleVolume[track.id] ?? 0
                 
                 compressor.$masterGain.value = AUValue(volume)
-                
             }
             else if midiStatus == .noteOff {
                 

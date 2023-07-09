@@ -228,6 +228,7 @@ extension InstrumentsSet.Track {
         case exsSampler
         case audioBuffer
         case audioBufferTimed
+        case SemOne
         case pulseWidthSynth
         case phaseSynth
         
@@ -239,6 +240,8 @@ extension InstrumentsSet.Track {
                 return "Buffer sampler"
             case .audioBufferTimed:
                 return "Stretched buffer sampler"
+            case .SemOne:
+                return "SeMOne Synth"
             case .pulseWidthSynth:
                 return "Pulse Width Modulation Synth"
             case .phaseSynth:

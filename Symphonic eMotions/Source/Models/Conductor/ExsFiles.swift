@@ -58,6 +58,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case SynthPads
     case TekkbrassNatuur
     case TijgersCompact
+    case TrancyHook
     case trigger
     case TrumpetsSmall
     case TubaSolo

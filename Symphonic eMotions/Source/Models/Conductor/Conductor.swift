@@ -720,6 +720,8 @@ final class Conductor {
                         targetBPM: set.bpm,
                         samplePath: samplePath
                     )
+                case .SemOne:
+                    trackInstruments[track.id] = SemOne(for: track, and: sequencer)
                 case .pulseWidthSynth:
                     trackInstruments[track.id] = createPulseWidthSynth(for: track, and: sequencer)
                 case .phaseSynth:
