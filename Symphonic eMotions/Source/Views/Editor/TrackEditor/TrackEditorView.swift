@@ -49,6 +49,13 @@ struct TrackEditorView: View {
     @Binding var areaOfInterest: [String: [Int]]
     @Binding var minimalLevel: [String: Double]
     
+    @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
+    @Binding var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
+    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
+    @Binding var targetParameterSequencer: [String: String]
+    @Binding var targetParameterInstrument: [String: String]
+    
     //State
     @State private var showRemoveConfirmation: Bool = false
     @State private var trackKeyToRemove: String? = nil
@@ -306,6 +313,18 @@ struct TrackEditorView: View {
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key
+                    )
+                }
+                if showEditorPart == editorPart || showEditorPart == .controller {
+                    
+                    ControllerView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showEditorPart: $showEditorPart,
+                        dampMode: $dampMode,
+                        targetType: $targetType,
+                        targetNameEffect: $targetNameEffect
                     )
                 }
                 

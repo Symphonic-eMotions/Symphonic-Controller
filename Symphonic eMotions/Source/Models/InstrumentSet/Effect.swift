@@ -20,7 +20,7 @@ extension InstrumentsSet.Track {
     
     enum Effect: Decodable {
         
-        private enum EffectKeys: String, CodingKey {
+        public enum EffectKeys: String, CodingKey {
             case effectType = "effectName"
             //BandPassFilter
             case centerFrequency
@@ -373,7 +373,7 @@ extension InstrumentsSet.Track {
 
 extension InstrumentsSet.Track.Effect {
     
-    enum EffectType: String, Codable {
+    enum EffectType: String, Codable, CaseIterable {
         case bandPassFilter
         case costelloReverb
         case compressor

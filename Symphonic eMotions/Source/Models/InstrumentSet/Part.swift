@@ -216,13 +216,25 @@ extension InstrumentsSet.Track.Part.DamperTarget: Encodable{
 
 extension InstrumentsSet.Track.Part.DamperTarget {
     
-    enum NodeType: String, Codable {
+    enum NodeType: String, Codable, CaseIterable {
         case sequencer
         case effect
         case instrument
         case master
+        
+        var description: String {
+            switch self{
+            case .sequencer:
+                return "Sequencer"
+            case .effect:
+                return "Effect"
+            case .instrument:
+                return "Instrument"
+            case .master:
+                return "Master"
+            }
+        }
     }
-    
 }
 
 extension InstrumentsSet.Track.Part.DamperTarget {
