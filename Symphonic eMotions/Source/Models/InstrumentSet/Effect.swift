@@ -326,7 +326,7 @@ extension InstrumentsSet.Track {
             }
         }
         
-        func effectVars(effectType: EffectType ) -> [String] {
+        static func effectVars(effectType: EffectType ) -> [String] {
             
             switch effectType {
                 
@@ -371,6 +371,7 @@ extension InstrumentsSet.Track {
     }
 }
 
+//Effect names
 extension InstrumentsSet.Track.Effect {
     
     enum EffectType: String, Codable, CaseIterable {
@@ -391,6 +392,7 @@ extension InstrumentsSet.Track.Effect {
     }
 }
 
+//Write to disk
 extension InstrumentsSet.Track.Effect: Encodable {
 
     func encode(to encoder: Encoder) throws {
@@ -512,3 +514,4 @@ extension InstrumentsSet.Track.Effect: Encodable {
         }
     }
 }
+

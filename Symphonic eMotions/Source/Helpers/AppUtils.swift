@@ -341,7 +341,7 @@ final class AppUtils {
             let effectType: InstrumentsSet.Track.Effect.EffectType = currentMasterEffect.effectType
             var parameters: [ValueAndRange] = []
             
-            let parameterStrings: [String] = currentMasterEffect.effectVars(effectType: effectType)
+            let parameterStrings: [String] = InstrumentsSet.Track.Effect.effectVars(effectType: effectType)
             for (parameterIndex, parameterString) in parameterStrings.enumerated() {
                 let loadedValueAndRange = currentMasterEffect.valueAndRanges(parameter: parameterString)!
                 let loadedRange = loadedValueAndRange.range
@@ -514,7 +514,7 @@ final class AppUtils {
             var parameters: OrderedDictionary<Int,ParameterSettings> = [:]
             
             //Get array of vars for selected effect
-            let parametersStrings = loadedEffect.effectVars(effectType: loadedEffect.effectType)
+            let parametersStrings = InstrumentsSet.Track.Effect.effectVars(effectType: loadedEffect.effectType)
             var parameterIndex: Int = 0
             for parameterString in parametersStrings {
                 
@@ -554,7 +554,7 @@ final class AppUtils {
             
             var parameters: [Parameter] = []
             
-            let parametersString = effect.effectVars(effectType: effect.effectType)
+            let parametersString = InstrumentsSet.Track.Effect.effectVars(effectType: effect.effectType)
             
             for (parameterIndex, parameterString) in parametersString.enumerated() {
                 

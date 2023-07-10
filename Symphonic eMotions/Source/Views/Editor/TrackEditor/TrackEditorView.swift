@@ -324,7 +324,8 @@ struct TrackEditorView: View {
                         showEditorPart: $showEditorPart,
                         dampMode: $dampMode,
                         targetType: $targetType,
-                        targetNameEffect: $targetNameEffect
+                        targetNameEffect: $targetNameEffect,
+                        targetParameterEffect: $targetParameterEffect
                     )
                 }
                 
