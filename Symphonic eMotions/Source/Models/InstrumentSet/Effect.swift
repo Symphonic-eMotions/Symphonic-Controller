@@ -16,6 +16,12 @@ protocol EffectProtocol {
     func valueAndRange(parameter: String) -> ValueAndRange?
 }
 
+extension InstrumentsSet.Track.Effect {
+    init() {
+        self = .bandPassFilter(BandPassFilterEffect(centerFrequency: .zero, bandwidth: .zero))
+    }
+}
+
 extension InstrumentsSet.Track {
     
     enum Effect: Decodable {
@@ -326,26 +332,60 @@ extension InstrumentsSet.Track {
             }
         }
         
-        static func effectVars(effectType: EffectType ) -> [String] {
-            
+        func effectVars(effectType: EffectType) -> [EffectKeys] {
             switch effectType {
-                
-            case .bandPassFilter: return ["centerFrequency","bandwidth"]
-            case .costelloReverb: return ["feedbackCostello","cutoffFrequencyCostello","dryWetMixer"]
-            case .compressor: return ["threshold","headRoom","attackTime","releaseTime","masterGain"]
-            case .delay: return ["time","feedback","lowPassCutoff","dryWetMix"]
-            case .distortion: return ["distDelay","distDecay","distDelayMix","distRingModFreq1","distRingModFreq2","distRingModBalance","distRingModMix","distDecimation","distRounding","distDecimationMix","distLinearTerm","distSquaredTerm","distCubicTerm","distPolynomialMix","distSoftClipGain","distFinalMix"]
-            case .dynamicRangeCompressor: return ["drcAttackDuration","drcReleaseDuration","drcRatio","drcTreshold"]
-            case .expander: return ["expansionRatio","expansionThreshold","expanderAttackTime","expanderReleaseTime","expanderMasterGain"]
-            case .highPassFilter: return ["hpfCutoffFrequency","hpfResonance"]
-            case .lowPassFilter: return ["cutoffFrequency","resonance"]
-            case .phaser: return ["phaserNotchMinimumFrequency","phaserNotchMaximumFrequency","phaserNotchWidth","phaserNotchFrequency","phaserVibratoMode","phaserDepth","phaserFeedback", "phaserInverted","phaserLfoBPM","phaserDryWetMixer"]
-            case .peakingParametricEqualizerFilter: return ["ppefCenterFrequency","ppefGain","ppefQ"]
-            case .responseReverb: return ["reverbDuration","dryWetMixer"]
-            case .reverb: return ["reverbDryWetMix","reverbPreset"]
-            case .tanhDistortion: return ["pregain","postgain","positiveShapeParameter","negativeShapeParameter","dryWetTanh"]
+            case .bandPassFilter:
+                return [.centerFrequency, .bandwidth]
+            case .costelloReverb:
+                return [.feedbackCostello, .cutoffFrequencyCostello, .dryWetMixer]
+            case .compressor:
+                return [.threshold, .headRoom, .attackTime, .releaseTime, .masterGain]
+            case .delay:
+                return [.time, .feedback, .lowPassCutoff, .dryWetMix]
+            case .distortion:
+                return [.distDelay, .distDecay, .distDelayMix, .distRingModFreq1, .distRingModFreq2, .distRingModBalance, .distRingModMix, .distDecimation, .distRounding, .distDecimationMix, .distLinearTerm, .distSquaredTerm, .distCubicTerm, .distPolynomialMix, .distSoftClipGain, .distFinalMix]
+            case .dynamicRangeCompressor:
+                return [.drcAttackDuration, .drcReleaseDuration, .drcRatio, .drcTreshold]
+            case .expander:
+                return [.expansionRatio, .expansionThreshold, .expanderAttackTime, .expanderReleaseTime, .expanderMasterGain]
+            case .highPassFilter:
+                return [.hpfCutoffFrequency, .hpfResonance]
+            case .lowPassFilter:
+                return [.cutoffFrequency, .resonance]
+            case .phaser:
+                return [.phaserNotchMinimumFrequency, .phaserNotchMaximumFrequency, .phaserNotchWidth, .phaserNotchFrequency, .phaserVibratoMode, .phaserDepth, .phaserFeedback, .phaserInverted, .phaserLfoBPM, .phaserDryWetMixer]
+            case .peakingParametricEqualizerFilter:
+                return [.ppefCenterFrequency, .ppefGain, .ppefQ]
+            case .responseReverb:
+                return [.respReverbDuration, .dryWetMixer]
+            case .reverb:
+                return [.reverbDryWetMix, .reverbPreset]
+            case .tanhDistortion:
+                return [.pregain, .postgain, .positiveShapeParameter, .negativeShapeParameter, .dryWetTanh]
             }
         }
+
+        
+//        static func effectVars(effectType: EffectType ) -> [String] {
+//
+//            switch effectType {
+//
+//            case .bandPassFilter: return ["centerFrequency","bandwidth"]
+//            case .costelloReverb: return ["feedbackCostello","cutoffFrequencyCostello","dryWetMixer"]
+//            case .compressor: return ["threshold","headRoom","attackTime","releaseTime","masterGain"]
+//            case .delay: return ["time","feedback","lowPassCutoff","dryWetMix"]
+//            case .distortion: return ["distDelay","distDecay","distDelayMix","distRingModFreq1","distRingModFreq2","distRingModBalance","distRingModMix","distDecimation","distRounding","distDecimationMix","distLinearTerm","distSquaredTerm","distCubicTerm","distPolynomialMix","distSoftClipGain","distFinalMix"]
+//            case .dynamicRangeCompressor: return ["drcAttackDuration","drcReleaseDuration","drcRatio","drcTreshold"]
+//            case .expander: return ["expansionRatio","expansionThreshold","expanderAttackTime","expanderReleaseTime","expanderMasterGain"]
+//            case .highPassFilter: return ["hpfCutoffFrequency","hpfResonance"]
+//            case .lowPassFilter: return ["cutoffFrequency","resonance"]
+//            case .phaser: return ["phaserNotchMinimumFrequency","phaserNotchMaximumFrequency","phaserNotchWidth","phaserNotchFrequency","phaserVibratoMode","phaserDepth","phaserFeedback", "phaserInverted","phaserLfoBPM","phaserDryWetMixer"]
+//            case .peakingParametricEqualizerFilter: return ["ppefCenterFrequency","ppefGain","ppefQ"]
+//            case .responseReverb: return ["reverbDuration","dryWetMixer"]
+//            case .reverb: return ["reverbDryWetMix","reverbPreset"]
+//            case .tanhDistortion: return ["pregain","postgain","positiveShapeParameter","negativeShapeParameter","dryWetTanh"]
+//            }
+//        }
         
         func valueAndRanges(parameter: String) -> ValueAndRange? {
             

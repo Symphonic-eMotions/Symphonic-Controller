@@ -82,7 +82,7 @@ struct ControllerView: View {
                     ForEach(Array(currentTrack.parts.enumerated()), id: \.offset ){ index, part in
                         
                         //Part parameters above each other
-                        VStack {
+                        VStack(alignment: .leading) {
                             
                             //Controller type Sequencer, Instrument or Effect
                             let excludedCases: [InstrumentsSet.Track.Part.DamperTarget.NodeType] = [.master]
@@ -95,8 +95,7 @@ struct ControllerView: View {
                                         targetType[part.value.partId] = newValue
                                     }
                                 }
-                            )
-                            ) {
+                            )) {
                                 ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases.filter { !excludedCases.contains($0) }, id: \.self) { type in
                                     Text(type.description)
                                         .tag(type)
@@ -104,11 +103,12 @@ struct ControllerView: View {
                             }
                             .pickerStyle(.menu)
                             .frame(width: 300, height: 50)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                             
                             
                             if targetType[part.value.partId] == .effect {
                                 
-                                VStack {
+                                VStack(alignment: .leading) {
                                     
                                     Picker("Effect name", selection: Binding(
                                         get: { self.selectedEffectType ?? .lowPassFilter },
@@ -122,24 +122,29 @@ struct ControllerView: View {
                                             Text(effectName.capitalized).tag(type)
                                         }
                                     }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 300, height: 50)
+                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                     
-                                    let effectParameters = InstrumentsSet.Track.Effect.effectVars(effectType: self.selectedEffectType!)
-//                                    Picker("Effect Parameter", selection: Binding(
-//                                        get: {
-//                                            selectedEffectParameter ?? effectParameters.first
-//                                            $targetParameterEffect[part.value.partId]
-//                                        },
-//                                        set: { newValue in
-//                                            selectedEffectParameter = newValue
-//                                        }
-//                                    )) {
-//                                        ForEach(effectParameters, id: \.self) { parameter in
-//                                            let parameterName: String = parameter.rawValue
-//                                            Text(parameterName.capitalized).tag(parameter)
-//                                        }
-//                                    }
-//                                    .pickerStyle(.menu)
-//                                    .frame(width: 300, height: 50)
+                                    let trackEffect = InstrumentsSet.Track.Effect()
+                                    let effectParameters = trackEffect.effectVars(effectType: self.selectedEffectType!)
+                                    Picker("Effect Parameter", selection: Binding(
+                                        get: {
+                                            selectedEffectParameter ?? effectParameters.first
+                                        },
+                                        set: { newValue in
+                                            selectedEffectParameter = newValue
+                                            self.targetParameterEffect[part.value.partId] = newValue
+                                        }
+                                    )) {
+                                        ForEach(effectParameters, id: \.self) { parameter in
+                                            let parameterName: String = parameter.rawValue
+                                            Text(parameterName.capitalized).tag(parameter)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 300, height: 50)
+                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                 }
                             }
                             

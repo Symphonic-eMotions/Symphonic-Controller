@@ -89,6 +89,7 @@ struct NoteNumberPositionsView: View {
                         }
                     }
                 }
+                .padding()
             }
         }
         .padding(.leading)
