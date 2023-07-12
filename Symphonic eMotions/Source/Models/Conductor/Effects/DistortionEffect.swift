@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class DistortionEffect: EffectProtocol {
+class DistortionEffect: AudioProcessingEffect {
     
     /// Initialize the distortion node
     ///

@@ -18,36 +18,44 @@ struct ControllerView: View {
     @Binding var showEditorPart: EditorParts
     
     @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
-    @Binding var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
-    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
-    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
+    
+    @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    
+//    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
+//    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
 //    @Binding var targetParameterSequencer: [String: String]
 //    @Binding var targetParameterInstrument: [String: String]
     
-    @State private var selectedEffectType: InstrumentsSet.Track.Effect.EffectType? = .lowPassFilter
-    @State private var selectedEffectParameter: InstrumentsSet.Track.Effect.EffectKeys? = .effectType
+//    @State private var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    
+//    var targetType: Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType>
+
+    
+//    @State private var selectedEffectType: [String: InstrumentsSet.Track.Effect.EffectType]
+//    @State private var selectedEffectParameter: [String: InstrumentsSet.Track.Effect.EffectKeys]
     
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
         showEditorPart: Binding<EditorParts>,
-        dampMode: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.DampMode]>,
-        targetType: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
-        targetNameEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
-        targetParameterEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectKeys]>
+        dampMode: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.DampMode]>
+        ,
+        targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>
+//        ,
+//        targetNameEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
+//        targetParameterEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectKeys]>
     )  {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
         _showEditorPart = showEditorPart
         _dampMode = dampMode
-        _targetType = targetType
-        _targetNameEffect = targetNameEffect
-        _targetParameterEffect = targetParameterEffect
+        _targetTypes = targetTypes
     }
     
     let columnWidth: CGFloat = 150
+    let buttonWidth: CGFloat = 220
     let color: Color = .accentColor
     
     var body: some View {
@@ -79,102 +87,42 @@ struct ControllerView: View {
                 
                 HStack(spacing: 20) {
                     
-                    ForEach(Array(currentTrack.parts.enumerated()), id: \.offset ){ index, part in
-                        
-                        //Part parameters above each other
-                        VStack(alignment: .leading) {
-                            
-                            //Controller type Sequencer, Instrument or Effect
-                            let excludedCases: [InstrumentsSet.Track.Part.DamperTarget.NodeType] = [.master]
-                            Picker("Controller type", selection: Binding(
-                                get: {
-                                    targetType[part.value.partId] ?? excludedCases.first ?? .effect
-                                },
-                                set: { newValue in
-                                    DispatchQueue.main.async {
-                                        targetType[part.value.partId] = newValue
-                                    }
-                                }
-                            )) {
-                                ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases.filter { !excludedCases.contains($0) }, id: \.self) { type in
-                                    Text(type.description)
-                                        .tag(type)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .frame(width: 300, height: 50)
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            
-                            
-                            if targetType[part.value.partId] == .effect {
-                                
-                                VStack(alignment: .leading) {
-                                    
-                                    Picker("Effect name", selection: Binding(
-                                        get: { self.selectedEffectType ?? .lowPassFilter },
-                                        set: {
-                                            self.selectedEffectType = $0
-                                            self.targetNameEffect[part.value.partId] = $0
-                                        }
-                                    )) {
-                                        ForEach(Array(InstrumentsSet.Track.Effect.EffectType.allCases), id: \.self) { type in
-                                            let effectName: String = type.rawValue
-                                            Text(effectName.capitalized).tag(type)
-                                        }
-                                    }
-                                    .pickerStyle(.menu)
-                                    .frame(width: 300, height: 50)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                    
-                                    let trackEffect = InstrumentsSet.Track.Effect()
-                                    let effectParameters = trackEffect.effectVars(effectType: self.selectedEffectType!)
-                                    Picker("Effect Parameter", selection: Binding(
-                                        get: {
-                                            selectedEffectParameter ?? effectParameters.first
-                                        },
-                                        set: { newValue in
-                                            selectedEffectParameter = newValue
-                                            self.targetParameterEffect[part.value.partId] = newValue
-                                        }
-                                    )) {
-                                        ForEach(effectParameters, id: \.self) { parameter in
-                                            let parameterName: String = parameter.rawValue
-                                            Text(parameterName.capitalized).tag(parameter)
-                                        }
-                                    }
-                                    .pickerStyle(.menu)
-                                    .frame(width: 300, height: 50)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                }
-                            }
-                            
-                            if targetType[part.value.partId] == .sequencer {
-                                
-                                Text("Parameter sequencer")
-                            }
-                            
-                            if targetType[part.value.partId] == .instrument {
-                                
-                                Text("Parameter instrument")
-                            }
-                            
-                            Divider()
-                            
-                            HStack{
-                                Text("Parameter range")
-                                
-                                let parameterRangeString = part.value.damperTarget.parameterRange.map { String($0) }.joined(separator: ", ")
-                                Text(parameterRangeString)
-                            }
-                            HStack{
-                                Text("Damp mode")
-                                Text(part.value.damperTarget.dampMode?.rawValue ?? "No damp mode")
+                    ForEach(Array(targetTypes.keys), id: \.self) { key in
+                        Picker("Controller type", selection: bindingForTrack(key)) {
+                            ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases, id: \.self) { type in
+                                Text(type.description).tag(type)
                             }
                         }
+                        .pickerStyle(.menu)
+                        .frame(width: 200, height: 50)
                     }
                 }
             }
         }
         .padding(.leading)
+        .onAppear {
+            updateTargetType() // Call the function to initialize targetTypes
+        }
+    }
+    
+    private func updateTargetType() {
+        targetTypes = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                targetTypes[part.value.partId] = part.value.damperTarget.nodeType
+            }
+        }
+    }
+    
+    private func bindingForTrack(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
+        Binding(
+            get: {
+                targetTypes[key] ?? .effect
+            },
+            set: { newValue in
+                targetTypes[key] = newValue
+                currentTrack.parts[key]?.targetType = newValue
+            }
+        )
     }
 }

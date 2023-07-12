@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-class TanhDistortionEffect: EffectProtocol {
+class TanhDistortionEffect: AudioProcessingEffect {
     
     let pregain: ValueAndRange
     let postgain: ValueAndRange

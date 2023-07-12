@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-class CostelloReverbEffect: EffectProtocol {
+class CostelloReverbEffect: AudioProcessingEffect {
     
     let feedback: ValueAndRange
     let cutoffFrequency: ValueAndRange

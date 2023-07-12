@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-class CompressorEffect: EffectProtocol {
+class CompressorEffect: AudioProcessingEffect {
     
     let threshold: ValueAndRange
     let headRoom: ValueAndRange

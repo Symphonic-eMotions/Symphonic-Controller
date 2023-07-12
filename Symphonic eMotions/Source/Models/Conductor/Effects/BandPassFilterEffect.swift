@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class BandPassFilterEffect: EffectProtocol {
+class BandPassFilterEffect: AudioProcessingEffect {
     
     var centerFrequency: ValueAndRange
     var bandwidth: ValueAndRange

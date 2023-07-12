@@ -50,11 +50,12 @@ struct TrackEditorView: View {
     @Binding var minimalLevel: [String: Double]
     
     @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
-    @Binding var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
-    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
-    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
-    @Binding var targetParameterSequencer: [String: String]
-    @Binding var targetParameterInstrument: [String: String]
+    @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    
+//    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
+//    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
+//    @Binding var targetParameterSequencer: [String: String]
+//    @Binding var targetParameterInstrument: [String: String]
     
     //State
     @State private var showRemoveConfirmation: Bool = false
@@ -323,9 +324,10 @@ struct TrackEditorView: View {
                         trackId: key,
                         showEditorPart: $showEditorPart,
                         dampMode: $dampMode,
-                        targetType: $targetType,
-                        targetNameEffect: $targetNameEffect,
-                        targetParameterEffect: $targetParameterEffect
+                        targetTypes: $targetTypes
+//                        ,
+//                        targetNameEffect: $targetNameEffect,
+//                        targetParameterEffect: $targetParameterEffect
                     )
                 }
                 
@@ -389,7 +391,19 @@ struct TrackEditorView: View {
             .font(.system(size: 45))
             Spacer()
         }
-        
-        
+
     }
+    
+//    private func bindingForTrack(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
+//        Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType>(
+//            get: {
+//                targetTypes[key] ?? .effect
+//            },
+//            set: { newValue in
+//                DispatchQueue.main.async {
+//                    targetTypes[key] = newValue
+//                }
+//            }
+//        )
+//    }
 }

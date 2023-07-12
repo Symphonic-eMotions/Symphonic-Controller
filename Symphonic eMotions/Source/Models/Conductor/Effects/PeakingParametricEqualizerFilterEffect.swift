@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-class PeakingParametricEqualizerFilterEffect: EffectProtocol {
+class PeakingParametricEqualizerFilterEffect: AudioProcessingEffect {
         
     var ppefCenterFrequency: ValueAndRange
     var ppefGain: ValueAndRange

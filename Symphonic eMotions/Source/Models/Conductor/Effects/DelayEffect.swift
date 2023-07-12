@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class DelayEffect: EffectProtocol {
+class DelayEffect: AudioProcessingEffect {
     
     let time: ValueAndRange
     let feedback: ValueAndRange

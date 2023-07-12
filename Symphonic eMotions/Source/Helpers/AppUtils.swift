@@ -114,7 +114,7 @@ final class AppUtils {
     }
     
     //MARK: Set setSetings
-    // - Structure to mutate and save as Instrument Set
+    // - Structure to load InstrumentsSet to mutuate and save
     static func setSettings(
         instrumentSet: InstrumentsSet
     ) -> SetSettings {
@@ -138,6 +138,10 @@ final class AppUtils {
             let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
             for partLoaded in trackLoaded.parts {
                 
+                print("Loaded TargetType: \(partLoaded.damperTarget.nodeType)")
+                print("Loaded EffetName: \(partLoaded.damperTarget.nodeName)")
+                print("Loaded EffetParameter: \(partLoaded.damperTarget.parameter)")
+                
                 let part = PartSettings(
                     partId: partLoaded.id,
                     partName: partLoaded.instrumentPartName,
@@ -151,8 +155,19 @@ final class AppUtils {
                         areaOfInterest: partLoaded.areaOfInterest
                     ),
                     damperTarget: partLoaded.damperTarget,
-                    dontDrawVisual: partLoaded.dontDrawVisual ?? false
+                    dontDrawVisual: partLoaded.dontDrawVisual ?? false,
+                    dampMode: partLoaded.damperTarget.dampMode ?? .easeInCubic,
+                    targetType: partLoaded.damperTarget.nodeType,
+                    targetNameEffect: InstrumentsSet.Track.Effect.EffectType(
+                        rawValue: partLoaded.damperTarget.nodeName) ?? .none,
+                    targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys(
+                        rawValue: partLoaded.damperTarget.parameter) ?? .effectType
                 )
+                
+                print("Mapped targetType \(part.targetType.rawValue)")
+                print("Mapped targetNameEffect \(part.targetNameEffect.rawValue)")
+                print("Mapped targetParameterEffect \(part.targetParameterEffect.rawValue)")
+                
                 parts[partLoaded.id] = part
                 partNumber += 1
             }
@@ -289,42 +304,11 @@ final class AppUtils {
             instrumentSet: instrumentSet,
             duplicateLastTrack: duplicateLastTrack
         )
-        
         InstrumentsSet.writeLoadedSet(setName: fileName, instrumentSet: storeInstrumentSet)
         
         return fileName
     }
-    
-    static func adjustArray(target: [Int], example: [Int]) -> [Int] {
-        var result = target
-        if result.count > example.count {
-            // If noteLevels is longer, remove the extra elements from the end
-            result = Array(result[..<example.count])
-        } else if result.count < example.count {
-            // If noteLevels is shorter, append the last value until they're the same length
-            let lastValue = result.last ?? 48
-            let addIndeces = example.count - result.count
-            result.append(contentsOf: Array(repeating: lastValue, count: addIndeces))
-        }
-        return result
-    }
-    
-    static func adjustArrayLevels(target: [Int], example: [Int]) -> [Int] {
-        
-        var result = target
 
-        if result.count < example.count {
-            // If the target array is shorter, append the last value until they're the same length.
-            let lastValue = result.last ?? 0
-            result.append(contentsOf: Array(repeating: lastValue, count: example.count - target.count))
-        } else if result.count > example.count {
-            // If the target array is longer, remove the extra elements from the end.
-            result = Array(result[..<example.count])
-        }
-
-        return result
-    }
-    
     //Instrument set from current state
     static func createInstrumentSet(
         setSettings: SetSettings,
@@ -377,16 +361,34 @@ final class AppUtils {
                     rampSpeedDown: part.value.rampDown
                 )
                 
+//                let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
+//                    trackId: part.value.damperTarget.trackId,
+//                    nodeType: part.value.damperTarget.nodeType,
+//                    nodeName: part.value.damperTarget.nodeName,
+//                    parameter: part.value.damperTarget.parameter,
+//                    parameterRange: part.value.damperTarget.parameterRange,
+//                    midiData: part.value.damperTarget.midiData,
+//                    nodeSettings: storeNodeSettings,
+//                    dampMode: part.value.damperTarget.dampMode
+//                )
+                
+                var parameter: String = "";
+                if part.value.targetType == .effect {
+                    parameter = part.value.targetParameterEffect.rawValue
+                }
+                
                 let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                     trackId: part.value.damperTarget.trackId,
-                    nodeType: part.value.damperTarget.nodeType,
-                    nodeName: part.value.damperTarget.nodeName,
-                    parameter: part.value.damperTarget.parameter,
+                    nodeType: part.value.targetType,
+                    nodeName: part.value.targetNameEffect.rawValue,
+                    parameter: parameter,
                     parameterRange: part.value.damperTarget.parameterRange,
                     midiData: part.value.damperTarget.midiData,
                     nodeSettings: storeNodeSettings,
                     dampMode: part.value.damperTarget.dampMode
                 )
+                
+                print(storeDamperTarget)
                 
                 let storePart = InstrumentsSet.Track.Part(
                     instrumentPartName: part.value.partName,
@@ -457,6 +459,36 @@ final class AppUtils {
         )
             
         return storeInstrumentSet
+    }
+    
+    static func adjustArray(target: [Int], example: [Int]) -> [Int] {
+        var result = target
+        if result.count > example.count {
+            // If noteLevels is longer, remove the extra elements from the end
+            result = Array(result[..<example.count])
+        } else if result.count < example.count {
+            // If noteLevels is shorter, append the last value until they're the same length
+            let lastValue = result.last ?? 48
+            let addIndeces = example.count - result.count
+            result.append(contentsOf: Array(repeating: lastValue, count: addIndeces))
+        }
+        return result
+    }
+    
+    static func adjustArrayLevels(target: [Int], example: [Int]) -> [Int] {
+        
+        var result = target
+
+        if result.count < example.count {
+            // If the target array is shorter, append the last value until they're the same length.
+            let lastValue = result.last ?? 0
+            result.append(contentsOf: Array(repeating: lastValue, count: example.count - target.count))
+        } else if result.count > example.count {
+            // If the target array is longer, remove the extra elements from the end.
+            result = Array(result[..<example.count])
+        }
+
+        return result
     }
     
     //MARK: editor

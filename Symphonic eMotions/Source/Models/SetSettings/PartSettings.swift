@@ -20,6 +20,12 @@ class PartSettings: Identifiable {
     var damperTarget: InstrumentsSet.Track.Part.DamperTarget
     var dontDrawVisual: Bool
     
+    //Controllers
+    var dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode
+    var targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType
+    var targetNameEffect: InstrumentsSet.Track.Effect.EffectType
+    var targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
+    
     init(partId: String,
          partName: String,
          partNumber: Int,
@@ -29,7 +35,11 @@ class PartSettings: Identifiable {
          areaOfInterest: [Int],
          areaOfInterestColor: [Color],
          damperTarget: InstrumentsSet.Track.Part.DamperTarget,
-         dontDrawVisual: Bool
+         dontDrawVisual: Bool,
+         dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode,
+         targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType,
+         targetNameEffect: InstrumentsSet.Track.Effect.EffectType,
+         targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
     ){
         self.partId = partId
         self.partName = partName
@@ -41,6 +51,10 @@ class PartSettings: Identifiable {
         self.areaOfInterestColor = areaOfInterestColor
         self.damperTarget = damperTarget
         self.dontDrawVisual = dontDrawVisual
+        self.dampMode = dampMode
+        self.targetType = targetType
+        self.targetNameEffect = targetNameEffect
+        self.targetParameterEffect = targetParameterEffect
     }
     
     func interestIndexes(rows: Int, columns: Int) -> [InstrumentsSet.Track.Part.Index] {

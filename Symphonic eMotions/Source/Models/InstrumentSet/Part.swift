@@ -163,9 +163,9 @@ extension InstrumentsSet.Track.Part {
         //Store to file init
         init(
             trackId: String,
-            nodeType: NodeType,
-            nodeName: String,
-            parameter: String,
+            nodeType: NodeType,         //targetType
+            nodeName: String,           //targetNameEffect
+            parameter: String,          //parameter
             parameterRange: [Double],
             midiData: MidiData?,
             nodeSettings: NodeSettings?,

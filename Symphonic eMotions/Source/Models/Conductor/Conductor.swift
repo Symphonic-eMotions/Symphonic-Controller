@@ -325,10 +325,13 @@ final class Conductor {
                 
                 velocities[trackId] = 1.0
                 
-                print("play \(trackId)")
+                print("play previewSingleTrack \(trackId)")
                 
                 trackSequencers[trackId]?.play()
             }
+        }
+        else{
+            print("no trackSequencers found")
         }
     }
     
@@ -371,6 +374,8 @@ final class Conductor {
         noteNumber:Int,
         noteOn:Bool
     ){
+        print("playNoteNumberSingleTrack \(trackId) \(soundSource) \(noteNumber) \(noteOn)")
+        
         if !noteOn {
             playEngineUIEffect()
             
@@ -380,11 +385,10 @@ final class Conductor {
             let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
             
             if [.exsSampler, .audioBuffer, .audioBufferTimed].contains(soundSource){
+                
                 trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
             }
             else if [.pulseWidthSynth, .phaseSynth].contains(soundSource) {
-                
-                print(noteOn)
                 
                 trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
             }
@@ -886,7 +890,8 @@ final class Conductor {
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
-            stopNotesTrackId(for: track.trackId)
+            //Keep playing until bar is complete
+//            stopNotesTrackId(for: track.trackId)
             
             copyMIDIfromMemory(
                 trackId: track.trackId,

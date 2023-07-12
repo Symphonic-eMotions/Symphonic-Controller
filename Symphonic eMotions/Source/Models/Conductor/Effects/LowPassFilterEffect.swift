@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class LowPassFilterEffect: EffectProtocol {
+class LowPassFilterEffect: AudioProcessingEffect {
     
     var cutOffFrequency: ValueAndRange
     var resonance: ValueAndRange

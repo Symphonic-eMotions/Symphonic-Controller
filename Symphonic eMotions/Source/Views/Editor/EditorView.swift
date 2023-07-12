@@ -64,14 +64,12 @@ struct EditorView: View {
     @State var minimalLevel: [String: Double]
     
     @State var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
-    @State var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
-    @State var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
-    @State var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
-    @State var targetParameterSequencer: [String: String]
-    @State var targetParameterInstrument: [String: String]
+    
+    @State private var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
+    
     
     init(
         setInfoModel: SetInfoModel,
@@ -109,11 +107,6 @@ struct EditorView: View {
         var minimalLevelInit = [String: Double]()
         
         var dampModeInit = [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]()
-        var targetTypeInit = [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]()
-        var targetNameEffectInit = [String: InstrumentsSet.Track.Effect.EffectType]()
-        var targetParameterEffectInit = [String: InstrumentsSet.Track.Effect.EffectKeys]()
-        var targetParameterSequencerInit = [String: String]()
-        var targetParameterInstrumentInit = [String: String]()
         
         //Loop over tracks once
         for track in setInfoModel.setSettings.tracks {
@@ -177,18 +170,14 @@ struct EditorView: View {
             
             let instrumentType = track.value.instrumentType
             instrumentTypesInit[track.value.trackId] = instrumentType
-                
+            
+            //Hust the parts from current track
             for part in track.value.parts {
+                
                 areaOfInterestInit[part.value.partId] = part.value.areaOfInterest
                 minimalLevelInit[part.value.partId] = part.value.minimalLevel
                 
                 dampModeInit[part.value.partId] = part.value.damperTarget.dampMode
-                targetTypeInit[part.value.partId] = part.value.damperTarget.nodeType
-                //Translate string back to type
-                targetNameEffectInit[part.value.partId] = InstrumentsSet.Track.Effect.EffectType(rawValue: part.value.damperTarget.nodeName)
-                targetParameterEffectInit[part.value.partId] = InstrumentsSet.Track.Effect.EffectKeys(rawValue: part.value.damperTarget.parameter)
-                targetParameterSequencerInit[part.value.partId] = part.value.damperTarget.parameter
-                targetParameterInstrumentInit[part.value.partId] = part.value.damperTarget.parameter
             }
         }
         
@@ -215,12 +204,28 @@ struct EditorView: View {
         _minimalLevel = State(initialValue: minimalLevelInit)
         
         _dampMode = State(initialValue: dampModeInit)
-        _targetType = State(initialValue: targetTypeInit)
-        _targetNameEffect = State(initialValue: targetNameEffectInit)
-        _targetParameterEffect = State(initialValue: targetParameterEffectInit)
-        _targetParameterSequencer = State(initialValue: targetParameterSequencerInit)
-        _targetParameterInstrument = State(initialValue: targetParameterInstrumentInit)
+        
+        _targetTypes = State(initialValue: [:])
+                
+//        updateTargetType()
+        
+//        _targetType = State(initialValue: targetTypeInit)
+//        _targetNameEffect = State(initialValue: targetNameEffectInit)
+//        _targetParameterEffect = State(initialValue: targetParameterEffectInit)
+//        _targetParameterSequencer = State(initialValue: targetParameterSequencerInit)
+//        _targetParameterInstrument = State(initialValue: targetParameterInstrumentInit)
     }
+    
+//    private func updateTargetType() {
+//        for track in setInfoModel.setSettings.tracks {
+//            for part in track.value.parts {
+//                self.targetTypes[part.value.partId] = part.value.damperTarget.nodeType
+//                print("INITIALISING targetTypes: \(part.value.damperTarget.nodeType)")
+//            }
+//        }
+//        
+//        print(self.targetTypes)
+//    }
     
     var body: some View {
         
@@ -272,11 +277,12 @@ struct EditorView: View {
                     areaOfInterest: $areaOfInterest,
                     minimalLevel: $minimalLevel,
                     dampMode: $dampMode,
-                    targetType: $targetType,
-                    targetNameEffect: $targetNameEffect,
-                    targetParameterEffect: $targetParameterEffect,
-                    targetParameterSequencer: $targetParameterSequencer,
-                    targetParameterInstrument: $targetParameterInstrument
+                    targetTypes: $targetTypes
+//                    ,
+//                    targetNameEffect: $targetNameEffect,
+//                    targetParameterEffect: $targetParameterEffect,
+//                    targetParameterSequencer: $targetParameterSequencer,
+//                    targetParameterInstrument: $targetParameterInstrument
                 )
             }
         }

@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class HighPassFiltereffect: EffectProtocol {
+class HighPassFiltereffect: AudioProcessingEffect {
     
     var hpfCutoffFrequency: ValueAndRange
     var hpfResonance: ValueAndRange

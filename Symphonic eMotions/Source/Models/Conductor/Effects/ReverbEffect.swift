@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import AVFAudio
 
-class Reverbeffect: EffectProtocol {
+class Reverbeffect: AudioProcessingEffect {
     
     let reverbDryWetMix: ValueAndRange
     let reverbPreset: ValueAndRange

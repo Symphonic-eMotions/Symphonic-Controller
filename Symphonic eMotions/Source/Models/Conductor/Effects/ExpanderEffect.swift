@@ -8,7 +8,7 @@
 import Foundation
 import AudioKit
 
-class ExpanderEffect: EffectProtocol {
+class ExpanderEffect: AudioProcessingEffect {
     
     var expansionRatio: ValueAndRange
     var expansionThreshold: ValueAndRange

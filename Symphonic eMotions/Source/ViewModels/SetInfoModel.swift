@@ -291,7 +291,7 @@ final class SetInfoModel: ObservableObject {
         //Calculate number of cells and create new Part
         let newPart = PartSettings(
             partId: partId,
-            partName: "Velocity",
+            partName: "Low pass filter",
             partNumber: 1,
             rampUp: newNodeSetting.rampSpeed!,
             rampDown: newNodeSetting.rampSpeedDown!,
@@ -299,7 +299,11 @@ final class SetInfoModel: ObservableObject {
             areaOfInterest: Array(repeating: 1, count: cells),
             areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
             damperTarget: newDamperTarget,
-            dontDrawVisual: false
+            dontDrawVisual: false,
+            dampMode: .easeInCubic,
+            targetType: .effect,
+            targetNameEffect: .lowPassFilter,
+            targetParameterEffect: .cutoffFrequency
         )
         
         //Create new Track
@@ -376,7 +380,11 @@ final class SetInfoModel: ObservableObject {
                 areaOfInterest: Array(repeating: 1, count: cells),
                 areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
                 damperTarget: newDamperTarget,
-                dontDrawVisual: false
+                dontDrawVisual: false,
+                dampMode: .easeInCubic,
+                targetType: .sequencer,
+                targetNameEffect: .lowPassFilter,
+                targetParameterEffect: .cutoffFrequency
             )
             
             returnPart = newPart

@@ -9,8 +9,8 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-protocol EffectProtocol {
-    var node: Node? { get set }
+protocol AudioProcessingEffect {
+//    var node: Node? { get set }
     func chain(to input: Node) -> Node
     func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget)
     func valueAndRange(parameter: String) -> ValueAndRange?
@@ -123,6 +123,7 @@ extension InstrumentsSet.Track {
         case responseReverb(ResponseReverbEffect)
         case reverb(Reverbeffect)
         case tanhDistortion(TanhDistortionEffect)
+        case none(NoneEffect)
         
         //Init for encoding
         init(
@@ -159,6 +160,8 @@ extension InstrumentsSet.Track {
                 self = .reverb(Reverbeffect(reverbDryWetMix: parameters[0], reverbPreset: parameters[1]))
             case .tanhDistortion:
                 self = .tanhDistortion(TanhDistortionEffect(pregain: parameters[0], postgain: parameters[1], positiveShapeParameter: parameters[2], negativeShapeParameter: parameters[3], dryWetTanh: parameters[4]))
+            case .none:
+                self = .none(NoneEffect())
 //            default: fatalError("Not implemented!")
             }
             
@@ -277,29 +280,32 @@ extension InstrumentsSet.Track {
                 let negativeShapeParameter = try container.decode(ValueAndRange.self, forKey: .negativeShapeParameter)
                 let dryWetTanh = try container.decode(ValueAndRange.self, forKey: .dryWetTanh)
                 self = .tanhDistortion(TanhDistortionEffect(pregain: pregain, postgain: postgain, positiveShapeParameter: positiveShapeParameter, negativeShapeParameter: negativeShapeParameter, dryWetTanh: dryWetTanh))
+            case .none:
+                self = .none(NoneEffect())
             }
         }
     
         var effectType: EffectType {
             switch self {
-                case .bandPassFilter(_): return .bandPassFilter
-                case .costelloReverb(_): return .costelloReverb
-                case .compressor(_): return .compressor
-                case .delay(_): return .delay
-                case .distortion(_): return .distortion
-                case .dynamicRangeCompressor(_): return .dynamicRangeCompressor
-                case .expander(_): return .expander
-                case .highPassFilter(_): return .highPassFilter
-                case .lowPassFilter(_): return .lowPassFilter
-                case .phaser(_): return .phaser
-                case .peakingParametricEqualizerFilter(_): return .peakingParametricEqualizerFilter
-                case .responseReverb(_): return .responseReverb
-                case .reverb(_): return .reverb
-                case .tanhDistortion(_): return .tanhDistortion
+            case .bandPassFilter: return .bandPassFilter
+            case .costelloReverb: return .costelloReverb
+            case .compressor: return .compressor
+            case .delay: return .delay
+            case .distortion: return .distortion
+            case .dynamicRangeCompressor: return .dynamicRangeCompressor
+            case .expander: return .expander
+            case .highPassFilter: return .highPassFilter
+            case .lowPassFilter: return .lowPassFilter
+            case .phaser: return .phaser
+            case .peakingParametricEqualizerFilter: return .peakingParametricEqualizerFilter
+            case .responseReverb: return .responseReverb
+            case .reverb: return .reverb
+            case .tanhDistortion: return .tanhDistortion
+            case .none: return .none
             }
         }
         
-        var effect: EffectProtocol {
+        var effect: AudioProcessingEffect {
             switch self {
                 case .bandPassFilter(let effect):
                     return effect
@@ -328,6 +334,8 @@ extension InstrumentsSet.Track {
                 case .reverb(let effect):
                     return effect
                 case .tanhDistortion(let effect):
+                    return effect
+                case .none(let effect):
                     return effect
             }
         }
@@ -362,30 +370,10 @@ extension InstrumentsSet.Track {
                 return [.reverbDryWetMix, .reverbPreset]
             case .tanhDistortion:
                 return [.pregain, .postgain, .positiveShapeParameter, .negativeShapeParameter, .dryWetTanh]
+            case .none:
+                return []
             }
         }
-
-        
-//        static func effectVars(effectType: EffectType ) -> [String] {
-//
-//            switch effectType {
-//
-//            case .bandPassFilter: return ["centerFrequency","bandwidth"]
-//            case .costelloReverb: return ["feedbackCostello","cutoffFrequencyCostello","dryWetMixer"]
-//            case .compressor: return ["threshold","headRoom","attackTime","releaseTime","masterGain"]
-//            case .delay: return ["time","feedback","lowPassCutoff","dryWetMix"]
-//            case .distortion: return ["distDelay","distDecay","distDelayMix","distRingModFreq1","distRingModFreq2","distRingModBalance","distRingModMix","distDecimation","distRounding","distDecimationMix","distLinearTerm","distSquaredTerm","distCubicTerm","distPolynomialMix","distSoftClipGain","distFinalMix"]
-//            case .dynamicRangeCompressor: return ["drcAttackDuration","drcReleaseDuration","drcRatio","drcTreshold"]
-//            case .expander: return ["expansionRatio","expansionThreshold","expanderAttackTime","expanderReleaseTime","expanderMasterGain"]
-//            case .highPassFilter: return ["hpfCutoffFrequency","hpfResonance"]
-//            case .lowPassFilter: return ["cutoffFrequency","resonance"]
-//            case .phaser: return ["phaserNotchMinimumFrequency","phaserNotchMaximumFrequency","phaserNotchWidth","phaserNotchFrequency","phaserVibratoMode","phaserDepth","phaserFeedback", "phaserInverted","phaserLfoBPM","phaserDryWetMixer"]
-//            case .peakingParametricEqualizerFilter: return ["ppefCenterFrequency","ppefGain","ppefQ"]
-//            case .responseReverb: return ["reverbDuration","dryWetMixer"]
-//            case .reverb: return ["reverbDryWetMix","reverbPreset"]
-//            case .tanhDistortion: return ["pregain","postgain","positiveShapeParameter","negativeShapeParameter","dryWetTanh"]
-//            }
-//        }
         
         func valueAndRanges(parameter: String) -> ValueAndRange? {
             
@@ -414,7 +402,8 @@ extension InstrumentsSet.Track {
 //Effect names
 extension InstrumentsSet.Track.Effect {
     
-    enum EffectType: String, Codable, CaseIterable {
+    enum EffectType: String, Codable, CaseIterable, Hashable {
+        case none
         case bandPassFilter
         case costelloReverb
         case compressor
@@ -547,6 +536,9 @@ extension InstrumentsSet.Track.Effect: Encodable {
             try container.encode(effect.positiveShapeParameter, forKey: .positiveShapeParameter)
             try container.encode(effect.negativeShapeParameter, forKey: .negativeShapeParameter)
             try container.encode(effect.dryWetTanh, forKey: .dryWetTanh)
+        
+        case .none(_):
+            try container.encode(effectType, forKey: .effectType)
         
 //        default:
 //            fatalError("Not implemented!")

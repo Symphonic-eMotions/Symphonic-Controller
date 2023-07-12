@@ -13,7 +13,7 @@ import SwiftUI
 import AudioKitEX
 import CSoundpipeAudioKit
 
-class ResponseReverbEffect: EffectProtocol {
+class ResponseReverbEffect: AudioProcessingEffect {
     
     var respReverbDuration: ValueAndRange
     let respDryWetMixer: ValueAndRange

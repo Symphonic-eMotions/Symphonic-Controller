@@ -10,7 +10,7 @@ import AudioKit
 import SporthAudioKit
 import SoundpipeAudioKit
 
-class PhaserEffect: EffectProtocol {
+class PhaserEffect: AudioProcessingEffect {
     
     var phaserNotchMinimumFrequency: ValueAndRange
     var phaserNotchMaximumFrequency: ValueAndRange

@@ -37,6 +37,7 @@
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A544D2A59BA9700FB6514 /* SemOne.swift */; };
 		7C4A545D2A5B288E00FB6514 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A545C2A5B288E00FB6514 /* ControllerView.swift */; };
+		7C4A545F2A5DA22100FB6514 /* NoneEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A545E2A5DA22100FB6514 /* NoneEffect.swift */; };
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
@@ -201,6 +202,7 @@
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C4A544D2A59BA9700FB6514 /* SemOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemOne.swift; sourceTree = "<group>"; };
 		7C4A545C2A5B288E00FB6514 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
+		7C4A545E2A5DA22100FB6514 /* NoneEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoneEffect.swift; sourceTree = "<group>"; };
 		7C4EBB9329D3505500958954 /* SavedSetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSetsList.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C4EBB9529D4A21300958954 /* Extenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenders.swift; sourceTree = "<group>"; };
 		7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGridSizeView.swift; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 				7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */,
 				7CFDDD4F28EF045500B6BD5F /* ReverbEffect.swift */,
 				7C798D3F272C38E000A4736E /* TanhDistortionEffect.swift */,
+				7C4A545E2A5DA22100FB6514 /* NoneEffect.swift */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
 				7C8D75922A2A4D0500DF2417 /* FileGroup.swift in Sources */,
 				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
+				7C4A545F2A5DA22100FB6514 /* NoneEffect.swift in Sources */,
 				7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */,
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,

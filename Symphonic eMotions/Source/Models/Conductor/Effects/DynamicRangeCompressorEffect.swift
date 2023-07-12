@@ -9,7 +9,7 @@ import Foundation
 import AudioKit
 import SoundpipeAudioKit
 
-class DynamicRangeCompressorEffect: EffectProtocol {
+class DynamicRangeCompressorEffect: AudioProcessingEffect {
     
     var drcAttackDuration: ValueAndRange
     var drcReleaseDuration: ValueAndRange
