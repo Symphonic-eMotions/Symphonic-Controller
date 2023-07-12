@@ -138,10 +138,6 @@ final class AppUtils {
             let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
             for partLoaded in trackLoaded.parts {
                 
-                print("Loaded TargetType: \(partLoaded.damperTarget.nodeType)")
-                print("Loaded EffetName: \(partLoaded.damperTarget.nodeName)")
-                print("Loaded EffetParameter: \(partLoaded.damperTarget.parameter)")
-                
                 let part = PartSettings(
                     partId: partLoaded.id,
                     partName: partLoaded.instrumentPartName,
@@ -163,10 +159,6 @@ final class AppUtils {
                     targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys(
                         rawValue: partLoaded.damperTarget.parameter) ?? .effectType
                 )
-                
-                print("Mapped targetType \(part.targetType.rawValue)")
-                print("Mapped targetNameEffect \(part.targetNameEffect.rawValue)")
-                print("Mapped targetParameterEffect \(part.targetParameterEffect.rawValue)")
                 
                 parts[partLoaded.id] = part
                 partNumber += 1
@@ -388,6 +380,7 @@ final class AppUtils {
                     dampMode: part.value.damperTarget.dampMode
                 )
                 
+                print("SAVING DAMPER TARGET")
                 print(storeDamperTarget)
                 
                 let storePart = InstrumentsSet.Track.Part(

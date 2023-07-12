@@ -402,7 +402,7 @@ extension InstrumentsSet.Track {
 //Effect names
 extension InstrumentsSet.Track.Effect {
     
-    enum EffectType: String, Codable, CaseIterable, Hashable {
+    enum EffectType: String, Codable, CaseIterable {
         case none
         case bandPassFilter
         case costelloReverb
@@ -418,7 +418,43 @@ extension InstrumentsSet.Track.Effect {
         case responseReverb
         case reverb
         case tanhDistortion
+        
+        var description: String {
+            switch self {
+            case .none:
+                return "None"
+            case .bandPassFilter:
+                return "Band Pass Filter"
+            case .costelloReverb:
+                return "Costello Reverb"
+            case .compressor:
+                return "Compressor"
+            case .delay:
+                return "Delay"
+            case .distortion:
+                return "Distortion"
+            case .expander:
+                return "Expander"
+            case .dynamicRangeCompressor:
+                return "Dynamic Range Compressor"
+            case .highPassFilter:
+                return "High Pass Filter"
+            case .lowPassFilter:
+                return "Low Pass Filter"
+            case .phaser:
+                return "Phaser"
+            case .peakingParametricEqualizerFilter:
+                return "Peaking Parametric Equalizer Filter"
+            case .responseReverb:
+                return "Response Reverb"
+            case .reverb:
+                return "Reverb"
+            case .tanhDistortion:
+                return "Tanh Distortion"
+            }
+        }
     }
+
 }
 
 //Write to disk

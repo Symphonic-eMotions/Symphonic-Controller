@@ -20,8 +20,12 @@ struct ControllerView: View {
     @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
     
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
+
+    @State private var localTargetNames: [String: InstrumentsSet.Track.Effect.EffectType]
+    @State private var localEffectTypes: [InstrumentsSet.Track.Effect.EffectType]
+
     
-//    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
 //    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
 //    @Binding var targetParameterSequencer: [String: String]
 //    @Binding var targetParameterInstrument: [String: String]
@@ -39,11 +43,10 @@ struct ControllerView: View {
         currentTrack: TrackSettings,
         trackId: String,
         showEditorPart: Binding<EditorParts>,
-        dampMode: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.DampMode]>
-        ,
-        targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>
+        dampMode: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.DampMode]>,
+        targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
+        targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>
 //        ,
-//        targetNameEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
 //        targetParameterEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectKeys]>
     )  {
         self.setInfoModel = setInfoModel
@@ -52,6 +55,9 @@ struct ControllerView: View {
         _showEditorPart = showEditorPart
         _dampMode = dampMode
         _targetTypes = targetTypes
+        _targetNames = targetNames
+        _localTargetNames = State(initialValue: targetNames.wrappedValue)
+        _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
     }
     
     let columnWidth: CGFloat = 150
@@ -87,21 +93,36 @@ struct ControllerView: View {
                 
                 HStack(spacing: 20) {
                     
-                    ForEach(Array(targetTypes.keys), id: \.self) { key in
-                        Picker("Controller type", selection: bindingForTrack(key)) {
-                            ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases, id: \.self) { type in
-                                Text(type.description).tag(type)
+                    //Use the targetTypes to get the partIds from this track
+                    ForEach(Array(targetTypes.keys), id: \.self) { partId in
+                        
+                        VStack{
+                            
+                            Picker("Controller type", selection: bindingTargetTypes(partId)) {
+                                ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases, id: \.self) { type in
+                                    Text(type.description).tag(type)
+                                }
                             }
+                            .pickerStyle(.menu)
+                            .frame(width: 200, height: 50)
+                            
+                            
+                            Picker("Effect name", selection: bindingTargetNames(partId)) {
+                                ForEach(localEffectTypes, id: \.self) { type in
+                                    Text(type.description).tag(type)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .frame(width: 200, height: 50)
                         }
-                        .pickerStyle(.menu)
-                        .frame(width: 200, height: 50)
                     }
                 }
             }
         }
         .padding(.leading)
         .onAppear {
-            updateTargetType() // Call the function to initialize targetTypes
+            updateTargetType()
+            updateTargetNames()
         }
     }
     
@@ -114,7 +135,23 @@ struct ControllerView: View {
         }
     }
     
-    private func bindingForTrack(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
+    
+    private func updateTargetNames() {
+        targetNames = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                print("TRACK ID: \(track.key), PART ID: \(part.key), NODE NAME: \(part.value.damperTarget.nodeName)")
+                
+                // Use part.key instead of part.value.partId
+                targetNames[part.key] = InstrumentsSet.Track.Effect.EffectType(rawValue: part.value.damperTarget.nodeName) ?? InstrumentsSet.Track.Effect.EffectType.none
+            }
+        }
+        
+        print("TARGET NAMES:")
+        print(targetNames)
+    }
+    
+    private func bindingTargetTypes(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
         Binding(
             get: {
                 targetTypes[key] ?? .effect
@@ -122,6 +159,21 @@ struct ControllerView: View {
             set: { newValue in
                 targetTypes[key] = newValue
                 currentTrack.parts[key]?.targetType = newValue
+            }
+        )
+    }
+    
+    private func bindingTargetNames(_ key: String) -> Binding<InstrumentsSet.Track.Effect.EffectType> {
+        Binding(
+            get: {
+                targetNames[key] ?? .none
+            },
+            set: { newValue in
+                targetNames[key] = newValue
+                
+                print("SETTING EFFEXTNAME TO: \(newValue) partid: \(key)")
+                
+                currentTrack.parts[key]?.targetNameEffect = newValue
             }
         )
     }

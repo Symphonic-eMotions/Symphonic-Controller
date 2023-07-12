@@ -51,8 +51,8 @@ struct TrackEditorView: View {
     
     @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
-    
-//    @Binding var targetNameEffect: [String: InstrumentsSet.Track.Effect.EffectType]
+    @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
+
 //    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
 //    @Binding var targetParameterSequencer: [String: String]
 //    @Binding var targetParameterInstrument: [String: String]
@@ -324,7 +324,8 @@ struct TrackEditorView: View {
                         trackId: key,
                         showEditorPart: $showEditorPart,
                         dampMode: $dampMode,
-                        targetTypes: $targetTypes
+                        targetTypes: $targetTypes,
+                        targetNames: $targetNames
 //                        ,
 //                        targetNameEffect: $targetNameEffect,
 //                        targetParameterEffect: $targetParameterEffect

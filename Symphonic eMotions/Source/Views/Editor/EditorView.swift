@@ -66,6 +66,7 @@ struct EditorView: View {
     @State var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
     
     @State private var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    @State private var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
@@ -206,26 +207,14 @@ struct EditorView: View {
         _dampMode = State(initialValue: dampModeInit)
         
         _targetTypes = State(initialValue: [:])
+        _targetNames = State(initialValue: [:])
                 
-//        updateTargetType()
-        
 //        _targetType = State(initialValue: targetTypeInit)
 //        _targetNameEffect = State(initialValue: targetNameEffectInit)
 //        _targetParameterEffect = State(initialValue: targetParameterEffectInit)
 //        _targetParameterSequencer = State(initialValue: targetParameterSequencerInit)
 //        _targetParameterInstrument = State(initialValue: targetParameterInstrumentInit)
     }
-    
-//    private func updateTargetType() {
-//        for track in setInfoModel.setSettings.tracks {
-//            for part in track.value.parts {
-//                self.targetTypes[part.value.partId] = part.value.damperTarget.nodeType
-//                print("INITIALISING targetTypes: \(part.value.damperTarget.nodeType)")
-//            }
-//        }
-//        
-//        print(self.targetTypes)
-//    }
     
     var body: some View {
         
@@ -277,7 +266,8 @@ struct EditorView: View {
                     areaOfInterest: $areaOfInterest,
                     minimalLevel: $minimalLevel,
                     dampMode: $dampMode,
-                    targetTypes: $targetTypes
+                    targetTypes: $targetTypes,
+                    targetNames: $targetNames
 //                    ,
 //                    targetNameEffect: $targetNameEffect,
 //                    targetParameterEffect: $targetParameterEffect,

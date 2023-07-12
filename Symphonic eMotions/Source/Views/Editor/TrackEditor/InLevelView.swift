@@ -111,8 +111,6 @@ struct InLevelView: View{
         .onAppear {
             // Ensure currentLevels is updated whenever the View appears
             tLevels = currentTrack.levels
-            
-            print("currentTrack.levels: \(currentTrack.levels)")
         }
     }
 }

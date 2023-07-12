@@ -493,14 +493,12 @@ final class SetInfoModel: ObservableObject {
         let trackId = self.partFeedback.currentTrackID.value
         
         if trackId == "" {
-//            print("partColor: No track selected")
             return .black.opacity(0.01)
         }
         
         let partId = self.partFeedback.currentPartID.value
         
         if partId == "" {
-//            print("partColor: No part selected")
             return .black.opacity(0.01)
         }
         
@@ -515,13 +513,11 @@ final class SetInfoModel: ObservableObject {
 
         let trackId = self.partFeedback.currentTrackID.value
         if trackId == "" {
-//            print("partDegree: No track selected")
             return 0
         }
 
         let partId = self.partFeedback.currentPartID.value
         if partId == "" {
-//            print("partDegree: No part selected")
             return 0
         }
 
