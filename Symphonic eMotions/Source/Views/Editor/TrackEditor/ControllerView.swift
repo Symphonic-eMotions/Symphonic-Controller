@@ -25,7 +25,9 @@ struct ControllerView: View {
 
     @State private var localTargetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @State private var localEffectTypes: [InstrumentsSet.Track.Effect.EffectType]
-    @State private var localParameterEffect: [InstrumentsSet.Track.Effect.EffectKeys]
+    @State private var localParametersEffect: [InstrumentsSet.Track.Effect.EffectKeys]
+    @State private var localParametersSequencer: [String]
+    @State private var localParametersInstrument: [String]
     
     init(
         setInfoModel: SetInfoModel,
@@ -49,7 +51,9 @@ struct ControllerView: View {
         
         _localTargetNames = State(initialValue: targetNames.wrappedValue)
         _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
-        _localParameterEffect = State(initialValue: InstrumentsSet.Track.Effect.EffectKeys.allCases)
+        _localParametersEffect = State(initialValue: InstrumentsSet.Track.Effect.EffectKeys.allCases)
+        _localParametersSequencer = State(initialValue: ["velocity"])
+        _localParametersInstrument = State(initialValue: ["samplerCC9"])
     }
     
     let columnWidth: CGFloat = 150
@@ -127,9 +131,25 @@ struct ControllerView: View {
                                 }
                                 else if targetType == .instrument {
                                     
+                                    Picker("Instrument parameter", selection: bindingInstrumentParameter(partId)) {
+                                        ForEach(localParametersInstrument, id: \.self) { type in
+                                            //Text(type.humanReadable).tag(type)
+                                            Text(type.description).tag(type)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 200, height: 50)
                                 }
                                 else if targetType == .sequencer {
                                     
+                                    Picker("Sequencer parameter", selection: bindingSequencerParameter(partId)) {
+                                        ForEach(localParametersSequencer, id: \.self) { type in
+                                            //Text(type.humanReadable).tag(type)
+                                            Text(type.description).tag(type)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 200, height: 50)
                                 }
                             }
                         }
@@ -208,7 +228,7 @@ struct ControllerView: View {
             set: { newValue in
                 targetNames[key] = newValue
                 currentTrack.parts[key]?.targetNameEffect = newValue
-                localParameterEffect = filteredParameterEffect(partId: key)
+                localParametersEffect = filteredParameterEffect(partId: key)
             }
         )
     }
@@ -225,6 +245,36 @@ struct ControllerView: View {
             set: { newValue in
                 targetParameters[key] = newValue.rawValue
                 currentTrack.parts[key]?.targetParameterEffect = newValue
+            }
+        )
+    }
+    
+    //Store instrument parameter
+    private func bindingInstrumentParameter(_ key: String) -> Binding<String> {
+        Binding(
+            get: {
+                guard let rawValue = targetParameters[key] else {
+                    return localParametersInstrument.first!
+                }
+                return rawValue
+            },
+            set: { newValue in
+                targetParameters[key] = newValue
+            }
+        )
+    }
+    
+    //Store sequencer parameter
+    private func bindingSequencerParameter(_ key: String) -> Binding<String> {
+        Binding(
+            get: {
+                guard let rawValue = targetParameters[key] else {
+                    return localParametersSequencer.first!
+                }
+                return rawValue
+            },
+            set: { newValue in
+                targetParameters[key] = newValue
             }
         )
     }
