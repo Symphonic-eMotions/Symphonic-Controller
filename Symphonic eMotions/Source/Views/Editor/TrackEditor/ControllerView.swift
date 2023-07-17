@@ -21,22 +21,11 @@ struct ControllerView: View {
     
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
     @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
+    @Binding var targetParameters: [String: String]
 
     @State private var localTargetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @State private var localEffectTypes: [InstrumentsSet.Track.Effect.EffectType]
-
-    
-//    @Binding var targetParameterEffect: [String: InstrumentsSet.Track.Effect.EffectKeys]
-//    @Binding var targetParameterSequencer: [String: String]
-//    @Binding var targetParameterInstrument: [String: String]
-    
-//    @State private var targetType: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
-    
-//    var targetType: Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType>
-
-    
-//    @State private var selectedEffectType: [String: InstrumentsSet.Track.Effect.EffectType]
-//    @State private var selectedEffectParameter: [String: InstrumentsSet.Track.Effect.EffectKeys]
+    @State private var localParameterEffect: [InstrumentsSet.Track.Effect.EffectKeys]
     
     init(
         setInfoModel: SetInfoModel,
@@ -44,10 +33,10 @@ struct ControllerView: View {
         trackId: String,
         showEditorPart: Binding<EditorParts>,
         dampMode: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.DampMode]>,
+        
         targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
-        targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>
-//        ,
-//        targetParameterEffect: Binding<[String: InstrumentsSet.Track.Effect.EffectKeys]>
+        targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
+        targetParameters: Binding<[String: String]>
     )  {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -56,8 +45,11 @@ struct ControllerView: View {
         _dampMode = dampMode
         _targetTypes = targetTypes
         _targetNames = targetNames
+        _targetParameters = targetParameters
+        
         _localTargetNames = State(initialValue: targetNames.wrappedValue)
         _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
+        _localParameterEffect = State(initialValue: InstrumentsSet.Track.Effect.EffectKeys.allCases)
     }
     
     let columnWidth: CGFloat = 150
@@ -93,27 +85,53 @@ struct ControllerView: View {
                 
                 HStack(spacing: 20) {
                     
-                    //Use the targetTypes to get the partIds from this track
-                    ForEach(Array(targetTypes.keys), id: \.self) { partId in
+                    //We need to bound these to the partId's of this track
+                    let partIds = currentTrack.parts.keys
+                    
+                    //Use the targetTypes to get the partIds from all tracks and filter on current track
+                    ForEach(Array(targetTypes), id: \.0) { partId, targetType in
                         
-                        VStack{
+                        if partIds.contains(partId) {
                             
-                            Picker("Controller type", selection: bindingTargetTypes(partId)) {
-                                ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases, id: \.self) { type in
-                                    Text(type.description).tag(type)
+                            VStack{
+                                
+                                Picker("Controller type", selection: bindingTargetTypes(partId)) {
+                                    ForEach(InstrumentsSet.Track.Part.DamperTarget.NodeType.allCases, id: \.self) { type in
+                                        Text(type.description).tag(type)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .frame(width: 200, height: 50)
+                                
+                                
+                                if targetType == .effect {
+                                    
+                                    Picker("Effect name", selection: bindingTargetNames(partId)) {
+                                        ForEach(localEffectTypes, id: \.self) { type in
+                                            Text(type.description).tag(type)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 200, height: 50)
+                                    
+                                    //Selected not working
+                                    
+                                    //Collection to big
+                                    
+                                    Picker("Effect parameter", selection: bindingEffectParameter(partId)) {
+                                        ForEach(localParameterEffect, id: \.self) { type in
+                                            //                                        Text(type.humanReadable).tag(type)
+                                            Text(type.description).tag(type)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(width: 200, height: 50)
+                                    
+                                    Text("PartID: \(partId)")
+                                    
+                                    
                                 }
                             }
-                            .pickerStyle(.menu)
-                            .frame(width: 200, height: 50)
-                            
-                            
-                            Picker("Effect name", selection: bindingTargetNames(partId)) {
-                                ForEach(localEffectTypes, id: \.self) { type in
-                                    Text(type.description).tag(type)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .frame(width: 200, height: 50)
                         }
                     }
                 }
@@ -123,6 +141,7 @@ struct ControllerView: View {
         .onAppear {
             updateTargetType()
             updateTargetNames()
+            updateTargetParameter()
         }
     }
     
@@ -151,6 +170,17 @@ struct ControllerView: View {
         print(targetNames)
     }
     
+    private func updateTargetParameter() {
+        targetParameters = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                print("TRACK ID: \(track.key), PART ID: \(part.key), PARAMETER NAME: \(part.value.damperTarget.parameter)")
+                targetParameters[part.key] = String(part.value.damperTarget.parameter)
+            }
+        }
+        
+    }
+    
     private func bindingTargetTypes(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
         Binding(
             get: {
@@ -174,6 +204,24 @@ struct ControllerView: View {
                 print("SETTING EFFEXTNAME TO: \(newValue) partid: \(key)")
                 
                 currentTrack.parts[key]?.targetNameEffect = newValue
+            }
+        )
+    }
+    
+    private func bindingEffectParameter(_ key: String) -> Binding<InstrumentsSet.Track.Effect.EffectKeys> {
+        Binding(
+            get: {
+                guard let rawValue = targetParameters[key] else {
+                    return .effectType // Return a default value if the rawValue is not found
+                }
+                return InstrumentsSet.Track.Effect.EffectKeys(rawValue: rawValue) ?? .effectType
+            },
+            set: { newValue in
+                targetParameters[key] = newValue.rawValue
+                
+                print("SETTING EFFEXTNAME TO: \(newValue) partid: \(key)")
+                
+                currentTrack.parts[key]?.targetParameterEffect = newValue
             }
         )
     }

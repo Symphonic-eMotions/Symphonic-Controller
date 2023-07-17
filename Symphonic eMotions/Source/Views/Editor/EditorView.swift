@@ -65,8 +65,12 @@ struct EditorView: View {
     
     @State var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
     
+    //Select Sequencer, Instrument, Effect or Master
     @State private var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
+    //Effects have names
     @State private var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
+    //One parameter for all types. for effect there's a Type: InstrumentsSet.Track.Effect.EffectKeys
+    @State private var targetParameters: [String: String]
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
@@ -208,12 +212,7 @@ struct EditorView: View {
         
         _targetTypes = State(initialValue: [:])
         _targetNames = State(initialValue: [:])
-                
-//        _targetType = State(initialValue: targetTypeInit)
-//        _targetNameEffect = State(initialValue: targetNameEffectInit)
-//        _targetParameterEffect = State(initialValue: targetParameterEffectInit)
-//        _targetParameterSequencer = State(initialValue: targetParameterSequencerInit)
-//        _targetParameterInstrument = State(initialValue: targetParameterInstrumentInit)
+        _targetParameters = State(initialValue: [:])
     }
     
     var body: some View {
@@ -267,9 +266,8 @@ struct EditorView: View {
                     minimalLevel: $minimalLevel,
                     dampMode: $dampMode,
                     targetTypes: $targetTypes,
-                    targetNames: $targetNames
-//                    ,
-//                    targetNameEffect: $targetNameEffect,
+                    targetNames: $targetNames,
+                    targetParameters: $targetParameters
 //                    targetParameterEffect: $targetParameterEffect,
 //                    targetParameterSequencer: $targetParameterSequencer,
 //                    targetParameterInstrument: $targetParameterInstrument

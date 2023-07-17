@@ -22,6 +22,217 @@ extension InstrumentsSet.Track.Effect {
     }
 }
 
+extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
+    static var allCases: [InstrumentsSet.Track.Effect.EffectKeys] {
+        return [
+            .effectType,
+            .centerFrequency,
+            .bandwidth,
+            .cutoffFrequencyCostello,
+            .feedbackCostello,
+            .dryWetMixer,
+            .threshold,
+            .headRoom,
+            .attackTime,
+            .releaseTime,
+            .masterGain,
+            .time,
+            .feedback,
+            .lowPassCutoff,
+            .dryWetMix,
+            .distDelay,
+            .distDecay,
+            .distDelayMix,
+            .distRingModFreq1,
+            .distRingModFreq2,
+            .distRingModBalance,
+            .distRingModMix,
+            .distDecimation,
+            .distRounding,
+            .distDecimationMix,
+            .distLinearTerm,
+            .distSquaredTerm,
+            .distCubicTerm,
+            .distPolynomialMix,
+            .distSoftClipGain,
+            .distFinalMix,
+            .drcAttackDuration,
+            .drcReleaseDuration,
+            .drcRatio,
+            .drcTreshold,
+            .expansionRatio,
+            .expansionThreshold,
+            .expanderAttackTime,
+            .expanderReleaseTime,
+            .expanderMasterGain,
+            .hpfCutoffFrequency,
+            .hpfResonance,
+            .cutoffFrequency,
+            .resonance,
+            .phaserNotchMinimumFrequency,
+            .phaserNotchMaximumFrequency,
+            .phaserNotchWidth,
+            .phaserNotchFrequency,
+            .phaserVibratoMode,
+            .phaserDepth,
+            .phaserFeedback,
+            .phaserInverted,
+            .phaserLfoBPM,
+            .phaserDryWetMixer,
+            .ppefCenterFrequency,
+            .ppefGain,
+            .ppefQ,
+            .respReverbDuration,
+            .respDryWetMixer,
+            .reverbDryWetMix,
+            .reverbPreset,
+            .pregain,
+            .postgain,
+            .positiveShapeParameter,
+            .negativeShapeParameter,
+            .dryWetTanh
+        ]
+    }
+    
+    public var description: String {
+        switch self {
+        case .effectType:
+            return "Effect Type"
+        case .centerFrequency:
+            return "Center Frequency"
+        case .bandwidth:
+            return "Bandwidth"
+        case .cutoffFrequencyCostello:
+            return "Cutoff Frequency (Costello)"
+        case .feedbackCostello:
+            return "Feedback (Costello)"
+        case .dryWetMixer:
+            return "Dry/Wet Mixer"
+        case .threshold:
+            return "Threshold"
+        case .headRoom:
+            return "Head Room"
+        case .attackTime:
+            return "Attack Time"
+        case .releaseTime:
+            return "Release Time"
+        case .masterGain:
+            return "Master Gain"
+        case .time:
+            return "Time"
+        case .feedback:
+            return "Feedback"
+        case .lowPassCutoff:
+            return "Low-Pass Cutoff"
+        case .dryWetMix:
+            return "Dry/Wet Mix"
+        case .distDelay:
+            return "Distortion Delay"
+        case .distDecay:
+            return "Distortion Decay"
+        case .distDelayMix:
+            return "Distortion Delay Mix"
+        case .distRingModFreq1:
+            return "Distortion Ring Mod Frequency 1"
+        case .distRingModFreq2:
+            return "Distortion Ring Mod Frequency 2"
+        case .distRingModBalance:
+            return "Distortion Ring Mod Balance"
+        case .distRingModMix:
+            return "Distortion Ring Mod Mix"
+        case .distDecimation:
+            return "Distortion Decimation"
+        case .distRounding:
+            return "Distortion Rounding"
+        case .distDecimationMix:
+            return "Distortion Decimation Mix"
+        case .distLinearTerm:
+            return "Distortion Linear Term"
+        case .distSquaredTerm:
+            return "Distortion Squared Term"
+        case .distCubicTerm:
+            return "Distortion Cubic Term"
+        case .distPolynomialMix:
+            return "Distortion Polynomial Mix"
+        case .distSoftClipGain:
+            return "Distortion Soft Clip Gain"
+        case .distFinalMix:
+            return "Distortion Final Mix"
+        case .drcAttackDuration:
+            return "DRC Attack Duration"
+        case .drcReleaseDuration:
+            return "DRC Release Duration"
+        case .drcRatio:
+            return "DRC Ratio"
+        case .drcTreshold:
+            return "DRC Threshold"
+        case .expansionRatio:
+            return "Expansion Ratio"
+        case .expansionThreshold:
+            return "Expansion Threshold"
+        case .expanderAttackTime:
+            return "Expander Attack Time"
+        case .expanderReleaseTime:
+            return "Expander Release Time"
+        case .expanderMasterGain:
+            return "Expander Master Gain"
+        case .hpfCutoffFrequency:
+            return "High-Pass Filter Cutoff Frequency"
+        case .hpfResonance:
+            return "High-Pass Filter Resonance"
+        case .cutoffFrequency:
+            return "Low-Pass Filter Cutoff Frequency"
+        case .resonance:
+            return "Low-Pass Filter Resonance"
+        case .phaserNotchMinimumFrequency:
+            return "Phaser Notch Minimum Frequency"
+        case .phaserNotchMaximumFrequency:
+            return "Phaser Notch Maximum Frequency"
+        case .phaserNotchWidth:
+            return "Phaser Notch Width"
+        case .phaserNotchFrequency:
+            return "Phaser Notch Frequency"
+        case .phaserVibratoMode:
+            return "Phaser Vibrato Mode"
+        case .phaserDepth:
+            return "Phaser Depth"
+        case .phaserFeedback:
+            return "Phaser Feedback"
+        case .phaserInverted:
+            return "Phaser Inverted"
+        case .phaserLfoBPM:
+            return "Phaser LFO BPM"
+        case .phaserDryWetMixer:
+            return "Phaser Dry/Wet Mixer"
+        case .ppefCenterFrequency:
+            return "Peaking Parametric EQ Center Frequency"
+        case .ppefGain:
+            return "Peaking Parametric EQ Gain"
+        case .ppefQ:
+            return "Peaking Parametric EQ Q"
+        case .respReverbDuration:
+            return "Response Reverb Duration"
+        case .respDryWetMixer:
+            return "Response Reverb Dry/Wet Mixer"
+        case .reverbDryWetMix:
+            return "Reverb Dry/Wet Mix"
+        case .reverbPreset:
+            return "Reverb Preset"
+        case .pregain:
+            return "Pre-gain"
+        case .postgain:
+            return "Post-gain"
+        case .positiveShapeParameter:
+            return "Positive Shape Parameter"
+        case .negativeShapeParameter:
+            return "Negative Shape Parameter"
+        case .dryWetTanh:
+            return "Dry/Wet Tanh"
+        }
+    }
+}
+
+
 extension InstrumentsSet.Track {
     
     enum Effect: Decodable {
