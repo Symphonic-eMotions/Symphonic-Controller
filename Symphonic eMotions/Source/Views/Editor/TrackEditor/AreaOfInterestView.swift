@@ -47,13 +47,16 @@ struct AreaOfInterestView: View {
     //Grid interface per Part
     func activeAreasView(for part: PartSettings, gridRows: Int, gridColumns: Int) -> some View {
         VStack(spacing: 0) {
+            
+            let cellWidth: CGFloat = CGFloat(200 / gridColumns - 1)
             ForEach(0..<gridRows, id: \.self) { row in
                 HStack(spacing: 0) {
                     ForEach(0..<gridColumns, id: \.self) { column in
                         let cellIndex =  row * gridColumns + column
+                        
                         ZStack {
                             Rectangle()
-                            .frame(width: 50, height: 50)
+                            .frame(width: cellWidth, height: cellWidth)
                             .foregroundColor(areaOfInterestColorLocal[part.partId]?[cellIndex])
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                             .onTapGesture {
@@ -185,10 +188,11 @@ struct AreaOfInterestView: View {
                             
                             //The gridinterface
                             activeAreasView(for: part.value, gridRows: gridRows, gridColumns: gridColumns)
+                                .frame(width: 200)
                             
-                            Text(part.value.damperTarget.nodeName)
-                            Text(part.value.damperTarget.parameter)
-                            Text(part.value.damperTarget.parameterRange.map{String($0)}.joined(separator: ","))
+//                            Text(part.value.damperTarget.nodeName)
+//                            Text(part.value.damperTarget.parameter)
+//                            Text(part.value.damperTarget.parameterRange.map{String($0)}.joined(separator: ","))
                         }
                     }
                 }

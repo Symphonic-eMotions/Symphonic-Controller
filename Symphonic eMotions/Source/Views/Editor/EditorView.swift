@@ -75,7 +75,6 @@ struct EditorView: View {
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     
-    
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,

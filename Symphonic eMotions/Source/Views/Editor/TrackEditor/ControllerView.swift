@@ -114,21 +114,21 @@ struct ControllerView: View {
                                     .pickerStyle(.menu)
                                     .frame(width: 200, height: 50)
                                     
-                                    //Selected not working
-                                    
                                     //Collection to big
                                     
                                     Picker("Effect parameter", selection: bindingEffectParameter(partId)) {
-                                        ForEach(localParameterEffect, id: \.self) { type in
-                                            //                                        Text(type.humanReadable).tag(type)
+                                        ForEach(filteredParameterEffect(partId: partId), id: \.self) { type in
+                                            //Text(type.humanReadable).tag(type)
                                             Text(type.description).tag(type)
                                         }
                                     }
                                     .pickerStyle(.menu)
                                     .frame(width: 200, height: 50)
+                                }
+                                else if targetType == .instrument {
                                     
-                                    Text("PartID: \(partId)")
-                                    
+                                }
+                                else if targetType == .sequencer {
                                     
                                 }
                             }
@@ -145,6 +145,16 @@ struct ControllerView: View {
         }
     }
     
+    //Only show parameters with selected effect type
+    private func filteredParameterEffect(partId: String) -> [InstrumentsSet.Track.Effect.EffectKeys] {
+        
+        let trackEffect = InstrumentsSet.Track.Effect()
+        let selectedEffectType = targetNames[partId]
+        
+        return trackEffect.effectVars(effectType: selectedEffectType!)
+    }
+    
+    //Set controller type picker
     private func updateTargetType() {
         targetTypes = [:]
         for track in setInfoModel.setSettings.tracks {
@@ -154,33 +164,29 @@ struct ControllerView: View {
         }
     }
     
-    
+    //Set effect type picker
     private func updateTargetNames() {
         targetNames = [:]
         for track in setInfoModel.setSettings.tracks {
             for part in track.value.parts {
-                print("TRACK ID: \(track.key), PART ID: \(part.key), NODE NAME: \(part.value.damperTarget.nodeName)")
-                
                 // Use part.key instead of part.value.partId
                 targetNames[part.key] = InstrumentsSet.Track.Effect.EffectType(rawValue: part.value.damperTarget.nodeName) ?? InstrumentsSet.Track.Effect.EffectType.none
             }
         }
-        
-        print("TARGET NAMES:")
-        print(targetNames)
     }
     
+    //Set parameter type effetcs picker
     private func updateTargetParameter() {
         targetParameters = [:]
         for track in setInfoModel.setSettings.tracks {
             for part in track.value.parts {
-                print("TRACK ID: \(track.key), PART ID: \(part.key), PARAMETER NAME: \(part.value.damperTarget.parameter)")
                 targetParameters[part.key] = String(part.value.damperTarget.parameter)
             }
         }
         
     }
     
+    //Store controller type
     private func bindingTargetTypes(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
         Binding(
             get: {
@@ -193,6 +199,7 @@ struct ControllerView: View {
         )
     }
     
+    //Store effect type and update effect parameter picker
     private func bindingTargetNames(_ key: String) -> Binding<InstrumentsSet.Track.Effect.EffectType> {
         Binding(
             get: {
@@ -200,14 +207,13 @@ struct ControllerView: View {
             },
             set: { newValue in
                 targetNames[key] = newValue
-                
-                print("SETTING EFFEXTNAME TO: \(newValue) partid: \(key)")
-                
                 currentTrack.parts[key]?.targetNameEffect = newValue
+                localParameterEffect = filteredParameterEffect(partId: key)
             }
         )
     }
     
+    //Store effect parameter
     private func bindingEffectParameter(_ key: String) -> Binding<InstrumentsSet.Track.Effect.EffectKeys> {
         Binding(
             get: {
@@ -218,9 +224,6 @@ struct ControllerView: View {
             },
             set: { newValue in
                 targetParameters[key] = newValue.rawValue
-                
-                print("SETTING EFFEXTNAME TO: \(newValue) partid: \(key)")
-                
                 currentTrack.parts[key]?.targetParameterEffect = newValue
             }
         )

@@ -52,7 +52,7 @@ struct MinimalLevelView: View {
                             in: 0...1
                         )
                     }
-                    .frame(width:150)
+                    .frame(width:200)
                 }
             }
         }
