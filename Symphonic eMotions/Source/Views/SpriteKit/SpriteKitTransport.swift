@@ -89,9 +89,11 @@ struct SpriteKitTransport: View {
                     if isSetPlaying {
                         setInfoModel.tapStopAudioEngine()
                         self.isSetPlaying = false
+                        setInfoModel.leveling.pauseLevel = false
                     }
                     else{
                         setInfoModel.tapStartAudioEngine()
+                        self.isSetPlaying = true
                     }
                     
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {

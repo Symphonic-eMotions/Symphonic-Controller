@@ -141,6 +141,9 @@ struct PlayView: View {
                 )
             }
         }
+        .onDisappear{
+            setInfoModel.leveling.pauseLevel = false
+        }
     }
 }
 

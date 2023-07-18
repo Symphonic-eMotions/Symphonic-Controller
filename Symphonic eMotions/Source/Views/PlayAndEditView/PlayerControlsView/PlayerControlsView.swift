@@ -60,6 +60,7 @@ struct PlayerControlsView: View {
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             self.isSetPlaying = false
+                            setInfoModel.leveling.pauseLevel = false
                         }
                         else{
                             sessionDisplaySub = .playing

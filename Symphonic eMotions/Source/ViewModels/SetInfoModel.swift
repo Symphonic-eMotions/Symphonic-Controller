@@ -172,10 +172,10 @@ final class SetInfoModel: ObservableObject {
     }
     
     let feedbackPresets: [(button: Int, feedback: Double)] = [
-        (0, 0.80), // Meeste feedback
-        (1, 0.70),
-        (2, 0.60),
-        (3, 0.50)  // Minste feedback
+        (0, 0.70), // Meeste feedback
+        (1, 0.60),
+        (2, 0.50),
+        (3, 0.40)  // Minste feedback
     ]
     
     func buttonToFeedback(id: Int) -> Double {
@@ -463,11 +463,13 @@ final class SetInfoModel: ObservableObject {
     }
     
     func tapSetTempoBPMPlus(){
-        self.setSettings.bpm -= 1
+        self.setSettings.bpm += 1
+        let _ = self.conductor.setTempo(tempoChange: 5)
     }
     
     func tapSetTempoBPMMin(){
-        self.setSettings.bpm += 1
+        self.setSettings.bpm -= 1
+        let _ = self.conductor.setTempo(tempoChange: -5)
     }
     
     func tapSetTempoReset(){

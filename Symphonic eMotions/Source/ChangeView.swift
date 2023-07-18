@@ -13,6 +13,8 @@ struct ChangeView: View {
     //We need background audio for sampler loading, so we create some background audio!
     @Environment(\.scenePhase) private var scenePhase
     
+    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
+    
     @Binding var sessionDisplay: SessionDisplay
     @Binding var sessionDisplaySub: SessionDisplay
     
@@ -26,21 +28,14 @@ struct ChangeView: View {
         .onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .background:
-                print("App is in background")
+                showPartEditor = false
                 audioPlayer.enableBackground()
             case .inactive:
+                showPartEditor = false
                 print("App is inactive")
-                
             case .active:
                 
-                print(sessionDisplay)
-                
-//                if sessionDisplay != .home {
-//                    showingAlert = true
-//                }
-                
-                
-                print("App is active")
+                print("App is active sessioDisplay: \(sessionDisplay)")
             @unknown default:
                 print("Unknown scenePhase")
             }

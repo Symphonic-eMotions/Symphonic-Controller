@@ -28,10 +28,11 @@ struct SettingsSheetView: View {
                 setInfoModel.imageDifference.sensitivityDeviationSubject.send(Float($0))
                 
                 
-                let sensitivity: Float = Float(sensitivitySession + sensitivityDeviation)
-                print("SENDING SESSION PRESET PLUS DEVIATION: \(self.sensitivitySession) + \(self.sensitivityDeviation)")
-                setInfoModel.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivity)
+                let sensitivityPlusDeviation: Float = Float(sensitivitySession + sensitivityDeviation)
+                setInfoModel.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivityPlusDeviation)
                 
+                
+                print("SENDING SESSION PRESET PLUS DEVIATION: \(self.sensitivitySession) + \(self.sensitivityDeviation)")
             }
         )
         

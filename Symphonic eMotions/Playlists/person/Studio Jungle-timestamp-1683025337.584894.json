@@ -1,7 +1,12 @@
 {
-  "customName" : "Free Interface",
+  "customName" : "",
   "defaultSkin" : {
-    "spriteKit" : {
+    "swiftUI" : {
+
+    }
+  },
+  "fileGroup" : {
+    "pro" : {
 
     }
   },
@@ -10,7 +15,9 @@
   "hasTempo" : true,
   "instrumentsConfig" : [
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -78,15 +85,11 @@
           "damperTarget" : {
             "dampMode" : "easeOutCubic",
             "midiData" : null,
-            "nodeName" : "",
+            "nodeName" : "none",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0015,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.059999999999999998,
-              "rampSpeedDown" : 0.044999999999999998,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.17120921611785889,
+              "rampSpeedDown" : 0.17581574618816376
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
@@ -123,13 +126,9 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0015,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.014999999999999999,
-              "rampSpeedDown" : 0.044999999999999998,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.14856046438217163,
+              "rampSpeedDown" : 0.16468331217765808
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -151,7 +150,6 @@
         2,
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -190,9 +188,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -217,13 +221,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTransport",
       "trackId" : "cellos",
       "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -276,13 +281,9 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0015,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.059999999999999998,
-              "rampSpeedDown" : 0.13758866488933563,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.18618042767047882,
+              "rampSpeedDown" : 0.16084453463554382
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -303,7 +304,6 @@
         2,
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -316,10 +316,10 @@
             2,
             2,
             2,
-            1,
-            1,
-            1,
-            1,
+            2,
+            2,
+            2,
+            2,
             1,
             1,
             1,
@@ -342,9 +342,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -369,13 +375,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTransport",
       "trackId" : "drums",
-      "trackType" : "variationByLevel"
+      "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -428,13 +435,9 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0015,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.024468084797263145,
-              "rampSpeedDown" : 0.090070925652980804,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeedDown" : 0.090070925652980804
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -454,7 +457,6 @@
         2,
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -491,9 +493,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -518,13 +526,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTransport",
       "trackId" : "bassline",
       "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -608,13 +617,9 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0015,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.014999999999999999,
-              "rampSpeedDown" : 0.044999999999999998,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeedDown" : 0.044999999999999998
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
@@ -633,7 +638,6 @@
       "levels" : [
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -672,9 +676,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -699,7 +709,6 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTransport",
       "trackId" : "synthline",
       "trackType" : "variationByPosition"
@@ -711,7 +720,6 @@
     32,
     32
   ],
-  "levelSpeed" : 0.65360826253890991,
   "masterTrackEffects" : [
     {
       "attackTime" : {
@@ -754,7 +762,7 @@
   ],
   "published" : true,
   "setBPM" : 118,
-  "setName" : "Free interface",
+  "setName" : "Studio Jungle",
   "setPath" : "",
   "setTimeSignature" : 4,
   "skin" : {
