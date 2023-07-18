@@ -85,15 +85,7 @@ final class Conductor {
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
     
-    //InstrumentParts to SpriteKit through PassthroughSubject
-    var spriteKitParts0a = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts0b = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts1a = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts1b = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts2a = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts2b = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts3a = PassthroughSubject<(Int,Int,Double), Never>()
-    var spriteKitParts3b = PassthroughSubject<(Int,Int,Double), Never>()
+    
     
     //The main instrument set structure. A Musical set is loaded into this struct
     internal var set: InstrumentsSet

@@ -267,9 +267,6 @@ struct EditorView: View {
                     targetTypes: $targetTypes,
                     targetNames: $targetNames,
                     targetParameters: $targetParameters
-//                    targetParameterEffect: $targetParameterEffect,
-//                    targetParameterSequencer: $targetParameterSequencer,
-//                    targetParameterInstrument: $targetParameterInstrument
                 )
             }
         }

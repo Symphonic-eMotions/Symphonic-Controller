@@ -303,7 +303,10 @@ final class SetInfoModel: ObservableObject {
             dampMode: .easeInCubic,
             targetType: .effect,
             targetNameEffect: .lowPassFilter,
-            targetParameterEffect: .cutoffFrequency
+            targetParameterEffect: .cutoffFrequency,
+            targetParameterInstrument: "samplerCC9",
+            targetParameterSequencer: "velocity"
+            
         )
         
         //Create new Track
@@ -384,7 +387,9 @@ final class SetInfoModel: ObservableObject {
                 dampMode: .easeInCubic,
                 targetType: .sequencer,
                 targetNameEffect: .lowPassFilter,
-                targetParameterEffect: .cutoffFrequency
+                targetParameterEffect: .cutoffFrequency,
+                targetParameterInstrument: "samplerCC9",
+                targetParameterSequencer: "velocity"
             )
             
             returnPart = newPart

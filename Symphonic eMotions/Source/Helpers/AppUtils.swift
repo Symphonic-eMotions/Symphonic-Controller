@@ -157,7 +157,9 @@ final class AppUtils {
                     targetNameEffect: InstrumentsSet.Track.Effect.EffectType(
                         rawValue: partLoaded.damperTarget.nodeName) ?? .none,
                     targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys(
-                        rawValue: partLoaded.damperTarget.parameter) ?? .effectType
+                        rawValue: partLoaded.damperTarget.parameter) ?? .effectType,
+                    targetParameterInstrument: partLoaded.damperTarget.parameter,
+                    targetParameterSequencer: partLoaded.damperTarget.parameter
                 )
                 
                 parts[partLoaded.id] = part
@@ -367,6 +369,12 @@ final class AppUtils {
                 var parameter: String = "";
                 if part.value.targetType == .effect {
                     parameter = part.value.targetParameterEffect.rawValue
+                }
+                else if part.value.targetType == .instrument {
+                    parameter = part.value.targetParameterInstrument
+                }
+                else if part.value.targetType == .sequencer {
+                    parameter = part.value.targetParameterSequencer
                 }
                 
                 let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(

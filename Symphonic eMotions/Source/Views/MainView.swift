@@ -62,9 +62,11 @@ struct MainView: View {
         
         //SpriteKit (2D Game) interface
         if sessionDisplay == .spriteKit {
-            SpriteKitView(
+            
+//            SpriteKitView(
+            InstrumentLocationContainer(
                 setInfoModel: setInfoModel,
-                mainViewModel: viewModel,
+//                mainViewModel: viewModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )

@@ -88,6 +88,9 @@
 		7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77A2A4AED3400490C59 /* UserCode.swift */; };
 		7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77C2A4B698300490C59 /* PlaylistView.swift */; };
 		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
+		7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */; };
+		7CA843ED2A65D74600FA1E47 /* InstrumentLocationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */; };
+		7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
@@ -252,6 +255,9 @@
 		7C9FB77A2A4AED3400490C59 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
 		7C9FB77C2A4B698300490C59 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
+		7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocations.swift; sourceTree = "<group>"; };
+		7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationScene.swift; sourceTree = "<group>"; };
+		7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationContainer.swift; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
@@ -601,6 +607,9 @@
 				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
 				7C645CA829AF4BB9000C5861 /* MagicParticle.sks */,
 				7C645CA929AF4BB9000C5861 /* Assets.xcassets */,
+				7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */,
+				7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */,
+				7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */,
 			);
 			path = SpriteKit;
 			sourceTree = "<group>";
@@ -911,6 +920,7 @@
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
+				7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */,
 				7C1FB0C029E820EC00621909 /* DefaultSkinView.swift in Sources */,
 				7C3EC2082A1FE9D40049E4ED /* UserDefaultsKeys.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
@@ -972,6 +982,7 @@
 				7C8D75902A28E0B900DF2417 /* NotesSequenceType.swift in Sources */,
 				7C2DDCB92A04F858001FE14F /* AreaOfInterestView.swift in Sources */,
 				7C1FB0B429DE0B2600621909 /* MidiClipLevelView.swift in Sources */,
+				7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */,
 				7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */,
 				7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */,
 				C069592326B4F2F6002EB522 /* EMButton.swift in Sources */,
@@ -995,6 +1006,7 @@
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,
 				7C6A8CF62A4481750056BED3 /* IntroductionImage.swift in Sources */,
+				7CA843ED2A65D74600FA1E47 /* InstrumentLocationScene.swift in Sources */,
 				7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */,
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CF50F5329EEBECD0016BAF4 /* NoteNumberLevelView.swift in Sources */,

@@ -7,6 +7,14 @@
 
 import SpriteKit
 import SwiftUI
+import Combine
+
+//InstrumentParts to SpriteKit through PassthroughSubject
+
+var spriteKitParts0b = PassthroughSubject<(Int,Int,Double), Never>()
+var spriteKitParts1b = PassthroughSubject<(Int,Int,Double), Never>()
+var spriteKitParts2b = PassthroughSubject<(Int,Int,Double), Never>()
+var spriteKitParts3b = PassthroughSubject<(Int,Int,Double), Never>()
 
 //SwiftUI creating a SpriteKit scene and sizing it
 struct SpriteKitView: View {
@@ -177,30 +185,30 @@ struct SpriteKitView: View {
                         }
                         //Again 4 static instruments
                         //First configured instrument (GO Cello)
-                        .onReceive(setInfoModel.conductor.spriteKitParts0a){ ( value ) in
+                        .onReceive(spriteKitParts0a){ ( value ) in
                             
-//                            print("XXXX Receiving first instrument \(value)")
+                            scene.updateInstrumentPart0a(value: value)
                             
-                            scene.instrumentPart0aMaxIndex = value.0
-                            scene.instrumentPart0aMidiClip = value.1
-                            scene.instrumentPart0aScale = CGFloat(value.2)
+//                            scene.instrumentPart0aMaxIndex = value.0
+//                            scene.instrumentPart0aMidiClip = value.1
+//                            scene.instrumentPart0aScale = CGFloat(value.2)
                         }
                         //Second configured instrument (GO Drums)
-                        .onReceive(setInfoModel.conductor.spriteKitParts1a){ ( value ) in
+                        .onReceive(spriteKitParts1a){ ( value ) in
                             
                             scene.instrumentPart1aMaxIndex = value.0
                             scene.instrumentPart1aMidiClip = value.1
                             scene.instrumentPart1aScale = CGFloat(value.2)
                         }
                         //Bassline
-                        .onReceive(setInfoModel.conductor.spriteKitParts2a){ ( value ) in
+                        .onReceive(spriteKitParts2a){ ( value ) in
                             
                             scene.instrumentPart2aMaxIndex = value.0
                             scene.instrumentPart2aMidiClip = value.1
                             scene.instrumentPart2aScale = CGFloat(value.2)
                         }
                         //Synth
-                        .onReceive(setInfoModel.conductor.spriteKitParts3a){ ( value ) in
+                        .onReceive(spriteKitParts3a){ ( value ) in
                             
                             scene.instrumentPart3aMaxIndex = value.0
                             scene.instrumentPart3aMidiClip = value.1

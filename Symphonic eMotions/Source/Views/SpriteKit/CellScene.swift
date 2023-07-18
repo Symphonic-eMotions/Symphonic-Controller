@@ -1,9 +1,3 @@
-//
-//  CellScene.swift
-//  Symphonic eMotions Pro
-//
-//  Created by Frans-Jan Wind on 24/02/2023.
-//
 import SpriteKit
 import SwiftUI
 
@@ -42,16 +36,6 @@ class Container: SKNode { }
 class Instrument: SKShapeNode { }
 
 class ImageInstrument: SKSpriteNode { }
-
-//class Receiver {
-//
-//    var instrumentPart: Instrument!
-//    var instrumentPartScale: CGFloat?
-//    var instrumentPartMaxIndex: Int = 0
-//    var instrumentPartMidiClip: Int = 0
-//}
-
-
 /*
  
  Stappenplan
@@ -63,8 +47,7 @@ class ImageInstrument: SKSpriteNode { }
  - - Negative instrument active stroke activator
  - - Stroke invisible on connectd cell
  - Waarom heeft Upbeat Acid gespiegelde X-as
- -
- 
+
  */
 
 class CellScene: SKScene {
@@ -94,6 +77,7 @@ class CellScene: SKScene {
     var instrumentPart0aMidiClip: Int = 0
     var instrument0Positions: [CGPoint] = []
     var instrument0Sizes: [CGSize] = []
+    
     //TODO: Convert to Receiver Class (SKNode?) for dynamic number of instruments
     var tiles1: Tiles!
     var instrumentPart1a: Container!
@@ -124,6 +108,14 @@ class CellScene: SKScene {
     
     //Collect all areas of interest from the instrument settings
     var instrumentPartAreas: [[[Int]]] = []
+    
+    func updateInstrumentPart0a(value: (Int, Int, Double)) {
+        instrumentPart0aMaxIndex = value.0
+        instrumentPart0aMidiClip = value.1
+        instrumentPart0aScale = CGFloat(value.2)
+        
+        print("updateInstrumentPart0a: \(value.0),\(value.1),\(value.2)")
+    }
     
     //MARK: Initialisation
     //Start of Scene funciton
@@ -280,6 +272,8 @@ class CellScene: SKScene {
         if self.sceneSkin.name != "free" {
             updateBackgrounds()
         }
+        
+        print("instrumentPart0aScale: \(String(describing: instrumentPart0aScale))")
         
         instrumentIndex = 0
         if self.instrument0Positions.indices.contains(instrumentPart0aMaxIndex){

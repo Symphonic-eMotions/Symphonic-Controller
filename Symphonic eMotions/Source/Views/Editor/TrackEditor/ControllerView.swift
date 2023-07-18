@@ -260,6 +260,7 @@ struct ControllerView: View {
             },
             set: { newValue in
                 targetParameters[key] = newValue
+                currentTrack.parts[key]?.targetParameterInstrument = newValue
             }
         )
     }
@@ -275,6 +276,7 @@ struct ControllerView: View {
             },
             set: { newValue in
                 targetParameters[key] = newValue
+                currentTrack.parts[key]?.targetParameterSequencer = newValue
             }
         )
     }

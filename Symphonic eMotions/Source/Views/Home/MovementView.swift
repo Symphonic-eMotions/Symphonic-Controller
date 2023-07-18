@@ -33,22 +33,22 @@ struct MovementView: View {
                 //Visual Feedback
                 VStack {
                     WarpHoleView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .onTapGesture {
-                            print("short")
-                            presentSettingSheet = true
-                        }
-                        .onLongPressGesture(minimumDuration: 1) {
-                            print("long")
-                            presentSettingSheet = true
-                        }
-                        .sheet(isPresented: $presentSettingSheet) {
-                            SettingsSheetView(
-                                setInfoModel: setInfoModel,
-                                showingSheet: $presentSettingSheet
-                            )
-                            .background(Color.black.opacity(0.5))
-                        }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onTapGesture {
+                        print("short")
+                        presentSettingSheet = true
+                    }
+                    .onLongPressGesture(minimumDuration: 1) {
+                        print("long")
+                        presentSettingSheet = true
+                    }
+                    .sheet(isPresented: $presentSettingSheet) {
+                        SettingsSheetView(
+                            setInfoModel: setInfoModel,
+                            showingSheet: $presentSettingSheet
+                        )
+                        .background(Color.black.opacity(0.5))
+                    }
                 }
                 .background(Color.black)
                 .edgesIgnoringSafeArea(.all)
@@ -94,8 +94,6 @@ struct MovementView: View {
                                     isSetPlaying = false
                                     rotationSpeedSubject.send(0)
                                     setInfoModel.tapStopAudioEngine()
-                                    
-                                    
                                 }
                                 else{
                                     setInfoModel.tapStartAudioEngine()
@@ -175,3 +173,4 @@ struct MovementView: View {
         }
     }
 }
+

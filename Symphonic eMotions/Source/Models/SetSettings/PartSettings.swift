@@ -25,6 +25,8 @@ class PartSettings: Identifiable {
     var targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType
     var targetNameEffect: InstrumentsSet.Track.Effect.EffectType
     var targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
+    var targetParameterInstrument: String
+    var targetParameterSequencer: String
     
     init(partId: String,
          partName: String,
@@ -39,7 +41,9 @@ class PartSettings: Identifiable {
          dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode,
          targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType,
          targetNameEffect: InstrumentsSet.Track.Effect.EffectType,
-         targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
+         targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys,
+         targetParameterInstrument: String,
+         targetParameterSequencer: String
     ){
         self.partId = partId
         self.partName = partName
@@ -55,6 +59,8 @@ class PartSettings: Identifiable {
         self.targetType = targetType
         self.targetNameEffect = targetNameEffect
         self.targetParameterEffect = targetParameterEffect
+        self.targetParameterInstrument = targetParameterInstrument
+        self.targetParameterSequencer = targetParameterSequencer
     }
     
     func interestIndexes(rows: Int, columns: Int) -> [InstrumentsSet.Track.Part.Index] {

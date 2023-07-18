@@ -44,7 +44,7 @@ struct AmoebaView: View {
                 // This will update the scene's rotation duration when the view appears.
                 scene.rotationDuration = 25
             }
-            .onReceive(setInfoModel.conductor.spriteKitParts1a) { value in
+            .onReceive(spriteKitParts1a) { value in
                 
                 let rotationDuration = setInfoModel.scale(
                     input: value.2, fromInputRange: (0,1), toOutputRange: (10000,10)

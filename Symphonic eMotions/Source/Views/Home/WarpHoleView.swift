@@ -84,4 +84,3 @@ struct WarpHoleView: UIViewRepresentable {
     
     func updateUIView(_ uiView: SKView, context: Context) { }
 }
-
