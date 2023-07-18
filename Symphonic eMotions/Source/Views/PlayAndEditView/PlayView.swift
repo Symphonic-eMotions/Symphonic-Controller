@@ -118,6 +118,7 @@ struct PlayView: View {
                             setInfoModel.leveling.pauseLevel = false
                             let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
                             setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+                            sessionDisplaySub = .stopped
                         }, color: .accentColor, isSolid: false) {
                             Text(NSLocalizedString("Finish", comment: ""))
                         }

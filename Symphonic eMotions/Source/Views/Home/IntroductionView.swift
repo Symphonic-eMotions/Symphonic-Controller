@@ -20,6 +20,7 @@ struct IntroductionView: View {
     
     @State var setIsPlaying: Bool = false;
     
+    
     var body: some View {
         
         ZStack(alignment: .topLeading){
@@ -27,13 +28,15 @@ struct IntroductionView: View {
             VStack(spacing: 0) {
                 
                 //Standaard
-                if sessionDisplaySub == .page01 {
-                    
+                if sessionDisplaySub == .page01 || sessionDisplaySub == .stopped {
+                   
                     IntroductionImage(
                         imageName: "page01",
                         customWidth: 0.9,
                         customHeight: 0.7
-                    )
+                    ).onAppear{
+                        sessionDisplaySub = .page01
+                    }
                     
                     Spacer()
                     
@@ -50,6 +53,7 @@ struct IntroductionView: View {
                         nextPage: .page02,
                         introductionNoteNumbers: []
                     )
+                    
                     
                     Spacer()
                 }
@@ -160,7 +164,7 @@ struct IntroductionView: View {
             }
             .onAppear{
                 
-                setInfoModel.tapStopAudioEngine()
+//                setInfoModel.tapStopAudioEngine()
                 
                 //Load set
                 setInfoModel.tapSetRow(filePath: "Introductie.json")

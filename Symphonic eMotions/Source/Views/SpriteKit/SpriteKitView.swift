@@ -120,7 +120,7 @@ struct SpriteKitView: View {
         VStack(spacing: 0){
             VStack{
                 SpriteKitTransport(
-                    mainViewModel: mainViewModel,
+//                    mainViewModel: mainViewModel,
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
@@ -236,6 +236,7 @@ struct SpriteKitView: View {
                         setInfoModel.leveling.pauseLevel = false
                         let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
                         setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+                        sessionDisplaySub = .stopped
                     }, color: .accentColor, isSolid: false) {
                         Text(NSLocalizedString("Finish", comment: ""))
                     }

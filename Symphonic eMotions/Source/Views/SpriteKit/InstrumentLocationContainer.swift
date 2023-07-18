@@ -77,39 +77,12 @@ struct InstrumentLocationContainer: View {
         
         VStack(spacing: 0){
             
-            //Play / stop button
-            HStack {
-                ZStack {
-                    Rectangle()
-                        .frame(width: 200, height: 50)
-                        .foregroundColor(.clear)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( Color.accentColor )
-                    
-                    if isSetPlaying {
-                        Text(NSLocalizedString("Stop set", comment: ""))
-                            .font(.system(size: 25))
-                            .padding()
-                    }
-                    else{
-                        Text(NSLocalizedString("Test set", comment: ""))
-                            .font(.system(size: 25))
-                            .padding()
-                    }
-                }
-                .onTapGesture {
-                    
-                    if isSetPlaying {
-                        isSetPlaying = false
-                        //                            rotationSpeedSubject.send(0)
-                        setInfoModel.tapStopAudioEngine()
-                    }
-                    else{
-                        setInfoModel.tapStartAudioEngine()
-                        isSetPlaying = true
-                    }
-                }
-            }
+            SpriteKitTransport(
+                setInfoModel: setInfoModel,
+                sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub,
+                transportHeigth: transportHeigth
+            )
             
             ZStack(alignment: .topLeading){
                 
@@ -141,6 +114,23 @@ struct InstrumentLocationContainer: View {
                                 showingSheet: $presentSettingSheet
                             )
                             .background(Color.black.opacity(0.5))
+                        }
+                        .onAppear{
+                            setInfoModel.conductor.playEngineAndTracks(
+                                setSettings: setInfoModel.setSettings,
+                                level: 0
+                            )
+                            setInfoModel.conductor.levelController(
+                                level: 0,
+                                setSettings: setInfoModel.setSettings
+                            )
+                        }
+                        .onDisappear{
+                            sessionDisplaySub = .stopped
+                            setInfoModel.conductor.pauzeEngineAndStopTracks(
+                                setSettings: setInfoModel.setSettings,
+                                resetLevels: true
+                            )
                         }
                     }
                     .background(Color.black)

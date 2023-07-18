@@ -11,7 +11,7 @@ struct SpriteKitTransport: View {
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
     
-    @ObservedObject var mainViewModel: MainViewModel
+//    @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -19,13 +19,13 @@ struct SpriteKitTransport: View {
     @State private(set) var localTempo: Int = 0
     
     init(
-        mainViewModel: MainViewModel,
+//        mainViewModel: MainViewModel,
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>,
         transportHeigth: CGFloat
     ) {
-        self.mainViewModel = mainViewModel
+//        self.mainViewModel = mainViewModel
         self.setInfoModel = setInfoModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
@@ -42,7 +42,7 @@ struct SpriteKitTransport: View {
                     
                     setInfoModel.tapStopAudioEngine()
                     //Check if back is playlists or set info
-                    let parentDirectoryName = mainViewModel.mainState.setSettings.setURL.deletingLastPathComponent().lastPathComponent
+                    let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
                     if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
                         sessionDisplay = .playlists
                         sessionDisplaySub = .playlists
@@ -51,7 +51,7 @@ struct SpriteKitTransport: View {
                         sessionDisplay = .setInfo
                         sessionDisplaySub = .none
                         //We do not want to go to the next set
-                        mainViewModel.mainState.setSettings.currentPlaylist = .none
+                        setInfoModel.setSettings.currentPlaylist = .none
                     }
                     
                 }, color: .accentColor, isSolid: false, maxWidth: 70) {
