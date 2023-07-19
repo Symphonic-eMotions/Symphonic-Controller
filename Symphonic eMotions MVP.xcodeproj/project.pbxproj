@@ -67,6 +67,15 @@
 		7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07162A3B2161007F7385 /* EditorParts.swift */; };
 		7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */; };
 		7C7A071B2A3BB6D4007F7385 /* SoundSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */; };
+		7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */; };
+		7C7E4FCC2A66FB3A007BEF14 /* TrackEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FCB2A66FB3A007BEF14 /* TrackEffectView.swift */; };
+		7C7E4FCE2A670E3E007BEF14 /* TrackEffectsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FCD2A670E3E007BEF14 /* TrackEffectsSettings.swift */; };
+		7C7E4FD02A670E86007BEF14 /* TrackEffectsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FCF2A670E86007BEF14 /* TrackEffectsHelper.swift */; };
+		7C7E4FD22A683C26007BEF14 /* SetTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD12A683C26007BEF14 /* SetTransport.swift */; };
+		7C7E4FD42A683CA3007BEF14 /* SetEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD32A683CA3007BEF14 /* SetEditor.swift */; };
+		7C7E4FD62A683D63007BEF14 /* SetLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD52A683D63007BEF14 /* SetLoading.swift */; };
+		7C7E4FD82A683DB4007BEF14 /* PartEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD72A683DB4007BEF14 /* PartEditor.swift */; };
+		7C7E4FDA2A683E52007BEF14 /* SetSubscribers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD92A683E52007BEF14 /* SetSubscribers.swift */; };
 		7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */; };
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
@@ -234,6 +243,15 @@
 		7C7A07162A3B2161007F7385 /* EditorParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorParts.swift; sourceTree = "<group>"; };
 		7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsView.swift; sourceTree = "<group>"; };
 		7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSourceView.swift; sourceTree = "<group>"; };
+		7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackEffectsHelper.swift; sourceTree = "<group>"; };
+		7C7E4FCB2A66FB3A007BEF14 /* TrackEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectView.swift; sourceTree = "<group>"; };
+		7C7E4FCD2A670E3E007BEF14 /* TrackEffectsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectsSettings.swift; sourceTree = "<group>"; };
+		7C7E4FCF2A670E86007BEF14 /* TrackEffectsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectsHelper.swift; sourceTree = "<group>"; };
+		7C7E4FD12A683C26007BEF14 /* SetTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTransport.swift; sourceTree = "<group>"; };
+		7C7E4FD32A683CA3007BEF14 /* SetEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEditor.swift; sourceTree = "<group>"; };
+		7C7E4FD52A683D63007BEF14 /* SetLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoading.swift; sourceTree = "<group>"; };
+		7C7E4FD72A683DB4007BEF14 /* PartEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartEditor.swift; sourceTree = "<group>"; };
+		7C7E4FD92A683E52007BEF14 /* SetSubscribers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSubscribers.swift; sourceTree = "<group>"; };
 		7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseOutCubicDamper.swift; sourceTree = "<group>"; };
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
@@ -517,12 +535,13 @@
 			path = SetEditor;
 			sourceTree = "<group>";
 		};
-		7CCDE10228E2C61300343920 /* MasterTrack */ = {
+		7CCDE10228E2C61300343920 /* MasterAndEffectView */ = {
 			isa = PBXGroup;
 			children = (
 				7C7756F528C7964200E73B14 /* MasterTrackView.swift */,
+				7C7E4FCB2A66FB3A007BEF14 /* TrackEffectView.swift */,
 			);
-			path = MasterTrack;
+			path = MasterAndEffectView;
 			sourceTree = "<group>";
 		};
 		7CCFE4A72A03DC56008AE3EE /* Active */ = {
@@ -592,7 +611,10 @@
 				7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */,
 				7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */,
 				7CFA009D29A74FA1001D8A5D /* PartSettings.swift */,
+				7C7E4FCD2A670E3E007BEF14 /* TrackEffectsSettings.swift */,
+				7C7E4FCF2A670E86007BEF14 /* TrackEffectsHelper.swift */,
 				7CFA009F29A74FA1001D8A5D /* MasterTrackEffectsSettings.swift */,
+				7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */,
 				7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */,
 				7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */,
 			);
@@ -722,7 +744,12 @@
 			children = (
 				7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */,
 				7CFA00A429A758BC001D8A5D /* SetInfoModel.swift */,
+				7C7E4FD92A683E52007BEF14 /* SetSubscribers.swift */,
+				7C7E4FD12A683C26007BEF14 /* SetTransport.swift */,
+				7C7E4FD32A683CA3007BEF14 /* SetEditor.swift */,
+				7C7E4FD72A683DB4007BEF14 /* PartEditor.swift */,
 				7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */,
+				7C7E4FD52A683D63007BEF14 /* SetLoading.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -768,7 +795,7 @@
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
 				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
-				7CCDE10228E2C61300343920 /* MasterTrack */,
+				7CCDE10228E2C61300343920 /* MasterAndEffectView */,
 				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
@@ -930,6 +957,7 @@
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */,
+				7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
 				7C29AA1F2A501E6C0070D901 /* DebugView.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
@@ -951,6 +979,7 @@
 				7C29AA1B2A4F4AB70070D901 /* ValueDamper.swift in Sources */,
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
+				7C7E4FD62A683D63007BEF14 /* SetLoading.swift in Sources */,
 				7C9123AA2A3290D500C1DB94 /* AudioBufferTimePitch.swift in Sources */,
 				7CF50F2929ED458A0016BAF4 /* ValuesDidChange.swift in Sources */,
 				C06958FB26B4D9E4002EB522 /* PlayView.swift in Sources */,
@@ -959,6 +988,7 @@
 				7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */,
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
 				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
+				7C7E4FDA2A683E52007BEF14 /* SetSubscribers.swift in Sources */,
 				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
 				7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
@@ -970,9 +1000,11 @@
 				7C7A07152A3B0D1E007F7385 /* TrackEditorView.swift in Sources */,
 				7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */,
 				7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */,
+				7C7E4FD82A683DB4007BEF14 /* PartEditor.swift in Sources */,
 				7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */,
 				7CD7DCD42A52CE7D00A8E1FE /* MainViewContainer.swift in Sources */,
 				7CB58357292FAE1D000C46FF /* ColorPicker.swift in Sources */,
+				7C7E4FD42A683CA3007BEF14 /* SetEditor.swift in Sources */,
 				7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */,
 				7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */,
 				7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */,
@@ -984,11 +1016,14 @@
 				7C1FB0B429DE0B2600621909 /* MidiClipLevelView.swift in Sources */,
 				7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */,
 				7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */,
+				7C7E4FCE2A670E3E007BEF14 /* TrackEffectsSettings.swift in Sources */,
 				7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */,
 				C069592326B4F2F6002EB522 /* EMButton.swift in Sources */,
 				C069590626B4E150002EB522 /* InstrumentsSet.swift in Sources */,
+				7C7E4FD22A683C26007BEF14 /* SetTransport.swift in Sources */,
 				7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */,
 				7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */,
+				7C7E4FD02A670E86007BEF14 /* TrackEffectsHelper.swift in Sources */,
 				C069591F26B4E77E002EB522 /* AreaValues.swift in Sources */,
 				C069590226B4E029002EB522 /* VideoPreviewView.swift in Sources */,
 				7CFA00A529A758BC001D8A5D /* SetInfoModel.swift in Sources */,
@@ -1037,6 +1072,7 @@
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
+				7C7E4FCC2A66FB3A007BEF14 /* TrackEffectView.swift in Sources */,
 				7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */,
 				7CFA00A929A759F9001D8A5D /* SwiftUIState.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,

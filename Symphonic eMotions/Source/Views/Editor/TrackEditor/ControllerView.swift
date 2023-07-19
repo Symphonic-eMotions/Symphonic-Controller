@@ -29,6 +29,8 @@ struct ControllerView: View {
     @State private var localParametersSequencer: [String]
     @State private var localParametersInstrument: [String]
     
+    @Binding var showTrackEffect: Bool
+    
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
@@ -38,7 +40,8 @@ struct ControllerView: View {
         
         targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
         targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
-        targetParameters: Binding<[String: String]>
+        targetParameters: Binding<[String: String]>,
+        showTrackEffect: Binding<Bool>
     )  {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -48,6 +51,7 @@ struct ControllerView: View {
         _targetTypes = targetTypes
         _targetNames = targetNames
         _targetParameters = targetParameters
+        _showTrackEffect = showTrackEffect
         
         _localTargetNames = State(initialValue: targetNames.wrappedValue)
         _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
@@ -67,26 +71,48 @@ struct ControllerView: View {
             Divider()
 
             HStack() {
-
-                ZStack {
-
-                    Rectangle()
-                        .frame(width: 130, height: 34)
-                        .foregroundColor(.clear)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( showEditorPart == .controller ? .clear : color )
-
-                    Text("Controllers")
-                        .frame(width: 130, height: 34)
-
-                }
-                .frame(width: columnWidth, alignment: .leading)
-                .onTapGesture {
-                    withAnimation {
-                        showEditorPart = .controller
-                    }
-                }
                 
+                VStack {
+                    
+                    ZStack {
+                        
+                        Rectangle()
+                            .frame(width: 130, height: 34)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( showEditorPart == .controller ? .clear : color )
+                        
+                        Text("Controllers")
+                            .frame(width: 130, height: 34)
+                        
+                    }
+                    .frame(width: columnWidth, alignment: .leading)
+                    .onTapGesture {
+                        withAnimation {
+                            showEditorPart = .controller
+                        }
+                    }
+                    
+                    ZStack {
+                        
+                        Rectangle()
+                            .frame(width: 130, height: 34)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( showTrackEffect ? .clear : color )
+                        
+                        Text("Effects")
+                            .frame(width: 130, height: 34)
+                        
+                    }
+                    .frame(width: columnWidth, alignment: .leading)
+                    .onTapGesture {
+                        withAnimation {
+                            showTrackEffect.toggle()
+                        }
+                    }
+                    
+                }
                 HStack(spacing: 20) {
                     
                     //We need to bound these to the partId's of this track

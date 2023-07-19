@@ -9,13 +9,27 @@ import AudioKit
 
 extension Conductor {
     
-    //MARK: Forwarders
+    public func forwardMasterTrackEffect(
+        value: Double,
+        nodeName: String,
+        parameter: String,
+        parameterRange: [Double] ) {
+        
+        let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: nodeName)
+        
+        let effect = set.effect(for: effectType!)
+        
+        effect!.targetAndApply(value: value, nodeName: nodeName, parameter: parameter, parameterRange: parameterRange)
+    }
+    
     //Forward Part Feedback
     internal func forwardPartFeedback( ramped: Double ) -> Void {
         forwardRampedPartFeedback.send(ramped)
     }
     
-    internal func forwardEffect(value: Double, for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
+    internal func forwardEffect(
+        value: Double,
+        for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
         
         guard let track = set.track(for: damperTarget.trackId) else { return }
         

@@ -829,16 +829,6 @@ final class Conductor {
             return finalNode as Node
         }
     
-    //MARK: Forward Master Track
-    public func forwardMasterTrackEffect(value: Double, nodeName: String, parameter: String, parameterRange: [Double] ) {
-        
-        let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: nodeName)
-        
-        let effect = set.effect(for: effectType!)
-        
-        effect!.targetAndApply(value: value, nodeName: nodeName, parameter: parameter, parameterRange: parameterRange)
-    }
-    
     //MARK: Level increment
     /*
      Here we have level increment logic

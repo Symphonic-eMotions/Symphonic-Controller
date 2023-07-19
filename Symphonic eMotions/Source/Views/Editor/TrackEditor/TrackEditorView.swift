@@ -58,6 +58,7 @@ struct TrackEditorView: View {
     @State private var showRemoveConfirmation: Bool = false
     @State private var trackKeyToRemove: String? = nil
     @State private var pleaseSave: Bool = false
+    @State private var showTrackEffect: Bool = false
     
     var body: some View {
         
@@ -147,6 +148,7 @@ struct TrackEditorView: View {
                                         variationTypes.removeValue(forKey: trackKey)
                                         instrumentTypes.removeValue(forKey: trackKey)
                                         
+                                        //Editor part picker
                                         editorParts = setInfoModel.selectableEditorParts()
                                         
                                         numberOfTracks -= 1
@@ -167,7 +169,7 @@ struct TrackEditorView: View {
                         }
                     }
                 }
-                //Edito track name action
+                //Edit track name action
                 .onLongPressGesture{
                     if showTrackNameEditor == editorPart {
                         showTrackNameEditor = .none
@@ -323,14 +325,21 @@ struct TrackEditorView: View {
                         dampMode: $dampMode,
                         targetTypes: $targetTypes,
                         targetNames: $targetNames,
-                        targetParameters: $targetParameters
-//                        ,
-//                        targetNameEffect: $targetNameEffect,
-//                        targetParameterEffect: $targetParameterEffect
+                        targetParameters: $targetParameters,
+                        showTrackEffect: $showTrackEffect
                     )
                 }
                 
                 Divider()
+                .sheet(isPresented: $showTrackEffect) {
+                    
+                    TrackEffectView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showTrackEffect: $showTrackEffect
+                    )
+                }
                 
             //End each key in setInfoModel.setSettings.tracks
             }

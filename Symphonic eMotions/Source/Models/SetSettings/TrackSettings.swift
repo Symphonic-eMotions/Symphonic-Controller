@@ -39,12 +39,14 @@ class TrackSettings: Identifiable, ObservableObject {
     
     var levels: [Int]
     
-    //TODO: Check if @Published and objectWillChange.send() is needed
-    
-//    @Published var parts: OrderedDictionary<String, PartSettings>
-    
-    
     @Published var parts: OrderedDictionary<String, PartSettings> = OrderedDictionary<String, PartSettings>() {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+    
+    //Start point track effects
+    @Published var effects: OrderedDictionary<Int, TrackEffectsSettings> = OrderedDictionary<Int, TrackEffectsSettings>() {
         didSet {
             objectWillChange.send()
         }
@@ -82,7 +84,8 @@ class TrackSettings: Identifiable, ObservableObject {
         loopsToGrid: [Int],
         loopsToGridMapped: [Int],
         levels: [Int],
-        parts: OrderedDictionary<String, PartSettings>
+        parts: OrderedDictionary<String, PartSettings>,
+        effects: OrderedDictionary<Int, TrackEffectsSettings>
     ){
         self.trackId = trackId
         self.trackIndex = trackIndex
@@ -108,6 +111,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.loopsToGridMapped = loopsToGridMapped
         self.levels = levels
         self.parts = parts
+        self.effects = effects
     }
     
     func changeAreaOfInterestColor(newColor: Color){

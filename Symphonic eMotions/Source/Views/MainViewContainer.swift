@@ -29,7 +29,7 @@ struct MainViewContainer: View {
                 setInfoState: SetInfoState(
                     currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
                     buildSettings: viewModel.mainState.buildSettings,
-                    masterTrackStructure: AppUtils.masterTrackViewObject(
+                    masterTrackStructure: MasterTrackEffectsHelper.masterTrackViewObject(
                         instrumentSet: viewModel.mainState.currentInstrumentsSet,
                         setSettings:  viewModel.mainState.setSettings
                     )

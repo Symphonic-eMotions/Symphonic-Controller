@@ -1,29 +1,38 @@
 //
-//  MasterTrackView.swift
-//  Symphonic eMotions
+//  TrackEffectView.swift
+//  Symphonic eMotions Pro
 //
-//  Created by Frans-Jan Wind on 06/09/2022.
+//  Created by Frans-Jan Wind on 18/07/2023.
 //
 
 import SwiftUI
 import OrderedCollections
 
-struct MasterTrackView: View {
+
+struct TrackEffectView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding var showMasterTrack: Bool
+    @ObservedObject var currentTrack: TrackSettings
     
-    //@State for slider status
-    @State var masterEffectState: [[Float]] = []
+    var trackId: String
+    @State var trackEffectState: [[Float]]
+    var viewObject: [TrackEffect]
     
+    @Binding var showTrackEffect: Bool
+
     init(
         setInfoModel: SetInfoModel,
-        masterEffect: State<[[Float]]>,
-        showMasterTrack: Binding<Bool>
+        currentTrack: TrackSettings,
+        trackId: String,
+        showTrackEffect: Binding<Bool>
+        
     ){
         self.setInfoModel = setInfoModel
-        self._masterEffectState = masterEffect
-        self._showMasterTrack = showMasterTrack
+        self.trackId = trackId
+        self.currentTrack = currentTrack
+        self._showTrackEffect = showTrackEffect
+        self.viewObject = TrackEffectsHelper.trackEffectViewObject(trackSettings: currentTrack)
+        self.trackEffectState = TrackEffectsHelper.trackEffectsStateObject(viewObject: viewObject)
     }
     
     var body: some View {
@@ -32,62 +41,72 @@ struct MasterTrackView: View {
             
             VStack{
                 ScrollView (.vertical){
-                    //Struct with effects, contains [struct] with parameters per effect
-                    let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure!
-                    ForEach( Array(masterTrackStructure.enumerated()), id: \.element ) { index, effect in
+
+                    ForEach( Array(viewObject.enumerated()), id: \.element ) { index, effect in
+                        
                         //Stack per effect
                         ZStack {
                             //Background color
                             RoundedRectangle(cornerRadius: 7)
                                 .fill(Color(UIColor.darkGray))
-                            
+
                             VStack(alignment: .leading) {
-                                
+
                                 Text(effect.effectName)
                                     .font(.headline)
                                     .padding(.vertical)
-                                
+
                                 ForEach( Array(effect.parameters!.enumerated()), id: \.element) { i, parameter in
                                     
                                     Text("\(parameter.name) \(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
                                     
-                                    MasterSliderView(
+                                    EffectSliderView(
                                         label: parameter.name,
                                         value: Binding(
-                                            get: { self.masterEffectState[index][i] },
-                                            set: { (newVal) in
-                                                //Set @State for local binding
-                                                self.masterEffectState[index][i] = newVal
+                                            get: { self.trackEffectState[index][i] },
+                                            set: { newVal in
+                                                //Set state for local binding
+                                                self.trackEffectState[index][i] = newVal
                                                 
-                                                //Send to conductor for real time modification
-                                                setInfoModel.conductor.forwardMasterTrackEffect(
-                                                    value: Double(newVal),
+                                                let dt = InstrumentsSet.Track.Part.DamperTarget(
+                                                    trackId: currentTrack.trackId,
+                                                    nodeType: .effect,
                                                     nodeName: effect.effectName,
                                                     parameter: parameter.name,
-                                                    parameterRange: parameter.range
+                                                    parameterRange: parameter.range,
+                                                    midiData: nil,
+                                                    nodeSettings: nil,
+                                                    dampMode: nil
                                                 )
                                                 
-                                                //Store in object for writing to file (encoder)
-                                                let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
-                                                setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
-                                                    RangeConverter.valueToRange(range: rangedValue, value: Double(newVal))
+                                                //Send to conductor for real time modification
+                                                self.setInfoModel.conductor.forwardEffect(
+                                                    value: Double(newVal),
+                                                    for: dt
+                                                )
+                                                
+                                                //Store in object to disk
+                                                currentTrack.effects[index]!.parameters[i]!.value = Double(
+                                                    RangeConverter.valueToRange(
+                                                        range: parameter.range,
+                                                        value: Double(newVal))
                                                 )
                                             }
                                         ),
                                         range: parameter.range,
                                         showsLabel: false
-                                    ).onAppear {
+                                    )
+                                    .onAppear{
                                         
-                                        let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value
-                                        let rangedRange = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                        let rangedValue = currentTrack.effects[index]!.parameters[i]!.value
+                                        let rangedRange = currentTrack.effects[index]!.parameters[i]!.range
                                         
-                                        
-                                        
-                                        masterEffectState[index][i] = RangeConverter.rangedToSlider(range: rangedRange, value: rangedValue)
-                                        
+                                        trackEffectState[index][i] = RangeConverter.rangedToSlider(
+                                            range: rangedRange,
+                                            value: rangedValue
+                                        )
                                     }
                                 }
-                                
                             }.padding()
                         }
                     }
@@ -96,7 +115,7 @@ struct MasterTrackView: View {
                 
                 //Continue
                 EMButton(action: {
-                    showMasterTrack = false
+                    showTrackEffect = false
                     
                 }, color: .green, isSolid: true) {
                     Text(NSLocalizedString("Continue", comment: ""))
@@ -107,7 +126,7 @@ struct MasterTrackView: View {
     }
 }
 
-struct MasterSliderView: View {
+struct EffectSliderView: View {
     
     var label: String
     @Binding var value: Float

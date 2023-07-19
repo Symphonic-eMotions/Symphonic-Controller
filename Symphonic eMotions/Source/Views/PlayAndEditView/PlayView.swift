@@ -133,7 +133,7 @@ struct PlayView: View {
                 MasterTrackView(
                     setInfoModel: setInfoModel,
                     masterEffect: State(
-                        initialValue: AppUtils.masterTrackStateObject(
+                        initialValue: MasterTrackEffectsHelper.masterTrackStateObject(
                             viewObject: setInfoModel.setInfoState.masterTrackStructure!
                         )
                     ),
