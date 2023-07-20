@@ -53,6 +53,7 @@ struct TrackEditorView: View {
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
     @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @Binding var targetParameters: [String: String]
+    @Binding var parametersInversed: [String: Bool]
     
     //State
     @State private var showRemoveConfirmation: Bool = false
@@ -335,7 +336,8 @@ struct TrackEditorView: View {
                         dampMode: $dampMode,
                         targetTypes: $targetTypes,
                         targetNames: $targetNames,
-                        targetParameters: $targetParameters
+                        targetParameters: $targetParameters,
+                        parametersInversed: $parametersInversed
                     )
                 }
                 
@@ -366,7 +368,7 @@ struct TrackEditorView: View {
                     //Add track
                     setInfoModel.setSettings.tracks[newTrack.trackId] = newTrack
                     
-                    //Insert bindings tracks
+                    //Insert bindings tracks, but better save and reopen
                     trackLevels[newTrack.trackId] = newTrack.levels
                     noteNumbersLevels[newTrack.trackId] = newTrack.notesToLevel
                     midiClipsLevels[newTrack.trackId] = newTrack.loopsToLevel
@@ -401,17 +403,4 @@ struct TrackEditorView: View {
         }
 
     }
-    
-//    private func bindingForTrack(_ key: String) -> Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType> {
-//        Binding<InstrumentsSet.Track.Part.DamperTarget.NodeType>(
-//            get: {
-//                targetTypes[key] ?? .effect
-//            },
-//            set: { newValue in
-//                DispatchQueue.main.async {
-//                    targetTypes[key] = newValue
-//                }
-//            }
-//        )
-//    }
 }

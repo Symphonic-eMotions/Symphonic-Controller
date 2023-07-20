@@ -22,6 +22,7 @@ struct ControllerView: View {
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
     @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @Binding var targetParameters: [String: String]
+    @Binding var parametersInversed: [String: Bool]
 
     @State private var localTargetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @State private var localEffectTypes: [InstrumentsSet.Track.Effect.EffectType]
@@ -38,7 +39,8 @@ struct ControllerView: View {
         
         targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
         targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
-        targetParameters: Binding<[String: String]>
+        targetParameters: Binding<[String: String]>,
+        parametersInversed: Binding<[String: Bool]>
     )  {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -48,6 +50,7 @@ struct ControllerView: View {
         _targetTypes = targetTypes
         _targetNames = targetNames
         _targetParameters = targetParameters
+        _parametersInversed = parametersInversed
         
         _localTargetNames = State(initialValue: targetNames.wrappedValue)
         _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
@@ -120,15 +123,17 @@ struct ControllerView: View {
                                     .pickerStyle(.menu)
                                     .frame(width: 200, height: 50)
                                     
-                                    //Collection to big
-                                    
                                     Picker("Effect parameter", selection: bindingEffectParameter(partId)) {
                                         ForEach(filteredParameterEffect(partId: partId), id: \.self) { type in
-                                            //Text(type.humanReadable).tag(type)
                                             Text(type.description).tag(type)
                                         }
                                     }
                                     .pickerStyle(.menu)
+                                    .frame(width: 200, height: 50)
+                                    
+                                    Toggle(isOn: bindingForInversionParameter(partId)){
+                                        Text("Inversed")
+                                    }
                                     .frame(width: 200, height: 50)
                                 }
                                 else if targetType == .instrument {
@@ -165,47 +170,6 @@ struct ControllerView: View {
             updateTargetNames()
             updateTargetParameter()
         }
-    }
-    
-    //Only show parameters with selected effect type
-    private func filteredParameterEffect(partId: String) -> [InstrumentsSet.Track.Effect.EffectKeys] {
-        
-        let trackEffect = InstrumentsSet.Track.Effect()
-        let selectedEffectType = targetNames[partId]
-        
-        return trackEffect.effectVars(effectType: selectedEffectType!)
-    }
-    
-    //Set controller type picker
-    private func updateTargetType() {
-        targetTypes = [:]
-        for track in setInfoModel.setSettings.tracks {
-            for part in track.value.parts {
-                targetTypes[part.value.partId] = part.value.damperTarget.nodeType
-            }
-        }
-    }
-    
-    //Set effect type picker
-    private func updateTargetNames() {
-        targetNames = [:]
-        for track in setInfoModel.setSettings.tracks {
-            for part in track.value.parts {
-                // Use part.key instead of part.value.partId
-                targetNames[part.key] = InstrumentsSet.Track.Effect.EffectType(rawValue: part.value.damperTarget.nodeName) ?? InstrumentsSet.Track.Effect.EffectType.none
-            }
-        }
-    }
-    
-    //Set parameter type effetcs picker
-    private func updateTargetParameter() {
-        targetParameters = [:]
-        for track in setInfoModel.setSettings.tracks {
-            for part in track.value.parts {
-                targetParameters[part.key] = String(part.value.damperTarget.parameter)
-            }
-        }
-        
     }
     
     //Store controller type
@@ -281,5 +245,58 @@ struct ControllerView: View {
                 currentTrack.parts[key]?.targetParameterSequencer = newValue
             }
         )
+    }
+    
+    func bindingForInversionParameter(_ key: String) -> Binding<Bool> {
+        return Binding<Bool>(
+            get: {
+                parametersInversed[key, default: false]
+            },
+            set: { newValue in
+                parametersInversed[key] = newValue
+                currentTrack.parts[key]?.parametersInversed = newValue
+            }
+        )
+    }
+    
+    //Set controller type picker
+    private func updateTargetType() {
+        targetTypes = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                targetTypes[part.value.partId] = part.value.damperTarget.nodeType
+            }
+        }
+    }
+    
+    //Set effect type picker
+    private func updateTargetNames() {
+        targetNames = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                // Use part.key instead of part.value.partId
+                targetNames[part.key] = InstrumentsSet.Track.Effect.EffectType(rawValue: part.value.damperTarget.nodeName) ?? InstrumentsSet.Track.Effect.EffectType.none
+            }
+        }
+    }
+    
+    //Set parameter type effetcs picker
+    private func updateTargetParameter() {
+        targetParameters = [:]
+        for track in setInfoModel.setSettings.tracks {
+            for part in track.value.parts {
+                targetParameters[part.key] = String(part.value.damperTarget.parameter)
+            }
+        }
+        
+    }
+    
+    //Only show parameters with selected effect type
+    private func filteredParameterEffect(partId: String) -> [InstrumentsSet.Track.Effect.EffectKeys] {
+        
+        let trackEffect = InstrumentsSet.Track.Effect()
+        let selectedEffectType = targetNames[partId]
+        
+        return trackEffect.effectVars(effectType: selectedEffectType!)
     }
 }

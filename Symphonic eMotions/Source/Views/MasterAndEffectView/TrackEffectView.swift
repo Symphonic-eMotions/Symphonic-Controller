@@ -76,6 +76,7 @@ struct TrackEffectView: View {
                                                     nodeName: effect.effectName,
                                                     parameter: parameter.name,
                                                     parameterRange: parameter.range,
+                                                    parameterInversed: false,
                                                     midiData: nil,
                                                     nodeSettings: nil,
                                                     dampMode: nil
@@ -88,11 +89,16 @@ struct TrackEffectView: View {
                                                 )
                                                 
                                                 //Store in object to disk
-                                                currentTrack.effects[index]!.parameters[i]!.value = Double(
-                                                    RangeConverter.valueToRange(
+                                                if let effect = currentTrack.effects[index],
+                                                   let parameter = effect.parameters[i] {
+
+                                                    let convertedValue = RangeConverter.valueToRange(
                                                         range: parameter.range,
-                                                        value: Double(newVal))
-                                                )
+                                                        value: Double(newVal)
+                                                    )
+
+                                                    parameter.value = Double(convertedValue)
+                                                }
                                             }
                                         ),
                                         range: parameter.range
@@ -142,9 +148,6 @@ struct EffectSliderView: View {
                 
             ZStack{
                 HStack {
-                    Slider(value: $value, in: 0...1)
-                        .foregroundColor(.accentColor)
-                        .frame(width: geometry.size.width * 0.8)
                     
                     let valueInRange = RangeConverter.rangeToValue(range: range, value: Double(value))
                     
@@ -152,6 +155,10 @@ struct EffectSliderView: View {
                         .foregroundColor(.white)
                         .font(.subheadline)
                         .frame(width: geometry.size.width * 0.2)
+                        
+                    Slider(value: $value, in: 0...1)
+                        .foregroundColor(.accentColor)
+                        .frame(width: geometry.size.width * 0.8)
                 }
             }
         }

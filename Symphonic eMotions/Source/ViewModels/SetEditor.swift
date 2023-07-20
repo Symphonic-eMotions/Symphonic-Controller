@@ -59,6 +59,7 @@ extension SetInfoModel {
             nodeName: "",
             parameter: "velocity",
             parameterRange: [0,1],
+            parameterInversed: false,
             midiData: nil,
             nodeSettings: newNodeSetting,
             dampMode: .easeInCubic
@@ -79,6 +80,7 @@ extension SetInfoModel {
             dampMode: .easeInCubic,
             targetType: .effect,
             targetNameEffect: .lowPassFilter,
+            parametersInversed: false,
             targetParameterEffect: .cutoffFrequency,
             targetParameterInstrument: "samplerCC9",
             targetParameterSequencer: "velocity"
@@ -143,6 +145,7 @@ extension SetInfoModel {
                 nodeName: "",
                 parameter: "velocity",
                 parameterRange: [0,1],
+                parameterInversed: false,
                 midiData: nil,
                 nodeSettings: newNodeSetting,
                 dampMode: .easeInCubic
@@ -164,6 +167,7 @@ extension SetInfoModel {
                 dampMode: .easeInCubic,
                 targetType: .sequencer,
                 targetNameEffect: .lowPassFilter,
+                parametersInversed: false,
                 targetParameterEffect: .cutoffFrequency,
                 targetParameterInstrument: "samplerCC9",
                 targetParameterSequencer: "velocity"

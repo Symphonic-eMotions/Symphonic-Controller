@@ -599,12 +599,19 @@ extension InstrumentsSet.Track {
             effect.apply(value: value, with: damperTarget)
         }
         
-        func targetAndApply(value: Double, nodeName: String, parameter: String, parameterRange: [Double]) {
+        func targetAndApply(
+            value: Double,
+            nodeName: String,
+            parameter: String,
+            parameterRange: [Double]
+        ) {
             let damperTarget = InstrumentsSet.Track.Part.DamperTarget(
                 trackIdString: "master",
                 nodeNameString: nodeName,
                 parameterString: parameter,
-                parameterRangeArray: parameterRange)
+                parameterRangeArray: parameterRange,
+                parameterInversedBool: false
+            )
             effect.apply(value: value, with: damperTarget)
         }
     }

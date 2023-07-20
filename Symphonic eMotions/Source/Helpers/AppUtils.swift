@@ -154,6 +154,7 @@ final class AppUtils {
                     targetType: partLoaded.damperTarget.nodeType,
                     targetNameEffect: InstrumentsSet.Track.Effect.EffectType(
                         rawValue: partLoaded.damperTarget.nodeName) ?? .none,
+                    parametersInversed: partLoaded.damperTarget.parameterInversed,
                     targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys(
                         rawValue: partLoaded.damperTarget.parameter) ?? .effectType,
                     targetParameterInstrument: partLoaded.damperTarget.parameter,
@@ -357,17 +358,6 @@ final class AppUtils {
                     rampSpeedDown: part.value.rampDown
                 )
                 
-//                let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
-//                    trackId: part.value.damperTarget.trackId,
-//                    nodeType: part.value.damperTarget.nodeType,
-//                    nodeName: part.value.damperTarget.nodeName,
-//                    parameter: part.value.damperTarget.parameter,
-//                    parameterRange: part.value.damperTarget.parameterRange,
-//                    midiData: part.value.damperTarget.midiData,
-//                    nodeSettings: storeNodeSettings,
-//                    dampMode: part.value.damperTarget.dampMode
-//                )
-                
                 var parameter: String = "";
                 if part.value.targetType == .effect {
                     parameter = part.value.targetParameterEffect.rawValue
@@ -385,6 +375,7 @@ final class AppUtils {
                     nodeName: part.value.targetNameEffect.rawValue,
                     parameter: parameter,
                     parameterRange: part.value.damperTarget.parameterRange,
+                    parameterInversed: part.value.parametersInversed,
                     midiData: part.value.damperTarget.midiData,
                     nodeSettings: storeNodeSettings,
                     dampMode: part.value.damperTarget.dampMode

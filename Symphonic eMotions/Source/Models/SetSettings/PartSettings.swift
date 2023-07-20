@@ -24,6 +24,7 @@ class PartSettings: Identifiable {
     var dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode
     var targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType
     var targetNameEffect: InstrumentsSet.Track.Effect.EffectType
+    var parametersInversed: Bool
     var targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
     var targetParameterInstrument: String
     var targetParameterSequencer: String
@@ -41,6 +42,7 @@ class PartSettings: Identifiable {
          dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode,
          targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType,
          targetNameEffect: InstrumentsSet.Track.Effect.EffectType,
+         parametersInversed: Bool,
          targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys,
          targetParameterInstrument: String,
          targetParameterSequencer: String
@@ -58,6 +60,7 @@ class PartSettings: Identifiable {
         self.dampMode = dampMode
         self.targetType = targetType
         self.targetNameEffect = targetNameEffect
+        self.parametersInversed = parametersInversed
         self.targetParameterEffect = targetParameterEffect
         self.targetParameterInstrument = targetParameterInstrument
         self.targetParameterSequencer = targetParameterSequencer

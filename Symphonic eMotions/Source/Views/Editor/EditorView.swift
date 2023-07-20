@@ -71,6 +71,8 @@ struct EditorView: View {
     @State private var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     //One parameter for all types. for effect there's a Type: InstrumentsSet.Track.Effect.EffectKeys
     @State private var targetParameters: [String: String]
+    //Inverse values at forwarding (to effect)
+    @State private var parametersInversed: [String: Bool]
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
@@ -111,6 +113,7 @@ struct EditorView: View {
         var minimalLevelInit = [String: Double]()
         
         var dampModeInit = [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]()
+        var parametersInversedInit = [String: Bool]()
         
         //Loop over tracks once
         for track in setInfoModel.setSettings.tracks {
@@ -175,13 +178,13 @@ struct EditorView: View {
             let instrumentType = track.value.instrumentType
             instrumentTypesInit[track.value.trackId] = instrumentType
             
-            //Hust the parts from current track
+            //Just the parts from current track
             for part in track.value.parts {
                 
                 areaOfInterestInit[part.value.partId] = part.value.areaOfInterest
                 minimalLevelInit[part.value.partId] = part.value.minimalLevel
-                
                 dampModeInit[part.value.partId] = part.value.damperTarget.dampMode
+                parametersInversedInit[part.value.partId] = part.value.damperTarget.parameterInversed
             }
         }
         
@@ -212,6 +215,7 @@ struct EditorView: View {
         _targetTypes = State(initialValue: [:])
         _targetNames = State(initialValue: [:])
         _targetParameters = State(initialValue: [:])
+        _parametersInversed = State(initialValue: parametersInversedInit)
     }
     
     var body: some View {
@@ -266,7 +270,8 @@ struct EditorView: View {
                     dampMode: $dampMode,
                     targetTypes: $targetTypes,
                     targetNames: $targetNames,
-                    targetParameters: $targetParameters
+                    targetParameters: $targetParameters,
+                    parametersInversed: $parametersInversed
                 )
             }
         }
