@@ -127,83 +127,83 @@ extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
         case .dryWetMix:
             return "Dry/Wet Mix"
         case .distDelay:
-            return "Distortion Delay"
+            return "Delay"
         case .distDecay:
-            return "Distortion Decay"
+            return "Decay"
         case .distDelayMix:
-            return "Distortion Delay Mix"
+            return "Delay Mix"
         case .distRingModFreq1:
-            return "Distortion Ring Mod Frequency 1"
+            return "Ring Mod Frequency 1"
         case .distRingModFreq2:
-            return "Distortion Ring Mod Frequency 2"
+            return "Ring Mod Frequency 2"
         case .distRingModBalance:
-            return "Distortion Ring Mod Balance"
+            return "Ring Mod Balance"
         case .distRingModMix:
-            return "Distortion Ring Mod Mix"
+            return "Ring Mod Mix"
         case .distDecimation:
-            return "Distortion Decimation"
+            return "Decimation"
         case .distRounding:
-            return "Distortion Rounding"
+            return "Rounding"
         case .distDecimationMix:
-            return "Distortion Decimation Mix"
+            return "Decimation Mix"
         case .distLinearTerm:
-            return "Distortion Linear Term"
+            return "Linear Term"
         case .distSquaredTerm:
-            return "Distortion Squared Term"
+            return "Squared Term"
         case .distCubicTerm:
-            return "Distortion Cubic Term"
+            return "Cubic Term"
         case .distPolynomialMix:
-            return "Distortion Polynomial Mix"
+            return "Polynomial Mix"
         case .distSoftClipGain:
-            return "Distortion Soft Clip Gain"
+            return "Soft Clip Gain"
         case .distFinalMix:
-            return "Distortion Final Mix"
+            return "Final Mix"
         case .drcAttackDuration:
-            return "DRC Attack Duration"
+            return "Attack Duration"
         case .drcReleaseDuration:
-            return "DRC Release Duration"
+            return "Release Duration"
         case .drcRatio:
-            return "DRC Ratio"
+            return "Ratio"
         case .drcTreshold:
-            return "DRC Threshold"
+            return "Threshold"
         case .expansionRatio:
             return "Expansion Ratio"
         case .expansionThreshold:
             return "Expansion Threshold"
         case .expanderAttackTime:
-            return "Expander Attack Time"
+            return "Attack Time"
         case .expanderReleaseTime:
-            return "Expander Release Time"
+            return "Release Time"
         case .expanderMasterGain:
-            return "Expander Master Gain"
+            return "Master Gain"
         case .hpfCutoffFrequency:
-            return "High-Pass Filter Cutoff Frequency"
+            return "Cutoff Frequency"
         case .hpfResonance:
-            return "High-Pass Filter Resonance"
+            return "Resonance"
         case .cutoffFrequency:
-            return "Low-Pass Filter Cutoff Frequency"
+            return "Cutoff Frequency"
         case .resonance:
-            return "Low-Pass Filter Resonance"
+            return "Resonance"
         case .phaserNotchMinimumFrequency:
-            return "Phaser Notch Minimum Frequency"
+            return "Notch Minimum Frequency"
         case .phaserNotchMaximumFrequency:
-            return "Phaser Notch Maximum Frequency"
+            return "Notch Maximum Frequency"
         case .phaserNotchWidth:
-            return "Phaser Notch Width"
+            return "Notch Width"
         case .phaserNotchFrequency:
-            return "Phaser Notch Frequency"
+            return "Notch Frequency"
         case .phaserVibratoMode:
-            return "Phaser Vibrato Mode"
+            return "Vibrato Mode"
         case .phaserDepth:
-            return "Phaser Depth"
+            return "Depth"
         case .phaserFeedback:
-            return "Phaser Feedback"
+            return "Feedback"
         case .phaserInverted:
-            return "Phaser Inverted"
+            return "Inverted"
         case .phaserLfoBPM:
-            return "Phaser LFO BPM"
+            return "LFO BPM"
         case .phaserDryWetMixer:
-            return "Phaser Dry/Wet Mixer"
+            return "Dry/Wet Mixer"
         case .ppefCenterFrequency:
             return "Peaking Parametric EQ Center Frequency"
         case .ppefGain:

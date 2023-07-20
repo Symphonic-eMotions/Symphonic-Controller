@@ -16,6 +16,7 @@ enum EditorParts: String, CaseIterable {
     case start
     case variation
     case location
+    case effects
     case controller
     //Lets be compatible with 16 tracks
     case track0
@@ -53,6 +54,8 @@ enum EditorParts: String, CaseIterable {
             return "Variation method"
         case .location:
             return "Position in camera view"
+        case .effects:
+            return "Effects"
         case .controller:
             return "Instrument part controller"
         default:

@@ -58,10 +58,12 @@ struct TrackEffectView: View {
 
                                 ForEach( Array(effect.parameters!.enumerated()), id: \.element) { i, parameter in
                                     
-                                    Text("\(parameter.name) \(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
-                                    
+                                    HStack{
+                                        Text("\(parameter.name)")
+                                        Spacer()
+                                        Text("\(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
+                                    }
                                     EffectSliderView(
-                                        label: parameter.name,
                                         value: Binding(
                                             get: { self.trackEffectState[index][i] },
                                             set: { newVal in
@@ -93,8 +95,7 @@ struct TrackEffectView: View {
                                                 )
                                             }
                                         ),
-                                        range: parameter.range,
-                                        showsLabel: false
+                                        range: parameter.range
                                     )
                                     .onAppear{
                                         
@@ -128,30 +129,24 @@ struct TrackEffectView: View {
 
 struct EffectSliderView: View {
     
-    var label: String
     @Binding var value: Float
     var range: [Double]
-    var showsLabel: Bool
     
-    init(label: String, value: Binding<Float>, range: [Double], showsLabel: Bool = true) {
-        self.label = label
+    init(value: Binding<Float>, range: [Double]) {
         _value = value
         self.range = range
-        self.showsLabel = showsLabel
     }
     
     var body: some View {
         GeometryReader { geometry in
                 
             ZStack{
-                if showsLabel { Text(label) }
                 HStack {
                     Slider(value: $value, in: 0...1)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * 0.8)
                     
                     let valueInRange = RangeConverter.rangeToValue(range: range, value: Double(value))
-//                    let valueInRange = value
                     
                     Text("\(valueInRange, specifier: range[1] >= 1000 ? "%.0f" : "%.2f")")
                         .foregroundColor(.white)

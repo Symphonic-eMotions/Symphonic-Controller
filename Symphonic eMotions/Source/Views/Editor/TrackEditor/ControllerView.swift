@@ -28,9 +28,7 @@ struct ControllerView: View {
     @State private var localParametersEffect: [InstrumentsSet.Track.Effect.EffectKeys]
     @State private var localParametersSequencer: [String]
     @State private var localParametersInstrument: [String]
-    
-    @Binding var showTrackEffect: Bool
-    
+        
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
@@ -40,8 +38,7 @@ struct ControllerView: View {
         
         targetTypes: Binding<[String: InstrumentsSet.Track.Part.DamperTarget.NodeType]>,
         targetNames: Binding<[String: InstrumentsSet.Track.Effect.EffectType]>,
-        targetParameters: Binding<[String: String]>,
-        showTrackEffect: Binding<Bool>
+        targetParameters: Binding<[String: String]>
     )  {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -51,7 +48,6 @@ struct ControllerView: View {
         _targetTypes = targetTypes
         _targetNames = targetNames
         _targetParameters = targetParameters
-        _showTrackEffect = showTrackEffect
         
         _localTargetNames = State(initialValue: targetNames.wrappedValue)
         _localEffectTypes = State(initialValue: InstrumentsSet.Track.Effect.EffectType.allCases)
@@ -92,26 +88,6 @@ struct ControllerView: View {
                             showEditorPart = .controller
                         }
                     }
-                    
-                    ZStack {
-                        
-                        Rectangle()
-                            .frame(width: 130, height: 34)
-                            .foregroundColor(.clear)
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .background( showTrackEffect ? .clear : color )
-                        
-                        Text("Effects")
-                            .frame(width: 130, height: 34)
-                        
-                    }
-                    .frame(width: columnWidth, alignment: .leading)
-                    .onTapGesture {
-                        withAnimation {
-                            showTrackEffect.toggle()
-                        }
-                    }
-                    
                 }
                 HStack(spacing: 20) {
                     

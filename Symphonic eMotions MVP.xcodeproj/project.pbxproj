@@ -76,6 +76,7 @@
 		7C7E4FD62A683D63007BEF14 /* SetLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD52A683D63007BEF14 /* SetLoading.swift */; };
 		7C7E4FD82A683DB4007BEF14 /* PartEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD72A683DB4007BEF14 /* PartEditor.swift */; };
 		7C7E4FDA2A683E52007BEF14 /* SetSubscribers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FD92A683E52007BEF14 /* SetSubscribers.swift */; };
+		7C7E4FDC2A688FFB007BEF14 /* EffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FDB2A688FFB007BEF14 /* EffectView.swift */; };
 		7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */; };
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
@@ -252,6 +253,7 @@
 		7C7E4FD52A683D63007BEF14 /* SetLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLoading.swift; sourceTree = "<group>"; };
 		7C7E4FD72A683DB4007BEF14 /* PartEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartEditor.swift; sourceTree = "<group>"; };
 		7C7E4FD92A683E52007BEF14 /* SetSubscribers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSubscribers.swift; sourceTree = "<group>"; };
+		7C7E4FDB2A688FFB007BEF14 /* EffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseOutCubicDamper.swift; sourceTree = "<group>"; };
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
 				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
 				7C4A545C2A5B288E00FB6514 /* ControllerView.swift */,
+				7C7E4FDB2A688FFB007BEF14 /* EffectView.swift */,
 			);
 			path = TrackEditor;
 			sourceTree = "<group>";
@@ -1021,6 +1024,7 @@
 				C069592326B4F2F6002EB522 /* EMButton.swift in Sources */,
 				C069590626B4E150002EB522 /* InstrumentsSet.swift in Sources */,
 				7C7E4FD22A683C26007BEF14 /* SetTransport.swift in Sources */,
+				7C7E4FDC2A688FFB007BEF14 /* EffectView.swift in Sources */,
 				7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */,
 				7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */,
 				7C7E4FD02A670E86007BEF14 /* TrackEffectsHelper.swift in Sources */,

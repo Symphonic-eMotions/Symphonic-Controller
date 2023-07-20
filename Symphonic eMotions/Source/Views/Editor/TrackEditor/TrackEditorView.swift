@@ -315,6 +315,16 @@ struct TrackEditorView: View {
                         trackId: key
                     )
                 }
+                if showEditorPart == editorPart || showEditorPart == .effects {
+
+                    EffectView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+                        trackId: key,
+                        showTrackEffect: $showTrackEffect
+                    )
+
+                }
                 if showEditorPart == editorPart || showEditorPart == .controller {
                     
                     ControllerView(
@@ -325,21 +335,11 @@ struct TrackEditorView: View {
                         dampMode: $dampMode,
                         targetTypes: $targetTypes,
                         targetNames: $targetNames,
-                        targetParameters: $targetParameters,
-                        showTrackEffect: $showTrackEffect
+                        targetParameters: $targetParameters
                     )
                 }
                 
                 Divider()
-                .sheet(isPresented: $showTrackEffect) {
-                    
-                    TrackEffectView(
-                        setInfoModel: setInfoModel,
-                        currentTrack: setInfoModel.setSettings.tracks[key]!,
-                        trackId: key,
-                        showTrackEffect: $showTrackEffect
-                    )
-                }
                 
             //End each key in setInfoModel.setSettings.tracks
             }
