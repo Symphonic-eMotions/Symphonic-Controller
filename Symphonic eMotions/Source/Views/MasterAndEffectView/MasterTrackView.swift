@@ -49,7 +49,11 @@ struct MasterTrackView: View {
                                 
                                 ForEach( Array(effect.parameters!.enumerated()), id: \.element) { i, parameter in
                                     
-                                    Text("\(parameter.name) \(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
+                                    HStack{
+                                        Text("\(parameter.name)")
+                                        Spacer()
+                                        Text("\(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
+                                    }
                                     
                                     MasterSliderView(
                                         label: parameter.name,
