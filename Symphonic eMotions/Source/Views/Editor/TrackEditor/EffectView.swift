@@ -62,7 +62,7 @@ struct EffectView: View {
                 }
                 HStack(spacing: 20) {
                     
-                    Text("Edit effect butttons")
+                    Text("Switch effects")
                     
 //                    ForEach(Array(currentTrack.effects.values), id: \.id) { effect in
 //                        Text(effect.name)

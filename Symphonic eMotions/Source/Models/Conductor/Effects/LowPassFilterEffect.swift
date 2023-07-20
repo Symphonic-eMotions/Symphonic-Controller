@@ -24,7 +24,11 @@ class LowPassFilterEffect: AudioProcessingEffect {
     }
     
     func chain(to input: Node) -> Node {
-        let newNode = LowPassFilter(input, cutoffFrequency: cutOffFrequency.value, resonance: resonance.value)
+        let newNode = LowPassFilter(
+            input,
+            cutoffFrequency: cutOffFrequency.value,
+            resonance: resonance.value
+        )
         node = newNode
         return newNode
     }
@@ -35,9 +39,6 @@ class LowPassFilterEffect: AudioProcessingEffect {
         case "cutoffFrequency":
             let cf = RangeConverter.valueToRange(range: cutOffFrequency.range, value: value, exponent: 2)
             (node as? LowPassFilter)?.cutoffFrequency = AUValue( cf )
-        case "cutoffFrequencyInverted":
-            let cfi = RangeConverter.valueToRange(range: cutOffFrequency.range, value: value, exponent: 0, inverted: true)
-            (node as? LowPassFilter)?.cutoffFrequency = AUValue( cfi )
         case "resonance":
             let r = RangeConverter.valueToRange(range: resonance.range, value: value, exponent: 1)
             (node as? LowPassFilter)?.resonance = AUValue( r )

@@ -90,7 +90,8 @@ extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
             .postgain,
             .positiveShapeParameter,
             .negativeShapeParameter,
-            .dryWetTanh
+            .dryWetTanh,
+            .volume
         ]
     }
     
@@ -228,6 +229,8 @@ extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
             return "Negative Shape Parameter"
         case .dryWetTanh:
             return "Dry/Wet Tanh"
+        case .volume:
+            return "Volume"
         }
     }
 }
@@ -318,6 +321,8 @@ extension InstrumentsSet.Track {
             case positiveShapeParameter
             case negativeShapeParameter
             case dryWetTanh
+            //MixerEffect
+            case volume
         }
         
         case bandPassFilter(BandPassFilterEffect)
@@ -329,6 +334,7 @@ extension InstrumentsSet.Track {
         case expander(ExpanderEffect)
         case highPassFilter(HighPassFiltereffect)
         case lowPassFilter(LowPassFilterEffect)
+        case mixer(MixerEffect)
         case phaser(PhaserEffect)
         case peakingParametricEqualizerFilter(PeakingParametricEqualizerFilterEffect)
         case responseReverb(ResponseReverbEffect)
@@ -343,6 +349,8 @@ extension InstrumentsSet.Track {
         ) {
             let effectType = effectType
             switch effectType {
+            case .mixer:
+                self = .mixer(MixerEffect(volume: parameters[0]))
             case .bandPassFilter:
                 self = .bandPassFilter(BandPassFilterEffect(centerFrequency: parameters[0], bandwidth: parameters[1]))
             case .costelloReverb:
@@ -454,6 +462,10 @@ extension InstrumentsSet.Track {
                 let cutOffFrequency = try container.decode(ValueAndRange.self, forKey: .cutoffFrequency)
                 let resonance = try container.decode(ValueAndRange.self, forKey: .resonance)
                 self = .lowPassFilter(LowPassFilterEffect(cutOffFrequency: cutOffFrequency, resonance: resonance))
+            
+            case .mixer:
+                let volume = try container.decode(ValueAndRange.self, forKey: .volume)
+                self = .mixer(MixerEffect(volume: volume))
                 
             case .phaser:
                 let phaserNotchMinimumFrequency = try container.decode(ValueAndRange.self, forKey: .phaserNotchMinimumFrequency)
@@ -507,6 +519,7 @@ extension InstrumentsSet.Track {
             case .expander: return .expander
             case .highPassFilter: return .highPassFilter
             case .lowPassFilter: return .lowPassFilter
+            case .mixer: return .mixer
             case .phaser: return .phaser
             case .peakingParametricEqualizerFilter: return .peakingParametricEqualizerFilter
             case .responseReverb: return .responseReverb
@@ -530,11 +543,13 @@ extension InstrumentsSet.Track {
                     return effect
                 case .dynamicRangeCompressor(let effect):
                     return effect
-            case .expander(let effect):
+                case .expander(let effect):
                     return effect
                 case .highPassFilter(let effect):
                     return effect
                 case .lowPassFilter(let effect):
+                    return effect
+                case .mixer(let effect):
                     return effect
                 case .phaser(let effect):
                     return effect
@@ -571,6 +586,8 @@ extension InstrumentsSet.Track {
                 return [.hpfCutoffFrequency, .hpfResonance]
             case .lowPassFilter:
                 return [.cutoffFrequency, .resonance]
+            case .mixer:
+                return [.volume]
             case .phaser:
                 return [.phaserNotchMinimumFrequency, .phaserNotchMaximumFrequency, .phaserNotchWidth, .phaserNotchFrequency, .phaserVibratoMode, .phaserDepth, .phaserFeedback, .phaserInverted, .phaserLfoBPM, .phaserDryWetMixer]
             case .peakingParametricEqualizerFilter:
@@ -631,6 +648,7 @@ extension InstrumentsSet.Track.Effect {
         case dynamicRangeCompressor
         case highPassFilter
         case lowPassFilter
+        case mixer
         case phaser
         case peakingParametricEqualizerFilter
         case responseReverb
@@ -659,6 +677,8 @@ extension InstrumentsSet.Track.Effect {
                 return "High Pass Filter"
             case .lowPassFilter:
                 return "Low Pass Filter"
+            case .mixer:
+                return "Amplitude"
             case .phaser:
                 return "Phaser"
             case .peakingParametricEqualizerFilter:
@@ -753,6 +773,10 @@ extension InstrumentsSet.Track.Effect: Encodable {
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.cutOffFrequency, forKey: .cutoffFrequency)
             try container.encode(effect.resonance, forKey: .resonance)
+        
+        case .mixer(let effect):
+            try container.encode(effectType, forKey: .effectType)
+            try container.encode(effect.volume, forKey: .volume)
             
         case .phaser(let effect):
             try container.encode(effectType, forKey: .effectType)
