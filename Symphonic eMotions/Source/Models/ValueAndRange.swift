@@ -10,7 +10,7 @@ import AudioKit
 
 struct ValueAndRange: Codable {
     
-    static var zero: ValueAndRange { .init(value: 0, range: [0, 0]) }
+    static var zero: ValueAndRange { .init(value: 0, range: [0, 1]) }
     
     var value: AUValue
     var range: [Double]

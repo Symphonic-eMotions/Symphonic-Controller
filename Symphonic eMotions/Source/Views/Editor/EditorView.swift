@@ -255,7 +255,6 @@ struct EditorView: View {
                     noteNumbers: $noteNumbers,
                     notesSequenceType: $notesSequenceType,
 
-
                     midiClips: $midiClips,
                     midiClipLetters: $midiClipLetters,
 

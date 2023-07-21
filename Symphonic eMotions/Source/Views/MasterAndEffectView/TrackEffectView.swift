@@ -16,7 +16,7 @@ struct TrackEffectView: View {
     
     var trackId: String
     @State var trackEffectState: [[Float]]
-    var viewObject: [TrackEffect]
+    var trackEffectViewObject: [TrackEffect]
     
     @Binding var showTrackEffect: Bool
 
@@ -31,8 +31,8 @@ struct TrackEffectView: View {
         self.trackId = trackId
         self.currentTrack = currentTrack
         self._showTrackEffect = showTrackEffect
-        self.viewObject = TrackEffectsHelper.trackEffectViewObject(trackSettings: currentTrack)
-        self.trackEffectState = TrackEffectsHelper.trackEffectsStateObject(viewObject: viewObject)
+        self.trackEffectViewObject = TrackEffectsHelper.trackEffectViewObject(trackSettings: currentTrack)
+        self.trackEffectState = TrackEffectsHelper.trackEffectsStateObject(viewObject: trackEffectViewObject)
     }
     
     var body: some View {
@@ -42,7 +42,7 @@ struct TrackEffectView: View {
             VStack{
                 ScrollView (.vertical){
 
-                    ForEach( Array(viewObject.enumerated()), id: \.element ) { index, effect in
+                    ForEach( Array(trackEffectViewObject.enumerated()), id: \.element ) { index, effect in
                         
                         //Stack per effect
                         ZStack {

@@ -27,4 +27,11 @@ class TrackEffectsSettings: Identifiable {
         self.effectType = effectType
         self.parameters = parameters
     }
+    
+    static func effectValueRanges(effectType: InstrumentsSet.Track.Effect.EffectType) -> [ValueAndRange] {
+            let ite = InstrumentsSet.Track.Effect()
+            let valueAndRange = ite.effectParameterValues(effectType: effectType)
+            
+            return valueAndRange
+        }
 }

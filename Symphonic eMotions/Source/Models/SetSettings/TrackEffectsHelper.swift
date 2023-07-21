@@ -7,6 +7,7 @@
 
 import Foundation
 import OrderedCollections
+import AudioKit
 
 class TrackEffectsHelper {
  
@@ -51,6 +52,28 @@ class TrackEffectsHelper {
         return trackEffectsSettings
     }
     
+    static func trackEffectInstrumentsSet(trackSetttings: TrackSettings ) -> [InstrumentsSet.Track.Effect] {
+        
+        var trackEffects: [InstrumentsSet.Track.Effect] = []
+        for effect in trackSetttings.effects {
+            var params: [ValueAndRange] = []
+            let paramDict = effect.value.parameters
+            for p in paramDict {
+                params.append(ValueAndRange(
+                    value: AUValue(p.value.value),
+                    range: p.value.range
+                ))
+            }
+            
+            let trackEffect = InstrumentsSet.Track.Effect(
+                effectType: effect.value.effectType,
+                parameters: params
+            )
+            trackEffects.append(trackEffect)
+        }
+        return trackEffects
+    }
+    
     //Create the object to build the master track view. This cannot hold changed values due to View rebuild on change
     static func trackEffectViewObject(
         trackSettings: TrackSettings
@@ -87,6 +110,62 @@ class TrackEffectsHelper {
             trackEffectsViewObject.append(trackEffect)
         }
         return trackEffectsViewObject
+    }
+    
+    static func newTrackEffect(effectType: InstrumentsSet.Track.Effect.EffectType) -> TrackEffect {
+        
+        let effectName = effectType.rawValue
+        
+        let ite = InstrumentsSet.Track.Effect()
+        let parameterValues = ite.effectParameterValues(effectType: effectType)
+        let parameterNames = ite.effectVars(effectType: effectType)
+        
+        var parameters: [Parameter] = []
+        
+        for (index, parameterValue) in parameterValues.enumerated() {
+            let parameter = Parameter(
+                name: parameterNames[index].rawValue,
+                value: Double(parameterValue.value),
+                range: parameterValue.range
+            )
+            parameters.append(parameter)
+        }
+        let trackEffect = TrackEffect(effectName: effectName, parameters: parameters)
+        
+        return trackEffect
+    }
+    
+    static func newTrackEffectSetting(
+        effectType: InstrumentsSet.Track.Effect.EffectType,
+        key: Int
+    ) -> TrackEffectsSettings {
+        
+        let effectName = effectType.rawValue
+        
+        let ite = InstrumentsSet.Track.Effect()
+        let parameterValues = ite.effectParameterValues(effectType: effectType)
+        let parameterNames = ite.effectVars(effectType: effectType)
+        
+        var parameters: OrderedDictionary<Int, ParameterSettings> = OrderedDictionary<Int, ParameterSettings>()
+        
+        for (index, parameterValue) in parameterValues.enumerated() {
+            let parameter = ParameterSettings(
+                index: index,
+                name: parameterNames[index].rawValue,
+                value: Double(parameterValue.value),
+                range: parameterValue.range
+            )
+            parameters[index] = parameter
+        }
+        
+        let tes = TrackEffectsSettings(
+            index: key,
+            name: effectName,
+            effectType: effectType,
+            parameters: parameters
+        )
+        
+        return tes
     }
     
     //This last object keeps track of the same master track values to hold localy in a @State var

@@ -381,8 +381,8 @@ final class AppUtils {
                     dampMode: part.value.damperTarget.dampMode
                 )
                 
-                print("SAVING DAMPER TARGET")
-                print(storeDamperTarget)
+//                print("SAVING DAMPER TARGET")
+//                print(storeDamperTarget)
                 
                 let storePart = InstrumentsSet.Track.Part(
                     instrumentPartName: part.value.partName,
@@ -407,6 +407,8 @@ final class AppUtils {
                 loopsToGrid: track.value.loopsToGrid
             )]
             
+            let effects: [InstrumentsSet.Track.Effect] = TrackEffectsHelper.trackEffectInstrumentsSet(trackSetttings: track.value)
+            
             let storeTrack = InstrumentsSet.Track(
                 id: track.value.trackId,
                 trackId: track.value.trackId,
@@ -426,7 +428,8 @@ final class AppUtils {
                 notesSequenceType: track.value.notesSequenceType,
                 exsFiles: [InstrumentsSet.Track.ExsFile(fileName: track.value.exsFile.rawValue)],
                 audioFiles: track.value.audioFiles,
-                effects: instrumentSet.tracks[track.value.trackIndex].effects, //track.effects,
+//                effects: instrumentSet.tracks[track.value.trackIndex].effects,
+                effects: effects,
                 parts: storeParts,
                 levels: track.value.levels
             )

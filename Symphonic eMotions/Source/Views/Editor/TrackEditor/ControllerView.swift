@@ -29,7 +29,8 @@ struct ControllerView: View {
     @State private var localParametersEffect: [InstrumentsSet.Track.Effect.EffectKeys]
     @State private var localParametersSequencer: [String]
     @State private var localParametersInstrument: [String]
-        
+    
+    
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
@@ -57,6 +58,7 @@ struct ControllerView: View {
         _localParametersEffect = State(initialValue: InstrumentsSet.Track.Effect.EffectKeys.allCases)
         _localParametersSequencer = State(initialValue: ["velocity"])
         _localParametersInstrument = State(initialValue: ["samplerCC9"])
+        
     }
     
     let columnWidth: CGFloat = 150
@@ -115,7 +117,8 @@ struct ControllerView: View {
                                 
                                 if targetType == .effect {
                                     
-                                    Picker("Effect name", selection: bindingTargetNames(partId)) {
+                                    //Effect Type controls actual effects in settings
+                                    Picker("Effect type", selection: bindingTargetNames(partId)) {
                                         ForEach(localEffectTypes, id: \.self) { type in
                                             Text(type.description).tag(type)
                                         }
@@ -131,6 +134,7 @@ struct ControllerView: View {
                                     .pickerStyle(.menu)
                                     .frame(width: 200, height: 50)
                                     
+                                    //Inverse parameter during play
                                     Toggle(isOn: bindingForInversionParameter(partId)){
                                         Text("Inversed")
                                     }
@@ -192,9 +196,31 @@ struct ControllerView: View {
                 targetNames[key] ?? .none
             },
             set: { newValue in
+                
                 targetNames[key] = newValue
                 currentTrack.parts[key]?.targetNameEffect = newValue
                 localParametersEffect = filteredParameterEffect(partId: key)
+                
+                // find the key in currentTrack.effects corresponding to newValue
+                if let foundKey = findKeyForValue(value: newValue) {
+                    //We need to do nothing, effect is already there to control
+                    print("Effect allready in chain \(newValue) at key \(foundKey) in currentTrack.effects")
+                    
+                } else {
+                    
+                    let highestKey = currentTrack.effects.keys.max() ?? 0
+                    let nextKey = highestKey + 1
+                    
+                    //Add effect to effects
+                    let newEffect = TrackEffectsHelper.newTrackEffectSetting(
+                        effectType: newValue,
+                        key: nextKey
+                    )
+                    
+                    currentTrack.effects[nextKey] = newEffect
+                    
+                    print("EFFECT ADDED \(newValue.rawValue)")
+                }
             }
         )
     }
@@ -299,4 +325,33 @@ struct ControllerView: View {
         
         return trackEffect.effectVars(effectType: selectedEffectType!)
     }
+    
+    private func findKeyForValue(value: InstrumentsSet.Track.Effect.EffectType) -> Int? {
+        for (key, effect) in currentTrack.effects {
+            if effect.effectType == value {
+                return key
+            }
+        }
+        return nil
+    }
+    
+//    func removeTargetNameEffect(at key: String, effectKey: Int) {
+//        // Check if the part exists for the given key
+//        guard let part = currentTrack.parts[key] else {
+//            print("No part found for key: \(key)")
+//            return
+//        }
+//
+//        // Check if the effect exists for the given effectKey
+//        guard currentTrack.effects.keys.contains(effectKey) else {
+//            print("No effect found for key: \(effectKey)")
+//            return
+//        }
+//
+//        // Set the targetNameEffect to none
+////        part.targetNameEffect = .none
+//
+//        // Remove the effect from the effects dictionary
+//        currentTrack.effects.remove(at: effectKey)
+//    }
 }
