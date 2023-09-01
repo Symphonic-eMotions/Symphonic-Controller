@@ -63,6 +63,7 @@ struct TrackEffectView: View {
                                         Spacer()
                                         Text("\(parameter.range[0], specifier: parameter.range[1] >= 1000 ? "%.0f" : "%.2f") - \(parameter.range[1], specifier: "%.0f")")
                                     }
+                                    
                                     EffectSliderView(
                                         value: Binding(
                                             get: { self.trackEffectState[index][i] },
@@ -83,22 +84,26 @@ struct TrackEffectView: View {
                                                 )
                                                 
                                                 //Send to conductor for real time modification
-                                                self.setInfoModel.conductor.forwardEffect(
+                                                setInfoModel.conductor.forwardEffect(
                                                     value: Double(newVal),
                                                     for: dt
                                                 )
                                                 
-                                                //Store in object to disk
-                                                if let effect = currentTrack.effects[index],
-                                                   let parameter = effect.parameters[i] {
-
-                                                    let convertedValue = RangeConverter.valueToRange(
-                                                        range: parameter.range,
-                                                        value: Double(newVal)
-                                                    )
-
-                                                    parameter.value = Double(convertedValue)
-                                                }
+                                                print("--> newVal \(newVal)")
+                                                print(dt)
+                                                
+                                                //Store to disk in currentTrack
+                                                
+//                                                if let effect = currentTrack.effects[index],
+//                                                   let parameter = effect.parameters[i] {
+//
+//                                                    let convertedValue = RangeConverter.valueToRange(
+//                                                        range: parameter.range,
+//                                                        value: Double(newVal)
+//                                                    )
+//                                                    //Store in object to disk
+//                                                    parameter.value = Double(convertedValue)
+//                                                }
                                             }
                                         ),
                                         range: parameter.range

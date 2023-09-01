@@ -27,7 +27,7 @@ struct EditorView: View {
     @State var editorParts: [EditorParts]
     
     //Levels
-    //!!!trackLevels have JUST the level indexes where yhe track is in!!!!!!!!!!!!!!
+    //!!!trackLevels have JUST the level indexes where the track is in!
     @State var trackLevels: [String: [Int]]
     //Keeps track of the midi index generated within the sequencer
     @State var noteNumbersLevels: [String: [Int]]

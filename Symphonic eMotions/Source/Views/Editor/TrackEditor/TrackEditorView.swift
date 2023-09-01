@@ -108,7 +108,7 @@ struct TrackEditorView: View {
                             .padding()
                         
                         Spacer()
-                        
+                                                
                         //Remove track
                         Button("-"){
                             trackKeyToRemove = key

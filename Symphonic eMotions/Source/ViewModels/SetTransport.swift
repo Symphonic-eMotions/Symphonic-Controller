@@ -30,6 +30,33 @@ extension SetInfoModel {
         )
     }
     
+    func tapAStartRecordTracks(){
+        //Start playing if not playing
+        if !isSetPlaying {
+            conductor.playEngineAndTracks(
+                setSettings: self.setSettings,
+                level: Int(leveling.currentSetLevelSubject.value)
+            )
+        }
+        
+        //Start recording all tracks separate
+        conductor.startRecordingTracks(
+            setSettings: self.setSettings
+        )
+    }
+    
+    func tapStopRecordTracks(){
+        //Stop recording
+        conductor.stopRecordingTracks(
+            setSettings: self.setSettings
+        )
+        
+        conductor.pauzeEngineAndStopTracks(
+            setSettings: self.setSettings,
+            resetLevels: false
+        )
+    }
+    
     func tapSetTempoBPMPlus(){
         self.setSettings.bpm += 1
         let _ = self.conductor.setTempo(tempoChange: 5)

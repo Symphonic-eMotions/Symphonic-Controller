@@ -39,7 +39,7 @@ struct SavedSetsList: View {
                     .font(.title)
                 Spacer()
             }
-            //User files documents fomder
+            //User files documents folder
             ForEach( userPresets, id: \.self ){ url in
                 
                 //Loop through filtered files in Documents folder

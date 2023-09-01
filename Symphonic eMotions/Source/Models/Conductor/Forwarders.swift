@@ -39,6 +39,8 @@ extension Conductor {
         
         //inverse value if requested in dampertarget
         let valueToApply = damperTarget.parameterInversed ? 1 - value : value
+        
+//        print("APPLY \(valueToApply) \(damperTarget.trackId)")
             
         effect.apply(value: valueToApply, with: damperTarget)
     }

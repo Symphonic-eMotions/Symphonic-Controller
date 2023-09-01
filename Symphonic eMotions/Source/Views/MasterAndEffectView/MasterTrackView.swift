@@ -72,9 +72,9 @@ struct MasterTrackView: View {
                                                 )
                                                 
                                                 //Store in object for writing to file (encoder)
-                                                let rangedValue = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
+                                                let range = setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.range
                                                 setInfoModel.setSettings.masterEffects[index]!.parameters[i]!.value = Double(
-                                                    RangeConverter.valueToRange(range: rangedValue, value: Double(newVal))
+                                                    RangeConverter.valueToRange(range: range, value: Double(newVal))
                                                 )
                                             }
                                         ),

@@ -29,6 +29,10 @@ final class Conductor {
     //Second mixer is the output of the first mixer's effect chain output
     private var mixerMaster: Mixer
     
+    //trackMaxers for recording tracks
+    internal var trackMixers: [String: Mixer] = [:]
+    internal var trackRecorders: [String: NodeRecorder] = [:]
+    
     //trackSequencers holds MIDI file information
     //Is the play head in the score
     //Controls speed, loop (length)
@@ -118,6 +122,8 @@ final class Conductor {
         rampDown = [:]
         volume = [:]
         trackSamplers = [:]
+        trackMixers = [:]
+        trackRecorders = [:]
         trackSequencersCallbackers = [:]
         trackSequencers = [:]
         trackSequencersMemory = [:]
@@ -158,6 +164,15 @@ final class Conductor {
                 trackSamplers[track.id] = nil
             }
             
+            if( trackMixers[track.id] != nil ) {
+                trackMixers[track.id]?.removeAllInputs()
+                trackMixers[track.id] = nil
+            }
+
+            if( trackRecorders[track.id] != nil ){
+                trackRecorders[track.id] = nil
+            }
+            
             if( trackInstruments[track.id] != nil ) {
                 trackInstruments.removeValue(forKey: track.id)
                 trackInstruments[track.id] = nil
@@ -193,8 +208,6 @@ final class Conductor {
         loadTracks(currentSetLevel: currentSetLevel)
         
         loadMaster(mixer: mixer)
-        
-        
     }
     
     
@@ -213,6 +226,8 @@ final class Conductor {
         var midiChannels = collectMidiChannels()
         
         set.tracks.forEach { track in
+            
+            trackMixers[track.id] = Mixer()
             
             //SoundModule controlled velocity
             //Initialize velocity to zero for silent start of these instrument
@@ -632,9 +647,10 @@ final class Conductor {
             //Default length of 1 loop, for midi memory we need the length of "all" loops, thus the sum of loops
             var duration = Duration(beats: midiFile.loopLength.first ?? 0)
             
+            //Fill sequencer as a copy buffer
             if length == "all" {
                 
-                //Over write loop duration
+                //Over write loop duration with complete length
                 duration = Duration(beats: midiFile.loopLength.reduce(0, {sum, value in sum + value}) )
                 
                 if [.audioBuffer,.audioBufferTimed].contains(track.instrumentType){
@@ -654,8 +670,8 @@ final class Conductor {
                             //Remember for next loop
                             interval = interval + lengthInBeats
                             
-                            print("AudioBufferALL sequencer startTime: \(startTime) audioFileName: \(audioFile.fileName) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
-                            
+//                            print("AudioBufferALL sequencer startTime: \(startTime) audioFileName: \(audioFile.fileName) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
+//                            
                             sequencer.tracks.first?.add(
                                 noteNumber: MIDINoteNumber(noteNumber),
                                 velocity: 127,
@@ -683,8 +699,6 @@ final class Conductor {
                     
                     //Create seperate isVelocity func
                     let isVelocitySensitive = isVelocitySensitive(for: track)
-                    
-                    
                     if isVelocitySensitive {
                         
                         //Create MIDI callback instrument
@@ -700,14 +714,12 @@ final class Conductor {
                         sequencer.setGlobalMIDIOutput(trackSamplers[track.id]!.midiIn)
                     }
                 case .audioBuffer:
-                    
                     trackSamplers[track.id] = createAudioBufferSampler(
                         for: track,
                         and: sequencer,
                         currentSetLevel: currentSetLevel,
                         samplePath: samplePath
                     )
-                    
                 case .audioBufferTimed:
                     trackSamplers[track.id] = createAudioBufferTimePitch(
                         for: track,
@@ -1004,7 +1016,41 @@ final class Conductor {
                 }
             }
         } catch {
-            print("Catched \(error)")
+            print("Catched playEngineAndTracks \(error)")
+        }
+    }
+    
+    internal func startRecordingTracks(
+        setSettings: SetSettings
+    ){
+        do {
+            try setSettings.tracks.forEach { track in
+
+                try trackRecorders[track.value.trackId]?.record()
+
+                print("RECORDING \(track.value.trackName)")
+            }
+            
+//            try masterRecorder?.record()
+            
+            print("RECORDING master")
+            
+        }
+        catch {
+            print("Error startRecordingTracks \(error)")
+        }
+    }
+    
+    internal func stopRecordingTracks(
+        setSettings: SetSettings
+    ){
+        
+//        masterRecorder?.stop()
+//        print("STOP RECORDING master")
+        
+        setSettings.tracks.forEach { track in
+
+            trackRecorders[track.value.trackId]?.stop()
         }
     }
     

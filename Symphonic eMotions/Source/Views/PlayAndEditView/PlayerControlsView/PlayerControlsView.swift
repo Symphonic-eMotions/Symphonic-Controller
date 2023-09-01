@@ -26,6 +26,8 @@ struct PlayerControlsView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool
     
+    @State var areTracksRecording: Bool = false
+    
     var body: some View {
         HStack(alignment: .center, spacing: 32.0) {
             
@@ -50,6 +52,40 @@ struct PlayerControlsView: View {
                             showMasterTrack.toggle()
                         }, color: .accentColor, isSolid: false) {
                             Text("Master")
+                        }
+                    }
+                    
+                    if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
+                        
+                        //Record tracks to file start stop
+                        EMButton(action: {
+                            
+                            if areTracksRecording {
+                                sessionDisplaySub = .stopped
+                                setInfoModel.tapStopAudioEngine()
+                                self.isSetPlaying = false
+                                setInfoModel.leveling.pauseLevel = false
+                                
+                                //Record part
+                                
+                                self.areTracksRecording = false
+                                setInfoModel.tapStopRecordTracks()
+                            }
+                            else{
+                                
+                                sessionDisplaySub = .playing
+                                setInfoModel.tapStartAudioEngine()
+                                self.isSetPlaying = true
+                                
+                                //Record part
+                                setInfoModel.tapAStartRecordTracks()
+                                self.areTracksRecording = true
+                            }
+                            
+                        }, color: .accentColor) {
+                            Image(systemName: areTracksRecording ?
+                                    "record.circle" :
+                                    "record.circle.fill")
                         }
                     }
                     
