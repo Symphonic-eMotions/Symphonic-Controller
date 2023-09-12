@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OrderedCollections
 
 extension SetInfoModel {
     
@@ -55,9 +56,9 @@ extension SetInfoModel {
         //New damperTarget
         let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
             trackId: trackId,
-            nodeType: .sequencer,
-            nodeName: "",
-            parameter: "velocity",
+            nodeType: .effect,
+            nodeName: "lowPassFilter",
+            parameter: "cutoffFrequency",
             parameterRange: [0,1],
             parameterInversed: false,
             midiData: nil,
@@ -86,6 +87,44 @@ extension SetInfoModel {
             targetParameterSequencer: "velocity"
             
         )
+        
+        let effect = InstrumentsSet.Track.Effect(
+            effectType: .lowPassFilter,
+            parameters: [
+                //cutOffFrequency
+                ValueAndRange(value: 20000, range: [10,20000]),
+                //resonance
+                ValueAndRange(value: -20, range: [-20,40])
+            ]
+        )
+        
+        let cutOffParameterSetting = ParameterSettings(
+            index: 0,
+            name: "Cut off frequency",
+            value: 20000,
+            range: [10,20000]
+        )
+        
+        let resoneceParameterSetting = ParameterSettings(
+            index: 1,
+            name: "Resonance",
+            value: -20,
+            range: [-20,20]
+        )
+        
+        var parameters = OrderedDictionary<Int, ParameterSettings>()
+        parameters[cutOffParameterSetting.index] = cutOffParameterSetting
+        parameters[resoneceParameterSetting.index] = resoneceParameterSetting
+        
+        let effectSetting = TrackEffectsSettings(
+            index: 0,
+            name: "Low pass filter",
+            effectType: .lowPassFilter,
+            parameters: parameters
+        )
+        
+        var effects = OrderedDictionary<Int, TrackEffectsSettings>()
+        effects[0] = effectSetting
         
         //Create new Track
         let newTrack = TrackSettings(
@@ -116,7 +155,7 @@ extension SetInfoModel {
             loopsToGridMapped: [],
             levels: (0...self.setSettings.levels.count-1).map { $0 },
             parts: [partId: newPart],
-            effects: [:]
+            effects: effects
         )
         
         return newTrack

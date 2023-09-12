@@ -83,9 +83,8 @@ struct PlayerControlsView: View {
                             }
                             
                         }, color: .accentColor) {
-                            Image(systemName: areTracksRecording ?
-                                    "record.circle" :
-                                    "record.circle.fill")
+                            Image(systemName: areTracksRecording ? "record.circle" : "record.circle.fill")
+                                    .foregroundColor(areTracksRecording ? .red : .primary)
                         }
                     }
                     
