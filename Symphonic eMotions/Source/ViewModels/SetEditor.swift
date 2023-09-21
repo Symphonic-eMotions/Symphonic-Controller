@@ -85,18 +85,8 @@ extension SetInfoModel {
             targetParameterEffect: .cutoffFrequency,
             targetParameterInstrument: "samplerCC9",
             targetParameterSequencer: "velocity"
-            
         )
         
-        let effect = InstrumentsSet.Track.Effect(
-            effectType: .lowPassFilter,
-            parameters: [
-                //cutOffFrequency
-                ValueAndRange(value: 20000, range: [10,20000]),
-                //resonance
-                ValueAndRange(value: -20, range: [-20,40])
-            ]
-        )
         
         let cutOffParameterSetting = ParameterSettings(
             index: 0,

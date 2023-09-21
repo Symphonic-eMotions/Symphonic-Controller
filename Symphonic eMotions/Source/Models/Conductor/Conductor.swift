@@ -501,13 +501,28 @@ final class Conductor {
             if track.value.levels.contains(selectedLevel)
             {
                 let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOn)
+//                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOn)
+                
+                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
+                    trackAmpEnvelope.scheduleMIDIEvent(event: envOn)
+                }
+                else{
+                    print("un mute \(track.value.trackId) not found")
+                }
+                
             }
             //Mute all other occasions is after last level
             else {
                 
                 let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
+//                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
+                
+                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
+                    trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
+                }
+                else{
+                    print("mute \(track.value.trackId) not found")
+                }
                 
                 //Highest level is full and is for the first time
                 if selectedLevel == setSettings.levels.count &&  isSetPlaying {

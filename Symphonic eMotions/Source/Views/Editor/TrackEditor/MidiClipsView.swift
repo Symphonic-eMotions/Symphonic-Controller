@@ -168,7 +168,7 @@ struct MidiClipsView: View {
                 }}
             ))
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            .frame(width: 40, height: 25)
+            .frame(width: 50, height: 25)
             
             Text("beats")
                 .frame(width: columnWidth, alignment: .leading)
