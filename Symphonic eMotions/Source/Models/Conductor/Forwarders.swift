@@ -184,7 +184,7 @@ extension Conductor {
                 soundModuleParam02[track.id] = value
             
             default:
-                print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
+//                print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
                 return
         }
     }

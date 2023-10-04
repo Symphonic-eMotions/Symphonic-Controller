@@ -21,13 +21,13 @@ extension Conductor {
         trackSequencers[track.trackId]?.preroll()
     }
     
-    internal func playNoteNumber(_ track: TrackSettings, _ noteNumber: Int){
+    internal func playSamplerNote(_ track: TrackSettings, _ noteNumber: Int){
             
         let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 120, channel: 1)
         trackSamplers[track.trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
     }
     
-    internal func stopNoteNumber(_ track: TrackSettings, _ noteNumber: Int) {
+    internal func stopSamplerNote(_ track: TrackSettings, _ noteNumber: Int) {
         if let sampler = trackSamplers[track.trackId] {
             let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
             sampler.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))

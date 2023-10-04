@@ -22,7 +22,6 @@
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
 		7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */; };
-		7C29AA192A4F4A830070D901 /* ValuesDidSetInfoChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA182A4F4A830070D901 /* ValuesDidSetInfoChanged.swift */; };
 		7C29AA1B2A4F4AB70070D901 /* ValueDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */; };
 		7C29AA1D2A4F4AF30070D901 /* ValueRamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */; };
 		7C29AA1F2A501E6C0070D901 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA1E2A501E6C0070D901 /* DebugView.swift */; };
@@ -202,7 +201,6 @@
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
 		7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNameUtils.swift; sourceTree = "<group>"; };
-		7C29AA182A4F4A830070D901 /* ValuesDidSetInfoChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesDidSetInfoChanged.swift; sourceTree = "<group>"; };
 		7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueDamper.swift; sourceTree = "<group>"; };
 		7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRamper.swift; sourceTree = "<group>"; };
 		7C29AA1E2A501E6C0070D901 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
@@ -603,7 +601,6 @@
 				C0C5129C27075D9500DE3393 /* Effects */,
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
-				7C29AA182A4F4A830070D901 /* ValuesDidSetInfoChanged.swift */,
 				7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */,
 				7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */,
 				7CCDE10328E2C65100343920 /* MasterTrackModel.swift */,
@@ -945,7 +942,6 @@
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
-				7C29AA192A4F4A830070D901 /* ValuesDidSetInfoChanged.swift in Sources */,
 				7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,

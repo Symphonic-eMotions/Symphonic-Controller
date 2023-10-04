@@ -147,9 +147,13 @@ final class Conductor {
                 
                 if let notesArePlaying = setSettings.tracks[track.id]?.notesArePlaying {
                     
-                    for note in notesArePlaying {
-                        let noteOff = MIDIEvent(noteOn: MIDINoteNumber(note), velocity: 0, channel: 1)
-                        trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+                    for maxIndex in notesArePlaying {
+                        
+                        if let noteNumber = setSettings.tracks[track.id]?.notesToGrid[maxIndex] {
+                            
+                            let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
+                            trackSamplers[track.id]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+                        }
                     }
                 }
                 do {
@@ -1089,7 +1093,7 @@ final class Conductor {
             stopTrack($0)
             
             for noteNumber in 0...127 {
-                stopNoteNumber($0, noteNumber)
+                stopSamplerNote($0, noteNumber)
             }
         }
     }

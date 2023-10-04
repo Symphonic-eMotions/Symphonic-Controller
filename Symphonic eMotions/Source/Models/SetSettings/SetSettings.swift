@@ -125,7 +125,8 @@ class SetSettings: Identifiable, ObservableObject {
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!
         let firstMinimalLevel = firstPart.value.damperTarget.nodeSettings?.minimalLevel ?? 0.1
-        self.waveUnderLevel = firstMinimalLevel - (firstMinimalLevel * 0.1)
+//        self.waveUnderLevel = firstMinimalLevel - (firstMinimalLevel * 0.75)
+        self.waveUnderLevel = firstMinimalLevel * 0.5
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown

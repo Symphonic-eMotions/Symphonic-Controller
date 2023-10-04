@@ -149,33 +149,33 @@ extension Conductor {
                         //Play with wave, end all notes after wave
                         if [.loopedTrigger].contains(track.startType) {
                             
+                            //Levels are triggered alsewhere
                             if track.variationType == .variationByPosition {
                                 
-                                print("*** Note number variation by position needs implmentation **")
-                            }
-                            
-                            //End all notes when a 10% lower than first part minimalLevel
-                            if value < setSettings.waveUnderLevel {
-                                                                
-                                for note in track.notesArePlaying {
-                                    stopNoteNumber(track, note)
-//                                    print("stopping \(note)")
+                                //waveUnderLevel is currently: firstMinimalLevel * 0.5
+                                if value < setSettings.waveUnderLevel {
+                                                                    
+                                    for maxIndex in track.notesArePlaying {
+                                        
+                                        let noteNumber = track.notesToGrid[maxIndex]
+                                        
+                                        stopSamplerNote(track, noteNumber)
+                                        
+                                    }
+                                    track.notesArePlaying = []
+//                                    print("stopping all notes")
                                 }
-                                track.notesArePlaying = []
-                            }
-                            else{
-                                
-                                //Play note Number && note is not already playing AND movement is above minimal level
-                                if part.areaOfInterest[maxIndex] == 1 && !track.notesArePlaying.contains(track.playThisNote) && value > part.minimalLevel {
+                                else{
                                     
-                                    playNoteNumber(track, track.playThisNote)
-                                    
-                                    //Add it to the playing note array
-                                    if !track.notesArePlaying.contains(track.playThisNote) {
+                                    if value > part.minimalLevel
+                                        && part.areaOfInterest[maxIndex] == 1
+                                        && !track.notesArePlaying.contains(maxIndex) {
                                         
-//                                        print("NM loopedTrigger WAVE PLAY \(track.playThisNote)")
+                                        playSamplerNote(track, track.notesToGrid[maxIndex])
                                         
-                                        track.notesArePlaying.append(track.playThisNote)
+                                        print("noteNumbers loopedTrigger PLAY NOTE \(maxIndex):\(track.notesToGrid[maxIndex])")
+                                        
+                                        track.notesArePlaying.append(maxIndex)
                                     }
                                 }
                             }
@@ -198,8 +198,9 @@ extension Conductor {
 //
 //                            if Int(localCurrentSetLevel) != track.currentLevel {
 //
-//                                for note in track.notesArePlaying {
-//                                    stopNoteNumber(track, note)
+//                                for maxIndex in track.notesArePlaying {
+//                                    let noteNumber = track.notesToGrid[maxIndex]
+//                                    stopNoteNumber(track, noteNumber)
 //                                }
 //
 //                                //This is the chosen note number in the editor NoteNumberToLevelView()
@@ -219,9 +220,7 @@ extension Conductor {
                     
                     //noteNumbers loopedTrigger
                     //Note Number / Wave player = start with movement
-                    else if track.noteSource == .noteNumbers {
-                        
-                        
+//                    else if track.noteSource == .noteNumbers {
                         
                         //Play with length connected to value
 //                        else if [.oneShot].contains(track.startType) {
@@ -255,7 +254,7 @@ extension Conductor {
 //                                //Record to sequencer
 //                            }
 //                        }
-                    }
+//                    }
                 }
                 //End first Part
                 

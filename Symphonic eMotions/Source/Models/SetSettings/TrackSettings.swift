@@ -53,7 +53,7 @@ class TrackSettings: Identifiable, ObservableObject {
     }
     
     //PlayStatus vars
-    var playThisNote: Int = 0
+//    var playThisNote: Int = 0
     var notesArePlaying: [Int] = []
     var currentMaxIndex: Int = 0
     var currentPartMaxIndex: Int = 0
