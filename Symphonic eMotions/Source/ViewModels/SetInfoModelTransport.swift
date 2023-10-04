@@ -28,6 +28,8 @@ extension SetInfoModel {
             setSettings: self.setSettings,
             level: Int(leveling.currentSetLevelSubject.value)
         )
+        
+        self.setSettings.isWavePlaying = false
     }
     
     func tapAStartRecordTracks(){

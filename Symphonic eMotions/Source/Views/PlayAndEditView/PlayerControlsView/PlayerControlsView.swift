@@ -95,6 +95,7 @@ struct PlayerControlsView: View {
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             self.isSetPlaying = false
+                            //Over ride hold level button
                             setInfoModel.leveling.pauseLevel = false
                         }
                         else{

@@ -59,7 +59,7 @@ extension Conductor {
         if let lengthInBeats = Double(lengthInBeatsString) {
             return lengthInBeats
         } else {
-            print("The file name \(fileName) has no length in beats info returning nil")
+//            print("The file name \(fileName) has no length in beats info returning nil")
             return nil
         }
     }

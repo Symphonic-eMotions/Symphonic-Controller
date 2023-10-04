@@ -205,6 +205,8 @@ final class Conductor {
         setInitialState()
         set = newInstrumentsSet
         
+        print("Loading: \(set.name) : \(set.customName)")
+        
         loadTracks(currentSetLevel: currentSetLevel)
         
         loadMaster(mixer: mixer)
@@ -408,7 +410,7 @@ final class Conductor {
             }
             else if [.pulseWidthSynth, .phaseSynth].contains(soundSource) {
                 
-                print(noteOff)
+//                print(noteOff)
                 
                 trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             }
@@ -507,7 +509,7 @@ final class Conductor {
                     trackAmpEnvelope.scheduleMIDIEvent(event: envOn)
                 }
                 else{
-                    print("un mute \(track.value.trackId) not found")
+                    print("ERROR: un mute \(track.value.trackId) not found")
                 }
                 
             }
@@ -552,11 +554,11 @@ final class Conductor {
     
     func playInterfaceSounds(sounds: [String], volume: Float) {
         if let randomSound = sounds.randomElement() {
-            print("Random sound selected: \(randomSound)")
+//            print("Random sound selected: \(randomSound)")
             if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "wav") {
-                print("Path exists: \(path)")
+//                print("Path exists: \(path)")
                 let url = URL(fileURLWithPath: path)
-                print("URL is valid: \(url)")
+//                print("URL is valid: \(url)")
                 do {
                     autoSound = try AVAudioPlayer(contentsOf: url)
                     autoSound?.delegate = self.autoSound as? any AVAudioPlayerDelegate

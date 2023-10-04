@@ -539,7 +539,7 @@
         48
       ],
       "scoreWalkDuration" : null,
-      "startType" : "oneShot",
+      "startType" : "loopedTrigger",
       "trackId" : "crashes",
       "trackType" : "variationByPosition"
     },

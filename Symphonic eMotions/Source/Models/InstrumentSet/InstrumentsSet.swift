@@ -20,10 +20,13 @@ struct InstrumentsSet: Identifiable, Decodable {
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
             
+//            print("withJSON Loaded: \(fileName)")
+            
             return decoded
         }
         catch{
             print("Unexpected error InstrumentsSet withJSON: \(error).")
+            print("In file \(fileName)")
         }
         return nil
     }
@@ -34,6 +37,9 @@ struct InstrumentsSet: Identifiable, Decodable {
         guard let data = try? Data(contentsOf: url) else { return nil }
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
+            
+//            print("withOnlineJSON Loaded: \(url.absoluteString)")
+            
             return decoded
         }
         catch{
@@ -53,10 +59,14 @@ struct InstrumentsSet: Identifiable, Decodable {
         guard let data = try? Data(contentsOf: jsonFilePath) else { return nil }
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
+            
+//            print("withFileManagerJSON Loaded: \(fileName)")
+            
             return decoded
         }
         catch{
-            print("Unexpected error InstrumentsSet withJSON: \(error).")
+            print("Unexpected error InstrumentsSet withFileManagerJSON: \(error).")
+            print("In file \(fileName)")
         }
         return nil
     }
@@ -67,7 +77,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         let directoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let documentURL = (directoryURL.appendingPathComponent(setName).appendingPathExtension("json"))
         
-        print("\(String(describing: directoryURL))")
+        print("writeLoadedSet \(String(describing: directoryURL))")
         
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = [.sortedKeys,.prettyPrinted]

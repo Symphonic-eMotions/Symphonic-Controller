@@ -501,10 +501,10 @@
     }
   ],
   "levelDurations" : [
-    45,
-    45,
-    45,
-    45
+    0,
+    1,
+    2,
+    3
   ],
   "levelSpeed" : 0.11043566465377808,
   "masterTrackEffects" : [
