@@ -362,8 +362,11 @@ struct TrackEditorView: View {
             }
             .frame(height: 45)
             
-            Button("+"){
-                if let newTrack = setInfoModel.addTrack(){
+            Spacer()
+            
+            Button("Add midi velocity track"){
+                
+                if let newTrack = setInfoModel.addTrack(trackType: .midiVelocity){
                     
                     //Add track
                     setInfoModel.setSettings.tracks[newTrack.trackId] = newTrack
@@ -384,7 +387,7 @@ struct TrackEditorView: View {
                     noteSources[newTrack.trackId] = newTrack.noteSource
                     startTypes[newTrack.trackId] = newTrack.startType
                     variationTypes[newTrack.trackId] = newTrack.variationType
-                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
+                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition]
                     instrumentTypes[newTrack.trackId] = newTrack.instrumentType
                     //Insert bindings parts
                     let part = newTrack.parts.values.first!
@@ -398,9 +401,48 @@ struct TrackEditorView: View {
                     pleaseSave = true
                 }
             }
-            .font(.system(size: 45))
+            
+            Spacer()
+            
+            Button("Add stem low pass filter track"){
+                if let newTrack = setInfoModel.addTrack(trackType: .stemLpf){
+                    
+                    //Add track
+                    setInfoModel.setSettings.tracks[newTrack.trackId] = newTrack
+                    
+                    //Insert bindings tracks, but better save and reopen
+                    trackLevels[newTrack.trackId] = newTrack.levels
+                    noteNumbersLevels[newTrack.trackId] = newTrack.notesToLevel
+                    midiClipsLevels[newTrack.trackId] = newTrack.loopsToLevel
+                    noteNumbersPositions[newTrack.trackId] = newTrack.notesToGrid
+                    midiClipPositions[newTrack.trackId] = newTrack.loopsToGrid
+                    noteNumbers[newTrack.trackId] = newTrack.midiGroup
+                    notesSequenceType[newTrack.trackId] = newTrack.notesSequenceType
+                    let nclips = newTrack.midiGroup
+                    noteNumberLetters[newTrack.trackId] = Array(0..<nclips.count).map{$0}
+                    midiClips[newTrack.trackId] = newTrack.loopLength
+                    let mclips = newTrack.loopLength
+                    midiClipLetters[newTrack.trackId] = Array(0..<mclips.count).map{$0}
+                    noteSources[newTrack.trackId] = newTrack.noteSource
+                    startTypes[newTrack.trackId] = newTrack.startType
+                    variationTypes[newTrack.trackId] = newTrack.variationType
+//                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
+                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition]
+                    instrumentTypes[newTrack.trackId] = newTrack.instrumentType
+                    //Insert bindings parts
+                    let part = newTrack.parts.values.first!
+                    areaOfInterest[part.partId] = part.areaOfInterest
+                    minimalLevel[part.partId] = part.minimalLevel
+                    
+                    editorParts = setInfoModel.selectableEditorParts()
+                    
+                    numberOfTracks += 1
+                    
+                    pleaseSave = true
+                }
+            }
+            
             Spacer()
         }
-
     }
 }

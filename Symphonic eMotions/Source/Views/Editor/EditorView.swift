@@ -170,8 +170,9 @@ struct EditorView: View {
             else{
                 availableVariationTypesInit[track.value.trackId] = [
                     .variationByLevel,
-                    .variationByPosition,
-                    .variationSequencial
+                    .variationByPosition
+//                    ,
+//                    .variationSequencial
                 ]
             }
             

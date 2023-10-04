@@ -90,9 +90,9 @@ extension Conductor {
                     //MARK: WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController
                     
-                    //What to play MidiFile tracks
+                    //Midi files variation and wave start
                     if track.noteSource == .midiFile {
-                        
+                        //Midi file variation
                         if track.variationType == .variationByPosition {
                             
                             //We have a new postition
@@ -118,72 +118,41 @@ extension Conductor {
                             }
                         }
                         
-                    }
-                    //Note number tracks
-                    else if track.noteSource == .noteNumbers {
-                        
-                         if track.variationType == .variationSequencial {
+                        //Midi file wave start
+                        if [.loopedTrigger].contains(track.startType) {
                             
-                            //Start with movement AND Trigger single note (not tracnsport)
-                            if [.loopedTrigger,.oneShot].contains(track.startType) {
-                                
-                                //We trigger only if above minimalLevel treshold
+                            if setSettings.isWavePlaying {
+                                //End wave under minimal leel first part
+                                if value < setSettings.waveUnderLevel{
+                                    //looped is always for all tracks
+                                    setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                                        stopTrack($0)
+                                    }
+                                    setSettings.isWavePlaying = false
+                                }
+                            }
+                            //No wave
+                            else {
                                 if value > part.minimalLevel {
-                                    
-                                    
+                                    setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                                        playTrack($0)
+                                    }
+                                    setSettings.isWavePlaying = true
                                 }
                             }
-                        }
-//                        //Note number levels
-//                        else if track.variationType == .variationByLevel {
-//
-//                            if Int(localCurrentSetLevel) != track.currentLevel {
-//
-//                                for note in track.notesArePlaying {
-//                                    stopNoteNumber(track, note)
-//                                }
-//
-//                                //This is the chosen note number in the editor NoteNumberToLevelView()
-//                                let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-//                                track.playThisNote = noteNumber
-//                                track.currentLevel = Int(localCurrentSetLevel)
-//
-//                                print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
-//                            }
-//                        }
-                    }
-                    
-                    //Midi File Position Wave player, start with movement
-                    if track.noteSource == .midiFile &&
-                        [.loopedTrigger].contains(track.startType) {
-                        
-                        
-                        if setSettings.isWavePlaying {
-                            //End wave under minimal leel first part
-                            if value < setSettings.waveUnderLevel{
-                                //looped is always for all tracks
-                                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                     stopTrack($0)
-                                }
-                                setSettings.isWavePlaying = false
-                            }
-                        }
-                        //No wave
-                        else {
-                            if value > part.minimalLevel {
-                                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                    playTrack($0)
-                                }
-                                setSettings.isWavePlaying = true
-                            }
+                            
                         }
                     }
-                    
-                    //Note Number / Wave player = start with movement
+                    //Note number wave start
                     else if track.noteSource == .noteNumbers {
                         
                         //Play with wave, end all notes after wave
                         if [.loopedTrigger].contains(track.startType) {
+                            
+                            if track.variationType == .variationByPosition {
+                                
+                                print("*** Note number variation by position needs implmentation **")
+                            }
                             
                             //End all notes when a 10% lower than first part minimalLevel
                             if value < setSettings.waveUnderLevel {
@@ -212,38 +181,80 @@ extension Conductor {
                             }
                         }
                         
+//                         if track.variationType == .variationSequencial {
+//                            
+//                            //Start with movement AND Trigger single note (not tracnsport)
+//                            if [.loopedTrigger,.oneShot].contains(track.startType) {
+//                                
+//                                //We trigger only if above minimalLevel treshold
+//                                if value > part.minimalLevel {
+//                                    
+//                                    
+//                                }
+//                            }
+//                        }
+//                        //Note number levels
+//                        else if track.variationType == .variationByLevel {
+//
+//                            if Int(localCurrentSetLevel) != track.currentLevel {
+//
+//                                for note in track.notesArePlaying {
+//                                    stopNoteNumber(track, note)
+//                                }
+//
+//                                //This is the chosen note number in the editor NoteNumberToLevelView()
+//                                let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
+//                                track.playThisNote = noteNumber
+//                                track.currentLevel = Int(localCurrentSetLevel)
+//
+//                                print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
+//                            }
+//                        }
+                    }
+                    
+                    //midiFile loopedTrigger
+                    //Midi File Position Wave player, start with movement
+//                    if track.noteSource == .midiFile &&
+//                    }
+                    
+                    //noteNumbers loopedTrigger
+                    //Note Number / Wave player = start with movement
+                    else if track.noteSource == .noteNumbers {
+                        
+                        
+                        
                         //Play with length connected to value
-                        else if [.oneShot].contains(track.startType) {
-                            
-                            //Play note Number && note is not already playing AND movement is above minimal level
-                            if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
-                                
-                                if track.variationType == .variationSequencial {
-                                    
-                                    if let currentNote = sequenceNote[track.trackId] {
-                                        
-                                        print("current note \(currentNote)")
-                                        
-                                        let noteNumber:Int = getNextSequenceNote(
-                                            currentNote,
-                                            track.notesSequenceType,
-                                            track.midiGroup,
-                                            value)
-                                        sequenceNote[track.trackId] = noteNumber
-                                        
-                                        print("sequnced note \(noteNumber)")
-                                        
-                                        playNoteNumberLength(track, noteNumber, value)
-                                    }
-                                }
-                                else if track.variationType == .variationByPosition {
-                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
-                                    playNoteNumberLength(track, noteNumber, value)
-                                }
-                                
-                                //Record to sequencer
-                            }
-                        }
+//                        else if [.oneShot].contains(track.startType) {
+//
+//                            //Play note Number && note is not already playing AND movement is above minimal level
+//                            if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
+//
+//                                if track.variationType == .variationSequencial {
+//
+//                                    if let currentNote = sequenceNote[track.trackId] {
+//
+//                                        print("current note \(currentNote)")
+//
+//                                        let noteNumber:Int = getNextSequenceNote(
+//                                            currentNote,
+//                                            track.notesSequenceType,
+//                                            track.midiGroup,
+//                                            value)
+//                                        sequenceNote[track.trackId] = noteNumber
+//
+//                                        print("sequnced note \(noteNumber)")
+//
+//                                        playNoteNumberLength(track, noteNumber, value)
+//                                    }
+//                                }
+//                                else if track.variationType == .variationByPosition {
+//                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
+//                                    playNoteNumberLength(track, noteNumber, value)
+//                                }
+//
+//                                //Record to sequencer
+//                            }
+//                        }
                     }
                 }
                 //End first Part

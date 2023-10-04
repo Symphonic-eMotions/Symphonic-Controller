@@ -114,12 +114,12 @@ struct NoteSourceView: View {
                         //State
                         noteSource = type
                         
-                        if type == .midiFile {
+//                        if type == .midiFile {
                             availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition]
-                        }
-                        else{
-                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
-                        }
+//                        }
+//                        else{
+//                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
+//                        }
                     }
                 }
             }

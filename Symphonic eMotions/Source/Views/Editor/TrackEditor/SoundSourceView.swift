@@ -84,7 +84,7 @@ struct SoundSourceView: View {
                 }
                 
                 Picker("Sources of sound", selection: $soundSource) {
-                    let workingTypes: [InstrumentsSet.Track.InstrumentType] = [.exsSampler,.audioBuffer,.pulseWidthSynth,.phaseSynth,.SemOne]
+                    let workingTypes: [InstrumentsSet.Track.InstrumentType] = [.exsSampler,.audioBuffer]
                     ForEach(workingTypes, id: \.self) { type in
                         Text(type.description).tag(type)
                     }

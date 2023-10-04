@@ -1,5 +1,5 @@
 //
-//  SetSubscribers.swift
+//  SetInfoModelSubscribers.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 19/07/2023.

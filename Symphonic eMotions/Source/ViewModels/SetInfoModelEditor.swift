@@ -1,5 +1,5 @@
 //
-//  SetEditor.swift
+//  SetInfoModelEditor.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 19/07/2023.
@@ -22,17 +22,23 @@ extension SetInfoModel {
         return selectableEditorParts
     }
     
-    func addTrack() -> TrackSettings? {
+    enum newTrackTypes: String {
+        case midiVelocity = "Midi Velocity"
+        case stemLpf = "Stem low passed"
+    }
+    
+    
+    func addTrack(trackType: newTrackTypes) -> TrackSettings? {
         
         //New track
-        var trackId = "New track \(self.setSettings.tracks.count + 1)"
+        var trackId = "AddedAt\(self.setSettings.tracks.count + 1)"
         var nameExists = true
         var counter = 0
         while nameExists {
             if let _ = self.setSettings.tracks[trackId] {
                 // Track name already exists, modify the trackId
                 counter += 1
-                trackId = "New track \(self.setSettings.tracks.count + counter)"
+                trackId = "AddedAt\(self.setSettings.tracks.count + counter)"
             } else {
                 // Track name doesn't exist, break the loop
                 nameExists = false
@@ -120,10 +126,10 @@ extension SetInfoModel {
         let newTrack = TrackSettings(
             trackId: trackId,
             trackIndex: 0,
-            trackName: trackId,
+            trackName: "New \(trackType.rawValue)",
             noteSource: .noteNumbers,
-            startType: .oneShot,
-            variationType: .variationByPosition,
+            startType: .loopedTransport,
+            variationType: .variationByLevel,
             instrumentType: .audioBuffer,
             exsFile: ExsFiles(rawValue: "trigger")!,
             audioFiles: [],

@@ -36,7 +36,7 @@ struct InstrumentLocationContainer: View {
         let rows = setInfoModel.setSettings.gridRows
         let columns = setInfoModel.setSettings.gridColumns
         let instrumentAreas = setInfoModel.setSettings.getInstrumentAreas()
-        let levels = setInfoModel.setSettings.getLevels()
+//        let levels = setInfoModel.setSettings.getLevels()
         
         instrument0 = setInfoModel.setSettings.spriteKitInstruments(
             instrumentIndex: 0,

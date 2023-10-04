@@ -11,7 +11,6 @@ enum StartType: String, Codable, CaseIterable, Equatable {
     
     case loopedTransport
     case loopedTrigger
-    case oneShot
     
     var description: String {
         switch self {
@@ -20,10 +19,7 @@ enum StartType: String, Codable, CaseIterable, Equatable {
             return "Start with transport"
         //Midi file and Note numbers
         case .loopedTrigger:
-            return "Movement looped"
-        //Note numbers
-        case .oneShot:
-            return  "Movement single"
+            return "Start with movement"
         }
     }
 }

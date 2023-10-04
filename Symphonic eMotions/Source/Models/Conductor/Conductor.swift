@@ -1012,23 +1012,23 @@ final class Conductor {
             print("--> We're playing <--")
             
             setSettings.tracks.forEach { track in
-                //Both midi file and audioBuffer note numbers
                 
+                //Both midi file and audioBuffer note numbers
                 if track.value.startType == .loopedTransport {
                     playTrack(track.value)
                 }
                 
-                if track.value.variationType == .variationSequencial {
-                    
-                    let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
-                    let noteNumber = getNextSequenceNote(
-                        currentNote,
-                        track.value.notesSequenceType,
-                        track.value.midiGroup,
-                        0.5
-                    )
-                    playNoteNumber(track.value, noteNumber)
-                }
+//                if track.value.variationType == .variationSequencial {
+//                    
+//                    let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
+//                    let noteNumber = getNextSequenceNote(
+//                        currentNote,
+//                        track.value.notesSequenceType,
+//                        track.value.midiGroup,
+//                        0.5
+//                    )
+//                    playNoteNumber(track.value, noteNumber)
+//                }
             }
         } catch {
             print("Catched playEngineAndTracks \(error)")
