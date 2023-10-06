@@ -42,11 +42,12 @@ extension Conductor {
             
             //Load System file
             if audioFile.source == .bundle {
+                
                 audioFileURL = Bundle.main.url(
                     forResource: audioFile.fileName,
                     withExtension: audioFile.fileExtension,
                     subdirectory: "Samples/\(samplePath)"
-                ) ?? URL("errorFileName")
+                ) ?? URL("Samples/\(samplePath))/\(audioFile.fileName).\(audioFile.fileExtension)")
                 
             } else {
                 //Load User file

@@ -5,12 +5,19 @@
 
     }
   },
+  "fileGroup" : {
+    "none" : {
+
+    }
+  },
   "gridColumns" : 2,
   "gridRows" : 2,
   "hasTempo" : true,
   "instrumentsConfig" : [
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
 
       ],
@@ -33,18 +40,15 @@
           "damperTarget" : {
             "dampMode" : "easeInOutCubic",
             "midiData" : null,
-            "nodeName" : "",
+            "nodeName" : "none",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.002,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.056737590581178665,
-              "rampSpeedDown" : 0.1007092222571373,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeedDown" : 0.1007092222571373
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
+            "parameterInversed" : false,
             "parameterRange" : [
               0,
               1
@@ -56,13 +60,12 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -10.471264839172363,
+      "instrumentVolume" : -12.595746,
       "levels" : [
         1,
         2,
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -70,10 +73,10 @@
             45
           ],
           "loopsToGrid" : [
-            1,
+            0,
             1,
             0,
-            0
+            1
           ],
           "loopsToLevel" : [
             0,
@@ -88,9 +91,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -103,13 +112,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTrigger",
       "trackId" : "marimba1",
       "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
 
       ],
@@ -132,18 +142,15 @@
           "damperTarget" : {
             "dampMode" : "easeInOutCubic",
             "midiData" : null,
-            "nodeName" : "",
+            "nodeName" : "none",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.002,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.057092197239398977,
-              "rampSpeedDown" : 0.097872339189052582,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.05709219723939898,
+              "rampSpeedDown" : 0.09787233918905258
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
+            "parameterInversed" : false,
             "parameterRange" : [
               0,
               1
@@ -155,12 +162,11 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -11.839081764221191,
+      "instrumentVolume" : -13.861704,
       "levels" : [
         2,
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -168,10 +174,10 @@
             45
           ],
           "loopsToGrid" : [
-            1,
             0,
             1,
-            0
+            0,
+            1
           ],
           "loopsToLevel" : [
             0,
@@ -186,9 +192,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -201,13 +213,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTrigger",
       "trackId" : "marimba2",
       "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -246,18 +259,15 @@
           "damperTarget" : {
             "dampMode" : "easeInOutCubic",
             "midiData" : null,
-            "nodeName" : "",
+            "nodeName" : "none",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.0030000000000000001,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.043262410908937454,
-              "rampSpeedDown" : 0.054964538663625717,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeedDown" : 0.05496453866362572
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
+            "parameterInversed" : false,
             "parameterRange" : [
               0,
               1
@@ -279,16 +289,13 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.00050000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.040000000000000001,
-              "rampSpeedDown" : 0.02,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.04,
+              "rampSpeedDown" : 0.02
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
             "parameterRange" : [
               10,
               20000
@@ -300,11 +307,10 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -2.1063814163208008,
+      "instrumentVolume" : -2.1063814,
       "levels" : [
         3
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -332,9 +338,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -347,13 +359,14 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTrigger",
       "trackId" : "perc",
       "trackType" : "variationByPosition"
     },
     {
-      "audioFiles" : null,
+      "audioFiles" : [
+
+      ],
       "effects" : [
         {
           "cutoffFrequency" : {
@@ -392,18 +405,15 @@
           "damperTarget" : {
             "dampMode" : "easeInOutCubic",
             "midiData" : null,
-            "nodeName" : "",
+            "nodeName" : "none",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.01,
               "minimalLevel" : 0.01,
               "rampSpeed" : 0.01,
-              "rampSpeedDown" : 0.094049908220767975,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeedDown" : 0.09404990822076797
             },
             "nodeType" : "sequencer",
             "parameter" : "velocity",
+            "parameterInversed" : false,
             "parameterRange" : [
               0,
               1
@@ -425,16 +435,13 @@
             "midiData" : null,
             "nodeName" : "lowPassFilter",
             "nodeSettings" : {
-              "coolDownTime" : null,
-              "levelPart" : 0.00050000000000000001,
               "minimalLevel" : 0.01,
-              "rampSpeed" : 0.040000000000000001,
-              "rampSpeedDown" : 0.02,
-              "tempoHigh" : null,
-              "tempoLow" : null
+              "rampSpeed" : 0.04,
+              "rampSpeedDown" : 0.02
             },
             "nodeType" : "effect",
             "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
             "parameterRange" : [
               10,
               20000
@@ -446,14 +453,13 @@
         }
       ],
       "instrumentType" : "exsSampler",
-      "instrumentVolume" : -0.50574910640716553,
+      "instrumentVolume" : -0.5057491,
       "levels" : [
         3,
         2,
         1,
         0
       ],
-      "masterTrackId" : null,
       "midiFiles" : [
         {
           "loopLength" : [
@@ -461,10 +467,10 @@
             45
           ],
           "loopsToGrid" : [
-            1,
+            0,
             1,
             0,
-            0
+            1
           ],
           "loopsToLevel" : [
             0,
@@ -479,9 +485,15 @@
       "midiGroup" : [
         48
       ],
-      "midiTargetTrackId" : null,
-      "muted" : null,
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
       "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
       "notesToGrid" : [
         48,
         48,
@@ -494,7 +506,6 @@
         48,
         48
       ],
-      "scoreWalkDuration" : null,
       "startType" : "loopedTrigger",
       "trackId" : "violins",
       "trackType" : "variationByPosition"
@@ -506,20 +517,19 @@
     2,
     3
   ],
-  "levelSpeed" : 0.11043566465377808,
   "masterTrackEffects" : [
     {
       "attackTime" : {
         "range" : [
           0.0001,
-          0.20000000000000001
+          0.2
         ],
-        "value" : 0.0010000000474974513
+        "value" : 0.001
       },
       "effectName" : "compressor",
       "headRoom" : {
         "range" : [
-          0.10000000000000001,
+          0.1,
           40
         ],
         "value" : 4
@@ -536,7 +546,7 @@
           0.01,
           3
         ],
-        "value" : 0.05000000074505806
+        "value" : 0.05
       },
       "threshold" : {
         "range" : [
@@ -553,14 +563,14 @@
           0,
           1
         ],
-        "value" : 0.18999999761581421
+        "value" : 0.19
       },
       "reverbPreset" : {
         "range" : [
           0,
           12
         ],
-        "value" : 11.263345718383789
+        "value" : 11.263346
       }
     }
   ],

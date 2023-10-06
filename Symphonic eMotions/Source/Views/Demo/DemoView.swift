@@ -6,6 +6,16 @@
 //
 
 import SwiftUI
+import AVKit
+
+struct VideoPlayerView: View {
+    let url: URL
+    
+    var body: some View {
+        VideoPlayer(player: AVPlayer(url: url))
+            .frame(height: 400)
+    }
+}
 
 struct DemoView: View {
     
@@ -18,7 +28,7 @@ struct DemoView: View {
         
         VStack{
             
-            Spacer().frame(height:70)
+            Spacer().frame(height:50)
             HStack {
                 
                 Image("LogoColor")
@@ -36,38 +46,24 @@ struct DemoView: View {
             }
             Spacer().frame(height:35)
             
-            //Play demo set button
-            HStack(spacing: 20){
-                
-//                HStack {
-//                    Image(systemName: "play.fill")
-//                        .foregroundColor(.white)
-//                        .font(.system(size: 30))
-//
-//                    Text(NSLocalizedString("Demo set", comment: ""))
-//                        .foregroundColor(.white)
-//                        .font(.headline)
-//                        .padding(.trailing)
-//                        .disabled(true)
-//                }
-//                .padding()
-//                .background(Color.accentColor)
-//                .cornerRadius(10.0)
-//                .onTapGesture {
-//
-//                    print("Play demo set")
-//                }
-                
-            }
-            
             HStack{
-                Text(NSLocalizedString("Welcome home", comment: ""))
-                    .font(.title)
-                    .scaleEffect(1.1)
-                    .padding(.top, 70)
-                    .padding(.trailing, 100)
-                    .padding(.leading, 100)
                 
+                if let url = Bundle.main.url(
+                    forResource: "SeM-Demo-01",
+                    withExtension: "mp4",
+                    subdirectory: "Videos") {
+                        VideoPlayerView(url: url)
+                } else {
+                    Text("Video file not found")
+                }
+                
+//                Text(NSLocalizedString("Welcome home", comment: ""))
+//                    .font(.title)
+//                    .scaleEffect(1.1)
+//                    .padding(.top, 70)
+//                    .padding(.trailing, 100)
+//                    .padding(.leading, 100)
+//                
             }
             Spacer()
             

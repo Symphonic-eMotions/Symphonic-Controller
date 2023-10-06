@@ -24,8 +24,7 @@ struct LightView: View {
     
     @State var showCameraPreview: Bool = false
     
-    @State private var testSoundPlaying: Bool = false
-    internal var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
+    internal var testSoundNoteNumbers: [Int] = [36,37]
     
     @State var setIsPlaying: Bool = false;
     @State var isAbove30: Bool = false

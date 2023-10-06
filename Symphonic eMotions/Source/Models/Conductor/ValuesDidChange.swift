@@ -92,30 +92,36 @@ extension Conductor {
                     
                     //Midi files variation and wave start
                     if track.noteSource == .midiFile {
-                        //Midi file variation
-                        if track.variationType == .variationByPosition {
+                        
+                        //Midi file variation check if instrument is placed
+                        if track.variationType == .variationByPosition && track.loopsToGridMapped.count > 0 {
                             
                             //We have a new postition
-                            if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
-                                //This is the mapped value from the editor .midiFile .variationByPosition
-                                let loopIndex = track.loopsToGridMapped[maxIndexPart]
+                            if track.loopsToGridMapped.indices.contains(maxIndexPart) &&
+                                track.loopsToGridMapped.indices.contains(track.currentPartMaxIndex) {
                                 
-                                if loopIndex != track.currentLoopIndex {
+                                if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
+                                    //This is the mapped value from the editor .midiFile .variationByPosition
+                                    let loopIndex = track.loopsToGridMapped[maxIndexPart]
                                     
-                                    let nextMIDIstartTime = calculateMIDIstartTime(
-                                        for: loopIndex,
-                                        in: track.loopLength
-                                    )
-                                    
-                                    copyMIDIfromMemory(
-                                        trackId: track.trackId,
-                                        midiStartTime: nextMIDIstartTime,
-                                        loopLength: track.loopLength[loopIndex])
-                                    
-                                    track.currentLoopIndex = loopIndex
-                                    track.currentPartMaxIndex = maxIndexPart
+                                    if loopIndex != track.currentLoopIndex {
+                                        
+                                        let nextMIDIstartTime = calculateMIDIstartTime(
+                                            for: loopIndex,
+                                            in: track.loopLength
+                                        )
+                                        
+                                        copyMIDIfromMemory(
+                                            trackId: track.trackId,
+                                            midiStartTime: nextMIDIstartTime,
+                                            loopLength: track.loopLength[loopIndex])
+                                        
+                                        track.currentLoopIndex = loopIndex
+                                        track.currentPartMaxIndex = maxIndexPart
+                                    }
                                 }
                             }
+                            
                         }
                         
                         //Midi file wave start
@@ -276,7 +282,6 @@ extension Conductor {
                     
                     if trackNr == 1 {
                         let isPlaying: Double = isSetPlaying ? 1 : 0
-                        
                         rotationSpeedSubject.send(value * isPlaying)
                     }
                 }

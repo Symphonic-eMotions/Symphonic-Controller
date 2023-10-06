@@ -18,7 +18,8 @@ struct MovementView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     
     @State private var selectedButton: Int? = nil
-    @State var hasTested: Bool = false
+    //We may continue anyways
+    @State var hasTested: Bool = true
     
     @State private var rotationSpeed: Double = 0
     
@@ -67,7 +68,7 @@ struct MovementView: View {
                         //Play and continue
                         HStack {
                             
-                            //Play / stop button
+                            //Play / stop Introductie set
                             ZStack {
                                 Rectangle()
                                     .frame(width: 200, height: 60)
@@ -75,6 +76,7 @@ struct MovementView: View {
                                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                                     .background( Color.accentColor )
                                 
+                                //Button text
                                 if isSetPlaying {
                                     Text(NSLocalizedString("Stop set", comment: ""))
                                         .font(.system(size: 30))
@@ -88,13 +90,16 @@ struct MovementView: View {
                             }
                             .onTapGesture {
                                 
+                                //Make continue available
                                 hasTested = true
                                 
+                                //Turn testing off
                                 if isSetPlaying {
                                     isSetPlaying = false
                                     rotationSpeedSubject.send(0)
                                     setInfoModel.tapStopAudioEngine()
                                 }
+                                //Turn testing on
                                 else{
                                     setInfoModel.tapStartAudioEngine()
                                     isSetPlaying = true

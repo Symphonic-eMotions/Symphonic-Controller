@@ -16,7 +16,8 @@ struct IntroductionView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     
     @State public var testSoundPlaying: Bool = false
-    var testSoundNoteNumbers: [Int] = [36,38,40,41,43,57,59,48]
+    
+    var testSoundNoteNumbers: [Int] = [36,37]
     
     @State var setIsPlaying: Bool = false;
     
@@ -27,7 +28,7 @@ struct IntroductionView: View {
             
             VStack(spacing: 0) {
                 
-                //Standaard
+                //iPad in standaard plaatsen
                 if sessionDisplaySub == .page01 || sessionDisplaySub == .stopped {
                    
                     IntroductionImage(
@@ -69,41 +70,12 @@ struct IntroductionView: View {
                     Spacer()
                     
                     VStack{
-                        
-                        //Start stop on buttons itself
-                        
-//                        ZStack {
-//                            Rectangle()
-//                                .frame(width: 220, height: 60)
-//                                .foregroundColor(.clear)
-//                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-//                                .background( Color.accentColor )
-//
-//                            Text( testSoundPlaying ?
-//                                  NSLocalizedString("Stop audio", comment: "") :
-//                                    NSLocalizedString("Test audio", comment: "")
-//                            )
-//                            .font(.system(size: 30))
-//                            .padding()
-//                        }
-//                        .onTapGesture {
-//                            //Direct connection Introductie set
-//                            setInfoModel.conductor.playNoteNumbersIntroduction(
-//                                trackId: "realLife",
-//                                soundSource: .audioBuffer,
-//                                noteNumbers: testSoundNoteNumbers,
-//                                noteOn: testSoundPlaying
-//                            )
-//
-//                            testSoundPlaying.toggle()
-//                        }
-                        
+                                                
                         //Volume
                         VStack(alignment: .leading){
                             
                             VolumeButtonsView(
                                 setInfoModel: setInfoModel,
-                                testSoundPlaying: $testSoundPlaying,
                                 testSoundNoteNumbers: testSoundNoteNumbers
                             )
                             .padding(.top)
@@ -111,16 +83,7 @@ struct IntroductionView: View {
                         }
                     }
                     Spacer()
-                    
-//                    IntroductionTitle(
-//                        setInfoModel: setInfoModel,
-//                        sessionDisplay: $sessionDisplay,
-//                        sessionDisplaySub: $sessionDisplaySub,
-//                        localizedString: "Connect audio",
-//                        nextPage: .page03,
-//                        introductionNoteNumbers: testSoundNoteNumbers
-//                    )
-//
+
                     HStack{
                         
                         Spacer()
@@ -134,18 +97,19 @@ struct IntroductionView: View {
                                 .frame(width: 200, height: 60)
                                 .foregroundColor(.clear)
                                 .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                .background( testSoundPlaying ? Color.accentColor : .gray )
+//                                .background( testSoundPlaying ? Color.accentColor : .gray )
+                                .background( Color.accentColor )
                                 
                             Text(NSLocalizedString("Continue", comment: ""))
                                 .font(.system(size: 30))
                                 .padding()
                         }
-                        .disabled( !testSoundPlaying )
+//                        .disabled( !testSoundPlaying )
                         .onTapGesture {
                             withAnimation {
                                 //Shut down audio test notes
                                 setInfoModel.conductor.playNoteNumbersIntroduction(
-                                    trackId: "realLife",
+                                    trackId: "Volume",
                                     soundSource: .audioBuffer,
                                     noteNumbers: testSoundNoteNumbers,
                                     noteOn: true

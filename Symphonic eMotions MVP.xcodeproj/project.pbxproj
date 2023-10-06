@@ -102,6 +102,7 @@
 		7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */; };
 		7CA843ED2A65D74600FA1E47 /* InstrumentLocationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */; };
 		7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */; };
+		7CAB35CB2AD02E8500659002 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 7CAB35CA2AD02E8500659002 /* Videos */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
@@ -280,6 +281,7 @@
 		7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocations.swift; sourceTree = "<group>"; };
 		7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationScene.swift; sourceTree = "<group>"; };
 		7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationContainer.swift; sourceTree = "<group>"; };
+		7CAB35CA2AD02E8500659002 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
 		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 				7CD418052A095388006831CE /* Localizable.strings */,
 				7C6C11FC2A03EF3E006F8CCB /* Sets */,
 				7C6C11FD2A03EF3F006F8CCB /* Sounds */,
+				7CAB35CA2AD02E8500659002 /* Videos */,
 				7CB2B9502A0D0D1500876CCD /* Playlists */,
 				7C166AD229544F8E0078C384 /* Library */,
 				7C69ED39295350750009F382 /* .gitignore */,
@@ -914,6 +917,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CAB35CB2AD02E8500659002 /* Videos in Resources */,
 				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
 				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,

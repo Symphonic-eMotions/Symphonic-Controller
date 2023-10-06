@@ -13,6 +13,10 @@ import AVFAudio
 
 final class AppUtils {
     
+    enum InstrumentError: Error {
+        case loadFailed(String)
+    }
+    
     private static let appStorage = UserDefaults.standard
     static var setUrl: String  {
         appStorage.string(forKey: "currentUrl") ?? "AppUtils"
@@ -69,10 +73,9 @@ final class AppUtils {
         return instrumentSet ?? nil
     }
     
-    static func loadSavedInstrumentSet(fileName: String) -> InstrumentsSet? {
-        
+    static func loadSavedInstrumentSet(fileName: String) throws -> InstrumentsSet {
         guard let instrumentSet = InstrumentsSet.withFileManagerJSON(fileName) else {
-            preconditionFailure()
+            throw InstrumentError.loadFailed("Failed to load instrument set from \(fileName)")
         }
         return instrumentSet
     }

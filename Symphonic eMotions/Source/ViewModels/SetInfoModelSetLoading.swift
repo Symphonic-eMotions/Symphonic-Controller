@@ -16,18 +16,27 @@ extension SetInfoModel {
     }
     
     func tapSavedRow(fileName: String) {
-                
-        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
-        currentInstrumentsSetIsChanged(instrumentSet!)
+        do {
+            let instrumentSet = try AppUtils.loadSavedInstrumentSet(fileName: fileName)
+            currentInstrumentsSetIsChanged(instrumentSet)
+        }
+        catch {
+            print(error)
+        }
     }
 
     func reloadSet(fileName: String) {
-                
-        let instrumentSet = AppUtils.loadSavedInstrumentSet(fileName: fileName)
-        currentInstrumentsSetIsChanged(instrumentSet!)
         
-        setSettings = AppUtils.setSettings(
-            instrumentSet: instrumentSet!
-        )
+        do {
+            let instrumentSet = try AppUtils.loadSavedInstrumentSet(fileName: fileName)
+            currentInstrumentsSetIsChanged(instrumentSet)
+            
+            setSettings = AppUtils.setSettings(
+                instrumentSet: instrumentSet
+            )
+        }
+        catch {
+            print(error)
+        }
     }
 }

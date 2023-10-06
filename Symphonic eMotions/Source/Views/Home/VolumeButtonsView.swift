@@ -24,7 +24,6 @@ struct VolumeButtonsView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @State private var sliderValue: Float = AVAudioSession.sharedInstance().outputVolume
-    @Binding public var testSoundPlaying: Bool
     internal var testSoundNoteNumbers: [Int]
     
     var body: some View {
@@ -43,6 +42,14 @@ struct VolumeButtonsView: View {
                     
                     Button(action: {
                         self.decreaseVolume()
+                        
+                        //Direct connection Introductie set
+                        setInfoModel.conductor.playNoteNumbersIntroduction(
+                            trackId: "Volume",
+                            soundSource: .audioBuffer,
+                            noteNumbers: testSoundNoteNumbers,
+                            noteOn: false
+                        )
                     }) {
                         Image(systemName: "speaker.minus.fill")
                             .font(.system(size: 50))
@@ -60,20 +67,16 @@ struct VolumeButtonsView: View {
                     
                     Button(action: {
                         
-                        if !testSoundPlaying {
-                            
-                            //Direct connection Introductie set
-                            setInfoModel.conductor.playNoteNumbersIntroduction(
-                                trackId: "realLife",
-                                soundSource: .audioBuffer,
-                                noteNumbers: testSoundNoteNumbers,
-                                noteOn: testSoundPlaying
-                            )
-                            
-                            testSoundPlaying = true
-                        }
-                        
                         self.increaseVolume()
+                            
+                        //Direct connection Introductie set
+                        setInfoModel.conductor.playNoteNumbersIntroduction(
+                            trackId: "Volume",
+                            soundSource: .audioBuffer,
+                            noteNumbers: testSoundNoteNumbers,
+                            noteOn: false
+                        )
+
                     }) {
                         Image(systemName: "speaker.plus.fill")
                             .font(.system(size: 50))

@@ -95,7 +95,7 @@ final class Conductor {
     internal var set: InstrumentsSet
     
     //Timer for introduction repeater:
-    var timer: Timer?
+//    var timer: Timer?
     var lastNoteNumber: Int?
     
     //MARK: Init
@@ -433,30 +433,41 @@ final class Conductor {
             let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
             trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
             
+            //Get any but the last played note
+            let filteredNotes = noteNumbers.filter { $0 != self.lastNoteNumber }
+            
+            print("Available notes: \(filteredNotes)")
             
             if let noteNumber = noteNumbers.randomElement() {
+                
+                print("PLAYING \(noteNumber)")
+                
                 self.lastNoteNumber = noteNumber
                 let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
                 self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+                
+            }
+            else{
+                print("EEROR PLAYING. last was \(String(describing: self.lastNoteNumber))")
             }
             
-            timer = Timer.scheduledTimer(withTimeInterval: 2.8, repeats: true) { _ in
-                //Never play same note twice
-                var newNoteNumber: Int? = nil
-                repeat {
-                    newNoteNumber = noteNumbers.randomElement()
-                } while newNoteNumber == self.lastNoteNumber
-                
-                if let noteNumber = newNoteNumber {
-                    self.lastNoteNumber = noteNumber
-                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
-                    self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-                }
-            }
+//            timer = Timer.scheduledTimer(withTimeInterval: 2.8, repeats: true) { _ in
+//                //Never play same note twice
+//                var newNoteNumber: Int? = nil
+//                repeat {
+//                    newNoteNumber = noteNumbers.randomElement()
+//                } while newNoteNumber == self.lastNoteNumber
+//                
+//                if let noteNumber = newNoteNumber {
+//                    self.lastNoteNumber = noteNumber
+//                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
+//                    self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+//                }
+//            }
         } else {
             
-            timer?.invalidate()
-            timer = nil
+//            timer?.invalidate()
+//            timer = nil
             
             for noteNumber in noteNumbers {
                 
@@ -540,7 +551,7 @@ final class Conductor {
                     )
                     
                     let sounds = ["Applause01", "Applause02", "Applause03"]
-                    playInterfaceSounds(sounds: sounds, volume: 0.30)
+                    playInterfaceSounds(sounds: sounds, volume: 0.17)
                     
                     if !autoVoice.isSpeaking {
                         
@@ -548,7 +559,7 @@ final class Conductor {
                         trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
                         trudy.rate = 0.55
                         trudy.pitchMultiplier = 1.01
-                        trudy.volume = 0.78
+                        trudy.volume = 0.35
                         autoVoice.speak(trudy)
                     }
                 }

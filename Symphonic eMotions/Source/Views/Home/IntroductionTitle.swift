@@ -43,7 +43,7 @@ struct IntroductionTitle: View {
                     //Shut down audio test notes
                     if nextPage == .page03 {
                         setInfoModel.conductor.playNoteNumbersIntroduction(
-                            trackId: "realLife",
+                            trackId: "Volume",
                             soundSource: .audioBuffer,
                             noteNumbers: introductionNoteNumbers,
                             noteOn: true
