@@ -276,49 +276,42 @@ final class AppUtils {
         
         let fileManager = FileManager.default
         
-        // Create an AVAudioFile first
+        // Base documents path
         let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let setName = ( set.customName != "" ) ? set.customName : set.name
-        let folderName = "Recordings \(setName)"
-        let folderPath = documentsPath.appendingPathComponent(folderName)
         
-        // Check if folder exists, if not, create it
-        var isDirectory: ObjCBool = false
-        if !fileManager.fileExists(atPath: folderPath.path, isDirectory: &isDirectory) {
-            do {
-                try fileManager.createDirectory(at: folderPath, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                print("Error creating folder: \(folderName)")
-                throw error // Propagate the error upwards
-            }
+        // Create subfolders
+        let setName = ( set.customName != "" ) ? set.customName : set.name
+        let mainFolderName = "Recordings"
+        let subFolderName = "\(setName)"
+        
+        // Full folder path
+        let mainFolderPath = documentsPath.appendingPathComponent(mainFolderName)
+        let subFolderPath = mainFolderPath.appendingPathComponent(subFolderName)
+        
+        // Create main folder if it doesn't exist
+        if !fileManager.fileExists(atPath: mainFolderPath.path) {
+            try fileManager.createDirectory(at: mainFolderPath, withIntermediateDirectories: true, attributes: nil)
         }
         
-        let outputFile = folderPath.appendingPathComponent("\(trackName).aac")
-
-//        let settings: [String: Any] = [
-//            AVFormatIDKey: Int(kAudioFormatLinearPCM),
-//            AVSampleRateKey: 44100,
-//            AVNumberOfChannelsKey: 2,
-//            AVLinearPCMBitDepthKey: 16,
-//            AVLinearPCMIsBigEndianKey: true, // AIFF is big-endian
-//            AVLinearPCMIsFloatKey: false
-//        ]
+        // Create subfolder if it doesn't exist
+        if !fileManager.fileExists(atPath: subFolderPath.path) {
+            try fileManager.createDirectory(at: subFolderPath, withIntermediateDirectories: true, attributes: nil)
+        }
         
+        // Output file within the subfolder
+        let outputFile = subFolderPath.appendingPathComponent("\(trackName).aac")
+        
+        // File settings
         let settings: [String: Any] = [
-//            AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
             AVLinearPCMBitDepthKey: 16
-//            ,
-//            AVLinearPCMIsBigEndianKey: false,  // Little-endian for WAV
-//            AVLinearPCMIsFloatKey: false
         ]
         
         do {
             // File to write recording to
             let avAudioFile = try AVAudioFile(forWriting: outputFile, settings: settings)
-            
             return avAudioFile
             
         } catch {
@@ -326,6 +319,7 @@ final class AppUtils {
             throw error // Propagate the error upwards
         }
     }
+
 
     
     //MARK: Write Instrument Set
