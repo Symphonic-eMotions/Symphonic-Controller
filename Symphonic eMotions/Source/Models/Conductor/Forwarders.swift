@@ -14,13 +14,13 @@ extension Conductor {
         nodeName: String,
         parameter: String,
         parameterRange: [Double] ) {
-        
-        let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: nodeName)
-        
-        let effect = set.effect(for: effectType!)
-        
-        effect!.targetAndApply(value: value, nodeName: nodeName, parameter: parameter, parameterRange: parameterRange)
-    }
+            
+            let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: nodeName)
+            
+            let effect = set.effect(for: effectType!)
+            
+            effect!.targetAndApply(value: value, nodeName: nodeName, parameter: parameter, parameterRange: parameterRange)
+        }
     
     //Forward Part Feedback
     internal func forwardPartFeedback( ramped: Double ) -> Void {
@@ -30,20 +30,28 @@ extension Conductor {
     internal func forwardEffect(
         value: Double,
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
-        
-        guard let track = set.track(for: damperTarget.trackId) else { return }
-        
-        guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
-        
-        guard let effect = track.effect(for: effectType) else { return }
-        
-        //inverse value if requested in dampertarget
-        let valueToApply = damperTarget.parameterInversed ? 1 - value : value
-        
-//        print("APPLY \(valueToApply) \(damperTarget.trackId)")
             
-        effect.apply(value: valueToApply, with: damperTarget)
-    }
+//            print("A")
+            
+            guard let track = set.track(for: damperTarget.trackId) else { return }
+            
+//            print("B \(damperTarget.nodeName)")
+            
+            guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
+            
+//            print("C")
+            
+            guard let effect = track.effect(for: effectType) else { return }
+            
+//            print("D")
+            
+            //inverse value if requested in dampertarget
+            let valueToApply = damperTarget.parameterInversed ? 1 - value : value
+            
+//            print("APPLY \(valueToApply) \(damperTarget.trackId)")
+            
+            effect.apply(value: valueToApply, with: damperTarget)
+        }
     
     internal func forwardSpriteKit(
         trackNr: Int,
@@ -54,14 +62,14 @@ extension Conductor {
         mappedIndex: Int
     ) -> Void {
         
-//        let allCells = areaOfInterest.filter { int in
-//            return int == 1
-//        }
+        //        let allCells = areaOfInterest.filter { int in
+        //            return int == 1
+        //        }
         //Reverse maxIndexes for inverted Y axis in SpriteKit
-//        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
+        //        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
         
-//        print("*** forwardSpriteKit trackNr: \(trackNr) partNr: \(partNr) ramped: \(ramped) areaOfInterest: \(areaOfInterest) maxIndex: \(maxIndex) mappedIndex: \(mappedIndex) ")
-//        
+        //        print("*** forwardSpriteKit trackNr: \(trackNr) partNr: \(partNr) ramped: \(ramped) areaOfInterest: \(areaOfInterest) maxIndex: \(maxIndex) mappedIndex: \(mappedIndex) ")
+        //
         if trackNr == 0 {
             if partNr == 0 {
                 spriteKitParts0a.send((maxIndex,mappedIndex,ramped))
@@ -161,31 +169,31 @@ extension Conductor {
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget,
         currentSetLevel: Double
     ) {
+        
+        //Parameter controllers
+        switch damperTarget.parameter {
             
-            //Parameter controllers
-            switch damperTarget.parameter {
+        case "velocity":
             
-            case "velocity":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                
-                //Check wether track.id is in current level
-                if track.levels.contains(Int(currentSetLevel)) {
-                    velocities[track.id] = value
-                } else { velocities[track.id] = 0 }
-                
-            case "soundModuleParam01":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                soundModuleParam01[track.id] = value
-            case "soundModuleParam02":
-                
-                guard let track = set.track(for: damperTarget.trackId) else { return }
-                soundModuleParam02[track.id] = value
+            guard let track = set.track(for: damperTarget.trackId) else { return }
             
-            default:
-//                print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
-                return
+            //Check wether track.id is in current level
+            if track.levels.contains(Int(currentSetLevel)) {
+                velocities[track.id] = value
+            } else { velocities[track.id] = 0 }
+            
+        case "soundModuleParam01":
+            
+            guard let track = set.track(for: damperTarget.trackId) else { return }
+            soundModuleParam01[track.id] = value
+        case "soundModuleParam02":
+            
+            guard let track = set.track(for: damperTarget.trackId) else { return }
+            soundModuleParam02[track.id] = value
+            
+        default:
+            //                print("Sequencer damperTarget.parameter Not mapped: \(damperTarget.parameter)")
+            return
         }
     }
 }

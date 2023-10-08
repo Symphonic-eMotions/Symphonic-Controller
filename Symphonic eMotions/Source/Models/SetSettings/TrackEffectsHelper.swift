@@ -96,6 +96,7 @@ class TrackEffectsHelper {
 
                 //Here are we getting the value from the effect?
                 let parameter = Parameter(
+                    type: parameterString.rawValue,
                     name: parameterString.description,
                     value: value,
                     range: range
@@ -104,6 +105,7 @@ class TrackEffectsHelper {
                 parameters.append(parameter)
             }
             let trackEffect = TrackEffect(
+                effectType: effect.value.effectType.rawValue,
                 effectName: effect.value.effectType.description,
                 parameters: parameters
             )
@@ -124,13 +126,18 @@ class TrackEffectsHelper {
         
         for (index, parameterValue) in parameterValues.enumerated() {
             let parameter = Parameter(
+                type: parameterNames[index].rawValue, 
                 name: parameterNames[index].rawValue,
                 value: Double(parameterValue.value),
                 range: parameterValue.range
             )
             parameters.append(parameter)
         }
-        let trackEffect = TrackEffect(effectName: effectName, parameters: parameters)
+        let trackEffect = TrackEffect(
+            effectType: effectType.rawValue, 
+            effectName: effectName,
+            parameters: parameters
+        )
         
         return trackEffect
     }

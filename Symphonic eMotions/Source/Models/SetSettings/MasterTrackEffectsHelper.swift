@@ -72,6 +72,7 @@ class MasterTrackEffectsHelper {
                 
                 //Here are we getting the value from the effect?
                 let parameter = Parameter(
+                    type: parameterString.rawValue, 
                     name: parameterString.rawValue,
                     value: value,
                     range: range

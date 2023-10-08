@@ -44,9 +44,6 @@ class DelayEffect: AudioProcessingEffect {
         case "dryWetMix":
             let d = RangeConverter.valueToRange(range: dryWetMix.range, value: value)
             (node as? Delay)?.dryWetMix = AUValue( d )
-        case "dryWetMixInverted":
-            let d = RangeConverter.valueToRange(range: dryWetMix.range, value: value, inverted: true)
-            (node as? Delay)?.dryWetMix = AUValue( d )
         default: break
         }
     }

@@ -16,12 +16,14 @@ struct MasterTrackEffect: Identifiable, Hashable {
 
 struct TrackEffect: Identifiable, Hashable {
     var id: String { effectName }
+    var effectType: String
     var effectName: String
     var parameters: [Parameter]?
 }
 
 struct Parameter: Identifiable, Hashable {
     var id: String { name }
+    var type: String
     var name: String
     var value: Double
     var range: [Double]

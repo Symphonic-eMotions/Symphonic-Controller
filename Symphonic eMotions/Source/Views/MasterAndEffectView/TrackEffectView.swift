@@ -74,8 +74,8 @@ struct TrackEffectView: View {
                                                 let dt = InstrumentsSet.Track.Part.DamperTarget(
                                                     trackId: currentTrack.trackId,
                                                     nodeType: .effect,
-                                                    nodeName: effect.effectName,
-                                                    parameter: parameter.name,
+                                                    nodeName: effect.effectType,
+                                                    parameter: parameter.type,
                                                     parameterRange: parameter.range,
                                                     parameterInversed: false,
                                                     midiData: nil,
@@ -89,8 +89,8 @@ struct TrackEffectView: View {
                                                     for: dt
                                                 )
                                                 
-                                                print("--> newVal \(newVal)")
-                                                print(dt)
+//                                                print("--> newVal \(newVal)")
+//                                                print(dt)
                                                 
                                                 //Store to disk in currentTrack
                                                 

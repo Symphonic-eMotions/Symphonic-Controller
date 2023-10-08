@@ -35,10 +35,16 @@ class LowPassFilterEffect: AudioProcessingEffect {
     
     func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
         
+//        print("apply LowPassFilterEffect \(damperTarget.parameter) \(value) to tange: \(cutOffFrequency.range)")
+        
         switch damperTarget.parameter {
         case "cutoffFrequency":
             let cf = RangeConverter.valueToRange(range: cutOffFrequency.range, value: value, exponent: 2)
+            
+//            print("Converted: \(cf)")
+            
             (node as? LowPassFilter)?.cutoffFrequency = AUValue( cf )
+            
         case "resonance":
             let r = RangeConverter.valueToRange(range: resonance.range, value: value, exponent: 1)
             (node as? LowPassFilter)?.resonance = AUValue( r )
