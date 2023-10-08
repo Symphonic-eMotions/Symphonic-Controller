@@ -228,7 +228,7 @@ final class Conductor {
     // MARK: Load tracks
     private func loadTracks(currentSetLevel: Double ){
         
-        //Create tupple with midichannel per midi only instrument
+        //Create tupple with midichannel per midi only instrument (Deprecate?)
         var midiChannels = collectMidiChannels()
         
         set.tracks.forEach { track in
@@ -263,9 +263,9 @@ final class Conductor {
             //Load sequencers
             //Within this function the EXS is also loaded
             trackSequencersCallbackers[track.id] = nil
-            trackSequencers[track.id] = midiSequencer(
+            trackSequencers[track.id] = midiSequencerBuffersAndSamplersWithNestedEffects(
                 for: track,
-                length: "loop",
+                length: "loopSequenceFromMIDIfile",
                 currentSetLevel: currentSetLevel,
                 midiChannels: &midiChannels,
                 samplePath: set.filesPath
@@ -273,9 +273,9 @@ final class Conductor {
             
             //Make dummy connectors for memory sequences to silence them in triggers module
             var midiChannelsDummy: [String: Int] = [:]
-            trackSequencersMemory[track.id] = midiSequencer(
+            trackSequencersMemory[track.id] = midiSequencerBuffersAndSamplersWithNestedEffects(
                 for: track,
-                length: "all",
+                length: "completeSequenceFromMIDIfile",
                 currentSetLevel: currentSetLevel,
                 midiChannels: &midiChannelsDummy,
                 samplePath: set.filesPath
@@ -628,7 +628,7 @@ final class Conductor {
     }
     
     // MARK: Seqs & Sound gens
-    private func midiSequencer(
+    private func midiSequencerBuffersAndSamplersWithNestedEffects(
         for track: InstrumentsSet.Track,
         length: String,
         currentSetLevel: Double,
@@ -641,6 +641,7 @@ final class Conductor {
                 return nil
             }
             
+            //What is everyting running on?
             let sequencer = AppleSequencer()
             
             // Try loading MIDI file from the app bundle first
@@ -676,11 +677,13 @@ final class Conductor {
             
             sequencer.setTempo(set.bpm)
             
-            //Default length of 1 loop, for midi memory we need the length of "all" loops, thus the sum of loops
+            //Default length of 1 loop, for midi memory we need the length of "completeSequenceFromMIDIfile" (the sum of loops)
             var duration = Duration(beats: midiFile.loopLength.first ?? 0)
             
+            //MARK: Actual instruments are loaded in loopSequenceFromMIDIfile
+            
             //Fill sequencer as a copy buffer
-            if length == "all" {
+            if length == "completeSequenceFromMIDIfile" {
                 
                 //Over write loop duration with complete length
                 duration = Duration(beats: midiFile.loopLength.reduce(0, {sum, value in sum + value}) )
@@ -703,7 +706,7 @@ final class Conductor {
                             interval = interval + lengthInBeats
                             
 //                            print("AudioBufferALL sequencer startTime: \(startTime) audioFileName: \(audioFile.fileName) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
-//                            
+//
                             sequencer.tracks.first?.add(
                                 noteNumber: MIDINoteNumber(noteNumber),
                                 velocity: 127,
@@ -719,15 +722,15 @@ final class Conductor {
             sequencer.setLoopInfo(duration, loopCount: 0)
             sequencer.enableLooping()
             
-            //loop means, we have an actual instrument, not a sequencer loaded for copy reference
-            if length == "loop" {
+            //An actual instrument, not a sequencer loaded for copy reference
+            if length == "loopSequenceFromMIDIfile" {
                 
                 switch track.instrumentType {
                     
                 case .exsSampler:
                     
                     //Create EXS sampler
-                    trackSamplers[track.id] = createExsSampler(for: track, and: sequencer)
+                    trackSamplers[track.id] = createExsSamplerChainEffects(for: track, and: sequencer)
                     
                     //Create seperate isVelocity func
                     let isVelocitySensitive = isVelocitySensitive(for: track)
@@ -746,20 +749,21 @@ final class Conductor {
                         sequencer.setGlobalMIDIOutput(trackSamplers[track.id]!.midiIn)
                     }
                 case .audioBuffer:
-                    trackSamplers[track.id] = createAudioBufferSampler(
+                    trackSamplers[track.id] = createAudioBufferSamplerChainEffects(
                         for: track,
                         and: sequencer,
                         currentSetLevel: currentSetLevel,
                         samplePath: samplePath
                     )
                 case .audioBufferTimed:
-                    trackSamplers[track.id] = createAudioBufferTimePitch(
+                    trackSamplers[track.id] = createAudioBufferTimePitchChainEffects(
                         for: track,
                         and: sequencer,
                         currentSetLevel: currentSetLevel,
                         targetBPM: set.bpm,
                         samplePath: samplePath
                     )
+                    //In all following cases also nested effect chain and track volume envelopes
                 case .SemOne:
                     trackInstruments[track.id] = SemOne(for: track, and: sequencer)
                 case .pulseWidthSynth:
@@ -841,8 +845,21 @@ final class Conductor {
             guard let effects = track.effects else { return startingNode }
             var finalNode = startingNode
             effects.forEach { effect in
+                
                 finalNode = effect.chain(to: finalNode)
+                
+//                //Loop over damperTargets to find parameters to set
+//                //There's 1 parameter per part
+//                track.parts.forEach { part in
+//                    
+//                    //We hebben het effect:
+//                    if effect.effectType.rawValue == part.damperTarget.nodeName {
+//                        effect.apply(value: 0.5, with: part.damperTarget)
+//                    }
+//                }
             }
+            
+            
             
             return finalNode as Node
         }

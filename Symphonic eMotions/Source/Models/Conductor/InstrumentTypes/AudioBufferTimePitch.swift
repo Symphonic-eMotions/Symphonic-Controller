@@ -11,7 +11,7 @@ import AVFAudio
 
 extension Conductor {
     
-    internal func createAudioBufferTimePitch(
+    internal func createAudioBufferTimePitchChainEffects(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
         currentSetLevel: Double,

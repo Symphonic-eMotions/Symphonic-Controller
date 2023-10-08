@@ -75,7 +75,7 @@ struct MidiClipsView: View {
                 VStack{
                     HStack{
                         //Current midi file loaded
-                        Text(currentTrack.midiFile)
+                        Text(currentTrack.midiFile == "Auto stem layout" ? "Default String" : currentTrack.midiFile)
                             .padding()
                         
                         //Notice we need to reload engine

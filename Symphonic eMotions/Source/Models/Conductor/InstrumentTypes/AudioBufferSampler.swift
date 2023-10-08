@@ -11,7 +11,7 @@ import AVFAudio
 
 extension Conductor {
     
-    internal func createAudioBufferSampler(
+    internal func createAudioBufferSamplerChainEffects(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
         currentSetLevel: Double,
@@ -102,7 +102,9 @@ extension Conductor {
         //No velocity
         sequencer.setGlobalMIDIOutput(sampler.midiIn)
         
+        //Connect all effects
         let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
+        //Connect ampplitude envelopes for track fading
         let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
         
         mixer.addInput(ampEnv)

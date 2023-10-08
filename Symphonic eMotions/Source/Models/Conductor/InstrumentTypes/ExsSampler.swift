@@ -9,7 +9,7 @@ import AudioKit
 
 extension Conductor {
     
-    internal func createExsSampler(
+    internal func createExsSamplerChainEffects(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer) -> MIDISampler? {
             
