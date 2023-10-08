@@ -11,7 +11,7 @@ import AVFoundation
 
 struct MainView: View {
     
-    @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
+//    @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
     
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
@@ -22,6 +22,9 @@ struct MainView: View {
     
     //Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
+    @StateObject var userSettings = UserSettings()
+    
+    @State var isCreator: Bool = false
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
     
@@ -39,21 +42,6 @@ struct MainView: View {
         self.setInfoModel = setInfoModel
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
-        
-        //Main navigation
-        var items = [
-            (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
-            // (name: "Demo", setName: "demo", fileGroup: FileGroup.demo, sessionDisplay: SessionDisplay.demo),
-            (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
-            (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
-        ]
-        
-        //Add creator navigation item
-        if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
-            items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
-        }
-        
-        _sidebarItems = State(initialValue: items)
         
         //Create Playlists if needed
         AppUtils.createPlayListFolders()
@@ -112,6 +100,7 @@ struct MainView: View {
                 )
             }
         }
+        
         //SwiftUI Interface with Part editor
         else if [.swiftUI,.setInfo,.pro,.demo,.creator,.playlists].contains(sessionDisplay) {
             
@@ -125,6 +114,24 @@ struct MainView: View {
                     sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
+                .onAppear {
+                    // Update `isCreator` based on the `userCode`
+                    isCreator = userSettings.userCode == .creator
+                    
+                    //Main navigation
+                    var items = [
+                        (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
+                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
+                        (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
+                    ]
+                    
+                    //Add creator navigation item
+                    if isCreator {
+                        items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
+                    }
+                    
+                    sidebarItems = items
+                }
                 
                 //SeM Pro interface with interaction editor
                 if sessionDisplay == .swiftUI {
@@ -170,7 +177,8 @@ struct MainView: View {
                 
                 else if sessionDisplay == .demo {
                     DemoView(
-                        setInfoModel: setInfoModel,
+                        setInfoModel: setInfoModel, 
+                        userSettings: userSettings,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
                     )
@@ -191,6 +199,7 @@ struct MainView: View {
                     
                     SetInfo(
                         setInfoModel: setInfoModel,
+                        isCreator: $isCreator,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub,
                         userPresets: $userPresets

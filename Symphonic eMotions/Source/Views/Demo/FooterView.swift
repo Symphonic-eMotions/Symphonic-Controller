@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct FooterView: View {
+    
+    @ObservedObject var userSettings: UserSettings
     @State private var isEditing = false
     @State private var inputUserCode: String = ""
-    @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
     @State private var showingAlert = false
 
     var body: some View {
@@ -29,12 +30,9 @@ struct FooterView: View {
             if isEditing {
                 TextField("Enter user code", text: $inputUserCode, onCommit: {
                     if let userCode = UserCode(rawValue: inputUserCode) {
-                        // `inputUserCode` matches a `UserCode` case, and `userCode` is now that case
-                        // Store it in userCodeRaw
-                        userCodeRaw = userCode.rawValue
+                        userSettings.userCode = userCode
                         isEditing = false
                     } else {
-                        // `inputUserCode` does not match any `UserCode` case
                         // Show an alert
                         showingAlert = true
                     }

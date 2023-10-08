@@ -20,6 +20,7 @@ struct VideoPlayerView: View {
 struct DemoView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
+    @ObservedObject var userSettings: UserSettings
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
@@ -67,7 +68,7 @@ struct DemoView: View {
             }
             Spacer()
             
-            FooterView()
+            FooterView(userSettings: userSettings)
         }
     }
 }

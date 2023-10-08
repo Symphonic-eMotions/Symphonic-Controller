@@ -12,6 +12,8 @@ struct EditorView: View {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "EditorView"
     
     @ObservedObject var setInfoModel: SetInfoModel
+    //Show creator elements
+    @Binding private var isCreator: Bool
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
@@ -73,18 +75,19 @@ struct EditorView: View {
     @State private var targetParameters: [String: String]
     //Inverse values at forwarding (to effect)
     @State private var parametersInversed: [String: Bool]
-    //Show creator elements
-    @State private var isCreator: Bool
+    
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
     
     init(
         setInfoModel: SetInfoModel,
+        isCreator: Binding<Bool>,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>
     ) {
         self.setInfoModel = setInfoModel
+        self._isCreator = isCreator
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
         _showEditorPart = State(initialValue: .none)
@@ -219,8 +222,7 @@ struct EditorView: View {
         _targetNames = State(initialValue: [:])
         _targetParameters = State(initialValue: [:])
         _parametersInversed = State(initialValue: parametersInversedInit)
-        let isCreatorValue = UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator
-        _isCreator = State(initialValue: isCreatorValue)
+        
     }
     
     var body: some View {
