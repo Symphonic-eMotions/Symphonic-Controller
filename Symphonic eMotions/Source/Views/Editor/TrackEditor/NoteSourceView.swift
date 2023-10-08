@@ -26,6 +26,8 @@ struct NoteSourceView: View {
     @Binding var noteNumberLetters: [String: [Int]]
     @Binding var availableVariationTypes: [String: [VariationType]]
     
+    @Binding var showTrackEffect: Bool
+    
     //States
     @State var noteSource: NoteSource
     @State var countedParts: Int
@@ -44,7 +46,9 @@ struct NoteSourceView: View {
         midiClipspositions: Binding<[String:[Int]]>,
         noteNumbers: Binding<[String:[Int]]>,
         noteNumberLetters: Binding<[String:[Int]]>,
-        availableVariationTypes: Binding<[String:[VariationType]]>
+        availableVariationTypes: Binding<[String:[VariationType]]>,
+        
+        showTrackEffect: Binding<Bool>
     ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
@@ -60,6 +64,8 @@ struct NoteSourceView: View {
         _noteNumbers = noteNumbers
         _noteNumberLetters = noteNumberLetters
         _availableVariationTypes = availableVariationTypes
+        
+        _showTrackEffect = showTrackEffect
         
         _noteSource = State(initialValue: noteSources[trackId].wrappedValue!)
         _countedParts = State(initialValue: currentTrack.parts.count)
@@ -151,8 +157,40 @@ struct NoteSourceView: View {
             
             HStack(){
                 
-                Text("Velocity sensitive")
+                VStack {
+                    
+                    ZStack {
+                        
+                        Rectangle()
+                            .frame(width: 130, height: 34)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( showTrackEffect ? .clear : color )
+                        
+                        Text("Effects")
+                            .frame(width: 130, height: 34)
+                        
+                    }
                     .frame(width: columnWidth, alignment: .leading)
+                    .onTapGesture {
+                        withAnimation {
+                            showTrackEffect.toggle()
+                        }
+                    }
+                    
+                }
+                .sheet(isPresented: $showTrackEffect) {
+                    
+                    TrackEffectView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: currentTrack,
+                        trackId: trackId,
+                        showTrackEffect: $showTrackEffect
+                    )
+                }
+                
+                Text("Velocity sensitive")
+                    
                 
                 Toggle("", isOn: $hasVelocity)
                 .frame(width: 50)

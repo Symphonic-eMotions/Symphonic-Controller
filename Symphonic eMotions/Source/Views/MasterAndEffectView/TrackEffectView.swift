@@ -117,6 +117,26 @@ struct TrackEffectView: View {
                                             range: rangedRange,
                                             value: rangedValue
                                         )
+                                        
+                                        let dt = InstrumentsSet.Track.Part.DamperTarget(
+                                            trackId: currentTrack.trackId,
+                                            nodeType: .effect,
+                                            nodeName: effect.effectType,
+                                            parameter: parameter.type,
+                                            parameterRange: parameter.range,
+                                            parameterInversed: false,
+                                            midiData: nil,
+                                            nodeSettings: nil,
+                                            dampMode: nil
+                                        )
+                                        
+                                        let _ = print("effect.effectType \(effect.effectType) \(parameter.type) \(rangedValue)")
+                                        
+                                        //Send to conductor for real time modification
+                                        setInfoModel.conductor.forwardEffect(
+                                            value: Double(rangedValue),
+                                            for: dt
+                                        )
                                     }
                                 }
                             }.padding()

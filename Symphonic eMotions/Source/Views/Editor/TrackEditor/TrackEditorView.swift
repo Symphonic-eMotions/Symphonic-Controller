@@ -226,7 +226,8 @@ struct TrackEditorView: View {
                         midiClipspositions: $midiClipPositions,
                         noteNumbers: $noteNumbers,
                         noteNumberLetters: $noteNumberLetters,
-                        availableVariationTypes: $availableVariationTypes
+                        availableVariationTypes: $availableVariationTypes,
+                        showTrackEffect: $showTrackEffect
                     )
                 }
                 if showEditorPart == editorPart || showEditorPart == .variation {
@@ -316,16 +317,16 @@ struct TrackEditorView: View {
                         trackId: key
                     )
                 }
-                if showEditorPart == editorPart || showEditorPart == .effects {
-
-                    EffectView(
-                        setInfoModel: setInfoModel,
-                        currentTrack: setInfoModel.setSettings.tracks[key]!,
-                        trackId: key,
-                        showTrackEffect: $showTrackEffect
-                    )
-
-                }
+//                if showEditorPart == editorPart || showEditorPart == .effects {
+//                    //This is moved to below note source
+//                    EffectView(
+//                        setInfoModel: setInfoModel,
+//                        currentTrack: setInfoModel.setSettings.tracks[key]!,
+//                        trackId: key,
+//                        showTrackEffect: $showTrackEffect
+//                    )
+//
+//                }
                 if showEditorPart == editorPart || showEditorPart == .controller {
                     
                     ControllerView(
