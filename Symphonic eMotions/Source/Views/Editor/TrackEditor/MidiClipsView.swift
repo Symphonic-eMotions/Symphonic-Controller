@@ -75,7 +75,7 @@ struct MidiClipsView: View {
                 VStack{
                     HStack{
                         //Current midi file loaded
-                        Text(currentTrack.midiFile == "Auto stem layout" ? "Default String" : currentTrack.midiFile)
+                        Text(currentTrack.midiFile == "trigger" ? "Automatic sample as stem midi" : currentTrack.midiFile)
                             .padding()
                         
                         //Notice we need to reload engine
@@ -86,7 +86,7 @@ struct MidiClipsView: View {
                         else{
                             //Button replace midi file
                             Button(action: {importing.toggle()}, label: {
-                                Text("Replace current MIDI file")
+                                Text("Replace current MIDI with file")
                             })
                         }
                         //Info about where to keep the midi files

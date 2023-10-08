@@ -73,6 +73,8 @@ struct EditorView: View {
     @State private var targetParameters: [String: String]
     //Inverse values at forwarding (to effect)
     @State private var parametersInversed: [String: Bool]
+    //Show creator elements
+    @State private var isCreator: Bool
     
     let columnWidth: CGFloat = 150
     let headingSize: CGFloat = 20
@@ -217,6 +219,8 @@ struct EditorView: View {
         _targetNames = State(initialValue: [:])
         _targetParameters = State(initialValue: [:])
         _parametersInversed = State(initialValue: parametersInversedInit)
+        let isCreatorValue = UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator
+        _isCreator = State(initialValue: isCreatorValue)
     }
     
     var body: some View {
@@ -240,6 +244,7 @@ struct EditorView: View {
                     setInfoModel: setInfoModel,
                     editorParts: $editorParts,
                     showEditorPart: $showEditorPart,
+                    isCreator: $isCreator,
 
                     numberOfTracks: $numberOfTracks,
 
@@ -356,8 +361,6 @@ struct EditorView: View {
                 }, color: .red, isSolid: true, maxWidth: 130, height: 35
             ){ Text(NSLocalizedString("Save", comment: "")) }
             .frame(width: 130)
-            
-            
             
         }
         .padding()
