@@ -79,6 +79,7 @@
 		7C7E4FDE2A69376D007BEF14 /* DamperTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FDD2A69376D007BEF14 /* DamperTarget.swift */; };
 		7C7E4FE02A69610A007BEF14 /* MixerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FDF2A69610A007BEF14 /* MixerEffect.swift */; };
 		7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */; };
+		7C889B512AE5242E00A2BCC4 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C889B502AE5242E00A2BCC4 /* FileLogger.swift */; };
 		7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */; };
 		7C8C3D9D28D3066F0051BAC9 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */; };
 		7C8C3D9F28D306D00051BAC9 /* PartFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */; };
@@ -258,6 +259,7 @@
 		7C7E4FDD2A69376D007BEF14 /* DamperTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamperTarget.swift; sourceTree = "<group>"; };
 		7C7E4FDF2A69610A007BEF14 /* MixerEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixerEffect.swift; sourceTree = "<group>"; };
 		7C87889228456DB100F0D3E5 /* EaseOutCubicDamper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EaseOutCubicDamper.swift; sourceTree = "<group>"; };
+		7C889B502AE5242E00A2BCC4 /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackState.swift; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@
 		C084FFE526B31216009A4D0C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7C889B502AE5242E00A2BCC4 /* FileLogger.swift */,
 				C084FFE726B31216009A4D0C /* Singletons */,
 				7CFA009929A74E01001D8A5D /* Helpers */,
 				7CFA00A729A759D0001D8A5D /* StateObjects */,
@@ -1075,6 +1078,7 @@
 				7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */,
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
+				7C889B512AE5242E00A2BCC4 /* FileLogger.swift in Sources */,
 				7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,

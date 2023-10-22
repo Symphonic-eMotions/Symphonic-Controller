@@ -853,19 +853,7 @@ final class Conductor {
             effects.forEach { effect in
                 
                 finalNode = effect.chain(to: finalNode)
-                
-//                //Loop over damperTargets to find parameters to set
-//                //There's 1 parameter per part
-//                track.parts.forEach { part in
-//                    
-//                    //We hebben het effect:
-//                    if effect.effectType.rawValue == part.damperTarget.nodeName {
-//                        effect.apply(value: 0.5, with: part.damperTarget)
-//                    }
-//                }
             }
-            
-            
             
             return finalNode as Node
         }

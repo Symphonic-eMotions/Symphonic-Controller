@@ -83,7 +83,7 @@ struct DemoView: View {
             HStack{
                 
                 if let url = Bundle.main.url(
-                    forResource: "SeM-Demo-02",
+                    forResource: "SeM-Demo-02-disabled",
                     withExtension: "mp4",
                     subdirectory: "Videos") {
                     

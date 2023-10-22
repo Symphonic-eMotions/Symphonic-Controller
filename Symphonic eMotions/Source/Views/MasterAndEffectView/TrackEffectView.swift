@@ -109,16 +109,16 @@ struct TrackEffectView: View {
                                                 if let effect = currentTrack.effects[index],
                                                    let parameter = effect.parameters[i] {
                                                     
-                                                    print("Store effect / parameter")
-                                                    print(effect)
-                                                    print("Current vaule: \(parameter.value)")
+//                                                    print("Store effect / parameter")
+//                                                    print(effect)
+//                                                    print("Current vaule: \(parameter.value)")
                                                     
                                                     let convertedValue = RangeConverter.valueToRange(
                                                         range: parameter.range,
                                                         value: Double(newVal)
                                                     )
                                                     
-                                                    print("New value: \(convertedValue)")
+//                                                    print("New value: \(convertedValue)")
                                                     
                                                     //Store in object to disk
                                                     parameter.value = Double(convertedValue)
@@ -149,8 +149,8 @@ struct TrackEffectView: View {
                                             dampMode: nil
                                         )
                                         
-                                        let _ = print("DAMPER TARGET effect \(i) \(effect.effectType) \(parameter.type) value: \(Double(rangedValue)) in range: \(parameter.range)")
-                                        
+                                        let _ = print("onAppear DAMPER TARGET effect \(i) \(effect.effectType) \(parameter.type) value: \(Double(rangedValue)) in range: \(parameter.range)")
+                                                                                
                                         //Send to conductor for real time modification
                                         setInfoModel.conductor.forwardEffect(
                                             value: Double(rangedValue),
