@@ -215,9 +215,10 @@ struct TrackEditorView: View {
                         soundSources: $instrumentTypes
                     )
                 }
+                //Note source also holds effects view
                 if (showEditorPart == editorPart || showEditorPart == .source) && isCreator {
                     
-                    NoteSourceView(
+                    NoteSourceAndEffectsView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
                         trackId: key,

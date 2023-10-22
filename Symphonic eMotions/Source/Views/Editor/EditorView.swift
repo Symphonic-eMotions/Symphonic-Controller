@@ -288,6 +288,11 @@ struct EditorView: View {
             
             EMButton(
                 action: {
+                    
+                    for track in setInfoModel.setSettings.tracks {
+                        setInfoModel.conductor.stopAllNoteNumbers(trackId: track.value.trackId)
+                    }
+                    
                     //Change the View
                     if sessionDisplaySub == .playListEditor {
                         sessionDisplay = .playlists
@@ -304,6 +309,11 @@ struct EditorView: View {
             
             EMButton(
                 action: {
+                    
+                    for track in setInfoModel.setSettings.tracks {
+                        setInfoModel.conductor.stopAllNoteNumbers(trackId: track.value.trackId)
+                    }
+                    
                     let fileName = AppUtils.createWorkingFile(
                         setSettings: setInfoModel.setSettings,
                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
@@ -331,6 +341,10 @@ struct EditorView: View {
             EMButton(
                 action: {
                     
+                    for track in setInfoModel.setSettings.tracks {
+                        setInfoModel.conductor.stopAllNoteNumbers(trackId: track.value.trackId)
+                    }
+                    
                     let fileName = AppUtils.createWorkingFile(
                         setSettings: setInfoModel.setSettings,
                         instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
@@ -341,7 +355,6 @@ struct EditorView: View {
                     
                     //Reopen the file
                     setInfoModel.reloadSet(fileName: fileController.urlToFileName(url: URL(currentUrl)))
-                    
                     
                     
                     //Figure out if we opened from playlists

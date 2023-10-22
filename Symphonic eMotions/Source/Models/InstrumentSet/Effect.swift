@@ -350,25 +350,78 @@ extension InstrumentsSet.Track {
             let effectType = effectType
             switch effectType {
             case .bandPassFilter:
-                self = .bandPassFilter(BandPassFilterEffect(centerFrequency: parameters[0], bandwidth: parameters[1]))
+                self = .bandPassFilter(BandPassFilterEffect(
+                    centerFrequency: parameters[0],
+                    bandwidth: parameters[1]
+                ))
             case .costelloReverb:
-                self = .costelloReverb(CostelloReverbEffect(feedback: parameters[0], cutoffFrequency: parameters[1], dryWetMixer: parameters[2]))
+                self = .costelloReverb(CostelloReverbEffect(
+                    feedback: parameters[0],
+                    cutoffFrequency: parameters[1],
+                    dryWetMixer: parameters[2]
+                ))
             case .compressor:
-                self = .compressor(CompressorEffect(threshold: parameters[0], headRoom: parameters[1], attackTime: parameters[2], releaseTime: parameters[3], masterGain: parameters[4]))
+                self = .compressor(CompressorEffect(
+                    threshold: parameters[0],
+                    headRoom: parameters[1],
+                    attackTime: parameters[2],
+                    releaseTime: parameters[3],
+                    masterGain: parameters[4]
+                ))
             case .delay:
-                self = .delay(DelayEffect(time: parameters[0], feedback: parameters[1], lowPassCutoff: parameters[1], dryWetMix: parameters[2]))
+                self = .delay(DelayEffect(
+                    time: parameters[0],
+                    feedback: parameters[1],
+                    lowPassCutoff: parameters[2],
+                    dryWetMix: parameters[3]
+                ))
             case .distortion:
-                self = .distortion(DistortionEffect(distDelay: parameters[0], distDecay: parameters[1], distDelayMix: parameters[2], distRingModFreq1: parameters[3], distRingModFreq2: parameters[4], distRingModBalance: parameters[5], distRingModMix: parameters[6], distDecimation: parameters[7], distRounding: parameters[8], distDecimationMix: parameters[9], distLinearTerm: parameters[10], distSquaredTerm: parameters[11], distCubicTerm: parameters[12], distPolynomialMix: parameters[13], distSoftClipGain: parameters[14], distFinalMix: parameters[15]))
+                self = .distortion(DistortionEffect(
+                    distDelay: parameters[0],
+                    distDecay: parameters[1],
+                    distDelayMix: parameters[2],
+                    distRingModFreq1: parameters[3],
+                    distRingModFreq2: parameters[4],
+                    distRingModBalance: parameters[5],
+                    distRingModMix: parameters[6],
+                    distDecimation: parameters[7],
+                    distRounding: parameters[8],
+                    distDecimationMix: parameters[9],
+                    distLinearTerm: parameters[10],
+                    distSquaredTerm: parameters[11],
+                    distCubicTerm: parameters[12],
+                    distPolynomialMix: parameters[13],
+                    distSoftClipGain: parameters[14],
+                    distFinalMix: parameters[15]
+                ))
             case .dynamicRangeCompressor:
-                self = .dynamicRangeCompressor(DynamicRangeCompressorEffect(drcAttackDuration: parameters[0], drcReleaseDuration: parameters[1], drcRatio: parameters[2], drcTreshold: parameters[3]))
+                self = .dynamicRangeCompressor(DynamicRangeCompressorEffect(
+                    drcAttackDuration: parameters[0],
+                    drcReleaseDuration: parameters[1],
+                    drcRatio: parameters[2], 
+                    drcTreshold: parameters[3]
+                ))
             case .expander:
-                self = .expander(ExpanderEffect(expansionRatio: parameters[0], expansionThreshold: parameters[1], expanderAttackTime: parameters[2], expanderReleaseTime: parameters[3], expanderMasterGain: parameters[4]))
+                self = .expander(ExpanderEffect(
+                    expansionRatio: parameters[0],
+                    expansionThreshold: parameters[1],
+                    expanderAttackTime: parameters[2],
+                    expanderReleaseTime: parameters[3],
+                    expanderMasterGain: parameters[4]
+                ))
             case .highPassFilter:
-                self = .highPassFilter(HighPassFiltereffect(hpfCutoffFrequency: parameters[0], hpfResonance: parameters[1]))
+                self = .highPassFilter(HighPassFiltereffect(
+                    hpfCutoffFrequency: parameters[0],
+                    hpfResonance: parameters[1]
+                ))
             case .lowPassFilter:
-                self = .lowPassFilter(LowPassFilterEffect(cutOffFrequency: parameters[0], resonance: parameters[1]))
+                self = .lowPassFilter(LowPassFilterEffect(
+                    cutOffFrequency: parameters[0],
+                    resonance: parameters[1]
+                ))
             case .mixer:
-                self = .mixer(MixerEffect(volume: parameters[0]))
+                self = .mixer(MixerEffect(
+                    volume: parameters[0]))
             case .phaser:
                 self = .phaser(PhaserEffect(
                     phaserNotchMinimumFrequency: parameters[0],
@@ -383,18 +436,32 @@ extension InstrumentsSet.Track {
                     phaserDryWetMixer: parameters[9]
                 ))
             case .peakingParametricEqualizerFilter:
-                self = .peakingParametricEqualizerFilter(PeakingParametricEqualizerFilterEffect(ppefCenterFrequency: parameters[0], ppefGain: parameters[1], ppefQ: parameters[2]))
+                self = .peakingParametricEqualizerFilter(PeakingParametricEqualizerFilterEffect(
+                    ppefCenterFrequency: parameters[0],
+                    ppefGain: parameters[1],
+                    ppefQ: parameters[2]
+                ))
             case .responseReverb:
-                self = .responseReverb(ResponseReverbEffect(respReverbDuration: parameters[0], respDryWetMixer: parameters[1]))
+                self = .responseReverb(ResponseReverbEffect(
+                    respReverbDuration: parameters[0],
+                    respDryWetMixer: parameters[1]
+                ))
             case .reverb:
-                self = .reverb(Reverbeffect(reverbDryWetMix: parameters[0], reverbPreset: parameters[1]))
+                self = .reverb(Reverbeffect(
+                    reverbDryWetMix: parameters[0],
+                    reverbPreset: parameters[1]
+                ))
             case .tanhDistortion:
-                self = .tanhDistortion(TanhDistortionEffect(pregain: parameters[0], postgain: parameters[1], positiveShapeParameter: parameters[2], negativeShapeParameter: parameters[3], dryWetTanh: parameters[4]))
+                self = .tanhDistortion(TanhDistortionEffect(
+                    pregain: parameters[0],
+                    postgain: parameters[1],
+                    positiveShapeParameter: parameters[2],
+                    negativeShapeParameter: parameters[3],
+                    dryWetTanh: parameters[4]
+                ))
             case .none:
                 self = .none(NoneEffect())
-//            default: fatalError("Not implemented!")
             }
-            
         }
         
         init(from decoder: Decoder) throws {
@@ -614,6 +681,162 @@ extension InstrumentsSet.Track {
             }
         }
         
+        //Obsolete due to EffectKeys init mapping??
+//        func effectParameterValue( parameterType: EffectKeys ) -> ValueAndRange {
+//            switch parameterType {
+//            case .effectType:
+//                return ValueAndRange.zero
+//            //BandPassFilter
+//            case .centerFrequency:
+//                return ValueAndRange(value: 5000, range: [20, 22050]) // Frequency usually in Hz
+//            case .bandwidth:
+//                return ValueAndRange(value: 600, range: [100, 12000])  // Bandwidth usually in Hz
+//            //CostelloReverb
+//            case .cutoffFrequencyCostello:
+//                return ValueAndRange(value: 20000, range: [12, 20000]) // Frequency usually in Hz
+//            case .feedbackCostello:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // Feedback usually between 0-1
+//            case .dryWetMixer:
+//                return ValueAndRange(value: 0.5, range: [0, 1])  // dryWetMixer usually between 0-1
+//            //Compressor effect
+//            case .threshold:
+//                return ValueAndRange(value: -5, range: [-40, 20]) // Threshold usually in dB
+//            case .headRoom:
+//                return ValueAndRange(value: 4, range: [0.1, 40]) // HeadRoom usually between 0-1
+//            case .attackTime:
+//                return ValueAndRange(value: 0.001, range: [0.0001, 0.2]) // AttackTime usually between 0-1 seconds
+//            case .releaseTime:
+//                return ValueAndRange(value: 0.05, range: [0.01, 0.2]) // ReleaseTime usually between 0-1 seconds
+//            case .masterGain:
+//                return ValueAndRange(value: 10, range: [-40, 40])  // MasterGain usually in dB
+//            //Delay effect
+//            case .time:
+//                return ValueAndRange(value: 0.417, range: [0, 2]) // Time usually in seconds
+//            case .feedback:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // Feedback usually between 0-1
+//            case .lowPassCutoff:
+//                return ValueAndRange(value: 440, range: [10, 20000]) // Frequency usually in Hz
+//            case .dryWetMix:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // dryWetMix usually between 0-1
+//            //Distortion
+//            case .distDelay:
+//                return ValueAndRange(value: 0.1, range: [0.1, 500]) // distDelay
+//            case .distDecay:
+//                return ValueAndRange(value: 1.0, range: [0.1, 50]) // distDecay
+//            case .distDelayMix:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distDelayMix
+//            case .distRingModFreq1:
+//                return ValueAndRange(value: 100, range: [0.5, 8000]) // distRingModFreq1
+//            case .distRingModFreq2:
+//                return ValueAndRange(value: 100, range: [0.5, 8000]) // distRingModFreq2
+//            case .distRingModBalance:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distRingModBalance
+//            case .distRingModMix:
+//                return ValueAndRange(value: 0, range: [0, 100]) // distRingModMix
+//            case .distDecimation:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distDecimation
+//            case .distRounding:
+//                return ValueAndRange(value: 0, range: [0, 100]) // distRounding
+//            case .distDecimationMix:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distDecimationMix
+//            case .distLinearTerm:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distLinearTerm
+//            case .distSquaredTerm:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distSquaredTerm
+//            case .distCubicTerm:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distCubicTerm
+//            case .distPolynomialMix:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distPolynomialMix
+//            case .distSoftClipGain:
+//                return ValueAndRange(value: -6, range: [-80, 20]) // distSoftClipGain
+//            case .distFinalMix:
+//                return ValueAndRange(value: 50, range: [0, 100]) // distFinalMix
+//            //DynamicRangeCompressor
+//            case .drcAttackDuration:
+//                return ValueAndRange(value: 0.01, range: [0, 1]) // AttackDuration usually between 0-1 seconds
+//            case .drcReleaseDuration:
+//                return ValueAndRange(value: 0.1, range: [0, 1]) // ReleaseDuration usually between 0-1 seconds
+//            case .drcRatio:
+//                return ValueAndRange(value: 20, range: [0.01, 100]) // Ratio usually a value > 1
+//            case .drcTreshold:
+//                return ValueAndRange(value: -15, range: [-100, 0]) // Threshold usually in dB
+//            //Expander
+//            case .expansionRatio:
+//                return ValueAndRange(value: 2, range: [1, 50]) // ExpansionRatio typically > 1
+//            case .expansionThreshold:
+//                return ValueAndRange(value: 2, range: [1, 50]) // ExpansionThreshold typically in dB
+//            case .expanderAttackTime:
+//                return ValueAndRange(value: 0.001, range: [0.0001, 0.2]) // AttackTime typically between 0-1 seconds
+//            case .expanderReleaseTime:
+//                return ValueAndRange(value: 0.05, range: [0.01, 3]) // ReleaseTime typically between 0-1 seconds
+//            case .expanderMasterGain:
+//                return ValueAndRange(value: 0, range: [-40, 40]) // MasterGain typically in dB
+//            //HighPassFilter
+//            case .hpfCutoffFrequency:
+//                return ValueAndRange(value: 6900, range: [20, 22050]) // CutoffFrequency typically in Hz
+//            case .hpfResonance:
+//                return ValueAndRange(value: 0, range: [-20, 40]) // Resonance typically between 0-1
+//            //LowPassFilter
+//            case .cutoffFrequency:
+//                return ValueAndRange(value: 6900, range: [10, 22050]) // CutoffFrequency typically in Hz
+//            case .resonance:
+//                return ValueAndRange(value: 0, range: [-20, 40]) // Resonance typically between 0-1
+//            //Phaser
+//            case .phaserNotchMinimumFrequency:
+//                return ValueAndRange(value: 100, range: [20, 5000]) //phaserNotchMinimumFrequency
+//            case .phaserNotchMaximumFrequency:
+//                return ValueAndRange(value: 1800, range: [20, 10000]) //phaserNotchMaximumFrequency
+//            case .phaserNotchWidth:
+//                return ValueAndRange(value: 1000, range: [10, 5000]) //phaserNotchWidth
+//            case .phaserNotchFrequency:
+//                return ValueAndRange(value: 1.5, range: [1.1, 4.0]) //phaserNotchFrequency
+//            case .phaserVibratoMode:
+//                return ValueAndRange(value: 1, range: [0, 1]) //phaserVibratoMode
+//            case .phaserDepth:
+//                return ValueAndRange(value: 1, range: [0, 1]) //phaserDepth
+//            case .phaserFeedback:
+//                return ValueAndRange(value: 0, range: [0, 1]) //phaserFeedback
+//            case .phaserInverted:
+//                return ValueAndRange(value: 0, range: [0, 1]) //phaserInverted
+//            case .phaserLfoBPM:
+//                return ValueAndRange(value: 30, range: [24, 360]) //phaserLfoBPM
+//            case .phaserDryWetMixer:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) //phaserDryWetMixer
+//            //PeakingParametricEqualizer
+//            case .ppefCenterFrequency:
+//                return ValueAndRange(value: 1000, range: [12, 20000]) // Center Frequency typically in Hz
+//            case .ppefGain:
+//                return ValueAndRange(value: 1, range: [0.0, 10]) // Gain typically in dB
+//            case .ppefQ:
+//                return ValueAndRange(value: 0.707, range: [0.0, 2.0]) // Q (Quality factor) typically > 0
+//            //ResponseReverb
+//            case .respReverbDuration:
+//                return ValueAndRange(value: 0.5, range: [0, 10]) // Reverb Duration typically in seconds
+//            case .respDryWetMixer:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // DryWetMixer typically between 0 (dry) and 1 (wet)
+//            //Reverb
+//            case .reverbDryWetMix:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // DryWetMix
+//            case .reverbPreset:
+//                return ValueAndRange(value: 8, range: [0, 12]) // Preset selection
+//            //TanhDistortion
+//            case .pregain:
+//                return ValueAndRange(value: 2, range: [0, 10]) // PreGain
+//            case .postgain:
+//                return ValueAndRange(value: 0.5, range: [0, 10]) // PostGain
+//            case .positiveShapeParameter:
+//                return ValueAndRange(value: 0.0, range: [-10, 10]) // positiveShapeParameter
+//            case .negativeShapeParameter:
+//                return ValueAndRange(value: 0.0, range: [-10, 10]) // negativeShapeParameter
+//            case .dryWetTanh:
+//                return ValueAndRange(value: 0.5, range: [0, 1]) // DryWetTanh
+//            //MixerEffect
+//            case .volume:
+//                return ValueAndRange(value: 0.69, range: [0, 1]) // Volume typically between 0 (mute) and 1 (max)
+//            }
+//        }
+        
+        
         func effectParameterValues(effectType: EffectType) -> [ValueAndRange] {
             switch effectType {
             case .bandPassFilter:
@@ -642,7 +865,7 @@ extension InstrumentsSet.Track {
                 // Parameters: time, feedback, lowPassCutoff, dryWetMix
                 return [
                     ValueAndRange(value: 0.417, range: [0, 2]), // Time usually in seconds
-                    ValueAndRange(value: 0.5, range: [0, 1]), // Feedback usually between 0-1
+                    ValueAndRange(value: 50, range: [-100, 100]), // Feedback this one -100-100
                     ValueAndRange(value: 440, range: [10, 20000]), // Frequency usually in Hz
                     ValueAndRange(value: 0.5, range: [0, 1]) // dryWetMix usually between 0-1
                 ]
@@ -665,7 +888,6 @@ extension InstrumentsSet.Track {
                     ValueAndRange(value: -6, range: [-80, 20]), // distSoftClipGain
                     ValueAndRange(value: 50, range: [0, 100]), // distFinalMix
                 ]
-                
             case .dynamicRangeCompressor:
                 // Parameters: drcAttackDuration, drcReleaseDuration, drcRatio, drcThreshold
                 return [
@@ -686,14 +908,14 @@ extension InstrumentsSet.Track {
             case .highPassFilter:
                 // Parameters: hpfCutoffFrequency, hpfResonance
                 return [
-                    ValueAndRange(value: 6900, range: [20, 22050]), // CutoffFrequency typically in Hz
-                    ValueAndRange(value: 0, range: [-20, 40]) // Resonance typically between 0-1
+                    ValueAndRange(value: 20, range: [20, 22050]), // CutoffFrequency typically in Hz
+                    ValueAndRange(value:-20, range: [-20, 40]) // Resonance typically between 0-1
                 ]
             case .lowPassFilter:
                 // Parameters: cutoffFrequency, resonance
                 return [
-                    ValueAndRange(value: 6900, range: [10, 22050]), // CutoffFrequency typically in Hz
-                    ValueAndRange(value: 0, range: [-20, 40]) // Resonance typically between 0-1
+                    ValueAndRange(value: 22050, range: [10, 22050]), // CutoffFrequency typically in Hz
+                    ValueAndRange(value: -20, range: [-20, 40]) // Resonance typically between 0-1
                 ]
             case .mixer:
                 // Parameter: volume

@@ -9,11 +9,45 @@ import SwiftUI
 import AVKit
 
 struct VideoPlayerView: View {
+    
     let url: URL
+    @State var isPlaying: Bool = false
+    @State private var player = AVPlayer()
+    
+//    var body: some View {
+//        VideoPlayer(player: AVPlayer(url: url))
+//            .frame(height: 400)
+//        
+//    }
     
     var body: some View {
-        VideoPlayer(player: AVPlayer(url: url))
-            .frame(height: 400)
+        ZStack {
+            
+            VideoPlayer(player: player)
+                .frame(height: 400)
+            
+            if !isPlaying {
+                        
+                // Invisible view to capture taps
+                Color.black
+                    .frame(width: 711, height: 400) // Scaled dimensions
+                    .contentShape(Rectangle())  // Makes the entire area tappable
+                    .opacity(0.5)
+                    .allowsHitTesting(true)
+                
+                Image(systemName: "play.circle.fill")
+                    .resizable()
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 50)
+                    .onTapGesture {
+                        self.player.play()
+                        isPlaying = true
+                    }
+            }
+        }
+        .onAppear {
+            self.player = AVPlayer(url: url)
+        }
     }
 }
 
@@ -24,7 +58,6 @@ struct DemoView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
-    
     var body: some View {
         
         VStack{
@@ -50,10 +83,12 @@ struct DemoView: View {
             HStack{
                 
                 if let url = Bundle.main.url(
-                    forResource: "SeM-Demo-01",
+                    forResource: "SeM-Demo-02",
                     withExtension: "mp4",
                     subdirectory: "Videos") {
+                    
                         VideoPlayerView(url: url)
+                                            
                 } else {
                     Text("Video file not found")
                 }

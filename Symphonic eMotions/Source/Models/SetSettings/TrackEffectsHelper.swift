@@ -93,7 +93,7 @@ class TrackEffectsHelper {
                 //TODO: Here we need to get the track effect values
                 let value = trackSettings.effects[effectIndex]!.parameters[parameterIndex]!.value
                 let range = trackSettings.effects[effectIndex]!.parameters[parameterIndex]!.range
-
+                                
                 //Here are we getting the value from the effect?
                 let parameter = Parameter(
                     type: parameterString.rawValue,

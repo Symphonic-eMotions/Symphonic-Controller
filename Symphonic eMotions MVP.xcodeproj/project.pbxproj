@@ -58,6 +58,7 @@
 		7C6A8CFA2A4481BE0056BED3 /* IntroductionSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */; };
 		7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FC2A03EF3E006F8CCB /* Sets */; };
 		7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FD2A03EF3F006F8CCB /* Sounds */; };
+		7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70DD282AD436FE0024BD67 /* TrackEffectsViewModel.swift */; };
 		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
 		7C7756F828C798BD00E73B14 /* Dial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F728C798BD00E73B14 /* Dial.swift */; };
@@ -136,7 +137,7 @@
 		7CF50F4929ED7D210016BAF4 /* VariationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4829ED7D210016BAF4 /* VariationType.swift */; };
 		7CF50F4B29ED83090016BAF4 /* NoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4A29ED83090016BAF4 /* NoteSource.swift */; };
 		7CF50F4D29ED84230016BAF4 /* StartType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4C29ED84230016BAF4 /* StartType.swift */; };
-		7CF50F4F29EDEC770016BAF4 /* NoteSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */; };
+		7CF50F4F29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F4E29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift */; };
 		7CF50F5129EEB7480016BAF4 /* NoteNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */; };
 		7CF50F5329EEBECD0016BAF4 /* NoteNumberLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F5229EEBECD0016BAF4 /* NoteNumberLevelView.swift */; };
 		7CF50F5529EF165B0016BAF4 /* StartTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F5429EF165B0016BAF4 /* StartTypeView.swift */; };
@@ -236,6 +237,7 @@
 		7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionSlider.swift; sourceTree = "<group>"; };
 		7C6C11FC2A03EF3E006F8CCB /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sets; path = Source/Sets; sourceTree = "<group>"; };
 		7C6C11FD2A03EF3F006F8CCB /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Source/Sounds; sourceTree = "<group>"; };
+		7C70DD282AD436FE0024BD67 /* TrackEffectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectsViewModel.swift; sourceTree = "<group>"; };
 		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
 		7C7756F728C798BD00E73B14 /* Dial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dial.swift; sourceTree = "<group>"; };
@@ -315,7 +317,7 @@
 		7CF50F4829ED7D210016BAF4 /* VariationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationType.swift; sourceTree = "<group>"; };
 		7CF50F4A29ED83090016BAF4 /* NoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSource.swift; sourceTree = "<group>"; };
 		7CF50F4C29ED84230016BAF4 /* StartType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartType.swift; sourceTree = "<group>"; };
-		7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSourceView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CF50F4E29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSourceAndEffectsView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CF50F5229EEBECD0016BAF4 /* NoteNumberLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberLevelView.swift; sourceTree = "<group>"; };
 		7CF50F5429EF165B0016BAF4 /* StartTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTypeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -490,7 +492,7 @@
 				7C29AA1E2A501E6C0070D901 /* DebugView.swift */,
 				7C7A07142A3B0D1E007F7385 /* TrackEditorView.swift */,
 				7C1FB0B529E4429700621909 /* InLevelView.swift */,
-				7CF50F4E29EDEC770016BAF4 /* NoteSourceView.swift */,
+				7CF50F4E29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift */,
 				7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */,
 				7CF50F5029EEB7480016BAF4 /* NoteNumberView.swift */,
 				7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */,
@@ -501,6 +503,7 @@
 				7CF50F5229EEBECD0016BAF4 /* NoteNumberLevelView.swift */,
 				7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */,
 				7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */,
+				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 				7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */,
 				7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */,
 				7C4A545C2A5B288E00FB6514 /* ControllerView.swift */,
@@ -755,6 +758,7 @@
 				7C7E4FD72A683DB4007BEF14 /* SetInfoModelPartEditor.swift */,
 				7C7E4FD52A683D63007BEF14 /* SetInfoModelSetLoading.swift */,
 				7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */,
+				7C70DD282AD436FE0024BD67 /* TrackEffectsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -801,7 +805,6 @@
 				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				7CCDE10228E2C61300343920 /* MasterAndEffectView */,
-				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
 			);
@@ -948,6 +951,7 @@
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
 				7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
+				7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */,
 				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
@@ -979,7 +983,7 @@
 				7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */,
 				7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */,
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
-				7CF50F4F29EDEC770016BAF4 /* NoteSourceView.swift in Sources */,
+				7CF50F4F29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
 				7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */,
 				7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */,

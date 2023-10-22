@@ -20,3 +20,9 @@ extension Date {
         return dateformat.string(from: self)
     }
 }
+
+extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
+}

@@ -64,7 +64,7 @@ final class Conductor {
     //Volume also controlled by editor
     public var volume: [String: Double] = [:]
     
-    //Sampler container
+    //EXS Sampler AND Buffer sampler container
     internal var trackSamplers: [String: MIDISampler] = [:]
     //Synth container
     private var trackInstruments: [String: Node] = [:]
@@ -481,7 +481,13 @@ final class Conductor {
     public func stopAllNoteNumbers( trackId:String ){
         for noteNumber in 0...127 {
             let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
-            trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+            
+            if let trackSampler = trackSamplers[    trackId] {
+                trackSampler.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
+            } else {
+                print("Index \(trackId) not found in trackSamplers array.")
+            }
+            
         }
     }
     
