@@ -15,11 +15,11 @@ struct TrackEffectView: View {
     @ObservedObject var currentTrack: TrackSettings
     
     var trackId: String
-    @State var trackEffectState: [[Float]]
     var trackEffectViewObject: [TrackEffect]
+    @State var trackEffectState: [[Float]]
     
     @Binding var showTrackEffect: Bool
-
+    
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
@@ -109,16 +109,10 @@ struct TrackEffectView: View {
                                                 if let effect = currentTrack.effects[index],
                                                    let parameter = effect.parameters[i] {
                                                     
-//                                                    print("Store effect / parameter")
-//                                                    print(effect)
-//                                                    print("Current vaule: \(parameter.value)")
-                                                    
                                                     let convertedValue = RangeConverter.valueToRange(
                                                         range: parameter.range,
                                                         value: Double(newVal)
                                                     )
-                                                    
-//                                                    print("New value: \(convertedValue)")
                                                     
                                                     //Store in object to disk
                                                     parameter.value = Double(convertedValue)
@@ -127,36 +121,6 @@ struct TrackEffectView: View {
                                         ),
                                         range: parameter.range
                                     )
-                                    .onAppear{
-                                        
-                                        let rangedValue = currentTrack.effects[index]!.parameters[i]!.value
-                                        let rangedRange = currentTrack.effects[index]!.parameters[i]!.range
-                                        
-                                        trackEffectState[index][i] = RangeConverter.rangedToSlider(
-                                            range: rangedRange,
-                                            value: rangedValue
-                                        )
-                                        
-                                        let dt = InstrumentsSet.Track.Part.DamperTarget(
-                                            trackId: currentTrack.trackId,
-                                            nodeType: .effect,
-                                            nodeName: effect.effectType,
-                                            parameter: parameter.type,
-                                            parameterRange: parameter.range,
-                                            parameterInversed: false,
-                                            midiData: nil,
-                                            nodeSettings: nil,
-                                            dampMode: nil
-                                        )
-                                        
-                                        let _ = print("onAppear DAMPER TARGET effect \(i) \(effect.effectType) \(parameter.type) value: \(Double(rangedValue)) in range: \(parameter.range)")
-                                                                                
-                                        //Send to conductor for real time modification
-                                        setInfoModel.conductor.forwardEffect(
-                                            value: Double(rangedValue),
-                                            for: dt
-                                        )
-                                    }
                                 }
                             }.padding()
                         }
@@ -167,11 +131,51 @@ struct TrackEffectView: View {
                 //Continue
                 EMButton(action: {
                     showTrackEffect = false
-                    
                 }, color: .green, isSolid: true) {
-                    Text(NSLocalizedString("Continue", comment: ""))
+                    Text(NSLocalizedString("Close", comment: ""))
                 }
                 .frame(width: geometry.size.width * 0.333)
+            }
+            .onAppear{
+                
+                //Set damper target parameters to the state value 
+                //This overrides frame extractor 0 values
+                
+                // Loop through each PartSettings in currentTrack
+                for part in currentTrack.parts.values {
+                    // Extract nodeName and parameter from the current part
+                    let nodeName = part.damperTarget.nodeName
+                    let parameterType = part.damperTarget.parameter
+                    
+                    // Search trackEffectViewObject for the matching effect
+                    if let effect = trackEffectViewObject.first(where: { $0.effectType == nodeName }) {
+                        // Find the matching parameter within the effect's parameters
+                        if let parameter = effect.parameters?.first(where: { $0.type == parameterType }) {
+                            // Now you have access to the matching parameter's value, name, and range
+                            let value = parameter.value
+                            let range = parameter.range
+                            
+//                            print("Found matching value: \(value) for nodeName: \(nodeName) and parameterType: \(parameterType)")
+                            
+                            let dt = InstrumentsSet.Track.Part.DamperTarget(
+                                trackId: currentTrack.trackId,
+                                nodeType: .effect,
+                                nodeName: nodeName,
+                                parameter: parameterType,
+                                parameterRange: range,
+                                parameterInversed: false,
+                                midiData: nil,
+                                nodeSettings: nil,
+                                dampMode: nil
+                            )
+                            
+                            setInfoModel.conductor.forwardEffect(
+                                value: value,
+                                for: dt
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -196,16 +200,11 @@ struct EffectSliderView: View {
                     let valueInRange = RangeConverter.rangeToValue(range: range, value: Double(value))
                     
                     Text("\(valueInRange, specifier: range[1] >= 1000 ? "%.0f" : "%.2f")")
-//                        .foregroundColor(.white)
-//                        .font(.subheadline)
                         .frame(width: geometry.size.width * 0.16)
-                    
-                    
-//                        .frame(width: 100) // Set the width to fit 8 characters
-                        .padding(8) // Add some padding for the rounded corner background
+                        .padding(8)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.gray.opacity(0.2)) // You can adjust the color and opacity here
+                                .fill(Color.gray.opacity(0.2))
                         )
                         
                     Slider(value: $value, in: 0...1)

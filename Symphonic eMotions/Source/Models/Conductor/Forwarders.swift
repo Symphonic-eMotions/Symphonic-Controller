@@ -31,7 +31,7 @@ extension Conductor {
         value: Double,
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
             
-            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+//            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
             
             guard let track = set.track(for: damperTarget.trackId) else { return }
             
@@ -42,8 +42,8 @@ extension Conductor {
             //inverse value if requested in dampertarget
             let valueToApply = damperTarget.parameterInversed ? 1 - value : value
             
-            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
-            
+//            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+//            
             effect.apply(value: valueToApply, with: damperTarget)
         }
     

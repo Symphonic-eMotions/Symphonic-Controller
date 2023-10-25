@@ -31,7 +31,12 @@ struct NoteSourceAndEffectsView: View {
     //States
     @State var noteSource: NoteSource
     @State var countedParts: Int
-    @State var hasVelocity: Bool
+//    @State var hasVelocity: Bool
+    @State var isPlaying: [Bool]
+    
+    //Initialize effects on play preview to start with correct values send to effect parameters
+    var trackEffectViewObject: [TrackEffect]
+    @State var trackEffectState: [[Float]]
     
     init(
         setInfoModel: SetInfoModel,
@@ -69,10 +74,21 @@ struct NoteSourceAndEffectsView: View {
         
         _noteSource = State(initialValue: noteSources[trackId].wrappedValue!)
         _countedParts = State(initialValue: currentTrack.parts.count)
-        let hasVelocityPart = currentTrack.parts.contains { (_, part) in
-            part.damperTarget.parameter == "velocity"
-        }
-        _hasVelocity = State(initialValue: hasVelocityPart)
+        
+        _isPlaying = State(
+            initialValue: Array(
+                repeating: false,
+                count: currentTrack.loopLength.count
+            )
+        )
+        
+        self.trackEffectViewObject = TrackEffectsHelper.trackEffectViewObject(trackSettings: currentTrack)
+        self.trackEffectState = TrackEffectsHelper.trackEffectsStateObject(viewObject: trackEffectViewObject)
+        
+//        let hasVelocityPart = currentTrack.parts.contains { (_, part) in
+//            part.damperTarget.parameter == "velocity"
+//        }
+//        _hasVelocity = State(initialValue: hasVelocityPart)
     }
     
     let columnWidth: CGFloat = 150
@@ -84,6 +100,7 @@ struct NoteSourceAndEffectsView: View {
             
             Divider()
             
+            //Note Source
             HStack(){
                 ZStack {
                     Rectangle()
@@ -128,6 +145,125 @@ struct NoteSourceAndEffectsView: View {
                 }
             }
             
+            //Preview & Velocity
+            HStack(){
+                
+                //Preview
+                HStack {
+                    //Left column is empty
+                    Text("")
+                    .frame(width: columnWidth, alignment: .leading)
+                    .onTapGesture {
+                        withAnimation {
+                            showTrackEffect.toggle()
+                        }
+                    }
+                    
+                    //Show preview button in right column
+                    ZStack {
+                        
+                        Rectangle()
+                            .frame(width: 130, height: 34)
+                            .foregroundColor(.clear)
+                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                            .background( showTrackEffect ? .clear : color )
+                        
+                        Text("Preview")
+                            .frame(width: 130, height: 34)
+                    }
+                    .onTapGesture {
+                        withAnimation {
+                            showTrackEffect.toggle()
+                        }
+                    }
+                    .padding(.top)
+                }
+                .sheet(isPresented: $showTrackEffect) {
+                    
+                    //Players for MIDI clips in file
+                    HStack() {
+                        
+                        ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
+                            
+                            let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
+                            
+                            HStack{
+                                
+                                Text("\(clipLetter)")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.leading)
+                                
+                                Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+                                    .foregroundColor(.white)
+                                    .frame(width: 40, height: 30)
+                                    
+                            }
+                            .padding(.vertical, 5.0)
+                            .padding(.horizontal, 5.0)
+                            .background(Color.accentColor)
+                            .cornerRadius(5.0)
+                            .onTapGesture {
+                                
+                                //Toggle play status
+                                isPlaying[index].toggle()
+                                
+                                //Copy correct midi clip part to play head sequencer
+                                setInfoModel.conductor.copyMidiSingleTrack(
+                                    trackId: trackId,
+                                    nextVariation: index,
+                                    loopLength: currentTrack.loopLength
+                                )
+                                
+                                //Start playing the midi file
+                                setInfoModel.conductor.previewSingleTrack(
+                                    trackId: trackId,
+                                    soundSource: soundSources[trackId]!
+                                )
+                            }
+                        }
+                    }
+                    .padding(.top)
+                    
+                    //Effect sliders
+                    TrackEffectView(
+                        setInfoModel: setInfoModel,
+                        currentTrack: currentTrack,
+                        trackId: trackId,
+                        showTrackEffect: $showTrackEffect
+                    )
+                    .padding(.bottom)
+                    
+                }
+                
+                //Velocity
+//                Text("Velocity sensitive")
+//
+//
+//                Toggle("", isOn: $hasVelocity)
+//                .frame(width: 50)
+//                .padding(.leading)
+//                .disabled(hasVelocity && countedParts == 1)
+//                .onChange(of: hasVelocity) { newValue in
+//
+//                    // Call the function when the toggle value changes
+//                    if newValue == true {
+//                        if let newPart = setInfoModel.addVelocityPart(
+//                            velocitySensitive: newValue,
+//                            trackId: trackId
+//                        ) {
+//                            currentTrack.parts[newPart.partId] = newPart
+//                            setInfoModel.setSettings.tracks[trackId]?.parts[newPart.partId] = newPart
+//                        }
+//                    }
+//                }
+//
+//                if hasVelocity && countedParts == 1 {
+//                    Text(NSLocalizedString("One part", comment: ""))
+//                }
+            }
+            
+            //Note Numbers
             if noteSource == .noteNumbers {
                 
                 NoteNumberView(
@@ -139,6 +275,8 @@ struct NoteSourceAndEffectsView: View {
                     soundSources: $soundSources
                 )
             }
+            
+            //Midi File with preview effect sheet
             else if noteSource == .midiFile {
                 
                 MidiClipsView(
@@ -152,62 +290,7 @@ struct NoteSourceAndEffectsView: View {
                     midiClipspositions: $midiClipspositions
                 )
             }
-            HStack(){
-                VStack {
-                    ZStack {
-                        
-                        Rectangle()
-                            .frame(width: 130, height: 34)
-                            .foregroundColor(.clear)
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .background( showTrackEffect ? .clear : color )
-                        
-                        Text("Effects")
-                            .frame(width: 130, height: 34)
-                        
-                    }
-                    .frame(width: columnWidth, alignment: .leading)
-                    .onTapGesture {
-                        withAnimation {
-                            showTrackEffect.toggle()
-                        }
-                    }
-                }
-                .sheet(isPresented: $showTrackEffect) {
-                    
-                    TrackEffectView(
-                        setInfoModel: setInfoModel,
-                        currentTrack: currentTrack,
-                        trackId: trackId,
-                        showTrackEffect: $showTrackEffect
-                    )
-                }
-                
-                Text("Velocity sensitive")
-                    
-                
-                Toggle("", isOn: $hasVelocity)
-                .frame(width: 50)
-                .padding(.leading)
-                .disabled(hasVelocity && countedParts == 1)
-                .onChange(of: hasVelocity) { newValue in
-                    
-                    // Call the function when the toggle value changes
-                    if newValue == true {
-                        if let newPart = setInfoModel.addVelocityPart(
-                            velocitySensitive: newValue,
-                            trackId: trackId
-                        ) {
-                            currentTrack.parts[newPart.partId] = newPart
-                            setInfoModel.setSettings.tracks[trackId]?.parts[newPart.partId] = newPart
-                        }
-                    }
-                }
-                
-                if hasVelocity && countedParts == 1 {
-                    Text(NSLocalizedString("One part", comment: ""))
-                }
-            }
+
         }
         .padding(.leading)
         .padding(.trailing)

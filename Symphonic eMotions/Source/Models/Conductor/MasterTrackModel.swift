@@ -29,6 +29,8 @@ struct Parameter: Identifiable, Hashable {
     var range: [Double]
 }
 
+
+
 //struct MasterViewState {
 //    var currentInstrumentsSet: InstrumentsSet
 //}

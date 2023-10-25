@@ -236,34 +236,31 @@ struct MidiClipsView: View {
             ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
                 
                 VStack{
-                    
-                    ZStack {
   
-                        let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
-                        
-                        Text("\(clipLetter)")
-                            .foregroundColor(.blue)
-                    }
+                    let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
                     
-                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-                        .foregroundColor(.white)
-                        .frame(width: 40, height: 30)
-                        .padding(.vertical, 5.0)
-                        .padding(.horizontal, 5.0)
-                        .background(Color.accentColor)
-                        .cornerRadius(5.0)
-                        .onTapGesture {
-                            isPlaying[index].toggle()
-                            setInfoModel.conductor.copyMidiSingleTrack(
-                                trackId: trackId,
-                                nextVariation: index,
-                                loopLength: currentTrack.loopLength
-                            )
-                            setInfoModel.conductor.previewSingleTrack(
-                                trackId: trackId,
-                                soundSource: soundSources[trackId]!
-                            )
-                        }
+                    Text("\(clipLetter)")
+                        .foregroundColor(.blue)
+                                    
+//                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+//                        .foregroundColor(.white)
+//                        .frame(width: 40, height: 30)
+//                        .padding(.vertical, 5.0)
+//                        .padding(.horizontal, 5.0)
+//                        .background(Color.accentColor)
+//                        .cornerRadius(5.0)
+//                        .onTapGesture {
+//                            isPlaying[index].toggle()
+//                            setInfoModel.conductor.copyMidiSingleTrack(
+//                                trackId: trackId,
+//                                nextVariation: index,
+//                                loopLength: currentTrack.loopLength
+//                            )
+//                            setInfoModel.conductor.previewSingleTrack(
+//                                trackId: trackId,
+//                                soundSource: soundSources[trackId]!
+//                            )
+//                        }
                 }
             }
         }

@@ -36,6 +36,7 @@
 "Are you sure" = "Weet je het zeker dat je deze set wilt verwijderen?";
 "Delete" = "Verwijder";
 "Confirm Delete" = "Bevestig verwijderen";
+"Close" = "Sluit";
 
 //Editor
 "Save set to continue" = "Bewaar of verwijder wijzigingen in de editor om door te gaan";

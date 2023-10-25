@@ -178,20 +178,24 @@ class TrackEffectsHelper {
     //This last object keeps track of the same master track values to hold localy in a @State var
     static func trackEffectsStateObject(viewObject: [TrackEffect]) -> [[Float]] {
         
-        //   Replaces  @State var masterEffect: [[Float]] = [
-        //        [0,0,0,0,0,0,0,0,0,0],
-        //        [0,0,0,0,0,0,0,0,0,0],
-        //        [0,0,0,0,0,0,0,0,0,0]
+        var parametersPerEffect: [[Float]] = []
         
-        var parametersPerEffect: [[Float]] {
-            var array: [[Float]] = []
-            if let max = viewObject.map(\.parameters!.count).max(by: { $0 < $1 }) {
-                for _ in viewObject {
-                    array.append(Array(repeating: 0.0, count: max))
+        if let max = viewObject.map({ $0.parameters?.count ?? 0 }).max() {
+            for effect in viewObject {
+                var values: [Float] = []
+                if let parameters = effect.parameters {
+                    for parameter in parameters {
+                        
+                        let convertedValue = RangeConverter.rangedToSlider(range: parameter.range, value: parameter.value)
+                        
+                        values.append(Float(convertedValue))
+                    }
                 }
+                let paddedValues = values + Array(repeating: 0.0, count: max - values.count)
+                parametersPerEffect.append(paddedValues)
             }
-            return array
         }
+        
         return parametersPerEffect
     }
 }
