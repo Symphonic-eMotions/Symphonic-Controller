@@ -13,7 +13,7 @@ struct NoteSourceAndEffectsView: View {
     @ObservedObject var currentTrack: TrackSettings
     //This is a 1 track View
     var trackId: String
-
+    
     //Bindings
     @Binding var showEditorPart: EditorParts
     @Binding var noteSources: [String: NoteSource]
@@ -31,7 +31,6 @@ struct NoteSourceAndEffectsView: View {
     //States
     @State var noteSource: NoteSource
     @State var countedParts: Int
-//    @State var hasVelocity: Bool
     @State var isPlaying: [Bool]
     
     //Initialize effects on play preview to start with correct values send to effect parameters
@@ -85,10 +84,10 @@ struct NoteSourceAndEffectsView: View {
         self.trackEffectViewObject = TrackEffectsHelper.trackEffectViewObject(trackSettings: currentTrack)
         self.trackEffectState = TrackEffectsHelper.trackEffectsStateObject(viewObject: trackEffectViewObject)
         
-//        let hasVelocityPart = currentTrack.parts.contains { (_, part) in
-//            part.damperTarget.parameter == "velocity"
-//        }
-//        _hasVelocity = State(initialValue: hasVelocityPart)
+        //        let hasVelocityPart = currentTrack.parts.contains { (_, part) in
+        //            part.damperTarget.parameter == "velocity"
+        //        }
+        //        _hasVelocity = State(initialValue: hasVelocityPart)
     }
     
     let columnWidth: CGFloat = 150
@@ -135,33 +134,27 @@ struct NoteSourceAndEffectsView: View {
                         //State
                         noteSource = type
                         
-//                        if type == .midiFile {
-                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition]
-//                        }
-//                        else{
-//                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
-//                        }
+                        //                        if type == .midiFile {
+                        availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition]
+                        //                        }
+                        //                        else{
+                        //                            availableVariationTypes[trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
+                        //                        }
                     }
                 }
             }
             
-            //Preview & Velocity
+            //Preview Sheet
             HStack(){
                 
-                //Preview
+                //Preview button
                 HStack {
                     //Left column is empty
                     Text("")
-                    .frame(width: columnWidth, alignment: .leading)
-                    .onTapGesture {
-                        withAnimation {
-                            showTrackEffect.toggle()
-                        }
-                    }
-                    
-                    //Show preview button in right column
-                    ZStack {
+                        .frame(width: columnWidth)
                         
+                    //Button and Sheet with preview and effect interface right column
+                    ZStack {
                         Rectangle()
                             .frame(width: 130, height: 34)
                             .foregroundColor(.clear)
@@ -176,54 +169,96 @@ struct NoteSourceAndEffectsView: View {
                             showTrackEffect.toggle()
                         }
                     }
-                    .padding(.top)
+                    .padding(.top, 40)
                 }
+                //Preview Sheet
                 .sheet(isPresented: $showTrackEffect) {
                     
                     //Players for MIDI clips in file
-                    HStack() {
-                        
-                        ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
+                    if noteSources[trackId] == .midiFile {
+                        HStack() {
                             
-                            let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
-                            
-                            HStack{
+                            ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
                                 
-                                Text("\(clipLetter)")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .padding(.leading)
+                                let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
                                 
-                                Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-                                    .foregroundColor(.white)
-                                    .frame(width: 40, height: 30)
+                                HStack{
                                     
-                            }
-                            .padding(.vertical, 5.0)
-                            .padding(.horizontal, 5.0)
-                            .background(Color.accentColor)
-                            .cornerRadius(5.0)
-                            .onTapGesture {
-                                
-                                //Toggle play status
-                                isPlaying[index].toggle()
-                                
-                                //Copy correct midi clip part to play head sequencer
-                                setInfoModel.conductor.copyMidiSingleTrack(
-                                    trackId: trackId,
-                                    nextVariation: index,
-                                    loopLength: currentTrack.loopLength
-                                )
-                                
-                                //Start playing the midi file
-                                setInfoModel.conductor.previewSingleTrack(
-                                    trackId: trackId,
-                                    soundSource: soundSources[trackId]!
-                                )
+                                    Text("\(clipLetter)")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding(.leading)
+                                    
+                                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+                                        .foregroundColor(.white)
+                                        .frame(width: 40, height: 30)
+                                    
+                                }
+                                .padding(.vertical, 5.0)
+                                .padding(.horizontal, 5.0)
+                                .background(Color.accentColor)
+                                .cornerRadius(5.0)
+                                .onTapGesture {
+                                    
+                                    //Toggle play status
+                                    isPlaying[index].toggle()
+                                    
+                                    //Copy correct midi clip part to play head sequencer
+                                    setInfoModel.conductor.copyMidiSingleTrack(
+                                        trackId: trackId,
+                                        nextVariation: index,
+                                        loopLength: currentTrack.loopLength
+                                    )
+                                    
+                                    //Start playing the midi file
+                                    setInfoModel.conductor.previewSingleTrack(
+                                        trackId: trackId,
+                                        soundSource: soundSources[trackId]!
+                                    )
+                                }
                             }
                         }
+                        .padding(.top)
                     }
-                    .padding(.top)
+                    
+                    if noteSources[trackId] == .noteNumbers {
+                        //Players for Note numbers
+                        HStack{
+                            
+                            //Play stop current note
+                            ForEach(0..<noteNumbers[trackId]!.count, id: \.self) { index in
+                                
+                                let letter: String = AppUtils.midiNoteName(for: self.noteNumbers[trackId]![index])
+                                
+                                HStack{
+                                    
+                                    Text("\(letter)")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding(.leading)
+                                    
+                                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+                                        .foregroundColor(.white)
+                                        .frame(width: 40, height: 30)
+                                }
+                                .padding(.vertical, 5.0)
+                                .padding(.horizontal, 5.0)
+                                .background(Color.accentColor)
+                                .cornerRadius(5.0)
+                                .onTapGesture {
+                                    
+                                    setInfoModel.conductor.playNoteNumberSingleTrack(
+                                        trackId: trackId,
+                                        soundSource: soundSources[trackId]!,
+                                        noteNumber: noteNumbers[trackId]![index],
+                                        noteOn: isPlaying[index])
+                                    
+                                    isPlaying[index].toggle()
+                                }
+                            }
+                        }
+                        .padding(.top)
+                    }
                     
                     //Effect sliders
                     TrackEffectView(
@@ -233,34 +268,13 @@ struct NoteSourceAndEffectsView: View {
                         showTrackEffect: $showTrackEffect
                     )
                     .padding(.bottom)
-                    
                 }
-                
-                //Velocity
-//                Text("Velocity sensitive")
-//
-//
-//                Toggle("", isOn: $hasVelocity)
-//                .frame(width: 50)
-//                .padding(.leading)
-//                .disabled(hasVelocity && countedParts == 1)
-//                .onChange(of: hasVelocity) { newValue in
-//
-//                    // Call the function when the toggle value changes
-//                    if newValue == true {
-//                        if let newPart = setInfoModel.addVelocityPart(
-//                            velocitySensitive: newValue,
-//                            trackId: trackId
-//                        ) {
-//                            currentTrack.parts[newPart.partId] = newPart
-//                            setInfoModel.setSettings.tracks[trackId]?.parts[newPart.partId] = newPart
-//                        }
-//                    }
-//                }
-//
-//                if hasVelocity && countedParts == 1 {
-//                    Text(NSLocalizedString("One part", comment: ""))
-//                }
+                //Stop notes on sheet release
+                .onChange(of: showTrackEffect) { newValue in
+                    if !newValue {  // if the sheet is dismissed
+                        setInfoModel.conductor.stopAllNoteNumbers(trackId: trackId)
+                    }
+                }
             }
             
             //Note Numbers
@@ -290,7 +304,7 @@ struct NoteSourceAndEffectsView: View {
                     midiClipspositions: $midiClipspositions
                 )
             }
-
+            
         }
         .padding(.leading)
         .padding(.trailing)

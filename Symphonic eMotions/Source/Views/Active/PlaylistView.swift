@@ -112,8 +112,7 @@ struct PlaylistView: View {
                                         .alert(isPresented: $viewModel.showRemoveConfirmation) {
                                             Alert(
                                                 title: Text(NSLocalizedString("Remove Set", comment: "")),
-                                                //                                           message: Text(NSLocalizedString("Confirmation remove set", comment: "")),
-                                                message: Text(NSLocalizedString(fileController.urlToPlayListFileName(url: url), comment: "")),
+                                                message: Text(""),
                                                 primaryButton: .destructive(Text("Remove")) {
                                                     
                                                     if let url = viewModel.removeSetUrl {

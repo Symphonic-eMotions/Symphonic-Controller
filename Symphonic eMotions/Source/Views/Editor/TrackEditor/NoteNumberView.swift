@@ -115,24 +115,24 @@ struct NoteNumberView: View {
                         
                         VStack{
                             
-                            //Play stop current note
-                            Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-                                .foregroundColor(.white)
-                                .frame(width: 40, height: 30)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.accentColor)
-                                .cornerRadius(5.0)
-                                .onTapGesture {
-                                    
-                                    setInfoModel.conductor.playNoteNumberSingleTrack(
-                                        trackId: trackId,
-                                        soundSource: soundSources[trackId]!,
-                                        noteNumber: noteNumbers[trackId]![index],
-                                        noteOn: isPlaying[index])
-                                    
-                                    isPlaying[index].toggle()
-                                }
+//                            //Play stop current note
+//                            Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
+//                                .foregroundColor(.white)
+//                                .frame(width: 40, height: 30)
+//                                .padding(.vertical, 5.0)
+//                                .padding(.horizontal, 5.0)
+//                                .background(Color.accentColor)
+//                                .cornerRadius(5.0)
+//                                .onTapGesture {
+//                                    
+//                                    setInfoModel.conductor.playNoteNumberSingleTrack(
+//                                        trackId: trackId,
+//                                        soundSource: soundSources[trackId]!,
+//                                        noteNumber: noteNumbers[trackId]![index],
+//                                        noteOn: isPlaying[index])
+//                                    
+//                                    isPlaying[index].toggle()
+//                                }
                             
                             HStack{
                                 //Lower current note
