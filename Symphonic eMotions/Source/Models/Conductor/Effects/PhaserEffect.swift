@@ -73,31 +73,31 @@ class PhaserEffect: AudioProcessingEffect {
         switch damperTarget.parameter {
         case "phaserNotchMinimumFrequency":
             let mf = RangeConverter.valueToRange(range: phaserNotchMinimumFrequency.range, value: value, exponent: 1)
-            (node as? Phaser)?.notchMinimumFrequency = AUValue( mf )
+            (nodeOne as? Phaser)?.notchMinimumFrequency = AUValue( mf )
         case "phaserNotchMaximumFrequency":
             let nmf = RangeConverter.valueToRange(range: phaserNotchMaximumFrequency.range, value: value, exponent: 1)
-            (node as? Phaser)?.notchMaximumFrequency = AUValue( nmf )
+            (nodeOne as? Phaser)?.notchMaximumFrequency = AUValue( nmf )
         case "phaserNotchWidth":
             let nw = RangeConverter.valueToRange(range: phaserNotchWidth.range, value: 1, exponent: 1)
-            (node as? Phaser)?.notchWidth = AUValue( nw )
+            (nodeOne as? Phaser)?.notchWidth = AUValue( nw )
         case "phaserNotchFrequency":
             let freq = RangeConverter.valueToRange(range: phaserNotchFrequency.range, value: value, exponent: 1)
-            (node as? Phaser)?.notchFrequency = AUValue( freq )
+            (nodeOne as? Phaser)?.notchFrequency = AUValue( freq )
         case "phaserVibratoMode":
             let vm = RangeConverter.valueToRange(range: phaserVibratoMode.range, value: value, exponent: 1)
-            (node as? Phaser)?.vibratoMode = AUValue( vm )
+            (nodeOne as? Phaser)?.vibratoMode = AUValue( vm )
         case "phaserDepth":
             let d = RangeConverter.valueToRange(range: phaserDepth.range, value: value, exponent: 1)
-            (node as? Phaser)?.depth = AUValue( d )
+            (nodeOne as? Phaser)?.depth = AUValue( d )
         case "phaserFeedback":
             let fb = RangeConverter.valueToRange(range: phaserFeedback.range, value: value, exponent: 1)
-            (node as? Phaser)?.feedback = AUValue( fb )
+            (nodeOne as? Phaser)?.feedback = AUValue( fb )
         case "phaserInverted":
             let i = RangeConverter.valueToRange(range: phaserInverted.range, value: value, exponent: 1)
-            (node as? Phaser)?.inverted = AUValue( i )
+            (nodeOne as? Phaser)?.inverted = AUValue( i )
         case "phaserLfoBPM":
             let l = RangeConverter.valueToRange(range: phaserLfoBPM.range, value: value, exponent: 1)
-            (node as? Phaser)?.lfoBPM = AUValue( l )
+            (nodeOne as? Phaser)?.lfoBPM = AUValue( l )
         case "phaserDryWetMixer":
             let m = RangeConverter.valueToRange(range: phaserDryWetMixer.range, value: value)
             (node as? DryWetMixer)?.balance = AUValue( m )
@@ -106,7 +106,7 @@ class PhaserEffect: AudioProcessingEffect {
     }
     
     func apply<V>(keyPath: WritableKeyPath<Phaser, V>, value: V) {
-        var phaser = node as? Phaser
+        var phaser = nodeOne as? Phaser
         phaser?[keyPath: keyPath] = value
     }
     

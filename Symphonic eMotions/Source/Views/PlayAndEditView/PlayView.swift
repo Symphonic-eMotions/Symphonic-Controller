@@ -107,13 +107,13 @@ struct PlayView: View {
                 }
                 else {
                     HStack{
-                        
+                        //Hold level
                         EMButton(action: {
                             setInfoModel.leveling.pauseLevel.toggle()
                         }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
                             Text(NSLocalizedString("Hold level", comment: ""))
                         }
-                        
+                        //End Set
                         EMButton(action: {
                             setInfoModel.leveling.pauseLevel = false
                             let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count

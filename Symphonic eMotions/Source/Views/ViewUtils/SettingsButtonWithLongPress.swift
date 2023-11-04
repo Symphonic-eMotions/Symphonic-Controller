@@ -36,6 +36,9 @@ struct SettingsButtonWithLongPress: View {
         //Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
             showPartEditor.toggle()
+            if showPartEditor == true {
+                setInfoModel.leveling.pauseLevel = true
+            }
         })
         //Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {

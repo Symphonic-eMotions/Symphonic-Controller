@@ -303,21 +303,21 @@ struct ValueFeedback: View {
 }
 
 struct RampSliderView: View {
-    
+
     var label: String
     @Binding var value: Float
     var minValue: Float = 0
-    var maxValue: Float = 0.2
+    var maxValue: Float = 1
     var displayRange: [Double]
     var specifier: String
     var showsLabel: Bool
     var isActive: Bool
-    
+
     init(
         label: String,
         value: Binding<Float>,
         minValue: Float = 0,
-        maxValue: Float = 0.2,
+        maxValue: Float = 1,
         displayRange: [Double] = [0,1],
         specifier: String = "%.4f",
         showsLabel: Bool = true,
@@ -325,28 +325,29 @@ struct RampSliderView: View {
     ) {
         self.label = label
         _value = value
-        self.maxValue = minValue
+        self.minValue = minValue
         self.maxValue = maxValue
         self.displayRange = displayRange
         self.specifier = specifier
         self.showsLabel = showsLabel
         self.isActive = isActive
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
-                
             ZStack{
-                if showsLabel { Text(label)}
+                if showsLabel { Text(label) }
                 HStack {
                     Slider(value: $value, in: minValue...maxValue)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * 0.8)
                         .disabled(!isActive)
                         .id(isActive)
-//                    let valueInRange = RangeConverter.valueToRange(range: range, value: Double(value))
-                    let displayRange = Float(RangeConverter.valueToRange(range: displayRange, value: Double(value)))
-                    Text("\(displayRange, specifier: "\(specifier)")")
+
+                    // Transform linear value to exponential
+                    let expValue = pow(value, 3)
+                    let displayValue = Float(RangeConverter.valueToRange(range: displayRange, value: Double(expValue)))
+                    Text("\(displayValue, specifier: "\(specifier)")")
                         .foregroundColor(.white)
                         .font(.subheadline)
                         .frame(width: geometry.size.width * 0.2)
@@ -356,3 +357,58 @@ struct RampSliderView: View {
         .frame(height: 40.0)
     }
 }
+
+//struct RampSliderView: View {
+//    
+//    var label: String
+//    @Binding var value: Float
+//    var minValue: Float = 0
+//    var maxValue: Float = 0.2
+//    var displayRange: [Double]
+//    var specifier: String
+//    var showsLabel: Bool
+//    var isActive: Bool
+//    
+//    init(
+//        label: String,
+//        value: Binding<Float>,
+//        minValue: Float = 0,
+//        maxValue: Float = 0.2,
+//        displayRange: [Double] = [0,1],
+//        specifier: String = "%.4f",
+//        showsLabel: Bool = true,
+//        isActive: Bool = true
+//    ) {
+//        self.label = label
+//        _value = value
+//        self.maxValue = minValue
+//        self.maxValue = maxValue
+//        self.displayRange = displayRange
+//        self.specifier = specifier
+//        self.showsLabel = showsLabel
+//        self.isActive = isActive
+//    }
+//    
+//    var body: some View {
+//        GeometryReader { geometry in
+//                
+//            ZStack{
+//                if showsLabel { Text(label)}
+//                HStack {
+//                    Slider(value: $value, in: minValue...maxValue)
+//                        .foregroundColor(.accentColor)
+//                        .frame(width: geometry.size.width * 0.8)
+//                        .disabled(!isActive)
+//                        .id(isActive)
+////                    let valueInRange = RangeConverter.valueToRange(range: range, value: Double(value))
+//                    let displayRange = Float(RangeConverter.valueToRange(range: displayRange, value: Double(value)))
+//                    Text("\(displayRange, specifier: "\(specifier)")")
+//                        .foregroundColor(.white)
+//                        .font(.subheadline)
+//                        .frame(width: geometry.size.width * 0.2)
+//                }
+//            }
+//        }
+//        .frame(height: 40.0)
+//    }
+//}

@@ -186,89 +186,26 @@ extension Conductor {
                                 }
                             }
                         }
-                        
-//                         if track.variationType == .variationSequencial {
-//                            
-//                            //Start with movement AND Trigger single note (not tracnsport)
-//                            if [.loopedTrigger,.oneShot].contains(track.startType) {
-//                                
-//                                //We trigger only if above minimalLevel treshold
-//                                if value > part.minimalLevel {
-//                                    
-//                                    
-//                                }
-//                            }
-//                        }
-//                        //Note number levels
-//                        else if track.variationType == .variationByLevel {
-//
-//                            if Int(localCurrentSetLevel) != track.currentLevel {
-//
-//                                for maxIndex in track.notesArePlaying {
-//                                    let noteNumber = track.notesToGrid[maxIndex]
-//                                    stopNoteNumber(track, noteNumber)
-//                                }
-//
-//                                //This is the chosen note number in the editor NoteNumberToLevelView()
-//                                let noteNumber:Int = track.notesToLevel[Int(localCurrentSetLevel)]
-//                                track.playThisNote = noteNumber
-//                                track.currentLevel = Int(localCurrentSetLevel)
-//
-//                                print("Level \(Int(localCurrentSetLevel)) play note number \(noteNumber) ")
-//                            }
-//                        }
                     }
-                    
-                    //midiFile loopedTrigger
-                    //Midi File Position Wave player, start with movement
-//                    if track.noteSource == .midiFile &&
-//                    }
-                    
-                    //noteNumbers loopedTrigger
-                    //Note Number / Wave player = start with movement
-//                    else if track.noteSource == .noteNumbers {
-                        
-                        //Play with length connected to value
-//                        else if [.oneShot].contains(track.startType) {
-//
-//                            //Play note Number && note is not already playing AND movement is above minimal level
-//                            if part.areaOfInterest[maxIndex] == 1 && value > part.minimalLevel {
-//
-//                                if track.variationType == .variationSequencial {
-//
-//                                    if let currentNote = sequenceNote[track.trackId] {
-//
-//                                        print("current note \(currentNote)")
-//
-//                                        let noteNumber:Int = getNextSequenceNote(
-//                                            currentNote,
-//                                            track.notesSequenceType,
-//                                            track.midiGroup,
-//                                            value)
-//                                        sequenceNote[track.trackId] = noteNumber
-//
-//                                        print("sequnced note \(noteNumber)")
-//
-//                                        playNoteNumberLength(track, noteNumber, value)
-//                                    }
-//                                }
-//                                else if track.variationType == .variationByPosition {
-//                                    let noteNumber:Int = track.notesToGridMapped[maxIndexPart]
-//                                    playNoteNumberLength(track, noteNumber, value)
-//                                }
-//
-//                                //Record to sequencer
-//                            }
-//                        }
-//                    }
                 }
                 //End first Part
                 
+                
+                
                 //All parts
                 //Ad damping curves
-                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
+//                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
+                
                 //Ad ramps from interface!
-                value = valueRamper(value: value, rampId: partIndex)
+//                value = valueRamper(value: value, rampId: partIndex)
+                
+                value = valueSmoother(
+                    value: value,
+                    partIndex: partIndex,
+                    floorValue: 0.075,
+                    boostFactor: 1.1
+                )
+
                 
                 //Forward to target
                 forward(

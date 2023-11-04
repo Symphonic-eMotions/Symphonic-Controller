@@ -33,6 +33,7 @@
 		7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2012A1D23A30049E4ED /* DemoView.swift */; };
 		7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */; };
 		7C3EC2082A1FE9D40049E4ED /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2072A1FE9D40049E4ED /* UserDefaultsKeys.swift */; };
+		7C45433E2AF690E8000B70D6 /* PreviousSmoothedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C45433D2AF690E8000B70D6 /* PreviousSmoothedValues.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
 		7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A544D2A59BA9700FB6514 /* SemOne.swift */; };
 		7C4A545D2A5B288E00FB6514 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A545C2A5B288E00FB6514 /* ControllerView.swift */; };
@@ -214,6 +215,7 @@
 		7C3EC2012A1D23A30049E4ED /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheetView.swift; sourceTree = "<group>"; };
 		7C3EC2072A1FE9D40049E4ED /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		7C45433D2AF690E8000B70D6 /* PreviousSmoothedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousSmoothedValues.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
 		7C4A544D2A59BA9700FB6514 /* SemOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemOne.swift; sourceTree = "<group>"; };
 		7C4A545C2A5B288E00FB6514 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				C0C5129C27075D9500DE3393 /* Effects */,
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
+				7C45433D2AF690E8000B70D6 /* PreviousSmoothedValues.swift */,
 				7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */,
 				7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */,
 				7CCDE10328E2C65100343920 /* MasterTrackModel.swift */,
@@ -970,6 +973,7 @@
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
+				7C45433E2AF690E8000B70D6 /* PreviousSmoothedValues.swift in Sources */,
 				7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */,
 				7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
@@ -1311,7 +1315,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproRC";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

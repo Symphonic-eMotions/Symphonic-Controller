@@ -55,7 +55,10 @@ final class Conductor {
     internal var soundModuleVolume: [String: Double] = [:]
     
     
-    //MARK: Therapist editor variables
+    //MARK: Smoothers
+    // Dictionary to store the previous smoothed values for each part
+    internal var previousSmoothedValues: [String: Double] = [:]
+    
     //Ramp values containers stored per Instrument.Part
     public var rampValues: [String: Double] = [:]
     //Ramp up and Ramp down values from struct and control from editor
