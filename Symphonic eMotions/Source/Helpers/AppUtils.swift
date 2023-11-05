@@ -81,24 +81,61 @@ final class AppUtils {
     }
     
     //MARK: Playists
-    static func createPlayListFolders() {
-        
+//    static func createPlayListFolders() {
+//        
+//        let fileManager = FileManager.default
+//        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let bundleURL = Bundle.main.bundleURL
+//
+//        let lists = BuildSettings.Playlists.allCases
+//        let partOfList = lists.filter({$0 != .none})
+//
+//        // Loop through all the enum cases and check if a folder with that name exists
+//        for playlist in partOfList {
+//            let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
+//            let bundlePlaylistURL = bundleURL.appendingPathComponent(playlist.rawValue)
+//
+//            if !fileManager.fileExists(atPath: playlistURL.path) {
+//                // Folder doesn't exist, create it
+//                try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
+//                
+//                do {
+//                    // Get the content of the playlist folder in the bundle
+//                    let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
+//
+//                    // Copy each item in the playlist folder to the new playlist folder in the Documents directory
+//                    for item in playlistContent {
+//                        let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
+//                        try fileManager.copyItem(at: item, to: destinationURL)
+//                    }
+//                } catch {
+//                    print("Error copying playlist files: \(error)")
+//                }
+//            }
+//        }
+//    }
+    
+    static func createPlayListFolders(resetPlaylist: Bool) {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let bundleURL = Bundle.main.bundleURL
 
         let lists = BuildSettings.Playlists.allCases
-        let partOfList = lists.filter({$0 != .none})
+        let filteredPlaylists = lists.filter({$0 != .none}) // Filtering out the 'none' case
 
-        // Loop through all the enum cases and check if a folder with that name exists
-        for playlist in partOfList {
+        // Loop through filtered playlists
+        for playlist in filteredPlaylists {
             let playlistURL = documentsURL.appendingPathComponent(playlist.rawValue)
             let bundlePlaylistURL = bundleURL.appendingPathComponent(playlist.rawValue)
 
-            if !fileManager.fileExists(atPath: playlistURL.path) {
-                // Folder doesn't exist, create it
-                try? fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
-                
+            if !fileManager.fileExists(atPath: playlistURL.path) || resetPlaylist {
+                // Folder doesn't exist or resetPlaylist is true, create it
+                do {
+                    try fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    print("Error creating directory: \(error)")
+                }
+                    
                 do {
                     // Get the content of the playlist folder in the bundle
                     let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
@@ -106,6 +143,13 @@ final class AppUtils {
                     // Copy each item in the playlist folder to the new playlist folder in the Documents directory
                     for item in playlistContent {
                         let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
+
+                        // Check if file exists at destination and if resetPlaylist is true, then remove existing file
+                        if fileManager.fileExists(atPath: destinationURL.path) && resetPlaylist {
+                            try fileManager.removeItem(at: destinationURL)
+                        }
+
+                        // Copy item from bundle to Documents directory
                         try fileManager.copyItem(at: item, to: destinationURL)
                     }
                 } catch {
@@ -114,6 +158,8 @@ final class AppUtils {
             }
         }
     }
+
+
     
     //MARK: Set setSetings
     // - Structure to load InstrumentsSet to mutuate and save
@@ -247,6 +293,9 @@ final class AppUtils {
             tracks[trackLoaded.id] = track
             trackIndex += 1
         }
+        
+        print("FILEGROUP \(instrumentSet.fileGroup)")
+        
         let setSettings = SetSettings(
             setName: instrumentSet.name,
             customName: instrumentSet.customName,

@@ -750,6 +750,11 @@
   "setName" : "Danse de la Fée-Dragée",
   "setPath" : "",
   "setTimeSignature" : 4,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

@@ -5,11 +5,6 @@
 
     }
   },
-  "fileGroup" : {
-    "none" : {
-
-    }
-  },
   "gridColumns" : 2,
   "gridRows" : 2,
   "hasTempo" : true,
@@ -579,6 +574,11 @@
   "setName" : "Dansen met...",
   "setPath" : "",
   "setTimeSignature" : 3,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

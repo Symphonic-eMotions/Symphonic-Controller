@@ -55,6 +55,7 @@ struct PlayerControlsView: View {
                         }
                     }
                     
+                    //In creator mode you can record all instruments separate
                     if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
                         
                         //Record tracks to file start stop
@@ -109,6 +110,10 @@ struct PlayerControlsView: View {
                                 "stop.fill" :
                                 "play.fill")
                     }
+                }
+                .onAppear {
+                    setInfoModel.onLevelReached = {
+                        sessionDisplaySub = .stopped                    }
                 }
             }
         }

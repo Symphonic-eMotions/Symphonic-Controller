@@ -36,14 +36,20 @@ extension SetInfoModel {
                 
                 if(currentLevel == setSettings.levels.count) {
                     
-                    //Stop engine
-                    conductor.pauzeEngineAndStopTracks(
-                        setSettings: setSettings,
-                        resetLevels: true
-                    )
-                    isSetPlaying = false
-                    //Engine is of, reset to level 0
+                    //Reset to level 0
                     leveling.currentSetLevelSubject.send(0)
+                    
+                    if(currentLevel == setSettings.levels.count) {
+                        //Reset to level 0
+                        leveling.currentSetLevelSubject.send(0)
+
+                        // Set the same vars as in the isSetPlaying block
+                        self.onLevelReached?()
+                        
+                        self.tapStopAudioEngine()
+                        self.isSetPlaying = false
+                        self.leveling.pauseLevel = false
+                    }
                 }
             }
         }

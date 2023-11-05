@@ -880,6 +880,11 @@
   "setName" : "Hard Rock",
   "setPath" : "",
   "setTimeSignature" : 4,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

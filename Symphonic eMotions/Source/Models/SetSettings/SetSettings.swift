@@ -32,7 +32,7 @@ class SetSettings: Identifiable, ObservableObject {
     
     //Get loaded with firstPart.value.damperTarget.nodeSettings.minimalLevel
     //Which has a slider in the editor
-    var waveUnderLevel: Double = 0.1
+    var waveUnderLevel: Double
     
     //Use tracks own ID to ommit use of indeces
     //Id comes from loaded struct
@@ -124,9 +124,8 @@ class SetSettings: Identifiable, ObservableObject {
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!
-        let firstMinimalLevel = firstPart.value.damperTarget.nodeSettings?.minimalLevel ?? 0.1
-//        self.waveUnderLevel = firstMinimalLevel - (firstMinimalLevel * 0.75)
-        self.waveUnderLevel = firstMinimalLevel * 0.75
+//        let firstMinimalLevel = firstPart.value.damperTarget.nodeSettings?.minimalLevel ?? 0.1
+        self.waveUnderLevel = 0.25 //firstMinimalLevel * 0.75
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
         self.settingsRampDown = firstPart.value.rampDown

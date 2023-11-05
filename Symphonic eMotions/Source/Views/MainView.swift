@@ -44,7 +44,7 @@ struct MainView: View {
         self._sessionDisplaySub = sessionDisplaySub
         
         //Create Playlists if needed
-        AppUtils.createPlayListFolders()
+        AppUtils.createPlayListFolders(resetPlaylist: true)
     }
     
     var body: some View {

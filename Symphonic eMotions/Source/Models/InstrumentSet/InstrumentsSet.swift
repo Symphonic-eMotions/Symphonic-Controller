@@ -139,7 +139,11 @@ struct InstrumentsSet: Identifiable, Decodable {
         name = try container.decode(String.self, forKey: .name)
         customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
         published = try container.decodeIfPresent(Bool.self, forKey: .published)
+        
         fileGroup = try container.decodeIfPresent(FileGroup.self, forKey: .fileGroup)
+        
+        print("INIT FILEGROUP \(fileGroup)")
+        
         filesPath = try container.decode(String.self, forKey: .filesPath)
         defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
         bpm = try container.decode(Double.self, forKey: .bpm)

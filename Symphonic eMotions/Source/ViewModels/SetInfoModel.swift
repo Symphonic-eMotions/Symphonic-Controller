@@ -12,6 +12,7 @@ import OrderedCollections
 struct SetInfoState {
     var currentInstrumentsSet: InstrumentsSet
     var currentLevel: Double = 0.0 //Leveling
+    
     var values: [[AreaValues]] = []
     //SpriteKit
     var displayOpacity: Float = 0.12
@@ -42,6 +43,7 @@ final class SetInfoModel: ObservableObject {
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
     var conductor: Conductor
     let leveling: Leveling
+    var onLevelReached: (() -> Void)?
     
     let feedbackPresets: [(button: Int, feedback: Double)] = [
         (0, 0.70), // Meeste feedback

@@ -58,6 +58,7 @@ final class Conductor {
     //MARK: Smoothers
     // Dictionary to store the previous smoothed values for each part
     internal var previousSmoothedValues: [String: Double] = [:]
+    internal var previousFilteredValues: [String: Double] = [:]
     
     //Ramp values containers stored per Instrument.Part
     public var rampValues: [String: Double] = [:]
@@ -103,6 +104,9 @@ final class Conductor {
     
     //MARK: Init
     init(set: InstrumentsSet) {
+        
+        let silentUtterance = AVSpeechUtterance(string: "")
+        autoVoice.speak(silentUtterance)
         
         self.set = set
         
@@ -510,9 +514,53 @@ final class Conductor {
         setSettings: SetSettings
     ) -> Void {
         
-        //Run over all tracks
+        print("levelController called")
+        
+        //MARK: Let know if levels is done
+        //Highest level is full and is for the first time
+        if selectedLevel == setSettings.levels.count &&  isSetPlaying {
+            
+            //We stop playing
+            self.pauzeEngineAndStopTracks(
+                setSettings: setSettings,
+                resetLevels: true
+            )
+            
+            isSetPlaying = false
+            
+            if setSettings.fileGroup == .playlists {
+                
+                let sounds = ["Applause01", "Applause02", "Applause03"]
+                playInterfaceSounds(sounds: sounds, volume: 0.17)
+            }
+            
+            if !autoVoice.isSpeaking {
+                
+                let utteranceText: String
+                let utteranceRate: Float
+                
+                if setSettings.fileGroup == .playlists {
+                    utteranceText = NSLocalizedString("Set complete", comment: "")
+                    utteranceRate = 0.55
+                } else {
+                    // Specify a different utterance here
+                    utteranceText = NSLocalizedString("Set ended", comment: "")
+                    utteranceRate = 0.4
+                }
+                
+                let trudy = AVSpeechUtterance(string: utteranceText)
+                trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
+                trudy.rate = utteranceRate
+                trudy.pitchMultiplier = 1.01
+                trudy.volume = 0.60
+                autoVoice.speak(trudy)
+            }
+        }
+        
+        //Is track in level playing logic
         setSettings.tracks.forEach { track in
             
+            //MARK: midi clip based on level
             //Variation by level  select loops/notenumber toLevel for current level
             if track.value.variationType == .variationByLevel {
                 if track.value.noteSource == .midiFile {
@@ -522,6 +570,9 @@ final class Conductor {
                     levelNoteNumberVariation(in: selectedLevel, on: track.value)
                 }
             }
+            
+            
+            //TODO: add level decrement method
             
             //UN-Mute if track is within level
             if track.value.levels.contains(selectedLevel)
@@ -548,29 +599,6 @@ final class Conductor {
                 }
                 else{
                     print("mute \(track.value.trackId) not found")
-                }
-                
-                //Highest level is full and is for the first time
-                if selectedLevel == setSettings.levels.count &&  isSetPlaying {
-                    
-                    //We stop playing
-                    self.pauzeEngineAndStopTracks(
-                        setSettings: setSettings,
-                        resetLevels: true
-                    )
-                    
-                    let sounds = ["Applause01", "Applause02", "Applause03"]
-                    playInterfaceSounds(sounds: sounds, volume: 0.17)
-                    
-                    if !autoVoice.isSpeaking {
-                        
-                        let trudy = AVSpeechUtterance(string: NSLocalizedString("Set complete", comment: ""))
-                        trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
-                        trudy.rate = 0.55
-                        trudy.pitchMultiplier = 1.01
-                        trudy.volume = 0.35
-                        autoVoice.speak(trudy)
-                    }
                 }
             }
         }

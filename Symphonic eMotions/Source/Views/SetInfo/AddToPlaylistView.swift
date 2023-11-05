@@ -26,6 +26,8 @@ struct AddToPlaylistView: View{
                 
                 EMButton(action: {
                     
+                    ensurePlaylistInFileGroup()
+                    
                     let to = sandBoxUrl.deletingLastPathComponent()
                         .appendingPathComponent(playlist.rawValue)
                         .appendingPathComponent(sandBoxUrl.lastPathComponent)
@@ -54,6 +56,26 @@ struct AddToPlaylistView: View{
                 Text(NSLocalizedString("Cancel", comment: ""))
             }
             .frame(width: 150, height: 50)
+        }
+    }
+    
+    private func ensurePlaylistInFileGroup() {
+        do {
+            // Read data from the file
+            var data = try Data(contentsOf: sandBoxUrl)
+            
+            // Decode data into a dictionary
+            var json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+            
+            // Replace 'fileGroup' with a dictionary containing only 'playlists'
+            json["fileGroup"] = ["playlists": [:]]
+            
+            // Encode the updated JSON with pretty printing and write it back to the file
+            data = try JSONSerialization.data(withJSONObject: json, options: [.sortedKeys,.prettyPrinted])
+            try data.write(to: sandBoxUrl)
+            
+        } catch {
+            print("Error ensuring playlists in file group: \(error)")
         }
     }
 

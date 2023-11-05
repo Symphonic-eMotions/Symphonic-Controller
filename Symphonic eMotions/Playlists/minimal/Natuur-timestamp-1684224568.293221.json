@@ -1064,6 +1064,11 @@
   "setName" : "Natuur",
   "setPath" : "",
   "setTimeSignature" : 4,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

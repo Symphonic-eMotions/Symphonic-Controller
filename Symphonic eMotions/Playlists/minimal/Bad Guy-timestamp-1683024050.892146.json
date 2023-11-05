@@ -1006,6 +1006,11 @@
   "setName" : "Bad Guy",
   "setPath" : "",
   "setTimeSignature" : 4,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

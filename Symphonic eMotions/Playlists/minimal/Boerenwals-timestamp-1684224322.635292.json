@@ -778,6 +778,11 @@
   "setName" : "Boerenwals",
   "setPath" : "",
   "setTimeSignature" : 3,
+  "fileGroup" : {
+    "playlists" : {
+
+    }
+  },
   "skin" : {
     "instruments" : [
       {

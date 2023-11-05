@@ -29,20 +29,52 @@ extension Conductor {
         var sum = 0.0
         var count = 0
         var scaledValues: [Double] = []
+        var maxScaledValue: Double = -1  // To store the maximum scaled value
         values.forEach { areaValues in
             areaValues.forEach { value in
                 sum += value.average
                 count += 1
                 scaledValues.append(value.scaledValue)
+                
+                // Update maxScaledValue if it's either nil or smaller than the current scaledValue
+                if value.scaledValue > maxScaledValue {
+                    maxScaledValue = value.scaledValue
+                }
             }
         }
 
         // Compute average
         let averageForLevelUpdate = sum / Double(count)
-
+        
+        //TODO: Create returning levels
+        
         // Update the current level
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(currentSetLevel: currentSetLevel, value: averageForLevelUpdate)
-
+        
+        //Wave mechanism
+        if setSettings.isWavePlaying {
+            if maxScaledValue < setSettings.waveUnderLevel {
+                setSettings.isWavePlaying = false
+                print("Stop all tracks")
+                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                    stopTrack($0)
+                }
+            }
+        }
+        //No wave
+        else {
+            if maxScaledValue > setSettings.waveUnderLevel {
+                
+                //TODO: wait buffer frame count treshold
+                
+                setSettings.isWavePlaying = true
+                print("Play play tracks")
+                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                    playTrack($0)
+                }
+            }
+        }
+ 
         // Find the maximum index
         let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
         let maxIndex = Int(maxIndexTuple.0)
@@ -79,6 +111,20 @@ extension Conductor {
                     value = 0
                 }
                 
+                //The brand new smoothers all AI created
+//                value = valueSmoother(
+//                    value: value,
+//                    partIndex: partIndex,
+//                    floorValue: 0.075,
+//                    boostFactor: 1.1
+//                )
+//                value = valueLowPassFilter(
+//                    value: value,
+//                    partIndex: partIndex,
+//                    floorValue: 0.075,
+//                    boostFactor: 1.1
+//                )
+                
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
                 //StartType -> Transport || Wave (loopedTriger)
@@ -101,6 +147,7 @@ extension Conductor {
                                 track.loopsToGridMapped.indices.contains(track.currentPartMaxIndex) {
                                 
                                 if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
+                                    
                                     //This is the mapped value from the editor .midiFile .variationByPosition
                                     let loopIndex = track.loopsToGridMapped[maxIndexPart]
                                     
@@ -119,31 +166,6 @@ extension Conductor {
                                         track.currentLoopIndex = loopIndex
                                         track.currentPartMaxIndex = maxIndexPart
                                     }
-                                }
-                            }
-                            
-                        }
-                        
-                        //Midi file wave start
-                        if [.loopedTrigger].contains(track.startType) {
-                            
-                            if setSettings.isWavePlaying {
-                                //End wave under minimal leel first part
-                                if value < setSettings.waveUnderLevel{
-                                    //looped is always for all tracks
-                                    setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                        stopTrack($0)
-                                    }
-                                    setSettings.isWavePlaying = false
-                                }
-                            }
-                            //No wave
-                            else {
-                                if value > part.minimalLevel {
-                                    setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
-                                        playTrack($0)
-                                    }
-                                    setSettings.isWavePlaying = true
                                 }
                             }
                             
@@ -194,18 +216,11 @@ extension Conductor {
                 
                 //All parts
                 //Ad damping curves
-//                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
+                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
                 
                 //Ad ramps from interface!
-//                value = valueRamper(value: value, rampId: partIndex)
+                value = valueRamper(value: value, rampId: partIndex)
                 
-                value = valueSmoother(
-                    value: value,
-                    partIndex: partIndex,
-                    floorValue: 0.075,
-                    boostFactor: 1.1
-                )
-
                 
                 //Forward to target
                 forward(
