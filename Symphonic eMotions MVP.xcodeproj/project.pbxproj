@@ -1315,8 +1315,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproRC";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
