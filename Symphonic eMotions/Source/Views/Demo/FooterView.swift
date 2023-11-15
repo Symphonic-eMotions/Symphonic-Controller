@@ -61,3 +61,4 @@ struct FooterView: View {
         .background(Color.secondary.opacity(0.1))
     }
 }
+

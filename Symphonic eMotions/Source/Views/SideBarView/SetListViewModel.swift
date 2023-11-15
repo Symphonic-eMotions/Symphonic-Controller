@@ -45,6 +45,6 @@ class SetListViewModel: ObservableObject {
     }
     
     func getSetFiles(for group: FileGroup) -> [SetFile] {
-        return setFiles.filter { $0.fileGroup == group }
+        return setFiles.filter { $0.fileGroup == group && $0.published == true }
     }
 }

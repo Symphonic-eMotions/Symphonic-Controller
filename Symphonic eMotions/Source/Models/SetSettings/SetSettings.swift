@@ -13,9 +13,6 @@ import SwiftUI
 
 class SetSettings: Identifiable, ObservableObject {
     
-    //SeM Start specific
-    var startSets: [String] = ["SE-set-interface-guided","SE-set-Neil"]
-    
     //Keep track of playlist
     var currentPlaylist: BuildSettings.Playlists
     var currentSetInList: URL
@@ -147,42 +144,6 @@ class SetSettings: Identifiable, ObservableObject {
     func getTrackLevels(trackId: String?) -> [Int] {
         return self.tracks[trackId!]!.levels
     }
-    
-    //Editor
-//    func updateTrackClipInLevel(){
-//        
-//        let levelsSize = self.levels.count
-//        tracks.forEach{ (trackId, track) in
-//            
-//            var loopsToLevelSize = track.loopsToLevel.count
-//            if loopsToLevelSize < levelsSize {
-//                while loopsToLevelSize < levelsSize {
-//                    track.loopsToLevel.append(0)
-//                    loopsToLevelSize = track.loopsToLevel.count
-//                }
-//            }
-//            else if loopsToLevelSize > levelsSize {
-//                while loopsToLevelSize > levelsSize {
-//                    track.loopsToLevel.removeLast()
-//                    loopsToLevelSize = track.loopsToLevel.count
-//                }
-//            }
-//            
-//            var noteToLoopSize = track.notesToLevel.count
-//            if noteToLoopSize < levelsSize {
-//                while noteToLoopSize < levelsSize {
-//                    track.notesToLevel.append(track.midiGroup.max() ?? 48)
-//                    noteToLoopSize = track.notesToLevel.count
-//                }
-//            }
-//            else if noteToLoopSize > levelsSize {
-//                while noteToLoopSize > levelsSize {
-//                    track.notesToLevel.removeLast()
-//                    noteToLoopSize = track.notesToLevel.count
-//                }
-//            }
-//        }
-//    }
     
     //Editor
     func resetGridArrays(cells: Int) {

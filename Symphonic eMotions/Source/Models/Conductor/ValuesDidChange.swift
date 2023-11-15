@@ -112,18 +112,23 @@ extension Conductor {
                 }
                 
                 //The brand new smoothers all AI created
-//                value = valueSmoother(
-//                    value: value,
-//                    partIndex: partIndex,
-//                    floorValue: 0.075,
-//                    boostFactor: 1.1
-//                )
+                value = valueSmoother(
+                    value: value,
+                    partIndex: partIndex
+                )
+                
 //                value = valueLowPassFilter(
 //                    value: value,
 //                    partIndex: partIndex,
 //                    floorValue: 0.075,
 //                    boostFactor: 1.1
 //                )
+                
+                //Ad damping curves
+//                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
+                
+                //Ad ramps from interface!
+//                value = valueRamper(value: value, rampId: partIndex)
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
@@ -142,14 +147,16 @@ extension Conductor {
                         //Midi file variation check if instrument is placed
                         if track.variationType == .variationByPosition && track.loopsToGridMapped.count > 0 {
                             
+                            
                             //We have a new postition
-                            if track.loopsToGridMapped.indices.contains(maxIndexPart) &&
-                                track.loopsToGridMapped.indices.contains(track.currentPartMaxIndex) {
-                                
+                            if track.loopsToGridMapped.indices.contains(maxIndexPart) 
+                                && track.loopsToGridMapped.indices.contains(track.currentPartMaxIndex)
+                            {
                                 if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
                                     
                                     //This is the mapped value from the editor .midiFile .variationByPosition
                                     let loopIndex = track.loopsToGridMapped[maxIndexPart]
+                                    track.currentPartMaxIndex = maxIndexPart
                                     
                                     if loopIndex != track.currentLoopIndex {
                                         
@@ -164,11 +171,10 @@ extension Conductor {
                                             loopLength: track.loopLength[loopIndex])
                                         
                                         track.currentLoopIndex = loopIndex
-                                        track.currentPartMaxIndex = maxIndexPart
                                     }
                                 }
+                                
                             }
-                            
                         }
                     }
                     //Note number wave start
@@ -213,15 +219,7 @@ extension Conductor {
                 //End first Part
                 
                 
-                
                 //All parts
-                //Ad damping curves
-                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
-                
-                //Ad ramps from interface!
-                value = valueRamper(value: value, rampId: partIndex)
-                
-                
                 //Forward to target
                 forward(
                     value: value,

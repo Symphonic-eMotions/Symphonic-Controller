@@ -277,6 +277,10 @@ struct PartFeedbackView: View {
                 }
             }
         }
+        .onDisappear {
+            // This will be called when the view is no longer visible
+            showPartEditor = false
+        }
     }
 }
 
