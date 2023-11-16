@@ -12,10 +12,11 @@ struct SetFile: Identifiable, Decodable, Equatable {
     let name: String
     let url: URL
     let published: Bool
+    let semVersion: String
     let fileGroup: FileGroup
 
     private enum CodingKeys: String, CodingKey {
-        case name, url, published, fileGroup
+        case name, url, published, semVersion, fileGroup
     }
 }
 
@@ -69,11 +70,13 @@ struct SideBarView: View {
         
     }
     
+    //Connection between the current view and the files type connected to tham
     private func changeFileGroupAndSessionDisplay(
         _ item: (name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)
     ) {
         self.fileGroup = item.fileGroup
         self.sessionDisplay = item.sessionDisplay
+        //Show difference also in the side bar header
         setInfoModel.setInfoLocalState.sideBarHead = item.name
         setInfoModel.setInfoLocalState.setName = item.setName
     }
@@ -141,7 +144,10 @@ struct SideBarView: View {
                     }
                 }
                 
-                ForEach(viewModel.getSetFiles(for: getFileGroup(for: selectedMainItem))) { setFile in
+                ForEach(
+                    viewModel.getSetFiles(
+                        for: getFileGroup(for: selectedMainItem),
+                        with: sessionDisplaySub)) { setFile in
                     SetFileButtonView(
                         setFile: setFile,
                         selectedSet: $selectedSet,
@@ -155,11 +161,11 @@ struct SideBarView: View {
             .navigationTitle(setInfoModel.setInfoLocalState.sideBarHead)
         }
         VStack {
-            Text(composedInfoString()).foregroundColor(.gray)
+            Text(semVersionString()).foregroundColor(.gray)
         }
     }
     
-    func composedInfoString() -> String {
+    func semVersionString() -> String {
         var infoString = ""
 
         if let bundleID = Bundle.main.bundleIdentifier {

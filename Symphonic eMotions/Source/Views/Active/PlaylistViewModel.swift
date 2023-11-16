@@ -6,18 +6,27 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PlaylistViewModel: ObservableObject {
+    
+    @AppStorage(UserDefaultsKeys.comaptibleSemVersion) var comaptibleSemVersion: String = "2.7.0"
     
     @Published var urls: [URL] = []
     @Published var removeSetUrl: URL?
     @Published var showRemoveConfirmation: Bool = false
     
     var playlist: BuildSettings.Playlists
-
-    init(playlist: BuildSettings.Playlists) {
+    
+    var sessionDisplay: SessionDisplay
+    
+    init(
+        playlist: BuildSettings.Playlists,
+        sessionDisplay: SessionDisplay
+    ) {
         self.playlist = playlist
-        loadPlaylistFolder()
+        self.sessionDisplay = sessionDisplay
+        loadPlaylistFolder(view: sessionDisplay)
     }
 
 //    func loadPlaylistFolder() {
@@ -33,10 +42,11 @@ class PlaylistViewModel: ObservableObject {
 //        }
 //    }
     
-    func loadPlaylistFolder() {
+    func loadPlaylistFolder(view compareView: SessionDisplay) {
         let fileManager = FileManager.default
         let directoryURL = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let playListUrl = directoryURL.appendingPathComponent(playlist.rawValue)
+//        let comapareView: SessionDisplay
         
         do {
             let fileURLs = try fileManager.contentsOfDirectory(at: playListUrl, includingPropertiesForKeys: nil)
@@ -48,9 +58,25 @@ class PlaylistViewModel: ObservableObject {
                 do {
                     let data = try Data(contentsOf: url)
                     let file = try decoder.decode(InstrumentsSet.self, from: data)
-                    if file.published ?? false {  // Check if the file is published
+                    //Check if minimun version number is smaller or the same as file version number
+                    let fileVersion = file.semVersion ?? "1.0.0"
+                    let comparison = AppUtils.compareVersions(
+                        version1: comaptibleSemVersion,
+                        version2: fileVersion )
+                    
+                    print("Playlist \(compareView) comaptibleSemVersion \(comaptibleSemVersion) fileVersion \(fileVersion) => \(comparison)")
+                    
+                    if [.orderedSame,.orderedAscending].contains(comparison){
+                        if file.published ?? false {  // Check if the file is published
+                            self.urls.append(url)
+                        }
+                    }
+                    
+                    //In creator mode we want to see all old files to modify
+                    else if comparison == .orderedDescending && compareView == .creator {
                         self.urls.append(url)
                     }
+                    
                 } catch {
                     // If there's an error decoding one file, just print the error and continue with the next one
                     print("Error decoding file at \(url): \(error)")

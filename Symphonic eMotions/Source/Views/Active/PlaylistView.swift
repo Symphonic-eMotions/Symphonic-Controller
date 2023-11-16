@@ -18,7 +18,7 @@ struct PlaylistView: View {
     @EnvironmentObject var fileController: FileController
     
     @ObservedObject var viewModel: PlaylistViewModel
-
+    
     var body: some View {
         ZStack {
             //Background

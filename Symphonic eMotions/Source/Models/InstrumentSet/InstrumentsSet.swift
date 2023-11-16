@@ -93,6 +93,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case name = "setName"
         case customName
         case published
+        case semVersion
         case fileGroup
         case filesPath = "setPath"
         case defaultSkin
@@ -112,6 +113,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     //User editable name
     let customName: String
     let published: Bool?
+    let semVersion: String?
     var fileGroup: FileGroup?
     //Depricate filesPath, it's not used
     let filesPath: String
@@ -139,9 +141,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         name = try container.decode(String.self, forKey: .name)
         customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
         published = try container.decodeIfPresent(Bool.self, forKey: .published)
-        
+        semVersion = try container.decodeIfPresent(String.self, forKey: .semVersion) ?? "1.0.0"
         fileGroup = try container.decodeIfPresent(FileGroup.self, forKey: .fileGroup)
-        
         filesPath = try container.decode(String.self, forKey: .filesPath)
         defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
         bpm = try container.decode(Double.self, forKey: .bpm)
@@ -196,6 +197,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         name: String,
         customName: String,
         published: Bool,
+        semVersion: String,
         fileGroup: FileGroup,
         filesPath: String,
         defaultSkin: SessionDisplay,
@@ -212,6 +214,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.name = name
         self.customName = customName
         self.published = published
+        self.semVersion = semVersion
         self.fileGroup = fileGroup
         self.filesPath = filesPath
         self.defaultSkin = defaultSkin

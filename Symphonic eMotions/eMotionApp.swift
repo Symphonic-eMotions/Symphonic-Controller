@@ -16,6 +16,8 @@ struct eMotionApp: App {
     //We need a set loaded into ram and @AppStorage
 //    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
+    //Also set in: PlaylistViewModelAND SetListViewModel
+    @AppStorage(UserDefaultsKeys.comaptibleSemVersion) var comaptibleSemVersion: String = "2.7.0"
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
     @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
