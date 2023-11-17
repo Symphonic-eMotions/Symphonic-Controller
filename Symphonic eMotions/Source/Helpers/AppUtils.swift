@@ -59,7 +59,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], tracks: [])
         }
         return instrumentSet
     }
@@ -159,7 +159,27 @@ final class AppUtils {
         }
     }
 
+    static func compareVersions(version1: String, version2: String) -> ComparisonResult {
+        let versionNumbers1 = version1.split(separator: ".").compactMap { Int($0) }
+        let versionNumbers2 = version2.split(separator: ".").compactMap { Int($0) }
 
+        for (num1, num2) in zip(versionNumbers1, versionNumbers2) {
+            if num1 < num2 {
+                return .orderedAscending
+            } else if num1 > num2 {
+                return .orderedDescending
+            }
+        }
+
+        // Handle cases where one version string is longer than the other
+        if versionNumbers1.count < versionNumbers2.count {
+            return .orderedAscending
+        } else if versionNumbers1.count > versionNumbers2.count {
+            return .orderedDescending
+        }
+
+        return .orderedSame
+    }
     
     //MARK: Set setSetings
     // - Structure to load InstrumentsSet to mutuate and save
@@ -543,10 +563,17 @@ final class AppUtils {
             storeTracks.append(storeTrack)
         }
         
+        var semVersion = "1.0.0"
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let versionNumber = appVersion.split(separator: " ").last {
+            semVersion = "\(versionNumber)"
+        }
+        
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,
             customName: setSettings.customName,
-            published: setSettings.published,
+            published: setSettings.published, 
+            semVersion: semVersion,
             fileGroup: setSettings.fileGroup,
             filesPath: setSettings.filesPath,
             defaultSkin: setSettings.defaultSkin,

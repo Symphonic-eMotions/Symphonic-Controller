@@ -11,35 +11,56 @@ extension Conductor {
     
     internal func valueSmoother(
         value: Double,
-        partIndex: String,
-        floorValue: Double = 0.01,
-        boostFactor: Double = 1.05
+        partIndex: String
     ) -> Double {
         
         // Get the previous smoothed value if it exists, otherwise use the current value
         let previousSmoothedValue = previousSmoothedValues[partIndex] ?? value
         
-        // Use rampUp as the alpha for both increasing and decreasing values
-        let alpha = self.rampUp[partIndex]!
+        // Determine whether we're ramping up or down
+        let isIncreasing = value > previousSmoothedValue
         
-        // Use rampDown as the feedback factor for the previous value
-        let feedback = self.rampDown[partIndex]!
+        // Use rampUp alpha if the value is increasing, otherwise calculate logarithmic rampDown
+        var alpha: Double
+        if isIncreasing {
+            alpha = (self.rampUp[partIndex] ?? 0) * 0.5 // Adjust the alpha value for ramp up if needed
+        } else {
+            // For ramp down, use a logarithmic scale - base it on the difference between the value and the previous value
+            let rampDownValue = self.rampDown[partIndex] ?? 0
+            let valueDifference = previousSmoothedValue - value
+            alpha = log(valueDifference + 1) * rampDownValue // +1 to avoid log(0), adjust the multiplier (rampDownValue) as needed
+        }
         
-        // Calculate the smoothed value considering the feedback
-        var smoothedValue = alpha * value + (1 - alpha) * (previousSmoothedValue * feedback + value * (1 - feedback))
+        // Calculate the dynamic floorValue based on alpha value
+        let floorValueStart = 0.02
+        let floorValueEnd = 0.3
+        let dynamicFloorValue = floorValueStart + (floorValueEnd - floorValueStart) * alpha
         
-        //MARK: Normalizing
+        // Calculate the Exponential Moving Average (EMA)
+        var smoothedValue = alpha * value + (1 - alpha) * previousSmoothedValue
+        
         // Lower the floor of the values
-        smoothedValue = max(smoothedValue - floorValue, 0)
+        smoothedValue = max(smoothedValue - dynamicFloorValue, 0)
         
-        // Apply an overall boost factor
-        smoothedValue = min(smoothedValue * boostFactor, 1.0)
+        // Calculate the dynamic boostFactor based on alpha value
+        let boostFactorStart = 1.04
+        let boostFactorEnd = 1.5    
+        let dynamicBoostFactor = boostFactorStart + (boostFactorEnd - boostFactorStart) * alpha
+        
+        // Apply the dynamic boost factor
+        smoothedValue *= dynamicBoostFactor
+        
+        // Clamp the value to the maximum of 1.0
+        smoothedValue = min(smoothedValue, 1.0)
         
         // Store the current smoothed value for future use
         previousSmoothedValues[partIndex] = smoothedValue
         
         return smoothedValue
     }
+
+
+
     
 
     

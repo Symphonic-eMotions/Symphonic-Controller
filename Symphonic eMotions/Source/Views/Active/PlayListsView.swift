@@ -23,13 +23,18 @@ struct PlayListsView: View {
                 setInfoModel: setInfoModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub,
-                viewModel: PlaylistViewModel(playlist: BuildSettings.Playlists.minimal)
+                viewModel: PlaylistViewModel(
+                    playlist: BuildSettings.Playlists.minimal, 
+                    sessionDisplay: sessionDisplay
+                )
             )
             PlaylistView(
                 setInfoModel: setInfoModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub,
-                viewModel: PlaylistViewModel(playlist: BuildSettings.Playlists.person)
+                viewModel: PlaylistViewModel(
+                    playlist: BuildSettings.Playlists.person,
+                    sessionDisplay: sessionDisplay)
             )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

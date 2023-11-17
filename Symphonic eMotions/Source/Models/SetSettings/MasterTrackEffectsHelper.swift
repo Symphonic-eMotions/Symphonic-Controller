@@ -23,9 +23,10 @@ class MasterTrackEffectsHelper {
             
             //Get array of vars for selected effect
             let parametersStrings = loadedEffect.effectVars(effectType: loadedEffect.effectType)
+            
             var parameterIndex: Int = 0
             for parameterString in parametersStrings {
-                
+                                
                 let valueAndRanges = loadedEffect.valueAndRanges(parameter: parameterString.rawValue)
                 
                 let parameterSetting = ParameterSettings(
@@ -64,6 +65,9 @@ class MasterTrackEffectsHelper {
             
             let parametersString = effect.effectVars(effectType: effect.effectType)
             
+            print(effect.effectType)
+            print(parametersString)
+            
             for (parameterIndex, parameterString) in parametersString.enumerated() {
                 
                 //Here we need to get the value from the
@@ -77,6 +81,8 @@ class MasterTrackEffectsHelper {
                     value: value,
                     range: range
                 )
+                
+                print("\(parameterString.rawValue) \(value) \(range)");
                 
                 parameters.append(parameter)
             }

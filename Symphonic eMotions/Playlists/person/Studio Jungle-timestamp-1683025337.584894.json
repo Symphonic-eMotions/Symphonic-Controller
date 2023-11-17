@@ -753,14 +753,14 @@
       },
       "threshold" : {
         "range" : [
-          -40,
+          -40,  
           20
         ],
         "value" : -20
       }
     }
   ],
-  "published" : true,
+  "published" : false,
   "setBPM" : 118,
   "setName" : "Studio Jungle",
   "setPath" : "",

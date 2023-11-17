@@ -69,6 +69,13 @@ struct AddToPlaylistView: View{
             
             // Replace 'fileGroup' with a dictionary containing only 'playlists'
             json["fileGroup"] = ["playlists": [:]]
+            json["published"] = true
+            var semVersion = "1.0.0"
+            if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+               let versionNumber = appVersion.split(separator: " ").last {
+                semVersion = "\(versionNumber)"
+            }
+            json["semVersion"] = semVersion
             
             // Encode the updated JSON with pretty printing and write it back to the file
             data = try JSONSerialization.data(withJSONObject: json, options: [.sortedKeys,.prettyPrinted])
