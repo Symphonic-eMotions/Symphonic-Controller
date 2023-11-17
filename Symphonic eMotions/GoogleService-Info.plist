@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCJ7HZDoGSJLF2LuU0jY5g3v4bZEb2-5BI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>214176796026</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>nl.symphonic-emotions.seproIntern</string>
+	<key>PROJECT_ID</key>
+	<string>symphonic-emotions-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>symphonic-emotions-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:214176796026:ios:e709e5cfa296fcd96edac3</string>
+</dict>
+</plist>

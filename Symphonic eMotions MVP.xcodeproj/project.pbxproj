@@ -42,6 +42,8 @@
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
 		7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* BpmView.swift */; };
+		7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */; };
+		7C513EED2B07D85900AAC779 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
 		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
 		7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA929AF4BB9000C5861 /* Assets.xcassets */; };
@@ -225,6 +227,7 @@
 		7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGridSizeView.swift; sourceTree = "<group>"; };
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
+		7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
 		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
 		7C645CA929AF4BB9000C5861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -381,6 +384,7 @@
 				7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */,
 				7C6801BC2875A51300688C2E /* SporthAudioKit in Frameworks */,
 				C0AFDD092705D254006EF64F /* AudioKit in Frameworks */,
+				7C513EED2B07D85900AAC779 /* FirebaseAnalyticsSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,15 +718,16 @@
 		C084FFD526B3115E009A4D0C /* Symphonic eMotions */ = {
 			isa = PBXGroup;
 			children = (
+				7C69ED39295350750009F382 /* .gitignore */,
+				7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */,
+				C069590026B4DD0D002EB522 /* Info.plist */,
 				7CD418052A095388006831CE /* Localizable.strings */,
 				7C6C11FC2A03EF3E006F8CCB /* Sets */,
 				7C6C11FD2A03EF3F006F8CCB /* Sounds */,
 				7CAB35CA2AD02E8500659002 /* Videos */,
 				7CB2B9502A0D0D1500876CCD /* Playlists */,
 				7C166AD229544F8E0078C384 /* Library */,
-				7C69ED39295350750009F382 /* .gitignore */,
 				C0AFDD0B2705F425006EF64F /* Samples */,
-				C069590026B4DD0D002EB522 /* Info.plist */,
 				C084FFE526B31216009A4D0C /* Source */,
 				C084FFD626B3115E009A4D0C /* eMotionApp.swift */,
 				C084FFE426B3118A009A4D0C /* eMotion.entitlements */,
@@ -875,6 +880,7 @@
 				7C67D15F270F8B83009122BF /* SoundpipeAudioKit */,
 				7C6801BB2875A51300688C2E /* SporthAudioKit */,
 				7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */,
+				7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */,
 			);
 			productName = eMotion;
 			productReference = C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */;
@@ -910,6 +916,7 @@
 				7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 				7C6801BA2875A51300688C2E /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 				7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				7C513EEB2B07D85900AAC779 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C084FFD426B3115E009A4D0C /* Products */;
 			projectDirPath = "";
@@ -938,6 +945,7 @@
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
 				7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */,
 				7C3CD115296D952A00A4C522 /* effects.json in Resources */,
+				7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,6 +1369,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		7C513EEB2B07D85900AAC779 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.18.0;
+			};
+		};
 		7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit";
@@ -1392,6 +1408,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C513EEB2B07D85900AAC779 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
 		};
 		7C67D15F270F8B83009122BF /* SoundpipeAudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
