@@ -314,8 +314,6 @@ final class AppUtils {
             trackIndex += 1
         }
         
-        print("FILEGROUP \(instrumentSet.fileGroup)")
-        
         let setSettings = SetSettings(
             setName: instrumentSet.name,
             customName: instrumentSet.customName,
