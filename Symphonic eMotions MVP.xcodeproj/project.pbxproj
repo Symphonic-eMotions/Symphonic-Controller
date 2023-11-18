@@ -44,6 +44,7 @@
 		7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* BpmView.swift */; };
 		7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */; };
 		7C513EED2B07D85900AAC779 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */; };
+		7C513EEF2B08BDC200AAC779 /* AnalyticsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
 		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
 		7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA929AF4BB9000C5861 /* Assets.xcassets */; };
@@ -228,6 +229,7 @@
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
 		7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsAction.swift; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
 		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
 		7C645CA929AF4BB9000C5861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				7C205ABA28D70A2B009646C1 /* RangeConverter.swift */,
 				7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */,
 				7C4EBB9529D4A21300958954 /* Extenders.swift */,
+				7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 				C0C512A027075DB800DE3393 /* DelayEffect.swift in Sources */,
 				7CCDE10428E2C65100343920 /* MasterTrackModel.swift in Sources */,
 				7C6A341B28425F01006F2E95 /* PartFeedback.swift in Sources */,
+				7C513EEF2B08BDC200AAC779 /* AnalyticsAction.swift in Sources */,
 				7CF50F5129EEB7480016BAF4 /* NoteNumberView.swift in Sources */,
 				7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */,
 				7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */,
@@ -1282,7 +1286,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1324,7 +1328,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

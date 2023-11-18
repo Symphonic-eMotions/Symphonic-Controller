@@ -16,7 +16,7 @@ struct SettingsSheetView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
-//    @Binding var stopEngine: Bool
+    //    @Binding var stopEngine: Bool
     @State private(set) var localTempo: Int = 0
     
     var body: some View {
@@ -49,12 +49,21 @@ struct SettingsSheetView: View {
                         HStack {
                             
                             EMButton(action: {
-                                
                                 if isSetPlaying {
+                                    AnalyticsAction.stopSet.logEvent(
+                                        sessionDisplay: .none,
+                                        fileGroup: setInfoModel.setSettings.fileGroup,
+                                        setName: setInfoModel.setSettings.setName
+                                    )
                                     setInfoModel.tapStopAudioEngine()
                                     self.isSetPlaying = false
                                 }
                                 else{
+                                    AnalyticsAction.startSet.logEvent(
+                                        sessionDisplay: .none,
+                                        fileGroup: setInfoModel.setSettings.fileGroup,
+                                        setName: setInfoModel.setSettings.setName
+                                    )
                                     setInfoModel.tapStartAudioEngine()
                                     self.isSetPlaying = true
                                 }
@@ -79,66 +88,99 @@ struct SettingsSheetView: View {
                             Spacer()
                             Text("+")
                         }
-                        Slider(value: sensitivityBinding, in: -0.25...0.25)
-                    }
-                    
-                    FeedbackButtonsView(
-                        setInfoModel: setInfoModel,
-                        imageSide: UIScreen.main.bounds.width * 0.05
-                    )
-                    
-                    //Level speed
-                    VStack(alignment: .leading){
-                        Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
-                        Slider(value: $levelSpeed, in: 0.1...1.5)
-                    }
-                    
-                    //Tempo
-                    if setInfoModel.setSettings.hasTempo {
+                        Slider(value: sensitivityBinding, in: -0.25...0.25, onEditingChanged: { editing in
+                            if editing {
+                                AnalyticsAction.sensitivity.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                            }
+                        })
                         
-                        VStack(alignment: .leading){
-                            Text("Tempo").padding(.top)
-                            HStack{
-                                
-                                EMButton(action: {
-                                    setInfoModel.tapSetTempoBPMMin()
-                                    localTempo -= 1
-                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                    Image(systemName: "minus")
-                                }
-                                
-                                EMButton(action: {
-                                    print("Reset pressed")
-                                    localTempo = 0
-                                    setInfoModel.tapSetTempoReset()
-                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                    Text(String(localTempo))
-                                }
-                                
-                                EMButton(action: {
-                                    setInfoModel.tapSetTempoBPMPlus()
-                                    localTempo += 1
-                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                    Image(systemName: "plus")
-                                }
+                    }
+                }
+                
+                FeedbackButtonsView(
+                    setInfoModel: setInfoModel,
+                    imageSide: UIScreen.main.bounds.width * 0.05
+                )
+                
+                //Level speed
+                VStack(alignment: .leading){
+                    Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
+                    Slider(value: $levelSpeed, in: 0.1...1.5, onEditingChanged: { editing in
+                        if editing {
+                            AnalyticsAction.levelSpeed.logEvent(
+                                sessionDisplay: .none,
+                                fileGroup: setInfoModel.setSettings.fileGroup,
+                                setName: setInfoModel.setSettings.setName
+                            )
+                        }
+                    })
+                }
+                
+                //Tempo
+                if setInfoModel.setSettings.hasTempo {
+                    
+                    VStack(alignment: .leading){
+                        Text("Tempo").padding(.top)
+                        HStack{
+                            
+                            EMButton(action: {
+                                AnalyticsAction.setSpeed.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                                setInfoModel.tapSetTempoBPMMin()
+                                localTempo -= 1
+                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                Image(systemName: "minus")
+                            }
+                            
+                            EMButton(action: {
+                                AnalyticsAction.setSpeed.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                                print("Reset pressed")
+                                localTempo = 0
+                                setInfoModel.tapSetTempoReset()
+                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                Text(String(localTempo))
+                            }
+                            
+                            EMButton(action: {
+                                AnalyticsAction.setSpeed.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                                setInfoModel.tapSetTempoBPMPlus()
+                                localTempo += 1
+                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                Image(systemName: "plus")
                             }
                         }
                     }
-                    
-                    //Volume
-                    VStack(alignment: .leading){
-                        Text("Volume").padding(.top)
-                        VolumeSlider()
-                            .frame(height: 10)
-                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                            .zIndex(101)
-                    }
-                    
-                    Spacer()
-                    
-                    //Continue
-                    EMButton(action: {
-                        showingSheet = false
+                }
+                
+                //Volume
+                VStack(alignment: .leading){
+                    Text("Volume").padding(.top)
+                    VolumeSlider()
+                        .frame(height: 10)
+                        .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                        .zIndex(101)
+                }
+                
+                Spacer()
+                
+                //Continue
+                EMButton(action: {
+                    showingSheet = false
 //                        if !isSetPlaying {
 //                            setInfoModel.conductor.levelController(
 //                                level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
@@ -149,19 +191,19 @@ struct SettingsSheetView: View {
 //                                level: Int(setInfoModel.leveling.currentSetLevelSubject.value)
 //                            )
 //                        }
-                    }, color: .green, isSolid: true) {
-                        Text(NSLocalizedString("Continue", comment: ""))
-                    }
-                    .frame(width: geometry.size.width * 0.333)
-                    
+                }, color: .green, isSolid: true) {
+                    Text(NSLocalizedString("Continue", comment: ""))
                 }
+                .frame(width: geometry.size.width * 0.333)
+                
+            }
 //                .onAppear{
 //                    if stopEngine {
 //                        setInfoModel.tapStopAudioEngine()
 //                    }
 //                }
-                .padding()
-            }
+            .padding()
         }
     }
 }
+

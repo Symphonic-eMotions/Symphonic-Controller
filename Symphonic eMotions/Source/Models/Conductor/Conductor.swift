@@ -520,6 +520,8 @@ final class Conductor {
         //Highest level is full and is for the first time
         if selectedLevel == setSettings.levels.count &&  isSetPlaying {
             
+            AnalyticsAction.setEnded.logEvent(sessionDisplay: .none, fileGroup: setSettings.fileGroup, setName: setSettings.setName)
+            
             //We stop playing
             self.pauzeEngineAndStopTracks(
                 setSettings: setSettings,

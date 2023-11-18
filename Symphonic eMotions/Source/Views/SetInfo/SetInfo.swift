@@ -73,7 +73,7 @@ struct SetInfo: View {
                         Spacer()
                         SetLoadAndPlay(setInfoModel: setInfoModel)
                         .onTapGesture {
-                            
+                            AnalyticsAction.loadSet.logEvent(sessionDisplay: sessionDisplay)
                             //We do not want to go to the next set
                             setInfoModel.setSettings.currentPlaylist = .none
                             //Load set
@@ -88,7 +88,7 @@ struct SetInfo: View {
                         //New variation button
                         EMButton(
                             action: {
-
+                                AnalyticsAction.newVariation.logEvent(sessionDisplay: sessionDisplay)
                                 setInfoModel.setInfoState.currentInstrumentsSet = AppUtils.loadInstrumentSet(json: setInfoModel.setInfoLocalState.setConfig)
 
                                 if(setInfoModel.setInfoState.currentInstrumentsSet.name != "No Set"){

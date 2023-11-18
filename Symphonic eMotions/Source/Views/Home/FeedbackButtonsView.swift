@@ -31,8 +31,12 @@ struct FeedbackButtonsView: View {
                 
                 Button(action: {
                     
+                    AnalyticsAction.distanceButtons.logEvent(
+                        sessionDisplay: .none,
+                        fileGroup: setInfoModel.setSettings.fileGroup,
+                        setName: setInfoModel.setSettings.setName
+                    )
                     self.selectedButton = buttonIndex
-                    
                     self.videoFeedback = self.setInfoModel.buttonToFeedback(id: buttonIndex)
                     print("SENDING FEEDBACK PRESET: \(self.videoFeedback)")
                     setInfoModel.imageDifference.feedback.send(Float(self.videoFeedback))
@@ -41,8 +45,6 @@ struct FeedbackButtonsView: View {
                     let sensitivity: Float = Float(sensitivitySession + sensitivityDeviation)
                     print("SENDING SESSION PRESET PLUS DEVIATION: \(self.sensitivitySession) + \(self.sensitivityDeviation)")
                     setInfoModel.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivity)
-
-                    
                 }) {
                     ZStack{
                         Rectangle()

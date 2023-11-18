@@ -79,7 +79,6 @@ struct IntroductionView: View {
                                 testSoundNoteNumbers: testSoundNoteNumbers
                             )
                             .padding(.top)
-                                
                         }
                     }
                     Spacer()
@@ -128,7 +127,17 @@ struct IntroductionView: View {
             }
             .onAppear{
                 
-//                setInfoModel.tapStopAudioEngine()
+                switch sessionDisplaySub {
+                    case .page01:
+                        AnalyticsAction.onboardingA.logEvent(sessionDisplay: sessionDisplay)
+                    case .page02:
+                        AnalyticsAction.onboardingB.logEvent(sessionDisplay: sessionDisplay)
+                    case .page03:
+                        AnalyticsAction.onboardingC.logEvent(sessionDisplay: sessionDisplay)
+                    case .page04:
+                        AnalyticsAction.onboardingD.logEvent(sessionDisplay: sessionDisplay)
+                    default: break
+                }
                 
                 //Load set
                 setInfoModel.tapSetRow(filePath: "Introductie.json")
@@ -164,12 +173,14 @@ struct IntroductionView: View {
             .padding(.top, UIScreen.main.bounds.height * 0.08)
             .padding(.leading, UIScreen.main.bounds.width * 0.85)
             .onTapGesture {
+                AnalyticsAction.logoShortCut.logEvent(sessionDisplay: sessionDisplay)
                 withAnimation {
                     sessionDisplay = .demo
                     sessionDisplaySub = .demo
                 }
             }
             .onLongPressGesture {
+                AnalyticsAction.logoShortCutLong.logEvent(sessionDisplay: sessionDisplay)
                 withAnimation {
                     sessionDisplay = .pro
                     sessionDisplaySub = .pro

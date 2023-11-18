@@ -97,6 +97,7 @@ struct SideBarView: View {
                         
                         //Deactivate navigation when sessionDisplaySub in these views
                         if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
+                            AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             withAnimation {
                                 // Fade to red and back
                                 let fadeDur = 0.25
@@ -112,6 +113,7 @@ struct SideBarView: View {
                         }
                         //Default navigation behaviour
                         else {
+                            AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             selectedMainItem = item.sessionDisplay
                             
                             //Let the sysem know what files to show
@@ -241,8 +243,10 @@ struct SetFileButtonView: View {
             .cornerRadius(10.0)
         }
         .onTapGesture {
+            
             //Deactivate navigation when sessionDisplaySub in these views
             if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
+                AnalyticsAction.sideBarNavigationSetLevelDisabled.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 withAnimation {
                     // Fade to red and back
                     let fadeDur = 0.25
@@ -256,8 +260,9 @@ struct SetFileButtonView: View {
                     }
                 }
             }
-            //Defaultnavigation behaviour
+            //Select a set file
             else{
+                AnalyticsAction.sideBarNavigationSetLevel.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 selectedSet = setFile
                 setInfoModel.tapStopAudioEngine()
                 

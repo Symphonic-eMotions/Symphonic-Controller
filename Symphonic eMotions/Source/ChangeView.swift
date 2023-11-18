@@ -28,13 +28,14 @@ struct ChangeView: View {
         .onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .background:
+                AnalyticsAction.appBackground.logEvent(sessionDisplay: sessionDisplay)
                 showPartEditor = false
                 audioPlayer.enableBackground()
             case .inactive:
                 showPartEditor = false
                 print("App is inactive")
             case .active:
-                
+                AnalyticsAction.appForeground.logEvent(sessionDisplay: sessionDisplay)
                 print("App is active sessioDisplay: \(sessionDisplay)")
             @unknown default:
                 print("Unknown scenePhase")

@@ -36,6 +36,11 @@ struct PlayerControlsView: View {
                 HStack {
                     //Switch between video feedback modes
                     EMButton(action: {
+                        AnalyticsAction.instrumentCameraView.logEvent(
+                            sessionDisplay: sessionDisplaySub,
+                            fileGroup: setInfoModel.setSettings.fileGroup,
+                            setName: setInfoModel.setSettings.setName
+                        )
                         setInfoModel.tapDisplayModeChange()
                     }, color: .accentColor, isSolid: false) {
                         setInfoModel.setInfoState.displayMode.icon
@@ -49,6 +54,11 @@ struct PlayerControlsView: View {
                     //Master FX Button only available in part editor
                     if showPartEditor {
                         EMButton(action: {
+                            AnalyticsAction.masterEfects.logEvent(
+                                sessionDisplay: sessionDisplaySub,
+                                fileGroup: setInfoModel.setSettings.fileGroup,
+                                setName: setInfoModel.setSettings.setName
+                            )
                             showMasterTrack.toggle()
                         }, color: .accentColor, isSolid: false) {
                             Text("Master")
@@ -93,6 +103,11 @@ struct PlayerControlsView: View {
                     EMButton(action: {
                         
                         if isSetPlaying {
+                            AnalyticsAction.stopSet.logEvent(
+                                sessionDisplay: sessionDisplaySub,
+                                fileGroup: setInfoModel.setSettings.fileGroup,
+                                setName: setInfoModel.setSettings.setName
+                            )
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             self.isSetPlaying = false
@@ -100,6 +115,11 @@ struct PlayerControlsView: View {
                             setInfoModel.leveling.pauseLevel = false
                         }
                         else{
+                            AnalyticsAction.startSet.logEvent(
+                                sessionDisplay: sessionDisplaySub,
+                                fileGroup: setInfoModel.setSettings.fileGroup,
+                                setName: setInfoModel.setSettings.setName
+                            )
                             sessionDisplaySub = .playing
                             setInfoModel.tapStartAudioEngine()
                             self.isSetPlaying = true

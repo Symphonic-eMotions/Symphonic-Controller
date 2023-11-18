@@ -55,11 +55,26 @@ struct SavedSetsList: View {
                     
                     //The same for adding to playlist and share
                     let playlistAction = {
+                        
+                        AnalyticsAction.addToPlaylist.logEvent(
+                            sessionDisplay: sessionDisplay
+                        )
+                        
                         isPlaylistsPresented = true
                         playlistUrl = url
                     }
                     
+//                    let shareAction = {
+//                        shareUrl = IdentifiableURL(url: url)
+//                    }
+                    
                     let shareAction = {
+                        // Log the share action before setting the shareUrl
+                        AnalyticsAction.shareSet.logEvent(
+                            sessionDisplay: sessionDisplay
+                        )
+
+                        // Setting the share URL
                         shareUrl = IdentifiableURL(url: url)
                     }
                     
@@ -95,6 +110,10 @@ struct SavedSetsList: View {
                             .cornerRadius(5.0)
                             .onTapGesture {
                                 
+                                AnalyticsAction.setEditor.logEvent(
+                                    sessionDisplay: .setEditor
+                                )
+                                
                                 //Store chosen url
                                 currentUrl = url.absoluteString
                                 
@@ -103,6 +122,7 @@ struct SavedSetsList: View {
                                 
                                 //Change the View
                                 sessionDisplaySub = .setEditor
+                                
                             }
                         
                         //Sharing
