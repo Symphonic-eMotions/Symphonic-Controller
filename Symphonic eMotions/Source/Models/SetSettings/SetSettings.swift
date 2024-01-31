@@ -78,6 +78,7 @@ class SetSettings: Identifiable, ObservableObject {
     
     //Skins
     var skins: InstrumentsSet.Skin
+    var semVersion: String
     
     init(
         setName: String,
@@ -94,7 +95,8 @@ class SetSettings: Identifiable, ObservableObject {
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
-        skins: InstrumentsSet.Skin
+        skins: InstrumentsSet.Skin,
+        semVersion: String
     ){
         self.setName = setName
         self.customName = customName
@@ -111,6 +113,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.masterEffects = masterEffects
         self.tracks = tracks
         self.skins = skins
+        self.semVersion = semVersion
         
         //In case of json error we need an "empty" instrumentsSet
         let initDamperTarget = InstrumentsSet.Track.Part.DamperTarget(trackIdString: "", nodeNameString: "", parameterString: "", parameterRangeArray: [], parameterInversedBool: false)

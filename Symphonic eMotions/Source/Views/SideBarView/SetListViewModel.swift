@@ -14,10 +14,19 @@ class SetListViewModel: ObservableObject {
     
     @Published var setFiles: [SetFile] = []
     
+    lazy private var fileCache: FileCache = {
+        FileCache(setFiles: setFiles, comaptibleSemVersion: comaptibleSemVersion)
+    }()
+    
     init() {
         loadSetFiles()
     }
     
+    func invalidateCache() {
+        fileCache.invalidateCache()
+        loadSetFiles()
+    }
+
     func loadSetFiles() {
         guard let url = Bundle.main.url(forResource: "Sets", withExtension: nil) else {
             print("Failed to find Sets folder")
@@ -50,36 +59,15 @@ class SetListViewModel: ObservableObject {
             }
             
             setFiles = unsortedSetFiles.sorted { $0.name < $1.name }
+            fileCache = FileCache(setFiles: setFiles, comaptibleSemVersion: comaptibleSemVersion)
+
             
         } catch {
             print("Error reading contents of directory: \(error)")
         }
     }
     
-    func getSetFiles(for group: FileGroup, with comapareView: SessionDisplay) -> [SetFile] {
-        
-        return setFiles.filter { setFile in
-            
-            // Check if the file belongs to the specified group
-            let isPartOfGroup = setFile.fileGroup == group
-
-            // Check if the file is published
-            let isPublished = setFile.published
-            
-            //Check if file is new enough for app version
-            let comparison = AppUtils.compareVersions(version1: comaptibleSemVersion, version2: setFile.semVersion)
-            
-            //In creator mode we want to see all old files to modify
-            var isOldVersionInCreator: Bool = false;
-            if comparison == .orderedDescending && comapareView == .creator {
-                isOldVersionInCreator = true
-            }
-            
-            // Print for debugging
-            print("comaptibleSemVersion \(comaptibleSemVersion) fileVersion \(setFile.semVersion) => \(comparison)")
-            
-            // Return true if both conditions are met
-            return ((isPartOfGroup && isPublished && [.orderedSame,.orderedAscending].contains(comparison)) || isOldVersionInCreator)
-        }
+    func getSetFiles(for group: FileGroup, with compareView: SessionDisplay) -> [SetFile] {
+        return fileCache.getSetFiles(for: group, with: compareView)
     }
 }

@@ -329,7 +329,8 @@ final class AppUtils {
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks,
-            skins: skin
+            skins: skin,
+            semVersion: instrumentSet.semVersion ?? "1.0.0"
         )
         
         return setSettings

@@ -27,6 +27,10 @@
 		7C29AA1F2A501E6C0070D901 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA1E2A501E6C0070D901 /* DebugView.swift */; };
 		7C2DDCB92A04F858001FE14F /* AreaOfInterestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */; };
 		7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */; };
+		7C32342E2B6A977400D0E371 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C32342D2B6A977400D0E371 /* FileCache.swift */; };
+		7C3234302B6ADF8600D0E371 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C32342F2B6ADF8600D0E371 /* SideBarItemView.swift */; };
+		7C3234322B6ADFB800D0E371 /* SetFileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3234312B6ADFB800D0E371 /* SetFileButtonView.swift */; };
+		7C3234342B6ADFED00D0E371 /* SetFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3234332B6ADFED00D0E371 /* SetFile.swift */; };
 		7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */; };
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
 		7C3CD115296D952A00A4C522 /* effects.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effects.json */; };
@@ -213,6 +217,10 @@
 		7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOfInterestView.swift; sourceTree = "<group>"; };
 		7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRangeCompressorEffect.swift; sourceTree = "<group>"; };
+		7C32342D2B6A977400D0E371 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		7C32342F2B6ADF8600D0E371 /* SideBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarItemView.swift; sourceTree = "<group>"; };
+		7C3234312B6ADFB800D0E371 /* SetFileButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFileButtonView.swift; sourceTree = "<group>"; };
+		7C3234332B6ADFED00D0E371 /* SetFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFile.swift; sourceTree = "<group>"; };
 		7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSettings.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C3CD114296D952A00A4C522 /* effects.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = effects.json; sourceTree = "<group>"; };
 		7C3EC2012A1D23A30049E4ED /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
@@ -417,6 +425,9 @@
 			children = (
 				7CC9089629F809E700AB1F30 /* SideBarView.swift */,
 				7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */,
+				7C32342F2B6ADF8600D0E371 /* SideBarItemView.swift */,
+				7C3234312B6ADFB800D0E371 /* SetFileButtonView.swift */,
+				7C3234332B6ADFED00D0E371 /* SetFile.swift */,
 			);
 			path = SideBarView;
 			sourceTree = "<group>";
@@ -803,6 +814,7 @@
 				7C6A341A28425F01006F2E95 /* PartFeedback.swift */,
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
 				7C8D75912A2A4D0500DF2417 /* FileGroup.swift */,
+				7C32342D2B6A977400D0E371 /* FileCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -961,7 +973,9 @@
 			files = (
 				7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */,
 				7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */,
+				7C32342E2B6A977400D0E371 /* FileCache.swift in Sources */,
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
+				7C3234302B6ADF8600D0E371 /* SideBarItemView.swift in Sources */,
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
@@ -1000,6 +1014,7 @@
 				7C513EEF2B08BDC200AAC779 /* AnalyticsAction.swift in Sources */,
 				7CF50F5129EEB7480016BAF4 /* NoteNumberView.swift in Sources */,
 				7C87889328456DB100F0D3E5 /* EaseOutCubicDamper.swift in Sources */,
+				7C3234322B6ADFB800D0E371 /* SetFileButtonView.swift in Sources */,
 				7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */,
 				7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */,
 				7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */,
@@ -1104,6 +1119,7 @@
 				7C2EF63728C630D700B75BE2 /* DynamicRangeCompressorEffect.swift in Sources */,
 				7C9E3B5027AC0657002AE6B6 /* EaseInCircularDamper.swift in Sources */,
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
+				7C3234342B6ADFED00D0E371 /* SetFile.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7C7E4FCC2A66FB3A007BEF14 /* TrackEffectView.swift in Sources */,

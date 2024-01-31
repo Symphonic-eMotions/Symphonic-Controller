@@ -10,9 +10,7 @@ import SwiftUI
 import AVFoundation
 
 struct MainView: View {
-    
-//    @AppStorage("userCode") private var userCodeRaw: String = UserCode.none.rawValue
-    
+        
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     //Highest lvel View control
@@ -52,10 +50,8 @@ struct MainView: View {
         //SpriteKit (2D Game) interface
         if sessionDisplay == .spriteKit {
             
-//            SpriteKitView(
             InstrumentLocationContainer(
                 setInfoModel: setInfoModel,
-//                mainViewModel: viewModel,
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub
             )
@@ -110,7 +106,6 @@ struct MainView: View {
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
-//                    setInfoLocalState: $setInfoLocalState,
                     sidebarItems: $sidebarItems
                 )
                 .environmentObject(fileController)
