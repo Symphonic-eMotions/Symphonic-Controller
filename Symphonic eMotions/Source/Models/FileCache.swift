@@ -12,11 +12,9 @@ class FileCache {
     private var cache: [String: [SetFile]] = [:]
     private let queue = DispatchQueue(label: "nl.symphonic-emotions.fileCacheQueue")
     private var setFiles: [SetFile]
-    private var comaptibleSemVersion: String
 
-    init(setFiles: [SetFile], comaptibleSemVersion: String) {
+    init(setFiles: [SetFile]) {
         self.setFiles = setFiles
-        self.comaptibleSemVersion = comaptibleSemVersion
     }
     
     func getSetFiles(for group: FileGroup, with compareView: SessionDisplay) -> [SetFile] {
@@ -53,24 +51,8 @@ class FileCache {
             // Check if the file is published
             let isPublished = setFile.published
             
-//            //Check if file is new enough for app version
-//            let comparison = AppUtils.compareVersions(
-//                version1: comaptibleSemVersion,
-//                version2: setFile.semVersion
-//            )
-//            
-//            //In creator mode we want to see all old files to modify
-//            var isOldVersionInCreator: Bool = false;
-//            if comparison == .orderedDescending && compareView == .creator {
-//                isOldVersionInCreator = true
-//            }
-//            
-//            // Print for debugging
-//            print("===============>>>>>>>>>>>> fetchSetFiles comaptibleSemVersion \(comaptibleSemVersion) fileVersion \(setFile.semVersion) => \(comparison.rawValue)")
-            
             // Return true if both conditions are met
             return ( isPartOfGroup && isPublished )
-//            return ((isPartOfGroup && isPublished && [.orderedSame,.orderedAscending].contains(comparison)) || isOldVersionInCreator)
         }
     }
 }

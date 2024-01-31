@@ -17,5 +17,4 @@ struct UserDefaultsKeys {
     static let videoFeedback = "videoFeedback"
     static let isSetPlaying = "isSetPlaying"
     static let showPartEditor = "showPartEditor"
-    static let comaptibleSemVersion = "comaptibleSemVersion"
 }

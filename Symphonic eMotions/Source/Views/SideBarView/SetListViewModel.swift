@@ -10,12 +10,10 @@ import SwiftUI
 
 class SetListViewModel: ObservableObject {
     
-    @AppStorage(UserDefaultsKeys.comaptibleSemVersion) var comaptibleSemVersion: String = "2.7.0"
-    
     @Published var setFiles: [SetFile] = []
     
     lazy private var fileCache: FileCache = {
-        FileCache(setFiles: setFiles, comaptibleSemVersion: comaptibleSemVersion)
+        FileCache(setFiles: setFiles)
     }()
     
     init() {
@@ -59,7 +57,7 @@ class SetListViewModel: ObservableObject {
             }
             
             setFiles = unsortedSetFiles.sorted { $0.name < $1.name }
-            fileCache = FileCache(setFiles: setFiles, comaptibleSemVersion: comaptibleSemVersion)
+            fileCache = FileCache(setFiles: setFiles)
 
             
         } catch {
