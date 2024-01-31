@@ -55,89 +55,84 @@ struct MovementView: View {
                 .edgesIgnoringSafeArea(.all)
                 
                 Spacer()
-                
-//                ZStack(alignment: .topLeading){
+                VStack{
                     
-                    VStack{
+                    FeedbackButtonsView(
+                        setInfoModel: setInfoModel,
+                        imageSide:  UIScreen.main.bounds.width * 0.12
+                    )
+                    
+                    //Play and continue
+                    HStack {
                         
-                        FeedbackButtonsView(
-                            setInfoModel: setInfoModel,
-                            imageSide:  UIScreen.main.bounds.width * 0.12
-                        )
-                        
-                        //Play and continue
-                        HStack {
+                        //Play / stop Introductie set
+                        ZStack {
+                            Rectangle()
+                                .frame(width: 200, height: 60)
+                                .foregroundColor(.clear)
+                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                .background( Color.accentColor )
                             
-                            //Play / stop Introductie set
-                            ZStack {
-                                Rectangle()
-                                    .frame(width: 200, height: 60)
-                                    .foregroundColor(.clear)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                    .background( Color.accentColor )
-                                
-                                //Button text
-                                if isSetPlaying {
-                                    Text(NSLocalizedString("Stop set", comment: ""))
-                                        .font(.system(size: 30))
-                                        .padding()
-                                }
-                                else{
-                                    Text(NSLocalizedString("Test set", comment: ""))
-                                        .font(.system(size: 30))
-                                        .padding()
-                                }
-                            }
-                            .onTapGesture {
-                                
-                                //Make continue available
-                                hasTested = true
-                                
-                                //Turn testing off
-                                if isSetPlaying {
-                                    isSetPlaying = false
-                                    rotationSpeedSubject.send(0)
-                                    setInfoModel.tapStopAudioEngine()
-                                }
-                                //Turn testing on
-                                else{
-                                    setInfoModel.tapStartAudioEngine()
-                                    isSetPlaying = true
-                                }
-                            }
-                            
-                            //Title
-                            Text(NSLocalizedString("Movement amount", comment: ""))
-                                .font(.system(size: 40))
-                                .padding()
-                            
-                            ZStack {
-                                Rectangle()
-                                    .frame(width: 200, height: 60)
-                                    .foregroundColor(.clear)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                                    .background( Color.accentColor )
-                                
-                                Text(NSLocalizedString("Continue", comment: ""))
+                            //Button text
+                            if isSetPlaying {
+                                Text(NSLocalizedString("Stop set", comment: ""))
                                     .font(.system(size: 30))
                                     .padding()
                             }
-                            .onTapGesture {
-                                withAnimation {
-                                    
-                                    setInfoModel.tapStopAudioEngine()
-                                    
-                                    isSetPlaying = false
-                                    
-                                    sessionDisplay = .demo
-                                    sessionDisplaySub = .demo
-                                }
+                            else{
+                                Text(NSLocalizedString("Test set", comment: ""))
+                                    .font(.system(size: 30))
+                                    .padding()
                             }
-                            .disabled(!hasTested)
                         }
+                        .onTapGesture {
+                            
+                            //Make continue available
+                            hasTested = true
+                            
+                            //Turn testing off
+                            if isSetPlaying {
+                                isSetPlaying = false
+                                rotationSpeedSubject.send(0)
+                                setInfoModel.tapStopAudioEngine()
+                            }
+                            //Turn testing on
+                            else{
+                                setInfoModel.tapStartAudioEngine()
+                                isSetPlaying = true
+                            }
+                        }
+                        
+                        //Title
+                        Text(NSLocalizedString("Movement amount", comment: ""))
+                            .font(.system(size: 40))
+                            .padding()
+                        
+                        ZStack {
+                            Rectangle()
+                                .frame(width: 200, height: 60)
+                                .foregroundColor(.clear)
+                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                .background( Color.accentColor )
+                            
+                            Text(NSLocalizedString("Continue", comment: ""))
+                                .font(.system(size: 30))
+                                .padding()
+                        }
+                        .onTapGesture {
+                            withAnimation {
+                                
+                                setInfoModel.tapStopAudioEngine()
+                                
+                                isSetPlaying = false
+                                
+                                sessionDisplay = .demo
+                                sessionDisplaySub = .demo
+                            }
+                        }
+                        .disabled(!hasTested)
                     }
-                
-//                }
+                }
             }
             .onAppear{
                 
