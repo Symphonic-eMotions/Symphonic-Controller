@@ -39,6 +39,7 @@ struct SelectGridSizeView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            .fixedSize()
             .padding(.leading)
             .padding(.trailing)
             .foregroundColor(.white)

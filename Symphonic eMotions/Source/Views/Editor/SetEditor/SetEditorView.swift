@@ -112,7 +112,7 @@ struct SetEditorView: View {
                     .padding()
                     .frame(width: columnWidth, alignment: .leading)
                 
-                DefaultSkinView(
+                SelectSkinView(
                     setInfoModel: setInfoModel
                 )
             }
@@ -125,6 +125,18 @@ struct SetEditorView: View {
                 SelectGridSizeView(
                     setInfoModel: setInfoModel,
                     localGridRow: setInfoModel.setSettings.gridRows
+                )
+            }
+            
+            HStack{
+                Text("Smoother")
+                    .font(.system(size: headingSize))
+                    .padding()
+                    .frame(width: columnWidth, alignment: .leading)
+                
+                SmootherSettingsView(
+                    setInfoModel: setInfoModel,
+                    localSmootherVersion: setInfoModel.setSettings.smootherVersion
                 )
             }
             

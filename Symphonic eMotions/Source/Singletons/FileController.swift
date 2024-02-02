@@ -86,8 +86,6 @@ class FileController: ObservableObject {
             return 0
         }
         
-        print("---------------->>>>>>>>>>>>> FILECONTROLLER \(instrumentSet.smootherVersion)")
-        
         return instrumentSet.smootherVersion
     }
     

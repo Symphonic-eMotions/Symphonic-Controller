@@ -126,6 +126,8 @@ extension Conductor {
                     )
                 }
                 
+//                print("SmootherVersion: \(setSettings.smootherVersion)")
+                
 //                value = valueLowPassFilter(
 //                    value: value,
 //                    partIndex: partIndex,

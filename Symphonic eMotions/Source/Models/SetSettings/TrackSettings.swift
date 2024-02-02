@@ -120,7 +120,4 @@ class TrackSettings: Identifiable, ObservableObject {
         }
     }
     
-    func reaplceNote(oldNote:Int) -> Void {
-        
-    }
 }
