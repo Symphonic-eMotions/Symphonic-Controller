@@ -33,7 +33,7 @@ extension Conductor {
             sampler.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
         } else {
             // Handle the case when track.trackId is not found in trackSamplers
-            print("Track ID: \(track.trackId) not found in trackSamplers")
+            print("Error: Track ID \(track.trackId) not found in trackSamplers")
         }
     }
     

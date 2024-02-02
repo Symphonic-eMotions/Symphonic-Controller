@@ -64,6 +64,7 @@ struct SetFileButtonView: View {
                 setInfoModel.tapStopAudioEngine()
                 
                 setInfoLocalState.setName = setFile.name
+                setInfoLocalState.smootherVersion = setFile.smootherVersion
                 setInfoLocalState.setConfig = setFile.url.lastPathComponent
                 setInfoLocalState.setURL = setFile.url.absoluteString
                 

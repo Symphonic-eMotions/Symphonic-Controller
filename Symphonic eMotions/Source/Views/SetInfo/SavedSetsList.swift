@@ -64,10 +64,6 @@ struct SavedSetsList: View {
                         playlistUrl = url
                     }
                     
-//                    let shareAction = {
-//                        shareUrl = IdentifiableURL(url: url)
-//                    }
-                    
                     let shareAction = {
                         // Log the share action before setting the shareUrl
                         AnalyticsAction.shareSet.logEvent(
@@ -164,10 +160,19 @@ struct SavedSetsList: View {
                         
                         //The file name and date
                         let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.nameFromUrl(url: url))
+                        
+                        let smooterVersion = fileController.getSmootherVersion(url: url)
+                        
                         VStack(alignment: .leading){
-                            Text(filesName)
-                                .font(.title2)
-                            
+                            HStack{
+                                Text(filesName)
+                                    .font(.title2)
+                                Image(systemName: smooterVersion == 2 ?
+                                      "b.circle.fill" : "a.circle.fill")
+                                .foregroundColor(smooterVersion == 2 ?
+                                    .orange : .clear)
+                                .font(.system(size: 24))
+                            }
                             Text(fileController.date(url: url))
                                 .foregroundColor(Color(.lightGray))
                                 .font(.subheadline)

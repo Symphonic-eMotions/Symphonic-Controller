@@ -13,10 +13,11 @@ struct SetFile: Identifiable, Decodable, Equatable {
     let url: URL
     let published: Bool
     let semVersion: String
+    let smootherVersion: Int
     let fileGroup: FileGroup
 
     private enum CodingKeys: String, CodingKey {
-        case name, url, published, semVersion, fileGroup
+        case name, url, published, semVersion, smootherVersion, fileGroup
     }
     
     func isCompatibleWithVersion() -> ComparisonResult {

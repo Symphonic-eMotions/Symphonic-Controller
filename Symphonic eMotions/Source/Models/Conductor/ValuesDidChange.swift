@@ -111,11 +111,20 @@ extension Conductor {
                     value = 0
                 }
                 
-                //The brand new smoothers all AI created
-                value = valueSmoother(
-                    value: value,
-                    partIndex: partIndex
-                )
+                if setSettings.smootherVersion == 2 {
+                    //The brand new smoothers all AI created
+                    value = valueSmoother(
+                        value: value,
+                        partIndex: partIndex
+                    )
+                }
+                else {
+                    //Original damping curves (smootherVersion == 1)
+                    value = valueDamper(
+                        dampMode: part.damperTarget.dampMode!,
+                        value: value
+                    )
+                }
                 
 //                value = valueLowPassFilter(
 //                    value: value,
@@ -123,10 +132,7 @@ extension Conductor {
 //                    floorValue: 0.075,
 //                    boostFactor: 1.1
 //                )
-                
-                //Ad damping curves
-//                value = valueDamper(dampMode: part.damperTarget.dampMode!, value: value)
-                
+                    
                 //Ad ramps from interface!
 //                value = valueRamper(value: value, rampId: partIndex)
                 

@@ -65,8 +65,8 @@ class MasterTrackEffectsHelper {
             
             let parametersString = effect.effectVars(effectType: effect.effectType)
             
-            print(effect.effectType)
-            print(parametersString)
+//            print(effect.effectType)
+//            print(parametersString)
             
             for (parameterIndex, parameterString) in parametersString.enumerated() {
                 
@@ -82,7 +82,7 @@ class MasterTrackEffectsHelper {
                     range: range
                 )
                 
-                print("\(parameterString.rawValue) \(value) \(range)");
+//                print("\(parameterString.rawValue) \(value) \(range)");
                 
                 parameters.append(parameter)
             }

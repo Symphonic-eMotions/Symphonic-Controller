@@ -7,6 +7,7 @@
 
 import Foundation
 import OrderedCollections
+import SwiftUI
 
 struct SeMFile {
     
@@ -78,7 +79,16 @@ class FileController: ObservableObject {
         else{
             return instrumentSet.name
         }
+    }
+    
+    public func getSmootherVersion(url:URL) -> Int {
+        guard let instrumentSet: InstrumentsSet = AppUtils.loadURLServerInstrumentSet(urlServer: url.absoluteString) else {
+            return 0
+        }
         
+        print("---------------->>>>>>>>>>>>> FILECONTROLLER \(instrumentSet.smootherVersion)")
+        
+        return instrumentSet.smootherVersion
     }
     
     public func fileContents(url: URL) -> InstrumentsSet? {

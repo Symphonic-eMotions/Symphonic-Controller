@@ -59,7 +59,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", smootherVersion: 2, fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], tracks: [])
         }
         return instrumentSet
     }
@@ -330,7 +330,8 @@ final class AppUtils {
             masterEffects: masterEffects,
             tracks: tracks,
             skins: skin,
-            semVersion: instrumentSet.semVersion ?? "1.0.0"
+            semVersion: instrumentSet.semVersion ?? "1.0.0",
+            smootherVersion: instrumentSet.smootherVersion
         )
         
         return setSettings
@@ -572,7 +573,8 @@ final class AppUtils {
             name: instrumentSet.name,
             customName: setSettings.customName,
             published: setSettings.published, 
-            semVersion: semVersion,
+            semVersion: semVersion, 
+            smootherVersion: setSettings.smootherVersion,
             fileGroup: setSettings.fileGroup,
             filesPath: setSettings.filesPath,
             defaultSkin: setSettings.defaultSkin,

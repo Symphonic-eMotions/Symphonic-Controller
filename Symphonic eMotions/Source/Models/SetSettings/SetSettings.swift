@@ -68,17 +68,15 @@ class SetSettings: Identifiable, ObservableObject {
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
     
     //Tracks
-//    var tracks: OrderedDictionary<String,TrackSettings>
-    
     @Published var tracks: OrderedDictionary<String, TrackSettings> = OrderedDictionary<String, TrackSettings>() {
         didSet {
             objectWillChange.send()
         }
     }
     
-    //Skins
     var skins: InstrumentsSet.Skin
     var semVersion: String
+    var smootherVersion: Int
     
     init(
         setName: String,
@@ -96,7 +94,8 @@ class SetSettings: Identifiable, ObservableObject {
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
         skins: InstrumentsSet.Skin,
-        semVersion: String
+        semVersion: String,
+        smootherVersion: Int
     ){
         self.setName = setName
         self.customName = customName
@@ -114,6 +113,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.tracks = tracks
         self.skins = skins
         self.semVersion = semVersion
+        self.smootherVersion = smootherVersion
         
         //In case of json error we need an "empty" instrumentsSet
         let initDamperTarget = InstrumentsSet.Track.Part.DamperTarget(trackIdString: "", nodeNameString: "", parameterString: "", parameterRangeArray: [], parameterInversedBool: false)
@@ -124,7 +124,6 @@ class SetSettings: Identifiable, ObservableObject {
         self.settingsCurrentTrackID = firstTrack.key
         self.settingsVolume = firstTrack.value.instrumentVolume
         let firstPart = firstTrack.value.parts.elements.first!
-//        let firstMinimalLevel = firstPart.value.damperTarget.nodeSettings?.minimalLevel ?? 0.1
         self.waveUnderLevel = 0.25 //firstMinimalLevel * 0.75
         self.settingsCurrentPartID = firstPart.key
         self.settingsRampUp = firstPart.value.rampUp
