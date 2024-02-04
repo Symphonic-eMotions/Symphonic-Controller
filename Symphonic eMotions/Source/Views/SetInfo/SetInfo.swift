@@ -116,8 +116,6 @@ struct SetInfo: View {
                         Spacer()
                     }
                     
-                    let _ = print("<<<<<<<<<<>>>>>>>>>>>>>SETINFO \(setInfoModel.setInfoLocalState.smootherVersion)")
-                    
                     HStack{
                         Image(systemName: setInfoModel.setInfoLocalState.smootherVersion == 2 ?
                               "b.circle.fill" : "a.circle.fill")
