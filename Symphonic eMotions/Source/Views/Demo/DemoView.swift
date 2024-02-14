@@ -82,16 +82,16 @@ struct DemoView: View {
             
             HStack{
                 
-                if let url = Bundle.main.url(
-                    forResource: "SeM-Demo-03",
-                    withExtension: "mp4",
-                    subdirectory: "Videos") {
-                    
-                        VideoPlayerView(url: url)
-                                            
-                } else {
-                    Text("Video file not found")
-                }
+//                if let url = Bundle.main.url(
+//                    forResource: "SeM-Demo-03",
+//                    withExtension: "mp4",
+//                    subdirectory: "Videos") {
+//                    
+//                        VideoPlayerView(url: url)
+//                                            
+//                } else {
+//                    Text("Video file not found")
+//                }
                 
 //                Text(NSLocalizedString("Welcome home", comment: ""))
 //                    .font(.title)

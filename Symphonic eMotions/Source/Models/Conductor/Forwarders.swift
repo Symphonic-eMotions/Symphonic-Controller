@@ -173,7 +173,9 @@ extension Conductor {
             
             //Check wether track.id is in current level
             if track.levels.contains(Int(currentSetLevel)) {
+                
                 velocities[track.id] = value
+                
             } else { velocities[track.id] = 0 }
             
         case "soundModuleParam01":

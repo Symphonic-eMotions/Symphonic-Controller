@@ -30,6 +30,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case FatFilt
     case FrenchHorns
     case FrenchHornsLegato
+    case FullStringsPizzicato
     case GlassMarimba
     case Glockenspiel
     case HardRock
