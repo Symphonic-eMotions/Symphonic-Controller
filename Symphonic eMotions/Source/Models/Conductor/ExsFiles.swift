@@ -15,6 +15,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case BaikalInstrument
     case BassGuitarSmall
     case BassoonSoloLegato
+    case BassoonSolo
     case BeatGen
     case BoerenOrgel
     case BrassyLead
@@ -64,6 +65,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case TrumpetsSmall
     case TubaSolo
     case TubularBells
+    case TubularStation
     case vibraphone
     case ViolinsLegatoLongRelease
 }
