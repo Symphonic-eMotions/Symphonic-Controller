@@ -73,33 +73,17 @@ final class Conductor {
     //Synth container
     internal var trackInstruments: [String: Node] = [:]
     
-    //Sampler for interface audio
-    //TODO: this needs to get plugged into the second mixer next to Mastertrack effects
-    private var soundEffectSampler: MIDISampler = MIDISampler(name: "Sound Effects")
-    
     //Amplitude enelopes for muting tracks for levels
     //TODO: init of these needs to be at 0 (-90Db)
     private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
     
-    // Keep track of currently playing notes and their end times (playNoteNumberLength)
-    internal var endTimesNotes: [String: [Int: Duration]] = [:]
-    //Keep track of current note for note sequences
-    internal var sequenceNote: [String: Int] = [:]
-    
-    //MARK: Combine variables for communication to user interface
-    //Global for the status control and feedback of this class
-//    var isConductorPlayingSubject = CurrentValueSubject<Bool, Never>(false)
-    
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
-    
-    
     
     //The main instrument set structure. A Musical set is loaded into this struct
     internal var set: InstrumentsSet
     
-    //Timer for introduction repeater:
-//    var timer: Timer?
+    //Play diffrent samples in introduction volume control:
     var lastNoteNumber: Int?
     
     //MARK: Init
@@ -149,7 +133,6 @@ final class Conductor {
          Then load all tracks and master
          
          */
-        
         
         currentTempo = newInstrumentsSet.bpm
         
@@ -269,11 +252,6 @@ final class Conductor {
             }
             velocities[track.id] = startVelocity
             
-            //NoteEndTimes
-            endTimesNotes[track.id] = [:]
-            //sequenceNotes
-            sequenceNote[track.id] = 0
-            
             //Load sequencers
             //Within this function the EXS is also loaded
             trackSequencersCallbackers[track.id] = nil
@@ -307,19 +285,6 @@ final class Conductor {
                 print("trackAmpEnvelopes[track.id] is nil")
             }
         }
-    }
-    
-    //Playing a sound effect at this moment is not working well with switching sets
-    public func playSoundEffect(midi noteNumer: MIDINoteNumber){
-        
-        playEngineUIEffect()
-        
-        let noteOn = MIDIEvent(noteOn: noteNumer, velocity: 100, channel: 1)
-        soundEffectSampler.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-        
-        let noteOff = MIDIEvent(noteOn: noteNumer, velocity: 0, channel: 1)
-        let samples = UInt64(3 * Settings.sampleRate)
-        soundEffectSampler.scheduleMIDIEvent(event: noteOff, offset: samples)
     }
     
     //MARK: EDITOR
@@ -435,6 +400,7 @@ final class Conductor {
         }
     }
     
+    //Volume buttons on boarding
     public func playNoteNumbersIntroduction(
         trackId:String,
         soundSource: InstrumentsSet.Track.InstrumentType,
@@ -465,23 +431,7 @@ final class Conductor {
                 print("EEROR PLAYING. last was \(String(describing: self.lastNoteNumber))")
             }
             
-//            timer = Timer.scheduledTimer(withTimeInterval: 2.8, repeats: true) { _ in
-//                //Never play same note twice
-//                var newNoteNumber: Int? = nil
-//                repeat {
-//                    newNoteNumber = noteNumbers.randomElement()
-//                } while newNoteNumber == self.lastNoteNumber
-//                
-//                if let noteNumber = newNoteNumber {
-//                    self.lastNoteNumber = noteNumber
-//                    let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(100), channel: 1)
-//                    self.trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
-//                }
-//            }
         } else {
-            
-//            timer?.invalidate()
-//            timer = nil
             
             for noteNumber in noteNumbers {
                 
@@ -572,10 +522,15 @@ final class Conductor {
             //MARK: midi clip based on level
             //Variation by level  select loops/notenumber toLevel for current level
             if track.value.variationType == .variationByLevel {
+                
                 if track.value.noteSource == .midiFile {
+                    //midi files which play notes
                     levelMidiClipVariation(in: selectedLevel, on: track.value)
+                    
+                    //midi files which play stems (buffer sampler)
                 }
                 else if track.value.noteSource == .noteNumbers {
+                    //TODO: same is midi files shich play stems
                     levelNoteNumberVariation(in: selectedLevel, on: track.value)
                 }
             }

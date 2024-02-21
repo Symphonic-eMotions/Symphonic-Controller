@@ -200,7 +200,7 @@ struct NoteSourceAndEffectsView: View {
                                 .cornerRadius(5.0)
                                 .onTapGesture {
                                     
-                                    //Toggle play status
+                                    //Toggle play state
                                     isPlaying[index].toggle()
                                     
                                     //Copy correct midi clip part to play head sequencer

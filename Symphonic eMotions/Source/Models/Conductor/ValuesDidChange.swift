@@ -51,31 +51,32 @@ extension Conductor {
         // Update the current level
         localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(currentSetLevel: currentSetLevel, value: averageForLevelUpdate)
         
-        //Wave mechanism
+        //Wave mechanism (start and stop on movement)
+        //End of wave, stop playing
         if setSettings.isWavePlaying {
             if maxScaledValue < setSettings.waveUnderLevel {
                 setSettings.isWavePlaying = false
-                print("Stop all tracks")
+//                print("Stop all tracks")
                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                     stopTrack($0)
                 }
             }
         }
-        //No wave
+        //Start playing on movement
         else {
             if maxScaledValue > setSettings.waveUnderLevel {
                 
                 //TODO: wait buffer frame count treshold
                 
                 setSettings.isWavePlaying = true
-                print("Play play tracks")
+//                print("Play play tracks")
                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                     playTrack($0)
                 }
             }
         }
  
-        // Find the maximum index
+        // Find the maximum index (used for variation by position)
         let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
         let maxIndex = Int(maxIndexTuple.0)
         
