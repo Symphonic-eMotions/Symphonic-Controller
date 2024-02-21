@@ -32,6 +32,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case FrenchHorns
     case FrenchHornsLegato
     case FullStringsPizzicato
+    case FluteSolo
     case GlassMarimba
     case Glockenspiel
     case HardRock
@@ -68,4 +69,5 @@ enum ExsFiles: String, Codable, CaseIterable {
     case TubularStation
     case vibraphone
     case ViolinsLegatoLongRelease
+    case Xylophone
 }

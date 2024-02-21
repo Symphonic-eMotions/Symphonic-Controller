@@ -36,8 +36,10 @@ struct eMotionApp: App {
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
 
-    @State public var sessionDisplay: SessionDisplay = .home
-    @State public var sessionDisplaySub: SessionDisplay = .page01
+//    @State public var sessionDisplay: SessionDisplay = .home
+    @State public var sessionDisplay: SessionDisplay = .pro
+//    @State public var sessionDisplaySub: SessionDisplay = .page01
+    @State public var sessionDisplaySub: SessionDisplay = .pro
         
     var body: some Scene {
         WindowGroup {

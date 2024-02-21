@@ -771,6 +771,11 @@ final class Conductor {
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
             
+//            if track.trackId == "bassoon" || track.trackId == "pizzicato" {
+//                print(track.loopsToLevel)
+//                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
+//            }
+            
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
             //Keep playing until bar is complete

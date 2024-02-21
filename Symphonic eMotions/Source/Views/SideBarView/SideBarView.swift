@@ -52,8 +52,8 @@ struct SideBarView: View {
     }
     
     // This function converts sessionDisplay to fileGroup
+    // This, what files to show on what navigation item
     private func getFileGroup(for session: SessionDisplay) -> FileGroup {
-        // This logic should be based on your mapping
         switch session {
         case .pro:
             return .pro
