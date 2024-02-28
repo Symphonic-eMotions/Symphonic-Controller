@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SetInfoLocalState {
     var setName: String
-    var smootherVersion: Int
     //String of document with relative path with extension
     var setConfig: String
     //Path of setting
@@ -22,7 +21,6 @@ struct SetInfoLocalState {
         self.setConfig = ""
         self.setURL = "SetInfoLocalState"
         self.sideBarHead = NSLocalizedString("Welcome", comment: "Header of left navigation bar")
-        self.smootherVersion = 0
     }
 }
 
@@ -116,24 +114,7 @@ struct SetInfo: View {
                         Spacer()
                     }
                     
-                    HStack{
-                        Image(systemName: setInfoModel.setInfoLocalState.smootherVersion == 2 ?
-                              "b.circle.fill" : "a.circle.fill")
-                        .foregroundColor(setInfoModel.setInfoLocalState.smootherVersion == 2 ?
-                            .orange : .clear)
-                        .font(.system(size: 24))
-                        
-                        Text( setInfoModel.setInfoLocalState.smootherVersion == 2 ?
-                            NSLocalizedString("smoother2", comment: "") :
-                            ""
-                        )
-                        .foregroundColor(setInfoModel.setInfoLocalState.smootherVersion == 2 ?
-                            .orange : .clear)
-                        Spacer()
-                        
-                    }.padding()
-                    
-                    Spacer(minLength: 20)
+//                    Spacer(minLength: 20)
                    
                     ScrollView {
                         

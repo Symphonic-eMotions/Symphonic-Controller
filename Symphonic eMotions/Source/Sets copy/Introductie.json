@@ -1,0 +1,665 @@
+{
+  "customName" : "",
+  "defaultSkin" : {
+    "home" : {
+
+    }
+  },
+  "fileGroup" : {
+    "template" : {
+
+    }
+  },
+  "gridColumns" : 2,
+  "gridRows" : 2,
+  "hasTempo" : false,
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Mijn Huis Cello_24_C3",
+          "lengthInBeats" : 24,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 3843.134
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              60
+            ],
+            "value" : 33.27835
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 9.690725
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 2462.3813
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.70515466
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Cello C3",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.09404990077018738,
+              "rampSpeedDown" : 0.5508637428283691
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "T1"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 5.6702147,
+      "levels" : [
+        1,
+        0,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            24
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "T1",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Mijn Huis Cruiser_24_C#3",
+          "lengthInBeats" : 24,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 10
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              60
+            ],
+            "value" : 22.70103
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 8.659792
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 937.3711
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.70515466
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Cruiser C#3",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.07485604286193848,
+              "rampSpeedDown" : 0.3646833002567291
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "T2"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 5.6702147,
+      "levels" : [
+        1,
+        0,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            24
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "T2",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Mijn Huis Flute_24_D3",
+          "lengthInBeats" : 24,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 1061.0206
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              60
+            ],
+            "value" : 18
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 8.041239
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 1164.0619
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 1.0721649
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Flute D3",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.06525911390781403,
+              "rampSpeedDown" : 0.09980805963277817
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "T3"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : -0.2978729,
+      "levels" : [
+        3,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            24
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "T3",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Volume_8_C2",
+          "lengthInBeats" : 8,
+          "source" : "bundle"
+        },
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Volume_8_C#2",
+          "lengthInBeats" : 8,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor400",
+      "instrumentName" : "Volume button samples",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.015,
+              "rampSpeedDown" : 0.045
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "Volume"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 2,
+      "levels" : [
+        
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            8
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "Volume",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDurations" : [
+    32,
+    32,
+    32,
+    1
+  ],
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.2
+        ],
+        "value" : 0.001
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.1,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 9.964414
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -20
+      }
+    }
+  ],
+  "published" : false,
+  "semVersion" : "2.7.0",
+  "smootherVersion": 2,
+  "setBPM" : 90.75,
+  "setName" : "Introductie",
+  "setPath" : "Introductie",
+  "setTimeSignature" : 4,
+  "skin" : {
+    "instruments" : [
+      {
+        "color" : "Skin0",
+        "image" : "Cello",
+        "name" : "Cello",
+        "shape" : "circle"
+      },
+      {
+        "color" : "Skin1",
+        "image" : "DrumKit",
+        "name" : "Beats",
+        "shape" : "circle"
+      },
+      {
+        "color" : "Skin2",
+        "image" : "Machine",
+        "name" : "Bassline",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor700",
+        "image" : "AudioFile1",
+        "name" : "Synth",
+        "shape" : "circle"
+      }
+    ],
+    "name" : "Introductie v2"
+  }
+}

@@ -25,10 +25,6 @@ struct SetFileButtonView: View {
                             .foregroundColor(selectedSet == setFile ? .white : .primary)
                             .font(.headline)
                             .padding(.horizontal)
-                        Spacer()
-                        Image(systemName: setFile.isCompatibleWithVersion() == .orderedAscending ? "a.circle.fill" : "b.circle.fill")
-                        .foregroundColor(setFile.isCompatibleWithVersion() == .orderedAscending ? .clear : .orange)
-                        .font(.system(size: 24))
 }
                     Spacer()
                 }
@@ -64,7 +60,6 @@ struct SetFileButtonView: View {
                 setInfoModel.tapStopAudioEngine()
                 
                 setInfoLocalState.setName = setFile.name
-                setInfoLocalState.smootherVersion = setFile.smootherVersion
                 setInfoLocalState.setConfig = setFile.url.lastPathComponent
                 setInfoLocalState.setURL = setFile.url.absoluteString
                 

@@ -157,21 +157,16 @@ struct SavedSetsList: View {
                                 sandBoxUrl: $playlistUrl
                             )
                         }
-                        
+                               
                         //The file name and date
-                        let filesName = fileController.fileNameOrCustomName(url: url, fileName: fileController.nameFromUrl(url: url))
-                        
-                        let smooterVersion = fileController.getSmootherVersion(url: url)
+                        let filesName = fileController.fileNameOrCustomName(
+                            url: url, fileName: fileController.nameFromUrl(url: url)
+                        )
                         
                         VStack(alignment: .leading){
                             HStack{
                                 Text(filesName)
                                     .font(.title2)
-                                Image(systemName: smooterVersion == 2 ?
-                                      "b.circle.fill" : "a.circle.fill")
-                                .foregroundColor(smooterVersion == 2 ?
-                                    .orange : .clear)
-                                .font(.system(size: 24))
                             }
                             Text(fileController.date(url: url))
                                 .foregroundColor(Color(.lightGray))

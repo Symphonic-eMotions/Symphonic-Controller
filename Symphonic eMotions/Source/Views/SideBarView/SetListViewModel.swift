@@ -48,7 +48,6 @@ class SetListViewModel: ObservableObject {
                             url: fileURL,
                             published: decodedFile.published ?? true, 
                             semVersion: decodedFile.semVersion ?? "1.0.0",
-                            smootherVersion: decodedFile.smootherVersion,
                             fileGroup: decodedFile.fileGroup ?? .none
                         )
                     )

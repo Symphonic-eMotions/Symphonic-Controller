@@ -129,18 +129,6 @@ struct SetEditorView: View {
             }
             
             HStack{
-                Text("Smoother")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                SmootherSettingsView(
-                    setInfoModel: setInfoModel,
-                    localSmootherVersion: setInfoModel.setSettings.smootherVersion
-                )
-            }
-            
-            HStack{
                 Text("BPM")
                     .font(.system(size: headingSize))
                     .padding()

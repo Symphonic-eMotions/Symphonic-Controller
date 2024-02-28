@@ -54,12 +54,6 @@ final class Conductor {
     internal var soundModuleParam02: [String: Double] = [:]
     internal var soundModuleVolume: [String: Double] = [:]
     
-    
-    //MARK: Smoothers
-    // Dictionary to store the previous smoothed values for each part
-    internal var previousSmoothedValues: [String: Double] = [:]
-    internal var previousFilteredValues: [String: Double] = [:]
-    
     //MARK: Time based envelopes
     // Dictionary om TimeBasedEnvelope instanties per partNr te beheren
     internal var timeBasedEnvelopes: [String: TimeBasedEnvelope] = [:]
@@ -123,8 +117,6 @@ final class Conductor {
         trackSequencers = [:]
         trackSequencersMemory = [:]
         trackInstruments = [:]
-        previousSmoothedValues = [:]
-        previousFilteredValues = [:]
         timeBasedEnvelopes = [:]
     }
     
@@ -772,18 +764,14 @@ final class Conductor {
         
         if track.levels.contains(level) {
             
-            guard track.loopsToLevel.contains(level) else{
-                return
-            }
-            
             //Midi clip looplength
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
             
-//            if track.trackId == "bassoon" || track.trackId == "pizzicato" {
-//                print(track.loopsToLevel)
-//                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
-//            }
+            if track.trackId == "stems" {
+                print(track.loopsToLevel)
+                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
+            }
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             

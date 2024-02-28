@@ -94,7 +94,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         case customName
         case published
         case semVersion
-        case smootherVersion
         case fileGroup
         case filesPath = "setPath"
         case defaultSkin
@@ -115,7 +114,6 @@ struct InstrumentsSet: Identifiable, Decodable {
     let customName: String
     let published: Bool?
     let semVersion: String?
-    let smootherVersion: Int
     var fileGroup: FileGroup?
     //Depricate filesPath, it's not used
     let filesPath: String
@@ -144,7 +142,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         customName = try container.decodeIfPresent(String.self, forKey: .customName) ?? ""
         published = try container.decodeIfPresent(Bool.self, forKey: .published)
         semVersion = try container.decodeIfPresent(String.self, forKey: .semVersion) ?? "1.0.0"
-        smootherVersion = try container.decodeIfPresent(Int.self, forKey: .smootherVersion) ?? 1
         fileGroup = try container.decodeIfPresent(FileGroup.self, forKey: .fileGroup)
         filesPath = try container.decode(String.self, forKey: .filesPath)
         defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
@@ -201,7 +198,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         customName: String,
         published: Bool,
         semVersion: String,
-        smootherVersion: Int,
         fileGroup: FileGroup,
         filesPath: String,
         defaultSkin: SessionDisplay,
@@ -219,7 +215,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.customName = customName
         self.published = published
         self.semVersion = semVersion
-        self.smootherVersion = smootherVersion
         self.fileGroup = fileGroup
         self.filesPath = filesPath
         self.defaultSkin = defaultSkin
@@ -278,7 +273,6 @@ extension InstrumentsSet: Encodable {
         try container.encode(customName, forKey: .customName)
         try container.encode(published, forKey: .published)
         try container.encode(semVersion, forKey: .semVersion)
-        try container.encode(smootherVersion, forKey: .smootherVersion)
         try container.encode(fileGroup, forKey: .fileGroup)
         try container.encode(filesPath, forKey: .filesPath)
         try container.encode(defaultSkin, forKey: .defaultSkin)

@@ -81,14 +81,6 @@ class FileController: ObservableObject {
         }
     }
     
-    public func getSmootherVersion(url:URL) -> Int {
-        guard let instrumentSet: InstrumentsSet = AppUtils.loadURLServerInstrumentSet(urlServer: url.absoluteString) else {
-            return 0
-        }
-        
-        return instrumentSet.smootherVersion
-    }
-    
     public func fileContents(url: URL) -> InstrumentsSet? {
         if let instrumentSet = InstrumentsSet.withFileManagerJSON(urlToFileName(url: url)) {
                 return instrumentSet

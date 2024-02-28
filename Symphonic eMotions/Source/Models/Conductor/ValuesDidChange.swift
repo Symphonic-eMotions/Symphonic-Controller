@@ -29,7 +29,7 @@ extension Conductor {
         var sum = 0.0
         var count = 0
         var scaledValues: [Double] = []
-        var previousScaledValues: [Double] = []
+//        var previousScaledValues: [Double] = []
         var maxScaledValue: Double = -1  // To store the maximum scaled value
         values.forEach { areaValues in
             areaValues.forEach { value in
@@ -37,7 +37,7 @@ extension Conductor {
                 sum += value.average
                 count += 1
                 scaledValues.append(value.scaledValue)
-                previousScaledValues.append(value.previousScaledValue)
+//                previousScaledValues.append(value.previousScaledValue)
 
                 // Update maxScaledValue if it's either nil or smaller than the current scaledValue
                 if value.scaledValue > maxScaledValue {
@@ -101,7 +101,11 @@ extension Conductor {
                         values[$0.row][$0.column].scaledValue
                 }
                 
-//                guard !valuesMapped.isEmpty else { return }
+                let previousValuesMapped = part.interestIndexes(
+                    rows: setSettings.gridRows,
+                    columns: setSettings.gridColumns).map {
+                        values[$0.row][$0.column].previousScaledValue
+                }
                 
                 //Find highest value (maximum) with it's index
                 let maxIndexPartTupple = vDSP.indexOfMaximum(valuesMapped)
@@ -115,22 +119,17 @@ extension Conductor {
                     value = 0
                 }
                 
-//                print(String(format: "value: %.5f >= valuePrevious: %.5f", value, valuePrevious))
-                
-//                if setSettings.smootherVersion == 2 {
-//                    //The brand new smoothers all AI created
-//                    value = valueSmoother(
-//                        value: value,
-//                        partIndex: partIndex
-//                    )
-//                }
-//                else {
-//                    //Original damping curves (smootherVersion == 1)
-//                    value = valueDamper(
-//                        dampMode: part.damperTarget.dampMode!,
-//                        value: value
-//                    )
-//                }
+
+//                //Original damping curves (smootherVersion == 1)
+//                value = valueDamper(
+//                    dampMode: part.damperTarget.dampMode!,
+//                    value: value
+//                )
+                let previousValue: Double
+                if previousValuesMapped.indices.contains(maxIndexPart) {
+                    previousValue = previousValuesMapped[maxIndexPart]
+                }
+                else{ previousValue = 0 }
                 
                 //MARK: Timed movement envelope
                 let envelope = timeBasedEnvelopes[partIndex]!
@@ -143,12 +142,10 @@ extension Conductor {
                 // Pas de logica aan voor previousMovement
                 value = envelope.updateEnvelope(
                     withMovement: value,
-                    previousMovement: previousScaledValues[maxIndexPart],
+                    previousMovement: previousValue,
                     decreaseRate: customDecreaseRate,
                     increaseRate: customIncreaseRate
                 )
-                
-                print("value Out: \(value) [\(customDecreaseRate),\(customIncreaseRate)]")
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number

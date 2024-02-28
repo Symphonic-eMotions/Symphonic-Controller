@@ -21,8 +21,8 @@ extension Date {
     }
 }
 
-extension Array {
-    subscript (safe index: Int) -> Element? {
-        return indices ~= index ? self[index] : nil
-    }
-}
+//extension Array {
+//    subscript (safe index: Int) -> Element? {
+//        return indices ~= index ? self[index] : nil
+//    }
+//}
