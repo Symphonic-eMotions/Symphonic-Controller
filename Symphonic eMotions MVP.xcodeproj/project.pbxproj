@@ -10,6 +10,7 @@
 		7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */; };
 		7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D692A0990080031FF54 /* AddToPlaylistView.swift */; };
 		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
+		7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */; };
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
 		7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */; };
@@ -199,6 +200,7 @@
 		7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		7C041D692A0990080031FF54 /* AddToPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistView.swift; sourceTree = "<group>"; };
 		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
+		7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBasedEnvelope.swift; sourceTree = "<group>"; };
 		7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leveling.swift; sourceTree = "<group>"; };
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				C0C5129C27075D9500DE3393 /* Effects */,
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
+				7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */,
 				7C45433D2AF690E8000B70D6 /* PreviousSmoothedValues.swift */,
 				7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */,
 				7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */,
@@ -988,6 +991,7 @@
 				7C9FB77B2A4AED3400490C59 /* UserCode.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */,
+				7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */,
 				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,

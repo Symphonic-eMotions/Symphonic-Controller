@@ -29,13 +29,16 @@ extension Conductor {
         var sum = 0.0
         var count = 0
         var scaledValues: [Double] = []
+        var previousScaledValues: [Double] = []
         var maxScaledValue: Double = -1  // To store the maximum scaled value
         values.forEach { areaValues in
             areaValues.forEach { value in
+                
                 sum += value.average
                 count += 1
                 scaledValues.append(value.scaledValue)
-                
+                previousScaledValues.append(value.previousScaledValue)
+
                 // Update maxScaledValue if it's either nil or smaller than the current scaledValue
                 if value.scaledValue > maxScaledValue {
                     maxScaledValue = value.scaledValue
@@ -112,32 +115,40 @@ extension Conductor {
                     value = 0
                 }
                 
-                if setSettings.smootherVersion == 2 {
-                    //The brand new smoothers all AI created
-                    value = valueSmoother(
-                        value: value,
-                        partIndex: partIndex
-                    )
-                }
-                else {
-                    //Original damping curves (smootherVersion == 1)
-                    value = valueDamper(
-                        dampMode: part.damperTarget.dampMode!,
-                        value: value
-                    )
-                }
+//                print(String(format: "value: %.5f >= valuePrevious: %.5f", value, valuePrevious))
                 
-//                print("SmootherVersion: \(setSettings.smootherVersion)")
+//                if setSettings.smootherVersion == 2 {
+//                    //The brand new smoothers all AI created
+//                    value = valueSmoother(
+//                        value: value,
+//                        partIndex: partIndex
+//                    )
+//                }
+//                else {
+//                    //Original damping curves (smootherVersion == 1)
+//                    value = valueDamper(
+//                        dampMode: part.damperTarget.dampMode!,
+//                        value: value
+//                    )
+//                }
                 
-//                value = valueLowPassFilter(
-//                    value: value,
-//                    partIndex: partIndex,
-//                    floorValue: 0.075,
-//                    boostFactor: 1.1
-//                )
-                    
-                //Ad ramps from interface!
-//                value = valueRamper(value: value, rampId: partIndex)
+                //MARK: Timed movement envelope
+                let envelope = timeBasedEnvelopes[partIndex]!
+                
+                // Haal de custom rates op, met standaardwaarden als fallback
+                let customDecreaseRate = rampDown[partIndex]! * 0.1 // ?? 0.05
+                let customIncreaseRate = rampUp[partIndex]! * 0.1 // ?? 0.05
+                
+                
+                // Pas de logica aan voor previousMovement
+                value = envelope.updateEnvelope(
+                    withMovement: value,
+                    previousMovement: previousScaledValues[maxIndexPart],
+                    decreaseRate: customDecreaseRate,
+                    increaseRate: customIncreaseRate
+                )
+                
+                print("value Out: \(value) [\(customDecreaseRate),\(customIncreaseRate)]")
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
@@ -227,7 +238,7 @@ extension Conductor {
                 }
                 //End first Part
                 
-                
+        
                 //All parts
                 //Forward to target
                 forward(

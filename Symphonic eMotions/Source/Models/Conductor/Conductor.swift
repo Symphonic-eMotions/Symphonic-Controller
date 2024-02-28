@@ -60,7 +60,11 @@ final class Conductor {
     internal var previousSmoothedValues: [String: Double] = [:]
     internal var previousFilteredValues: [String: Double] = [:]
     
-    //Ramp values containers stored per Instrument.Part
+    //MARK: Time based envelopes
+    // Dictionary om TimeBasedEnvelope instanties per partNr te beheren
+    internal var timeBasedEnvelopes: [String: TimeBasedEnvelope] = [:]
+    
+    //MARK: Ramp values containers stored per Instrument.Part
     public var rampValues: [String: Double] = [:]
     //Ramp up and Ramp down values from struct and control from editor
     public var rampUp: [String: Double] = [:]
@@ -119,6 +123,9 @@ final class Conductor {
         trackSequencers = [:]
         trackSequencersMemory = [:]
         trackInstruments = [:]
+        previousSmoothedValues = [:]
+        previousFilteredValues = [:]
+        timeBasedEnvelopes = [:]
     }
     
     //Function which is called when switching between sets
@@ -248,6 +255,8 @@ final class Conductor {
                     rampValues[part.id] = 0.0
                     rampUp[part.id] = part.damperTarget.nodeSettings!.rampSpeed ?? -1
                     rampDown[part.id] = part.damperTarget.nodeSettings!.rampSpeedDown ?? -1
+                    
+                    timeBasedEnvelopes[part.id] = TimeBasedEnvelope()
                 }
             }
             velocities[track.id] = startVelocity

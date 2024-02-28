@@ -337,7 +337,7 @@ struct EditorView: View {
             .frame(width: 130)
             .padding(.leading)
             
-            //This editor is unreachable for editing Bundle files, so no optional save button
+            //You cannot mutate Bundle files, so no optional save button
             EMButton(
                 action: {
                     
