@@ -94,58 +94,35 @@ extension Conductor {
             //Loop through all parts per track per value
             track.parts.forEach { (partIndex,part) in
                 
-                //We get the value from the areas of interest
-                let valuesMapped = part.interestIndexes(
-                    rows: setSettings.gridRows,
-                    columns: setSettings.gridColumns).map {
-                        values[$0.row][$0.column].scaledValue
+                // get current and previous value from values
+                let interestIndexes = part.interestIndexes(rows: setSettings.gridRows, columns: setSettings.gridColumns)
+                let valuesMapped = interestIndexes.map { index -> (current: Double, previous: Double) in
+                    (current: values[index.row][index.column].scaledValue, previous: values[index.row][index.column].previousScaledValue)
                 }
                 
-                let previousValuesMapped = part.interestIndexes(
-                    rows: setSettings.gridRows,
-                    columns: setSettings.gridColumns).map {
-                        values[$0.row][$0.column].previousScaledValue
-                }
+                let currentValues = valuesMapped.map { $0.current }
+                let previousValues = valuesMapped.map { $0.previous }
                 
-                //Find highest value (maximum) with it's index
-                let maxIndexPartTupple = vDSP.indexOfMaximum(valuesMapped)
-                                
-                //Have a var for MaxIndex to number of MidiClips range
-                let maxIndexPart = Int(maxIndexPartTupple.0)
-                
-                //MaxMapped (highest value found in all of AreaOfInterest) value to work with
-                var value = maxIndexPartTupple.1
-                if value.isNaN {
-                    value = 0
-                }
-                
-
-//                //Original damping curves (smootherVersion == 1)
-//                value = valueDamper(
-//                    dampMode: part.damperTarget.dampMode!,
-//                    value: value
-//                )
-                let previousValue: Double
-                if previousValuesMapped.indices.contains(maxIndexPart) {
-                    previousValue = previousValuesMapped[maxIndexPart]
-                }
-                else{ previousValue = 0 }
+                // Vind de hoogste waarde (maximum) met bijbehorende index
+                let maxIndexPartTuple = vDSP.indexOfMaximum(currentValues)
+                let maxIndexPart = Int(maxIndexPartTuple.0)
+                var value = maxIndexPartTuple.1.isNaN ? 0 : maxIndexPartTuple.1
+                let previousValue = previousValues.indices.contains(maxIndexPart) ? previousValues[maxIndexPart] : 0
                 
                 //MARK: Timed movement envelope
-                let envelope = timeBasedEnvelopes[partIndex]!
-                
-                // Haal de custom rates op, met standaardwaarden als fallback
-                let customDecreaseRate = rampDown[partIndex]! * 0.1 // ?? 0.05
-                let customIncreaseRate = rampUp[partIndex]! * 0.1 // ?? 0.05
-                
-                
-                // Pas de logica aan voor previousMovement
-                value = envelope.updateEnvelope(
-                    withMovement: value,
-                    previousMovement: previousValue,
-                    decreaseRate: customDecreaseRate,
-                    increaseRate: customIncreaseRate
-                )
+                if let envelope = timeBasedEnvelopes[partIndex] {
+                    // Veilige toegang tot custom rates met standaardwaarden als fallback
+                    let customDecreaseRate = (rampDown[partIndex] ?? 0.5) * 0.1
+                    let customIncreaseRate = (rampUp[partIndex] ?? 0.5) * 0.1
+                    
+                    // Pas de logica aan voor previousMovement
+                    value = envelope.updateEnvelope(
+                        withMovement: value,
+                        previousMovement: previousValue,
+                        decreaseRate: customDecreaseRate,
+                        increaseRate: customIncreaseRate
+                    )
+                }
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number
