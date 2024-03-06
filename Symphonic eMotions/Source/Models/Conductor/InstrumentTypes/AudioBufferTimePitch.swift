@@ -115,9 +115,9 @@ extension Conductor {
         timePitch.pitch = AUValue(desiredPitchShift)
         
         let chainEffects: Node = chainEffects(for: track, startingNode: timePitch)
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
+//        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
         
-        mixer.addInput(ampEnv)
+        mixer.addInput(chainEffects)
         
         // This needs to happen last
         do {

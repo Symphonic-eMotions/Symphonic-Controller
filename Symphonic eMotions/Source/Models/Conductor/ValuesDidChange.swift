@@ -29,16 +29,12 @@ extension Conductor {
         var sum = 0.0
         var count = 0
         var scaledValues: [Double] = []
-//        var previousScaledValues: [Double] = []
         var maxScaledValue: Double = -1  // To store the maximum scaled value
         values.forEach { areaValues in
             areaValues.forEach { value in
-                
                 sum += value.average
                 count += 1
                 scaledValues.append(value.scaledValue)
-//                previousScaledValues.append(value.previousScaledValue)
-
                 // Update maxScaledValue if it's either nil or smaller than the current scaledValue
                 if value.scaledValue > maxScaledValue {
                     maxScaledValue = value.scaledValue
@@ -49,11 +45,20 @@ extension Conductor {
         // Compute average
         let averageForLevelUpdate = sum / Double(count)
         
-        //TODO: Create returning levels
+        //TODO: Make level type switch
+        // Increment the current level
+//        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
+//            currentSetLevel: currentSetLevel,
+//            value: averageForLevelUpdate
+//        )
         
-        // Update the current level
-        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(currentSetLevel: currentSetLevel, value: averageForLevelUpdate)
-        
+        // Increment AND decrement level
+        localCurrentSetLevel = adjustCurrentSetLevel(
+            setSettings: setSettings,
+            currentSetLevel: currentSetLevel,
+            averageMovement: averageForLevelUpdate
+        )
+                
         //Wave mechanism (start and stop on movement)
         //End of wave, stop playing
         if setSettings.isWavePlaying {
@@ -87,7 +92,7 @@ extension Conductor {
         var trackNr: Int = 0
         var partNr: Int = 0
         setSettings.tracks.forEach { (trackIndex,track) in
-            
+                        
             //Reset part per track
             partNr = 0
             
@@ -103,19 +108,19 @@ extension Conductor {
                 let currentValues = valuesMapped.map { $0.current }
                 let previousValues = valuesMapped.map { $0.previous }
                 
-                // Vind de hoogste waarde (maximum) met bijbehorende index
+                // Find highest value (maximum) with its index
                 let maxIndexPartTuple = vDSP.indexOfMaximum(currentValues)
                 let maxIndexPart = Int(maxIndexPartTuple.0)
                 var value = maxIndexPartTuple.1.isNaN ? 0 : maxIndexPartTuple.1
                 let previousValue = previousValues.indices.contains(maxIndexPart) ? previousValues[maxIndexPart] : 0
                 
-                //MARK: Timed movement envelope
+                //MARK: Timed movement envelope (Replaced ramps and damps)
                 if let envelope = timeBasedEnvelopes[partIndex] {
-                    // Veilige toegang tot custom rates met standaardwaarden als fallback
+                    // Safe access to custom rates with default value fallback
                     let customDecreaseRate = (rampDown[partIndex] ?? 0.5) * 0.1
                     let customIncreaseRate = (rampUp[partIndex] ?? 0.5) * 0.1
                     
-                    // Pas de logica aan voor previousMovement
+                    // This is the instrument / effect controller
                     value = envelope.updateEnvelope(
                         withMovement: value,
                         previousMovement: previousValue,
@@ -123,6 +128,14 @@ extension Conductor {
                         increaseRate: customIncreaseRate
                     )
                 }
+                
+                let progress = levelProgressForController(
+                    track.levels,
+                    currentLevel: localCurrentSetLevel
+                )
+                
+                value *= progress
+                
                 
                 //MARK: First part Type controlling
                 //NoteSource -> midi || note number

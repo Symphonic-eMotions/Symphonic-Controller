@@ -33,6 +33,9 @@ final class Conductor {
     internal var trackMixers: [String: Mixer] = [:]
     internal var trackRecorders: [String: NodeRecorder] = [:]
     
+    //Amplitude controller with interpolation per track
+    internal var amplitudeControllers: [String: AmplitudeController] = [:]
+    
     //trackSequencers holds MIDI file information
     //Is the play head in the score
     //Controls speed, loop (length)
@@ -73,7 +76,7 @@ final class Conductor {
     
     //Amplitude enelopes for muting tracks for levels
     //TODO: init of these needs to be at 0 (-90Db)
-    private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
+//    private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
     
     //Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
@@ -106,7 +109,7 @@ final class Conductor {
         soundModuleParam01 = [:]
         soundModuleParam02 = [:]
         soundModuleVolume = [:]
-        trackAmpEnvelopes = [:]
+//        trackAmpEnvelopes = [:]
         rampUp = [:]
         rampDown = [:]
         volume = [:]
@@ -118,6 +121,7 @@ final class Conductor {
         trackSequencersMemory = [:]
         trackInstruments = [:]
         timeBasedEnvelopes = [:]
+        amplitudeControllers = [:]
     }
     
     //Function which is called when switching between sets
@@ -168,7 +172,7 @@ final class Conductor {
                 trackMixers[track.id]?.removeAllInputs()
                 trackMixers[track.id] = nil
             }
-
+            
             if( trackRecorders[track.id] != nil ){
                 trackRecorders[track.id] = nil
             }
@@ -193,10 +197,10 @@ final class Conductor {
                 trackSequencersCallbackers[track.id] = nil
             }
             
-            if( trackAmpEnvelopes[track.id] != nil ) {
-                trackAmpEnvelopes.removeValue(forKey: track.id)
-                trackAmpEnvelopes[track.id] = nil
-            }
+//            if( trackAmpEnvelopes[track.id] != nil ) {
+//                trackAmpEnvelopes.removeValue(forKey: track.id)
+//                trackAmpEnvelopes[track.id] = nil
+//            }
         }
         
         mixer.removeAllInputs()
@@ -278,13 +282,18 @@ final class Conductor {
             soundModuleParam02[track.id] = 0
             soundModuleVolume[track.id] = 0
             
-            //Turn tracks off so things will be quiet to start off with
-            if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
-                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-                trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
-            } else {
-                print("trackAmpEnvelopes[track.id] is nil")
-            }
+            //In level after level open trackAmpEnvelope 1 level early
+            //OR replace with amplitudeControllers
+            amplitudeControllers[track.id] = AmplitudeController()
+            
+            
+//            //Turn tracks off so things will be quiet to start off with
+//            if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
+//                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+//                trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
+//            } else {
+//                print("trackAmpEnvelopes[track.id] is nil")
+//            }
         }
     }
     
@@ -312,9 +321,9 @@ final class Conductor {
             }
             else{
                 playEngineUIEffect()
-                //                unMuteTrack(trackId: trackId)
-                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: envOn)
+                
+//                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
+//                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: envOn)
                 
                 velocities[trackId] = 1.0
                 
@@ -372,8 +381,8 @@ final class Conductor {
         if !noteOn {
             playEngineUIEffect()
             
-            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
+//            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
+//            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
             
             let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
             
@@ -393,9 +402,7 @@ final class Conductor {
                 trackSamplers[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             }
             else if [.pulseWidthSynth, .phaseSynth].contains(soundSource) {
-                
-//                print(noteOff)
-                
+                                
                 trackInstruments[trackId]!.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
             }
         }
@@ -411,8 +418,8 @@ final class Conductor {
         if !noteOn {
             playEngineUIEffect()
             
-            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
+//            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
+//            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
             
             //Get any but the last played note
             let filteredNotes = noteNumbers.filter { $0 != self.lastNoteNumber }
@@ -539,43 +546,39 @@ final class Conductor {
             
             //TODO: add level decrement method
             
-            //UN-Mute if track is within level
-            if track.value.levels.contains(selectedLevel)
-            {
-                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-//                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOn)
-                
-                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
-                    trackAmpEnvelope.scheduleMIDIEvent(event: envOn)
-                }
-                else{
-                    print("ERROR: un mute \(track.value.trackId) not found")
-                }
-                
-            }
-            //Mute all other occasions is after last level
-            else {
-                
-                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//                trackAmpEnvelopes[track.value.trackId]!.scheduleMIDIEvent(event: envOff)
-                
-                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
-                    trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
-                }
-                else{
-                    print("mute \(track.value.trackId) not found")
-                }
-            }
+//            //UN-Mute if track is within level
+//            if track.value.levels.contains(selectedLevel)
+//            {
+//                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
+//                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
+//                    trackAmpEnvelope.scheduleMIDIEvent(event: envOn)
+//                }
+//                else{
+//                    print("ERROR: un mute \(track.value.trackId) not found")
+//                }
+//                
+//            }
+//            //Mute all other occasions is after last level
+//            else {
+//                
+//                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
+//                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
+//                    trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
+//                }
+//                else{
+//                    print("mute \(track.value.trackId) not found")
+//                }
+//            }
         }
     }
     
     func playInterfaceSounds(sounds: [String], volume: Float) {
         if let randomSound = sounds.randomElement() {
-//            print("Random sound selected: \(randomSound)")
+            //            print("Random sound selected: \(randomSound)")
             if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "wav") {
-//                print("Path exists: \(path)")
+                //                print("Path exists: \(path)")
                 let url = URL(fileURLWithPath: path)
-//                print("URL is valid: \(url)")
+                //                print("URL is valid: \(url)")
                 do {
                     autoSound = try AVAudioPlayer(contentsOf: url)
                     autoSound?.delegate = self.autoSound as? any AVAudioPlayerDelegate
@@ -706,17 +709,17 @@ final class Conductor {
         }
     
     //MARK: Add track amplitude envelopes
-    internal func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
-        
-        //Add Amplitude envelope for
-        trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
-        trackAmpEnvelopes[trackId]!.attackDuration = 0.4
-        trackAmpEnvelopes[trackId]!.decayDuration = 0.01
-        trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
-        trackAmpEnvelopes[trackId]!.releaseDuration = 0.4
-        
-        return trackAmpEnvelopes[trackId]! as Node
-    }
+//    internal func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
+//        
+//        //Add Amplitude envelope for
+//        trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
+//        trackAmpEnvelopes[trackId]!.attackDuration = 0.4
+//        trackAmpEnvelopes[trackId]!.decayDuration = 0.01
+//        trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
+//        trackAmpEnvelopes[trackId]!.releaseDuration = 0.4
+//        
+//        return trackAmpEnvelopes[trackId]! as Node
+//    }
     
     //MARK: Chain master track
     private func chainMasterEffects(
@@ -738,27 +741,60 @@ final class Conductor {
     
     internal func getAndOrIncreaseCurrentSetLevel(
         currentSetLevel: Double,
-        value: Double ) -> Double {
+        value: Double
+    ) -> Double {
+        if value > 0.1 {
             
-            if value > 0.1 {
-                
-                //Hack to get initial value after first install
-                //Problem is this triggering every frame
-                var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.5
-                
-                if userDefaultsLevelSpeed == 0 {
-                    userDefaultsLevelSpeed = 0.1
-                }
-                
-                //Level speed slider from sheet correlation
-                let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
-                
-                // Muting is not happening in over amount of levels.
-                return levelSpeedValue
+            //Hack to get initial value after first install
+            //Problem is this triggering every frame
+            var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.5
+            //0 is standing still!
+            if userDefaultsLevelSpeed == 0 {
+                userDefaultsLevelSpeed = 0.1
             }
             
-            return currentSetLevel
+            //Level speed slider from sheet correlation
+            let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
+            
+            // Muting is not happening in over amount of levels.
+            return levelSpeedValue
         }
+        
+        return currentSetLevel
+    }
+
+    internal func adjustCurrentSetLevel(
+            setSettings: SetSettings,
+            currentSetLevel: Double,
+            averageMovement: Double
+        ) -> Double {
+            // Obtain the user preference for level speed
+            let userPreferenceSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.05
+            // Set a default speed if the user preference is not set
+            let levelAdjustSpeed = userPreferenceSpeed == 0 ? 0.05 : userPreferenceSpeed
+            
+            // Adjust decreasing level speed < 1 is slower than up, > 1 is faster than up
+            let levelDecreaseRate = levelAdjustSpeed * 1.5
+            
+            // Define a movement threshold to increase the level
+            let movementThreshold = 0.25
+            
+            if averageMovement > movementThreshold {
+                // Increase the level based on movement and user preference
+                let newSetLevel = currentSetLevel + levelAdjustSpeed * averageMovement
+                let doubleLevels = Double(setSettings.levels.count)
+                if newSetLevel < doubleLevels {
+                    return newSetLevel
+                }
+                else { return doubleLevels - 0.001 }
+            } else {
+                // Reduce the level slowly if there is little to no movement
+                // Ensure that the level does not drop below 0
+                return max(currentSetLevel - levelDecreaseRate, 0.0)
+            }
+        }
+
+    
     
     private func levelMidiClipVariation(in level: Int, on track: TrackSettings) -> Void {
         
@@ -776,7 +812,7 @@ final class Conductor {
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
             //Keep playing until bar is complete
-//            stopNotesTrackId(for: track.trackId)
+            //            stopNotesTrackId(for: track.trackId)
             
             copyMIDIfromMemory(
                 trackId: track.trackId,
@@ -789,7 +825,7 @@ final class Conductor {
     private func levelNoteNumberVariation(in level: Int, on track: TrackSettings) -> Void {
         if track.levels.contains(level) {
             
-//            print("levelNoteNumberVariation -> copyMIDIfromMemory ")
+            //            print("levelNoteNumberVariation -> copyMIDIfromMemory ")
             
             guard track.notesToLevel.contains(level) else{
                 return
@@ -798,18 +834,18 @@ final class Conductor {
             //Get length in beats from audio filws
             let clipLengths: [Double] = track.audioFiles.map { Double($0.lengthInBeats) }
             
-//            print("clipLengths: \(clipLengths)")
+            //            print("clipLengths: \(clipLengths)")
             
             let nextVariation = track.notesToLevel[level]
             
-//            print("nextVariation: \(nextVariation)")
+            //            print("nextVariation: \(nextVariation)")
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
-//            stopNotesTrackId(for: track.trackId)
+            //            stopNotesTrackId(for: track.trackId)
             
-//            print("nextMIDIstartTime: \(nextMIDIstartTime)")
-//            print("loopLength: \(clipLengths[nextVariation])")
+            //            print("nextMIDIstartTime: \(nextMIDIstartTime)")
+            //            print("loopLength: \(clipLengths[nextVariation])")
             
             copyMIDIfromMemory(
                 trackId: track.trackId,
@@ -843,12 +879,12 @@ final class Conductor {
         let loopSegment = contentFromMemory?.filter { midiStartTime ..< (midiStartTime + loopLength) ~= $0.position.beats }
         
         let shiftedSegment = loopSegment?.map { MIDINoteData(
-                noteNumber: $0.noteNumber,
-                velocity: $0.velocity,
-                channel: $0.channel,
-                duration: $0.duration,
-                position: Duration(beats: $0.position.beats - midiStartTime)
-            )
+            noteNumber: $0.noteNumber,
+            velocity: $0.velocity,
+            channel: $0.channel,
+            duration: $0.duration,
+            position: Duration(beats: $0.position.beats - midiStartTime)
+        )
         }
         
         //All notes off is moved one layer up
@@ -877,7 +913,7 @@ final class Conductor {
         setSettings: SetSettings,
         level: Int
     ) {
-                
+        
         do {
             //Variable for use Everywhere
             isSetPlaying = true
@@ -894,17 +930,17 @@ final class Conductor {
                     playTrack(track.value)
                 }
                 
-//                if track.value.variationType == .variationSequencial {
-//                    
-//                    let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
-//                    let noteNumber = getNextSequenceNote(
-//                        currentNote,
-//                        track.value.notesSequenceType,
-//                        track.value.midiGroup,
-//                        0.5
-//                    )
-//                    playNoteNumber(track.value, noteNumber)
-//                }
+                //                if track.value.variationType == .variationSequencial {
+                //                    
+                //                    let currentNote = sequenceNote[track.value.trackId] ?? track.value.midiGroup.first!
+                //                    let noteNumber = getNextSequenceNote(
+                //                        currentNote,
+                //                        track.value.notesSequenceType,
+                //                        track.value.midiGroup,
+                //                        0.5
+                //                    )
+                //                    playNoteNumber(track.value, noteNumber)
+                //                }
             }
         } catch {
             print("Catched playEngineAndTracks \(error)")
@@ -916,13 +952,13 @@ final class Conductor {
     ){
         do {
             try setSettings.tracks.forEach { track in
-
+                
                 try trackRecorders[track.value.trackId]?.record()
-
+                
                 print("RECORDING \(track.value.trackName)")
             }
             
-//            try masterRecorder?.record()
+            //            try masterRecorder?.record()
             
             print("RECORDING master")
             
@@ -936,11 +972,11 @@ final class Conductor {
         setSettings: SetSettings
     ){
         
-//        masterRecorder?.stop()
-//        print("STOP RECORDING master")
+        //        masterRecorder?.stop()
+        //        print("STOP RECORDING master")
         
         setSettings.tracks.forEach { track in
-
+            
             trackRecorders[track.value.trackId]?.stop()
         }
     }

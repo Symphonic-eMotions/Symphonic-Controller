@@ -108,9 +108,9 @@ extension Conductor {
             oscMixer.addInput(moogLadder)
             
             let chainEffects: Node = chainEffects(for: track, startingNode: ampEnvPhaseDist)
-            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
+//            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
             
-            mixer.addInput(ampEnv)
+            mixer.addInput(chainEffects)
             
             return ampEnvPhaseDist as Node
         }

@@ -47,7 +47,7 @@ extension Conductor {
                     forResource: audioFile.fileName,
                     withExtension: audioFile.fileExtension,
                     subdirectory: "Samples/\(samplePath)"
-                ) ?? URL("Samples/\(samplePath))/\(audioFile.fileName).\(audioFile.fileExtension)")
+                ) ?? URL("Samples/\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)")
                 
             } else {
                 //Load User file
@@ -106,9 +106,9 @@ extension Conductor {
         //Connect all effects
         let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
         //Connect ampplitude envelopes for track fading
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
+//        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
         
-        mixer.addInput(ampEnv)
+        mixer.addInput(chainEffects)
         
         //This needs to happen as last
         do {

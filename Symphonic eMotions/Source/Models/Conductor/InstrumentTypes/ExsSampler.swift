@@ -172,10 +172,10 @@ extension Conductor {
             sampler.amplitude = track.volume
             
             let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
-            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
+//            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
             
             //Have an extra mixer to record
-            trackMixers[track.id]?.addInput(ampEnv)
+            trackMixers[track.id]?.addInput(chainEffects)
             
             //Send the record signal to the main out
             mixer.addInput(trackMixers[track.id]!)

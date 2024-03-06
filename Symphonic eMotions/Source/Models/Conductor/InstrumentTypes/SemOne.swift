@@ -31,9 +31,9 @@ extension Conductor {
         compressor.$masterGain.value = AUValue(volume)
         
         let chainEffectsNode = chainEffects(for: track, startingNode: compressor)
-        let ampEnv = setTrackAmpEnvelope(trackId: track.trackId, startingNode: chainEffectsNode)
+//        let ampEnv = setTrackAmpEnvelope(trackId: track.trackId, startingNode: chainEffectsNode)
         
-        mixer.addInput(ampEnv)
+        mixer.addInput(chainEffectsNode)
             
         return env as Node
     }

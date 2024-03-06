@@ -11,6 +11,8 @@
 		7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D692A0990080031FF54 /* AddToPlaylistView.swift */; };
 		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
 		7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */; };
+		7C0C9F372B8FDF6700DBD142 /* AmplitudeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */; };
+		7C0C9F392B9874BF00DBD142 /* LevelProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */; };
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
 		7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */; };
@@ -199,6 +201,8 @@
 		7C041D692A0990080031FF54 /* AddToPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistView.swift; sourceTree = "<group>"; };
 		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
 		7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBasedEnvelope.swift; sourceTree = "<group>"; };
+		7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeController.swift; sourceTree = "<group>"; };
+		7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelProgressController.swift; sourceTree = "<group>"; };
 		7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leveling.swift; sourceTree = "<group>"; };
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
@@ -375,7 +379,7 @@
 		C084FFEB26B3122C009A4D0C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0AFDD002705BC08006EF64F /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C0AFDD022705BC24006EF64F /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
-		C0AFDD052705D1CC006EF64F /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
+		C0AFDD052705D1CC006EF64F /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0AFDD0B2705F425006EF64F /* Samples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Samples; sourceTree = "<group>"; };
 		C0C5129D27075DAA00DE3393 /* LowPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowPassFilterEffect.swift; sourceTree = "<group>"; };
 		C0C5129F27075DB800DE3393 /* DelayEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayEffect.swift; sourceTree = "<group>"; };
@@ -627,6 +631,8 @@
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
 				7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */,
+				7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */,
+				7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */,
 				7C29AA1A2A4F4AB70070D901 /* ValueDamper.swift */,
 				7C29AA1C2A4F4AF30070D901 /* ValueRamper.swift */,
 				7CCDE10328E2C65100343920 /* MasterTrackModel.swift */,
@@ -996,6 +1002,7 @@
 				7C7E4FDE2A69376D007BEF14 /* DamperTarget.swift in Sources */,
 				7C3EC2082A1FE9D40049E4ED /* UserDefaultsKeys.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
+				7C0C9F392B9874BF00DBD142 /* LevelProgressController.swift in Sources */,
 				7C1FB0B229DDFD9A00621909 /* LevelsView.swift in Sources */,
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
@@ -1067,6 +1074,7 @@
 				7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */,
 				C069592326B4F2F6002EB522 /* EMButton.swift in Sources */,
 				C069590626B4E150002EB522 /* InstrumentsSet.swift in Sources */,
+				7C0C9F372B8FDF6700DBD142 /* AmplitudeController.swift in Sources */,
 				7C7E4FD22A683C26007BEF14 /* SetInfoModelTransport.swift in Sources */,
 				7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */,
 				7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */,

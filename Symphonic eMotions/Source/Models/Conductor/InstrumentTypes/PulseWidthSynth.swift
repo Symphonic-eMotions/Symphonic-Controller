@@ -93,9 +93,9 @@ extension Conductor {
         
         
         let chainEffects: Node = chainEffects(for: track, startingNode: compressor)
-        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
+//        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
         
-        mixer.addInput(ampEnv)
+        mixer.addInput(chainEffects)
         
         return env as Node
     }
