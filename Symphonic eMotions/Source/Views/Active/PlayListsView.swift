@@ -24,7 +24,7 @@ struct PlayListsView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub,
                 viewModel: PlaylistViewModel(
-                    playlist: BuildSettings.Playlists.minimal, 
+                    playlist: SeMActive.Playlists.minimal, 
                     sessionDisplay: sessionDisplay
                 )
             )
@@ -33,7 +33,7 @@ struct PlayListsView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub,
                 viewModel: PlaylistViewModel(
-                    playlist: BuildSettings.Playlists.person,
+                    playlist: SeMActive.Playlists.person,
                     sessionDisplay: sessionDisplay)
             )
         }

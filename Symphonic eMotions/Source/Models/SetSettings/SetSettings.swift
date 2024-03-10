@@ -14,7 +14,7 @@ import SwiftUI
 class SetSettings: Identifiable, ObservableObject {
     
     //Keep track of playlist
-    var currentPlaylist: BuildSettings.Playlists
+    var currentPlaylist: SeMActive.Playlists
     var currentSetInList: URL
     
     //Keep track of current edited values

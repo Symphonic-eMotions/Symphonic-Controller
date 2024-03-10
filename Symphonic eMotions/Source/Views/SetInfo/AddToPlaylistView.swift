@@ -19,7 +19,7 @@ struct AddToPlaylistView: View{
             Text(NSLocalizedString("Add to playlist", comment: "String"))
                 .font(.largeTitle)
             
-            let lists = BuildSettings.Playlists.allCases
+            let lists = SeMActive.Playlists.allCases
             let partOfList = lists.filter({$0 != .none})
             
             ForEach(partOfList, id: \.self) { playlist in

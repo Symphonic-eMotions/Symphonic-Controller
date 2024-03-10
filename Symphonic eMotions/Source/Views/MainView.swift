@@ -209,6 +209,19 @@ struct MainView: View {
             sessionDisplay: $sessionDisplay,
             sessionDisplaySub: $sessionDisplaySub
         )
+        .onAppear {
+                // This prints the initial values of sessionDisplay and sessionDisplaySub when the view appears
+                print("Initial sessionDisplay: \(sessionDisplay)")
+                print("Initial sessionDisplaySub: \(sessionDisplaySub)")
+            }
+            .onChange(of: sessionDisplay) { newValue in
+                // This prints the updated value of sessionDisplay whenever it changes
+                print("Updated sessionDisplay: \(newValue)")
+            }
+            .onChange(of: sessionDisplaySub) { newValue in
+                // This prints the updated value of sessionDisplaySub whenever it changes
+                print("Updated sessionDisplaySub: \(newValue)")
+            }
     }
 }
 

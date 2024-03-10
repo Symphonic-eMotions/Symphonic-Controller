@@ -53,7 +53,7 @@ struct eMotionApp: App {
                             instrumentsSet: instrumentSet
                         ),
                         currentInstrumentsSet: instrumentSet,
-                        buildSettings: BuildSettings()
+                        semActive: SeMActive()
                     ),
                     conductor: Conductor(set: instrumentSet),
                     leveling: Leveling(),

@@ -103,7 +103,7 @@ struct CountDown: View {
         }
     }
     
-    func nextURL(currentURL: URL, currentPlaylist: BuildSettings.Playlists) -> URL? {
+    func nextURL(currentURL: URL, currentPlaylist: SeMActive.Playlists) -> URL? {
         let fileManager = FileManager.default
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let minimalFolderURL = documentDirectory.appendingPathComponent(currentPlaylist.rawValue)

@@ -131,7 +131,8 @@ extension Conductor {
                 
                 let progress = levelProgressForController(
                     track.levels,
-                    currentLevel: localCurrentSetLevel
+                    currentLevel: localCurrentSetLevel,
+                    difficulty: 1
                 )
                 
                 value *= progress

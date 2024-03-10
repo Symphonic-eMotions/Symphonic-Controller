@@ -17,7 +17,7 @@ struct SetInfoState {
     //SpriteKit
     var displayOpacity: Float = 0.12
     //Pro
-    var buildSettings: BuildSettings
+    var semActive: SeMActive
     var displayMode: DisplayModes = .both
     //Part editor
     var updateEditView: Int = 0

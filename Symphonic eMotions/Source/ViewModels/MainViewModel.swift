@@ -11,7 +11,7 @@ struct MainViewState {
     var setSettings: SetSettings
     var imageDifference: ImageDifference
     var currentInstrumentsSet: InstrumentsSet
-    var buildSettings: BuildSettings
+    var semActive: SeMActive
     var masterTrackStructure: [MasterTrackEffect]?
 }
 
@@ -86,7 +86,7 @@ final class MainViewModel: ObservableObject {
                     setSetting: setSettings
                 ),
                 currentInstrumentsSet: instrumentsSet,
-                buildSettings: mainState.buildSettings
+                semActive: mainState.semActive
             )
             print("*** sending sensitivity + deviation \(sensitivitySession) + \(sensitivityDeviation) and feedback \(videoFeedback) ***")
             

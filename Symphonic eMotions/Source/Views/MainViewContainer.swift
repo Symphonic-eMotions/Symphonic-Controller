@@ -28,7 +28,7 @@ struct MainViewContainer: View {
                 imageDifference: $viewModel.mainState.imageDifference,
                 setInfoState: SetInfoState(
                     currentInstrumentsSet: viewModel.mainState.currentInstrumentsSet,
-                    buildSettings: viewModel.mainState.buildSettings,
+                    semActive: viewModel.mainState.semActive,
                     masterTrackStructure: MasterTrackEffectsHelper.masterTrackViewObject(
                         instrumentSet: viewModel.mainState.currentInstrumentsSet,
                         setSettings:  viewModel.mainState.setSettings

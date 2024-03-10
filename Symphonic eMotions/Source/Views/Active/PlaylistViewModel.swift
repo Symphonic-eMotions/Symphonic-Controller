@@ -14,12 +14,12 @@ class PlaylistViewModel: ObservableObject {
     @Published var removeSetUrl: URL?
     @Published var showRemoveConfirmation: Bool = false
     
-    var playlist: BuildSettings.Playlists
+    var playlist: SeMActive.Playlists
     
     var sessionDisplay: SessionDisplay
     
     init(
-        playlist: BuildSettings.Playlists,
+        playlist: SeMActive.Playlists,
         sessionDisplay: SessionDisplay
     ) {
         self.playlist = playlist

@@ -43,7 +43,7 @@ struct SpriteKitTransport: View {
                     setInfoModel.tapStopAudioEngine()
                     //Check if back is playlists or set info
                     let parentDirectoryName = setInfoModel.setSettings.setURL.deletingLastPathComponent().lastPathComponent
-                    if BuildSettings.Playlists(rawValue: parentDirectoryName) != nil {
+                    if SeMActive.Playlists(rawValue: parentDirectoryName) != nil {
                         sessionDisplay = .playlists
                         sessionDisplaySub = .playlists
                     }

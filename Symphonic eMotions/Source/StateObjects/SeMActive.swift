@@ -1,5 +1,5 @@
 //
-//  BuildSettings.swift
+//  SeMActive.swift
 //  Symphonic eMotions
 //
 //  Created by Frans-Jan Wind on 15/09/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BuildSettings {
+struct SeMActive {
     
     public enum Playlists: String, CaseIterable {
         case none
