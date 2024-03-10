@@ -34,7 +34,7 @@ extension SetInfoModel {
     
     func tapAStartRecordTracks(){
         //Start playing if not playing
-        if !isSetPlaying {
+        if !userSettings.isSetPlaying {
             conductor.playEngineAndTracks(
                 setSettings: self.setSettings,
                 level: Int(leveling.currentSetLevelSubject.value)

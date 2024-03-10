@@ -10,8 +10,6 @@ import Combine
 
 struct MainViewContainer: View {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    
     @ObservedObject var viewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay

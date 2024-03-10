@@ -9,8 +9,7 @@ import SwiftUI
 
 struct IntroductionView: View {
     
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -141,8 +140,8 @@ struct IntroductionView: View {
                 
                 //Load set
                 setInfoModel.tapSetRow(filePath: "Introductie.json")
-                //Let @AppStorage know what is current
-                currentUrl = "Introductie.json"
+                //Store current location
+                userSettings.currentUrl = "Introductie.json"
             }
             
             //Back button

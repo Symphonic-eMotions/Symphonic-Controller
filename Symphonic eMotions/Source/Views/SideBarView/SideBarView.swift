@@ -9,8 +9,6 @@ import SwiftUI
 
 struct SideBarView: View {
 
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    
     @EnvironmentObject var fileController: FileController
     @ObservedObject var setInfoModel: SetInfoModel
 

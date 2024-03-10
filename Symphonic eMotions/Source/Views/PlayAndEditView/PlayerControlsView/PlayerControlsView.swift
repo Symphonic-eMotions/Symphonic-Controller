@@ -19,9 +19,6 @@ struct VolumeSlider: UIViewRepresentable {
 
 struct PlayerControlsView: View {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool

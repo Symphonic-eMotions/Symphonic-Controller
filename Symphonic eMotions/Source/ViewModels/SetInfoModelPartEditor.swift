@@ -100,7 +100,7 @@ extension SetInfoModel {
             row: row, column: column, currentLevel: Int( self.leveling.currentSetLevelSubject.value )
         )
         
-        guard isSetPlaying else { return colors }
+        guard userSettings.isSetPlaying else { return colors }
         
         if row < self.setInfoState.values.count {
             if column < self.setInfoState.values[row].count {

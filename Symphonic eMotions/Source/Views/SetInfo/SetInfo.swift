@@ -26,7 +26,7 @@ struct SetInfoLocalState {
 
 struct SetInfo: View {
     
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var isCreator: Bool
     @Binding public var sessionDisplay: SessionDisplay
@@ -78,8 +78,8 @@ struct SetInfo: View {
                             setInfoModel.setSettings.currentPlaylist = .none
                             //Load set
                             setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
-                            //Let @AppStorage know what is current
-                            currentUrl = setInfoModel.setInfoLocalState.setConfig
+                            //Save current location
+                            userSettings.currentUrl = setInfoModel.setInfoLocalState.setConfig
                             
                             //Change the View
                             sessionDisplay = setInfoModel.setSettings.defaultSkin
@@ -130,6 +130,10 @@ struct SetInfo: View {
                     Spacer()
                 }
             }
+        }
+        .onAppear(){
+            userSettings.isSetPlaying = false
+            userSettings.showPartEditor = false
         }
     }
 }

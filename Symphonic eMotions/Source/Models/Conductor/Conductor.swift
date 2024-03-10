@@ -15,7 +15,7 @@ import SwiftUI
 
 final class Conductor {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    var userSettings: UserSettings
     
     let autoVoice = AVSpeechSynthesizer()
     var autoSound: AVAudioPlayer!
@@ -88,12 +88,15 @@ final class Conductor {
     var lastNoteNumber: Int?
     
     //MARK: Init
-    init(set: InstrumentsSet) {
+    init(
+        userSettings: UserSettings = UserSettings.shared,
+        set: InstrumentsSet
+    ) {
+        self.userSettings = userSettings
+        self.set = set
         
         let silentUtterance = AVSpeechUtterance(string: "")
         autoVoice.speak(silentUtterance)
-        
-        self.set = set
         
         audioEngine = AudioEngine()
         mixer = Mixer()
@@ -483,7 +486,7 @@ final class Conductor {
         
         //MARK: Let know if levels is done
         //Highest level is full and is for the first time
-        if selectedLevel == setSettings.levels.count &&  isSetPlaying {
+        if selectedLevel == setSettings.levels.count &&  userSettings.isSetPlaying {
             
             AnalyticsAction.setEnded.logEvent(sessionDisplay: .none, fileGroup: setSettings.fileGroup, setName: setSettings.setName)
             
@@ -493,10 +496,9 @@ final class Conductor {
                 resetLevels: true
             )
             
-            isSetPlaying = false
+            userSettings.isSetPlaying = false
             
             if setSettings.fileGroup == .playlists {
-                
                 let sounds = ["Applause01", "Applause02", "Applause03"]
                 playInterfaceSounds(sounds: sounds, volume: 0.17)
             }
@@ -544,7 +546,7 @@ final class Conductor {
             }
             
             
-            //TODO: add level decrement method
+            //TODO: Switch level type switch of is nieuwe methode superieur?
             
 //            //UN-Mute if track is within level
 //            if track.value.levels.contains(selectedLevel)
@@ -916,7 +918,7 @@ final class Conductor {
         
         do {
             //Variable for use Everywhere
-            isSetPlaying = true
+            userSettings.isSetPlaying = true
             
             //Fire up the audio engine
             try audioEngine.start()

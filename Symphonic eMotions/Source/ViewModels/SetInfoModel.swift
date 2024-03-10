@@ -33,8 +33,7 @@ enum PlayerControlsViewAction {
 
 final class SetInfoModel: ObservableObject {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    
+    var userSettings: UserSettings
     private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var setSettings: SetSettings
@@ -70,6 +69,7 @@ final class SetInfoModel: ObservableObject {
     internal var cancellablePartFeddback: AnyCancellable? = nil
     
     init(
+        userSettings: UserSettings = UserSettings.shared,
         setInfoLocalState: Binding<SetInfoLocalState>,
         setSettings: Binding<SetSettings>,
         imageDifference: Binding<ImageDifference>,
@@ -81,6 +81,7 @@ final class SetInfoModel: ObservableObject {
         partFeedbackState: PartFeedbackState,
         playerControlsAction: ((PlayerControlsViewAction) -> Void)? = nil
     ) {
+        self.userSettings = userSettings
         self._setInfoLocalState = setInfoLocalState
         self._setSettings = setSettings
         self._imageDifference = imageDifference
@@ -152,7 +153,7 @@ final class SetInfoModel: ObservableObject {
 extension SetInfoModel: FrameExtractorDelegate {
     
     func captured(image: CIImage) {
-        guard isSetPlaying else { return }
+        guard userSettings.isSetPlaying else { return }
         imageDifference.updateImageData(image: image)
     }
 }

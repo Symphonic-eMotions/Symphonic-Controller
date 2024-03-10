@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SettingsButtonWithLongPress: View {
     
-    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
-    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     
     let color: Color = .accentColor
@@ -36,8 +35,8 @@ struct SettingsButtonWithLongPress: View {
         //Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
             AnalyticsAction.settingsLong.logEvent(sessionDisplay: .swiftUI)
-            showPartEditor.toggle()
-            if showPartEditor == true {
+            userSettings.showPartEditor.toggle()
+            if userSettings.showPartEditor == true {
                 setInfoModel.leveling.pauseLevel = true
             }
         })

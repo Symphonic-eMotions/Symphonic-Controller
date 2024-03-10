@@ -47,7 +47,7 @@ extension SetInfoModel {
                         self.onLevelReached?()
                         
                         self.tapStopAudioEngine()
-                        self.isSetPlaying = false
+                        userSettings.isSetPlaying = false
                         self.leveling.pauseLevel = false
                     }
                 }

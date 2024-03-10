@@ -12,8 +12,7 @@ struct ChangeView: View {
     
     //We need background audio for sampler loading, so we create some background audio!
     @Environment(\.scenePhase) private var scenePhase
-    
-    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
+    @EnvironmentObject var userSettings: UserSettings
     
     @Binding var sessionDisplay: SessionDisplay
     @Binding var sessionDisplaySub: SessionDisplay
@@ -29,10 +28,10 @@ struct ChangeView: View {
             switch newScenePhase {
             case .background:
                 AnalyticsAction.appBackground.logEvent(sessionDisplay: sessionDisplay)
-                showPartEditor = false
+                userSettings.showPartEditor = false
                 audioPlayer.enableBackground()
             case .inactive:
-                showPartEditor = false
+                userSettings.showPartEditor = false
                 print("App is inactive")
             case .active:
                 AnalyticsAction.appForeground.logEvent(sessionDisplay: sessionDisplay)

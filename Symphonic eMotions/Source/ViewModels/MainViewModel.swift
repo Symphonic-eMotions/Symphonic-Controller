@@ -17,20 +17,9 @@ struct MainViewState {
 
 final class MainViewModel: ObservableObject {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    //Convert to Float
-    private let appStorage = UserDefaults.standard
-    var sensitivitySession: Float  {
-        appStorage.float(forKey: "sensitivitySession")
-    }
-    var sensitivityDeviation: Float  {
-        appStorage.float(forKey: "sensitivityDeviation")
-    }
-    var videoFeedback: Float  {
-        appStorage.float(forKey: "videoFeedback")
-    }
     
     @Published var mainState: MainViewState
+    var userSettings: UserSettings
     let conductor: Conductor
     let leveling: Leveling
     var partFeedback: PartFeedback
@@ -39,12 +28,14 @@ final class MainViewModel: ObservableObject {
         mainState: MainViewState,
         conductor: Conductor,
         leveling: Leveling,
-        partFeedback: PartFeedback
+        partFeedback: PartFeedback,
+        userSettings: UserSettings = UserSettings.shared
     ) {
         self.mainState = mainState
         self.conductor = conductor
         self.leveling = leveling
         self.partFeedback = partFeedback
+        self.userSettings = userSettings
     }
     
     func currentModelInstrumentsSetChanged(
@@ -55,12 +46,12 @@ final class MainViewModel: ObservableObject {
         leveling.currentSetLevelSubject.send(0)
         
         //If we're playing first stop playing
-        if isSetPlaying {
+        if userSettings.isSetPlaying {
             conductor.pauzeEngineAndStopTracks(
                 setSettings: self.mainState.setSettings,
                 resetLevels: true
             )
-            self.isSetPlaying = false
+            userSettings.isSetPlaying = false
             
         } else {
                         
@@ -88,10 +79,11 @@ final class MainViewModel: ObservableObject {
                 currentInstrumentsSet: instrumentsSet,
                 semActive: mainState.semActive
             )
-            print("*** sending sensitivity + deviation \(sensitivitySession) + \(sensitivityDeviation) and feedback \(videoFeedback) ***")
+            print("*** sending sensitivity + deviation \(userSettings.sensitivitySession) + \(userSettings.sensitivityDeviation) and feedback \(userSettings.videoFeedback) ***")
             
-            mainState.imageDifference.feedback.send(videoFeedback)
-            mainState.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivitySession + sensitivityDeviation)
+            mainState.imageDifference.feedback.send(Float(userSettings.videoFeedback))
+            mainState.imageDifference.sensitivityToMaxValue(
+                sensitivityPlusDeviation: Float(userSettings.sensitivitySession + userSettings.sensitivityDeviation))
         }
     }
 }

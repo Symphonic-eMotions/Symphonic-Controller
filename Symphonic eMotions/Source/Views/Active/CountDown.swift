@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct CountDown: View {
-    
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "CountDown"
-    
+        
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay

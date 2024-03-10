@@ -9,10 +9,7 @@ import SwiftUI
 
 struct MovementView: View {
     
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -74,7 +71,7 @@ struct MovementView: View {
                                 .background( Color.accentColor )
                             
                             //Button text
-                            if isSetPlaying {
+                            if userSettings.isSetPlaying {
                                 Text(NSLocalizedString("Stop set", comment: ""))
                                     .font(.system(size: 30))
                                     .padding()
@@ -91,15 +88,15 @@ struct MovementView: View {
                             hasTested = true
                             
                             //Turn testing off
-                            if isSetPlaying {
-                                isSetPlaying = false
+                            if userSettings.isSetPlaying {
+                                userSettings.isSetPlaying = false
                                 rotationSpeedSubject.send(0)
                                 setInfoModel.tapStopAudioEngine()
                             }
                             //Turn testing on
                             else{
                                 setInfoModel.tapStartAudioEngine()
-                                isSetPlaying = true
+                                userSettings.isSetPlaying = true
                             }
                         }
                         
@@ -124,7 +121,7 @@ struct MovementView: View {
                                 
                                 setInfoModel.tapStopAudioEngine()
                                 
-                                isSetPlaying = false
+                                userSettings.isSetPlaying = false
                                 
                                 sessionDisplay = .demo
                                 sessionDisplaySub = .demo
@@ -143,8 +140,8 @@ struct MovementView: View {
                 //Load set
                 setInfoModel.tapSetRow(filePath: "Introductie.json")
                 
-                //Let @AppStorage know what is current
-                currentUrl = "Introductie.json"
+                //Store current location
+                userSettings.currentUrl = "Introductie.json"
             }
             
             //Back button
@@ -160,7 +157,7 @@ struct MovementView: View {
                     
                     setInfoModel.tapStopAudioEngine()
                     
-                    isSetPlaying = false
+                    userSettings.isSetPlaying = false
                     
                     //Paginering
                     let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]

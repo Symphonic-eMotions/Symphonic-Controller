@@ -9,30 +9,25 @@ import SwiftUI
 
 struct SettingsSheetView: View {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
-    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
-    @AppStorage(UserDefaultsKeys.sensitivityDeviation) var sensitivityDeviation: Double = 0
-    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
-    //    @Binding var stopEngine: Bool
     @State private(set) var localTempo: Int = 0
     
     var body: some View {
         
         let sensitivityBinding = Binding(
-            get: { self.sensitivityDeviation },
+            get: { userSettings.sensitivityDeviation },
             set: {
-                self.sensitivityDeviation = $0
+                userSettings.sensitivityDeviation = $0
                 setInfoModel.imageDifference.sensitivityDeviationSubject.send(Float($0))
                 
                 
-                let sensitivityPlusDeviation: Float = Float(sensitivitySession + sensitivityDeviation)
+                let sensitivityPlusDeviation: Float = Float(userSettings.sensitivitySession + userSettings.sensitivityDeviation)
                 setInfoModel.imageDifference.sensitivityToMaxValue(sensitivityPlusDeviation: sensitivityPlusDeviation)
                 
                 
-                print("SENDING SESSION PRESET PLUS DEVIATION: \(self.sensitivitySession) + \(self.sensitivityDeviation)")
+                print("SENDING SESSION PRESET PLUS DEVIATION: \(userSettings.sensitivitySession) + \(userSettings.sensitivityDeviation)")
             }
         )
         
@@ -45,18 +40,18 @@ struct SettingsSheetView: View {
                     //Start stop
                     VStack(alignment: .leading){
                         
-                        Text( self.isSetPlaying ? "Stop" : "Play").padding(.top)
+                        Text( userSettings.isSetPlaying ? "Stop" : "Play").padding(.top)
                         HStack {
                             
                             EMButton(action: {
-                                if isSetPlaying {
+                                if userSettings.isSetPlaying {
                                     AnalyticsAction.stopSet.logEvent(
                                         sessionDisplay: .none,
                                         fileGroup: setInfoModel.setSettings.fileGroup,
                                         setName: setInfoModel.setSettings.setName
                                     )
                                     setInfoModel.tapStopAudioEngine()
-                                    self.isSetPlaying = false
+                                    userSettings.isSetPlaying = false
                                 }
                                 else{
                                     AnalyticsAction.startSet.logEvent(
@@ -65,11 +60,11 @@ struct SettingsSheetView: View {
                                         setName: setInfoModel.setSettings.setName
                                     )
                                     setInfoModel.tapStartAudioEngine()
-                                    self.isSetPlaying = true
+                                    userSettings.isSetPlaying = true
                                 }
                                 
                             }, color: .accentColor) {
-                                Image(systemName: isSetPlaying ?
+                                Image(systemName: userSettings.isSetPlaying ?
                                       "stop.fill" :
                                         "play.fill")
                             }
@@ -108,8 +103,8 @@ struct SettingsSheetView: View {
                 
                 //Level speed
                 VStack(alignment: .leading){
-                    Text("Level speed \(String(format: "%.1f", levelSpeed))").padding(.top)
-                    Slider(value: $levelSpeed, in: 0.1...1.5, onEditingChanged: { editing in
+                    Text("Level speed \(String(format: "%.1f", userSettings.levelSpeed))").padding(.top)
+                    Slider(value: userSettings.$levelSpeed, in: 0.1...1.5, onEditingChanged: { editing in
                         if editing {
                             AnalyticsAction.levelSpeed.logEvent(
                                 sessionDisplay: .none,

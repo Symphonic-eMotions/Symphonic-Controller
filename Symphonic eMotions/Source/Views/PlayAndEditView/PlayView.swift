@@ -10,9 +10,7 @@ import AudioKit
 
 struct PlayView: View {
     
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
-    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
-    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
@@ -62,7 +60,7 @@ struct PlayView: View {
                     //Instruments
                     if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
                         
-                        if showPartEditor  {
+                        if userSettings.showPartEditor  {
                             
                             EditGridView(setInfoModel: setInfoModel)
                             
@@ -95,7 +93,7 @@ struct PlayView: View {
                     .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                 }
                 //Instrument Part editor
-                if showPartEditor {
+                if userSettings.showPartEditor {
 
                     //Editing modee visual parameter value feedback
                     PartFeedbackView(

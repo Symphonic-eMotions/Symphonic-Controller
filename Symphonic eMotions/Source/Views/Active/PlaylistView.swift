@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct PlaylistView: View {
-    
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "PlayListsView"
-    
+        
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay

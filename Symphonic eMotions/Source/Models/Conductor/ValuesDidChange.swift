@@ -239,7 +239,7 @@ extension Conductor {
                 if setSettings.defaultSkin == .home {
                     
                     if trackNr == 1 {
-                        let isPlaying: Double = isSetPlaying ? 1 : 0
+                        let isPlaying: Double = userSettings.isSetPlaying ? 1 : 0
                         rotationSpeedSubject.send(value * isPlaying)
                     }
                 }

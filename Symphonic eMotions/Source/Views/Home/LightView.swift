@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LightView: View {
     
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introduction"
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay

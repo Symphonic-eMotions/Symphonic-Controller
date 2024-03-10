@@ -26,15 +26,10 @@ struct eMotionApp: App {
     // register app delegate for Firebase setup
       @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    //We need a set loaded into ram and @AppStorage
+    //We need a set loaded into ram and userSettings
 //    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
-    //Also set in: PlaylistViewModelAND SetListViewModel
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
-    @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
-    @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
-    @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
-    @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    
 
 //    @State public var sessionDisplay: SessionDisplay = .home
     @State public var sessionDisplay: SessionDisplay = .pro
@@ -64,6 +59,7 @@ struct eMotionApp: App {
             )
             .statusBar(hidden: true)
             .preferredColorScheme(.dark)
+            .environmentObject(UserSettings.shared)
         }
     }
 }

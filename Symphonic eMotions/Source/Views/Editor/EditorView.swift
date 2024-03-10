@@ -9,8 +9,7 @@ import SwiftUI
 
 struct EditorView: View {
     
-    @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "EditorView"
-    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     //Show creator elements
     @Binding private var isCreator: Bool
@@ -354,7 +353,7 @@ struct EditorView: View {
                     fileController.addSetFileURLToController(fileName: fileName)
                     
                     //Reopen the file
-                    setInfoModel.reloadSet(fileName: fileController.urlToFileName(url: URL(currentUrl)))
+                    setInfoModel.reloadSet(fileName: fileController.urlToFileName(url: URL(userSettings.currentUrl)))
                     
                     
                     //Figure out if we opened from playlists
