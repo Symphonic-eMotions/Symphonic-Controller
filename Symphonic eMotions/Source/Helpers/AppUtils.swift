@@ -124,6 +124,29 @@ final class AppUtils {
             }
         }
     }
+    
+    static func semVersionString() -> String {
+        var infoString = ""
+
+        if let bundleID = Bundle.main.bundleIdentifier {
+            let bundleIDComponents = bundleID.split(separator: ".")
+            if let lastComponent = bundleIDComponents.last {
+                infoString += "\(lastComponent) "
+            }
+        }
+
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let versionNumber = appVersion.split(separator: " ").last {
+            infoString += "\(versionNumber) "
+        }
+
+        if let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
+           let buildNumberValue = buildNumber.split(separator: " ").last {
+            infoString += "(\(buildNumberValue))"
+        }
+
+        return infoString
+    }
 
     static func compareVersions(version1: String, version2: String) -> ComparisonResult {
         let versionNumbers1 = version1.split(separator: ".").compactMap { Int($0) }

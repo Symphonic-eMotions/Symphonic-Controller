@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsSheetView: View {
     
-    @EnvironmentObject var userSettings: UserSettings
+    @ObservedObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showingSheet: Bool
     @State private(set) var localTempo: Int = 0
@@ -68,8 +68,8 @@ struct SettingsSheetView: View {
                 
                 //Level speed
                 VStack(alignment: .leading){
-                    Text("Level speed \(String(format: "%.1f", userSettings.levelSpeed))").padding(.top)
-                    Slider(value: userSettings.$levelSpeed, in: 0.1...1.5, onEditingChanged: { editing in
+                    Text("Level speed \(String(format: "%.2f", userSettings.levelSpeed))").padding(.top)
+                    Slider(value: userSettings.levelSpeedBinding, in: 0.01...1, onEditingChanged: { editing in
                         if editing {
                             AnalyticsAction.levelSpeed.logEvent(
                                 sessionDisplay: .none,
@@ -86,8 +86,8 @@ struct SettingsSheetView: View {
                         Slider(value: userSettings.$levelProgressExponent, in: 0...4)
                     }
                     VStack(alignment: .leading){
-                        Text("Level difficulty \(String(format: "%.1f", userSettings.levelDifficulty))").padding(.top)
-                        Slider(value: userSettings.$levelDifficulty, in: 0...5)
+                        Text("Level difficulty \(String(format: "%.2f", userSettings.levelDifficulty))").padding(.top)
+                        Slider(value: userSettings.$levelDifficulty, in: 0...1)
                     }
                 }
                 

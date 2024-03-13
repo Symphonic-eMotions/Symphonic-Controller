@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InstrumentLocationContainer: View {
     
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -108,6 +109,7 @@ struct InstrumentLocationContainer: View {
                         }
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
+                                userSettings: userSettings,
                                 setInfoModel: setInfoModel,
                                 showingSheet: $presentSettingSheet
                             )

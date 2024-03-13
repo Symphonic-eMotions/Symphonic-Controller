@@ -66,29 +66,6 @@ struct SideBarView: View {
         }
     }
     
-    private func semVersionString() -> String {
-        var infoString = ""
-
-        if let bundleID = Bundle.main.bundleIdentifier {
-            let bundleIDComponents = bundleID.split(separator: ".")
-            if let lastComponent = bundleIDComponents.last {
-                infoString += "\(lastComponent) "
-            }
-        }
-
-        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-           let versionNumber = appVersion.split(separator: " ").last {
-            infoString += "\(versionNumber) "
-        }
-
-        if let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
-           let buildNumberValue = buildNumber.split(separator: " ").last {
-            infoString += "(\(buildNumberValue))"
-        }
-
-        return infoString
-    }
-    
     var body: some View {
         
         NavigationView {
@@ -174,7 +151,7 @@ struct SideBarView: View {
             .navigationTitle(setInfoModel.setInfoLocalState.sideBarHead)
         }
         VStack {
-            Text(semVersionString()).foregroundColor(.gray)
+            Text(AppUtils.semVersionString()).foregroundColor(.gray)
         }
     }
 }

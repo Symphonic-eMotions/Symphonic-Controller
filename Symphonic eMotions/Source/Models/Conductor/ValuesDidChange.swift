@@ -129,6 +129,7 @@ extension Conductor {
                     )
                 }
                 
+                //Level controls the amount of instrument controller
                 let progress = levelProgressForController(
                     track.levels,
                     currentLevel: localCurrentSetLevel

@@ -72,6 +72,7 @@ struct PlayView: View {
                             }
                             .sheet(isPresented: $presentSettingSheet) {
                                 SettingsSheetView(
+                                    userSettings: userSettings,
                                     setInfoModel: setInfoModel,
                                     showingSheet: $presentSettingSheet
                                 )

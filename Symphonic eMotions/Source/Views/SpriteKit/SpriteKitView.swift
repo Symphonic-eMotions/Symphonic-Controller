@@ -19,6 +19,7 @@ var spriteKitParts3b = PassthroughSubject<(Int,Int,Double), Never>()
 //SwiftUI creating a SpriteKit scene and sizing it
 struct SpriteKitView: View {
     
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var mainViewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
@@ -165,6 +166,7 @@ struct SpriteKitView: View {
                         //Present sheet
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
+                                userSettings: userSettings,
                                 setInfoModel: setInfoModel,
                                 showingSheet: $presentSettingSheet
                             )

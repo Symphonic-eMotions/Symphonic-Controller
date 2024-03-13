@@ -87,6 +87,9 @@ final class Conductor {
     //Play diffrent samples in introduction volume control:
     var lastNoteNumber: Int?
     
+    //Debug var
+    internal var lastRounded: [String: Double] = [:]
+    
     //MARK: Init
     init(
         userSettings: UserSettings = UserSettings.shared,
@@ -125,6 +128,9 @@ final class Conductor {
         trackInstruments = [:]
         timeBasedEnvelopes = [:]
         amplitudeControllers = [:]
+        
+        //Debug var
+        lastRounded = [:]
     }
     
     //Function which is called when switching between sets
@@ -747,16 +753,10 @@ final class Conductor {
     ) -> Double {
         if value > 0.1 {
             
-            //Hack to get initial value after first install
-            //Problem is this triggering every frame
-            var userDefaultsLevelSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.5
-            //0 is standing still!
-            if userDefaultsLevelSpeed == 0 {
-                userDefaultsLevelSpeed = 0.1
-            }
+            let userSettingLevelSpeed = userSettings.levelSpeed * 0.5
             
             //Level speed slider from sheet correlation
-            let levelSpeedValue = currentSetLevel + 0.01 * userDefaultsLevelSpeed * value
+            let levelSpeedValue = currentSetLevel + 0.01 * userSettingLevelSpeed * value
             
             // Muting is not happening in over amount of levels.
             return levelSpeedValue
@@ -764,40 +764,53 @@ final class Conductor {
         
         return currentSetLevel
     }
-
+    
     internal func adjustCurrentSetLevel(
-            setSettings: SetSettings,
-            currentSetLevel: Double,
-            averageMovement: Double
-        ) -> Double {
-            // Obtain the user preference for level speed
-            let userPreferenceSpeed = UserDefaults.standard.double(forKey: "levelSpeed") * 0.05
-            // Set a default speed if the user preference is not set
-            let levelAdjustSpeed = userPreferenceSpeed == 0 ? 0.05 : userPreferenceSpeed
+        setSettings: SetSettings,
+        currentSetLevel: Double,
+        averageMovement: Double
+    ) -> Double {
+        
+        let doubleLevels = Double(setSettings.levels.count)
+        
+        //When levels go up levelspeed is decreased
+        let speedAdjustmentFactor = currentSetLevel.transform(
+            outputStart: 1.0,
+            outputEnd: 0.1,
+            inputStart: 0.0,
+            inputEnd: doubleLevels,
+            transformationDegree: 0
+        )
+        
+        // Pas de userSettingLevelSpeed aan met de speedAdjustmentFactor.
+        let userSettingLevelSpeed = userSettings.levelSpeed * speedAdjustmentFactor
+        
+        let movementThreshold = userSettings.levelDifficulty.transform(
+            outputStart: 0.1,
+            outputEnd: 0.3,
+            transformationDegree: 3
+        )
+        
+        if averageMovement > movementThreshold {
+            // Verhoog de level op basis van de beweging en gebruikersvoorkeur.
+            let newSetLevel = currentSetLevel + userSettingLevelSpeed * averageMovement
             
-            // Adjust decreasing level speed < 1 is slower than up, > 1 is faster than up
-            let levelDecreaseRate = levelAdjustSpeed * 1.5
+            if newSetLevel < doubleLevels {
+                return newSetLevel
+            } else { return doubleLevels - 0.001 }
             
-            // Define a movement threshold to increase the level
-            let movementThreshold = 0.25
+        } else {
             
-            if averageMovement > movementThreshold {
-                // Increase the level based on movement and user preference
-                let newSetLevel = currentSetLevel + levelAdjustSpeed * averageMovement
-                let doubleLevels = Double(setSettings.levels.count)
-                if newSetLevel < doubleLevels {
-                    return newSetLevel
-                }
-                else { return doubleLevels - 0.001 }
-            } else {
-                // Reduce the level slowly if there is little to no movement
-                // Ensure that the level does not drop below 0
-                return max(currentSetLevel - levelDecreaseRate, 0.0)
-            }
+            let levelDecreaseRate = userSettings.levelSpeed * userSettings.levelDifficulty.transform(
+                outputStart: 0.1,
+                outputEnd: 1,
+                transformationDegree: 1
+            )
+            
+            return max(currentSetLevel - levelDecreaseRate, 0.0)
         }
+    }
 
-    
-    
     private func levelMidiClipVariation(in level: Int, on track: TrackSettings) -> Void {
         
         if track.levels.contains(level) {

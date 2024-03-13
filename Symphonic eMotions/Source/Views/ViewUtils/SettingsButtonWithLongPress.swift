@@ -48,6 +48,7 @@ struct SettingsButtonWithLongPress: View {
         //Present sheet
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSheetView(
+                userSettings: userSettings,
                 setInfoModel: setInfoModel,
                 showingSheet: $presentSettingSheet
                 
