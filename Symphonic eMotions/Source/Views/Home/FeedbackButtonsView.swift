@@ -9,14 +9,20 @@ import SwiftUI
 
 struct FeedbackButtonsView: View {
     
-    @EnvironmentObject var userSettings: UserSettings
+    //@EnvironmentObject stops workinh here, zo replaced with @ObservedObject
+    @ObservedObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @State private var selectedButton: Int? = nil
     var imageSide: CGFloat
     
-    init(setInfoModel: SetInfoModel, imageSide: CGFloat){
+    init(
+        setInfoModel: SetInfoModel,
+        imageSide: CGFloat,
+        userSettings: UserSettings
+    ){
         self.setInfoModel = setInfoModel
         self.imageSide = imageSide
+        self.userSettings = userSettings
         
         self._selectedButton = State(initialValue: self.setInfoModel.feedbackToButton(feedback: userSettings.videoFeedback))
     }

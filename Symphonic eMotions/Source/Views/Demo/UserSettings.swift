@@ -18,7 +18,11 @@ class UserSettings: ObservableObject {
     static let shared = UserSettings()
     
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    
     @AppStorage(UserDefaultsKeys.levelSpeed) var levelSpeed: Double = 1
+    @AppStorage(UserDefaultsKeys.levelProgressExponent) var levelProgressExponent: Double = 2
+    @AppStorage(UserDefaultsKeys.levelDifficulty) var levelDifficulty: Double = 0
+    
     
     @AppStorage(UserDefaultsKeys.videoFeedback) var videoFeedback: Double = 0.5
     @AppStorage(UserDefaultsKeys.sensitivitySession) var sensitivitySession: Double = 0.8
@@ -48,7 +52,10 @@ class UserSettings: ObservableObject {
 struct UserDefaultsKeys {
     
     static let isSetPlaying = "isSetPlaying"
+    
     static let levelSpeed = "levelSpeed"
+    static let levelProgressExponent = "levelProgressExponent"
+    static let levelDifficulty = "levelDifficulty"
     
     static let videoFeedback = "videoFeedback"
     static let sensitivitySession = "sensitivitySession"

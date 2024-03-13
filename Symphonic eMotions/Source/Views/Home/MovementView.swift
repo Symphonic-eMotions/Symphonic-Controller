@@ -56,7 +56,8 @@ struct MovementView: View {
                     
                     FeedbackButtonsView(
                         setInfoModel: setInfoModel,
-                        imageSide:  UIScreen.main.bounds.width * 0.12
+                        imageSide:  UIScreen.main.bounds.width * 0.12,
+                        userSettings: userSettings
                     )
                     
                     //Play and continue

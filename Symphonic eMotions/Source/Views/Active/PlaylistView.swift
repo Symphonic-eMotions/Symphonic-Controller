@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct PlaylistView: View {
-        
+    
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -46,7 +47,7 @@ struct PlaylistView: View {
                         
                         if let url = viewModel.urls.first {
                             
-                            currentUrl = url.absoluteString
+                            userSettings.currentUrl = url.absoluteString
                             
                             print("Load Header Playlist file \(url.absoluteString)")
                             
@@ -126,7 +127,7 @@ struct PlaylistView: View {
                             .onTapGesture {
                                 
                                 //App storage
-                                currentUrl = url.absoluteString
+                                userSettings.currentUrl = url.absoluteString
                                 
                                 print("Load Playlist file \(url)")
                                 
@@ -144,7 +145,7 @@ struct PlaylistView: View {
                             .onLongPressGesture {
                                 
                                 //Edit file
-                                currentUrl = url.absoluteString
+                                userSettings.currentUrl = url.absoluteString
                                 
                                 //Load settings over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))

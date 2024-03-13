@@ -37,42 +37,6 @@ struct SettingsSheetView: View {
                 
                 VStack(alignment: .leading, spacing: 15) {
                     
-                    //Start stop
-                    VStack(alignment: .leading){
-                        
-                        Text( userSettings.isSetPlaying ? "Stop" : "Play").padding(.top)
-                        HStack {
-                            
-                            EMButton(action: {
-                                if userSettings.isSetPlaying {
-                                    AnalyticsAction.stopSet.logEvent(
-                                        sessionDisplay: .none,
-                                        fileGroup: setInfoModel.setSettings.fileGroup,
-                                        setName: setInfoModel.setSettings.setName
-                                    )
-                                    setInfoModel.tapStopAudioEngine()
-                                    userSettings.isSetPlaying = false
-                                }
-                                else{
-                                    AnalyticsAction.startSet.logEvent(
-                                        sessionDisplay: .none,
-                                        fileGroup: setInfoModel.setSettings.fileGroup,
-                                        setName: setInfoModel.setSettings.setName
-                                    )
-                                    setInfoModel.tapStartAudioEngine()
-                                    userSettings.isSetPlaying = true
-                                }
-                                
-                            }, color: .accentColor) {
-                                Image(systemName: userSettings.isSetPlaying ?
-                                      "stop.fill" :
-                                        "play.fill")
-                            }
-                            .frame(width: geometry.size.width * 0.333)
-                            Spacer()
-                        }
-                    }
-                    
                     //Sensitivity deviation
                     VStack(alignment: .leading){
                         Text("Sensitivity").padding(.top)
@@ -98,7 +62,8 @@ struct SettingsSheetView: View {
                 
                 FeedbackButtonsView(
                     setInfoModel: setInfoModel,
-                    imageSide: UIScreen.main.bounds.width * 0.05
+                    imageSide: UIScreen.main.bounds.width * 0.05,
+                    userSettings: userSettings
                 )
                 
                 //Level speed
@@ -113,6 +78,17 @@ struct SettingsSheetView: View {
                             )
                         }
                     })
+                }
+                
+                HStack(){
+                    VStack(alignment: .leading){
+                        Text("Level progress exponent \(String(format: "%.1f", userSettings.levelProgressExponent))").padding(.top)
+                        Slider(value: userSettings.$levelProgressExponent, in: 0...4)
+                    }
+                    VStack(alignment: .leading){
+                        Text("Level difficulty \(String(format: "%.1f", userSettings.levelDifficulty))").padding(.top)
+                        Slider(value: userSettings.$levelDifficulty, in: 0...5)
+                    }
                 }
                 
                 //Tempo
@@ -176,27 +152,12 @@ struct SettingsSheetView: View {
                 //Continue
                 EMButton(action: {
                     showingSheet = false
-//                        if !isSetPlaying {
-//                            setInfoModel.conductor.levelController(
-//                                level: Int(setInfoModel.leveling.currentSetLevelSubject.value),
-//                                setSettings: setInfoModel.setSettings
-//                            )
-//                            setInfoModel.conductor.playEngineAndTracks(
-//                                setSettings: setInfoModel.setSettings,
-//                                level: Int(setInfoModel.leveling.currentSetLevelSubject.value)
-//                            )
-//                        }
                 }, color: .green, isSolid: true) {
                     Text(NSLocalizedString("Continue", comment: ""))
                 }
                 .frame(width: geometry.size.width * 0.333)
                 
             }
-//                .onAppear{
-//                    if stopEngine {
-//                        setInfoModel.tapStopAudioEngine()
-//                    }
-//                }
             .padding()
         }
     }

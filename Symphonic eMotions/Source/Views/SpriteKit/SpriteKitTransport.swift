@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SpriteKitTransport: View {
     
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -83,18 +84,18 @@ struct SpriteKitTransport: View {
                 //Start stop
                 EMButton(action: {
                     
-                    if isSetPlaying {
+                    if userSettings.isSetPlaying {
                         setInfoModel.tapStopAudioEngine()
-                        self.isSetPlaying = false
+                        userSettings.isSetPlaying = false
                         setInfoModel.leveling.pauseLevel = false
                     }
                     else{
                         setInfoModel.tapStartAudioEngine()
-                        self.isSetPlaying = true
+                        userSettings.isSetPlaying = true
                     }
                     
                 }, color: .accentColor, isSolid: true, maxWidth: 90) {
-                    Image(systemName: isSetPlaying ?
+                    Image(systemName: userSettings.isSetPlaying ?
                             "stop.fill" :
                             "play.fill")
                 }

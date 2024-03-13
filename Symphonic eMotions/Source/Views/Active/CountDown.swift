@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CountDown: View {
         
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
@@ -82,11 +83,7 @@ struct CountDown: View {
                 let thisPlaylist = setInfoModel.setSettings.currentPlaylist
                 let thisSet = setInfoModel.setSettings.currentSetInList
                 
-                currentUrl = setInfoModel.setSettings.currentSetInList.absoluteString
-                
-//                AppUtils.createSessionFile(
-//                    sensitivity: -1,
-//                    setURL: setInfoModel.setSettings.currentSetInList)
+                userSettings.currentUrl = setInfoModel.setSettings.currentSetInList.absoluteString
                 
                 //Load settngs over current
                 setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList))

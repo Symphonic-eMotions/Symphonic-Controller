@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PartFeedbackView: View {
     
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
@@ -248,7 +249,7 @@ struct PartFeedbackView: View {
                         }
                         
                         //Save set, if not a bundle file
-                        if currentUrl.contains("/Documents/") {
+                        if userSettings.currentUrl.contains("/Documents/") {
                             
                             //Save user file / playlist file
                             EMButton(
@@ -262,7 +263,7 @@ struct PartFeedbackView: View {
                                     )
                                     fileController.addSetFileURLToController(fileName: fileName)
                                     
-                                    showPartEditor = false
+                                    userSettings.showPartEditor = false
                                     
                                 }, color: .red, isSolid: true, maxWidth: 130, height: 35
                             ){
@@ -276,7 +277,7 @@ struct PartFeedbackView: View {
         }
         .onDisappear {
             // This will be called when the view is no longer visible
-            showPartEditor = false
+            userSettings.showPartEditor = false
         }
     }
 }

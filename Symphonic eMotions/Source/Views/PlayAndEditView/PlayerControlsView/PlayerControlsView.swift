@@ -19,6 +19,7 @@ struct VolumeSlider: UIViewRepresentable {
 
 struct PlayerControlsView: View {
     
+    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool
@@ -49,7 +50,7 @@ struct PlayerControlsView: View {
                     )
                     
                     //Master FX Button only available in part editor
-                    if showPartEditor {
+                    if userSettings.showPartEditor {
                         EMButton(action: {
                             AnalyticsAction.masterEfects.logEvent(
                                 sessionDisplay: sessionDisplaySub,
@@ -71,7 +72,7 @@ struct PlayerControlsView: View {
                             if areTracksRecording {
                                 sessionDisplaySub = .stopped
                                 setInfoModel.tapStopAudioEngine()
-                                self.isSetPlaying = false
+                                userSettings.isSetPlaying = false
                                 setInfoModel.leveling.pauseLevel = false
                                 
                                 //Record part
@@ -83,7 +84,7 @@ struct PlayerControlsView: View {
                                 
                                 sessionDisplaySub = .playing
                                 setInfoModel.tapStartAudioEngine()
-                                self.isSetPlaying = true
+                                userSettings.isSetPlaying = true
                                 
                                 //Record part
                                 setInfoModel.tapAStartRecordTracks()
@@ -99,7 +100,7 @@ struct PlayerControlsView: View {
                     //Start stop
                     EMButton(action: {
                         
-                        if isSetPlaying {
+                        if userSettings.isSetPlaying {
                             AnalyticsAction.stopSet.logEvent(
                                 sessionDisplay: sessionDisplaySub,
                                 fileGroup: setInfoModel.setSettings.fileGroup,
@@ -107,7 +108,7 @@ struct PlayerControlsView: View {
                             )
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
-                            self.isSetPlaying = false
+                            userSettings.isSetPlaying = false
                             //Over ride hold level button
                             setInfoModel.leveling.pauseLevel = false
                         }
@@ -119,11 +120,11 @@ struct PlayerControlsView: View {
                             )
                             sessionDisplaySub = .playing
                             setInfoModel.tapStartAudioEngine()
-                            self.isSetPlaying = true
+                            userSettings.isSetPlaying = true
                         }
                         
                     }, color: .accentColor) {
-                        Image(systemName: isSetPlaying ?
+                        Image(systemName: userSettings.isSetPlaying ?
                                 "stop.fill" :
                                 "play.fill")
                     }
