@@ -61,37 +61,48 @@ class UserSettings: ObservableObject {
     }
 
     init() {
-                    
-        let savedVersion = UserDefaults.standard.string(forKey: UserDefaultsKeys.appVersion) ?? "0.0"
-        if savedVersion != UserSettings.currentSettingsVersion {
-//            resetToDefaultSettings()
+        
+        let levelSpeedDefault:Double = 0.1
+        
+        // Eerst, initialiseer alle properties die niet afhankelijk zijn van 'self'
+        if UserDefaults.standard.string(forKey: UserDefaultsKeys.appVersion) != UserSettings.currentSettingsVersion {
+            // Stel de standaardwaarden in zonder resetToDefaultSettings() aan te roepen
+            UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isSetPlaying)
+            UserDefaults.standard.set(2.5, forKey: UserDefaultsKeys.levelProgressExponent)
+            UserDefaults.standard.set(0.67, forKey: UserDefaultsKeys.levelDifficulty)
+            UserDefaults.standard.set(0.5, forKey: UserDefaultsKeys.videoFeedback)
+            UserDefaults.standard.set(0.8, forKey: UserDefaultsKeys.sensitivitySession)
+            UserDefaults.standard.set(0, forKey: UserDefaultsKeys.sensitivityDeviation)
+            UserDefaults.standard.set("Introductie.json", forKey: UserDefaultsKeys.currentUrl)
+            UserDefaults.standard.set(false, forKey: UserDefaultsKeys.showPartEditor)
+            // Aangezien _levelSpeed rechtstreeks uit UserDefaults komt
+            UserDefaults.standard.set(levelSpeedDefault, forKey: UserDefaultsKeys.levelSpeed)
+            //Update opgeslagen versie
             UserDefaults.standard.set(UserSettings.currentSettingsVersion, forKey: UserDefaultsKeys.appVersion)
         }
         
-        //Default value for levelSpeed
-        if UserDefaults.standard.object(forKey: UserDefaultsKeys.levelSpeed) == nil {
-                    _levelSpeed = 1
-                }
+        // Gebruik dan 'self' na alle properties geïnitialiseerd zijn
+        _levelSpeed = UserDefaults.standard.double(forKey: UserDefaultsKeys.levelSpeed)
         
+        //Regel opslag van ingevoerde user code
         if let rawValue = UserDefaults.standard.string(forKey: "userCode"),
            let initialCode = UserCode(rawValue: rawValue) {
             self.userCode = initialCode
         } else {
             self.userCode = .none
         }
-    }
-    
-    func resetToDefaultSettings() {
-        // Reset al je instellingen naar hun standaardwaarden
-        isSetPlaying = false
-        levelProgressExponent = 2.5
-        levelDifficulty = 0.6
-        videoFeedback = 0.5
-        sensitivitySession = 0.5
-        sensitivityDeviation = 0.0
-        currentUrl = "Introductie.json"
-        showPartEditor = false
-        _levelSpeed = 0.1
+        
+        // Voor properties die niet door @AppStorage worden beheerd, zoals _levelSpeed,
+        // controleer of er al een waarde bestaat en stel deze in, gebruikmakend van de directe toegang tot UserDefaults.
+        let storedLevelSpeed = UserDefaults.standard.double(forKey: UserDefaultsKeys.levelSpeed)
+        if storedLevelSpeed == 0 {
+            // Dit betekent dat er geen waarde is opgeslagen, dus gebruik de standaardwaarde.
+            // Dit kan het geval zijn als de versiecontrole hierboven de standaardwaarden reset.
+            _levelSpeed = levelSpeedDefault
+        } else {
+            // Gebruik de opgeslagen waarde.
+            _levelSpeed = storedLevelSpeed
+        }
     }
 }
 
