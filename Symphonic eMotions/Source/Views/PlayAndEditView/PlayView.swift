@@ -55,44 +55,54 @@ struct PlayView: View {
                 .zIndex(100)
                 
                 //Video preview and instrument locations
-                ZStack{
-                    
-                    //Instruments
-                    if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
+                GeometryReader { geometry in
+                    ZStack{
                         
-                        if userSettings.showPartEditor  {
+                        //Instruments
+                        if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
                             
-                            EditGridView(setInfoModel: setInfoModel)
-                            
-                        } else {
-                            
-                            PlayGridView(setInfoModel: setInfoModel)
-                            .onTapGesture {
-                                presentSettingSheet.toggle()
-                            }
-                            .sheet(isPresented: $presentSettingSheet) {
-                                SettingsSheetView(
-                                    userSettings: userSettings,
+                            if userSettings.showPartEditor  {
+                                
+                                EditGridView(setInfoModel: setInfoModel)
+                                
+                            } else {
+                                
+                                //PlayGridView(setInfoModel: setInfoModel)
+                                LevelPlayer(
                                     setInfoModel: setInfoModel,
-                                    showingSheet: $presentSettingSheet
+                                    levelPlayerModel: LevelPlayerModel(), 
+                                    geometry: geometry
                                 )
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                                .border(Color.red, width: 4)
+                                .onTapGesture {
+                                    presentSettingSheet.toggle()
+                                }
+                                .sheet(isPresented: $presentSettingSheet) {
+                                    SettingsSheetView(
+                                        userSettings: userSettings,
+                                        setInfoModel: setInfoModel,
+                                        showingSheet: $presentSettingSheet
+                                    )
+                                }
                             }
                         }
+                        else{
+                            DontPlayGridView()
+                        }
+                        
+                        //Video
+                        VideoPreviewViewRepresetable(
+                            setInfoModel: setInfoModel
+                        )
+                        //.frame(width: 180.0, height: 120.0)
+                        .aspectRatio(1.77777, contentMode: .fit)
+                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                        .cornerRadius(10.0)
+                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                     }
-                    else{
-                        DontPlayGridView()
-                    }
-                    
-                    //Video
-                    VideoPreviewViewRepresetable(
-                        setInfoModel: setInfoModel
-                    )
-                    //.frame(width: 180.0, height: 120.0)
-                    .aspectRatio(1.77777, contentMode: .fit)
-                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                    .cornerRadius(10.0)
-                    .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                 }
+                
                 //Instrument Part editor
                 if userSettings.showPartEditor {
 
@@ -149,6 +159,8 @@ struct PlayView: View {
                     showMasterTrack: $showMasterTrack
                 )
             }
+            
+            
         }
         .onDisappear{
             setInfoModel.leveling.pauseLevel = false

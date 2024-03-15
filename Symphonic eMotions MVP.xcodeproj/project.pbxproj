@@ -132,6 +132,11 @@
 		7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFE4A82A03DC77008AE3EE /* PlayListsView.swift */; };
 		7CD418032A095388006831CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CD418052A095388006831CE /* Localizable.strings */; };
 		7CD7DCD42A52CE7D00A8E1FE /* MainViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */; };
+		7CDC117B2BA3BC8600CE8C07 /* SVGImageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC11772BA3BC8600CE8C07 /* SVGImageViewContainer.swift */; };
+		7CDC117C2BA3BC8600CE8C07 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC11782BA3BC8600CE8C07 /* SVGImageView.swift */; };
+		7CDC117D2BA3BC8600CE8C07 /* ProgressBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC11792BA3BC8600CE8C07 /* ProgressBarButton.swift */; };
+		7CDC117E2BA3BC8600CE8C07 /* LevelPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */; };
+		7CDC11812BA4883100CE8C07 /* LevelPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC11802BA4883100CE8C07 /* LevelPlayerModel.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
@@ -321,6 +326,11 @@
 		7CD418042A095388006831CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD418062A095474006831CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewContainer.swift; sourceTree = "<group>"; };
+		7CDC11772BA3BC8600CE8C07 /* SVGImageViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVGImageViewContainer.swift; sourceTree = "<group>"; };
+		7CDC11782BA3BC8600CE8C07 /* SVGImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
+		7CDC11792BA3BC8600CE8C07 /* ProgressBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBarButton.swift; sourceTree = "<group>"; };
+		7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelPlayer.swift; sourceTree = "<group>"; };
+		7CDC11802BA4883100CE8C07 /* LevelPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPlayerModel.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
@@ -357,7 +367,7 @@
 		7CFDDD4F28EF045500B6BD5F /* ReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbEffect.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C02E54E126B50920003D503E /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C02E54EA26B53EC2003D503E /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
-		C06958FA26B4D9E4002EB522 /* PlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
+		C06958FA26B4D9E4002EB522 /* PlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C06958FE26B4DB1E002EB522 /* FrameExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameExtractor.swift; sourceTree = "<group>"; };
 		C069590026B4DD0D002EB522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C069590126B4E029002EB522 /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
@@ -436,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				7C109D802851FF88008E08D2 /* LevelView.swift */,
+				7CDC11792BA3BC8600CE8C07 /* ProgressBarButton.swift */,
 			);
 			path = LevelView;
 			sourceTree = "<group>";
@@ -582,6 +593,17 @@
 				7CB2B94D2A0CF80300876CCD /* CountDown.swift */,
 			);
 			path = Active;
+			sourceTree = "<group>";
+		};
+		7CDC117F2BA47A9600CE8C07 /* LevelPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				7CDC11802BA4883100CE8C07 /* LevelPlayerModel.swift */,
+				7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */,
+				7CDC11772BA3BC8600CE8C07 /* SVGImageViewContainer.swift */,
+				7CDC11782BA3BC8600CE8C07 /* SVGImageView.swift */,
+			);
+			path = LevelPlayer;
 			sourceTree = "<group>";
 		};
 		7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */ = {
@@ -829,9 +851,10 @@
 				7C3EC2002A1D236F0049E4ED /* Demo */,
 				7CCFE4A72A03DC56008AE3EE /* Active */,
 				7CCBF8FC2A38B75B00360E21 /* Editor */,
-				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
-				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
+				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
+				7CDC117F2BA47A9600CE8C07 /* LevelPlayer */,
+				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7CCDE10228E2C61300343920 /* MasterAndEffectView */,
 				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
@@ -982,6 +1005,7 @@
 				7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
+				7CDC117C2BA3BC8600CE8C07 /* SVGImageView.swift in Sources */,
 				7C9FB77B2A4AED3400490C59 /* UserSettings.swift in Sources */,
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */,
@@ -1021,8 +1045,10 @@
 				7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */,
 				7CF50F4F29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
+				7CDC11812BA4883100CE8C07 /* LevelPlayerModel.swift in Sources */,
 				7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */,
 				7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */,
+				7CDC117E2BA3BC8600CE8C07 /* LevelPlayer.swift in Sources */,
 				7C29AA1B2A4F4AB70070D901 /* ValueDamper.swift in Sources */,
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
@@ -1070,6 +1096,7 @@
 				7C0C9F372B8FDF6700DBD142 /* AmplitudeController.swift in Sources */,
 				7C7E4FD22A683C26007BEF14 /* SetInfoModelTransport.swift in Sources */,
 				7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */,
+				7CDC117B2BA3BC8600CE8C07 /* SVGImageViewContainer.swift in Sources */,
 				7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */,
 				7C7E4FD02A670E86007BEF14 /* TrackEffectsHelper.swift in Sources */,
 				C069591F26B4E77E002EB522 /* AreaValues.swift in Sources */,
@@ -1125,6 +1152,7 @@
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7C7E4FCC2A66FB3A007BEF14 /* TrackEffectView.swift in Sources */,
 				7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */,
+				7CDC117D2BA3BC8600CE8C07 /* ProgressBarButton.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,
 				7C6A8CF02A4303280056BED3 /* IntroductionView.swift in Sources */,
 				7C9FB76F2A49AEB300490C59 /* MovementView.swift in Sources */,
