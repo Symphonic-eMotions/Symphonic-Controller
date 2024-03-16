@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg width="120.0" height="120.0" viewBox="-10.0 -10.0 120.0 120.0">
-    <polygon points="50,0 100,100 0,100" fill="none" stroke="green" stroke-width="5" />
+    <path d="M10,50 A40,40 0 1,1 90,50 A40,40 0 1,1 10,50" fill="none" stroke="black" stroke-width="5" />
 </svg>
