@@ -13,6 +13,7 @@ struct SVGImageView: View {
     var level: Int
     var imageName: String
     var scale: CGFloat
+    var opacity: CGFloat
 
     var body: some View {
         GeometryReader { geometry in
@@ -20,6 +21,7 @@ struct SVGImageView: View {
             .resizable()
             .scaledToFit()
             .scaleEffect(scale)
+            .opacity(opacity)
 //            .position(
 //                levelPlayerModel.position(
 //                    for: level,

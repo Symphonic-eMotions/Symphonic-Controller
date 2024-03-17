@@ -19,7 +19,8 @@ struct LevelPlayer: View {
             ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.levels.count, id: \.self) { index in
                 //Index is the number of the current available level
                 SVGImageViewContainer(
-                    levelPlayerModel: levelPlayerModel,
+                    levelPlayerModel: levelPlayerModel, 
+                    setInfoModel: setInfoModel,
                     geometry: geometry,
                     level: index,
                     imageName: "level\(index)",
@@ -28,7 +29,8 @@ struct LevelPlayer: View {
                             let currentBarLevel = Float(max(0, setInfoModel.leveling.currentSetLevelSubject.value - Double(index)))
                             return max(0, min(1, currentBarLevel))
                         },
-                        set: { _ in })
+                        set: { _ in }
+                    )
                 )
                 .frame(
                     width: geometry.size.width,
@@ -41,6 +43,5 @@ struct LevelPlayer: View {
             width: geometry.size.width,
             height: geometry.size.height
         )
-//        .aspectRatio(1.77777, contentMode: .fit)
     }
 }
