@@ -18,6 +18,7 @@ struct PlayView: View {
     
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
+    @State private var showLevelPlayerFullScreen: Bool = false
     
     init(
         setInfoModel: SetInfoModel,
@@ -71,10 +72,11 @@ struct PlayView: View {
                                 LevelPlayer(
                                     setInfoModel: setInfoModel,
                                     levelPlayerModel: LevelPlayerModel(), 
+                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
                                     geometry: geometry
                                 )
+                                .zIndex(showLevelPlayerFullScreen ? 200 : 0)
                                 .frame(width: geometry.size.width, height: geometry.size.height)
-                                .border(Color.red, width: 4)
                                 .onTapGesture {
                                     presentSettingSheet.toggle()
                                 }
@@ -102,6 +104,7 @@ struct PlayView: View {
                         .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                     }
                 }
+                .zIndex(110)
                 
                 //Instrument Part editor
                 if userSettings.showPartEditor {
@@ -127,6 +130,7 @@ struct PlayView: View {
                         }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
                             Text(NSLocalizedString("Hold level", comment: ""))
                         }
+                        
                         //End Set
                         EMButton(action: {
                             AnalyticsAction.endSet.logEvent(
@@ -141,8 +145,8 @@ struct PlayView: View {
                         }, color: .accentColor, isSolid: false) {
                             Text(NSLocalizedString("Finish", comment: ""))
                         }
-                        
                     }
+                    .zIndex(100)
                 }
                 Spacer()
             }

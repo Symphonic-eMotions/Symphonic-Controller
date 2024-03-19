@@ -16,7 +16,7 @@ struct SVGImageView: View {
     var opacity: CGFloat
 
     var body: some View {
-        GeometryReader { geometry in
+//        GeometryReader { geometry in
             Image(imageName)
             .resizable()
             .scaledToFit()
@@ -28,6 +28,6 @@ struct SVGImageView: View {
 //                    in: geometry
 //                )
 //            )
-        }
+//        }
     }
 }

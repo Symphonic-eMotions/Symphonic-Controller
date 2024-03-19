@@ -5,110 +5,119 @@
 //  Created by Frans-Jan Wind on 16/11/2023.
 //
 
-extension Conductor {
+//
+//  MainView.swift
+//  MainView
+//
+//  Created by Mihai Fratu on 29.07.2021.
+//
+
+import UIKit
+import SwiftUI
+import AVFoundation
+
+struct MainView: View {
+        
+    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var setInfoModel: SetInfoModel
+    //Highest lvel View control
+    @Binding public var sessionDisplay: SessionDisplay
+    @Binding public var sessionDisplaySub: SessionDisplay
     
-    internal func valuesDidChange(
-        //Values for movement calculations
-        values: [[AreaValues]],
-        //Dynamic area's of interest
-        setSettings: SetSettings,
-        //Is track present in current level
-        currentSetLevel: Double,
-        //Do we want to show this part in part feedback visualisation
-        partFeedbackTrackID: String,
-        partFeedbackPartID: String
-    ) -> Double {
+    
+    //Keep track of local saved SeM setting files
+    @StateObject var fileController = FileController()
+    @StateObject var userSettings = UserSettings()
+    
+    @State var isCreator: Bool = false
+    @State var userPresets: [URL] = []
+    @State var templatePresets: [URL] = []
+    
+    // Initialize sidebarItems as @State
+    @State var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = []
+    
+    init(
+        viewModel: MainViewModel,
+        setInfoModel: SetInfoModel,
+        sessionDisplay: Binding<SessionDisplay>,
+        sessionDisplaySub: Binding<SessionDisplay>
+    ) {
         
-        //Levels are updated with movement
-        var localCurrentSetLevel: Double = currentSetLevel
-
-        // Flatten the 2D list and compute the sum, count and maximum in a single pass
-        var sum = 0.0
-        var count = 0
-        var scaledValues: [Double] = []
-        var maxScaledValue: Double = -1  // To store the maximum scaled value
-        values.forEach { areaValues in
-            areaValues.forEach { value in
-                sum += value.average
-                count += 1
-                scaledValues.append(value.scaledValue)
-                // Update maxScaledValue if it's either nil or smaller than the current scaledValue
-                if value.scaledValue > maxScaledValue {
-                    maxScaledValue = value.scaledValue
-                }
-            }
-        }
-
-        // Compute average
-        let averageForLevelUpdate = sum / Double(count)
+        self.viewModel = viewModel
+        self.setInfoModel = setInfoModel
+        self._sessionDisplay = sessionDisplay
+        self._sessionDisplaySub = sessionDisplaySub
         
-        // Increment AND decrement level
-        localCurrentSetLevel = adjustCurrentSetLevel(
-            setSettings: setSettings,
-            currentSetLevel: currentSetLevel,
-            averageMovement: averageForLevelUpdate
-        )
-              
-        // Find the maximum index (used for variation by position)
-        let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
-        let maxIndex = Int(maxIndexTuple.0)
-        
-        //We iterate through all tracks and its parts
-        var trackNr: Int = 0
-        var partNr: Int = 0
-        setSettings.tracks.forEach { (trackIndex,track) in
-                        
-            //Reset part per track
-            partNr = 0
+        //Create Playlists if needed
+        AppUtils.createPlayListFolders(resetPlaylist: true)
+    }
+    
+    var body: some View {
             
-            //Loop through all parts per track per value
-            track.parts.forEach { (partIndex,part) in
+        NavigationView {
+            
+            SideBarView(
+                setInfoModel: setInfoModel,
+                sessionDisplay: $sessionDisplay,
+                sessionDisplaySub: $sessionDisplaySub,
+                sidebarItems: $sidebarItems
+            )
+            .environmentObject(fileController)
+            .onAppear {
+                // Update `isCreator` based on the `userCode`
+                isCreator = userSettings.userCode == .creator
                 
-                // get current and previous value from values
-                let interestIndexes = part.interestIndexes(rows: setSettings.gridRows, columns: setSettings.gridColumns)
-                let valuesMapped = interestIndexes.map { index -> (current: Double, previous: Double) in
-                    (current: values[index.row][index.column].scaledValue, previous: values[index.row][index.column].previousScaledValue)
+                //Main navigation
+                var items = [
+                    (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
+//                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
+                    (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
+                ]
+                
+                //Add creator navigation item
+                if isCreator {
+                    items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
                 }
                 
-                let currentValues = valuesMapped.map { $0.current }
-                let previousValues = valuesMapped.map { $0.previous }
-                
-                // Find highest value (maximum) with its index
-                let maxIndexPartTuple = vDSP.indexOfMaximum(currentValues)
-                let maxIndexPart = Int(maxIndexPartTuple.0)
-                var value = maxIndexPartTuple.1.isNaN ? 0 : maxIndexPartTuple.1
-                let previousValue = previousValues.indices.contains(maxIndexPart) ? previousValues[maxIndexPart] : 0
-                
-                //MARK: Timed movement envelope (Replaced ramps and damps)
-                if let envelope = timeBasedEnvelopes[partIndex] {
-                    // Safe access to custom rates with default value fallback
-                    let customDecreaseRate = (rampDown[partIndex] ?? 0.5) * 0.1
-                    let customIncreaseRate = (rampUp[partIndex] ?? 0.5) * 0.1
-                    
-                    //Hier moet de nieuwe level vermenigvuldiging ergens komen?
-                    
-                    // This is the instrument / effect controller
-                    value = envelope.updateEnvelope(
-                        withMovement: value,
-                        previousMovement: previousValue,
-                        decreaseRate: customDecreaseRate,
-                        increaseRate: customIncreaseRate
-                    )
-                }
-                
-                //All parts
-                //Forward to target
-                forward(
-                    value: value,
-                    for: part.damperTarget,
-                    currentSetLevel: localCurrentSetLevel
-                )
-
-                partNr += 1
+                sidebarItems = items
             }
-            trackNr += 1
+            
+            //SeM Pro interface with interaction editor
+            if sessionDisplay == .swiftUI {
+                
+                ZStack{
+                    PlayView(
+                        setInfoModel: setInfoModel,
+                        sessionDisplay: $sessionDisplay,
+                        sessionDisplaySub: $sessionDisplaySub
+                    )
+                    .environmentObject(fileController)
+                    .navigationBarHidden(false)
+                    //It's not called PlayView for nothing
+                    .onAppear{
+                        sessionDisplaySub = .playing
+                        viewModel.conductor.playEngineAndTracks(
+                            setSettings: viewModel.mainState.setSettings,
+                            level: 0
+                        )
+                        viewModel.conductor.levelController(
+                            level: 0,
+                            setSettings: viewModel.mainState.setSettings
+                        )
+                    }
+                    .onDisappear{
+                        sessionDisplaySub = .stopped
+                        viewModel.conductor.pauzeEngineAndStopTracks(
+                            setSettings: viewModel.mainState.setSettings,
+                            resetLevels: true
+                        )
+                    }
+                    
+                }
+            }
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
         
-        return localCurrentSetLevel
     }
 }
+

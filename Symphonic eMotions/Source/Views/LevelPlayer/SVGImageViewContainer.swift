@@ -41,7 +41,6 @@ struct SVGImageViewContainer: View {
         let overlap: Double = 0.25
         //Initial opcaity value
         var opacityBound: Float = 1
-        
         // All level information
         let allLevelProgress = setInfoModel.leveling.currentSetLevelSubject.value
         // Current level
@@ -58,7 +57,7 @@ struct SVGImageViewContainer: View {
                     outputStart: 1,
                     outputEnd: 0,
                     inputStart: 1,
-                    inputEnd: 1.5,
+                    inputEnd: 1.8,
                     transformationDegree: 0
                 )
                 opacityBound = Float(max(0,min(1,opacity)))
