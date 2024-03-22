@@ -54,7 +54,7 @@ struct LevelPlayer: View {
             }
             .position(
                 x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width - 30 : geometry.size.width - 30,
-                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height - 30 : geometry.size.height - 30
+                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height - 45 : geometry.size.height - 45
             )
             .zIndex(300) // Zorgt ervoor dat de knop bovenop ligt
             
