@@ -34,7 +34,7 @@ struct SVGImageViewContainer: View {
         )
     }
     
-    //@var scale Float Opacity Float
+    //@var (scale Float, Opacity Float)
     private func calculateScaleOpacity(for level: Int) -> (Float,Float) {
         
         //Amount of overlap next over previous level animation
@@ -44,27 +44,32 @@ struct SVGImageViewContainer: View {
         // All level information
         let allLevelProgress = setInfoModel.leveling.currentSetLevelSubject.value
         // Current level
-        let currentLevelValue = Float(allLevelProgress - Double(level))
+        let currentLevelValue = allLevelProgress - Double(level)
+        
+        // De exponent die je wilt gebruiken, dit kan elke waarde zijn die je instelt
+        let exponentValue: Double = 0.9 // Voorbeeldwaarde, aanpasbaar naar wens
+
+        // Bereken de waarde verheven tot de macht van de exponent
+        let exponentiatedValue = Float(pow(currentLevelValue, exponentValue))
         
         //We starten de animatie op overlap voor 0
         if (allLevelProgress - overlap) > (0 - overlap) {
                 
             //is de level reeds geweest? Start 2nd level animation
-            if (currentLevelValue > 1) {
+            if (exponentiatedValue > 1) {
                 
-                let opacityDouble = Double(currentLevelValue)
+                let opacityDouble = Double(exponentiatedValue)
                 let opacity = opacityDouble.transform(
                     outputStart: 1,
-                    outputEnd: 0,
+                    outputEnd: 0.1,
                     inputStart: 1,
                     inputEnd: 1.8,
                     transformationDegree: 0
                 )
                 opacityBound = Float(max(0,min(1,opacity)))
             }
-            let maxCurrentLevelValue = max(0, currentLevelValue)
 
-            return (maxCurrentLevelValue,opacityBound)
+            return (max(0, exponentiatedValue),opacityBound)
         }
         // De animatie nog niet starten
         else {
