@@ -74,6 +74,13 @@ final class Conductor {
     //Synth container
     internal var trackInstruments: [String: Node] = [:]
     
+    //Buffer sampler voor samples met adsr
+    internal var effectSamplers: [UUID: MIDISampler]?
+    internal var effectTypeToUUIDs: [EffectType: [UUID]] = [:]
+    internal var rewindIsPlaying: UUID? = nil
+//    internal var effectAmpEnvs: [UUID: AmplitudeEnvelope]?
+    
+    
     //Amplitude enelopes for muting tracks for levels
     //TODO: init of these needs to be at 0 (-90Db)
 //    private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
@@ -128,6 +135,11 @@ final class Conductor {
         trackInstruments = [:]
         timeBasedEnvelopes = [:]
         amplitudeControllers = [:]
+        
+        effectSamplers = [:]
+        effectTypeToUUIDs = [:]
+        rewindIsPlaying = nil
+//        effectAmpEnvs = [:]
         
         //Debug var
         lastRounded = [:]
@@ -212,6 +224,36 @@ final class Conductor {
 //            }
         }
         
+        if let effectSetsDict = effectSamplers {
+            for (_, sampler) in effectSetsDict {
+                
+                // Loop through all MIDI note numbers from 0 to 127
+                for noteNumber in 0...127 {
+                    let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
+                    // Schedule the noteOff event here
+                    sampler.scheduleMIDIEvent(event: noteOff)
+                }
+                
+                // Attempt to load the empty EXS file to free up resources
+                do {
+                    try sampler.loadEXS24("Sounds/Sampler Instruments/trigger")
+                } catch {
+                    print("Error loading EXS: trigger")
+                }
+                
+                // Cleanup and release resources
+                sampler.destroyEndpoint()
+            }
+//            if( trackAmpEnvelopes[track.id] != nil ) {
+//                trackAmpEnvelopes.removeValue(forKey: track.id)
+//                trackAmpEnvelopes[track.id] = nil
+//            }
+            effectSamplers = [:]
+            effectTypeToUUIDs = [:]
+            rewindIsPlaying = nil
+//            effectAmpEnvs = [:]
+        }
+        
         mixer.removeAllInputs()
         mixerMaster.removeAllInputs()
         
@@ -221,7 +263,7 @@ final class Conductor {
         print("Loading: \(set.name) : \(set.customName)")
         
         loadTracks(currentSetLevel: currentSetLevel)
-        
+        effectSamplers = loadEffectSamplers()
         loadMaster(mixer: mixer)
     }
     
@@ -305,6 +347,143 @@ final class Conductor {
 //            }
         }
     }
+    
+    private func loadEffectSamplers() -> [UUID : MIDISampler]? {
+            
+        //Get file info from config
+        guard let setEffects = set.setEffects else {
+            print("No set effects for this set available")
+            return nil
+        }
+        
+        //Get ready for user files
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Document directory not found")
+            return nil
+        }
+        
+        var setEffectSamplers = [UUID: MIDISampler]()
+        
+        for setEffect in setEffects {
+            
+            //Remember uuid for playing samplers
+            addSetEffect(setEffect)
+            
+            //Store files in RAM
+            var avAudioFiles = [AVAudioFile]()
+
+            var audioFileURL = URL("noPath")
+            
+            var sampleFolder: String = set.filesPath;
+            if setEffect.effectType == .rewind {
+                sampleFolder = "Samples/Rewind";
+            }
+            else if setEffect.effectType == .applause {
+                sampleFolder = "Samples/Applause"
+            }
+            
+            for audioFile in setEffect.audioFiles {
+                if setEffect.fileSource == .bundle {
+                    audioFileURL = Bundle.main.url(
+                        forResource: audioFile.fileName,
+                        withExtension: audioFile.fileExtension,
+                        subdirectory: sampleFolder
+                    ) ?? URL("Samples/\(sampleFolder)/\(audioFile.fileName).\(audioFile.fileExtension)")
+                    
+                    print("Loading bundle \(audioFileURL)")
+                    
+                } else {
+                    //Load User file
+                    audioFileURL = documentDirectory.appendingPathComponent(
+                        "\(sampleFolder)/\(audioFile.fileName).\(audioFile.fileExtension)"
+                    )
+                    
+                    print("Loading user file \(audioFileURL)")
+                }
+            }
+            
+            do {
+                let avAudioFile = try AVAudioFile(forReading: audioFileURL)
+                avAudioFiles.append(avAudioFile)
+            } catch {
+                print("Error loading audio file at \(audioFileURL): \(error)")
+            }
+            
+            let sampler = MIDISampler(name: "Effect Sampler")
+            sampler.amplitude = 5
+            
+            setEffectSamplers[setEffect.id] = sampler
+            
+//            let envelope = AmplitudeEnvelope(sampler)
+//            envelope.attackDuration = AUValue(setEffect.adsrEnvelope.attack)
+//            envelope.decayDuration = AUValue(setEffect.adsrEnvelope.decay)
+//            envelope.sustainLevel = AUValue(setEffect.adsrEnvelope.sustain)
+//            envelope.releaseDuration = AUValue(setEffect.adsrEnvelope.release)
+//            
+//            effectAmpEnvs?[setEffect.id] = envelope
+            
+            mixerMaster.addInput(sampler)
+            
+            //This needs to happen as last
+            do {
+                try sampler.loadAudioFiles(avAudioFiles)
+
+            } catch {
+                print("Error loadEffectSampler avAudioFiles: \(avAudioFiles)")
+            }
+        }
+        return setEffectSamplers
+    }
+    
+    func addSetEffect(_ setEffect: InstrumentsSet.SetEffect) {
+        let effectType = setEffect.effectType
+        let uuid = setEffect.id
+        
+        // Add or create uuid array per affectType
+        if var uuids = effectTypeToUUIDs[effectType] {
+            uuids.append(uuid)
+            effectTypeToUUIDs[effectType] = uuids
+        } else {
+            effectTypeToUUIDs[effectType] = [uuid]
+        }
+    }
+    
+    func envelopeSamplerPlay(effectType: EffectType, identifier: Int) -> UUID? {
+        guard let uuid = uuid(for: effectType, identifier: identifier),
+              let sampler = effectSamplers?[uuid] else {
+            return nil
+        }
+
+//        effectAmpEnvs?[uuid]?.start()
+
+        let noteNumber = 60
+        let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
+        sampler.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
+
+        return uuid
+    }
+    
+    func envelopeSamplerStop(uuid: UUID) {
+        guard let sampler = effectSamplers?[uuid] else {
+            return
+        }
+
+//        effectAmpEnvs?[uuid]?.stop()
+
+        let noteNumber = 60
+        let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
+        sampler.scheduleMIDIEvent(event: noteOff)
+    }
+    
+    func uuid(for effectType: EffectType, identifier: Int) -> UUID? {
+        guard let uuids = effectTypeToUUIDs[effectType], !uuids.isEmpty else {
+            return nil
+        }
+        //return an uuid connected to level if possible
+        let index = (identifier - 1) % uuids.count
+        return uuids[index]
+    }
+
     
     //MARK: EDITOR
     public func previewSingleTrack(
@@ -795,6 +974,12 @@ final class Conductor {
             // Verhoog de level op basis van de beweging en gebruikersvoorkeur.
             let newSetLevel = currentSetLevel + userSettingLevelSpeed * averageMovement
             
+            if let uuid = rewindIsPlaying {
+                envelopeSamplerStop(uuid: uuid)
+                rewindIsPlaying = nil
+                print("stopping uuid \(uuid)")
+            }
+            
             if newSetLevel < doubleLevels {
                 return newSetLevel
             } else { return doubleLevels - 0.001 }
@@ -807,7 +992,25 @@ final class Conductor {
                 transformationDegree: 1
             )
             
-            return max(currentSetLevel - levelDecreaseRate, 0.0)
+            let nextCurrentSetLevel = max(currentSetLevel - levelDecreaseRate, 0.0)
+            
+            if nextCurrentSetLevel < 0.1 {
+                if let uuid = rewindIsPlaying {
+                    envelopeSamplerStop(uuid: uuid)
+                    rewindIsPlaying = nil
+                }
+            }
+            else{
+                if rewindIsPlaying == nil {
+                    if let uuid = envelopeSamplerPlay(
+                        effectType: .rewind,
+                        identifier: Int(nextCurrentSetLevel)
+                    ) {
+                        rewindIsPlaying = uuid
+                    }
+                }
+            }
+            return nextCurrentSetLevel
         }
     }
 
@@ -819,10 +1022,10 @@ final class Conductor {
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
             
-            if track.trackId == "stems" {
-                print(track.loopsToLevel)
-                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
-            }
+//            if track.trackId == "stems" {
+//                print(track.loopsToLevel)
+//                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
+//            }
             
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             

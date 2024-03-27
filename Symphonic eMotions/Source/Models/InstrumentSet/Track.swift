@@ -286,11 +286,6 @@ extension InstrumentsSet.Track.ExsFile: Encodable {
 
 extension InstrumentsSet.Track {
 
-    enum Source: String, Codable {
-        case bundle
-        case user
-    }
-
     struct AudioFile: Decodable, Identifiable {
         private enum AudioFileKeys: String, CodingKey {
             case id
@@ -304,7 +299,7 @@ extension InstrumentsSet.Track {
         let fileName: String
         let fileExtension: String
         var lengthInBeats: Double
-        let source: Source
+        let source: InstrumentsSet.FileSource
 
         init(from decoder: Decoder) throws {
             self.id = UUID()
@@ -312,14 +307,14 @@ extension InstrumentsSet.Track {
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
             lengthInBeats = try container.decode(Double.self, forKey: .lengthInBeats)
-            source = try container.decodeIfPresent(Source.self, forKey: .source) ?? .user
+            source = try container.decodeIfPresent(InstrumentsSet.FileSource.self, forKey: .source) ?? .user
         }
 
         init(
             fileName: String,
             fileExtension: String,
             lengthInBeats: Double,
-            source: Source
+            source: InstrumentsSet.FileSource
         ){
             self.id = UUID()
             self.fileName = fileName

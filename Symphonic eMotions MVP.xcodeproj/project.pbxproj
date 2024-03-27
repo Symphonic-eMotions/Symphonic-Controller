@@ -67,6 +67,7 @@
 		7C6A8CFA2A4481BE0056BED3 /* IntroductionSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */; };
 		7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FC2A03EF3E006F8CCB /* Sets */; };
 		7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FD2A03EF3F006F8CCB /* Sounds */; };
+		7C700EF82BB4423B00C8F700 /* SetEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C700EF72BB4423B00C8F700 /* SetEffect.swift */; };
 		7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70DD282AD436FE0024BD67 /* TrackEffectsViewModel.swift */; };
 		7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7502EB29C07C4D00F55CA3 /* EditorView.swift */; };
 		7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7756F528C7964200E73B14 /* MasterTrackView.swift */; };
@@ -260,6 +261,7 @@
 		7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionSlider.swift; sourceTree = "<group>"; };
 		7C6C11FC2A03EF3E006F8CCB /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sets; path = Source/Sets; sourceTree = "<group>"; };
 		7C6C11FD2A03EF3F006F8CCB /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Source/Sounds; sourceTree = "<group>"; };
+		7C700EF72BB4423B00C8F700 /* SetEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEffect.swift; sourceTree = "<group>"; };
 		7C70DD282AD436FE0024BD67 /* TrackEffectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectsViewModel.swift; sourceTree = "<group>"; };
 		7C7502EB29C07C4D00F55CA3 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C7756F528C7964200E73B14 /* MasterTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackView.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				C0AFDD002705BC08006EF64F /* Part.swift */,
 				7C7E4FDD2A69376D007BEF14 /* DamperTarget.swift */,
 				C0AFDD022705BC24006EF64F /* Effect.swift */,
+				7C700EF72BB4423B00C8F700 /* SetEffect.swift */,
 				7CF327C42989504F003D33D3 /* Skin.swift */,
 			);
 			path = InstrumentSet;
@@ -1137,6 +1140,7 @@
 				7CFA00AD29A75AF2001D8A5D /* SetInfo.swift in Sources */,
 				7C4A545F2A5DA22100FB6514 /* NoneEffect.swift in Sources */,
 				7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */,
+				7C700EF82BB4423B00C8F700 /* SetEffect.swift in Sources */,
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
 				7C889B512AE5242E00A2BCC4 /* FileLogger.swift in Sources */,
@@ -1311,7 +1315,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1332,7 +1336,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.2;
+				MARKETING_VERSION = 2.8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproMuurIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1353,7 +1357,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1374,7 +1378,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.2;
+				MARKETING_VERSION = 2.8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproMuurIntern";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";

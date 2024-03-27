@@ -9,6 +9,11 @@ import SwiftUI
 
 struct InstrumentsSet: Identifiable, Decodable {
     
+    enum FileSource: String, Codable {
+        case bundle
+        case user
+    }
+    
     //Load Instrument set json file
     static func withJSON(_ fileName: String) -> InstrumentsSet? {
         guard let url = Bundle.main.url(
@@ -106,6 +111,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case columns = "gridColumns"
         case levels = "levelDurations"
         case tracks = "instrumentsConfig"
+        case setEffects
     }
     
     var id: String { name }
@@ -132,7 +138,7 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Level duration keeps the amount of levels with an int
     //Duration could be refectored to aditional level speed per level
     let levels: [Int]
-    
+    let setEffects: [SetEffect]?
     //Tracks
     var tracks: [Track]
     
@@ -153,6 +159,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows = try container.decode(Int.self, forKey: .rows)
         columns = try container.decode(Int.self, forKey: .columns)
         levels = try container.decode([Int].self, forKey: .levels)
+        setEffects = try container.decodeIfPresent([SetEffect].self, forKey: .setEffects)
         tracks = try container.decode([Track].self, forKey: .tracks)
         if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
             skin = skinRaw
@@ -209,6 +216,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows: Int,
         columns: Int,
         levels: [Int],
+        setEffects: [SetEffect],
         tracks: [Track]
     ) {
         self.name = name
@@ -228,6 +236,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.rows = rows
         self.columns = columns
         self.levels = levels
+        self.setEffects = setEffects
         self.tracks = tracks
     }
     
@@ -283,6 +292,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(rows, forKey: .rows)
         try container.encode(columns, forKey: .columns)
         try container.encode(levels, forKey: .levels)
+        try container.encode(setEffects, forKey: .setEffects)
         try container.encode(tracks, forKey: .tracks)
         try container.encode(skin, forKey: .skin)
     }
