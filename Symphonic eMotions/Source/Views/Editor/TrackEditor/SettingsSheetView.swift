@@ -149,13 +149,52 @@ struct SettingsSheetView: View {
                 
                 Spacer()
                 
-                //Continue
-                EMButton(action: {
-                    showingSheet = false
-                }, color: .green, isSolid: true) {
-                    Text(NSLocalizedString("Continue", comment: ""))
+                HStack {
+                    
+                    Spacer()
+                    
+                    //Continue
+                    EMButton(action: {
+                        showingSheet = false
+                    }, color: .green, isSolid: true) {
+                        Text(NSLocalizedString("Continue", comment: ""))
+                    }
+                    .frame(width: geometry.size.width * 0.333)
+                    
+                    //Start stop
+                    HStack {
+                        EMButton(action: {
+                            if userSettings.isSetPlaying {
+                                AnalyticsAction.stopSet.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                                setInfoModel.tapStopAudioEngine()
+                                userSettings.isSetPlaying = false
+                            }
+                            else{
+                                AnalyticsAction.startSet.logEvent(
+                                    sessionDisplay: .none,
+                                    fileGroup: setInfoModel.setSettings.fileGroup,
+                                    setName: setInfoModel.setSettings.setName
+                                )
+                                setInfoModel.tapStartAudioEngine()
+                                userSettings.isSetPlaying = true
+                            }
+                            
+                        }, color: .accentColor) {
+                            Image(systemName: userSettings.isSetPlaying ?
+                                  "stop.fill" :
+                                    "play.fill")
+                        }
+                        .frame(width: geometry.size.width * 0.333)
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                    
                 }
-                .frame(width: geometry.size.width * 0.333)
                 
             }
             .padding()

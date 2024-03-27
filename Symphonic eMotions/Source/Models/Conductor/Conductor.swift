@@ -1220,6 +1220,14 @@ final class Conductor {
                 stopSamplerNote($0, noteNumber)
             }
         }
+        
+        if let samplers = effectSamplers {
+            for (_, sampler) in samplers {
+                let noteNumber = 60
+                let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
+                sampler.scheduleMIDIEvent(event: noteOff)
+            }
+        }
     }
     
     private func playEngineUIEffect() {
