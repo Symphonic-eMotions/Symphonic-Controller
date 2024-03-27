@@ -667,7 +667,7 @@ final class Conductor {
         setSettings: SetSettings
     ) -> Void {
         
-        print("levelController called")
+//        print("levelController called")
         
         //MARK: Let know if levels is done
         //Highest level is full and is for the first time
@@ -977,7 +977,6 @@ final class Conductor {
             if let uuid = rewindIsPlaying {
                 envelopeSamplerStop(uuid: uuid)
                 rewindIsPlaying = nil
-                print("stopping uuid \(uuid)")
             }
             
             if newSetLevel < doubleLevels {

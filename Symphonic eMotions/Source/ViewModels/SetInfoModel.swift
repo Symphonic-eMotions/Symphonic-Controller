@@ -132,6 +132,16 @@ final class SetInfoModel: ObservableObject {
         return 0.5
     }
     
+    //TODO: random cell colors
+    func colorForCell(row: Int, column: Int) -> Color {
+        // Genereer een willekeurige kleur voor de rand van de cel
+        Color(
+            red: Double.random(in: 0...1),
+            green: Double.random(in: 0...1),
+            blue: Double.random(in: 0...1)
+        )
+    }
+    
     //Multi purpose scale function
     func scale(
         input: Double,

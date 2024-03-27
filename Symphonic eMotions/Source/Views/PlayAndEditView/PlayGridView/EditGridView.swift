@@ -1,6 +1,5 @@
 //
-//  PlayGridView.swift
-//  GridView
+//  EditGridView.swift
 //
 //  Created by Frans-Jan Wind on 18 october 2022
 //

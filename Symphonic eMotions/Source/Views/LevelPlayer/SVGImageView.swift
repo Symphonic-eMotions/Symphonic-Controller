@@ -9,25 +9,16 @@ import SwiftUI
 
 struct SVGImageView: View {
     
-    @ObservedObject var levelPlayerModel: LevelPlayerModel
     var level: Int
     var imageName: String
     var scale: CGFloat
     var opacity: CGFloat
 
     var body: some View {
-//        GeometryReader { geometry in
-            Image(imageName)
-            .resizable()
-            .scaledToFit()
-            .scaleEffect(scale)
-            .opacity(opacity)
-//            .position(
-//                levelPlayerModel.position(
-//                    for: level,
-//                    in: geometry
-//                )
-//            )
-//        }
+        Image(imageName)
+        .resizable()
+        .scaledToFit()
+        .scaleEffect(scale)
+        .opacity(opacity)
     }
 }

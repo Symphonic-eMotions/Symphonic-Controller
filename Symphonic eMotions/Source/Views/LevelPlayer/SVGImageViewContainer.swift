@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SVGImageViewContainer: View {
     
-    @ObservedObject var levelPlayerModel: LevelPlayerModel
     @ObservedObject var setInfoModel: SetInfoModel
     var geometry: GeometryProxy
     var level: Int
@@ -21,7 +20,6 @@ struct SVGImageViewContainer: View {
         let scaleOpcity = calculateScaleOpacity(for: level)
         
         SVGImageView(
-            levelPlayerModel: levelPlayerModel,
             level: level,
             imageName: "level\(level)",
             scale: CGFloat(scaleOpcity.0), 

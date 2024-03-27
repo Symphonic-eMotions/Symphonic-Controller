@@ -15,7 +15,7 @@ struct PlayView: View {
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
-    
+    @StateObject private var opacityController: CellOpacityController
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
     @State private var showLevelPlayerFullScreen: Bool = false
@@ -26,6 +26,11 @@ struct PlayView: View {
         sessionDisplaySub: Binding<SessionDisplay>
     ){
         self.setInfoModel = setInfoModel
+        self._opacityController = StateObject(wrappedValue: CellOpacityController(cellCount: (
+                    setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns
+                )
+            )
+        )
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
     }
@@ -70,8 +75,8 @@ struct PlayView: View {
                                 
                                 //PlayGridView(setInfoModel: setInfoModel)
                                 LevelPlayer(
-                                    setInfoModel: setInfoModel,
-                                    levelPlayerModel: LevelPlayerModel(), 
+                                    setInfoModel: setInfoModel, 
+                                    opacityController: opacityController,
                                     showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
                                     geometry: geometry
                                 )

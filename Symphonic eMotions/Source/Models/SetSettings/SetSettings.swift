@@ -13,6 +13,11 @@ import SwiftUI
 
 class SetSettings: Identifiable, ObservableObject {
     
+    // From valuesDidChange to SwiftUI grid index
+    @Published var maxIndex: Int = -1
+    
+    // TODO: Translate maxIndex to center of grid coordinate
+    
     //Keep track of playlist
     var currentPlaylist: SeMActive.Playlists
     var currentSetInList: URL

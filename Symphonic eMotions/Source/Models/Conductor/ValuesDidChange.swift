@@ -88,6 +88,16 @@ extension Conductor {
         let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
         let maxIndex = Int(maxIndexTuple.0)
         
+        // LevelPlayer
+        // Update maxIndex in SetSettings
+        DispatchQueue.main.async {
+            if averageForLevelUpdate < 0.08 {
+                setSettings.maxIndex = -1
+            } else {
+                setSettings.maxIndex = maxIndex
+            }
+        }
+        
         //We iterate through all tracks and its parts
         var trackNr: Int = 0
         var partNr: Int = 0
@@ -130,6 +140,7 @@ extension Conductor {
                 }
                 
                 //Level controls the amount of instrument controller
+                //Last level fade out sits here
                 let progress = levelProgressForController(
                     track.levels,
                     currentLevel: localCurrentSetLevel
@@ -143,8 +154,6 @@ extension Conductor {
                 //StartType -> Transport || Wave (loopedTriger)
                 //VariationType -> Variation by level || position
                 if partNr == 0 {
-                    
-//                    track.currentMaxIndex = maxIndex
                     
                     //MARK: WHAT to play for midi and note numbers
                     //.variationByLevel sits in self.levelController

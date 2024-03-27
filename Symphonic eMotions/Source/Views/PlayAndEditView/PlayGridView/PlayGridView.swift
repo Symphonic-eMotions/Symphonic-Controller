@@ -1,6 +1,5 @@
 //
 //  PlayGridView.swift
-//  GridView
 //
 //  Created by Mihai Fratu on 31.07.2021.
 //

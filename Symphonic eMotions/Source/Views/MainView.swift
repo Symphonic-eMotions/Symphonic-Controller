@@ -133,7 +133,7 @@ struct MainView: View {
                     
                     ZStack{
                         PlayView(
-                            setInfoModel: setInfoModel,
+                            setInfoModel: setInfoModel, 
                             sessionDisplay: $sessionDisplay,
                             sessionDisplaySub: $sessionDisplaySub
                         )

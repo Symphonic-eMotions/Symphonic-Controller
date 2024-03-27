@@ -91,63 +91,65 @@ struct SettingsSheetView: View {
                     }
                 }
                 
-                //Tempo
-                if setInfoModel.setSettings.hasTempo {
+                HStack {
                     
-                    VStack(alignment: .leading){
-                        Text("Tempo").padding(.top)
-                        HStack{
-                            
-                            EMButton(action: {
-                                AnalyticsAction.setSpeed.logEvent(
-                                    sessionDisplay: .none,
-                                    fileGroup: setInfoModel.setSettings.fileGroup,
-                                    setName: setInfoModel.setSettings.setName
-                                )
-                                setInfoModel.tapSetTempoBPMMin()
-                                localTempo -= 1
-                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                Image(systemName: "minus")
-                            }
-                            
-                            EMButton(action: {
-                                AnalyticsAction.setSpeed.logEvent(
-                                    sessionDisplay: .none,
-                                    fileGroup: setInfoModel.setSettings.fileGroup,
-                                    setName: setInfoModel.setSettings.setName
-                                )
-                                print("Reset pressed")
-                                localTempo = 0
-                                setInfoModel.tapSetTempoReset()
-                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                Text(String(localTempo))
-                            }
-                            
-                            EMButton(action: {
-                                AnalyticsAction.setSpeed.logEvent(
-                                    sessionDisplay: .none,
-                                    fileGroup: setInfoModel.setSettings.fileGroup,
-                                    setName: setInfoModel.setSettings.setName
-                                )
-                                setInfoModel.tapSetTempoBPMPlus()
-                                localTempo += 1
-                            }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
-                                Image(systemName: "plus")
+                    //Tempo
+                    if setInfoModel.setSettings.hasTempo {
+                        
+                        VStack(alignment: .leading){
+                            Text("Tempo").padding(.top)
+                            HStack{
+                                
+                                EMButton(action: {
+                                    AnalyticsAction.setSpeed.logEvent(
+                                        sessionDisplay: .none,
+                                        fileGroup: setInfoModel.setSettings.fileGroup,
+                                        setName: setInfoModel.setSettings.setName
+                                    )
+                                    setInfoModel.tapSetTempoBPMMin()
+                                    localTempo -= 1
+                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                    Image(systemName: "minus")
+                                }
+                                
+                                EMButton(action: {
+                                    AnalyticsAction.setSpeed.logEvent(
+                                        sessionDisplay: .none,
+                                        fileGroup: setInfoModel.setSettings.fileGroup,
+                                        setName: setInfoModel.setSettings.setName
+                                    )
+                                    print("Reset pressed")
+                                    localTempo = 0
+                                    setInfoModel.tapSetTempoReset()
+                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                    Text(String(localTempo))
+                                }
+                                
+                                EMButton(action: {
+                                    AnalyticsAction.setSpeed.logEvent(
+                                        sessionDisplay: .none,
+                                        fileGroup: setInfoModel.setSettings.fileGroup,
+                                        setName: setInfoModel.setSettings.setName
+                                    )
+                                    setInfoModel.tapSetTempoBPMPlus()
+                                    localTempo += 1
+                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
+                                    Image(systemName: "plus")
+                                }
                             }
                         }
                     }
+                    
+                    //Volume
+                    VStack(alignment: .leading){
+                        Text("Volume").padding(.top)
+                        VolumeSlider()
+                            .frame(height: 10)
+                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                            .zIndex(101)
+                    }
                 }
-                
-                //Volume
-                VStack(alignment: .leading){
-                    Text("Volume").padding(.top)
-                    VolumeSlider()
-                        .frame(height: 10)
-                        .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                        .zIndex(101)
-                }
-                
-                Spacer()
+                Spacer().frame(height:50)
                 
                 HStack {
                     
@@ -162,8 +164,7 @@ struct SettingsSheetView: View {
                     .frame(width: geometry.size.width * 0.333)
                     
                     //Start stop
-                    HStack {
-                        EMButton(action: {
+                    EMButton(action: {
                             if userSettings.isSetPlaying {
                                 AnalyticsAction.stopSet.logEvent(
                                     sessionDisplay: .none,
@@ -184,16 +185,11 @@ struct SettingsSheetView: View {
                             }
                             
                         }, color: .accentColor) {
-                            Image(systemName: userSettings.isSetPlaying ?
-                                  "stop.fill" :
-                                    "play.fill")
-                        }
-                        .frame(width: geometry.size.width * 0.333)
-                        Spacer()
+                        Image(systemName: userSettings.isSetPlaying ? "stop.fill" : "play.fill")
                     }
-                    
+                    .frame(width: geometry.size.width * 0.333)
+                        
                     Spacer()
-                    
                 }
                 
             }
