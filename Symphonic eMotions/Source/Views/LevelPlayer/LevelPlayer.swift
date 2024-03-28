@@ -16,23 +16,27 @@ struct LevelPlayer: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            
-            GridView(
-                setInfoModel: setInfoModel,
-                opacityController: opacityController,
-                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
-                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns
-            )
-            .frame(
-                //Adapt to View size
-                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
-                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
-            )
-            .position(
-                //Center the view
-                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width / 2,
-                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height / 2
-            )
+//            Color.red
+//            
+//            GridView(
+//                setInfoModel: setInfoModel,
+//                opacityController: opacityController,
+//                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
+//                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns,
+//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+//            )
+//            .background(Color.green)
+//            .frame(
+//                //Adapt to View size
+//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+//            )
+//            .position(
+//                //Center the view
+//                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width / 2,
+//                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height / 2
+//            )
             
             ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.levels.count, id: \.self) { index in
                 SVGImageViewContainer(
