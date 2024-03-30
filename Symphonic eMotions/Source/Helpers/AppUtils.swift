@@ -305,6 +305,7 @@ final class AppUtils {
         
         let setSettings = SetSettings(
             setName: instrumentSet.name,
+            setPath: instrumentSet.filesPath,
             customName: instrumentSet.customName,
             published: instrumentSet.published ?? false,
             fileGroup: instrumentSet.fileGroup ?? .none,

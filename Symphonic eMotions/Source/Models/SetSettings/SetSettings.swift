@@ -40,6 +40,7 @@ class SetSettings: Identifiable, ObservableObject {
     //Id comes from loaded struct
     //Set Name
     var setName: String
+    var setPath: String
     var customName: String
     var published: Bool
     var fileGroup: FileGroup
@@ -84,6 +85,7 @@ class SetSettings: Identifiable, ObservableObject {
     
     init(
         setName: String,
+        setPath: String,
         customName: String,
         published: Bool,
         fileGroup: FileGroup,
@@ -101,6 +103,7 @@ class SetSettings: Identifiable, ObservableObject {
         semVersion: String
     ){
         self.setName = setName
+        self.setPath = setPath
         self.customName = customName
         self.published = published
         self.fileGroup = fileGroup

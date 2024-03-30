@@ -19,10 +19,12 @@ struct SVGImageViewContainer: View {
         
         let scaleOpcity = calculateScaleOpacity(for: level)
         
+        let imageName = "level\(setInfoModel.setSettings.setPath)\(level)"
+        
         SVGImageView(
             level: level,
-            imageName: "level\(level)",
-            scale: CGFloat(scaleOpcity.0), 
+            imageName: imageName,
+            scale: CGFloat(scaleOpcity.0),
             opacity: CGFloat(scaleOpcity.1)
 
         )
