@@ -112,7 +112,7 @@ extension Conductor {
                 // get current and previous value from values
                 let interestIndexes = part.interestIndexes(rows: setSettings.gridRows, columns: setSettings.gridColumns)
                 let valuesMapped = interestIndexes.map { index -> (current: Double, previous: Double) in
-                    (current: values[index.row][index.column].scaledValue, previous: values[index.row][index.column].previousScaledValue)
+	                    (current: values[index.row][index.column].scaledValue, previous: values[index.row][index.column].previousScaledValue)
                 }
                 
                 let currentValues = valuesMapped.map { $0.current }
