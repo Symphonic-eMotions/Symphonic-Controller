@@ -16,6 +16,8 @@
 		7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D5CD0273C8E5100F6EEAD /* Leveling.swift */; };
 		7C109D812851FF88008E08D2 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D802851FF88008E08D2 /* LevelView.swift */; };
 		7C109D8528522163008E08D2 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */; };
+		7C1D32D92BBDB0B2002F31CD /* ColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1D32D82BBDB0B2002F31CD /* ColumnView.swift */; };
+		7C1D32DB2BBDB51A002F31CD /* ColumnOpacityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1D32DA2BBDB51A002F31CD /* ColumnOpacityController.swift */; };
 		7C1FB0B229DDFD9A00621909 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B129DDFD9A00621909 /* LevelsView.swift */; };
 		7C1FB0B429DE0B2600621909 /* MidiClipLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B329DE0B2600621909 /* MidiClipLevelView.swift */; };
 		7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B529E4429700621909 /* InLevelView.swift */; };
@@ -213,6 +215,8 @@
 		7C109D802851FF88008E08D2 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		7C109D8428522163008E08D2 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
 		7C166AD0295353690078C384 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7C1D32D82BBDB0B2002F31CD /* ColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnView.swift; sourceTree = "<group>"; };
+		7C1D32DA2BBDB51A002F31CD /* ColumnOpacityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnOpacityController.swift; sourceTree = "<group>"; };
 		7C1FB0B129DDFD9A00621909 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		7C1FB0B329DE0B2600621909 /* MidiClipLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipLevelView.swift; sourceTree = "<group>"; };
 		7C1FB0B529E4429700621909 /* InLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InLevelView.swift; sourceTree = "<group>"; };
@@ -610,6 +614,8 @@
 				7C700EFB2BB4624F00C8F700 /* GridView.swift */,
 				7C700EF92BB461C400C8F700 /* CellOpacityController.swift */,
 				7C6228402BB8705E00524647 /* GridModel.swift */,
+				7C1D32D82BBDB0B2002F31CD /* ColumnView.swift */,
+				7C1D32DA2BBDB51A002F31CD /* ColumnOpacityController.swift */,
 			);
 			path = LevelPlayer;
 			sourceTree = "<group>";
@@ -1038,6 +1044,7 @@
 				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */,
 				7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */,
+				7C1D32DB2BBDB51A002F31CD /* ColumnOpacityController.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
 				7C29AA1F2A501E6C0070D901 /* DebugView.swift in Sources */,
 				7CFDDD5028EF045500B6BD5F /* ReverbEffect.swift in Sources */,
@@ -1139,6 +1146,7 @@
 				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
 				7C4A545D2A5B288E00FB6514 /* ControllerView.swift in Sources */,
 				7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */,
+				7C1D32D92BBDB0B2002F31CD /* ColumnView.swift in Sources */,
 				7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */,
 				7C7E4FE02A69610A007BEF14 /* MixerEffect.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,

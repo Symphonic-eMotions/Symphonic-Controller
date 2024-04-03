@@ -15,7 +15,7 @@ struct PlayView: View {
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
-    @StateObject private var opacityController: CellOpacityController
+    @StateObject private var columnOpacityController: ColumnOpacityController
     @StateObject private var gridModel: GridModel
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
@@ -27,13 +27,12 @@ struct PlayView: View {
         sessionDisplaySub: Binding<SessionDisplay>
     ){
         self.setInfoModel = setInfoModel
-        self._opacityController = StateObject(wrappedValue: CellOpacityController(cellCount: (
-                    setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns
-                )
-            )
+        self._columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(columnCount:(setInfoModel.setInfoState.currentInstrumentsSet.columns))
         )
         self._gridModel = StateObject(wrappedValue:
             GridModel(
+                levelCount: setInfoModel.setSettings.levels.count,
+                levelSubject: setInfoModel.leveling.currentSetLevelSubject,
                 gridRows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
                 gridColumns: setInfoModel.setInfoState.currentInstrumentsSet.columns
             )
@@ -83,7 +82,7 @@ struct PlayView: View {
                                 //PlayGridView(setInfoModel: setInfoModel)
                                 LevelPlayer(
                                     setInfoModel: setInfoModel, 
-                                    opacityController: opacityController, 
+                                    columnOpacityController: columnOpacityController,
                                     gridModel: gridModel,
                                     showLevelPlayerFullScreen: $showLevelPlayerFullScreen, 
                                     geometry: geometry

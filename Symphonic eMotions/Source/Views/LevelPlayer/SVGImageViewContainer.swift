@@ -19,10 +19,6 @@ struct SVGImageViewContainer: View {
     var body: some View {
 
         let scaleOpacity = calculateScaleOpacity(for: levelFromIndex)
-        // Bereken de offset gebaseerd op originalPosition en lastSVGPosition
-        let position = gridModel.svgPositions[levelFromIndex] ?? SVGPosition(originalPosition: .zero, lastSVGPosition: .zero)
-        let offsetX = position.lastSVGPosition.x - position.originalPosition.x
-        let offsetY = position.lastSVGPosition.y - position.originalPosition.y
 
         SVGImageView(
             level: levelFromIndex,
@@ -30,17 +26,10 @@ struct SVGImageViewContainer: View {
             scale: CGFloat(scaleOpacity.0),
             opacity: CGFloat(scaleOpacity.1)
         )
-        .frame(width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width, height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height)
-        .offset(x: offsetX, y: offsetY)
-        .onAppear {
-            // Update de positie wanneer de view verschijnt of de layout verandert
-            let newSVGPosition = geometry.frame(in: .global).origin
-            gridModel.updateSVGPosition(
-                for: levelFromIndex,
-                originalPosition: newSVGPosition, // Pas dit aan indien nodig
-                newPosition: newSVGPosition
-            )
-        }
+        .frame(
+            width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+            height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+        )
     }
 
     //@var (scale Float, Opacity Float)

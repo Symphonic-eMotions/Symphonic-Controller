@@ -25,16 +25,55 @@ class GridModel: ObservableObject {
     @Published var inlineViewCenter: CGPoint = .zero
     @Published var fullscreenViewCenter: CGPoint = .zero
     @Published var cells: [GridCell] = []
-    @Published var svgPositions: [Int: SVGPosition] = [:]
-    @Published var targetPosition: CGPoint = .zero
-    @Published var animationSpeedFactor: CGFloat = 1 // Kan variëren van 0 tot 1
+    
+    // Published properties om SwiftUI te laten reageren op de veranderingen
+    @Published var xOffset: CGFloat = 0
+    @Published var yOffset: CGFloat = 0
+    
+    public var levelCount: Int
+    
+    private var radius: CGFloat {
+        // Stel dat de maximale straal 100 is; pas dit aan naar jouw behoeften
+        return 5 * CGFloat(currentLevel/Double(levelCount))
+    }
+    
+    var currentLevel: Double = 0 {
+        didSet {
+            updateOffsets()
+        }
+    }
+    
+    private var angle: CGFloat = 0
+    private var subscriptions = Set<AnyCancellable>()
+        
+    // Deze methode wordt aangeroepen elke keer als `currentLevel` verandert
+    private func updateOffsets() {
+        // Update de hoek gebaseerd op de framesnelheid of andere triggers
+        // Deze voorbeeldcode laat de hoek constant toenemen; pas aan naar je behoefte
+        angle += .pi / 100 // Voorbeeldwaarde, pas dit aan naar jouw logica
+        
+        // Bereken nieuwe offsets
+        xOffset = radius * cos(angle)
+        yOffset = radius * sin(angle)
+    }
+    
     private var gridRows: Int
     private var gridColumns: Int
     
-    init(gridRows: Int, gridColumns: Int) {
+    init(
+        levelCount: Int,
+        levelSubject: CurrentValueSubject<Double, Never>,
+        gridRows: Int,
+        gridColumns: Int
+    ) {
+        self.levelCount = levelCount
         self.gridRows = gridRows
         self.gridColumns = gridColumns
         self.initializeCells()
+        levelSubject
+            .receive(on: RunLoop.main)
+            .assign(to: \.currentLevel, on: self)
+            .store(in: &subscriptions)
     }
     
     public func initializeViewCenters(inlineSize: CGSize, fullscreenSize: CGSize) {
@@ -53,70 +92,7 @@ class GridModel: ObservableObject {
             )
         }
     }
-    
-    public func updateSVGPosition(
-        for id: Int,
-        originalPosition: CGPoint? = nil,
-        newPosition: CGPoint
-    ) {
-        if let position = svgPositions[id] {
-            // Als originalPosition is meegegeven, update deze, anders behoud de huidige
-            let updatedPosition = SVGPosition(
-                originalPosition: originalPosition ?? position.originalPosition,
-                lastSVGPosition: newPosition
-            )
-            svgPositions[id] = updatedPosition
-        } else {
-            // Als er geen bestaande positie is, voeg dan een nieuwe toe
-            let newPosition = SVGPosition(originalPosition: originalPosition ?? newPosition, lastSVGPosition: newPosition)
-            svgPositions[id] = newPosition
-        }
-    }
-    
-    private func getTargetForMaxIndex(at index: Int, isFullscreen: Bool) -> CGPoint {
-        guard index >= 0 && index < cells.count else {
-            return targetPosition
-        }
-        
-        let cell = cells[index]
-        let position = isFullscreen ? cell.fullscreenCenter : cell.inlineCenter
-        targetPosition = position
-        return position
-    }
-    
-    public func calculateAnimation(
-        for index: Int,
-        at maxIndex: Int,
-        _ fullScreen: Bool) {
-        
-        guard let lastPosition = svgPositions[index]?.lastSVGPosition else { return }
-        
-        var target = getTargetForMaxIndex(
-            at: maxIndex,
-            isFullscreen: fullScreen)
-            
-            //Movement stops
-            if maxIndex == -1 {
-                // Animeren naar het midden van de view
-                target = fullScreen ? fullscreenViewCenter : inlineViewCenter
-            } else {
-                // Bestaande logica voor het animeren naar een specifieke cel
-                target = getTargetForMaxIndex(at: index, isFullscreen: fullScreen)
-            }
-            
-        // Bereken de geïnterpoleerde positie
-        let interpolatedX = lastPosition.x + (target.x - lastPosition.x) * animationSpeedFactor
-        let interpolatedY = lastPosition.y + (target.y - lastPosition.y) * animationSpeedFactor
 
-        let newPosition = CGPoint(x: interpolatedX, y: interpolatedY)
-
-        // Update de positie
-        updateSVGPosition(
-            for: index,
-            newPosition: newPosition
-        )
-    }
-    
     public func updateCellCenters(inlineSize: CGSize, fullscreenSize: CGSize) {
         
         let inlineCellWidth = inlineSize.width / CGFloat(gridColumns)
