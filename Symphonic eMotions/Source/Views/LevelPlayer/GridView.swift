@@ -18,6 +18,7 @@ struct GridView: View {
     let height: CGFloat
     
     var body: some View {
+        
         let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 20), count: self.columns)
         let totalVerticalSpacing = CGFloat(self.rows - 1) * 20
         let cellHeight = (height - totalVerticalSpacing - 40) / CGFloat(self.rows)

@@ -11,47 +11,64 @@ struct LevelPlayer: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var opacityController: CellOpacityController
+    @ObservedObject var gridModel: GridModel
     @Binding var showLevelPlayerFullScreen: Bool
     var geometry: GeometryProxy
     
     var body: some View {
         ZStack(alignment: .center) {
-//            Color.red
-//            
-//            GridView(
-//                setInfoModel: setInfoModel,
-//                opacityController: opacityController,
-//                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
-//                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns,
-//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
-//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
-//            )
-//            .background(Color.green)
-//            .frame(
-//                //Adapt to View size
-//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
-//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
-//            )
-//            .position(
-//                //Center the view
-//                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width / 2,
-//                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height / 2
-//            )
+            GridView(
+                setInfoModel: setInfoModel,
+                opacityController: opacityController,
+                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
+                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns,
+                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+            )
+            .frame(
+                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+            )
+            .position(
+                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width / 2 : geometry.size.width / 2,
+                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height / 2 : geometry.size.height / 2
+            )
+            .onAppear {
+                // Inline en fullscreen grootte bepalen en doorgeven
+                let inlineSize = CGSize(
+                    width: geometry.size.width,
+                    height: geometry.size.height
+                )
+                let fullscreenSize = UIScreen.main.bounds.size
+                gridModel.updateCellCenters(inlineSize: inlineSize, fullscreenSize: fullscreenSize)
+                
+                gridModel.initializeViewCenters(
+                    inlineSize: CGSize(width: geometry.size.width, height: geometry.size.height),
+                    fullscreenSize: UIScreen.main.bounds.size // Of een andere logica voor het bepalen van de fullscreen grootte
+                )
+            }
             
+            //SVG Animation
             ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.levels.count, id: \.self) { index in
+                
                 SVGImageViewContainer(
                     setInfoModel: setInfoModel,
-                    geometry: geometry,
-                    level: index,
-                    imageName: "level\(index)",
-                    scale: .init(
-                        get: {
-                            let currentBarLevel = Float(max(0, setInfoModel.leveling.currentSetLevelSubject.value - Double(index)))
-                            return max(0, min(1, currentBarLevel))
-                        },
-                        set: { _ in }
-                    )
+                    gridModel: gridModel,
+                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen, 
+                    levelFromIndex: index,
+                    geometry: geometry
+                    
                 )
+                .onChange(of: setInfoModel.setSettings.maxIndex) { maxIndex in
+                    //TODO: kan duration variabel met level input?
+                    withAnimation(.easeInOut(duration: 1.0)) {
+                        gridModel.calculateAnimation(
+                            for: index,
+                            at: maxIndex,
+                            showLevelPlayerFullScreen
+                        )
+                    }
+                }
                 .frame(
                     width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
                     height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height

@@ -8,34 +8,43 @@
 import SwiftUI
 
 struct SVGImageViewContainer: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
+    @ObservedObject var gridModel: GridModel
+    @Binding var showLevelPlayerFullScreen: Bool
+    //Also used for storing SVGPositions
+    var levelFromIndex: Int
     var geometry: GeometryProxy
-    var level: Int
-    var imageName: String
-    @Binding var scale: Float
+    
     
     var body: some View {
-        
-        let scaleOpcity = calculateScaleOpacity(for: level)
-        
-        let imageName = "level\(setInfoModel.setSettings.setPath)\(level)"
-        
-        SVGImageView(
-            level: level,
-            imageName: imageName,
-            scale: CGFloat(scaleOpcity.0),
-            opacity: CGFloat(scaleOpcity.1)
 
+        let scaleOpacity = calculateScaleOpacity(for: levelFromIndex)
+        // Bereken de offset gebaseerd op originalPosition en lastSVGPosition
+        let position = gridModel.svgPositions[levelFromIndex] ?? SVGPosition(originalPosition: .zero, lastSVGPosition: .zero)
+        let offsetX = position.lastSVGPosition.x - position.originalPosition.x
+        let offsetY = position.lastSVGPosition.y - position.originalPosition.y
+
+        SVGImageView(
+            level: levelFromIndex,
+            imageName: "level\(setInfoModel.setSettings.setPath)\(levelFromIndex)",
+            scale: CGFloat(scaleOpacity.0),
+            opacity: CGFloat(scaleOpacity.1)
         )
-        .frame(
-            width: geometry.size.width,
-            height: geometry.size.height
-        )
+        .frame(width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width, height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height)
+        .offset(x: offsetX, y: offsetY)
+        .onAppear {
+            // Update de positie wanneer de view verschijnt of de layout verandert
+            let newSVGPosition = geometry.frame(in: .global).origin
+            gridModel.updateSVGPosition(
+                for: levelFromIndex,
+                originalPosition: newSVGPosition, // Pas dit aan indien nodig
+                newPosition: newSVGPosition
+            )
+        }
     }
-    
+
     //@var (scale Float, Opacity Float)
-    private func calculateScaleOpacity(for level: Int) -> (Float,Float) {
+    private func calculateScaleOpacity(for levelFromIndex: Int) -> (Float,Float) {
         
         //Amount of overlap next over previous level animation
         let overlap: Double = 0.25
@@ -44,7 +53,7 @@ struct SVGImageViewContainer: View {
         // All level information
         let allLevelProgress = setInfoModel.leveling.currentSetLevelSubject.value
         // Current level
-        let currentLevelValue = allLevelProgress - Double(level)
+        let currentLevelValue = allLevelProgress - Double(levelFromIndex)
         
         // De exponent die je wilt gebruiken, dit kan elke waarde zijn die je instelt
         let exponentValue: Double = 0.9 // Voorbeeldwaarde, aanpasbaar naar wens
@@ -77,3 +86,4 @@ struct SVGImageViewContainer: View {
         }
     }
 }
+

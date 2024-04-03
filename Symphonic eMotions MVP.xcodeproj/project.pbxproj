@@ -50,6 +50,7 @@
 		7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */; };
 		7C513EED2B07D85900AAC779 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */; };
 		7C513EEF2B08BDC200AAC779 /* AnalyticsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */; };
+		7C6228412BB8705E00524647 /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6228402BB8705E00524647 /* GridModel.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
 		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
 		7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA929AF4BB9000C5861 /* Assets.xcassets */; };
@@ -246,6 +247,7 @@
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
 		7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsAction.swift; sourceTree = "<group>"; };
+		7C6228402BB8705E00524647 /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
 		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
 		7C645CA929AF4BB9000C5861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				7CDC11782BA3BC8600CE8C07 /* SVGImageView.swift */,
 				7C700EFB2BB4624F00C8F700 /* GridView.swift */,
 				7C700EF92BB461C400C8F700 /* CellOpacityController.swift */,
+				7C6228402BB8705E00524647 /* GridModel.swift */,
 			);
 			path = LevelPlayer;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */,
 				7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */,
+				7C6228412BB8705E00524647 /* GridModel.swift in Sources */,
 				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,

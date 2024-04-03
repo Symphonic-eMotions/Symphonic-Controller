@@ -16,6 +16,7 @@ struct PlayView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @StateObject private var opacityController: CellOpacityController
+    @StateObject private var gridModel: GridModel
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
     @State private var showLevelPlayerFullScreen: Bool = false
@@ -29,6 +30,12 @@ struct PlayView: View {
         self._opacityController = StateObject(wrappedValue: CellOpacityController(cellCount: (
                     setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns
                 )
+            )
+        )
+        self._gridModel = StateObject(wrappedValue:
+            GridModel(
+                gridRows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
+                gridColumns: setInfoModel.setInfoState.currentInstrumentsSet.columns
             )
         )
         self._sessionDisplay = sessionDisplay
@@ -76,8 +83,9 @@ struct PlayView: View {
                                 //PlayGridView(setInfoModel: setInfoModel)
                                 LevelPlayer(
                                     setInfoModel: setInfoModel, 
-                                    opacityController: opacityController,
-                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
+                                    opacityController: opacityController, 
+                                    gridModel: gridModel,
+                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen, 
                                     geometry: geometry
                                 )
                                 .zIndex(showLevelPlayerFullScreen ? 200 : 0)
