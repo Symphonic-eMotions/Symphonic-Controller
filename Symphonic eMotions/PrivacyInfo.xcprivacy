@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryUserDefaults</key>
+			<string>Wij gebruiken User Defaults om gebruikersvoorkeuren op te slaan en de gebruikerservaring te personaliseren.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryFileTimestamp</key>
+			<string>We gebruiken bestandstimestamps om de gebruikers eigen versies van muzieksets te laten maken.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryDiskSpace</key>
+			<string>We controleren momenteel niet beschikbare schijfruimte om te zorgen voor voldoende opslagcapaciteit voor de app-functionaliteit.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategorySystemBootTime</key>
+			<string>We gebruiken systeemstarttijd om prestatie-analyses en foutopsporing te verbeteren.</string>
+		</dict>
+	</array>
+</dict>
+</plist>

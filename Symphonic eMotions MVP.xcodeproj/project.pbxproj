@@ -296,6 +296,7 @@
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* SeMActive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeMActive.swift; sourceTree = "<group>"; };
 		7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackState.swift; sourceTree = "<group>"; };
+		7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLevelView.swift; sourceTree = "<group>"; };
 		7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberSequenceView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C8D758F2A28E0B900DF2417 /* NotesSequenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSequenceType.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -769,6 +770,7 @@
 		C084FFD526B3115E009A4D0C /* Symphonic eMotions */ = {
 			isa = PBXGroup;
 			children = (
+				7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */,
 				7C69ED39295350750009F382 /* .gitignore */,
 				7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */,
 				C069590026B4DD0D002EB522 /* Info.plist */,
@@ -1331,7 +1333,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1373,7 +1375,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;

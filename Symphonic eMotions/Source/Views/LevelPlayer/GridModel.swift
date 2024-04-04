@@ -39,7 +39,7 @@ class GridModel: ObservableObject {
     
     var currentLevel: Double = 0 {
         didSet {
-            updateOffsets()
+//            updateOffsets()
         }
     }
     

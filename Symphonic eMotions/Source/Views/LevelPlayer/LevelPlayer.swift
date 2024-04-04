@@ -18,36 +18,36 @@ struct LevelPlayer: View {
     var body: some View {
         ZStack(alignment: .center) {
             
-            ColumnView(
-                setInfoModel: setInfoModel,
-                columnOpacityController: columnOpacityController,
-                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
-                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns,
-                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
-                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
-            )
-            .frame(
-                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
-                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
-            )
-            .position(
-                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width / 2 : geometry.size.width / 2,
-                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height / 2 : geometry.size.height / 2
-            )
-            .onAppear {
-                // Inline en fullscreen grootte bepalen en doorgeven
-                let inlineSize = CGSize(
-                    width: geometry.size.width,
-                    height: geometry.size.height
-                )
-                let fullscreenSize = UIScreen.main.bounds.size
-                gridModel.updateCellCenters(inlineSize: inlineSize, fullscreenSize: fullscreenSize)
-                
-                gridModel.initializeViewCenters(
-                    inlineSize: CGSize(width: geometry.size.width, height: geometry.size.height),
-                    fullscreenSize: UIScreen.main.bounds.size // Of een andere logica voor het bepalen van de fullscreen grootte
-                )
-            }
+//            ColumnView(
+//                setInfoModel: setInfoModel,
+//                columnOpacityController: columnOpacityController,
+//                rows: setInfoModel.setInfoState.currentInstrumentsSet.rows,
+//                columns: setInfoModel.setInfoState.currentInstrumentsSet.columns,
+//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+//            )
+//            .frame(
+//                width: showLevelPlayerFullScreen ? UIScreen.main.bounds.width : geometry.size.width,
+//                height: showLevelPlayerFullScreen ? UIScreen.main.bounds.height : geometry.size.height
+//            )
+//            .position(
+//                x: showLevelPlayerFullScreen ? UIScreen.main.bounds.width / 2 : geometry.size.width / 2,
+//                y: showLevelPlayerFullScreen ? UIScreen.main.bounds.height / 2 : geometry.size.height / 2
+//            )
+//            .onAppear {
+//                // Inline en fullscreen grootte bepalen en doorgeven
+//                let inlineSize = CGSize(
+//                    width: geometry.size.width,
+//                    height: geometry.size.height
+//                )
+//                let fullscreenSize = UIScreen.main.bounds.size
+//                gridModel.updateCellCenters(inlineSize: inlineSize, fullscreenSize: fullscreenSize)
+//                
+//                gridModel.initializeViewCenters(
+//                    inlineSize: CGSize(width: geometry.size.width, height: geometry.size.height),
+//                    fullscreenSize: UIScreen.main.bounds.size // Of een andere logica voor het bepalen van de fullscreen grootte
+//                )
+//            }
             
 //            GridView(
 //                setInfoModel: setInfoModel,
