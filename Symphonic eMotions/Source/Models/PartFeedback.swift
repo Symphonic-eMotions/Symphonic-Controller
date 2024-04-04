@@ -9,21 +9,31 @@ import Combine
 
 class PartFeedback {
     
-    //What track are we showing?
+    // What track are we showing?
     var currentTrackID = CurrentValueSubject<String, Never>("")
     
-    //What part of this track are we showing
+    // What part of this track are we showing
     var currentPartID = CurrentValueSubject<String, Never>("")
     
-    //Show value after Damp
-//    var damped = CurrentValueSubject<Double, Never>(0)
-    
-    //Show value after Ramp
+    // Show value after Ramp
     var ramped = CurrentValueSubject<Double, Never>(0)
     
     init(instrumentsSet: InstrumentsSet){
-
-        self.currentTrackID.send(instrumentsSet.tracks.first!.trackId)
-        self.currentPartID.send(instrumentsSet.tracks.first!.parts.first!.id)
+        // Optionele binding om veilig het eerste track op te halen
+        if let firstTrack = instrumentsSet.tracks.first {
+            self.currentTrackID.send(firstTrack.trackId)
+            
+            // Optionele binding om veilig het eerste part van het eerste track op te halen
+            if let firstPart = firstTrack.parts.first {
+                self.currentPartID.send(firstPart.id)
+            } else {
+                // Geen eerste part gevonden, eventueel hier een standaardwaarde instellen of een log/foutmelding
+                print("Geen eerste part gevonden")
+            }
+        } else {
+            // Geen eerste track gevonden, eventueel hier een standaardwaarde instellen of een log/foutmelding
+            print("Geen eerste track gevonden")
+        }
     }
 }
+
