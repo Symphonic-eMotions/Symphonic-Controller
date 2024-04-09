@@ -81,8 +81,8 @@ struct SetInfo: View {
                             //Save current location
                             userSettings.currentUrl = setInfoModel.setInfoLocalState.setConfig
                             
-                            //Change the View
-                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                            print("Setting sessionDisplay to .swiftUI")
+                            sessionDisplay = .swiftUI
                         }
                         Spacer()
                         //New variation button

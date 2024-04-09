@@ -48,12 +48,11 @@ struct SavedSetsList: View {
                     name: setInfoModel.setInfoLocalState.setName
                 ) {
                     // Create a closure to capture the current URL and return the button
+                    //The same for adding to playlist and share
                     let deleteAction = {
                         showDeleteAlert = true
                         deleteUrl = url
                     }
-                    
-                    //The same for adding to playlist and share
                     let playlistAction = {
                         
                         AnalyticsAction.addToPlaylist.logEvent(
@@ -63,7 +62,6 @@ struct SavedSetsList: View {
                         isPlaylistsPresented = true
                         playlistUrl = url
                     }
-                    
                     let shareAction = {
                         // Log the share action before setting the shareUrl
                         AnalyticsAction.shareSet.logEvent(
@@ -91,8 +89,7 @@ struct SavedSetsList: View {
                                 currentUrl = url.absoluteString
                                 //Load settngs over current
                                 setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                                //Change the View to the selected view
-                                sessionDisplay = setInfoModel.setSettings.defaultSkin
+                                sessionDisplay = .swiftUI
                             }
                         
                         //Edit this set

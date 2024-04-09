@@ -48,7 +48,8 @@ class SetSettings: Identifiable, ObservableObject {
     var setURL: URL
     var hasTempo: Bool
     
-    var defaultSkin: SessionDisplay
+    // What views does the user see
+    var userViews: [UserView]
     
     //grid dimention
     var gridRows: Int
@@ -92,7 +93,7 @@ class SetSettings: Identifiable, ObservableObject {
         filesPath: String,
         setURL: URL,
         hasTempo: Bool,
-        defaultSkin: SessionDisplay,
+        userViews: [UserView],
         rows: Int,
         columns: Int,
         levels: [Int],
@@ -110,7 +111,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.filesPath = filesPath
         self.setURL = setURL
         self.hasTempo = hasTempo
-        self.defaultSkin = defaultSkin
+        self.userViews = userViews
         self.gridRows = rows
         self.bpm = bpm
         self.gridColumns = columns

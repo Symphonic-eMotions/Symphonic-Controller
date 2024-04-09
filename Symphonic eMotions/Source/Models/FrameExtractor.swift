@@ -45,7 +45,6 @@ class FrameExtractor: NSObject {
     private var listener: AnyCancellable?
     
     deinit {
-//        listener?.cancel()
         captureSession.stopRunning()
     }
     
@@ -61,16 +60,11 @@ class FrameExtractor: NSObject {
     
     public func startExtracting(){
         sessionQueue.async {
-//            DispatchQueue.global(qos: .background).async { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
                 self.configureSession()
                 self.captureSession.startRunning()
-                
-//                self.listener = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-//                    .compactMap { _ in (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.interfaceOrientation ?? .unknown }
-//                    .assign(to: \.orientation, on: self)
             }
         }
     }
@@ -139,37 +133,6 @@ class FrameExtractor: NSObject {
         }
     }
 
-    
-//    private func configureSession() {
-//        guard permissionGranted else {
-//            print("Error: No permissionGranted")
-//            return
-//        }
-//        captureSession.sessionPreset = quality
-//
-//        guard let captureDevice = selectCaptureDevice() else {
-//            print("Error: No captureDevice")
-//            return
-//        }
-//        guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else {
-//            print("Error: No captureDeviceInput")
-//            return
-//        }
-//        guard captureSession.canAddInput(captureDeviceInput) else {
-//            print("Error: No captureSession")
-//            return
-//        }
-//        captureSession.addInput(captureDeviceInput)
-//        let videoOutput = AVCaptureVideoDataOutput()
-//        videoOutput.setSampleBufferDelegate(self, queue: bufferQueue)
-//        guard captureSession.canAddOutput(videoOutput) else {
-//            print("Error: No captureSession.canAddOutput")
-//            return
-//        }
-//        captureSession.addOutput(videoOutput)
-//        setConnectionOrientation()
-//    }
-    
     private func setConnectionOrientation() {
         guard let videoOutput = captureSession.outputs.first else { return }
         
@@ -206,7 +169,6 @@ class FrameExtractor: NSObject {
             return .success(device)
         } else {
             print("Error: No selectCaptureDevice (.video .front)")
-//            fatalError("Missing expected front camera device.")
             return .failure(.noCameraAvailable)
         }
     }

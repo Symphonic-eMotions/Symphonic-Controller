@@ -101,7 +101,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case semVersion
         case fileGroup
         case filesPath = "setPath"
-        case defaultSkin
+        case userViews
         case bpm = "setBPM"
         case hasTempo
         case skin
@@ -116,15 +116,12 @@ struct InstrumentsSet: Identifiable, Decodable {
     
     var id: String { name }
     let name: String
-    //User editable name
     let customName: String
     let published: Bool?
     let semVersion: String?
     var fileGroup: FileGroup?
-    //Depricate filesPath, it's not used
     let filesPath: String
-    //Path for custom files (.mid, .wav, .aif)
-    var defaultSkin: SessionDisplay?
+    var userViews: [UserView]
     //Sequencer objects variables
     var bpm: Double
     let hasTempo: Bool
@@ -150,7 +147,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         semVersion = try container.decodeIfPresent(String.self, forKey: .semVersion) ?? "1.0.0"
         fileGroup = try container.decodeIfPresent(FileGroup.self, forKey: .fileGroup)
         filesPath = try container.decode(String.self, forKey: .filesPath)
-        defaultSkin = try container.decodeIfPresent(SessionDisplay.self, forKey: .defaultSkin)
+        userViews = try container.decodeIfPresent([UserView].self, forKey: .userViews) ?? [.playView]
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
@@ -207,7 +204,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         semVersion: String,
         fileGroup: FileGroup,
         filesPath: String,
-        defaultSkin: SessionDisplay,
+        userViews: [UserView],
         bpm: Double,
         hasTempo: Bool,
         skin: Skin,
@@ -225,7 +222,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.semVersion = semVersion
         self.fileGroup = fileGroup
         self.filesPath = filesPath
-        self.defaultSkin = defaultSkin
+        self.userViews = userViews
         self.bpm = bpm
         self.hasTempo = hasTempo
         self.skin = skin
@@ -284,7 +281,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(semVersion, forKey: .semVersion)
         try container.encode(fileGroup, forKey: .fileGroup)
         try container.encode(filesPath, forKey: .filesPath)
-        try container.encode(defaultSkin, forKey: .defaultSkin)
+        try container.encode(userViews, forKey: .userViews)
         try container.encode(bpm, forKey: .bpm)
         try container.encode(hasTempo, forKey: .hasTempo)
         try container.encode(timeSignature, forKey: .timeSignature)

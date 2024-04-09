@@ -28,6 +28,7 @@ struct MainView: View {
     
     // Initialize sidebarItems as @State
     @State var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = []
+    @State private var showLevelPlayerFullScreen: Bool = false
     
     init(
         viewModel: MainViewModel,
@@ -102,12 +103,15 @@ struct MainView: View {
             
             NavigationView {
                 
+                //Set Navigation
                 SideBarView(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub,
                     sidebarItems: $sidebarItems
                 )
+                //TODO: Hide SideBar on fullscreen
+//                .navigationBarHidden(showLevelPlayerFullScreen)
                 .environmentObject(fileController)
                 .onAppear {
                     // Update `isCreator` based on the `userCode`
@@ -116,7 +120,7 @@ struct MainView: View {
                     //Main navigation
                     var items = [
                         (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
-//                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
+                        //                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
                         (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
                     ]
                     
@@ -129,13 +133,15 @@ struct MainView: View {
                 }
                 
                 //SeM Pro interface with interaction editor
+                //LevelPlayer with userViews
                 if sessionDisplay == .swiftUI {
                     
                     ZStack{
                         PlayView(
                             setInfoModel: setInfoModel, 
                             sessionDisplay: $sessionDisplay,
-                            sessionDisplaySub: $sessionDisplaySub
+                            sessionDisplaySub: $sessionDisplaySub, 
+                            showLevelPlayerFullScreen: $showLevelPlayerFullScreen
                         )
                         .environmentObject(fileController)
                         .navigationBarHidden(false)
@@ -204,6 +210,7 @@ struct MainView: View {
             }
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
+            
 
         ChangeView(
             sessionDisplay: $sessionDisplay,

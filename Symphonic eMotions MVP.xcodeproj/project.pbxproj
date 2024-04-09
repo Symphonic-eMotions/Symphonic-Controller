@@ -23,7 +23,6 @@
 		7C1FB0B629E4429700621909 /* InLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B529E4429700621909 /* InLevelView.swift */; };
 		7C1FB0B829E455CB00621909 /* VariationTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B729E455CB00621909 /* VariationTypeView.swift */; };
 		7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0B929E45C9F00621909 /* MidiFiles.swift */; };
-		7C1FB0C029E820EC00621909 /* SelectSkinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB0BF29E820EC00621909 /* SelectSkinView.swift */; };
 		7C205ABB28D70A2B009646C1 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C205ABA28D70A2B009646C1 /* RangeConverter.swift */; };
 		7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C259F14271319FF00B17A9E /* CompressorEffect.swift */; };
 		7C29AA172A4EFA0F0070D901 /* FileNameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */; };
@@ -52,6 +51,9 @@
 		7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */; };
 		7C513EED2B07D85900AAC779 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7C513EEC2B07D85900AAC779 /* FirebaseAnalyticsSwift */; };
 		7C513EEF2B08BDC200AAC779 /* AnalyticsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */; };
+		7C6204E12BBFFC1600629DC5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */; };
+		7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E22BBFFF8A00629DC5 /* UserView.swift */; };
+		7C6204E52BC06C4100629DC5 /* SelectUserViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */; };
 		7C6228412BB8705E00524647 /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6228402BB8705E00524647 /* GridModel.swift */; };
 		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
 		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
@@ -222,7 +224,6 @@
 		7C1FB0B529E4429700621909 /* InLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InLevelView.swift; sourceTree = "<group>"; };
 		7C1FB0B729E455CB00621909 /* VariationTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationTypeView.swift; sourceTree = "<group>"; };
 		7C1FB0B929E45C9F00621909 /* MidiFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFiles.swift; sourceTree = "<group>"; };
-		7C1FB0BF29E820EC00621909 /* SelectSkinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSkinView.swift; sourceTree = "<group>"; };
 		7C205ABA28D70A2B009646C1 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7C259F14271319FF00B17A9E /* CompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
 		7C29AA162A4EFA0F0070D901 /* FileNameUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNameUtils.swift; sourceTree = "<group>"; };
@@ -251,6 +252,8 @@
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
 		7C513EE92B07D4BF00AAC779 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C513EEE2B08BDC200AAC779 /* AnalyticsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsAction.swift; sourceTree = "<group>"; };
+		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserViews.swift; sourceTree = "<group>"; };
 		7C6228402BB8705E00524647 /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
 		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
@@ -481,6 +484,7 @@
 				C0AFDD022705BC24006EF64F /* Effect.swift */,
 				7C700EF72BB4423B00C8F700 /* SetEffect.swift */,
 				7CF327C42989504F003D33D3 /* Skin.swift */,
+				7C6204E22BBFFF8A00629DC5 /* UserView.swift */,
 			);
 			path = InstrumentSet;
 			sourceTree = "<group>";
@@ -578,10 +582,10 @@
 			isa = PBXGroup;
 			children = (
 				7CCBF8FE2A39159700360E21 /* SetEditorView.swift */,
-				7C1FB0BF29E820EC00621909 /* SelectSkinView.swift */,
 				7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */,
 				7C4EBB9B29D83BCB00958954 /* BpmView.swift */,
 				7C1FB0B129DDFD9A00621909 /* LevelsView.swift */,
+				7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */,
 			);
 			path = SetEditor;
 			sourceTree = "<group>";
@@ -613,10 +617,10 @@
 				7CDC11772BA3BC8600CE8C07 /* SVGImageViewContainer.swift */,
 				7CDC11782BA3BC8600CE8C07 /* SVGImageView.swift */,
 				7C700EFB2BB4624F00C8F700 /* GridView.swift */,
-				7C700EF92BB461C400C8F700 /* CellOpacityController.swift */,
-				7C6228402BB8705E00524647 /* GridModel.swift */,
 				7C1D32D82BBDB0B2002F31CD /* ColumnView.swift */,
 				7C1D32DA2BBDB51A002F31CD /* ColumnOpacityController.swift */,
+				7C700EF92BB461C400C8F700 /* CellOpacityController.swift */,
+				7C6228402BB8705E00524647 /* GridModel.swift */,
 			);
 			path = LevelPlayer;
 			sourceTree = "<group>";
@@ -990,6 +994,7 @@
 				7CAB35CB2AD02E8500659002 /* Videos in Resources */,
 				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
+				7C6204E12BBFFC1600629DC5 /* PrivacyInfo.xcprivacy in Resources */,
 				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
 				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
@@ -1035,7 +1040,6 @@
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
 				7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */,
-				7C1FB0C029E820EC00621909 /* SelectSkinView.swift in Sources */,
 				7C7E4FDE2A69376D007BEF14 /* DamperTarget.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
 				7C0C9F392B9874BF00DBD142 /* LevelProgressController.swift in Sources */,
@@ -1162,6 +1166,7 @@
 				7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */,
 				7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */,
 				7C889B512AE5242E00A2BCC4 /* FileLogger.swift in Sources */,
+				7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */,
 				7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */,
 				7CFA00B129A75B3A001D8A5D /* SetInfoHome.swift in Sources */,
 				7CB5834D292F9C44000C46FF /* FileController.swift in Sources */,
@@ -1171,6 +1176,7 @@
 				C069592126B4E8FC002EB522 /* PlayGridView.swift in Sources */,
 				7C3234342B6ADFED00D0E371 /* SetFile.swift in Sources */,
 				C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */,
+				7C6204E52BC06C4100629DC5 /* SelectUserViews.swift in Sources */,
 				7CFA00AF29A75B20001D8A5D /* SetLoadAndPlay.swift in Sources */,
 				7C7E4FCC2A66FB3A007BEF14 /* TrackEffectView.swift in Sources */,
 				7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */,

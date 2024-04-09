@@ -58,8 +58,8 @@ struct CountDown: View {
                             //Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = nextUrl
                             setInfoModel.setSettings.currentPlaylist = thisPlaylist
-                            //Change the View
-                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                            print("Setting sessionDisplay to .playlist")
+                            sessionDisplay = .playlists
                         }
                     }
                 }
@@ -92,8 +92,8 @@ struct CountDown: View {
                 setInfoModel.setSettings.currentSetInList = thisSet
                 setInfoModel.setSettings.currentPlaylist = thisPlaylist
                 
-                //Change the View
-                sessionDisplay = setInfoModel.setSettings.defaultSkin
+                print("Countdown Setting sessionPlaylist to .playlists")
+                sessionDisplay = .playlists
             }
         }
     }

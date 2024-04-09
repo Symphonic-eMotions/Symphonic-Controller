@@ -167,7 +167,7 @@ class ImageDifference {
                 let maxVal = max(buf[0], max(buf[1], buf[2]))
                 let diff = Int(maxVal)
                 
-                //TODO, place for video noise reduction?
+                //TODO: place for video noise reduction?
 //                print( "row: \(row) column: \(column) -> \(diff)" )
                 
                 //invert columns for tap grid campability

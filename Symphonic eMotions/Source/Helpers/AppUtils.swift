@@ -59,7 +59,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", defaultSkin: .none, bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], setEffects: [], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", userViews: [.playView], bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], setEffects: [], tracks: [])
         }
         return instrumentSet
     }
@@ -83,11 +83,14 @@ final class AppUtils {
     //MARK: Playists
     static func createPlayListFolders(resetPlaylist: Bool) {
         let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Document directory niet gevonden.")
+            return
+        }
         let bundleURL = Bundle.main.bundleURL
 
         let lists = SeMActive.Playlists.allCases
-        let filteredPlaylists = lists.filter({$0 != .none}) // Filtering out the 'none' case
+        let filteredPlaylists = lists.filter({ $0 != .none }) // Filtering out the 'none' case
 
         // Loop through filtered playlists
         for playlist in filteredPlaylists {
@@ -95,28 +98,34 @@ final class AppUtils {
             let bundlePlaylistURL = bundleURL.appendingPathComponent(playlist.rawValue)
 
             if !fileManager.fileExists(atPath: playlistURL.path) || resetPlaylist {
-                // Folder doesn't exist or resetPlaylist is true, create it
                 do {
                     try fileManager.createDirectory(at: playlistURL, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                     print("Error creating directory: \(error)")
+                    continue // Ga door naar de volgende playlist als het maken van de directory mislukt
                 }
-                    
+
                 do {
-                    // Get the content of the playlist folder in the bundle
                     let playlistContent = try fileManager.contentsOfDirectory(at: bundlePlaylistURL, includingPropertiesForKeys: nil)
 
-                    // Copy each item in the playlist folder to the new playlist folder in the Documents directory
                     for item in playlistContent {
                         let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
 
-                        // Check if file exists at destination and if resetPlaylist is true, then remove existing file
                         if fileManager.fileExists(atPath: destinationURL.path) && resetPlaylist {
-                            try fileManager.removeItem(at: destinationURL)
+                            do {
+                                try fileManager.removeItem(at: destinationURL)
+                            } catch {
+                                print("Error removing existing item: \(error)")
+                                continue // Ga door naar het volgende item als het verwijderen mislukt
+                            }
                         }
 
-                        // Copy item from bundle to Documents directory
-                        try fileManager.copyItem(at: item, to: destinationURL)
+                        do {
+                            try fileManager.copyItem(at: item, to: destinationURL)
+                        } catch {
+                            print("Error copying playlist files: \(error)")
+                            continue // Maar ga toch door
+                        }
                     }
                 } catch {
                     print("Error copying playlist files: \(error)")
@@ -124,6 +133,7 @@ final class AppUtils {
             }
         }
     }
+
     
     static func semVersionString() -> String {
         var infoString = ""
@@ -179,6 +189,7 @@ final class AppUtils {
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
         
         let skin: InstrumentsSet.Skin = instrumentSet.skin
+        
         var trackIndex: Int = 0
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
@@ -311,8 +322,8 @@ final class AppUtils {
             fileGroup: instrumentSet.fileGroup ?? .none,
             filesPath: instrumentSet.filesPath,
             setURL: URL(setUrl),
-            hasTempo: instrumentSet.hasTempo,
-            defaultSkin: instrumentSet.defaultSkin ?? .swiftUI,
+            hasTempo: instrumentSet.hasTempo, 
+            userViews: instrumentSet.userViews,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             levels: instrumentSet.levels,
@@ -565,7 +576,7 @@ final class AppUtils {
             semVersion: semVersion, 
             fileGroup: setSettings.fileGroup,
             filesPath: setSettings.filesPath,
-            defaultSkin: setSettings.defaultSkin,
+            userViews: setSettings.userViews,
             bpm: setSettings.bpm,
             hasTempo: setSettings.hasTempo,
             skin: setSettings.skins,

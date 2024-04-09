@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/*
+ 
+ All parameters have 2 values, a local for state and value in setInfoModel
+ 
+ */
+
 struct SetEditorView: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
@@ -107,15 +113,26 @@ struct SetEditorView: View {
                     
             }
             HStack{
-                Text("Skin")
+                Text("PlayViews")
                     .font(.system(size: headingSize))
                     .padding()
                     .frame(width: columnWidth, alignment: .leading)
                 
-                SelectSkinView(
+                SelectUserViews(
                     setInfoModel: setInfoModel
                 )
+                .frame(height: 300)
             }
+//            HStack{
+//                Text("Skin")
+//                    .font(.system(size: headingSize))
+//                    .padding()
+//                    .frame(width: columnWidth, alignment: .leading)
+//                
+//                SelectSkinView(
+//                    setInfoModel: setInfoModel
+//                )
+//            }
             HStack{
                 Text("Grid size")
                     .font(.system(size: headingSize))

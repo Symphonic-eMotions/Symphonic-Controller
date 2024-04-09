@@ -19,12 +19,13 @@ struct PlayView: View {
     @StateObject private var gridModel: GridModel
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
-    @State private var showLevelPlayerFullScreen: Bool = false
+    @Binding public var showLevelPlayerFullScreen: Bool
     
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
-        sessionDisplaySub: Binding<SessionDisplay>
+        sessionDisplaySub: Binding<SessionDisplay>,
+        showLevelPlayerFullScreen: Binding<Bool>
     ){
         self.setInfoModel = setInfoModel
         self._columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(columnCount:(setInfoModel.setInfoState.currentInstrumentsSet.columns))
@@ -39,6 +40,7 @@ struct PlayView: View {
         )
         self._sessionDisplay = sessionDisplay
         self._sessionDisplaySub = sessionDisplaySub
+        self._showLevelPlayerFullScreen = showLevelPlayerFullScreen
     }
     
     var body: some View {
@@ -54,56 +56,66 @@ struct PlayView: View {
                 Rectangle().frame(height: 25).foregroundColor(Color.clear)
                 #endif
                 
-                LevelView(
-                    setInfoModel: setInfoModel
-                )
-                
-                //Transport buttons
-                PlayerControlsView(
-                    setInfoModel: setInfoModel,
-                    sessionDisplaySub: $sessionDisplaySub,
-                    showMasterTrack: $showMasterTrack
-                )
-                .zIndex(100)
-                
+                if !showLevelPlayerFullScreen {
+                    LevelView(
+                        setInfoModel: setInfoModel
+                    )
+                    
+                    
+                    //Transport buttons
+                    PlayerControlsView(
+                        setInfoModel: setInfoModel,
+                        sessionDisplaySub: $sessionDisplaySub,
+                        showMasterTrack: $showMasterTrack
+                    )
+                    .zIndex(100)
+                }
                 //Video preview and instrument locations
                 GeometryReader { geometry in
                     ZStack{
                         
                         //Instruments
-                        if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
+                        
                             
                             if userSettings.showPartEditor  {
                                 
                                 EditGridView(setInfoModel: setInfoModel)
                                 
-                            } else {
+                            } 
+                            else {
                                 
-                                //PlayGridView(setInfoModel: setInfoModel)
-                                LevelPlayer(
-                                    setInfoModel: setInfoModel, 
-                                    columnOpacityController: columnOpacityController,
-                                    gridModel: gridModel,
-                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen, 
-                                    geometry: geometry
-                                )
-                                .zIndex(showLevelPlayerFullScreen ? 200 : 0)
-                                .frame(width: geometry.size.width, height: geometry.size.height)
-                                .onTapGesture {
-                                    presentSettingSheet.toggle()
+                                //PlayView
+                                if setInfoModel.setSettings.userViews.contains(.playView) {
+                                    if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
+                                        PlayGridView(setInfoModel: setInfoModel)
+                                    } else {
+                                        DontPlayGridView()
+                                    }
                                 }
-                                .sheet(isPresented: $presentSettingSheet) {
-                                    SettingsSheetView(
-                                        userSettings: userSettings,
+                                
+                                else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
+                                    LevelPlayer(
                                         setInfoModel: setInfoModel,
-                                        showingSheet: $presentSettingSheet
+                                        columnOpacityController: columnOpacityController,
+                                        gridModel: gridModel,
+                                        showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
+                                        geometry: geometry
                                     )
+                                    .zIndex(showLevelPlayerFullScreen ? 200 : 0)
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .onTapGesture {
+                                        presentSettingSheet.toggle()
+                                    }
+                                    .sheet(isPresented: $presentSettingSheet) {
+                                        SettingsSheetView(
+                                            userSettings: userSettings,
+                                            setInfoModel: setInfoModel,
+                                            showingSheet: $presentSettingSheet
+                                        )
+                                    }
                                 }
                             }
-                        }
-                        else{
-                            DontPlayGridView()
-                        }
+                        
                         
                         //Video
                         VideoPreviewViewRepresetable(
@@ -129,37 +141,38 @@ struct PlayView: View {
                     )
                     .environmentObject(fileController)
                 }
-                else {
-                    HStack{
-                        //Hold level
-                        EMButton(action: {
-                            AnalyticsAction.holdLevel.logEvent(
-                                sessionDisplay: sessionDisplay,
-                                fileGroup: setInfoModel.setSettings.fileGroup,
-                                setName: setInfoModel.setSettings.setName
-                            )
-                            setInfoModel.leveling.pauseLevel.toggle()
-                        }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
-                            Text(NSLocalizedString("Hold level", comment: ""))
-                        }
-                        
-                        //End Set
-                        EMButton(action: {
-                            AnalyticsAction.endSet.logEvent(
-                                sessionDisplay: sessionDisplay,
-                                fileGroup: setInfoModel.setSettings.fileGroup,
-                                setName: setInfoModel.setSettings.setName
-                            )
-                            setInfoModel.leveling.pauseLevel = false
-                            let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
-                            setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
-                            sessionDisplaySub = .stopped
-                        }, color: .accentColor, isSolid: false) {
-                            Text(NSLocalizedString("Finish", comment: ""))
-                        }
-                    }
-                    .zIndex(100)
-                }
+//                else {
+//                    
+//                    HStack{
+//                        //Hold level
+//                        EMButton(action: {
+//                            AnalyticsAction.holdLevel.logEvent(
+//                                sessionDisplay: sessionDisplay,
+//                                fileGroup: setInfoModel.setSettings.fileGroup,
+//                                setName: setInfoModel.setSettings.setName
+//                            )
+//                            setInfoModel.leveling.pauseLevel.toggle()
+//                        }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
+//                            Text(NSLocalizedString("Hold level", comment: ""))
+//                        }
+//                        
+//                        //End Set
+//                        EMButton(action: {
+//                            AnalyticsAction.endSet.logEvent(
+//                                sessionDisplay: sessionDisplay,
+//                                fileGroup: setInfoModel.setSettings.fileGroup,
+//                                setName: setInfoModel.setSettings.setName
+//                            )
+//                            setInfoModel.leveling.pauseLevel = false
+//                            let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
+//                            setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
+//                            sessionDisplaySub = .stopped
+//                        }, color: .accentColor, isSolid: false) {
+//                            Text(NSLocalizedString("Finish", comment: ""))
+//                        }
+//                    }
+//                    .zIndex(100)
+//                }
                 Spacer()
             }
             .padding(.horizontal)

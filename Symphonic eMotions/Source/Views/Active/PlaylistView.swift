@@ -58,7 +58,8 @@ struct PlaylistView: View {
                             setInfoModel.setSettings.currentPlaylist = viewModel.playlist
                             
                             //Change the View to the selected view
-                            sessionDisplay = setInfoModel.setSettings.defaultSkin
+                            print("Setting Playlist sessionDisplay to .playlists")
+                            sessionDisplay = .playlists
                         }
                     }
                     Spacer()
@@ -138,8 +139,8 @@ struct PlaylistView: View {
                                 setInfoModel.setSettings.currentSetInList = url
                                 setInfoModel.setSettings.currentPlaylist = viewModel.playlist
                                 
-                                //Change the View to the view in the skin settings
-                                sessionDisplay = setInfoModel.setSettings.defaultSkin
+                                print("Setting sessionDisplay to .playlist")
+                                sessionDisplay = .playlists
                                 
                             }
                             .onLongPressGesture {
