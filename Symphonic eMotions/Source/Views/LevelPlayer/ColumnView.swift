@@ -26,30 +26,31 @@ struct ColumnView: View {
         LazyVGrid(columns: columnsGridItem, spacing: 20) {
             ForEach(0..<self.columns, id: \.self) { columnIndex in
                 let color: Color = [.green, .yellow, .orange, .purple][columnIndex % 4]
+                
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(color, lineWidth: 2)
                     .background(color.opacity(0.2))
                     .frame(width: columnWidth, height: height - 40) // Trek de padding van de totale hoogte af
-                    .opacity(columnOpacityController.columnOpacities[columnIndex])
+                    .opacity(columnOpacityController.opacities[columnIndex]) // Gebruik de juiste eigenschap voor opaciteit
             }
         }
         .padding(20)
         .onChange(of: setInfoModel.setSettings.maxIndex) { newIndex in
-            let columnIndex = columnIndex(
+            let columnIndex = self.columnIndex(
                 forCellIndex: newIndex,
                 inGridWithRows: self.rows,
                 columns: self.columns
             )
-            columnOpacityController.triggerColumnEnvelope(forColumn: columnIndex)
+            columnOpacityController.triggerEnvelope(forIndex: columnIndex) // Aangepast voor consistentie
         }
         .frame(width: width, height: height) // Gebruik de externe afmetingen voor het bepalen van de grootte van de ColumnView
     }
     
+    // Helperfunctie om de kolomindex te berekenen
     func columnIndex(forCellIndex cellIndex: Int, inGridWithRows rows: Int, columns: Int) -> Int {
         if cellIndex == -1 {
             return -1
         }
-        
         return cellIndex % columns
     }
 }

@@ -76,99 +76,92 @@ struct SetEditorView: View {
         }
         
         if showEditorPart == .set {
+            ScrollView{
 //            HStack{
 //                Text("Publish set")
 //                    .font(.system(size: headingSize))
 //                    .padding()
 //                    .frame(width: columnWidth, alignment: .leading)
-//                
+//
 //                Toggle("", isOn: $setInfoModel.setSettings.published)
 //                    .frame(width: 50)
 //                    .padding(.leading)
-//                
+//
 //                Spacer()
 //            }
-            HStack{
-                Text("Name")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                TextField("Custom name", text: $setInfoModel.setSettings.customName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.leading)
-                    .padding(.trailing)
+                HStack{
+                    Text("Name")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
                     
-            }
-            HStack{
-                Text("Project folder")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                TextField("Folder name", text: $setInfoModel.setSettings.filesPath)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.leading)
-                    .padding(.trailing)
+                    TextField("Custom name", text: $setInfoModel.setSettings.customName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading)
+                        .padding(.trailing)
                     
-            }
-            HStack{
-                Text("PlayViews")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
+                }
+                HStack{
+                    Text("Project folder")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    TextField("Folder name", text: $setInfoModel.setSettings.filesPath)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading)
+                        .padding(.trailing)
+                    
+                }
+                HStack{
+                    Text("PlayViews")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    SelectUserViews(
+                        setInfoModel: setInfoModel
+                    )
+                    .frame(height: 300)
+                }
+                HStack{
+                    Text("Grid size")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    SelectGridSizeView(
+                        setInfoModel: setInfoModel,
+                        localGridRow: setInfoModel.setSettings.gridRows
+                    )
+                }
                 
-                SelectUserViews(
-                    setInfoModel: setInfoModel
-                )
-                .frame(height: 300)
-            }
-//            HStack{
-//                Text("Skin")
-//                    .font(.system(size: headingSize))
-//                    .padding()
-//                    .frame(width: columnWidth, alignment: .leading)
-//                
-//                SelectSkinView(
-//                    setInfoModel: setInfoModel
-//                )
-//            }
-            HStack{
-                Text("Grid size")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                SelectGridSizeView(
+                HStack{
+                    Text("BPM")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    BpmView(
+                        setInfoModel: setInfoModel
+                    )
+                    Text("User controlled")
+                        .font(.system(size: headingSize))
+                        .padding()
+                        .frame(width: columnWidth, alignment: .leading)
+                    
+                    Toggle("", isOn: $setInfoModel.setSettings.hasTempo)
+                        .frame(width: 50)
+                        .padding(.leading)
+                }
+                LevelsView(
                     setInfoModel: setInfoModel,
-                    localGridRow: setInfoModel.setSettings.gridRows
+                    trackLevels: $trackLevels,
+                    noteNumbersLevels: $noteNumbersLevels,
+                    midiClipsLevels: $midiClipsLevels
                 )
             }
-            
-            HStack{
-                Text("BPM")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                BpmView(
-                    setInfoModel: setInfoModel
-                )
-                Text("User controlled")
-                    .font(.system(size: headingSize))
-                    .padding()
-                    .frame(width: columnWidth, alignment: .leading)
-                
-                Toggle("", isOn: $setInfoModel.setSettings.hasTempo)
-                    .frame(width: 50)
-                    .padding(.leading)
-            }
-            LevelsView(
-                setInfoModel: setInfoModel,
-                trackLevels: $trackLevels,
-                noteNumbersLevels: $noteNumbersLevels,
-                midiClipsLevels: $midiClipsLevels
-            )
+            .frame(height: 430)
         }
     }
 }

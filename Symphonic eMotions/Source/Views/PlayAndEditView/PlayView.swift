@@ -16,6 +16,7 @@ struct PlayView: View {
     @Binding public var sessionDisplay: SessionDisplay
     @Binding public var sessionDisplaySub: SessionDisplay
     @StateObject private var columnOpacityController: ColumnOpacityController
+    @StateObject private var cellOpacityController: CellOpacityController
     @StateObject private var gridModel: GridModel
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
@@ -28,7 +29,9 @@ struct PlayView: View {
         showLevelPlayerFullScreen: Binding<Bool>
     ){
         self.setInfoModel = setInfoModel
-        self._columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(columnCount:(setInfoModel.setInfoState.currentInstrumentsSet.columns))
+        self._columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(count:(setInfoModel.setInfoState.currentInstrumentsSet.columns))
+        )
+        self._cellOpacityController = StateObject(wrappedValue: CellOpacityController(count:(setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns))
         )
         self._gridModel = StateObject(wrappedValue:
             GridModel(
@@ -74,48 +77,49 @@ struct PlayView: View {
                 GeometryReader { geometry in
                     ZStack{
                         
-                        //Instruments
+                        /*
+                         * UserViews
+                         */
                         
+                        //Editor
+                        if userSettings.showPartEditor  {
+                            EditGridView(setInfoModel: setInfoModel)
+                        }
+                        else {
                             
-                            if userSettings.showPartEditor  {
-                                
-                                EditGridView(setInfoModel: setInfoModel)
-                                
-                            } 
-                            else {
-                                
-                                //PlayView
-                                if setInfoModel.setSettings.userViews.contains(.playView) {
-                                    if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
-                                        PlayGridView(setInfoModel: setInfoModel)
-                                    } else {
-                                        DontPlayGridView()
-                                    }
-                                }
-                                
-                                else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
-                                    LevelPlayer(
-                                        setInfoModel: setInfoModel,
-                                        columnOpacityController: columnOpacityController,
-                                        gridModel: gridModel,
-                                        showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
-                                        geometry: geometry
-                                    )
-                                    .zIndex(showLevelPlayerFullScreen ? 200 : 0)
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
-                                    .onTapGesture {
-                                        presentSettingSheet.toggle()
-                                    }
-                                    .sheet(isPresented: $presentSettingSheet) {
-                                        SettingsSheetView(
-                                            userSettings: userSettings,
-                                            setInfoModel: setInfoModel,
-                                            showingSheet: $presentSettingSheet
-                                        )
-                                    }
+                            //PlayView
+                            if setInfoModel.setSettings.userViews.contains(.playView) {
+                                if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
+                                    PlayGridView(setInfoModel: setInfoModel)
+                                } else {
+                                    DontPlayGridView()
                                 }
                             }
-                        
+                            
+                            //LevelPlayer
+                            else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
+                                LevelPlayer(
+                                    setInfoModel: setInfoModel,
+                                    columnOpacityController: columnOpacityController,
+                                    cellOpacityController: cellOpacityController,
+                                    gridModel: gridModel,
+                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
+                                    geometry: geometry
+                                )
+                                .zIndex(showLevelPlayerFullScreen ? 200 : 0)
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                                .onTapGesture {
+                                    presentSettingSheet.toggle()
+                                }
+                                .sheet(isPresented: $presentSettingSheet) {
+                                    SettingsSheetView(
+                                        userSettings: userSettings,
+                                        setInfoModel: setInfoModel,
+                                        showingSheet: $presentSettingSheet
+                                    )
+                                }
+                            }
+                        }
                         
                         //Video
                         VideoPreviewViewRepresetable(
