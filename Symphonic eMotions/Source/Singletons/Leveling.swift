@@ -12,16 +12,4 @@ class Leveling {
         
     //This levels up with Area values not instruments
     var currentSetLevelSubject = CurrentValueSubject<Double, Never>(0)
-    var pauseLevel: Bool = false
-    
-//    var trackLevels: [Int] = []
 }
-
-//class TrackLevelsModel: ObservableObject {
-//
-//    var levels: [Int] = []
-//
-//    init(trackLevels: [Int]){
-//        self.levels = trackLevels
-//    }
-//}

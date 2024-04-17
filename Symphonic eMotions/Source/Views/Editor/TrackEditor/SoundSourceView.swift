@@ -238,20 +238,32 @@ struct SoundSourceView: View {
                     }
                     .fileImporter(isPresented: $importing, allowedContentTypes: [.wav,.aiff]) { file in
                         do {
+                            //Be sure about pathname
+                            //TODO: If pathname has Project folder suggest to add to set
                             let fileUrl: URL = try file.get()
-                            let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
-                            
                             let fileName = fileUrl.deletingPathExtension().lastPathComponent
                             let fileExtension = fileUrl.pathExtension
-                            
-                            // define destination URL in your app's documents directory
+                            let destinationFileName = "\(fileName).\(fileExtension)"
                             let documentsDirectory = try FileManager.default.url(
                                 for: .documentDirectory,
                                 in: .userDomainMask,
                                 appropriateFor: nil,
                                 create: false
                             )
-                            let destinationUrl = documentsDirectory.appendingPathComponent(folderAndFileName)
+                            let destinationUrl = documentsDirectory.appendingPathComponent(destinationFileName)
+
+                            print("Attempting to access file at: \(destinationUrl.path)")
+                            
+                            do {
+                                if FileManager.default.fileExists(atPath: fileUrl.path) {
+                                    try FileManager.default.copyItem(at: fileUrl, to: destinationUrl)
+                                    print("File copied successfully.")
+                                } else {
+                                    print("Source file does not exist, cannot copy.")
+                                }
+                            } catch {
+                                print("An error occurred while copying the file: \(error.localizedDescription)")
+                            }
                             
                             // Ensure that file exists at the destination URL
                             guard FileManager.default.fileExists(atPath: destinationUrl.path) else {

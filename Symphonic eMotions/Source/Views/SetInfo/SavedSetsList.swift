@@ -84,7 +84,6 @@ struct SavedSetsList: View {
                             .background(Color.accentColor)
                             .cornerRadius(5.0)
                             .onTapGesture {
-                                
                                 //Store chosen url
                                 currentUrl = url.absoluteString
                                 //Load settngs over current

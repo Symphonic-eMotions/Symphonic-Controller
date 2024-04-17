@@ -1021,21 +1021,17 @@ final class Conductor {
             let clipLengths = track.loopLength
             let nextVariation = track.loopsToLevel[level]
             
-//            if track.trackId == "stems" {
-//                print(track.loopsToLevel)
-//                print("\(track.trackId) levelMidiClipVariation level: \(level) nextVariation: \(nextVariation)")
-//            }
-            
             let nextMIDIstartTime = calculateMIDIstartTime(for: nextVariation, in: clipLengths)
             
-            //Keep playing until bar is complete
-            //            stopNotesTrackId(for: track.trackId)
-            
-            copyMIDIfromMemory(
-                trackId: track.trackId,
-                midiStartTime: nextMIDIstartTime,
-                loopLength: clipLengths[nextVariation]
-            )
+            if nextVariation >= 0 && nextVariation < clipLengths.count {
+                copyMIDIfromMemory(
+                    trackId: track.trackId,
+                    midiStartTime: nextMIDIstartTime,
+                    loopLength: clipLengths[nextVariation]
+                )
+            } else {
+                print("Error: index 'nextVariation' (\(nextVariation)) is out of range given array 'clipLengths'.")
+            }
         }
     }
     

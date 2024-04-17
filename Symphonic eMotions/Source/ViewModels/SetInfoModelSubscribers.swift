@@ -56,7 +56,6 @@ extension SetInfoModel {
                         
                         self.tapStopAudioEngine()
                         userSettings.isSetPlaying = false
-                        self.leveling.pauseLevel = false
                     }
                 }
             }
@@ -86,13 +85,10 @@ extension SetInfoModel {
                     partFeedbackTrackID: self.partFeedback.currentTrackID.value,
                     partFeedbackPartID: self.partFeedback.currentPartID.value
                 )
-                
-                if self.leveling.pauseLevel == false {
-                    let newLevel = levelValue
-                    let currentLevel = self.leveling.currentSetLevelSubject.value
-                    if newLevel != currentLevel {
-                        self.leveling.currentSetLevelSubject.send(newLevel)
-                    }
+                let newLevel = levelValue
+                let currentLevel = self.leveling.currentSetLevelSubject.value
+                if newLevel != currentLevel {
+                    self.leveling.currentSetLevelSubject.send(newLevel)
                 }
             }
         }

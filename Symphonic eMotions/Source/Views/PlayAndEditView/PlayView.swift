@@ -146,38 +146,6 @@ struct PlayView: View {
                     )
                     .environmentObject(fileController)
                 }
-//                else {
-//                    
-//                    HStack{
-//                        //Hold level
-//                        EMButton(action: {
-//                            AnalyticsAction.holdLevel.logEvent(
-//                                sessionDisplay: sessionDisplay,
-//                                fileGroup: setInfoModel.setSettings.fileGroup,
-//                                setName: setInfoModel.setSettings.setName
-//                            )
-//                            setInfoModel.leveling.pauseLevel.toggle()
-//                        }, color: .accentColor, isSolid: setInfoModel.leveling.pauseLevel) {
-//                            Text(NSLocalizedString("Hold level", comment: ""))
-//                        }
-//                        
-//                        //End Set
-//                        EMButton(action: {
-//                            AnalyticsAction.endSet.logEvent(
-//                                sessionDisplay: sessionDisplay,
-//                                fileGroup: setInfoModel.setSettings.fileGroup,
-//                                setName: setInfoModel.setSettings.setName
-//                            )
-//                            setInfoModel.leveling.pauseLevel = false
-//                            let nrLevels = setInfoModel.setInfoState.currentInstrumentsSet.levels.count
-//                            setInfoModel.leveling.currentSetLevelSubject.value = Double(nrLevels) + 0.999
-//                            sessionDisplaySub = .stopped
-//                        }, color: .accentColor, isSolid: false) {
-//                            Text(NSLocalizedString("Finish", comment: ""))
-//                        }
-//                    }
-//                    .zIndex(100)
-//                }
                 Spacer()
             }
             .padding(.horizontal)
@@ -193,11 +161,6 @@ struct PlayView: View {
                     showMasterTrack: $showMasterTrack
                 )
             }
-            
-            
-        }
-        .onDisappear{
-            setInfoModel.leveling.pauseLevel = false
         }
     }
 }

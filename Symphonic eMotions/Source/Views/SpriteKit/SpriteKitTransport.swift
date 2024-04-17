@@ -87,7 +87,6 @@ struct SpriteKitTransport: View {
                     if userSettings.isSetPlaying {
                         setInfoModel.tapStopAudioEngine()
                         userSettings.isSetPlaying = false
-                        setInfoModel.leveling.pauseLevel = false
                     }
                     else{
                         setInfoModel.tapStartAudioEngine()

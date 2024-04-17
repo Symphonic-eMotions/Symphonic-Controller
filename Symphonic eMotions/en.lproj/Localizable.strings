@@ -44,7 +44,7 @@
 "Save set to continue" = "Please save or dismiss changes to continue";
 "Editor open" = "Editor is open";
 "Save and reopen" = "Save and reopen set to activate new midi file";
-"One part" = "Velocity is the only controller and yhus connot be removed";
+"One part" = "Velocity is the only controller and thus connot be removed";
 
 //Introduction
 "Continue" = "Continue";

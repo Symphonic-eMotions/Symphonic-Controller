@@ -38,7 +38,6 @@ struct SettingsButtonWithLongPress: View {
             AnalyticsAction.settingsLong.logEvent(sessionDisplay: .swiftUI)
             userSettings.showPartEditor.toggle()
             if userSettings.showPartEditor == true {
-                setInfoModel.leveling.pauseLevel = true
             }
         })
         //Show the settings sheet

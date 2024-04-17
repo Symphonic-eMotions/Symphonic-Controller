@@ -74,10 +74,8 @@ struct PlayerControlsView: View {
                                 sessionDisplaySub = .stopped
                                 setInfoModel.tapStopAudioEngine()
                                 userSettings.isSetPlaying = false
-                                setInfoModel.leveling.pauseLevel = false
                                 
                                 //Record part
-                                
                                 self.areTracksRecording = false
                                 setInfoModel.tapStopRecordTracks()
                             }
@@ -110,8 +108,6 @@ struct PlayerControlsView: View {
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             userSettings.isSetPlaying = false
-                            //Over ride hold level button
-                            setInfoModel.leveling.pauseLevel = false
                         }
                         else{
                             AnalyticsAction.startSet.logEvent(

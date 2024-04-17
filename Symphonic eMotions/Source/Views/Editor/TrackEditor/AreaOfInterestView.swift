@@ -52,18 +52,17 @@ struct AreaOfInterestView: View {
             ForEach(0..<gridRows, id: \.self) { row in
                 HStack(spacing: 0) {
                     ForEach(0..<gridColumns, id: \.self) { column in
-                        let cellIndex =  row * gridColumns + column
-                        
+                        let cellIndex = row * gridColumns + column
+                        let liveColor = areaOfInterestColorLocal[part.partId]?[cellIndex] ?? .gray  // Fallback to gray if nil
                         ZStack {
                             Rectangle()
-                            .frame(width: cellWidth, height: cellWidth)
-                            .foregroundColor(areaOfInterestColorLocal[part.partId]?[cellIndex])
-                            .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .onTapGesture {
-                                tapOnCell(cellIndex: cellIndex,partId: part.partId)
-                                
-                                print("\(cellIndex) \(areaOfInterestColorLocal[part.partId]![cellIndex])")
-                            }
+                                .frame(width: cellWidth, height: cellWidth)
+                                .foregroundColor(liveColor == Color("InstrumentNoColor") ? .gray : liveColor)
+                                .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                .onTapGesture {
+                                    tapOnCell(cellIndex: cellIndex, partId: part.partId)
+                                    print("\(cellIndex) \(areaOfInterestColorLocal[part.partId]?[cellIndex] ?? .gray)")  // Fallback to gray if nil
+                                }
                         }
                     }
                 }
@@ -154,7 +153,7 @@ struct AreaOfInterestView: View {
             HStack(){
                 
                 ZStack {
-                    
+                    //Select all Instr. positions from tracks
                     Rectangle()
                         .frame(width: 130, height: 34)
                         .foregroundColor(.clear)

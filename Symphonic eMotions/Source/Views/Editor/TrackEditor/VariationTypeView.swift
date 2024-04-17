@@ -56,7 +56,7 @@ struct VariationTypeView: View{
         VStack(alignment: .leading){
 
             Divider()
-            //Track is presenr in level
+            //Track is present in level
             HStack() {
 
                 ZStack {
