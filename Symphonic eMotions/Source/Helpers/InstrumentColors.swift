@@ -11,6 +11,7 @@ import SwiftUI
 struct InstrumentColors {
     
     var palet: [Color] = [
+        Color("InstrumentNoColor"),
         Color("InstrumentColor000"),
         Color("InstrumentColor001"),
         Color("InstrumentColor002"),
@@ -36,6 +37,9 @@ struct InstrumentColors {
     public func name( color: Color ) -> String {
         
         switch color {
+        
+        case Color("InstrumentNoColor"):
+            return "InstrumentNoColor"
             
         case Color("InstrumentColor000"):
             return "InstrumentColor000"

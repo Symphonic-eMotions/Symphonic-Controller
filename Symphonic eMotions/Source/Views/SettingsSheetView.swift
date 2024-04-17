@@ -11,6 +11,7 @@ struct SettingsSheetView: View {
     
     @ObservedObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showingSheet: Bool
     @State private(set) var localTempo: Int = 0
     
@@ -171,6 +172,7 @@ struct SettingsSheetView: View {
                                     fileGroup: setInfoModel.setSettings.fileGroup,
                                     setName: setInfoModel.setSettings.setName
                                 )
+                                sessionDisplaySub = .stopped
                                 setInfoModel.tapStopAudioEngine()
                                 userSettings.isSetPlaying = false
                             }
@@ -180,6 +182,7 @@ struct SettingsSheetView: View {
                                     fileGroup: setInfoModel.setSettings.fileGroup,
                                     setName: setInfoModel.setSettings.setName
                                 )
+                                sessionDisplaySub = .playing
                                 setInfoModel.tapStartAudioEngine()
                                 userSettings.isSetPlaying = true
                             }

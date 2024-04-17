@@ -11,6 +11,7 @@ struct SettingsButtonWithLongPress: View {
     
     @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
+    @Binding public var sessionDisplaySub: SessionDisplay
     
     let color: Color = .accentColor
     var isSolid: Bool = false
@@ -49,7 +50,8 @@ struct SettingsButtonWithLongPress: View {
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSheetView(
                 userSettings: userSettings,
-                setInfoModel: setInfoModel,
+                setInfoModel: setInfoModel, 
+                sessionDisplaySub: $sessionDisplaySub,
                 showingSheet: $presentSettingSheet
                 
             )

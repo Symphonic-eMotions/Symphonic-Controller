@@ -25,6 +25,14 @@ extension SetInfoModel {
             if oldLevel != currentLevel {
                 print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
                 
+                if oldLevel > currentLevel {
+                    for track in self.setSettings.tracks {
+                        if track.value.instrumentType == .exsSampler {
+                            self.conductor.stopNotesTrackId(for: track.value.trackId)
+                        }
+                    }
+                }
+                
                 // Mute and unmutes tracks to level settings
                 //
                 // Switch View logic sits in MainView / PlayView.onReceive

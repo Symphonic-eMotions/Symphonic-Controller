@@ -110,7 +110,8 @@ struct InstrumentLocationContainer: View {
                         .sheet(isPresented: $presentSettingSheet) {
                             SettingsSheetView(
                                 userSettings: userSettings,
-                                setInfoModel: setInfoModel,
+                                setInfoModel: setInfoModel, 
+                                sessionDisplaySub: $sessionDisplaySub,
                                 showingSheet: $presentSettingSheet
                             )
                             .background(Color.black.opacity(0.5))

@@ -46,7 +46,8 @@ struct PlayerControlsView: View {
                     
                     //Settings button
                     SettingsButtonWithLongPress(
-                        setInfoModel: setInfoModel
+                        setInfoModel: setInfoModel, 
+                        sessionDisplaySub: $sessionDisplaySub
                     )
                     
                     //Master FX Button only available in part editor
