@@ -190,6 +190,9 @@ final class AppUtils {
         
         let skin: InstrumentsSet.Skin = instrumentSet.skin
         
+        let setLevels: [Int] = instrumentSet.levels
+        let maxSetLevelIndex = setLevels.count
+        
         var trackIndex: Int = 0
         var tracks: OrderedDictionary<String,TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
@@ -276,6 +279,11 @@ final class AppUtils {
             
             let effects: OrderedDictionary<Int,TrackEffectsSettings> = TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)
             
+            //Remove levels higher than after level so we get no new fade ins
+            let filteredLevels = trackLoaded.levels.filter { $0 <= maxSetLevelIndex }
+            
+            print("setSettings track \(trackLoaded.instrumentName) filteredLevels: \(filteredLevels)")
+            
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackIndex: trackIndex,
@@ -305,7 +313,7 @@ final class AppUtils {
                     areaOfInterest: firstAreaOfInterest,
                     cellsToGrid: loopsToGrid
                 ),
-                levels: trackLoaded.levels,
+                levels: filteredLevels,
                 parts: parts,
                 effects: effects
             )

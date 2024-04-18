@@ -37,8 +37,6 @@ struct SettingsButtonWithLongPress: View {
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
             AnalyticsAction.settingsLong.logEvent(sessionDisplay: .swiftUI)
             userSettings.showPartEditor.toggle()
-            if userSettings.showPartEditor == true {
-            }
         })
         //Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {

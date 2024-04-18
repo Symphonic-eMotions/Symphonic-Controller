@@ -24,7 +24,7 @@ struct PlayerControlsView: View {
     @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool
     
-    @State var areTracksRecording: Bool = false
+//    @State var areTracksRecording: Bool = false
     
     var body: some View {
         HStack(alignment: .center, spacing: 32.0) {
@@ -67,33 +67,40 @@ struct PlayerControlsView: View {
                     //In creator mode you can record all instruments separate
                     if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
                         
-                        //Record tracks to file start stop
                         EMButton(action: {
-                            
-                            if areTracksRecording {
-                                sessionDisplaySub = .stopped
-                                setInfoModel.tapStopAudioEngine()
-                                userSettings.isSetPlaying = false
-                                
-                                //Record part
-                                self.areTracksRecording = false
-                                setInfoModel.tapStopRecordTracks()
-                            }
-                            else{
-                                
-                                sessionDisplaySub = .playing
-                                setInfoModel.tapStartAudioEngine()
-                                userSettings.isSetPlaying = true
-                                
-                                //Record part
-                                setInfoModel.tapAStartRecordTracks()
-                                self.areTracksRecording = true
-                            }
-                            
-                        }, color: .accentColor) {
-                            Image(systemName: areTracksRecording ? "record.circle" : "record.circle.fill")
-                                    .foregroundColor(areTracksRecording ? .red : .primary)
+                            userSettings.showPartEditor.toggle()
+                        }, color: .accentColor, isSolid: false) {
+                            Image(systemName: userSettings.showPartEditor ? "wrench.adjustable" : "wrench.adjustable.fill")
                         }
+                            
+                        
+                        //Record tracks to file start stop
+//                        EMButton(action: {
+//                            
+//                            if areTracksRecording {
+//                                sessionDisplaySub = .stopped
+//                                setInfoModel.tapStopAudioEngine()
+//                                userSettings.isSetPlaying = false
+//                                
+//                                //Record part
+//                                self.areTracksRecording = false
+//                                setInfoModel.tapStopRecordTracks()
+//                            }
+//                            else{
+//                                
+//                                sessionDisplaySub = .playing
+//                                setInfoModel.tapStartAudioEngine()
+//                                userSettings.isSetPlaying = true
+//                                
+//                                //Record part
+//                                setInfoModel.tapAStartRecordTracks()
+//                                self.areTracksRecording = true
+//                            }
+//                            
+//                        }, color: .accentColor) {
+//                            Image(systemName: areTracksRecording ? "record.circle" : "record.circle.fill")
+//                                    .foregroundColor(areTracksRecording ? .red : .primary)
+//                        }
                     }
                     
                     //Start stop

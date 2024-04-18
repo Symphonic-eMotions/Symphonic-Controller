@@ -29,6 +29,8 @@ struct SoundSourceView: View {
     //Audio files
     @State var importing = false
     @State var isNewAudio: Bool = false
+    @State private var showOverwriteAlert = false
+    @State private var directoryName: String
     
     init(
         setInfoModel: SetInfoModel,
@@ -46,6 +48,7 @@ struct SoundSourceView: View {
         _audioFiles = State(initialValue: currentTrack.audioFiles)
         _selectedExsFile = State(initialValue: currentTrack.exsFile)
         _selectedExsFileMemory = State(initialValue: currentTrack.exsFile)
+        _directoryName = State(initialValue: setInfoModel.setSettings.filesPath)
     }
     
     private func toggleInfoVisibility(for key: String) {
@@ -236,12 +239,16 @@ struct SoundSourceView: View {
                             }
                         }
                     }
-                    .fileImporter(isPresented: $importing, allowedContentTypes: [.wav,.aiff]) { file in
+                    .fileImporter(
+                        isPresented: $importing,
+                        allowedContentTypes: [.wav,.aiff]
+                    ) { file in
                         do {
                             //Be sure about pathname
                             //TODO: If pathname has Project folder suggest to add to set
                             let fileUrl: URL = try file.get()
                             let fileName = fileUrl.deletingPathExtension().lastPathComponent
+                            directoryName = fileUrl.deletingLastPathComponent().lastPathComponent
                             let fileExtension = fileUrl.pathExtension
                             let destinationFileName = "\(fileName).\(fileExtension)"
                             let documentsDirectory = try FileManager.default.url(
@@ -251,7 +258,11 @@ struct SoundSourceView: View {
                                 create: false
                             )
                             let destinationUrl = documentsDirectory.appendingPathComponent(destinationFileName)
-
+                            
+                            if directoryName != setInfoModel.setSettings.filesPath {
+                                showOverwriteAlert.toggle()
+                            }
+                            
                             print("Attempting to access file at: \(destinationUrl.path)")
                             
                             do {
@@ -294,6 +305,19 @@ struct SoundSourceView: View {
                             
                             print ("SoundSourceView error reading: \(error.localizedDescription)")
                         }
+                    }
+                    .alert(isPresented: $showOverwriteAlert) {
+                        Alert(
+                            title: Text("Update Project Path?"),
+                            message: Text("Do you want to update the project path with the folder name '\(directoryName)'?"),
+                            primaryButton: .default(Text("Update")) {
+                                // Update project path logic here
+                                print("Project path updated with \(directoryName)")
+                                
+                                setInfoModel.setSettings.filesPath = directoryName
+                            },
+                            secondaryButton: .cancel()
+                        )
                     }
                     
                 }

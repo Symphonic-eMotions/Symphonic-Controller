@@ -55,8 +55,8 @@ extension SetInfoModel {
         //New nodeSetting
         let newNodeSetting = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
             minimalLevel: 0.1,
-            rampSpeed: 0.15,
-            rampSpeedDown: 0.14
+            rampSpeed: 0.54,
+            rampSpeedDown: 0.27
         )
         
         //New damperTarget
@@ -127,9 +127,9 @@ extension SetInfoModel {
             trackId: trackId,
             trackIndex: 0,
             trackName: "New \(trackType.rawValue)",
-            noteSource: .noteNumbers,
+            noteSource: .midiFile,
             startType: .loopedTransport,
-            variationType: .variationByLevel,
+            variationType: .variationByPosition,
             instrumentType: .audioBuffer,
             exsFile: ExsFiles(rawValue: "trigger")!,
             audioFiles: [],
@@ -149,7 +149,7 @@ extension SetInfoModel {
             loopsToLevel: [],
             loopsToGrid: [],
             loopsToGridMapped: [],
-            levels: (0...self.setSettings.levels.count-1).map { $0 },
+            levels: (0...self.setSettings.levels.count).map { $0 },
             parts: [partId: newPart],
             effects: effects
         )

@@ -67,7 +67,7 @@ struct InLevelView: View{
                     }
                 }
                 
-                ForEach(0..<setInfoModel.setSettings.levels.count, id: \.self) { level in
+                ForEach(0..<(setInfoModel.setSettings.levels.count+1), id: \.self) { level in
                     
                     //This should be based of a @State
                     let inLevel: Bool = (tLevels.contains(level) == true)
@@ -77,8 +77,7 @@ struct InLevelView: View{
                         Rectangle()
                         .frame(width: 50, height: 50)
                         .foregroundColor(.clear)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-//                        .foregroundColor(inLevel ? color : .white)
+                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(level == setInfoModel.setSettings.levels.count ? .red : .white, lineWidth: 3))
                         .background(inLevel ? color : .clear)
                     
                         
@@ -86,9 +85,6 @@ struct InLevelView: View{
                             .foregroundColor(inLevel ? .white : .gray)
                     }
                     .onTapGesture {
-                        //For saving
-//                        setInfoModel.setSettings.updateLevelIndex(trackId: trackId, level: level)
-                        
                         //Local state
                         if self.tLevels.contains(level) {
                             self.tLevels.removeAll { $0 == level }
@@ -96,9 +92,6 @@ struct InLevelView: View{
                         else {
                             self.tLevels.append(level)
                         }
-                        
-                        print("tLevels: \(tLevels)")
-                        
                         //Store to disk
                         currentTrack.levels = tLevels
                         //Let binding know

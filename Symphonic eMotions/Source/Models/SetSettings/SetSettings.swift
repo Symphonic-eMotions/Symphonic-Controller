@@ -189,23 +189,4 @@ class SetSettings: Identifiable, ObservableObject {
             }
         }
     }
-    
-    func resetRampSetting(version: Int){
-        
-        for( index, _ ) in tracks {
-            
-            for( partIndex, _ ) in tracks[index]!.parts {
-                
-                if version == 2 {
-                    tracks[index]!.parts[partIndex]?.rampUp = 0.0323
-                    tracks[index]!.parts[partIndex]?.rampDown = 0.3190
-                }
-                //Version is 1 for now
-                else {
-                    tracks[index]!.parts[partIndex]?.rampUp = 0.0008
-                    tracks[index]!.parts[partIndex]?.rampDown = 0.0028
-                }
-            }
-        }
-    }
 }
