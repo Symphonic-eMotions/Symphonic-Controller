@@ -75,70 +75,73 @@ struct PlayView: View {
                 }
                 //Video preview and instrument locations
                 GeometryReader { geometry in
-                    ZStack{
-                        
-                        /*
-                         * UserViews
-                         */
-                        
-                        //Editor
-                        if userSettings.showPartEditor  {
-                            EditGridView(setInfoModel: setInfoModel)
-                        }
-                        else {
-                            
-                            //PlayView
-                            if setInfoModel.setSettings.userViews.contains(.playView) {
-                                if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
-                                    PlayGridView(setInfoModel: setInfoModel)
-                                } else {
-                                    DontPlayGridView()
+                    VStack{
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            ZStack{
+                                
+                                //Editor
+                                if userSettings.showPartEditor  {
+                                    EditGridView(setInfoModel: setInfoModel)
                                 }
-                            }
-                            
-                            //LevelPlayer
-                            else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
-                                LevelPlayer(
-                                    setInfoModel: setInfoModel,
-                                    columnOpacityController: columnOpacityController,
-                                    cellOpacityController: cellOpacityController,
-                                    gridModel: gridModel,
-                                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
-                                    geometry: geometry
+                                else {
+                                    
+                                    //PlayView
+                                    if setInfoModel.setSettings.userViews.contains(.playView) {
+                                        if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
+                                            PlayGridView(setInfoModel: setInfoModel)
+                                        } else {
+                                            DontPlayGridView()
+                                        }
+                                    }
+                                    
+                                    //LevelPlayer
+                                    else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
+                                        LevelPlayer(
+                                            setInfoModel: setInfoModel,
+                                            columnOpacityController: columnOpacityController,
+                                            cellOpacityController: cellOpacityController,
+                                            gridModel: gridModel,
+                                            showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
+                                            geometry: geometry
+                                        )
+                                        .zIndex(showLevelPlayerFullScreen ? 200 : 0)
+                                        .frame(width: geometry.size.width, height: geometry.size.height)
+                                        .onTapGesture {
+                                            presentSettingSheet.toggle()
+                                        }
+                                        .sheet(isPresented: $presentSettingSheet) {
+                                            SettingsSheetView(
+                                                userSettings: userSettings,
+                                                setInfoModel: setInfoModel,
+                                                sessionDisplaySub: $sessionDisplaySub,
+                                                showingSheet: $presentSettingSheet
+                                            )
+                                        }
+                                    }
+                                }
+                                
+                                //Video
+                                VideoPreviewViewRepresetable(
+                                    setInfoModel: setInfoModel
                                 )
-                                .zIndex(showLevelPlayerFullScreen ? 200 : 0)
-                                .frame(width: geometry.size.width, height: geometry.size.height)
-                                .onTapGesture {
-                                    presentSettingSheet.toggle()
-                                }
-                                .sheet(isPresented: $presentSettingSheet) {
-                                    SettingsSheetView(
-                                        userSettings: userSettings,
-                                        setInfoModel: setInfoModel, 
-                                        sessionDisplaySub: $sessionDisplaySub,
-                                        showingSheet: $presentSettingSheet
-                                    )
-                                }
+                                //.frame(width: 180.0, height: 120.0)
+                                .aspectRatio(1.77777, contentMode: .fit)
+                                .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                                .cornerRadius(10.0)
+                                .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                             }
+                            Spacer()
                         }
-                        
-                        //Video
-                        VideoPreviewViewRepresetable(
-                            setInfoModel: setInfoModel
-                        )
-                        //.frame(width: 180.0, height: 120.0)
-                        .aspectRatio(1.77777, contentMode: .fit)
-                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                        .cornerRadius(10.0)
-                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
+                        Spacer()
                     }
                 }
                 .zIndex(110)
                 
-                //Instrument Part editor
                 if userSettings.showPartEditor {
 
-                    //Editing modee visual parameter value feedback
+                    //Editor below grid editor
                     PartFeedbackView(
                         setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
