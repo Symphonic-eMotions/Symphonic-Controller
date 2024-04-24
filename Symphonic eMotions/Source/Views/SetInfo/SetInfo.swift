@@ -65,7 +65,7 @@ struct SetInfo: View {
                 //Set Info
                 else{
                     
-                    //Titla
+                    //Title set name
                     Text("Set \(setInfoModel.setInfoLocalState.setName)")
                         .font(.largeTitle)
                         .fontWeight(.regular)
@@ -81,7 +81,6 @@ struct SetInfo: View {
                             setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
                             //Save current location
                             userSettings.currentUrl = setInfoModel.setInfoLocalState.setConfig
-                            
                             print("Setting sessionDisplay to .swiftUI")
                             sessionDisplay = .swiftUI
                         }

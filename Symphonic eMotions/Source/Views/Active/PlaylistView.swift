@@ -51,15 +51,15 @@ struct PlaylistView: View {
                             
                             print("Load Header Playlist file \(url.absoluteString)")
                             
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
+                                //Change the View to the selected view
+                                print("Setting Playlist sessionDisplay to .playlists")
+                                sessionDisplay = .playlists
+                            }
                             
                             //Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = url
                             setInfoModel.setSettings.currentPlaylist = viewModel.playlist
-                            
-                            //Change the View to the selected view
-                            print("Setting Playlist sessionDisplay to .playlists")
-                            sessionDisplay = .playlists
                         }
                     }
                     Spacer()
@@ -133,15 +133,14 @@ struct PlaylistView: View {
                                 print("Load Playlist file \(url)")
                                 
                                 //Load settngs over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
+                                    print("Setting sessionDisplay to .playlist")
+                                    sessionDisplay = .playlists
+                                }
                                 
                                 //Keep track for next in playlist after loading new set
                                 setInfoModel.setSettings.currentSetInList = url
                                 setInfoModel.setSettings.currentPlaylist = viewModel.playlist
-                                
-                                print("Setting sessionDisplay to .playlist")
-                                sessionDisplay = .playlists
-                                
                             }
                             .onLongPressGesture {
                                 
@@ -149,14 +148,12 @@ struct PlaylistView: View {
                                 userSettings.currentUrl = url.absoluteString
                                 
                                 //Load settings over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url))
-                                
-                                //Change the View
-                                sessionDisplay = .setInfo
-                                sessionDisplaySub = .playListEditor
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
+                                    //Change the View
+                                    sessionDisplay = .setInfo
+                                    sessionDisplaySub = .playListEditor
+                                }
                             }
-                            
-                            
                         }
                         .frame(height: 55)
                     }

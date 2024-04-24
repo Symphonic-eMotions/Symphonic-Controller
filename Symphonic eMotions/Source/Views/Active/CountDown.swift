@@ -53,13 +53,14 @@ struct CountDown: View {
                             let thisPlaylist = setInfoModel.setSettings.currentPlaylist
                             
                             //Load settngs over current
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl))
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl)){
+                                print("Setting sessionDisplay to .playlist")
+                                sessionDisplay = .playlists
+                            }
                             
                             //Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = nextUrl
                             setInfoModel.setSettings.currentPlaylist = thisPlaylist
-                            print("Setting sessionDisplay to .playlist")
-                            sessionDisplay = .playlists
                         }
                     }
                 }
@@ -86,14 +87,13 @@ struct CountDown: View {
                 userSettings.currentUrl = setInfoModel.setSettings.currentSetInList.absoluteString
                 
                 //Load settngs over current
-                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList))
-                
+                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList)){
+                    print("Countdown Setting sessionPlaylist to .playlists")
+                    sessionDisplay = .playlists
+                }
                 //Keep track for next in playlist after loading new set
                 setInfoModel.setSettings.currentSetInList = thisSet
                 setInfoModel.setSettings.currentPlaylist = thisPlaylist
-                
-                print("Countdown Setting sessionPlaylist to .playlists")
-                sessionDisplay = .playlists
             }
         }
     }
