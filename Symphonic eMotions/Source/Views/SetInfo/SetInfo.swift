@@ -65,10 +65,11 @@ struct SetInfo: View {
                 //Set Info
                 else{
                     
+                    //Titla
                     Text("Set \(setInfoModel.setInfoLocalState.setName)")
                         .font(.largeTitle)
                         .fontWeight(.regular)
-                    
+                    //Main play set button
                     HStack{
                         Spacer()
                         SetLoadAndPlay(setInfoModel: setInfoModel)
