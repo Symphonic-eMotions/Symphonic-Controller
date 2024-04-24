@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7C00F04B29CB4606003DF0C8 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */; };
 		7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C041D692A0990080031FF54 /* AddToPlaylistView.swift */; };
-		7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */; };
 		7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */; };
 		7C0C9F372B8FDF6700DBD142 /* AmplitudeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */; };
 		7C0C9F392B9874BF00DBD142 /* LevelProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */; };
@@ -54,9 +53,6 @@
 		7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E22BBFFF8A00629DC5 /* UserView.swift */; };
 		7C6204E52BC06C4100629DC5 /* SelectUserViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */; };
 		7C6228412BB8705E00524647 /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6228402BB8705E00524647 /* GridModel.swift */; };
-		7C645CA529A91260000C5861 /* CellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C645CA429A91260000C5861 /* CellScene.swift */; };
-		7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA829AF4BB9000C5861 /* MagicParticle.sks */; };
-		7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C645CA929AF4BB9000C5861 /* Assets.xcassets */; };
 		7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C67D15F270F8B83009122BF /* SoundpipeAudioKit */; };
 		7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */; };
 		7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6801B82875A24A00688C2E /* PhaserEffect.swift */; };
@@ -107,7 +103,6 @@
 		7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */; };
 		7C9FB76D2A498F2B00490C59 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76C2A498F2B00490C59 /* LightView.swift */; };
 		7C9FB76F2A49AEB300490C59 /* MovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB76E2A49AEB300490C59 /* MovementView.swift */; };
-		7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7702A49E10400490C59 /* AmoebaView.swift */; };
 		7C9FB7732A49E33400490C59 /* AmoebaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7722A49E33400490C59 /* AmoebaScene.swift */; };
 		7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */; };
 		7C9FB7772A4AE95C00490C59 /* SetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */; };
@@ -115,9 +110,7 @@
 		7C9FB77B2A4AED3400490C59 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77A2A4AED3400490C59 /* UserSettings.swift */; };
 		7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77C2A4B698300490C59 /* PlaylistView.swift */; };
 		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
-		7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */; };
-		7CA843ED2A65D74600FA1E47 /* InstrumentLocationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */; };
-		7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */; };
+		7CAAD35D2BD39A8E0059E2E4 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAD35C2BD39A8E0059E2E4 /* StartView.swift */; };
 		7CAB35CB2AD02E8500659002 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 7CAB35CA2AD02E8500659002 /* Videos */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
@@ -147,8 +140,6 @@
 		7CDC117E2BA3BC8600CE8C07 /* LevelPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
-		7CF327C52989504F003D33D3 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C42989504F003D33D3 /* Skin.swift */; };
-		7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF327C629899166003D33D3 /* SpriteKitView.swift */; };
 		7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */; };
 		7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */; };
 		7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */; };
@@ -210,7 +201,6 @@
 /* Begin PBXFileReference section */
 		7C00F04A29CB4606003DF0C8 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		7C041D692A0990080031FF54 /* AddToPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistView.swift; sourceTree = "<group>"; };
-		7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTransport.swift; sourceTree = "<group>"; };
 		7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBasedEnvelope.swift; sourceTree = "<group>"; };
 		7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeController.swift; sourceTree = "<group>"; };
 		7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelProgressController.swift; sourceTree = "<group>"; };
@@ -255,9 +245,6 @@
 		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserViews.swift; sourceTree = "<group>"; };
 		7C6228402BB8705E00524647 /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
-		7C645CA429A91260000C5861 /* CellScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScene.swift; sourceTree = "<group>"; };
-		7C645CA829AF4BB9000C5861 /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
-		7C645CA929AF4BB9000C5861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostelloReverbEffect.swift; sourceTree = "<group>"; };
 		7C6801B82875A24A00688C2E /* PhaserEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaserEffect.swift; sourceTree = "<group>"; };
 		7C69ED39295350750009F382 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -308,7 +295,6 @@
 		7C9FB76A2A45862800490C59 /* VolumeButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeButtonsView.swift; sourceTree = "<group>"; };
 		7C9FB76C2A498F2B00490C59 /* LightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		7C9FB76E2A49AEB300490C59 /* MovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementView.swift; sourceTree = "<group>"; };
-		7C9FB7702A49E10400490C59 /* AmoebaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmoebaView.swift; sourceTree = "<group>"; };
 		7C9FB7722A49E33400490C59 /* AmoebaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmoebaScene.swift; sourceTree = "<group>"; };
 		7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AmoebaShader.fsh; sourceTree = "<group>"; };
 		7C9FB7762A4AE95C00490C59 /* SetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -316,9 +302,7 @@
 		7C9FB77A2A4AED3400490C59 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = ../Views/Demo/UserSettings.swift; sourceTree = "<group>"; };
 		7C9FB77C2A4B698300490C59 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
-		7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocations.swift; sourceTree = "<group>"; };
-		7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationScene.swift; sourceTree = "<group>"; };
-		7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentLocationContainer.swift; sourceTree = "<group>"; };
+		7CAAD35C2BD39A8E0059E2E4 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		7CAB35CA2AD02E8500659002 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
 		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
@@ -349,8 +333,6 @@
 		7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelPlayer.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
-		7CF327C42989504F003D33D3 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
-		7CF327C629899166003D33D3 /* SpriteKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitView.swift; sourceTree = "<group>"; };
 		7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberPositionsView.swift; sourceTree = "<group>"; };
 		7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseWidthSynth.swift; sourceTree = "<group>"; };
 		7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseSynth.swift; sourceTree = "<group>"; };
@@ -389,7 +371,7 @@
 		C069590126B4E029002EB522 /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
 		C069590326B4E0C7002EB522 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		C069590526B4E150002EB522 /* InstrumentsSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentsSet.swift; sourceTree = "<group>"; };
-		C069591C26B4E6A2002EB522 /* ImageDifference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDifference.swift; sourceTree = "<group>"; };
+		C069591C26B4E6A2002EB522 /* ImageDifference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDifference.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C069591E26B4E77E002EB522 /* AreaValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaValues.swift; sourceTree = "<group>"; };
 		C069592026B4E8FC002EB522 /* PlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGridView.swift; sourceTree = "<group>"; };
 		C069592226B4F2F6002EB522 /* EMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMButton.swift; sourceTree = "<group>"; };
@@ -485,7 +467,6 @@
 				7C7E4FDD2A69376D007BEF14 /* DamperTarget.swift */,
 				C0AFDD022705BC24006EF64F /* Effect.swift */,
 				7C700EF72BB4423B00C8F700 /* SetEffect.swift */,
-				7CF327C42989504F003D33D3 /* Skin.swift */,
 				7C6204E22BBFFF8A00629DC5 /* UserView.swift */,
 			);
 			path = InstrumentSet;
@@ -528,7 +509,6 @@
 				7C9FB76C2A498F2B00490C59 /* LightView.swift */,
 				7C9FB76E2A49AEB300490C59 /* MovementView.swift */,
 				7CFD4B692A56FA8C005ACEF3 /* FeedbackButtonsView.swift */,
-				7C9FB7702A49E10400490C59 /* AmoebaView.swift */,
 				7CFD4B652A55E589005ACEF3 /* WarpHoleView.swift */,
 				7C9FB7722A49E33400490C59 /* AmoebaScene.swift */,
 				7C9FB7742A49E90A00490C59 /* AmoebaShader.fsh */,
@@ -697,21 +677,6 @@
 			path = SetSettings;
 			sourceTree = "<group>";
 		};
-		7CFA00A629A75912001D8A5D /* SpriteKit */ = {
-			isa = PBXGroup;
-			children = (
-				7C645CA429A91260000C5861 /* CellScene.swift */,
-				7CF327C629899166003D33D3 /* SpriteKitView.swift */,
-				7C07FBCF2992F921002F9C5B /* SpriteKitTransport.swift */,
-				7C645CA829AF4BB9000C5861 /* MagicParticle.sks */,
-				7C645CA929AF4BB9000C5861 /* Assets.xcassets */,
-				7CA843EA2A65A5A600FA1E47 /* InstrumentLocations.swift */,
-				7CA843EE2A65DB2000FA1E47 /* InstrumentLocationContainer.swift */,
-				7CA843EC2A65D74600FA1E47 /* InstrumentLocationScene.swift */,
-			);
-			path = SpriteKit;
-			sourceTree = "<group>";
-		};
 		7CFA00A729A759D0001D8A5D /* StateObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +716,7 @@
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
+				7CAAD35C2BD39A8E0059E2E4 /* StartView.swift */,
 			);
 			path = PlayAndEditView;
 			sourceTree = "<group>";
@@ -877,7 +843,6 @@
 				7C109D7F2851FF5C008E08D2 /* LevelView */,
 				C06958F926B4D9E4002EB522 /* PlayAndEditView */,
 				7CDC117F2BA47A9600CE8C07 /* LevelPlayer */,
-				7CFA00A629A75912001D8A5D /* SpriteKit */,
 				7CCDE10228E2C61300343920 /* MasterAndEffectView */,
 				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				C084FFEB26B3122C009A4D0C /* MainView.swift */,
@@ -1004,9 +969,7 @@
 				7CB2B9532A0D0E0500876CCD /* person in Resources */,
 				7CD418032A095388006831CE /* Localizable.strings in Resources */,
 				7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */,
-				7C645CAA29AF4BB9000C5861 /* MagicParticle.sks in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
-				7C645CAB29AF4BB9000C5861 /* Assets.xcassets in Resources */,
 				7C3CD115296D952A00A4C522 /* effects.json in Resources */,
 				7C513EEA2B07D4BF00AAC779 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1019,7 +982,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CF327C729899166003D33D3 /* SpriteKitView.swift in Sources */,
 				7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */,
 				7C32342E2B6A977400D0E371 /* FileCache.swift in Sources */,
 				7CFA00A329A74FA2001D8A5D /* MasterTrackEffectsSettings.swift in Sources */,
@@ -1027,12 +989,10 @@
 				C069591D26B4E6A2002EB522 /* ImageDifference.swift in Sources */,
 				7C8D758C2A28ABBA00DF2417 /* MinimalLevelView.swift in Sources */,
 				C0C512AA27075EBE00DE3393 /* EaseInOutCubicDamper.swift in Sources */,
-				7C9FB7712A49E10400490C59 /* AmoebaView.swift in Sources */,
 				C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */,
 				7C0D5CD1273C8E5100F6EEAD /* Leveling.swift in Sources */,
 				7CDC117C2BA3BC8600CE8C07 /* SVGImageView.swift in Sources */,
 				7C9FB77B2A4AED3400490C59 /* UserSettings.swift in Sources */,
-				7C645CA529A91260000C5861 /* CellScene.swift in Sources */,
 				7C70DD292AD436FE0024BD67 /* TrackEffectsViewModel.swift in Sources */,
 				7C0C9F332B8D441900DBD142 /* TimeBasedEnvelope.swift in Sources */,
 				7C6228412BB8705E00524647 /* GridModel.swift in Sources */,
@@ -1041,7 +1001,6 @@
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
 				C084FFEC26B3122C009A4D0C /* MainView.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
-				7CA843EB2A65A5A600FA1E47 /* InstrumentLocations.swift in Sources */,
 				7C7E4FDE2A69376D007BEF14 /* DamperTarget.swift in Sources */,
 				7CF50F4529ED52B80016BAF4 /* Forwarders.swift in Sources */,
 				7C0C9F392B9874BF00DBD142 /* LevelProgressController.swift in Sources */,
@@ -1049,7 +1008,6 @@
 				7C8C3D9B28D305DA0051BAC9 /* MainViewModel.swift in Sources */,
 				7CCFE4A92A03DC77008AE3EE /* PlayListsView.swift in Sources */,
 				7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */,
-				7CF327C52989504F003D33D3 /* Skin.swift in Sources */,
 				7CFD4B6A2A56FA8C005ACEF3 /* FeedbackButtonsView.swift in Sources */,
 				7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */,
 				7CFA00A129A74FA2001D8A5D /* PartSettings.swift in Sources */,
@@ -1071,7 +1029,6 @@
 				7CF50F4F29EDEC770016BAF4 /* NoteSourceAndEffectsView.swift in Sources */,
 				C0AFDD032705BC24006EF64F /* Effect.swift in Sources */,
 				7C1FB0BA29E45C9F00621909 /* MidiFiles.swift in Sources */,
-				7C07FBD02992F921002F9C5B /* SpriteKitTransport.swift in Sources */,
 				7CDC117E2BA3BC8600CE8C07 /* LevelPlayer.swift in Sources */,
 				7CCCBF472BC5F1D400C78F44 /* CellOpacityController.swift in Sources */,
 				7C29AA1B2A4F4AB70070D901 /* ValueDamper.swift in Sources */,
@@ -1112,7 +1069,6 @@
 				7C8D75902A28E0B900DF2417 /* NotesSequenceType.swift in Sources */,
 				7C2DDCB92A04F858001FE14F /* AreaOfInterestView.swift in Sources */,
 				7C1FB0B429DE0B2600621909 /* MidiClipLevelView.swift in Sources */,
-				7CA843EF2A65DB2000FA1E47 /* InstrumentLocationContainer.swift in Sources */,
 				7C7756F628C7964200E73B14 /* MasterTrackView.swift in Sources */,
 				7C7E4FCE2A670E3E007BEF14 /* TrackEffectsSettings.swift in Sources */,
 				7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */,
@@ -1138,12 +1094,12 @@
 				7C109D812851FF88008E08D2 /* LevelView.swift in Sources */,
 				7CF50F4729ED54F70016BAF4 /* NoteNumberPLayer.swift in Sources */,
 				7C259F15271319FF00B17A9E /* CompressorEffect.swift in Sources */,
+				7CAAD35D2BD39A8E0059E2E4 /* StartView.swift in Sources */,
 				C069590426B4E0C7002EB522 /* Track.swift in Sources */,
 				7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */,
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,
 				7C6A8CF62A4481750056BED3 /* IntroductionImage.swift in Sources */,
-				7CA843ED2A65D74600FA1E47 /* InstrumentLocationScene.swift in Sources */,
 				7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */,
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CF50F5329EEBECD0016BAF4 /* NoteNumberLevelView.swift in Sources */,
@@ -1366,10 +1322,9 @@
 				);
 				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1408,10 +1363,9 @@
 				);
 				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "nl.symphonic-emotions.seproMacIntern";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

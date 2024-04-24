@@ -47,58 +47,6 @@ extension Conductor {
             effect.apply(value: valueToApply, with: damperTarget)
         }
     
-    internal func forwardSpriteKit(
-        trackNr: Int,
-        partNr: Int,
-        ramped: Double,
-        areaOfInterest: [Int],
-        maxIndex: Int,
-        mappedIndex: Int
-    ) -> Void {
-        
-        //        let allCells = areaOfInterest.filter { int in
-        //            return int == 1
-        //        }
-        //Reverse maxIndexes for inverted Y axis in SpriteKit
-        //        let reversed = reverseNumber(number: maxIndexRaw, min: 0, max: allCells.count - 1)
-        
-        //        print("*** forwardSpriteKit trackNr: \(trackNr) partNr: \(partNr) ramped: \(ramped) areaOfInterest: \(areaOfInterest) maxIndex: \(maxIndex) mappedIndex: \(mappedIndex) ")
-        //
-        if trackNr == 0 {
-            if partNr == 0 {
-                spriteKitParts0a.send((maxIndex,mappedIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts0b.send((maxIndex,mappedIndex,ramped))
-            }
-        }
-        else if trackNr == 1 {
-            if partNr == 0 {
-                spriteKitParts1a.send((maxIndex,mappedIndex,ramped))
-                
-            }
-            else if partNr == 1 {
-                spriteKitParts1b.send((maxIndex,mappedIndex,ramped))
-            }
-        }
-        else if trackNr == 2 {
-            if partNr == 0 {
-                spriteKitParts2a.send((maxIndex,mappedIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts2b.send((maxIndex,mappedIndex,ramped))
-            }
-        }
-        else if trackNr == 3 {
-            if partNr == 0 {
-                spriteKitParts3a.send((maxIndex,mappedIndex,ramped))
-            }
-            else if partNr == 1 {
-                spriteKitParts3b.send((maxIndex,mappedIndex,ramped))
-            }
-        }
-    }
-    
     //Forward damper data
     internal func forward(
         value: Double,

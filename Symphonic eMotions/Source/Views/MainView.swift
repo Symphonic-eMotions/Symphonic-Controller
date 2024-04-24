@@ -48,17 +48,6 @@ struct MainView: View {
     
     var body: some View {
         
-        //SpriteKit (2D Game) interface
-        if sessionDisplay == .spriteKit {
-            
-            InstrumentLocationContainer(
-                setInfoModel: setInfoModel,
-                sessionDisplay: $sessionDisplay,
-                sessionDisplaySub: $sessionDisplaySub
-            )
-            .padding(.top, 20)
-        }
-        
         //Playlist full screen count down
         if sessionDisplay == .countDown {
             
@@ -120,7 +109,7 @@ struct MainView: View {
                     //Main navigation
                     var items = [
                         (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
-                        //                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
+//                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
                         (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
                     ]
                     

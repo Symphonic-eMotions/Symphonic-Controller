@@ -41,6 +41,7 @@ class SetSettings: Identifiable, ObservableObject {
     //Set Name
     var setName: String
     var setPath: String
+    var imagePrefix: String
     var customName: String
     var published: Bool
     var fileGroup: FileGroup
@@ -81,7 +82,6 @@ class SetSettings: Identifiable, ObservableObject {
         }
     }
     
-    var skins: InstrumentsSet.Skin
     var semVersion: String
     
     init(
@@ -91,6 +91,7 @@ class SetSettings: Identifiable, ObservableObject {
         published: Bool,
         fileGroup: FileGroup,
         filesPath: String,
+        imagePrefix: String,
         setURL: URL,
         hasTempo: Bool,
         userViews: [UserView],
@@ -100,7 +101,6 @@ class SetSettings: Identifiable, ObservableObject {
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
-        skins: InstrumentsSet.Skin,
         semVersion: String
     ){
         self.setName = setName
@@ -109,6 +109,7 @@ class SetSettings: Identifiable, ObservableObject {
         self.published = published
         self.fileGroup = fileGroup
         self.filesPath = filesPath
+        self.imagePrefix = imagePrefix
         self.setURL = setURL
         self.hasTempo = hasTempo
         self.userViews = userViews
@@ -118,7 +119,6 @@ class SetSettings: Identifiable, ObservableObject {
         self.levels = levels
         self.masterEffects = masterEffects
         self.tracks = tracks
-        self.skins = skins
         self.semVersion = semVersion
         
         //In case of json error we need an "empty" instrumentsSet

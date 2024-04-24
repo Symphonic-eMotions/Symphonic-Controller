@@ -101,6 +101,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case semVersion
         case fileGroup
         case filesPath = "setPath"
+        case imagePrefix
         case userViews
         case bpm = "setBPM"
         case hasTempo
@@ -121,11 +122,11 @@ struct InstrumentsSet: Identifiable, Decodable {
     let semVersion: String?
     var fileGroup: FileGroup?
     let filesPath: String
+    let imagePrefix: String
     var userViews: [UserView]
     //Sequencer objects variables
     var bpm: Double
     let hasTempo: Bool
-    var skin: Skin
     let timeSignature: Int
     //Master effect rack group
     let masterTrackEffects: [Track.Effect]
@@ -147,6 +148,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         semVersion = try container.decodeIfPresent(String.self, forKey: .semVersion) ?? "1.0.0"
         fileGroup = try container.decodeIfPresent(FileGroup.self, forKey: .fileGroup)
         filesPath = try container.decode(String.self, forKey: .filesPath)
+        imagePrefix = try container.decodeIfPresent(String.self, forKey: .imagePrefix) ?? "Introductie"
         userViews = try container.decodeIfPresent([UserView].self, forKey: .userViews) ?? [.playView]
         bpm = try container.decode(Double.self, forKey: .bpm)
         hasTempo = try container.decode(Bool.self, forKey: .hasTempo)
@@ -158,42 +160,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         levels = try container.decode([Int].self, forKey: .levels)
         setEffects = try container.decodeIfPresent([SetEffect].self, forKey: .setEffects)
         tracks = try container.decode([Track].self, forKey: .tracks)
-        if let skinRaw = try container.decodeIfPresent(Skin.self, forKey: .skin){
-            skin = skinRaw
-        }
-        else{
-            
-            //We go Skinning!
-            let instruments = [InstrumentsSet.Skin.Instrument(
-                shape: "circle",
-                name: "AudioA",
-                image: "AudioFile1",
-                color: .white
-                //UIColor(red: 151/255, green: 71/255, blue: 255/255, alpha: 1)
-            ),InstrumentsSet.Skin.Instrument(
-                shape: "circle",
-                name: "AudioB",
-                image: "AudioFile1",
-                color: .white
-                //UIColor(red: 124/255, green: 177/255, blue: 255/255, alpha: 1)
-            ),InstrumentsSet.Skin.Instrument(
-                shape: "circle",
-                name: "AudioC",
-                image: "AudioFile1",
-                color: .white
-                //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
-            ),InstrumentsSet.Skin.Instrument(
-                shape: "circle",
-                name: "AudioD",
-                image: "AudioFile1",
-                color: .white
-                //UIColor(red: 0, green: 207/255, blue: 58/255, alpha: 1)
-            )]
-            
-            //Here we need to load the initial Skset
-            //default name switches SetInfoLocalState to SwiftUI
-            skin = Skin(name: "default", instruments:instruments)
-        }
     }
     
     //Init for writing a copy with live values
@@ -204,10 +170,10 @@ struct InstrumentsSet: Identifiable, Decodable {
         semVersion: String,
         fileGroup: FileGroup,
         filesPath: String,
+        imagePrefix: String,
         userViews: [UserView],
         bpm: Double,
         hasTempo: Bool,
-        skin: Skin,
         timeSignature: Int,
         masterTrackEffects: [Track.Effect],
         rows: Int,
@@ -222,10 +188,10 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.semVersion = semVersion
         self.fileGroup = fileGroup
         self.filesPath = filesPath
+        self.imagePrefix = imagePrefix
         self.userViews = userViews
         self.bpm = bpm
         self.hasTempo = hasTempo
-        self.skin = skin
         self.timeSignature = timeSignature
         //TODO: new values from state object
         self.masterTrackEffects = masterTrackEffects
@@ -260,16 +226,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         let row: Int
         let column: Int
     }
-    
-//    func instrumentInLevel(_ level: Double, _ Instrument: String) -> Bool {
-//        
-//        let levelInt = Int(level)
-//        let levelArray = levelInstruments[levelInt]
-//        if levelArray.contains(Instrument){
-//            return true
-//        }
-//        return false
-//    }
 }
 
 extension InstrumentsSet: Encodable {
@@ -281,6 +237,7 @@ extension InstrumentsSet: Encodable {
         try container.encode(semVersion, forKey: .semVersion)
         try container.encode(fileGroup, forKey: .fileGroup)
         try container.encode(filesPath, forKey: .filesPath)
+        try container.encode(imagePrefix, forKey: .imagePrefix)
         try container.encode(userViews, forKey: .userViews)
         try container.encode(bpm, forKey: .bpm)
         try container.encode(hasTempo, forKey: .hasTempo)
@@ -291,6 +248,5 @@ extension InstrumentsSet: Encodable {
         try container.encode(levels, forKey: .levels)
         try container.encode(setEffects, forKey: .setEffects)
         try container.encode(tracks, forKey: .tracks)
-        try container.encode(skin, forKey: .skin)
     }
 }

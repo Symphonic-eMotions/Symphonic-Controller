@@ -376,11 +376,11 @@ final class Conductor {
             
             var sampleFolder: String = set.filesPath;
             if setEffect.effectType == .rewind {
-                sampleFolder = "Samples/Rewind";
+                sampleFolder = "Rewind";
             }
-            else if setEffect.effectType == .applause {
-                sampleFolder = "Samples/Applause"
-            }
+//            else if setEffect.effectType == .applause {
+//                sampleFolder = "Applause"
+//            }
             
             for audioFile in setEffect.audioFiles {
                 if setEffect.fileSource == .bundle {
@@ -769,9 +769,10 @@ final class Conductor {
                 do {
                     autoSound = try AVAudioPlayer(contentsOf: url)
                     autoSound?.delegate = self.autoSound as? any AVAudioPlayerDelegate
+                    autoSound?.volume = volume
                     autoSound?.prepareToPlay()
                     autoSound?.play()
-                    autoSound?.volume = volume
+                    
                 } catch {
                     print("Error: could not play sound: \(error)")
                 }

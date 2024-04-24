@@ -22,7 +22,7 @@ struct SVGImageViewContainer: View {
 
         SVGImageView(
             level: levelFromIndex,
-            imageName: "level\(setInfoModel.setSettings.setPath)\(levelFromIndex)",
+            imageName: "level\(setInfoModel.setSettings.imagePrefix)\(levelFromIndex)",
             scale: CGFloat(scaleOpacity.0),
             opacity: CGFloat(scaleOpacity.1)
         )

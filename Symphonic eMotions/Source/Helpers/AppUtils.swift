@@ -59,7 +59,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", userViews: [.playView], bpm: 120, hasTempo: true, skin: InstrumentsSet.Skin(name: "skin", instruments: []), timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], setEffects: [], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", imagePrefix: "", userViews: [.playView], bpm: 120, hasTempo: true, timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], setEffects: [], tracks: [])
         }
         return instrumentSet
     }
@@ -187,9 +187,7 @@ final class AppUtils {
     ) -> SetSettings {
         
         let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
-        
-        let skin: InstrumentsSet.Skin = instrumentSet.skin
-        
+                
         let setLevels: [Int] = instrumentSet.levels
         let maxSetLevelIndex = setLevels.count
         
@@ -329,6 +327,7 @@ final class AppUtils {
             published: instrumentSet.published ?? false,
             fileGroup: instrumentSet.fileGroup ?? .none,
             filesPath: instrumentSet.filesPath,
+            imagePrefix: instrumentSet.imagePrefix,
             setURL: URL(setUrl),
             hasTempo: instrumentSet.hasTempo, 
             userViews: instrumentSet.userViews,
@@ -338,7 +337,6 @@ final class AppUtils {
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks,
-            skins: skin,
             semVersion: instrumentSet.semVersion ?? "1.0.0"
         )
         
@@ -584,10 +582,10 @@ final class AppUtils {
             semVersion: semVersion, 
             fileGroup: setSettings.fileGroup,
             filesPath: setSettings.filesPath,
+            imagePrefix: setSettings.imagePrefix,
             userViews: setSettings.userViews,
             bpm: setSettings.bpm,
             hasTempo: setSettings.hasTempo,
-            skin: setSettings.skins,
             timeSignature: instrumentSet.timeSignature,
             masterTrackEffects: modifiedMasterEffects, //MasterTrack effects editor values
             rows: setSettings.gridRows,
