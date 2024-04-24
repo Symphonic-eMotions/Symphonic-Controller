@@ -63,8 +63,6 @@ struct PlayView: View {
                     LevelView(
                         setInfoModel: setInfoModel
                     )
-                    
-                    
                     //Transport buttons
                     PlayerControlsView(
                         setInfoModel: setInfoModel,
@@ -91,6 +89,9 @@ struct PlayView: View {
                                     if setInfoModel.setSettings.userViews.contains(.playView) {
                                         if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
                                             PlayGridView(setInfoModel: setInfoModel)
+                                            .onTapGesture {
+                                                presentSettingSheet.toggle()
+                                            }
                                         } else {
                                             DontPlayGridView()
                                         }
@@ -111,14 +112,6 @@ struct PlayView: View {
                                         .onTapGesture {
                                             presentSettingSheet.toggle()
                                         }
-                                        .sheet(isPresented: $presentSettingSheet) {
-                                            SettingsSheetView(
-                                                userSettings: userSettings,
-                                                setInfoModel: setInfoModel,
-                                                sessionDisplaySub: $sessionDisplaySub,
-                                                showingSheet: $presentSettingSheet
-                                            )
-                                        }
                                     }
                                 }
                                 
@@ -135,6 +128,14 @@ struct PlayView: View {
                             Spacer()
                         }
                         Spacer()
+                    }
+                    .sheet(isPresented: $presentSettingSheet) {
+                        SettingsSheetView(
+                            userSettings: userSettings,
+                            setInfoModel: setInfoModel,
+                            sessionDisplaySub: $sessionDisplaySub,
+                            showingSheet: $presentSettingSheet
+                        )
                     }
                 }
                 .zIndex(110)

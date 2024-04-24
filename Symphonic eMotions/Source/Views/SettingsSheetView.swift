@@ -38,6 +38,8 @@ struct SettingsSheetView: View {
                 
                 VStack(alignment: .leading, spacing: 15) {
                     
+                    Spacer().frame(height:50)
+                    
                     //Sensitivity deviation
                     VStack(alignment: .leading){
                         Text("Sensitivity").padding(.top)
@@ -140,15 +142,15 @@ struct SettingsSheetView: View {
                             }
                         }
                     }
-                    
-                    //Volume
-                    VStack(alignment: .leading){
-                        Text("Volume").padding(.top)
-                        VolumeSlider()
-                            .frame(height: 10)
-                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                            .zIndex(101)
-                    }
+                    Spacer().frame(height:50)
+//                    //Volume
+//                    VStack(alignment: .leading){
+//                        Text("Volume").padding(.top)
+//                        VolumeSlider()
+//                            .frame(height: 10)
+//                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+//                            .zIndex(101)
+//                    }
                 }
                 Spacer().frame(height:50)
                 
