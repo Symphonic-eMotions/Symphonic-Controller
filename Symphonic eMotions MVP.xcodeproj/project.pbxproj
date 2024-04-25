@@ -123,7 +123,6 @@
 		7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58363292FAEB1000C46FF /* InstrumentColors.swift */; };
 		7CB58366292FAEE2000C46FF /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58365292FAEE2000C46FF /* ColorType.swift */; };
 		7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2555B2A27865900ACA903 /* ChangeView.swift */; };
-		7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */; };
 		7CC8EDCA2A3C42520085C77B /* ExsFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC8EDC92A3C42520085C77B /* ExsFiles.swift */; };
 		7CC9089729F809E700AB1F30 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC9089629F809E700AB1F30 /* SideBarView.swift */; };
 		7CCBF8FF2A39159700360E21 /* SetEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBF8FE2A39159700360E21 /* SetEditorView.swift */; };
@@ -315,7 +314,6 @@
 		7CB58363292FAEB1000C46FF /* InstrumentColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentColors.swift; sourceTree = "<group>"; };
 		7CB58365292FAEE2000C46FF /* ColorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7CC2555B2A27865900ACA903 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
-		7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitSettings.swift; sourceTree = "<group>"; };
 		7CC8EDC92A3C42520085C77B /* ExsFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExsFiles.swift; sourceTree = "<group>"; };
 		7CC9089629F809E700AB1F30 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7CCBF8FE2A39159700360E21 /* SetEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEditorView.swift; sourceTree = "<group>"; };
@@ -672,7 +670,6 @@
 				7CFA009F29A74FA1001D8A5D /* MasterTrackEffectsSettings.swift */,
 				7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */,
 				7CFA009E29A74FA1001D8A5D /* ParameterSettings.swift */,
-				7CC6CF4C2A0139A400227BD1 /* SpriteKitSettings.swift */,
 			);
 			path = SetSettings;
 			sourceTree = "<group>";
@@ -1044,7 +1041,6 @@
 				7CFDDD4E28EEF75C00B6BD5F /* DistortionEffect.swift in Sources */,
 				7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */,
 				7C7E4FDA2A683E52007BEF14 /* SetInfoModelSubscribers.swift in Sources */,
-				7CC6CF4D2A0139A400227BD1 /* SpriteKitSettings.swift in Sources */,
 				7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
@@ -1224,7 +1220,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1281,7 +1277,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
