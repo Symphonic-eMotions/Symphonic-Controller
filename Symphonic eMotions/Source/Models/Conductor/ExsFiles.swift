@@ -11,7 +11,6 @@ enum ExsFiles: String, Codable, CaseIterable {
     
     case AdvancedFM
     case AfricanMarimba
-    case BadGuy
     case BaikalInstrument
     case BassGuitarSmall
     case BassoonSoloLegato
@@ -35,9 +34,6 @@ enum ExsFiles: String, Codable, CaseIterable {
     case FluteSolo2
     case GlassMarimba
     case Glockenspiel
-    case HardRock
-    case HardRockCrashes
-    case HardRockGuitars
     case harp
     case IJsbreker
     case JazzBassWav
