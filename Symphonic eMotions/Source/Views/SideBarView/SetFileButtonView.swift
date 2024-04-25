@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SetFileButtonView: View {
+    
+    @EnvironmentObject var userSettings: UserSettings
     let setFile: SetFile
     @Binding var selectedSet: SetFile?
     @Binding var sessionDisplay: SessionDisplay
@@ -41,6 +43,12 @@ struct SetFileButtonView: View {
             if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
                 AnalyticsAction.sideBarNavigationSetLevelDisabled.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 withAnimation {
+                    
+                    //Stop audio engine
+                    sessionDisplaySub = .stopped
+                    setInfoModel.tapStopAudioEngine()
+                    userSettings.isSetPlaying = false
+                    
                     // Fade to red and back
                     let fadeDur = 0.25
                     withAnimation(.easeInOut(duration: fadeDur)) {

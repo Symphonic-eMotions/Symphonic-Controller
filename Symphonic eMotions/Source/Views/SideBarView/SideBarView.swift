@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SideBarView: View {
-
+    
+    @EnvironmentObject var userSettings: UserSettings
     @EnvironmentObject var fileController: FileController
     @ObservedObject var setInfoModel: SetInfoModel
 
@@ -84,6 +85,12 @@ struct SideBarView: View {
                         if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
                             AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             withAnimation {
+                                
+                                //Stop audio engine
+                                sessionDisplaySub = .stopped
+                                setInfoModel.tapStopAudioEngine()
+                                userSettings.isSetPlaying = false
+                                
                                 // Fade to red and back
                                 let fadeDur = 0.25
                                 withAnimation(.easeInOut(duration: fadeDur)) {

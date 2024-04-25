@@ -64,7 +64,7 @@ struct PlayerControlsView: View {
                         }
                     }
                     
-                    //In creator mode you can record all instruments separate
+                    //Creator mode
                     if UserCode(rawValue: UserDefaults.standard.string(forKey: "userCode") ?? UserCode.none.rawValue) == .creator {
                         
                         EMButton(action: {
