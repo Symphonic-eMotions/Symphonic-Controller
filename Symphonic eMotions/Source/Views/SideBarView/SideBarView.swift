@@ -86,10 +86,12 @@ struct SideBarView: View {
                             AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             withAnimation {
                                 
-                                //Stop audio engine
-                                sessionDisplaySub = .stopped
-                                setInfoModel.tapStopAudioEngine()
-                                userSettings.isSetPlaying = false
+                                if sessionDisplaySub == .playing {
+                                    //Stop audio engine
+                                    sessionDisplaySub = .stopped
+                                    setInfoModel.tapStopAudioEngine()
+                                    userSettings.isSetPlaying = false
+                                }
                                 
                                 // Fade to red and back
                                 let fadeDur = 0.25

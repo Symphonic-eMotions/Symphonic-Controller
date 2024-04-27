@@ -44,10 +44,12 @@ struct SetFileButtonView: View {
                 AnalyticsAction.sideBarNavigationSetLevelDisabled.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 withAnimation {
                     
-                    //Stop audio engine
-                    sessionDisplaySub = .stopped
-                    setInfoModel.tapStopAudioEngine()
-                    userSettings.isSetPlaying = false
+                    if sessionDisplaySub == .playing {
+                        //Stop audio engine
+                        sessionDisplaySub = .stopped
+                        setInfoModel.tapStopAudioEngine()
+                        userSettings.isSetPlaying = false
+                    }
                     
                     // Fade to red and back
                     let fadeDur = 0.25
