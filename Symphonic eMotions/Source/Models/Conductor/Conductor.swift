@@ -927,24 +927,6 @@ final class Conductor {
      Here we have level increment logic
      */
     
-    internal func getAndOrIncreaseCurrentSetLevel(
-        currentSetLevel: Double,
-        value: Double
-    ) -> Double {
-        if value > 0.1 {
-            
-            let userSettingLevelSpeed = userSettings.levelSpeed * 0.5
-            
-            //Level speed slider from sheet correlation
-            let levelSpeedValue = currentSetLevel + 0.01 * userSettingLevelSpeed * value
-            
-            // Muting is not happening in over amount of levels.
-            return levelSpeedValue
-        }
-        
-        return currentSetLevel
-    }
-    
     internal func adjustCurrentSetLevel(
         setSettings: SetSettings,
         currentSetLevel: Double,
@@ -963,9 +945,9 @@ final class Conductor {
         )
         
         // Pas de userSettingLevelSpeed aan met de speedAdjustmentFactor.
-        let userSettingLevelSpeed = userSettings.levelSpeed * speedAdjustmentFactor
+        let setSettingLevelSpeed = setSettings.levelSpeedSet * speedAdjustmentFactor
         
-        let movementThreshold = userSettings.levelDifficulty.transform(
+        let movementThreshold = setSettings.levelDifficultySet.transform(
             outputStart: 0.1,
             outputEnd: 0.3,
             transformationDegree: 3
@@ -973,7 +955,7 @@ final class Conductor {
         
         if averageMovement > movementThreshold {
             // Verhoog de level op basis van de beweging en gebruikersvoorkeur.
-            let newSetLevel = currentSetLevel + userSettingLevelSpeed * averageMovement
+            let newSetLevel = currentSetLevel + setSettingLevelSpeed * averageMovement
             
             if let uuid = rewindIsPlaying {
                 envelopeSamplerStop(uuid: uuid)
@@ -986,7 +968,7 @@ final class Conductor {
             
         } else {
             
-            let levelDecreaseRate = userSettings.levelSpeed * userSettings.levelDifficulty.transform(
+            let levelDecreaseRate = setSettings.levelSpeedSet * setSettings.levelDifficultySet.transform(
                 outputStart: 0.1,
                 outputEnd: 1,
                 transformationDegree: 1

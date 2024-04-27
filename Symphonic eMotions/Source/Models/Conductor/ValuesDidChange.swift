@@ -45,13 +45,6 @@ extension Conductor {
         // Compute average
         let averageForLevelUpdate = sum / Double(count)
         
-        //TODO: Make level type switch
-        // Increment the current level
-//        localCurrentSetLevel = getAndOrIncreaseCurrentSetLevel(
-//            currentSetLevel: currentSetLevel,
-//            value: averageForLevelUpdate
-//        )
-        
         // Increment AND decrement level
         localCurrentSetLevel = adjustCurrentSetLevel(
             setSettings: setSettings,

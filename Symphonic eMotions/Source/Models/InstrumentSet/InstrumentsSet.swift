@@ -111,6 +111,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         case rows = "gridRows"
         case columns = "gridColumns"
         case levels = "levelDurations"
+        case levelSpeedSet
+        case levelDifficultySet
         case tracks = "instrumentsConfig"
         case setEffects
     }
@@ -136,6 +138,8 @@ struct InstrumentsSet: Identifiable, Decodable {
     //Level duration keeps the amount of levels with an int
     //Duration could be refectored to aditional level speed per level
     let levels: [Int]
+    let levelSpeedSet: Double
+    let levelDifficultySet: Double
     let setEffects: [SetEffect]?
     //Tracks
     var tracks: [Track]
@@ -158,6 +162,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows = try container.decode(Int.self, forKey: .rows)
         columns = try container.decode(Int.self, forKey: .columns)
         levels = try container.decode([Int].self, forKey: .levels)
+        levelSpeedSet = try container.decodeIfPresent(Double.self, forKey: .levelSpeedSet) ?? 0.5
+        levelDifficultySet = try container.decodeIfPresent(Double.self, forKey: .levelDifficultySet) ?? 0.5
         setEffects = try container.decodeIfPresent([SetEffect].self, forKey: .setEffects)
         tracks = try container.decode([Track].self, forKey: .tracks)
     }
@@ -179,6 +185,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         rows: Int,
         columns: Int,
         levels: [Int],
+        levelSpeedSet: Double,
+        levelDifficultySet: Double,
         setEffects: [SetEffect],
         tracks: [Track]
     ) {
@@ -199,6 +207,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.rows = rows
         self.columns = columns
         self.levels = levels
+        self.levelSpeedSet = levelSpeedSet
+        self.levelDifficultySet = levelDifficultySet
         self.setEffects = setEffects
         self.tracks = tracks
     }
@@ -246,6 +256,8 @@ extension InstrumentsSet: Encodable {
         try container.encode(rows, forKey: .rows)
         try container.encode(columns, forKey: .columns)
         try container.encode(levels, forKey: .levels)
+        try container.encode(levelSpeedSet, forKey: .levelSpeedSet)
+        try container.encode(levelDifficultySet, forKey: .levelDifficultySet)
         try container.encode(setEffects, forKey: .setEffects)
         try container.encode(tracks, forKey: .tracks)
     }

@@ -59,7 +59,7 @@ final class AppUtils {
             print("Error loading instrument set from JSON: \(json)")
             
             //The name "No Set" is used to prevent loading
-            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", imagePrefix: "", userViews: [.playView], bpm: 120, hasTempo: true, timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], setEffects: [], tracks: [])
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", imagePrefix: "", userViews: [.playView], bpm: 120, hasTempo: true, timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], levelSpeedSet: 0.5, levelDifficultySet: 0.5, setEffects: [], tracks: [])
         }
         return instrumentSet
     }
@@ -334,6 +334,8 @@ final class AppUtils {
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
             levels: instrumentSet.levels,
+            levelSpeedSet: instrumentSet.levelSpeedSet,
+            levelDifficultySet: instrumentSet.levelDifficultySet,
             bpm: instrumentSet.bpm,
             masterEffects: masterEffects,
             tracks: tracks,
@@ -590,8 +592,9 @@ final class AppUtils {
             masterTrackEffects: modifiedMasterEffects, //MasterTrack effects editor values
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
-//            levelSpeed: setSettings.levelSpeed,
             levels: setSettings.levels, 
+            levelSpeedSet: setSettings.levelSpeedSet,
+            levelDifficultySet: setSettings.levelDifficultySet,
             setEffects: instrumentSet.setEffects ?? [],
             tracks: storeTracks
         )

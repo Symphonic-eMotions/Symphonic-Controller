@@ -32,6 +32,16 @@ struct SettingsSheetView: View {
             }
         )
         
+        let levelSpeedBinding = Binding(
+            get: { setInfoModel.setSettings.levelSpeedSet },
+            set: { setInfoModel.setSettings.levelSpeedSet = $0 }
+        )
+        
+        let levelDifficulty = Binding(
+            get: {setInfoModel.setSettings.levelDifficultySet},
+            set: {setInfoModel.setSettings.levelDifficultySet = $0}
+        )
+        
         return GeometryReader { geometry in
             
             ScrollView{
@@ -71,8 +81,8 @@ struct SettingsSheetView: View {
                 
                 //Level speed
                 VStack(alignment: .leading){
-                    Text("Level speed \(String(format: "%.2f", userSettings.levelSpeed))").padding(.top)
-                    Slider(value: userSettings.levelSpeedBinding, in: 0.01...1, onEditingChanged: { editing in
+                    Text("Level speed \(String(format: "%.2f", levelSpeedBinding.wrappedValue))").padding(.top)
+                    Slider(value: levelSpeedBinding, in: 0.01...1, onEditingChanged: { editing in
                         if editing {
                             AnalyticsAction.levelSpeed.logEvent(
                                 sessionDisplay: .none,
@@ -84,13 +94,15 @@ struct SettingsSheetView: View {
                 }
                 
                 HStack(){
-                    VStack(alignment: .leading){
-                        Text("Level progress exponent \(String(format: "%.1f", userSettings.levelProgressExponent))").padding(.top)
-                        Slider(value: userSettings.$levelProgressExponent, in: 0...4)
+                    if userSettings.userCode == .creator {
+                        VStack(alignment: .leading){
+                            Text("Level progress exponent \(String(format: "%.1f", userSettings.levelProgressExponent))").padding(.top)
+                            Slider(value: userSettings.$levelProgressExponent, in: 0...4)
+                        }
                     }
                     VStack(alignment: .leading){
-                        Text("Level difficulty \(String(format: "%.2f", userSettings.levelDifficulty))").padding(.top)
-                        Slider(value: userSettings.$levelDifficulty, in: 0...1)
+                        Text("Level difficulty \(String(format: "%.2f", levelDifficulty.wrappedValue))").padding(.top)
+                        Slider(value: levelDifficulty, in: 0...1)
                     }
                 }
                 

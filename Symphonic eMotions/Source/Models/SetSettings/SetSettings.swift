@@ -71,6 +71,8 @@ class SetSettings: Identifiable, ObservableObject {
     
     //Levels
     @Published var levels: [Int]
+    @Published var levelSpeedSet: Double
+    @Published var levelDifficultySet: Double
     
     //MasterTrack
     var masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings>
@@ -98,6 +100,8 @@ class SetSettings: Identifiable, ObservableObject {
         rows: Int,
         columns: Int,
         levels: [Int],
+        levelSpeedSet: Double,
+        levelDifficultySet: Double,
         bpm: Double,
         masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings>,
         tracks: OrderedDictionary<String,TrackSettings>,
@@ -117,6 +121,8 @@ class SetSettings: Identifiable, ObservableObject {
         self.bpm = bpm
         self.gridColumns = columns
         self.levels = levels
+        self.levelSpeedSet = levelSpeedSet
+        self.levelDifficultySet = levelDifficultySet
         self.masterEffects = masterEffects
         self.tracks = tracks
         self.semVersion = semVersion
