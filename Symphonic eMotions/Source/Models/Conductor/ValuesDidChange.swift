@@ -57,7 +57,6 @@ extension Conductor {
         if setSettings.isWavePlaying {
             if maxScaledValue < setSettings.waveUnderLevel {
                 setSettings.isWavePlaying = false
-//                print("Stop all tracks")
                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                     stopTrack($0)
                 }
@@ -70,7 +69,6 @@ extension Conductor {
                 //TODO: wait buffer frame count treshold
                 
                 setSettings.isWavePlaying = true
-//                print("Play play tracks")
                 setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
                     playTrack($0)
                 }

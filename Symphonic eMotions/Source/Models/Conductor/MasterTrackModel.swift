@@ -29,22 +29,3 @@ struct Parameter: Identifiable, Hashable {
     var range: [Double]
 }
 
-
-
-//struct MasterViewState {
-//    var currentInstrumentsSet: InstrumentsSet
-//}
-//
-//final class MasterViewModel: ObservableObject {
-//
-//    var conductor: Conductor
-//    @Published var setInfoState: SetInfoState
-//
-//    init(
-//        setInfoState: SetInfoState,
-//        conductor: Conductor
-//    ) {
-//        self.setInfoState = setInfoState
-//        self.conductor = conductor
-//    }
-//}
