@@ -83,7 +83,6 @@ struct SideBarView: View {
                     .onTapGesture {
                         //Deactivate navigation when sessionDisplaySub in these views
                         if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
-                            AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             withAnimation {
                                 
                                 if sessionDisplaySub == .playing {
@@ -107,7 +106,6 @@ struct SideBarView: View {
                         }
                         //Default navigation behaviour
                         else {
-                            AnalyticsAction.sideBarNavigationProductLevelDisabled.logEvent(sessionDisplay: item.sessionDisplay)
                             selectedMainItem = item.sessionDisplay
                             
                             //Let the sysem know what files to show

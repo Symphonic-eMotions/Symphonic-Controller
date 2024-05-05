@@ -38,8 +38,6 @@ struct CountDown: View {
                         counter -= 1
                     } else {
                         
-                        AnalyticsAction.nextSetAutomated.logEvent(sessionDisplay: sessionDisplay, fileGroup: setInfoModel.setSettings.fileGroup, setName: setInfoModel.setSettings.setName)
-                        
                         print("NEXT SET, end of count down")
                         
                         if let nextUrl = nextURL(

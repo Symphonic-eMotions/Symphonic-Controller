@@ -25,7 +25,6 @@ struct FooterView: View {
                 .frame(height: 50)
                 .cornerRadius(10)
                 .onLongPressGesture {
-                    AnalyticsAction.unlockCreator.logEvent(sessionDisplay: .none)
                     self.isEditing.toggle()
                 }
             if isEditing {

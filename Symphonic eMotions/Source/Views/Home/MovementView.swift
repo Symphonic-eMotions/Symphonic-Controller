@@ -169,10 +169,6 @@ struct MovementView: View {
                     }
                 }
             }
-            
-        }
-        .onAppear{
-            AnalyticsAction.trySet.logEvent(sessionDisplay: sessionDisplay)
         }
     }
 }

@@ -27,34 +27,17 @@ struct ChangeView: View {
         .onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .background:
-                AnalyticsAction.appBackground.logEvent(sessionDisplay: sessionDisplay)
                 userSettings.showPartEditor = false
                 audioPlayer.enableBackground()
             case .inactive:
                 userSettings.showPartEditor = false
                 print("App is inactive")
             case .active:
-                AnalyticsAction.appForeground.logEvent(sessionDisplay: sessionDisplay)
                 print("App is active sessioDisplay: \(sessionDisplay)")
             @unknown default:
                 print("Unknown scenePhase")
             }
         }
-//        .alert(isPresented: $showingAlert) {
-//            Alert(
-//                title: Text(NSLocalizedString("Resume or start over", comment: "")),
-//                message: Text(NSLocalizedString("Resume text", comment: "")),
-//                primaryButton: .default(Text(NSLocalizedString("Resume", comment: ""))),
-//                secondaryButton: .default(Text(NSLocalizedString("Opnieuw beginnen", comment: ""))) {
-//                    
-//                    //TODO: connect to engine
-//                    print("Stop ENGINE and start over!")
-//                    
-//                    sessionDisplay = .home
-//                    sessionDisplaySub = .page01
-//                }
-//            )
-//        }
     }
 }
 

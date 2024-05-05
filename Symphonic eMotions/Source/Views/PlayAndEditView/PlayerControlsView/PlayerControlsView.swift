@@ -34,11 +34,6 @@ struct PlayerControlsView: View {
                 HStack {
                     //Switch between video feedback modes
                     EMButton(action: {
-                        AnalyticsAction.instrumentCameraView.logEvent(
-                            sessionDisplay: sessionDisplaySub,
-                            fileGroup: setInfoModel.setSettings.fileGroup,
-                            setName: setInfoModel.setSettings.setName
-                        )
                         setInfoModel.tapDisplayModeChange()
                     }, color: .accentColor, isSolid: false) {
                         setInfoModel.setInfoState.displayMode.icon
@@ -53,11 +48,6 @@ struct PlayerControlsView: View {
                     //Master FX Button only available in part editor
                     if userSettings.showPartEditor {
                         EMButton(action: {
-                            AnalyticsAction.masterEfects.logEvent(
-                                sessionDisplay: sessionDisplaySub,
-                                fileGroup: setInfoModel.setSettings.fileGroup,
-                                setName: setInfoModel.setSettings.setName
-                            )
                             showMasterTrack.toggle()
                         }, color: .accentColor, isSolid: false) {
                             Text("Master")
@@ -107,21 +97,11 @@ struct PlayerControlsView: View {
                     EMButton(action: {
                         
                         if userSettings.isSetPlaying {
-                            AnalyticsAction.stopSet.logEvent(
-                                sessionDisplay: sessionDisplaySub,
-                                fileGroup: setInfoModel.setSettings.fileGroup,
-                                setName: setInfoModel.setSettings.setName
-                            )
                             sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             userSettings.isSetPlaying = false
                         }
                         else{
-                            AnalyticsAction.startSet.logEvent(
-                                sessionDisplay: sessionDisplaySub,
-                                fileGroup: setInfoModel.setSettings.fileGroup,
-                                setName: setInfoModel.setSettings.setName
-                            )
                             sessionDisplaySub = .playing
                             setInfoModel.tapStartAudioEngine()
                             userSettings.isSetPlaying = true

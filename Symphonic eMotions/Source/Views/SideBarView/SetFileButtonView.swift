@@ -41,7 +41,6 @@ struct SetFileButtonView: View {
             
             //Deactivate navigation when sessionDisplaySub in these views
             if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
-                AnalyticsAction.sideBarNavigationSetLevelDisabled.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 withAnimation {
                     
                     if sessionDisplaySub == .playing {
@@ -65,7 +64,6 @@ struct SetFileButtonView: View {
             }
             //Select a set file
             else{
-                AnalyticsAction.sideBarNavigationSetLevel.logEvent(sessionDisplay: sessionDisplay, fileGroup: selectedSet?.fileGroup, setName: selectedSet?.name)
                 selectedSet = setFile
                 setInfoModel.tapStopAudioEngine()
                 

@@ -72,9 +72,6 @@ struct LightView: View {
                     }
                 }
                 .onAppear {
-                    
-                    AnalyticsAction.onboardingLightning.logEvent(sessionDisplay: sessionDisplay)
-                    
                     self.whiteTimer = Timer.scheduledTimer(
                         withTimeInterval: 0.25,
                         repeats: true

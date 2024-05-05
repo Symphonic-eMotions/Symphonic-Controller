@@ -121,16 +121,7 @@ struct SettingsSheetView: View {
                            Spacer()
                            Text("+")
                        }
-                       Slider(value: sensitivityBinding, in: -0.25...0.25, onEditingChanged: { editing in
-                           if editing {
-                               AnalyticsAction.sensitivity.logEvent(
-                                   sessionDisplay: .none,
-                                   fileGroup: setInfoModel.setSettings.fileGroup,
-                                   setName: setInfoModel.setSettings.setName
-                               )
-                           }
-                       })
-                       
+                       Slider(value: sensitivityBinding, in: -0.25...0.25)
                    }
                }
                
@@ -143,15 +134,7 @@ struct SettingsSheetView: View {
                //Level speed
                VStack(alignment: .leading){
                    Text("Level speed \(String(format: "%.2f", userSettings.levelSpeed))").padding(.top)
-                   Slider(value: userSettings.levelSpeedBinding, in: 0.01...1, onEditingChanged: { editing in
-                       if editing {
-                           AnalyticsAction.levelSpeed.logEvent(
-                               sessionDisplay: .none,
-                               fileGroup: setInfoModel.setSettings.fileGroup,
-                               setName: setInfoModel.setSettings.setName
-                           )
-                       }
-                   })
+                   Slider(value: userSettings.levelSpeedBinding, in: 0.01...1)
                }
                
                HStack(){
@@ -175,11 +158,6 @@ struct SettingsSheetView: View {
                            HStack{
                                
                                EMButton(action: {
-                                   AnalyticsAction.setSpeed.logEvent(
-                                       sessionDisplay: .none,
-                                       fileGroup: setInfoModel.setSettings.fileGroup,
-                                       setName: setInfoModel.setSettings.setName
-                                   )
                                    setInfoModel.tapSetTempoBPMMin()
                                    localTempo -= 1
                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
@@ -187,11 +165,6 @@ struct SettingsSheetView: View {
                                }
                                
                                EMButton(action: {
-                                   AnalyticsAction.setSpeed.logEvent(
-                                       sessionDisplay: .none,
-                                       fileGroup: setInfoModel.setSettings.fileGroup,
-                                       setName: setInfoModel.setSettings.setName
-                                   )
                                    print("Reset pressed")
                                    localTempo = 0
                                    setInfoModel.tapSetTempoReset()
@@ -200,11 +173,6 @@ struct SettingsSheetView: View {
                                }
                                
                                EMButton(action: {
-                                   AnalyticsAction.setSpeed.logEvent(
-                                       sessionDisplay: .none,
-                                       fileGroup: setInfoModel.setSettings.fileGroup,
-                                       setName: setInfoModel.setSettings.setName
-                                   )
                                    setInfoModel.tapSetTempoBPMPlus()
                                    localTempo += 1
                                }, color: .accentColor, isSolid: true, maxWidth: geometry.size.width * 0.111) {
@@ -214,14 +182,6 @@ struct SettingsSheetView: View {
                        }
                    }
                    Spacer().frame(height:50)
-//                    //Volume
-//                    VStack(alignment: .leading){
-//                        Text("Volume").padding(.top)
-//                        VolumeSlider()
-//                            .frame(height: 10)
-//                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-//                            .zIndex(101)
-//                    }
                }
                Spacer().frame(height:50)
                
@@ -240,21 +200,11 @@ struct SettingsSheetView: View {
                    //Start stop
                    EMButton(action: {
                            if userSettings.isSetPlaying {
-                               AnalyticsAction.stopSet.logEvent(
-                                   sessionDisplay: .none,
-                                   fileGroup: setInfoModel.setSettings.fileGroup,
-                                   setName: setInfoModel.setSettings.setName
-                               )
                                sessionDisplaySub = .stopped
                                setInfoModel.tapStopAudioEngine()
                                userSettings.isSetPlaying = false
                            }
                            else{
-                               AnalyticsAction.startSet.logEvent(
-                                   sessionDisplay: .none,
-                                   fileGroup: setInfoModel.setSettings.fileGroup,
-                                   setName: setInfoModel.setSettings.setName
-                               )
                                sessionDisplaySub = .playing
                                setInfoModel.tapStartAudioEngine()
                                userSettings.isSetPlaying = true

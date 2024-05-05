@@ -33,12 +33,6 @@ struct FeedbackButtonsView: View {
             ForEach(0..<4) { buttonIndex in
                 
                 Button(action: {
-                    
-                    AnalyticsAction.distanceButtons.logEvent(
-                        sessionDisplay: .none,
-                        fileGroup: setInfoModel.setSettings.fileGroup,
-                        setName: setInfoModel.setSettings.setName
-                    )
                     self.selectedButton = buttonIndex
                     userSettings.videoFeedback = self.setInfoModel.buttonToFeedback(id: buttonIndex)
                     print("SENDING FEEDBACK PRESET: \(userSettings.videoFeedback)")

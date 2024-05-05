@@ -35,12 +35,10 @@ struct SettingsButtonWithLongPress: View {
         .cornerRadius(8.0)
         //Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
-            AnalyticsAction.settingsLong.logEvent(sessionDisplay: .swiftUI)
             userSettings.showPartEditor.toggle()
         })
         //Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {
-            AnalyticsAction.settings.logEvent(sessionDisplay: .swiftUI)
             presentSettingSheet.toggle()
         })
         //Present sheet
