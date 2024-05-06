@@ -58,7 +58,6 @@ struct PartFeedbackView: View {
                 Picker(
                     "Tracks",
                     selection: Binding(get: {
-//                        playViewModel.partFeedback.currentTrackID.value
                         currentTrackID
                         
                     }, set: { value in
@@ -102,7 +101,6 @@ struct PartFeedbackView: View {
                     Picker(
                         "Parts",
                         selection: Binding(get: {
-//                            playViewModel.partFeedback.currentPartID.value
                             currentPartID
                             
                         }, set: { value in

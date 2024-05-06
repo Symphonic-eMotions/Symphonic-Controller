@@ -39,6 +39,9 @@ struct MasterTrackView: View {
     private var masterTrackScrollView: some View {
         
         ScrollView (.vertical){
+            
+            MasterVolumesView(setInfoModel: setInfoModel)
+            
             //Struct with effects, contains [struct] with parameters per effect
             if let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure {
                 
