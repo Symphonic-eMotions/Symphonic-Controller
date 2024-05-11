@@ -41,44 +41,47 @@ struct MidiClipsPositionsView: View {
     var body: some View {
         
         VStack(alignment: .leading){
-            
+                    
             HStack(){
-                
+                        
                 Text("Place clip in grid: ")
                 .frame(width: columnWidth, alignment: .leading)
-        
+                
                 let gridRows: Int = setInfoModel.setSettings.gridRows
                 let gridColumns: Int = setInfoModel.setSettings.gridColumns
 
                 VStack(spacing: 0) {
-                    
-                    let cellWidth: CGFloat = CGFloat(200 / gridColumns - 1)
+                            
+                    let cellWidth: CGFloat = gridColumns > 0 ? CGFloat(200 / gridColumns - 1) : 0
                     ForEach(0..<gridRows, id: \.self) { row in
                         HStack(spacing: 0) {
                             ForEach(0..<gridColumns, id: \.self) { column in
 
                                 let cellIndex =  row * gridColumns + column
 
-                                ZStack {
+                                if let positions = midiClipsPositions[trackId], positions.count > cellIndex {
+                                    ZStack {
 
-                                    Rectangle()
-                                    .frame(width: cellWidth, height: cellWidth)
-                                    .foregroundColor(.blue)
-                                    .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
+                                        Rectangle()
+                                        .frame(width: cellWidth, height: cellWidth)
+                                        .foregroundColor(.blue)
+                                        .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
 
-                                    let clipPosition = midiClipsPositions[trackId]![cellIndex]
-                                    let clipLetter: String = AppUtils.letterForNumber(clipPosition) ?? "-"
+                                        let clipPosition = positions[cellIndex]
+                                        let clipLetter: String = AppUtils.letterForNumber(clipPosition) ?? "-"
 
-                                    Text("\(clipLetter)")
-                                    .foregroundColor(.white)
-                                }
-                                .onTapGesture {
+                                        Text("\(clipLetter)")
+                                        .foregroundColor(.white)
+                                    }
+                                    .onTapGesture {
+                                        if let letters = midiClipLetters[trackId], letters.count > 0 {
+                                            let increment = positions[cellIndex] + 1
+                                            let incrementModulo = increment % letters.count
 
-                                    let increment = midiClipsPositions[trackId]![cellIndex] + 1
-                                    let incrementModulo = increment % midiClipLetters[trackId]!.count
-
-                                    currentTrack.loopsToGrid[cellIndex] = incrementModulo
-                                    midiClipsPositions[trackId]![cellIndex] = incrementModulo
+                                            currentTrack.loopsToGrid[cellIndex] = incrementModulo
+                                            midiClipsPositions[trackId]![cellIndex] = incrementModulo
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -86,6 +89,7 @@ struct MidiClipsPositionsView: View {
                 }
             }
         }
+        
         .padding(.leading)
 //        .onAppear {
 //            // Set initial value of syncedValue to value from observed object
