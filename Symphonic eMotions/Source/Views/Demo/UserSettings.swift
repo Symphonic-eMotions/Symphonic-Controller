@@ -20,6 +20,7 @@ class UserSettings: ObservableObject {
     static let currentSettingsVersion = AppUtils.semVersionString()
 
     @AppStorage(UserDefaultsKeys.isSetPlaying) var isSetPlaying: Bool = false
+    @AppStorage(UserDefaultsKeys.isCapturingRunning) var isCapturingRunning: Bool = false
     
     @AppStorage(UserDefaultsKeys.levelProgressExponent) var levelProgressExponent: Double = 2.5
     
@@ -41,6 +42,7 @@ class UserSettings: ObservableObject {
     init() {
         if UserDefaults.standard.string(forKey: UserDefaultsKeys.appVersion) != UserSettings.currentSettingsVersion {
             UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isSetPlaying)
+            UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isCapturingRunning)
             UserDefaults.standard.set(2.5, forKey: UserDefaultsKeys.levelProgressExponent)
             UserDefaults.standard.set(0.5, forKey: UserDefaultsKeys.videoFeedback)
             UserDefaults.standard.set(0.8, forKey: UserDefaultsKeys.sensitivitySession)
@@ -65,6 +67,7 @@ struct UserDefaultsKeys {
     static let appVersion = "appVersion"
     
     static let isSetPlaying = "isSetPlaying"
+    static let isCapturingRunning = "isCapturingRunning"
     
 //    static let levelSpeed = "levelSpeed"
     static let levelProgressExponent = "levelProgressExponent"

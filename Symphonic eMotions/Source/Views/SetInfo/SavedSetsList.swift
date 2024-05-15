@@ -77,7 +77,12 @@ struct SavedSetsList: View {
                                 //Store chosen url
                                 currentUrl = url.absoluteString
                                 //Load settngs over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                setInfoModel.tapSavedRow(
+                                    fileName: fileController.urlToFileName(
+                                        url: url
+                                    )
+                                )
+                                setInfoModel.userSettings.isCapturingRunning = true
                                 sessionDisplay = .swiftUI
                             }
                         

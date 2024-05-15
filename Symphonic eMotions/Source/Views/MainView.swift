@@ -134,13 +134,7 @@ struct MainView: View {
                         )
                         .environmentObject(fileController)
                         .navigationBarHidden(false)
-                        //It's not called PlayView for nothing
                         .onAppear{
-                            sessionDisplaySub = .playing
-                            viewModel.conductor.playEngineAndTracks(
-                                setSettings: viewModel.mainState.setSettings,
-                                level: 0
-                            )
                             viewModel.conductor.levelController(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings
@@ -155,6 +149,7 @@ struct MainView: View {
                         }
                         
                         //If levels are completed go to count down view
+                        //At the moment this is not possible
                         .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
                             if viewModel.mainState.setSettings.currentPlaylist != .none {
                                 if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {

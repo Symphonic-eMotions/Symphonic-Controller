@@ -20,7 +20,9 @@ struct eMotionApp: App {
     @State public var sessionDisplay: SessionDisplay = .pro
 //    @State public var sessionDisplaySub: SessionDisplay = .page01
     @State public var sessionDisplaySub: SessionDisplay = .pro
-        
+    
+    var startViewModel = StartViewModel()
+    
     var body: some Scene {
         WindowGroup {
             MainViewContainer(
@@ -45,6 +47,7 @@ struct eMotionApp: App {
             .statusBar(hidden: true)
             .preferredColorScheme(.dark)
             .environmentObject(UserSettings.shared)
+            .environmentObject(startViewModel)
         }
     }
 }

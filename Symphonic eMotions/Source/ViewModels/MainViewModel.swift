@@ -41,7 +41,6 @@ final class MainViewModel: ObservableObject {
     func currentModelInstrumentsSetChanged(
         instrumentsSet: InstrumentsSet
     ) {
-    
         //Reset leveling
         leveling.currentSetLevelSubject.send(0)
         
@@ -52,9 +51,12 @@ final class MainViewModel: ObservableObject {
                 resetLevels: true
             )
             userSettings.isSetPlaying = false
+            userSettings.isCapturingRunning = false
             
         } else {
-                        
+            
+            userSettings.isCapturingRunning = false
+            
             let setSettings = AppUtils.setSettings(
                 instrumentSet: instrumentsSet
             )

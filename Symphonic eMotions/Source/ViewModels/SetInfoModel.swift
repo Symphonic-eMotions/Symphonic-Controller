@@ -163,7 +163,7 @@ final class SetInfoModel: ObservableObject {
 extension SetInfoModel: FrameExtractorDelegate {
     
     func captured(image: CIImage) {
-        guard userSettings.isSetPlaying else { return }
+        guard userSettings.isCapturingRunning else { return }
         imageDifference.updateImageData(image: image)
     }
 }

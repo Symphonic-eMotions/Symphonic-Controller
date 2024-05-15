@@ -83,9 +83,18 @@ struct PlayView: View {
                                 if userSettings.showPartEditor  {
                                     EditGridView(setInfoModel: setInfoModel)
                                 }
+                                //PlayView
                                 else {
                                     
-                                    //PlayView
+                                    if !setInfoModel.userSettings.isSetPlaying {
+                                        StartView(
+                                            setInfoModel: setInfoModel,
+                                            sessionDisplaySub: $sessionDisplaySub,
+                                            geometry: geometry
+                                        )
+                                        .zIndex(210)
+                                    }
+                                    
                                     if setInfoModel.setSettings.userViews.contains(.playView) {
                                         if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
                                             PlayGridView(setInfoModel: setInfoModel)

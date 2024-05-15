@@ -86,7 +86,7 @@ struct SideBarView: View {
                             withAnimation {
                                 
                                 if sessionDisplaySub == .playing {
-                                    //Stop audio engine
+                                    //Stop audio engine if playing
                                     sessionDisplaySub = .stopped
                                     setInfoModel.tapStopAudioEngine()
                                     userSettings.isSetPlaying = false

@@ -77,11 +77,16 @@ struct SetInfo: View {
                             //We do not want to go to the next set
                             setInfoModel.setSettings.currentPlaylist = .none
                             //Load set
-                            setInfoModel.tapSetRow(filePath: setInfoModel.setInfoLocalState.setConfig)
+                            setInfoModel.tapSetRow(
+                                filePath: setInfoModel.setInfoLocalState.setConfig
+                            )
                             //Save current location
                             userSettings.currentUrl = setInfoModel.setInfoLocalState.setConfig
-                            print("Setting sessionDisplay to .swiftUI")
+                            //Start capturing engine
+                            setInfoModel.userSettings.isCapturingRunning = true
+                            //Change View
                             sessionDisplay = .swiftUI
+                            
                         }
                         Spacer()
                         //New variation button
