@@ -106,6 +106,8 @@ struct SideBarView: View {
                         }
                         //Default navigation behaviour
                         else {
+                            userSettings.isCapturingRunning = false
+                            
                             selectedMainItem = item.sessionDisplay
                             
                             //Let the sysem know what files to show

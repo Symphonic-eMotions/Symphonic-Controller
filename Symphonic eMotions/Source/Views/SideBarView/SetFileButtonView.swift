@@ -64,6 +64,8 @@ struct SetFileButtonView: View {
             }
             //Select a set file
             else{
+                userSettings.isCapturingRunning = false
+                
                 selectedSet = setFile
                 setInfoModel.tapStopAudioEngine()
                 

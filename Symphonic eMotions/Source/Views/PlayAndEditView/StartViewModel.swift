@@ -44,9 +44,9 @@ class StartViewModel: ObservableObject {
     }
     
     func handleTimerTick() {
-        if isCountdownActive && countdown > 0 {
+        if isCountdownActive && countdown > 1 {
             countdown -= 1
-        } else if countdown <= 0 {
+        } else if countdown <= 1 {
             stopCountdown()
         }
     }
