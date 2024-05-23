@@ -233,34 +233,11 @@ struct MidiClipsView: View {
                 .font(.system(size: 45))
             }
             
-            ForEach(0..<midiClipLetters[trackId]!.count, id: \.self) { index in
-                
-                VStack{
-  
+            ForEach(0..<(midiClipLetters[trackId]?.count ?? 0), id: \.self) { index in
+                VStack {
                     let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
-                    
                     Text("\(clipLetter)")
                         .foregroundColor(.blue)
-                                    
-//                    Image(systemName: isPlaying[index] ? "pause.fill" : "play.fill")
-//                        .foregroundColor(.white)
-//                        .frame(width: 40, height: 30)
-//                        .padding(.vertical, 5.0)
-//                        .padding(.horizontal, 5.0)
-//                        .background(Color.accentColor)
-//                        .cornerRadius(5.0)
-//                        .onTapGesture {
-//                            isPlaying[index].toggle()
-//                            setInfoModel.conductor.copyMidiSingleTrack(
-//                                trackId: trackId,
-//                                nextVariation: index,
-//                                loopLength: currentTrack.loopLength
-//                            )
-//                            setInfoModel.conductor.previewSingleTrack(
-//                                trackId: trackId,
-//                                soundSource: soundSources[trackId]!
-//                            )
-//                        }
                 }
             }
         }

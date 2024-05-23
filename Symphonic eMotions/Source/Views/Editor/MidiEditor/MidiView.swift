@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AVFoundation
 
 struct MidiView: View {
     
@@ -14,12 +13,15 @@ struct MidiView: View {
     @Binding var chords: [ChordEntry]
     var trackId: String
     
-    @State private var selectedChord: Chord = .C
-    @State private var selectedOctave: Int = 3
-    @State private var selectedLength: Length = .whole
-    @State private var strum: Double = 0.01
-    @State private var durationFactor: Double = 0.95
+    @State private var selectedChord: Chord
+    @State private var selectedOctave: Int
+    @State private var selectedLength: Length
+    @State private var strum: Double
+    @State private var durationFactor: Double
+    @State private var selectedOption: ChordOption
     @State private var editMode = EditMode.inactive
+    
+    @State private var isPlaying: Bool = false
     
     private var midiFileModel = MidiFileModel()
     @State var setTrackName: String
@@ -33,6 +35,24 @@ struct MidiView: View {
         self.trackId = trackId
         self.setInfoModel = setInfoModel
         self._chords = chords
+        
+        // Initialiseren van de state-variabelen met waarden van chords.first
+        if let firstChord = chords.wrappedValue.first {
+            self._selectedChord = State(initialValue: firstChord.chord)
+            self._selectedOctave = State(initialValue: firstChord.octave)
+            self._selectedLength = State(initialValue: firstChord.length)
+            self._strum = State(initialValue: firstChord.strum)
+            self._durationFactor = State(initialValue: firstChord.durationFactor)
+            self._selectedOption = State(initialValue: firstChord.option)
+        } else {
+            self._selectedChord = State(initialValue: .C)
+            self._selectedOctave = State(initialValue: 3)
+            self._selectedLength = State(initialValue: .whole)
+            self._strum = State(initialValue: 0.01)
+            self._durationFactor = State(initialValue: 0.95)
+            self._selectedOption = State(initialValue: .none)
+        }
+        
         self._setTrackName = State(initialValue: "\(setInfoModel.setInfoLocalState.setName)_\(trackId)")
     }
     
@@ -41,7 +61,7 @@ struct MidiView: View {
             HStack {
                 Picker("Chord", selection: $selectedChord) {
                     ForEach(Chord.allCases, id: \.self) { chord in
-                        Text(chord.rawValue).tag(chord)
+                        Text(chord.description).tag(chord)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
@@ -65,6 +85,17 @@ struct MidiView: View {
                 }
             }
             .padding()
+            
+            Picker("Chord Option", selection: $selectedOption) {
+                Text("None").tag(ChordOption.none)
+                Text("Add Second Note as Fourth").tag(ChordOption.addSecondNoteAsFourth)
+                Text("Add Seventh").tag(ChordOption.addSeventh)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            .onChange(of: selectedOption) { newValue in
+                updateChordOptions(newValue)
+            }
             
             HStack {
                 Text("Strum \(self.strum, specifier: "%.2f")")
@@ -93,7 +124,7 @@ struct MidiView: View {
             List {
                 ForEach(chords) { entry in
                     HStack {
-                        Text("\(entry.chord.rawValue)\(entry.octave) \(entry.length.rawValue)")
+                        Text("\(entry.chord.description) \(entry.octave) - \(entry.length.rawValue)")
                         Spacer()
                         Button(action: {
                             removeChord(entry)
@@ -108,11 +139,19 @@ struct MidiView: View {
             .environment(\.editMode, $editMode)
             
             HStack {
-                Button(action: createMIDIFile) {
-                    Text("Create MIDI File")
+                if isPlaying {
+                    Button(action: stopMIDIFile) {
+                        Text("Stop MIDI")
+                            .foregroundColor(.orange)
+                    }
+                    .padding()
                 }
-                .padding()
-                
+                else {
+                    Button(action: createMIDIFile) {
+                        Text("Create MIDI File")
+                    }
+                    .padding()
+                }
                 Button(action: clearChords) {
                     Text("Clear All")
                         .foregroundColor(.red)
@@ -124,7 +163,14 @@ struct MidiView: View {
     }
     
     private func addChord() {
-        let newEntry = ChordEntry(chord: selectedChord, octave: selectedOctave, length: selectedLength, strum: strum, durationFactor: durationFactor)
+        let newEntry = ChordEntry(
+            chord: selectedChord,
+            octave: selectedOctave,
+            length: selectedLength,
+            strum: strum,
+            durationFactor: durationFactor,
+            option: selectedOption
+        )
         chords.append(newEntry)
     }
     
@@ -141,11 +187,20 @@ struct MidiView: View {
     private func createMIDIFile() {
         midiFileModel.createMIDIFile(
             chords: chords,
-            setTrackName: setTrackName, 
-            setPath: setInfoModel.setSettings.filesPath
-        )
+            setTrackName: setTrackName,
+            setPath: setInfoModel.setSettings.filesPath,
+            bpm: setInfoModel.setSettings.bpm
+        ) { isPlaying in
+            self.isPlaying = true
+        }
         setInfoModel.setSettings.tracks[trackId]?.chordEntries = chords
         setInfoModel.setSettings.tracks[trackId]?.midiFile = setTrackName
+    }
+    
+    private func stopMIDIFile() {
+        midiFileModel.stopPlaying { isPlaying in
+            self.isPlaying = false
+        }
     }
     
     private func updateStrumValues(_ newValue: Double) {
@@ -157,6 +212,12 @@ struct MidiView: View {
     private func updateDurationValues(_ newValue: Double) {
         for index in chords.indices {
             chords[index].durationFactor = newValue
+        }
+    }
+    
+    private func updateChordOptions(_ newValue: ChordOption) {
+        for index in chords.indices {
+            chords[index].option = newValue
         }
     }
     

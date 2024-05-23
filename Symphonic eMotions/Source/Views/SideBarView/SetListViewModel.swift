@@ -30,7 +30,7 @@ class SetListViewModel: ObservableObject {
             print("Failed to find Sets folder")
             return
         }
-        
+
         do {
             let fileURLs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
             let decoder = JSONDecoder()
@@ -46,7 +46,7 @@ class SetListViewModel: ObservableObject {
                         SetFile(
                             name: decodedFile.name,
                             url: fileURL,
-                            published: decodedFile.published ?? true, 
+                            published: decodedFile.published ?? true,
                             semVersion: decodedFile.semVersion ?? "1.0.0",
                             fileGroup: decodedFile.fileGroup ?? .none
                         )
@@ -56,15 +56,22 @@ class SetListViewModel: ObservableObject {
                 }
             }
             
-            setFiles = unsortedSetFiles.sorted { $0.name < $1.name }
+            setFiles = unsortedSetFiles.sorted {
+                if $0.name == "Template" {
+                    return true
+                } else if $1.name == "Template" {
+                    return false
+                } else {
+                    return $0.name < $1.name
+                }
+            }
             fileCache = FileCache(setFiles: setFiles)
 
-            
         } catch {
             print("Error reading contents of directory: \(error)")
         }
     }
-    
+
     func getSetFiles(for group: FileGroup, with compareView: SessionDisplay) -> [SetFile] {
         return fileCache.getSetFiles(for: group, with: compareView)
     }

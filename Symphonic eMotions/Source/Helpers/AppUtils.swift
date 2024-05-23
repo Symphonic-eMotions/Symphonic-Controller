@@ -272,7 +272,17 @@ final class AppUtils {
             
             var exsFile: ExsFiles = .trigger
             if let loaded = trackLoaded.exsFiles, !loaded.isEmpty {
-                exsFile = ExsFiles(rawValue: loaded.first!.fileName)!
+                if let fileName = loaded.first?.fileName {
+                    if let exsFileEnum = ExsFiles(rawValue: fileName) {
+                        exsFile = exsFileEnum
+                    } else {
+                        print("Kon geen ExsFiles enum maken van fileName: \(fileName)")
+                    }
+                } else {
+                    print("fileName is nil")
+                }
+            } else {
+                print("trackLoaded.exsFiles is nil of leeg")
             }
             
             let effects: OrderedDictionary<Int,TrackEffectsSettings> = TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)

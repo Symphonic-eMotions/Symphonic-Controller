@@ -37,6 +37,7 @@ enum ExsFiles: String, Codable, CaseIterable {
     case harp
     case JazzBassWav
     case JP8Unifix
+    case JP8UnifixEuroPaPa
     case JvRhodesMkV
     case MellotronFlutes
     case natuur
