@@ -41,6 +41,7 @@ struct TrackEditorView: View {
     
     //Types per tracks
     @Binding var noteSources: [String: NoteSource]
+    @Binding var chordEntries: [String: [ChordEntry]]
     @Binding var startTypes: [String: StartType]
     @Binding var variationTypes: [String: VariationType]
     @Binding var availableVariationTypes: [String: [VariationType]]
@@ -61,6 +62,7 @@ struct TrackEditorView: View {
     @State private var trackKeyToRemove: String? = nil
     @State private var pleaseSave: Bool = false
     @State private var showTrackEffect: Bool = false
+    @State private var showChordEntries: Bool = false
     
     var body: some View {
         
@@ -224,6 +226,7 @@ struct TrackEditorView: View {
                         trackId: key,
                         showEditorPart: $showEditorPart,
                         noteSources: $noteSources,
+                        chordEntries: $chordEntries,
                         soundSources: $instrumentTypes,
                         midiClips: $midiClips,
                         midiClipLetters: $midiClipLetters,
@@ -232,7 +235,8 @@ struct TrackEditorView: View {
                         noteNumbers: $noteNumbers,
                         noteNumberLetters: $noteNumberLetters,
                         availableVariationTypes: $availableVariationTypes,
-                        showTrackEffect: $showTrackEffect
+                        showTrackEffect: $showTrackEffect,
+                        showChordEntries: $showChordEntries
                     )
                 }
                 if (showEditorPart == editorPart || showEditorPart == .variation) && isCreator {

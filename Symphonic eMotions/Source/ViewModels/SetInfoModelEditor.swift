@@ -59,75 +59,133 @@ extension SetInfoModel {
             rampSpeedDown: 0.27
         )
         
-        //New damperTarget
-        let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
-            trackId: trackId,
-            nodeType: .effect,
-            nodeName: "lowPassFilter",
-            parameter: "cutoffFrequency",
-            parameterRange: [0,1],
-            parameterInversed: false,
-            midiData: nil,
-            nodeSettings: newNodeSetting,
-            dampMode: .easeInCubic
-        )
-        
-        //Calculate number of cells and create new Part
-        let newPart = PartSettings(
-            partId: partId,
-            partName: "Low pass filter",
-            partNumber: 1,
-            rampUp: newNodeSetting.rampSpeed!,
-            rampDown: newNodeSetting.rampSpeedDown!,
-            minimalLevel: newNodeSetting.minimalLevel!,
-            areaOfInterest: Array(repeating: 1, count: cells),
-            areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
-            damperTarget: newDamperTarget,
-            dontDrawVisual: false,
-            dampMode: .easeInCubic,
-            targetType: .effect,
-            targetNameEffect: .lowPassFilter,
-            parametersInversed: false,
-            targetParameterEffect: .cutoffFrequency,
-            targetParameterInstrument: "samplerCC9",
-            targetParameterSequencer: "velocity"
-        )
-        
-        
-        let cutOffParameterSetting = ParameterSettings(
-            index: 0,
-            name: "Cut off frequency",
-            value: 20000,
-            range: [10,20000]
-        )
-        
-        let resoneceParameterSetting = ParameterSettings(
-            index: 1,
-            name: "Resonance",
-            value: -20,
-            range: [-20,20]
-        )
-        
-        var parameters = OrderedDictionary<Int, ParameterSettings>()
-        parameters[cutOffParameterSetting.index] = cutOffParameterSetting
-        parameters[resoneceParameterSetting.index] = resoneceParameterSetting
-        
-        let effectSetting = TrackEffectsSettings(
-            index: 0,
-            name: "Low pass filter",
-            effectType: .lowPassFilter,
-            parameters: parameters
-        )
-        
+        let newPart: PartSettings
         var effects = OrderedDictionary<Int, TrackEffectsSettings>()
-        effects[0] = effectSetting
+
+        if trackType == .midiVelocity {
+            
+            //New damperTarget
+            let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
+                trackId: trackId,
+                nodeType: .sequencer,
+                nodeName: "",
+                parameter: "velocity",
+                parameterRange: [0,1],
+                parameterInversed: false,
+                midiData: nil,
+                nodeSettings: newNodeSetting,
+                dampMode: .easeInCubic
+            )
+            
+            //Calculate number of cells and create new Part
+            newPart = PartSettings(
+                partId: partId,
+                partName: "Velocity (aanslag)",
+                partNumber: 1,
+                rampUp: newNodeSetting.rampSpeed!,
+                rampDown: newNodeSetting.rampSpeedDown!,
+                minimalLevel: newNodeSetting.minimalLevel!,
+                areaOfInterest: Array(repeating: 1, count: cells),
+                areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
+                damperTarget: newDamperTarget,
+                dontDrawVisual: false,
+                dampMode: .easeInCubic,
+                targetType: .sequencer,
+                targetNameEffect: .none,
+                parametersInversed: false,
+                targetParameterEffect: .effectType,
+                targetParameterInstrument: "velocity",
+                targetParameterSequencer: ""
+            )
+            
+            
+            let cutOffParameterSetting = ParameterSettings(
+                index: 0,
+                name: "Cut off frequency",
+                value: 20000,
+                range: [10,20000]
+            )
+            
+            let resoneceParameterSetting = ParameterSettings(
+                index: 1,
+                name: "Resonance",
+                value: -20,
+                range: [-20,20]
+            )
+        }
+        else{
+            //New damperTarget
+            let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
+                trackId: trackId,
+                nodeType: .effect,
+                nodeName: "lowPassFilter",
+                parameter: "cutoffFrequency",
+                parameterRange: [0,1],
+                parameterInversed: false,
+                midiData: nil,
+                nodeSettings: newNodeSetting,
+                dampMode: .easeInCubic
+            )
+            
+            //Calculate number of cells and create new Part
+            newPart = PartSettings(
+                partId: partId,
+                partName: "Low pass filter",
+                partNumber: 1,
+                rampUp: newNodeSetting.rampSpeed!,
+                rampDown: newNodeSetting.rampSpeedDown!,
+                minimalLevel: newNodeSetting.minimalLevel!,
+                areaOfInterest: Array(repeating: 1, count: cells),
+                areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
+                damperTarget: newDamperTarget,
+                dontDrawVisual: false,
+                dampMode: .easeInCubic,
+                targetType: .effect,
+                targetNameEffect: .lowPassFilter,
+                parametersInversed: false,
+                targetParameterEffect: .cutoffFrequency,
+                targetParameterInstrument: "samplerCC9",
+                targetParameterSequencer: "velocity"
+            )
+            
+            
+            let cutOffParameterSetting = ParameterSettings(
+                index: 0,
+                name: "Cut off frequency",
+                value: 20000,
+                range: [10,20000]
+            )
+            
+            let resoneceParameterSetting = ParameterSettings(
+                index: 1,
+                name: "Resonance",
+                value: -20,
+                range: [-20,20]
+            )
+            
+            var parameters = OrderedDictionary<Int, ParameterSettings>()
+            parameters[cutOffParameterSetting.index] = cutOffParameterSetting
+            parameters[resoneceParameterSetting.index] = resoneceParameterSetting
+            
+            let effectSetting = TrackEffectsSettings(
+                index: 0,
+                name: "Low pass filter",
+                effectType: .lowPassFilter,
+                parameters: parameters
+            )
+            
+            effects[0] = effectSetting
+        }
+        
+        
         
         //Create new Track
         let newTrack = TrackSettings(
             trackId: trackId,
             trackIndex: 0,
             trackName: "New \(trackType.rawValue)",
-            noteSource: .midiFile,
+            noteSource: .midiFile, 
+            chordEntries: [ChordEntry()],
             startType: .loopedTransport,
             variationType: .variationByPosition,
             instrumentType: .audioBuffer,

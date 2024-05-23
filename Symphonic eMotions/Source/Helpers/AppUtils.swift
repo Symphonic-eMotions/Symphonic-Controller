@@ -286,7 +286,8 @@ final class AppUtils {
                 trackId: trackLoaded.id,
                 trackIndex: trackIndex,
                 trackName: trackLoaded.instrumentName,
-                noteSource: trackLoaded.noteSource ?? .midiFile,
+                noteSource: trackLoaded.noteSource ?? .midiFile, 
+                chordEntries: trackLoaded.chordEntries ?? [],
                 startType: trackLoaded.startType,
                 variationType: trackLoaded.variationType ?? .variationByPosition,
                 instrumentType: trackLoaded.instrumentType,
@@ -549,7 +550,8 @@ final class AppUtils {
                 trackId: track.value.trackId,
                 muted: false,
                 instrumentType: track.value.instrumentType,
-                noteSource: track.value.noteSource,
+                noteSource: track.value.noteSource, 
+                chordEntries: track.value.chordEntries,
                 startType: track.value.startType,
                 variationType: track.value.variationType,
                 instrumentName: track.value.trackName,
@@ -648,14 +650,14 @@ final class AppUtils {
         return "\(noteName)\(octave)"
     }
     
-    //Collect clip number from selected instrument cells
+    // Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],
         cellsToGrid: [Int]
     ) -> [Int] {
         var cellsToGridMapped: [Int] = []
         for (index, value) in areaOfInterest.enumerated() {
-            if value == 1 {
+            if value == 1 && index < cellsToGrid.count {
                 cellsToGridMapped.append(cellsToGrid[index])
             }
         }

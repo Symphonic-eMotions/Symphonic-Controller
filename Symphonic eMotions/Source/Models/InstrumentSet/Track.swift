@@ -25,6 +25,7 @@ extension InstrumentsSet {
             case muted
             case instrumentType
             case noteSource
+            case chordEntries
             case startType
             case variationType = "trackType"
             case instrumentName
@@ -51,6 +52,8 @@ extension InstrumentsSet {
         
         //Midi file or note numbers
         var noteSource: NoteSource?
+        //Chords to create midi files with
+        var chordEntries: [ChordEntry]?
         //How do notes start playing
         var startType: StartType
         //To be refeactored to NoteVariation
@@ -86,6 +89,7 @@ extension InstrumentsSet {
             instrumentType = try container.decode(InstrumentType.self, forKey: .instrumentType)
             
             noteSource = try container.decodeIfPresent(NoteSource.self, forKey: .noteSource)
+            chordEntries = try container.decodeIfPresent([ChordEntry].self, forKey: .chordEntries)
             startType = try container.decode(StartType.self, forKey: .startType)
             variationType = try container.decodeIfPresent(VariationType.self, forKey: .variationType)
             
@@ -146,6 +150,7 @@ extension InstrumentsSet {
             muted: Bool?,
             instrumentType: InstrumentType,
             noteSource: NoteSource,
+            chordEntries: [ChordEntry]?,
             startType: StartType,
             variationType: VariationType,
             instrumentName: String,
@@ -168,6 +173,7 @@ extension InstrumentsSet {
             self.muted = muted
             self.instrumentType = instrumentType
             self.noteSource = noteSource
+            self.chordEntries = chordEntries
             self.startType = startType
             self.variationType = variationType
             self.instrumentName = instrumentName
@@ -202,6 +208,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(instrumentType, forKey: .instrumentType)
         
         try container.encode(noteSource, forKey: .noteSource)
+        try container.encode(chordEntries, forKey: .chordEntries)
         try container.encode(startType, forKey: .startType)
         try container.encode(variationType, forKey: .variationType)
         try container.encode(instrumentName, forKey: .instrumentName)

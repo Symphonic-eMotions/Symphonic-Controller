@@ -42,7 +42,7 @@ extension Conductor {
                     create: false)
                 if let documentsDirectory = documentsDirectory {
                     
-                    let fileURL = documentsDirectory.appendingPathComponent("\(set.filesPath)/\(midiFile.fileName)")
+                    let fileURL = documentsDirectory.appendingPathComponent("\(set.filesPath)/\(midiFile.fileName).\(midiFile.fileExtension)")
                     
                     // Check if file exists at the destination URL
                     if FileManager.default.fileExists(atPath: fileURL.path) {

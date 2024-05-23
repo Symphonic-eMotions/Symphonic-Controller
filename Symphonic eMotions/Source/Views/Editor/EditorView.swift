@@ -55,6 +55,7 @@ struct EditorView: View {
     
     //Types per track
     @State var noteSources: [String: NoteSource]
+    @State var chordEntries: [String: [ChordEntry]]
     @State var startTypes: [String: StartType]
     @State var variationTypes: [String: VariationType]
     @State var availableVariationTypes: [String: [VariationType]]
@@ -107,6 +108,7 @@ struct EditorView: View {
         var midiClipLettersInit = [String: [Int]]()
         
         var noteSourcesInit = [String: NoteSource]()
+        var chordEntriesInit = [String: [ChordEntry]]()
         var startTypesInit = [String: StartType]()
         var variationTypesInit = [String: VariationType]()
         var availableVariationTypesInit = [String: [VariationType]]()
@@ -158,6 +160,9 @@ struct EditorView: View {
             let noteSource = track.value.noteSource
             noteSourcesInit[track.value.trackId] = noteSource
             
+            let chordEntries = track.value.chordEntries
+            chordEntriesInit[track.value.trackId] = chordEntries
+            
             let startType = track.value.startType
             startTypesInit[track.value.trackId] = startType
             
@@ -208,6 +213,7 @@ struct EditorView: View {
         _midiClips = State(initialValue: midiClipsInit)
         _midiClipLetters = State(initialValue: midiClipLettersInit)
         _noteSources = State(initialValue: noteSourcesInit)
+        _chordEntries = State(initialValue: chordEntriesInit)
         _startTypes = State(initialValue: startTypesInit)
         _variationTypes = State(initialValue: variationTypesInit)
         _availableVariationTypes = State(initialValue: availableVariationTypesInit)
@@ -266,6 +272,7 @@ struct EditorView: View {
                     midiClipLetters: $midiClipLetters,
 
                     noteSources: $noteSources,
+                    chordEntries: $chordEntries,
                     startTypes: $startTypes,
                     variationTypes: $variationTypes,
                     availableVariationTypes: $availableVariationTypes,

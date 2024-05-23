@@ -15,6 +15,7 @@ class TrackSettings: Identifiable, ObservableObject {
     var trackIndex: Int
     var trackName: String
     var noteSource: NoteSource
+    var chordEntries: [ChordEntry]
     var startType: StartType
     var variationType: VariationType
     var instrumentType: InstrumentsSet.Track.InstrumentType
@@ -65,6 +66,7 @@ class TrackSettings: Identifiable, ObservableObject {
         trackIndex: Int,
         trackName: String,
         noteSource: NoteSource,
+        chordEntries: [ChordEntry],
         startType: StartType,
         variationType: VariationType,
         instrumentType: InstrumentsSet.Track.InstrumentType,
@@ -91,6 +93,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.trackIndex = trackIndex
         self.trackName = trackName
         self.noteSource = noteSource
+        self.chordEntries = chordEntries
         self.startType = startType
         self.variationType = variationType
         self.instrumentType = instrumentType
