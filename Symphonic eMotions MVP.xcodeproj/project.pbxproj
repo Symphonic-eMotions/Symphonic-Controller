@@ -1327,7 +1327,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1349,7 +1349,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.8.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1368,7 +1368,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1390,7 +1390,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.8.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.seproIntern";
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
