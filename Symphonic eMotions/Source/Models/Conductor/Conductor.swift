@@ -960,6 +960,15 @@ final class Conductor {
                 rewindIsPlaying = nil
             }
             
+            if !setSettings.isWavePlaying && userSettings.isSetPlaying {
+                setSettings.isWavePlaying = true
+                setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                    playTrack($0)
+                    
+                    print("Start with movement track \($0.trackId)")
+                }
+            }
+            
             if newSetLevel < doubleLevels {
                 return newSetLevel
             } else { return doubleLevels - 0.001 }
@@ -973,8 +982,17 @@ final class Conductor {
             )
             
             let nextCurrentSetLevel = max(currentSetLevel - levelDecreaseRate, 0.0)
-            
             if nextCurrentSetLevel < 0.1 {
+                
+                if setSettings.isWavePlaying {
+                    setSettings.isWavePlaying = false
+                    setSettings.tracks.values.filter { [.loopedTrigger].contains($0.startType) }.forEach {
+                        stopTrack($0)
+                        
+                        print("Stop with no movement track \($0.trackId)")
+                    }
+                }
+                
                 if let uuid = rewindIsPlaying {
                     envelopeSamplerStop(uuid: uuid)
                     rewindIsPlaying = nil
