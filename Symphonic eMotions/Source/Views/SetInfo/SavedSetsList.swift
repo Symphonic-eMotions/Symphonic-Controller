@@ -18,7 +18,6 @@ struct SavedSetsList: View {
     
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     @Binding var userPresets: [URL]
     @State private var isSharePresented: Bool = false
@@ -62,116 +61,76 @@ struct SavedSetsList: View {
                         shareUrl = IdentifiableURL(url: url)
                     }
                     
-                    HStack(spacing:20){
-                        
-                        //Play this set
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.white)
-                            .font(.system(size: 18))
-                            .frame(width: 30, height: 24)
-                            .padding(.vertical, 5.0)
-                            .padding(.horizontal, 5.0)
-                            .background(Color.accentColor)
-                            .cornerRadius(5.0)
-                            .onTapGesture {
-                                //Store chosen url
-                                currentUrl = url.absoluteString
-                                //Load settngs over current
-                                setInfoModel.tapSavedRow(
-                                    fileName: fileController.urlToFileName(
-                                        url: url
-                                    )
-                                )
-                                setInfoModel.userSettings.isCapturingRunning = true
-                                sessionDisplay = .swiftUI
-                            }
-                        
-                        //Edit this set
-                        Image(systemName: "square.and.pencil")
-                            .foregroundColor(.white)
-                            .font(.system(size: 18))
-                            .frame(width: 30, height: 24)
-                            .padding(.vertical, 5.0)
-                            .padding(.horizontal, 5.0)
-                            .background(Color.green)
-                            .cornerRadius(5.0)
-                            .onTapGesture {
-                                //Store chosen url
-                                currentUrl = url.absoluteString
-                                
-                                //Load settngs over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                                
-                                //Change the View
-                                sessionDisplaySub = .setEditor
-                                
-                            }
-                        
-                        //Sharing
-                        Button(action: shareAction) {
-                            Image(systemName: "square.and.arrow.up")
-                                .renderingMode(.original)
-                                .foregroundColor(.white)
-                                .font(.system(size: 18))
-                                .frame(width: 30, height: 24)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.blue)
-                                .cornerRadius(5.0)
-                        }
-                        .sheet(item: $shareUrl, onDismiss: {
-                            print("Dismiss")
-                        }) { identifiableUrl in
-                            ActivityViewController(activityItems: [identifiableUrl.url as NSURL])
-                        }
-                        
-                        //Add to playlist
-                        Button( action: playlistAction ) {
-                            Image(systemName: "list.star")
-                                .renderingMode(.original)
-                                .foregroundColor(.white)
-                                .font(.system(size: 18))
-                                .frame(width: 30, height: 24)
-                                .padding(.vertical, 5.0)
-                                .padding(.horizontal, 5.0)
-                                .background(Color.blue)
-                                .cornerRadius(5.0)
-                        }
-                        .sheet(isPresented: $isPlaylistsPresented){
-                            AddToPlaylistView(
-                                isPresented: $isPlaylistsPresented,
-                                sandBoxUrl: $playlistUrl
-                            )
-                        }
-                               
-                        //The file name and date
-                        let filesName = fileController.fileNameOrCustomName(
-                            url: url, fileName: fileController.nameFromUrl(url: url)
-                        )
-                        
-                        VStack(alignment: .leading){
-                            HStack{
-                                Text(filesName)
-                                    .font(.title2)
-                            }
+                    //The file name and date
+                    let filesName = fileController.fileNameOrCustomName(
+                        url: url, fileName: fileController.nameFromUrl(url: url)
+                    )
+                    
+                    VStack(alignment: .leading, spacing: 8) { // Verlaag de spacing voor minder ruimte tussen tekst en knoppen
+                        // De bestandsnaam en datum
+                        VStack(alignment: .leading, spacing: 2) { // Kleine spacing tussen de tekstregels
+                            Text(filesName)
+                                .font(.title2)
+                                .lineLimit(1) // Zorgt ervoor dat de tekst op één regel blijft
                             Text(fileController.date(url: url))
                                 .foregroundColor(Color(.lightGray))
                                 .font(.subheadline)
                         }
+                        .layoutPriority(1)
                         
-                        Spacer()
-                        
-                        //Delete
-                        VStack {
-                            Spacer()
-                            Button( action: deleteAction ) {
+                        // HStack met knoppen
+                        HStack(spacing: 10) { // Pas de spacing aan indien nodig
+                            // Play this set
+                            Image(systemName: "play.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .frame(width: 30, height: 24)
+                                .padding(5)
+                                .background(Color.accentColor)
+                                .cornerRadius(5.0)
+                                .onTapGesture {
+                                    // Actie voor afspelen
+                                }
+                            
+                            // Edit this set
+                            Image(systemName: "square.and.pencil")
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .frame(width: 30, height: 24)
+                                .padding(5)
+                                .background(Color.green)
+                                .cornerRadius(5.0)
+                                .onTapGesture {
+                                    // Actie voor bewerken
+                                }
+                            
+                            // Sharing
+                            Button(action: shareAction) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .renderingMode(.original)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 18))
+                                    .frame(width: 30, height: 24)
+                                    .padding(5)
+                                    .background(Color.blue)
+                                    .cornerRadius(5.0)
+                            }
+                            .sheet(item: $shareUrl, onDismiss: {
+                                print("Dismiss")
+                            }) { identifiableUrl in
+                                ActivityViewController(activityItems: [identifiableUrl.url as NSURL])
+                            }
+                            
+                            Spacer() // Zorgt ervoor dat de knoppen aan de linkerkant blijven en de Delete-knop aan de rechterkant
+                            
+                            // Delete-knop
+                            Button(action: deleteAction) {
                                 Image(systemName: "trash")
                                     .renderingMode(.template)
                                     .foregroundColor(.white)
                                     .font(.system(size: 18))
                                     .frame(width: 30)
-                                    .padding(.vertical, 5.0)
-                                    .padding(.horizontal, 5.0)
+                                    .padding(5)
                                     .background(Color.red)
                                     .cornerRadius(5.0)
                             }
@@ -179,18 +138,27 @@ struct SavedSetsList: View {
                                 Alert(
                                     title: Text(NSLocalizedString("Confirm Delete", comment: "")),
                                     message: Text(NSLocalizedString("Are you sure", comment: "")),
-                                    primaryButton: .destructive(Text(NSLocalizedString("Delete", comment: ""))
-                                ) {
-                                    // Handle delete action
-                                    userPresets = fileController.deleteFile(url: deleteUrl)
-                                }, secondaryButton: .cancel())
+                                    primaryButton: .destructive(Text(NSLocalizedString("Delete", comment: ""))) {
+                                        // Verwijderactie
+                                        userPresets = fileController.deleteFile(url: deleteUrl)
+                                    },
+                                    secondaryButton: .cancel()
+                                )
                             }
                         }
-                        .padding(.trailing)
+                        // Verwijder of verminder de padding om de afstand tussen tekst en knoppen te verkleinen
+                        .padding(.top, 5) // Alleen padding aan de bovenkant indien nodig
                     }
-                    .padding()
+                    // Voeg padding toe aan de buitenste VStack voor consistente marges
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    // Voeg een Divider toe om sets van elkaar te scheiden
+                    Divider()
+
+
                 }
             } //End Foreach userPresets -> url
+            
         }
         .onAppear{
             userPresets = fileController.addDirectoryURLsToController()

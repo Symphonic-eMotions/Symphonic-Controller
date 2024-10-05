@@ -23,8 +23,7 @@ extension SetInfoModel {
 
             //On level change mute and un-mute tracks accordingly
             if oldLevel != currentLevel {
-                print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
-                
+//                print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
                 if oldLevel > currentLevel {
                     for track in self.setSettings.tracks {
                         if track.value.instrumentType == .exsSampler {

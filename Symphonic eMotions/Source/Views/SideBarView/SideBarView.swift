@@ -14,7 +14,6 @@ struct SideBarView: View {
     @ObservedObject var setInfoModel: SetInfoModel
 
     @Binding var sessionDisplay: SessionDisplay
-    @Binding var sessionDisplaySub: SessionDisplay
     @Binding var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]
     
     @StateObject private var viewModel = SetListViewModel()
@@ -28,13 +27,11 @@ struct SideBarView: View {
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
-        sessionDisplaySub: Binding<SessionDisplay>,
         sidebarItems: Binding<[(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)]>
         
     ) {
         self.setInfoModel = setInfoModel
         _sessionDisplay = sessionDisplay
-        _sessionDisplaySub = sessionDisplaySub
         _sidebarItems = sidebarItems
         
     }
@@ -81,77 +78,28 @@ struct SideBarView: View {
                         )
                     }
                     .onTapGesture {
-                        //Deactivate navigation when sessionDisplaySub in these views
-                        if [.setEditor,.playListEditor,.playing].contains(sessionDisplaySub) {
-                            withAnimation {
-                                
-                                if sessionDisplaySub == .playing {
-                                    //Stop audio engine if playing
-                                    sessionDisplaySub = .stopped
-                                    setInfoModel.tapStopAudioEngine()
-                                    userSettings.isSetPlaying = false
-                                }
-                                
-                                // Fade to red and back
-                                let fadeDur = 0.25
-                                withAnimation(.easeInOut(duration: fadeDur)) {
-                                    self.showDisabled = true
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + fadeDur) {
-                                    withAnimation(.easeInOut(duration: fadeDur)) {
-                                        self.showDisabled = false
-                                    }
-                                }
-                            }
-                        }
-                        //Default navigation behaviour
-                        else {
-                            userSettings.isCapturingRunning = false
-                            
-                            selectedMainItem = item.sessionDisplay
-                            
-                            //Let the sysem know what files to show
-                            changeFileGroupAndSessionDisplay(item)
-                            
-                            //Playlist and sub
-                            if item.sessionDisplay == .playlists {
-                                sessionDisplaySub = .playlists
-                            }
-                            //Home and sub
-                            else if item.sessionDisplay == .home {
-                                sessionDisplaySub = .page01
-                            }
-                            //Pro
-                            else if item.sessionDisplay == .pro {
-                                sessionDisplaySub = .stopped
-                            }
-                            //SpriteKit
-                            else if item.sessionDisplay == .pro {
-                                sessionDisplaySub = .stopped
-                            }
-                            
-                            //Default
-                            else{
-                                sessionDisplaySub = sessionDisplay
-                            }
-                            
-                            setInfoModel.setSettings.currentPlaylist = .none
-                        }
+
+                        userSettings.isCapturingRunning = false
+                        
+                        selectedMainItem = item.sessionDisplay
+                        
+                        //Let the sysem know what files to show
+                        changeFileGroupAndSessionDisplay(item)
+                        
+                        setInfoModel.setSettings.currentPlaylist = .none
                     }
                 }
                 
                 //Set items
                 ForEach(
                     viewModel.getSetFiles(
-                        for: getFileGroup(for: selectedMainItem),
-                        with: sessionDisplaySub
+                        for: getFileGroup(for: selectedMainItem), with: .pro
                     )
                 ) { setFile in
                     SetFileButtonView(
                         setFile: setFile,
                         selectedSet: $selectedSet,
                         sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub,
                         setInfoLocalState: $setInfoModel.setInfoLocalState,
                         setInfoModel: setInfoModel
                     )

@@ -30,10 +30,8 @@ struct SetInfo: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var isCreator: Bool
     @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     @Binding public var userPresets: [URL]
-    
     
     var body: some View {
         VStack{
@@ -49,21 +47,21 @@ struct SetInfo: View {
             else if sessionDisplay == .setInfo {
                 
                 //Here we got the Editor!
-                if [.setEditor,.playListEditor].contains(sessionDisplaySub) {
-                    
-                    Text("Variation \(setInfoModel.setInfoLocalState.setName)")
-                        .font(.largeTitle)
-                        .fontWeight(.regular)
-                    
-                    EditorView(
-                        setInfoModel: setInfoModel,
-                        isCreator: $isCreator,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub
-                    ).environmentObject(fileController)
-                }
+//                if [.setEditor,.playListEditor].contains(sessionDisplaySub) {
+//                    
+//                    Text("Variation \(setInfoModel.setInfoLocalState.setName)")
+//                        .font(.largeTitle)
+//                        .fontWeight(.regular)
+//                    
+//                    EditorView(
+//                        setInfoModel: setInfoModel,
+//                        isCreator: $isCreator,
+//                        sessionDisplay: $sessionDisplay,
+//                        sessionDisplaySub: $sessionDisplaySub
+//                    ).environmentObject(fileController)
+//                }
                 //Set Info
-                else{
+//                else{
                     
                     //Title set name
                     Text("Set \(setInfoModel.setInfoLocalState.setName)")
@@ -124,14 +122,13 @@ struct SetInfo: View {
                         SavedSetsList(
                             setInfoModel: setInfoModel,
                             sessionDisplay: $sessionDisplay,
-                            sessionDisplaySub: $sessionDisplaySub,
                             userPresets: $userPresets
                         )
                         .environmentObject(fileController)
                         
                     }
                     Spacer()
-                }
+                
             }
         }
         .onAppear(){

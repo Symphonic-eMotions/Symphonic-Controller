@@ -183,10 +183,10 @@ extension Conductor {
             
             do {
                 //Recorder
-                let avAudioFile = try AppUtils.createAvAudioFile(set: set, trackName: track.instrumentName)
-                //Use trackMixers to record, you can also hear this signal
-                let recorder = try NodeRecorder(node: trackMixers[track.id]!, file: avAudioFile)
-                trackRecorders[track.id] = recorder
+//                let avAudioFile = try AppUtils.createAvAudioFile(set: set, trackName: track.instrumentName)
+//                //Use trackMixers to record, you can also hear this signal
+//                let recorder = try NodeRecorder(node: trackMixers[track.id]!, file: avAudioFile)
+//                trackRecorders[track.id] = recorder
                 
                 //Load EXS from File
                 try sampler.loadEXS24("Sounds/Sampler Instruments/\(exsFile.fileName)")

@@ -13,11 +13,14 @@ import Combine
 import Dispatch
 import SwiftUI
 
-final class Conductor {
+protocol HasAudioEngine {
+    var audioEngine: AudioEngine { get set }
+}
+
+final class Conductor: HasAudioEngine {
     
     var userSettings: UserSettings
     
-    let autoVoice = AVSpeechSynthesizer()
     var autoSound: AVAudioPlayer!
     
     //MARK: Var declarations
@@ -104,9 +107,6 @@ final class Conductor {
     ) {
         self.userSettings = userSettings
         self.set = set
-        
-        let silentUtterance = AVSpeechUtterance(string: "")
-        autoVoice.speak(silentUtterance)
         
         audioEngine = AudioEngine()
         mixer = Mixer()
@@ -684,28 +684,6 @@ final class Conductor {
             if setSettings.fileGroup == .playlists {
                 let sounds = ["Applause01", "Applause02", "Applause03"]
                 playInterfaceSounds(sounds: sounds, volume: 0.17)
-            }
-            
-            if !autoVoice.isSpeaking {
-                
-                let utteranceText: String
-                let utteranceRate: Float
-                
-                if setSettings.fileGroup == .playlists {
-                    utteranceText = NSLocalizedString("Set complete", comment: "")
-                    utteranceRate = 0.55
-                } else {
-                    // Specify a different utterance here
-                    utteranceText = NSLocalizedString("Set ended", comment: "")
-                    utteranceRate = 0.4
-                }
-                
-                let trudy = AVSpeechUtterance(string: utteranceText)
-                trudy.voice = AVSpeechSynthesisVoice(language: NSLocalizedString("accent", comment: ""))
-                trudy.rate = utteranceRate
-                trudy.pitchMultiplier = 1.01
-                trudy.volume = 0.60
-                autoVoice.speak(trudy)
             }
         }
         

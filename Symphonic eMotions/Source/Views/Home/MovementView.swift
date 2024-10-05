@@ -44,7 +44,6 @@ struct MovementView: View {
                         SettingsSheetView(
                             userSettings: userSettings,
                             setInfoModel: setInfoModel, 
-                            sessionDisplaySub: $sessionDisplaySub,
                             showingSheet: $presentSettingSheet
                         )
                         .background(Color.black.opacity(0.5))

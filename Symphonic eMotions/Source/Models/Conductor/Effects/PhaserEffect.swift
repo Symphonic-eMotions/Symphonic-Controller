@@ -9,6 +9,7 @@ import Foundation
 import AudioKit
 import SporthAudioKit
 import SoundpipeAudioKit
+import AudioKitEX
 
 class PhaserEffect: AudioProcessingEffect {
     

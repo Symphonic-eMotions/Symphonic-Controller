@@ -14,7 +14,6 @@ struct PlayView: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
     @StateObject private var columnOpacityController: ColumnOpacityController
     @StateObject private var cellOpacityController: CellOpacityController
     @StateObject private var gridModel: GridModel
@@ -25,7 +24,6 @@ struct PlayView: View {
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
-        sessionDisplaySub: Binding<SessionDisplay>,
         showLevelPlayerFullScreen: Binding<Bool>
     ){
         self.setInfoModel = setInfoModel
@@ -42,7 +40,6 @@ struct PlayView: View {
             )
         )
         self._sessionDisplay = sessionDisplay
-        self._sessionDisplaySub = sessionDisplaySub
         self._showLevelPlayerFullScreen = showLevelPlayerFullScreen
     }
     
@@ -66,7 +63,6 @@ struct PlayView: View {
                     //Transport buttons
                     PlayerControlsView(
                         setInfoModel: setInfoModel,
-                        sessionDisplaySub: $sessionDisplaySub,
                         showMasterTrack: $showMasterTrack
                     )
                     .zIndex(100)
@@ -89,7 +85,6 @@ struct PlayView: View {
                                     if !setInfoModel.userSettings.isSetPlaying {
                                         StartView(
                                             setInfoModel: setInfoModel,
-                                            sessionDisplaySub: $sessionDisplaySub,
                                             geometry: geometry
                                         )
                                         .zIndex(210)
@@ -142,7 +137,6 @@ struct PlayView: View {
                         SettingsSheetView(
                             userSettings: userSettings,
                             setInfoModel: setInfoModel,
-                            sessionDisplaySub: $sessionDisplaySub,
                             showingSheet: $presentSettingSheet
                         )
                     }
@@ -154,8 +148,7 @@ struct PlayView: View {
                     //Editor below grid editor
                     PartFeedbackView(
                         setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay,
-                        sessionDisplaySub: $sessionDisplaySub
+                        sessionDisplay: $sessionDisplay
                     )
                     .environmentObject(fileController)
                 }

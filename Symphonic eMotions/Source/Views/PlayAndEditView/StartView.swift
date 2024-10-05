@@ -11,7 +11,6 @@ struct StartView: View {
     @EnvironmentObject var userSettings: UserSettings
     @EnvironmentObject var startViewModel: StartViewModel
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplaySub: SessionDisplay
     @State private var isCalibrating: Bool = false
     @State private var calibrationThreshold: Int = 0
     @State private var calibrationThresholdCancellable: AnyCancellable?
@@ -51,7 +50,6 @@ struct StartView: View {
             .clipShape(Circle())
             .onAppear {
                 startViewModel.onCountdownComplete = {
-                    sessionDisplaySub = .playing
                     setInfoModel.tapStartAudioEngine()
                     userSettings.isSetPlaying = true
                     startViewModel.initalizeModel()

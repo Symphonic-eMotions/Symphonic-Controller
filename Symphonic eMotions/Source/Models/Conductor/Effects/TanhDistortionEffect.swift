@@ -8,6 +8,7 @@
 import Foundation
 import AudioKit
 import SoundpipeAudioKit
+import AudioKitEX
 
 class TanhDistortionEffect: AudioProcessingEffect {
     

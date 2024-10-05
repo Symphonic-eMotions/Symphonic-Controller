@@ -13,7 +13,6 @@ struct PartFeedbackView: View {
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
     
     @State var currentTrackID: String
     @State var currentPartID: String
@@ -25,14 +24,12 @@ struct PartFeedbackView: View {
     
     init(
         setInfoModel: SetInfoModel,
-        sessionDisplay: Binding<SessionDisplay>,
-        sessionDisplaySub: Binding<SessionDisplay>
+        sessionDisplay: Binding<SessionDisplay>
     ){
         
         self.setInfoModel = setInfoModel
         
         self._sessionDisplay = sessionDisplay
-        self._sessionDisplaySub = sessionDisplaySub
         
         //Set Settings for building interface
         self.setSettings = setInfoModel.setSettings
@@ -225,26 +222,23 @@ struct PartFeedbackView: View {
                         )
                         
                         //New set, not in playlist
-                        if sessionDisplaySub != .playlists {
-                            EMButton(
-                                action: {
-                                    
-                                    let fileName = AppUtils.createWorkingFile(
-                                        setSettings: setSettings,
-                                        instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
-                                        duplicateLastTrack: false,
-                                        asNewFile: true
-                                    )
-                                    
-                                    fileController.addSetFileURLToController(fileName: fileName)
-                                    
-                                    sessionDisplay = .setInfo
-                                    sessionDisplaySub = .none
-                                }, color: .orange, isSolid: true, maxWidth: 130, height: 35
-                            ){
-                                Text("New Set")
-                            }.frame(width: 130)
-                        }
+                        EMButton(
+                            action: {
+                                
+                                let fileName = AppUtils.createWorkingFile(
+                                    setSettings: setSettings,
+                                    instrumentSet: setInfoModel.setInfoState.currentInstrumentsSet,
+                                    duplicateLastTrack: false,
+                                    asNewFile: true
+                                )
+                                
+                                fileController.addSetFileURLToController(fileName: fileName)
+                                
+                                sessionDisplay = .setInfo
+                            }, color: .orange, isSolid: true, maxWidth: 130, height: 35
+                        ){
+                            Text("New Set")
+                        }.frame(width: 130)
                         
                         //Save set, if not a bundle file
                         if userSettings.currentUrl.contains("/Documents/") {

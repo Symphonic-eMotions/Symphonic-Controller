@@ -41,8 +41,7 @@ struct eMotionApp: App {
                     leveling: Leveling(),
                     partFeedback: PartFeedback(instrumentsSet: instrumentSet)
                 ),
-                sessionDisplay: $sessionDisplay,
-                sessionDisplaySub: $sessionDisplaySub
+                sessionDisplay: $sessionDisplay
             )
             .statusBar(hidden: true)
             .preferredColorScheme(.dark)

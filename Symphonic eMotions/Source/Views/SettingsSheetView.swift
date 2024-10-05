@@ -11,7 +11,6 @@ struct SettingsSheetView: View {
     
     @ObservedObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showingSheet: Bool
     @State private(set) var localTempo: Int = 0
     
@@ -141,12 +140,10 @@ struct SettingsSheetView: View {
                     //Start stop
                     EMButton(action: {
                             if userSettings.isSetPlaying {
-                                sessionDisplaySub = .stopped
                                 setInfoModel.tapStopAudioEngine()
                                 userSettings.isSetPlaying = false
                             }
                             else{
-                                sessionDisplaySub = .playing
                                 setInfoModel.tapStartAudioEngine()
                                 userSettings.isSetPlaying = true
                             }

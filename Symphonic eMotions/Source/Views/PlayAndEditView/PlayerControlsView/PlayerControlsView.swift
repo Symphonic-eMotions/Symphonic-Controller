@@ -21,7 +21,6 @@ struct PlayerControlsView: View {
     
     @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplaySub: SessionDisplay
     @Binding var showMasterTrack: Bool
     
 //    @State var areTracksRecording: Bool = false
@@ -41,8 +40,7 @@ struct PlayerControlsView: View {
                     
                     //Settings button
                     SettingsButtonWithLongPress(
-                        setInfoModel: setInfoModel, 
-                        sessionDisplaySub: $sessionDisplaySub
+                        setInfoModel: setInfoModel
                     )
                     
                     //Master FX Button only available in part editor
@@ -62,47 +60,16 @@ struct PlayerControlsView: View {
                         }, color: .accentColor, isSolid: false) {
                             Image(systemName: userSettings.showPartEditor ? "wrench.adjustable" : "wrench.adjustable.fill")
                         }
-                            
-                        
-                        //Record tracks to file start stop
-//                        EMButton(action: {
-//                            
-//                            if areTracksRecording {
-//                                sessionDisplaySub = .stopped
-//                                setInfoModel.tapStopAudioEngine()
-//                                userSettings.isSetPlaying = false
-//                                
-//                                //Record part
-//                                self.areTracksRecording = false
-//                                setInfoModel.tapStopRecordTracks()
-//                            }
-//                            else{
-//                                
-//                                sessionDisplaySub = .playing
-//                                setInfoModel.tapStartAudioEngine()
-//                                userSettings.isSetPlaying = true
-//                                
-//                                //Record part
-//                                setInfoModel.tapAStartRecordTracks()
-//                                self.areTracksRecording = true
-//                            }
-//                            
-//                        }, color: .accentColor) {
-//                            Image(systemName: areTracksRecording ? "record.circle" : "record.circle.fill")
-//                                    .foregroundColor(areTracksRecording ? .red : .primary)
-//                        }
                     }
                     
                     //Start stop
                     EMButton(action: {
                         
                         if userSettings.isSetPlaying {
-                            sessionDisplaySub = .stopped
                             setInfoModel.tapStopAudioEngine()
                             userSettings.isSetPlaying = false
                         }
                         else{
-                            sessionDisplaySub = .playing
                             setInfoModel.tapStartAudioEngine()
                             userSettings.isSetPlaying = true
                         }
@@ -112,10 +79,6 @@ struct PlayerControlsView: View {
                                 "stop.fill" :
                                 "play.fill")
                     }
-                }
-                .onAppear {
-                    setInfoModel.onLevelReached = {
-                        sessionDisplaySub = .stopped                    }
                 }
             }
         }

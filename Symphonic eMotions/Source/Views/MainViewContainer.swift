@@ -12,7 +12,6 @@ struct MainViewContainer: View {
     
     @ObservedObject var viewModel: MainViewModel
     @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
     //Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState()
     
@@ -42,8 +41,7 @@ struct MainViewContainer: View {
                 partFeedback: viewModel.partFeedback,
                 partFeedbackState: PartFeedbackState()
             ),
-            sessionDisplay: $sessionDisplay,
-            sessionDisplaySub: $sessionDisplaySub
+            sessionDisplay: $sessionDisplay
         )
     }
 }
