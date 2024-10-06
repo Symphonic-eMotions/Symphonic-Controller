@@ -89,7 +89,15 @@ struct SavedSetsList: View {
                                 .background(Color.accentColor)
                                 .cornerRadius(5.0)
                                 .onTapGesture {
-                                    // Actie voor afspelen
+                                    currentUrl = url.absoluteString
+                                    //Load settngs over current
+                                    setInfoModel.tapSavedRow(
+                                        fileName: fileController.urlToFileName(
+                                            url: url
+                                        )
+                                    )
+                                    setInfoModel.userSettings.isCapturingRunning = true
+                                    sessionDisplay = .swiftUI
                                 }
                             
                             // Edit this set
@@ -101,7 +109,13 @@ struct SavedSetsList: View {
                                 .background(Color.green)
                                 .cornerRadius(5.0)
                                 .onTapGesture {
-                                    // Actie voor bewerken
+                                    currentUrl = url.absoluteString
+                                                                    
+                                    //Load settngs over current
+                                    setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
+                                    
+                                    //Change the View
+//                                    sessionDisplaySub = .setEditor
                                 }
                             
                             // Sharing

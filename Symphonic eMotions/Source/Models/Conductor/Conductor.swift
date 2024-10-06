@@ -178,10 +178,15 @@ final class Conductor: HasAudioEngine {
                     }
                 }
                 do {
-                    //Close file by loading empty exs
-                    try trackSamplers[track.id]!.loadEXS24("Sounds/Sampler Instruments/trigger")
+                    // Zoek het instrumentbestand in de app-bundle
+                    if let instrumentURL = Bundle.main.url(forResource: "Sounds/Sampler Instruments/trigger", withExtension: "exs") {
+                        // Laad het instrument nadat de sampler aan de engine is toegevoegd en de engine is gestart.
+                        try trackSamplers[track.id]!.loadInstrument(at: instrumentURL)
+                    } else {
+                        print("Instrument file not found: trigger.exs")
+                    }
                 } catch {
-                    print("Error loading EXS: trigger")
+                    print("Error loading instrument: \(error.localizedDescription)")
                 }
                 
                 trackSamplers[track.id]!.destroyEndpoint()
@@ -236,9 +241,15 @@ final class Conductor: HasAudioEngine {
                 
                 // Attempt to load the empty EXS file to free up resources
                 do {
-                    try sampler.loadEXS24("Sounds/Sampler Instruments/trigger")
+                    // Zoek het instrumentbestand in de app-bundle
+                    if let instrumentURL = Bundle.main.url(forResource: "Sounds/Sampler Instruments/trigger", withExtension: "exs") {
+                        // Laad het instrument nadat de sampler aan de engine is toegevoegd en de engine is gestart.
+                        try sampler.loadInstrument(at: instrumentURL)
+                    } else {
+                        print("Instrument file not found: trigger.exs")
+                    }
                 } catch {
-                    print("Error loading EXS: trigger")
+                    print("Error loading instrument: \(error.localizedDescription)")
                 }
                 
                 // Cleanup and release resources

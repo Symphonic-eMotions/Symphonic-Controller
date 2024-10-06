@@ -27,32 +27,16 @@ extension Conductor {
             let sequencer = AppleSequencer()
             
             // Try loading MIDI file from the app bundle first
-            if let bundlePath = Bundle.main.path(forResource: "Sounds/MIDI/\(midiFile.fileName)", ofType: "mid"),
-               FileManager.default.fileExists(atPath: bundlePath) {
-                sequencer.loadMIDIFile("Sounds/MIDI/\(midiFile.fileName)")
-            }
-            
-            // If the file does not exist in the app bundle, try loading it from the documents directory
-            else {
-                
-                let documentsDirectory = try? FileManager.default.url(
-                    for: .documentDirectory,
-                    in: .userDomainMask,
-                    appropriateFor: nil,
-                    create: false)
-                if let documentsDirectory = documentsDirectory {
-                    
-                    let fileURL = documentsDirectory.appendingPathComponent("\(set.filesPath)/\(midiFile.fileName).\(midiFile.fileExtension)")
-                    
-                    // Check if file exists at the destination URL
-                    if FileManager.default.fileExists(atPath: fileURL.path) {
-                        sequencer.loadMIDIFile(fromURL: fileURL)
-                    } else {
-                        print("MIDI file \(midiFile.fileName) does not exist at expected location: \(fileURL.path)")
-                        return nil
-                    }
+            if let bundleURL = Bundle.main.url(forResource: "Sounds/MIDI/\(midiFile.fileName)", withExtension: "mid") {
+                sequencer.loadMIDIFile(fromURL: bundleURL)
+            } else {
+                // Probeer het te laden vanuit de documentenmap
+                let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                if let fileURL = documentsDirectory?.appendingPathComponent("\(set.filesPath)/\(midiFile.fileName).\(midiFile.fileExtension)"),
+                   FileManager.default.fileExists(atPath: fileURL.path) {
+                    sequencer.loadMIDIFile(fromURL: fileURL)
                 } else {
-                    print("Couldn't find the documents directory.")
+                    print("MIDI file \(midiFile.fileName) does not exist at expected location.")
                     return nil
                 }
             }
@@ -162,40 +146,67 @@ extension Conductor {
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer) -> MIDISampler? {
             
-            // Use the 1st exs file defined.
-            guard let exsFile = track.exsFiles?.first else {
-                print("No EXS file for track id: \(track.id)")
-                return nil
-            }
-            
-            let sampler = MIDISampler(name: track.instrumentName)
-            sampler.amplitude = track.volume
-            
-            let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
-//            let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-            
-            //Have an extra mixer to record
-            trackMixers[track.id]?.addInput(chainEffects)
-            
-            //Send the record signal to the main out
-            mixer.addInput(trackMixers[track.id]!)
-            //mixer.addInput(ampEnv)
-            
-            do {
-                //Recorder
-//                let avAudioFile = try AppUtils.createAvAudioFile(set: set, trackName: track.instrumentName)
-//                //Use trackMixers to record, you can also hear this signal
-//                let recorder = try NodeRecorder(node: trackMixers[track.id]!, file: avAudioFile)
-//                trackRecorders[track.id] = recorder
-                
-                //Load EXS from File
-                try sampler.loadEXS24("Sounds/Sampler Instruments/\(exsFile.fileName)")
-                
-            } catch {
-                print("Error loading EXS: \(exsFile.fileName)")
-            }
-            
-            return sampler
+        // Gebruik het eerste EXS-bestand dat is gedefinieerd.
+        guard let exsFile = track.exsFiles?.first else {
+            print("No EXS file for track id: \(track.id)")
+            return nil
         }
-    
+        
+        let sampler = MIDISampler(name: track.instrumentName)
+        sampler.amplitude = track.volume
+        
+        // Koppel de sampler aan de audio-engine als deze nog niet is gekoppeld
+        if sampler.avAudioNode.engine == nil {
+            audioEngine.avEngine.attach(sampler.avAudioNode)
+        }
+        
+        // Maak de keten van effecten
+        let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
+        
+        // Koppel chainEffects aan de engine indien nodig
+        if chainEffects.avAudioNode.engine == nil {
+            audioEngine.avEngine.attach(chainEffects.avAudioNode)
+        }
+        
+        // Zorg ervoor dat de track mixer is gekoppeld aan de engine
+        if let trackMixer = trackMixers[track.id] {
+            if trackMixer.avAudioNode.engine == nil {
+                audioEngine.avEngine.attach(trackMixer.avAudioNode)
+            }
+            
+            // Verbind chainEffects met de track mixer
+            audioEngine.avEngine.connect(chainEffects.avAudioNode, to: trackMixer.avAudioNode, format: nil)
+            
+            // Zorg ervoor dat de hoofdmixer is gekoppeld aan de engine
+            if mixer.avAudioNode.engine == nil {
+                audioEngine.avEngine.attach(mixer.avAudioNode)
+            }
+            
+            // Verbind de track mixer met de hoofdmixer
+            audioEngine.avEngine.connect(trackMixer.avAudioNode, to: mixer.avAudioNode, format: nil)
+        }
+        
+        // Start de AudioKit engine als deze nog niet is gestart.
+        if !audioEngine.avEngine.isRunning {
+            do {
+                try audioEngine.start()
+            } catch {
+                print("Error starting AudioKit: \(error.localizedDescription)")
+            }
+        }
+        
+        do {
+            // Zoek het instrumentbestand in de app-bundle
+            if let instrumentURL = Bundle.main.url(forResource: "Sounds/Sampler Instruments/\(exsFile.fileName)", withExtension: "exs") {
+                // Laad het instrument nadat de sampler aan de engine is toegevoegd en de engine is gestart.
+                try sampler.loadInstrument(at: instrumentURL)
+            } else {
+                print("Instrument file not found: \(exsFile.fileName).exs")
+            }
+        } catch {
+            print("Error loading instrument: \(error.localizedDescription)")
+        }
+        
+        return sampler
+    }
 }
