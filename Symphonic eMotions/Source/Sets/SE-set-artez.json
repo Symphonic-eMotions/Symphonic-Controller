@@ -1,0 +1,626 @@
+{
+  "customName" : "",
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "gridColumns" : 3,
+  "gridRows" : 3,
+  "hasTempo" : false,
+  "imagePrefix" : "Introductie",
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Boomwhackers-8-C3",
+          "lengthInBeats" : 8,
+          "source" : "user"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentNoColor",
+      "instrumentName" : "Boomwhackers",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8918439745903015,
+              "rampSpeedDown" : 0.5815602540969849
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "boom"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 8.202126,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            8
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        0,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "boom",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Triangel-8-C3",
+          "lengthInBeats" : 8,
+          "source" : "user"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentNoColor",
+      "instrumentName" : "Triangel",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8918439745903015,
+              "rampSpeedDown" : 0.5815602540969849
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "Triangel"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 8.202126,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            8
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        0,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "Triangel",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Shaker-8-C3",
+          "lengthInBeats" : 8,
+          "source" : "user"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentNoColor",
+      "instrumentName" : "Shaker",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8918439745903015,
+              "rampSpeedDown" : 0.5815602540969849
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "Shaker"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 8.202126,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            8
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        0,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "Shaker",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Handdrum-8-C3",
+          "lengthInBeats" : 8,
+          "source" : "user"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentNoColor",
+      "instrumentName" : "Handdrum",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8918439745903015,
+              "rampSpeedDown" : 0.5815602540969849
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "Handdrum"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 8.202126,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            8
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        0,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "Handdrum",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDifficultySet" : 0.5,
+  "levelDurations" : [
+    32,
+    64,
+    64
+  ],
+  "levelSpeedSet" : 0.5,
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.2
+        ],
+        "value" : 0.001
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.1,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 10
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    },
+    {
+      "effectName" : "reverb",
+      "reverbDryWetMix" : {
+        "range" : [
+          0,
+          1
+        ],
+        "value" : 0.2814433
+      },
+      "reverbPreset" : {
+        "range" : [
+          0,
+          12
+        ],
+        "value" : 4.5773196
+      }
+    }
+  ],
+  "published" : true,
+  "semVersion" : "2.8.4",
+  "setBPM" : 110,
+  "setEffects" : [
+
+  ],
+  "setName" : "Docent Muziek",
+  "setPath" : "Artez",
+  "setTimeSignature" : 4,
+  "userViews" : [
+    "PlayView"
+  ]
+}

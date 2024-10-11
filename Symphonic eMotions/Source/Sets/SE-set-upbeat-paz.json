@@ -1,0 +1,327 @@
+{
+    "gridColumns": 3,
+    "gridRows": 3,
+    "hasTempo": true,
+    "published": true,
+    "semVersion" : "2.6.0",
+    "fileGroup" : {
+      "template" : {
+
+      }
+    },
+    "instrumentsConfig": [{
+        "audioFiles": null,
+        "effects": [{
+            "cutoffFrequency": {
+                "range": [10, 20000],
+                "value": 20000
+            },
+            "effectName": "lowPassFilter",
+            "resonance": {
+                "range": [-20, 40],
+                "value": -20
+            }
+        }],
+        "excludeLevelClipControl": null,
+        "exsFiles": [{
+            "exsFileExt": "exs",
+            "exsFileName": "PazBeat"
+        }],
+        "instrumentColor": "InstrumentColor601",
+        "instrumentName": "Drums",
+        "instrumentParts": [{
+            "areaOfInterest": [0, 0, 1, 0, 0, 1, 0, 0, 1],
+            "damperTarget": {
+                "dampMode": "easeOutCubic",
+                "midiData": null,
+                "nodeName": "lowPassFilter",
+                "nodeSettings": {
+                    "coolDownTime": null,
+                    "levelPart": 0.001,
+                    "minimalLevel": 0.01,
+                    "rampSpeed": 0.1482,
+                    "rampSpeedDown": 0.078299999999999995,
+                    "tempoHigh": null,
+                    "tempoLow": null
+                },
+                "nodeType": "effect",
+                "parameter": "cutoffFrequency",
+                "parameterRange": [10, 20000],
+                "scoreWandererType": null,
+                "trackId": "drums"
+            },
+            "dontDrawVisual": false,
+            "instrumentPartName": "LPF",
+            "mapMaxIndex": [2, 1, 0]
+        }, {
+            "areaOfInterest": [0, 0, 1, 0, 0, 1, 0, 0, 0],
+            "damperTarget": {
+                "dampMode": "easeOutCubic",
+                "midiData": null,
+                "nodeName": "",
+                "nodeSettings": {
+                    "coolDownTime": null,
+                    "levelPart": 0.001,
+                    "minimalLevel": 0.01,
+                    "rampSpeed": 0.010283688083291054,
+                    "rampSpeedDown": 0.010283688083291054,
+                    "tempoHigh": null,
+                    "tempoLow": null
+                },
+                "nodeType": "instrument",
+                "parameter": "samplerCC9",
+                "parameterRange": [0, 1],
+                "scoreWandererType": null,
+                "trackId": "drums"
+            },
+            "dontDrawVisual": false,
+            "instrumentPartName": "LPF",
+            "mapMaxIndex": null
+        }],
+        "instrumentType": "exsSampler",
+        "instrumentVolume": -15.127662658691406,
+        "levels": [2],
+        "masterTrackId": null,
+        "midiFiles": [{
+            "loopLength": [8, 8, 8],
+            "midiFileExt": "mid",
+            "midiFileName": "paz-drums-abstract1-3"
+        }],
+        "midiTargetTrackId": null,
+        "midiThreshold": 1,
+        "muted": null,
+        "scoreWalkDuration": null,
+        "startType": "loopedTransport",
+        "trackId": "drums"
+    }, {
+        "audioFiles": null,
+        "effects": [{
+            "cutoffFrequency": {
+                "range": [10, 20000],
+                "value": 4000
+            },
+            "effectName": "lowPassFilter",
+            "resonance": {
+                "range": [-20, 40],
+                "value": -20
+            }
+        }, {
+            "effectName": "reverb",
+            "reverbDryWetMix": {
+                "range": [0, 1],
+                "value": 0.37000000476837158
+            },
+            "reverbPreset": {
+                "range": [0, 12],
+                "value": 4.4000000953674316
+            }
+        }],
+        "excludeLevelClipControl": null,
+        "exsFiles": [{
+            "exsFileExt": "exs",
+            "exsFileName": "harp"
+        }],
+        "instrumentColor": "InstrumentColor700",
+        "instrumentName": "Harp",
+        "instrumentParts": [{
+            "areaOfInterest": [1, 0, 0, 1, 0, 0, 1, 0, 0],
+            "damperTarget": {
+                "dampMode": "easeOutCubic",
+                "midiData": null,
+                "nodeName": "",
+                "nodeSettings": {
+                    "coolDownTime": null,
+                    "levelPart": 0.001,
+                    "minimalLevel": 0.01,
+                    "rampSpeed": 0.1298,
+                    "rampSpeedDown": 0.083699999999999997,
+                    "tempoHigh": null,
+                    "tempoLow": null
+                },
+                "nodeType": "sequencer",
+                "parameter": "velocity",
+                "parameterRange": [0, 1],
+                "scoreWandererType": null,
+                "trackId": "harp"
+            },
+            "dontDrawVisual": false,
+            "instrumentPartName": "Velocity (aanslag)",
+            "mapMaxIndex": [2, 1, 0]
+        }],
+        "instrumentType": "exsSampler",
+        "instrumentVolume": -3,
+        "levels": [0, 1, 2],
+        "masterTrackId": null,
+        "midiFiles": [{
+            "loopLength": [32, 32, 32],
+            "midiFileExt": "mid",
+            "midiFileName": "paz-main-3parts2"
+        }],
+        "midiTargetTrackId": null,
+        "midiThreshold": 1,
+        "muted": null,
+        "scoreWalkDuration": null,
+        "startType": "loopedTransport",
+        "trackId": "harp"
+    }, {
+        "audioFiles": null,
+        "effects": [{
+            "dryWetTanh": {
+                "range": [0, 1],
+                "value": 0.89999997615814209
+            },
+            "effectName": "tanhDistortion",
+            "negativeShapeParameter": {
+                "range": [-10, 10],
+                "value": 2
+            },
+            "positiveShapeParameter": {
+                "range": [-10, 10],
+                "value": -2.5
+            },
+            "postgain": {
+                "range": [0, 10],
+                "value": 10
+            },
+            "pregain": {
+                "range": [0, 10],
+                "value": 1.5
+            }
+        }, {
+            "attackTime": {
+                "range": [0.0001, 0.20000000000000001],
+                "value": 0.0010000000474974513
+            },
+            "effectName": "compressor",
+            "headRoom": {
+                "range": [0.10000000000000001, 40],
+                "value": 4
+            },
+            "masterGain": {
+                "range": [-40, 40],
+                "value": -18
+            },
+            "releaseTime": {
+                "range": [0.01, 3],
+                "value": 0.05000000074505806
+            },
+            "threshold": {
+                "range": [-40, 20],
+                "value": -20
+            }
+        }, {
+            "dryWetMix": {
+                "range": [0, 100],
+                "value": 45
+            },
+            "effectName": "delay",
+            "feedback": {
+                "range": [-100, 100],
+                "value": -90
+            },
+            "lowPassCutoff": {
+                "range": [10, 20000],
+                "value": 440
+            },
+            "time": {
+                "range": [0, 2],
+                "value": 0.41699999570846558
+            }
+        }],
+        "excludeLevelClipControl": null,
+        "exsFiles": null,
+        "instrumentColor": "InstrumentColor600",
+        "instrumentName": "Pulse Width Synth",
+        "instrumentParts": [{
+            "areaOfInterest": [0, 1, 0, 0, 1, 0, 0, 1, 0],
+            "damperTarget": {
+                "dampMode": "easeOutCubic",
+                "midiData": null,
+                "nodeName": "",
+                "nodeSettings": {
+                    "coolDownTime": null,
+                    "levelPart": 0.00020000000000000001,
+                    "minimalLevel": 0.01,
+                    "rampSpeed": 0.031899999999999998,
+                    "rampSpeedDown": 0.10829999999999999,
+                    "tempoHigh": null,
+                    "tempoLow": null
+                },
+                "nodeType": "sequencer",
+                "parameter": "velocity",
+                "parameterRange": [0, 1],
+                "scoreWandererType": null,
+                "trackId": "pulseWidthSynth"
+            },
+            "dontDrawVisual": false,
+            "instrumentPartName": "Velocity (aanslag)",
+            "mapMaxIndex": null
+        }, {
+            "areaOfInterest": [0, 1, 0, 0, 0, 0, 0, 0, 0],
+            "damperTarget": {
+                "dampMode": "easeInOutCubic",
+                "midiData": null,
+                "nodeName": "",
+                "nodeSettings": {
+                    "coolDownTime": null,
+                    "levelPart": 0.0040000000000000001,
+                    "minimalLevel": 0.01,
+                    "rampSpeed": 0.028400000000000002,
+                    "rampSpeedDown": 0.0115,
+                    "tempoHigh": null,
+                    "tempoLow": null
+                },
+                "nodeType": "sequencer",
+                "parameter": "soundModuleParam01",
+                "parameterRange": [0, 1],
+                "scoreWandererType": null,
+                "trackId": "pulseWidthSynth"
+            },
+            "dontDrawVisual": false,
+            "instrumentPartName": "Resonance",
+            "mapMaxIndex": null
+        }],
+        "instrumentType": "pulseWidthSynth",
+        "instrumentVolume": -64,
+        "levels": [2, 1],
+        "masterTrackId": null,
+        "midiFiles": [{
+            "loopLength": [32],
+            "midiFileExt": "mid",
+            "midiFileName": "paz-bass-synth-1part2"
+        }],
+        "midiTargetTrackId": null,
+        "midiThreshold": 1,
+        "muted": null,
+        "scoreWalkDuration": null,
+        "startType": "loopedTransport",
+        "trackId": "pulseWidthSynth"
+    }],
+    "levelClipControl": null,
+    "levelClipControlStartLevel": null,
+    "levelSpeed": 0.5,
+    "levelDurations": [30, 60, 60],
+    "masterTrackEffects": [{
+        "drcAttackDuration": {
+            "range": [0, 1],
+            "value": 0.0099999997764825821
+        },
+        "drcRatio": {
+            "range": [0.01, 100],
+            "value": 9.0856409072875977
+        },
+        "drcReleaseDuration": {
+            "range": [0, 1],
+            "value": 0.10000000149011612
+        },
+        "drcTreshold": {
+            "range": [-100, 0],
+            "value": -6.2277555465698242
+        },
+        "effectName": "dynamicRangeCompressor"
+    }],
+    "setBPM": 127,
+    "setName": "Upbeat Acid",
+    "setPath": "",
+    "setTimeSignature": 4
+}

@@ -1,0 +1,829 @@
+{
+  "customName" : "",
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "gridColumns" : 3,
+  "gridRows" : 3,
+  "hasTempo" : true,
+  "imagePrefix" : "Introductie",
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+
+      ],
+      "chordEntries" : [
+        {
+          "chord" : "Em",
+          "durationFactor" : 0.14,
+          "id" : "D0BBCEA2-9F66-406D-8614-66743407B516",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Em",
+          "durationFactor" : 0.14,
+          "id" : "C324B5A0-2031-4FA1-ABFF-C6188A087BA6",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "A",
+          "durationFactor" : 0.14,
+          "id" : "3D73DCC9-C171-4F97-B905-5B2C24FBD259",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "A",
+          "durationFactor" : 0.14,
+          "id" : "732EB7CF-0375-492F-B80B-C7B4483B912C",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Fsharp",
+          "durationFactor" : 0.14,
+          "id" : "541264CE-1745-4047-9602-07DFC91B9EE4",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Fsharp",
+          "durationFactor" : 0.14,
+          "id" : "C401782E-7D0D-4126-B826-0F48F8CA2217",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Bm",
+          "durationFactor" : 0.14,
+          "id" : "869927A2-2B45-4FA2-8595-C1B9207AF5EF",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Bm",
+          "durationFactor" : 0.14,
+          "id" : "281F6E7D-A8DA-45C6-B98D-3726D0DFA285",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        }
+      ],
+      "effects" : [
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              60
+            ],
+            "value" : 33.27835
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 9.690725
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 2462.3813
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.38
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "JP8Unifix"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor200",
+      "instrumentName" : "JP8 Synth",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8982725739479065,
+              "rampSpeedDown" : 0.4779270589351654
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "TemplateTrack01"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        },
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.44337812066078186,
+              "rampSpeedDown" : 0.1650671809911728
+            },
+            "nodeType" : "instrument",
+            "parameter" : "samplerCC9",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "TemplateTrack01"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "ControlNr 09"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "EuroPaPa-JP8Unifix"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "TemplateTrack01",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "chordEntries" : [
+
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "EXS808"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor602",
+      "instrumentName" : "EXS-808",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.9251439571380615,
+              "rampSpeedDown" : 0.6717850565910339
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "TemplateTrack02"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "EuroPaPa-EXS808"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "TemplateTrack02",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "chordEntries" : [
+
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "EXS808"
+        }
+      ],
+      "instrumentColor" : "InstrumentNoColor",
+      "instrumentName" : "EXS-808-Snares",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.41650670766830444,
+              "rampSpeedDown" : 0.33973127603530884
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "TemplateTrack022"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -7.54023,
+      "levels" : [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "EuroPaPa-EXS808-Snares"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "TemplateTrack022",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "chordEntries" : [
+        {
+          "chord" : "Em",
+          "durationFactor" : 0.14,
+          "id" : "D0BBCEA2-9F66-406D-8614-66743407B516",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Em",
+          "durationFactor" : 0.14,
+          "id" : "C324B5A0-2031-4FA1-ABFF-C6188A087BA6",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "A",
+          "durationFactor" : 0.14,
+          "id" : "3D73DCC9-C171-4F97-B905-5B2C24FBD259",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "A",
+          "durationFactor" : 0.14,
+          "id" : "732EB7CF-0375-492F-B80B-C7B4483B912C",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Fsharp",
+          "durationFactor" : 0.14,
+          "id" : "541264CE-1745-4047-9602-07DFC91B9EE4",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Fsharp",
+          "durationFactor" : 0.14,
+          "id" : "C401782E-7D0D-4126-B826-0F48F8CA2217",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Bm",
+          "durationFactor" : 0.14,
+          "id" : "869927A2-2B45-4FA2-8595-C1B9207AF5EF",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        },
+        {
+          "chord" : "Bm",
+          "durationFactor" : 0.14,
+          "id" : "281F6E7D-A8DA-45C6-B98D-3726D0DFA285",
+          "length" : "halve maat",
+          "octave" : 2,
+          "option" : {
+            "addSecondNoteAsFourth" : {
+
+            }
+          },
+          "strum" : 0.5
+        }
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "smallYamahaPiano"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor200",
+      "instrumentName" : "Yamaha Piano",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.6928982734680176,
+              "rampSpeedDown" : 0.47408828139305115
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "TemplateTrack03"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 0,
+      "levels" : [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "EuroPaPa-Piano"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "TemplateTrack03",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDifficultySet" : 0.27213114500045776,
+  "levelDurations" : [
+    32,
+    32,
+    32,
+    32
+  ],
+  "levelSpeedSet" : 0.3185116156935692,
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.2
+        ],
+        "value" : 0.001
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.1,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 13.03093
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -20
+      }
+    }
+  ],
+  "published" : true,
+  "semVersion" : "2.8.5",
+  "setBPM" : 164,
+  "setEffects" : [
+
+  ],
+  "setName" : "AgoogPaPA",
+  "setPath" : "AgoogPaPa",
+  "setTimeSignature" : 4,
+  "userViews" : [
+    "PlayView"
+  ]
+}

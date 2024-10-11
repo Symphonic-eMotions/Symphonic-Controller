@@ -1,0 +1,30 @@
+{
+  "customName" : "",
+  "defaultSkin" : {
+    "home" : {
+
+    }
+  },
+  "fileGroup" : {
+    "template" : {
+
+    }
+  },
+  "gridColumns" : 2,
+  "gridRows" : 2,
+  "hasTempo" : false,
+  "instrumentsConfig" : [
+  ],
+  "levelDurations" : [
+    1
+  ],
+  "masterTrackEffects" : [
+  ],
+  "published" : false,
+  "semVersion" : "2.7.0",
+  "smootherVersion": 2,
+  "setBPM" : 90.75,
+  "setName" : "Loader",
+  "setPath" : "Loader",
+  "setTimeSignature" : 4
+}

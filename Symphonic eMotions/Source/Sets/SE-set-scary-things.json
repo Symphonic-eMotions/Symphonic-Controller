@@ -1,0 +1,881 @@
+{
+  "customName" : "",
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "gridColumns" : 3,
+  "gridRows" : 3,
+  "hasTempo" : false,
+  "imagePrefix" : "Introductie",
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "aif",
+          "fileName" : "SpectralFeedback_64_C#2",
+          "lengthInBeats" : 64,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 1967.7834
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 1
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 88.35052
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 12848.938
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.9670103
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor002",
+      "instrumentName" : "Spectral",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : {
+              "group" : [
+                61
+              ],
+              "ranges" : null
+            },
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.910057783126831,
+              "rampSpeedDown" : 0.35979124903678894
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "spectral"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "Spectral LPF"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : -23.085104,
+      "levels" : [
+        1,
+        2,
+        3,
+        4,
+        0
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        37
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        37,
+        37,
+        37,
+        37,
+        37,
+        37,
+        37,
+        37,
+        37
+      ],
+      "notesToLevel" : [
+        37,
+        37,
+        37,
+        37
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "spectral",
+      "trackType" : "variationSequencial"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Bas_start_64_C2",
+          "lengthInBeats" : 64,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor602",
+      "instrumentName" : " Bassline start",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8927553296089172,
+              "rampSpeedDown" : 0.5806337594985962
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "AddedAt2"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : -0.117020845,
+      "levels" : [
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        36
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        36,
+        36,
+        36,
+        36,
+        36,
+        36,
+        36,
+        36,
+        36
+      ],
+      "notesToLevel" : [
+        1,
+        1,
+        1,
+        1
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "AddedAt2",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "aif",
+          "fileName" : "Bas_end_64_D#2",
+          "lengthInBeats" : 64,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Bassline end",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.7957091927528381,
+              "rampSpeedDown" : 0.29999297857284546
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "AddedAt4"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : -5.781611,
+      "levels" : [
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        39
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        39,
+        39,
+        39,
+        39,
+        39,
+        39,
+        39,
+        39,
+        39
+      ],
+      "notesToLevel" : [
+        39,
+        39,
+        39,
+        39
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "AddedAt4",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "KickDroog_64_C3",
+          "lengthInBeats" : 64,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "effectName" : "reverb",
+          "reverbDryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0
+          },
+          "reverbPreset" : {
+            "range" : [
+              0,
+              12
+            ],
+            "value" : 5.7773194
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor400",
+      "instrumentName" : "Kick",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.8707041144371033,
+              "rampSpeedDown" : 0.28208500146865845
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "AddedAt5"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "reverb",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.01842610351741314,
+              "rampSpeedDown" : 0.008829175494611263
+            },
+            "nodeType" : "effect",
+            "parameter" : "reverbDryWetMix",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "AddedAt5"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Reverb"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 0,
+      "levels" : [
+        1,
+        2,
+        3,
+        4
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "AddedAt5",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "aif",
+          "fileName" : "Chords_Merged_64_C3",
+          "lengthInBeats" : 64,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 5986.3916
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              20
+            ],
+            "value" : 18.309278
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.95068836
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 91.237114
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 12972.587
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.7010309
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Chords",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.1,
+              "rampSpeed" : 0.5333957672119141,
+              "rampSpeedDown" : 0.09641487896442413
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "AddedAt6"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : -11.252873,
+      "levels" : [
+        3,
+        4,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            48,
+            48,
+            48,
+            48
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "nextForward",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "AddedAt6",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDifficultySet" : 0.5,
+  "levelDurations" : [
+    0,
+    1,
+    2,
+    3
+  ],
+  "levelSpeedSet" : 0.5,
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.2
+        ],
+        "value" : 0.001
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.1,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 19.381443
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    }
+  ],
+  "published" : true,
+  "semVersion" : "2.8.4",
+  "setBPM" : 80,
+  "setEffects" : [
+
+  ],
+  "setName" : "Scary Things",
+  "setPath" : "Spook",
+  "setTimeSignature" : 4,
+  "userViews" : [
+    "PlayView"
+  ]
+}

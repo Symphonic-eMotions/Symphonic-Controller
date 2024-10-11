@@ -1,0 +1,1251 @@
+{
+  "customName" : "",
+  "defaultSkin" : {
+    "swiftUI" : {
+
+    }
+  },
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "gridColumns" : 2,
+  "gridRows" : 2,
+  "hasTempo" : true,
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              1000
+            ],
+            "value" : 0
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "Onderwater"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor802",
+      "instrumentName" : "One hits",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.017999999999999999,
+              "rampSpeedDown" : 0.02
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              1000
+            ],
+            "trackId" : "onehit"
+          },
+          "dontDrawVisual" : true,
+          "instrumentPartName" : "LPF rev. CutOff"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 2.6536324024200439,
+      "levels" : [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            64
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-striker"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "onehit",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              -900,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : 4
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "Onderwater"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor602",
+      "instrumentName" : "Water",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            1,
+            1,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.015738964080810547,
+              "rampSpeedDown" : 0.017981866374611855
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : true,
+            "parameterRange" : [
+              -900,
+              20000
+            ],
+            "trackId" : "waterEXS"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF rev. CutOff"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -8,
+      "levels" : [
+        0,
+        1,
+        2,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            300
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-water"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "waterEXS",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "Celesta"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Celesta",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.019133234396576881,
+              "rampSpeedDown" : 0.019313173368573189
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "celesta"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -26,
+      "levels" : [
+        1,
+        2,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-celesta"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "celesta",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "vibraphone"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Vibraphone",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.031331624835729613,
+              "rampSpeedDown" : 0.019522063434123993
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "vibraphone"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -22,
+      "levels" : [
+        1,
+        2,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-vibraphone"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "vibraphone",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : -90
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 1600
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.56300002336502075
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "GlassMarimba"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Glass Marimba",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.01847840100526809,
+              "rampSpeedDown" : 0.014875130727887159
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "glassMarimba"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -7,
+      "levels" : [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-glassMarimba4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "glassMarimba",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : -90
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.75
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "MellotronFlutes"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Mellotron",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.029999999999999999,
+              "rampSpeedDown" : 0.050000000000000003
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "mellotron"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : 1,
+      "levels" : [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-mellotron4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "mellotron",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+        {
+          "effectName" : "phaser",
+          "phaserDepth" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.10000000149011612
+          },
+          "phaserDryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "phaserFeedback" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.10000000149011612
+          },
+          "phaserInverted" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0
+          },
+          "phaserLfoBPM" : {
+            "range" : [
+              24,
+              360
+            ],
+            "value" : 42.330001831054688
+          },
+          "phaserNotchFrequency" : {
+            "range" : [
+              1.1000000000000001,
+              4
+            ],
+            "value" : 0.40000000596046448
+          },
+          "phaserNotchMaximumFrequency" : {
+            "range" : [
+              20,
+              10000
+            ],
+            "value" : 100
+          },
+          "phaserNotchMinimumFrequency" : {
+            "range" : [
+              20,
+              5000
+            ],
+            "value" : 20
+          },
+          "phaserNotchWidth" : {
+            "range" : [
+              10,
+              5000
+            ],
+            "value" : 10
+          },
+          "phaserVibratoMode" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 1
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "JvRhodesMkV"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor702",
+      "instrumentName" : "JV Rhodes",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.04345316439867021,
+              "rampSpeedDown" : 0.01857253722846508
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "jvrhodes"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -24.170209884643555,
+      "levels" : [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-modernClassic4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "jvrhodes",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : [
+
+      ],
+      "effects" : [
+
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "SuitcaseElectricPiano"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor701",
+      "instrumentName" : "Suitcase",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "none",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.01,
+              "rampSpeedDown" : 0.012715226970613003
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "suitcase"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -11.872337341308594,
+      "levels" : [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16,
+            16,
+            16,
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "onderwater-suitcase4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "suitcase",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDurations" : [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.20000000000000001
+        ],
+        "value" : 0.0010000000474974513
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.10000000000000001,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 10
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05000000074505806
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    },
+    {
+      "effectName" : "reverb",
+      "reverbDryWetMix" : {
+        "range" : [
+          0,
+          1
+        ],
+        "value" : 0.80000001192092896
+      },
+      "reverbPreset" : {
+        "range" : [
+          0,
+          12
+        ],
+        "value" : 11.263345718383789
+      }
+    }
+  ],
+  "published" : true,
+  "semVersion" : "2.6.0",
+  "setBPM" : 80,
+  "setName" : "Onderwater",
+  "setPath" : "",
+  "setTimeSignature" : 4,
+  "skin" : {
+    "instruments" : [
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioA",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioB",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioC",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioD",
+        "shape" : "circle"
+      }
+    ],
+    "name" : "default"
+  }
+}

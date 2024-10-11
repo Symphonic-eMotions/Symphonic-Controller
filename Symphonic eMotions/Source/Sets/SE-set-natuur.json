@@ -1,0 +1,1154 @@
+{
+  "customName" : "",
+  "fileGroup" : {
+    "pro" : {
+
+    }
+  },
+  "defaultSkin" : {
+    "swiftUI" : {
+
+    }
+  },
+  "gridColumns" : 3,
+  "gridRows" : 3,
+  "hasTempo" : false,
+  "instrumentsConfig" : [
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "natuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor100",
+      "instrumentName" : "Wind",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.09680851548910141,
+              "rampSpeedDown" : 0.019858157262206078,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "wind"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -9.5212793350219727,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "Wind4"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "wind",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "effectName" : "reverb",
+          "reverbDryWetMix" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.69999998807907104
+          },
+          "reverbPreset" : {
+            "range" : [
+              0,
+              12
+            ],
+            "value" : 8
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              10,
+              60
+            ],
+            "value" : 27
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 65
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 666
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.73000001907348633
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "CellosLegatoSlowAttack"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor601",
+      "instrumentName" : "Cello",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.083687946200370789,
+              "rampSpeedDown" : 0.018794326111674309,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "cellos"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -8.4361724853515625,
+      "levels" : [
+        0,
+        1,
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            32
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-cellos"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "cellos",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 10
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 80
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 800
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        },
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "natuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor802",
+      "instrumentName" : "Carrilion",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.00069999999999999978,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.087588652968406677,
+              "rampSpeedDown" : 0.048226948827505112,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "carrilion"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -17.700000762939453,
+      "levels" : [
+        1,
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-carrilion"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "carrilion",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 5
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 35
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 9000
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "CelestaNatuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Celesta",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.086879432201385498,
+              "rampSpeedDown" : 0.014893616549670696,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "sequencer",
+            "parameter" : "velocity",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "celesta"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Velocity (aanslag)"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.11595745384693146,
+              "rampSpeedDown" : 0.035460993647575378,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "instrument",
+            "parameter" : "samplerCC9",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "celesta"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "ControlNr 09"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -4,
+      "levels" : [
+        1,
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-bellz"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "celesta",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 10
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 80
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 800
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.47999998927116394
+          }
+        },
+        {
+          "cutoffFrequencyCostello" : {
+            "range" : [
+              12,
+              20000
+            ],
+            "value" : 4200
+          },
+          "dryWetMixer" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          },
+          "effectName" : "costelloReverb",
+          "feedbackCostello" : {
+            "range" : [
+              0,
+              1
+            ],
+            "value" : 0.5
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "natuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor600",
+      "instrumentName" : "Birds",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.16808511316776276,
+              "rampSpeedDown" : 0.068794332444667816,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "birds"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -1.5638312101364136,
+      "levels" : [
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            16
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-birds"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "birds",
+      "trackType" : "variationByPosition"
+    },
+    {
+      "audioFiles" : null,
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 20000
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              100
+            ],
+            "value" : 2
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : -5
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 4000
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.92000001668930054
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "TekkbrassNatuur"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor700",
+      "instrumentName" : "Synth",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.0025000000000000001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.11914893239736557,
+              "rampSpeedDown" : 0.025886524468660355,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "synth"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "LPF Cut Off Frequency"
+        },
+        {
+          "areaOfInterest" : [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeInCubic",
+            "midiData" : null,
+            "nodeName" : "",
+            "nodeSettings" : {
+              "coolDownTime" : null,
+              "levelPart" : 0.001,
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.073758862912654877,
+              "rampSpeedDown" : 0.0173758864402771,
+              "tempoHigh" : null,
+              "tempoLow" : null
+            },
+            "nodeType" : "instrument",
+            "parameter" : "samplerCC9",
+            "parameterRange" : [
+              0,
+              1
+            ],
+            "trackId" : "synth"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "ControlNr 09"
+        }
+      ],
+      "instrumentType" : "exsSampler",
+      "instrumentVolume" : -10.606385231018066,
+      "levels" : [
+        2
+      ],
+      "masterTrackId" : null,
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            32
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "natuur-synth-1"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "midiTargetTrackId" : null,
+      "muted" : null,
+      "noteSource" : "midiFile",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48
+      ],
+      "scoreWalkDuration" : null,
+      "startType" : "loopedTransport",
+      "trackId" : "synth",
+      "trackType" : "variationByPosition"
+    }
+  ],
+  "levelDurations" : [
+    32,
+    32,
+    32
+  ],
+  "levelSpeed" : 0.5,
+  "masterTrackEffects" : [
+    {
+      "attackTime" : {
+        "range" : [
+          0.0001,
+          0.20000000000000001
+        ],
+        "value" : 0.0010000000474974513
+      },
+      "effectName" : "compressor",
+      "headRoom" : {
+        "range" : [
+          0.10000000000000001,
+          40
+        ],
+        "value" : 4
+      },
+      "masterGain" : {
+        "range" : [
+          -40,
+          40
+        ],
+        "value" : 10
+      },
+      "releaseTime" : {
+        "range" : [
+          0.01,
+          3
+        ],
+        "value" : 0.05000000074505806
+      },
+      "threshold" : {
+        "range" : [
+          -40,
+          20
+        ],
+        "value" : -5
+      }
+    }
+  ],
+  "published" : true,
+  "semVersion" : "2.6.0",
+  "setBPM" : 125,
+  "setName" : "Natuur",
+  "setPath" : "",
+  "setTimeSignature" : 4,
+  "skin" : {
+    "instruments" : [
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioA",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioB",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioC",
+        "shape" : "circle"
+      },
+      {
+        "color" : "InstrumentColor000",
+        "image" : "AudioFile1",
+        "name" : "AudioD",
+        "shape" : "circle"
+      }
+    ],
+    "name" : "default"
+  }
+}
