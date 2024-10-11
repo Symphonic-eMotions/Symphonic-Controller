@@ -117,6 +117,7 @@
 		7C9FB77B2A4AED3400490C59 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77A2A4AED3400490C59 /* UserSettings.swift */; };
 		7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77C2A4B698300490C59 /* PlaylistView.swift */; };
 		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
+		7CA382412CB9E53E00C8EE7D /* SwiftOSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA382402CB9E53D00C8EE7D /* SwiftOSC.framework */; };
 		7CAAD35D2BD39A8E0059E2E4 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAD35C2BD39A8E0059E2E4 /* StartView.swift */; };
 		7CAB35CB2AD02E8500659002 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 7CAB35CA2AD02E8500659002 /* Videos */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
@@ -316,6 +317,7 @@
 		7C9FB77A2A4AED3400490C59 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = ../Views/Demo/UserSettings.swift; sourceTree = "<group>"; };
 		7C9FB77C2A4B698300490C59 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
+		7CA382402CB9E53D00C8EE7D /* SwiftOSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftOSC.framework; sourceTree = "<group>"; };
 		7CAAD35C2BD39A8E0059E2E4 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		7CAB35CA2AD02E8500659002 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */,
+				7CA382412CB9E53E00C8EE7D /* SwiftOSC.framework in Frameworks */,
 				7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */,
 				7C6801BC2875A51300688C2E /* SporthAudioKit in Frameworks */,
 				C0AFDD092705D254006EF64F /* AudioKit in Frameworks */,
@@ -487,6 +490,7 @@
 		7C2EF60628B8CC7F00B75BE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CA382402CB9E53D00C8EE7D /* SwiftOSC.framework */,
 				7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */,
 			);
 			name = Frameworks;
@@ -947,7 +951,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					C084FFD226B3115E009A4D0C = {
 						CreatedOnToolsVersion = 13.0;
@@ -1207,6 +1211,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1270,6 +1275,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1336,6 +1342,10 @@
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions";
@@ -1377,6 +1387,10 @@
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions";
