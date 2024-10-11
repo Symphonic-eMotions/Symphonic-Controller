@@ -8,13 +8,35 @@
 import SwiftUI
 import AVFoundation
 import Combine
+import AudioKit
 
 @main
 struct eMotionApp: App {
     
+    init() {
+        #if os(iOS)
+            do {
+                Settings.bufferLength = .short
+
+                let deviceSampleRate = AVAudioSession.sharedInstance().sampleRate
+                if deviceSampleRate > Settings.sampleRate {
+                    // Update sampleRate to 48_000. Default is 44_100.
+                    Settings.sampleRate = deviceSampleRate
+                }
+
+                try AVAudioSession.sharedInstance().setPreferredIOBufferDuration(Settings.bufferLength.duration)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord,
+                                                                options: [.defaultToSpeaker, .mixWithOthers, .allowBluetoothA2DP])
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let err {
+                print(err)
+            }
+        #endif
+    }
+    
     //We need a set loaded into ram and userSettings
 //    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
-    let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
+    let instrumentSet = AppUtils.loadInstrumentSet(json: "Loader.json")
     
 //    @State public var sessionDisplay: SessionDisplay = .home
     @State public var sessionDisplay: SessionDisplay = .pro
