@@ -97,14 +97,12 @@ struct PlayView: View {
                                 else {
                                         
                                     VStack{
-                                        
-//                                        if !setInfoModel.userSettings.isSetPlaying {
-                                            StartView(
-                                                setInfoModel: setInfoModel,
-                                                geometry: geometry
-                                            )
-                                            .zIndex(210)
-//                                        }
+                                        CalibrationView(
+                                            geometry: geometry,
+                                            userSettings: setInfoModel.userSettings,
+                                            setInfoModel: setInfoModel
+                                        )
+                                        .zIndex(210)
                                         
                                         //Display ramped value feedback
                                         ValueFeedback(value: .init(

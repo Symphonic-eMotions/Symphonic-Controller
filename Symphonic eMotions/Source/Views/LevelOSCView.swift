@@ -58,9 +58,10 @@ struct LevelOSCView: View {
                             ZStack{
                                 
                                 if !setInfoModel.userSettings.isSetPlaying {
-                                    StartView(
-                                        setInfoModel: setInfoModel,
-                                        geometry: geometry
+                                    CalibrationView(
+                                        geometry: geometry,
+                                        userSettings: setInfoModel.userSettings,
+                                        setInfoModel: setInfoModel
                                     )
                                     .zIndex(210)
                                 }

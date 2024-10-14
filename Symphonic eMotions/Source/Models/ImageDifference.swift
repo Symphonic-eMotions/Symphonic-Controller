@@ -57,6 +57,7 @@ class ImageDifference: ObservableObject {
     }
     
     private func resetCalibrationValues() {
+        print("resetCalibrationValues CALLED")
         calibrationValues.removeAll()
         calibrationThreshold = 0
     }

@@ -31,10 +31,12 @@ class UserSettings: ObservableObject {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
-    @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "192.168.178.22"
+    @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "172.20.10.99"
     @AppStorage(UserDefaultsKeys.port) var port: Int = 8000
-    @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/makeMeUnique"
+    @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/stap1"
     
+    @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
+
     
     //Have a observed van for states
     @Published var userCode: UserCode {
@@ -91,4 +93,7 @@ struct UserDefaultsKeys {
     static let ipAddress = "ipAddress"
     static let port = "port"
     static let pattern = "pattern"
+    
+    static let calibrationThreshold = "calibrationThreshold"
+
 }
