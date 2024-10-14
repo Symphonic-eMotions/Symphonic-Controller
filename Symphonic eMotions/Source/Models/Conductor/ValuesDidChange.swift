@@ -113,130 +113,21 @@ extension Conductor {
                         decreaseRate: customDecreaseRate,
                         increaseRate: customIncreaseRate
                     )
-                }
-                
-                //Level controls the amount of instrument controller
-                //Last level fade out sits here
-                let progress = levelProgressForController(
-                    track.levels,
-                    currentLevel: localCurrentSetLevel
-                )
-                
-                value *= progress
-                
-                
-                //MARK: First part Type controlling
-                //NoteSource -> midi || note number
-                //StartType -> Transport || Wave (loopedTriger)
-                //VariationType -> Variation by level || position
-                if partNr == 0 {
                     
-                    //MARK: WHAT to play for midi and note numbers
-                    //.variationByLevel sits in self.levelController
-                    
-                    //Midi files variation and wave start
-                    if track.noteSource == .midiFile {
+                    if trackNr == 0 && partNr == 0 {
+                        OSCMessageSender.shared.sendOSCMessage(
+                            ipAddress: self.userSettings.ipAddress,
+                            port: self.userSettings.port,
+                            pattern: self.userSettings.pattern + "/direct",
+                            value: Float(value)
+                        )
                         
-                        //Midi file variation check if instrument is placed
-                        if track.variationType == .variationByPosition && track.loopsToGridMapped.count > 0 {
-                            
-                            
-                            //We have a new postition
-                            if track.loopsToGridMapped.indices.contains(maxIndexPart) 
-                                && track.loopsToGridMapped.indices.contains(track.currentPartMaxIndex)
-                            {
-                                if track.loopsToGridMapped[maxIndexPart] != track.loopsToGridMapped[track.currentPartMaxIndex] {
-                                    
-                                    //This is the mapped value from the editor .midiFile .variationByPosition
-                                    let loopIndex = track.loopsToGridMapped[maxIndexPart]
-                                    track.currentPartMaxIndex = maxIndexPart
-                                    
-                                    if loopIndex != track.currentLoopIndex {
-                                        
-                                        let nextMIDIstartTime = calculateMIDIstartTime(
-                                            for: loopIndex,
-                                            in: track.loopLength
-                                        )
-                                        
-                                        copyMIDIfromMemory(
-                                            trackId: track.trackId,
-                                            midiStartTime: nextMIDIstartTime,
-                                            loopLength: track.loopLength[loopIndex])
-                                        
-                                        track.currentLoopIndex = loopIndex
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
-                    //Note number wave start
-                    else if track.noteSource == .noteNumbers {
-                        
-                        //Play with wave, end all notes after wave
-                        if [.loopedTrigger].contains(track.startType) {
-                            
-                            //Levels are triggered alsewhere
-                            if track.variationType == .variationByPosition {
-                                
-                                //waveUnderLevel is currently: firstMinimalLevel * 0.5
-                                if value < setSettings.waveUnderLevel {
-                                                                    
-                                    for maxIndex in track.notesArePlaying {
-                                        
-                                        let noteNumber = track.notesToGrid[maxIndex]
-                                        
-                                        stopSamplerNote(track, noteNumber)
-                                        
-                                    }
-                                    track.notesArePlaying = []
-//                                    print("stopping all notes")
-                                }
-                                else{
-                                    
-                                    if value > part.minimalLevel
-                                        && part.areaOfInterest[maxIndex] == 1
-                                        && !track.notesArePlaying.contains(maxIndex) {
-                                        
-                                        playSamplerNote(track, track.notesToGrid[maxIndex])
-                                        
-                                        print("noteNumbers loopedTrigger PLAY NOTE \(maxIndex):\(track.notesToGrid[maxIndex])")
-                                        
-                                        track.notesArePlaying.append(maxIndex)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                //End first Part
-                
-        
-                //All parts
-                //Forward to target
-                forward(
-                    value: value,
-                    for: part.damperTarget,
-                    currentSetLevel: localCurrentSetLevel
-                )
-                
-                //User interface feedback
-                if setSettings.userViews.contains(.homeView) {
-                    
-                    if trackNr == 1 {
-                        let isPlaying: Double = userSettings.isSetPlaying ? 1 : 0
-                        rotationSpeedSubject.send(value * isPlaying)
-                    }
-                }
-                //Koppelen aan sessionViewSub
-                else if setSettings.userViews.contains(.playView) {
-                    //Check part feedback interface state for part feedback visualisation
-                    if partFeedbackTrackID == trackIndex && partFeedbackPartID == partIndex {
                         forwardPartFeedback(
                             ramped: value
                         )
                     }
                 }
+                
                 partNr += 1
             }
             trackNr += 1

@@ -21,6 +21,12 @@ struct PlayView: View {
     @State private var showMasterTrack: Bool = false
     @Binding public var showLevelPlayerFullScreen: Bool
     
+    @State var currentTrackID: String
+    @State var currentPartID: String
+    @State var rampUp: Float
+    @State var rampDown: Float
+    @State var volume: Float
+    
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
@@ -41,6 +47,17 @@ struct PlayView: View {
         )
         self._sessionDisplay = sessionDisplay
         self._showLevelPlayerFullScreen = showLevelPlayerFullScreen
+        
+        //Set the first track active in the editor
+        self.currentTrackID = setInfoModel.setSettings.settingsCurrentTrackID
+        setInfoModel.partFeedback.currentTrackID.value = setInfoModel.setSettings.settingsCurrentTrackID
+        
+        self.currentPartID = setInfoModel.setSettings.settingsCurrentPartID
+        setInfoModel.partFeedback.currentPartID.value = setInfoModel.setSettings.settingsCurrentPartID
+        
+        self.rampUp = Float(setInfoModel.setSettings.settingsRampUp)
+        self.rampDown = Float(setInfoModel.setSettings.settingsRampDown)
+        self.volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(setInfoModel.setSettings.settingsVolume)))
     }
     
     var body: some View {
@@ -56,24 +73,21 @@ struct PlayView: View {
                 Rectangle().frame(height: 25).foregroundColor(Color.clear)
                 #endif
                 
-                if !showLevelPlayerFullScreen {
-                    LevelView(
-                        setInfoModel: setInfoModel
-                    )
-                    //Transport buttons
-                    PlayerControlsView(
-                        setInfoModel: setInfoModel,
-                        showMasterTrack: $showMasterTrack
-                    )
-                    .zIndex(100)
-                }
+//                if !showLevelPlayerFullScreen {
+//                    LevelView(
+//                        setInfoModel: setInfoModel
+//                    )
+//                    //Transport buttons
+//                    PlayerControlsView(
+//                        setInfoModel: setInfoModel,
+//                        showMasterTrack: $showMasterTrack
+//                    )
+//                    .zIndex(100)
+//                }
                 //Video preview and instrument locations
                 GeometryReader { geometry in
                     VStack{
-                        Spacer()
                         HStack {
-                            Spacer()
-                            ZStack{
                                 
                                 //Editor
                                 if userSettings.showPartEditor  {
@@ -81,57 +95,70 @@ struct PlayView: View {
                                 }
                                 //PlayView
                                 else {
-                                    
-                                    if !setInfoModel.userSettings.isSetPlaying {
-                                        StartView(
-                                            setInfoModel: setInfoModel,
-                                            geometry: geometry
+                                        
+                                    VStack{
+                                        
+//                                        if !setInfoModel.userSettings.isSetPlaying {
+                                            StartView(
+                                                setInfoModel: setInfoModel,
+                                                geometry: geometry
+                                            )
+                                            .zIndex(210)
+//                                        }
+                                        
+                                        //Display ramped value feedback
+                                        ValueFeedback(value: .init(
+                                            get: {
+                                                let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
+                                                return max(0, min(1, currentBarLevel))
+                                            },
+                                            set: {
+                                                _ in
+                                            }), title: "Ramped value" )
+                                        .frame(height: 28.0)
+                                        
+                                        RampSliderView(
+                                            label: "Ramp up",
+                                            value: Binding(
+                                                get: { self.rampUp },
+                                                set: { (newVal) in
+                                                    self.rampUp = newVal
+                                                    setInfoModel.conductor.rampUp[currentPartID] = Double(newVal)
+                                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = Double(newVal)
+                                                }
+                                            ),
+                                            showsLabel: true,
+                                            isActive: true
                                         )
-                                        .zIndex(210)
-                                    }
-                                    
-                                    if setInfoModel.setSettings.userViews.contains(.playView) {
-                                        if [.instruments,.both].contains(setInfoModel.setInfoState.displayMode) {
-                                            PlayGridView(setInfoModel: setInfoModel)
-                                            .onTapGesture {
-                                                presentSettingSheet.toggle()
-                                            }
-                                        } else {
-                                            DontPlayGridView()
-                                        }
-                                    }
-                                    
-                                    //LevelPlayer
-                                    else if setInfoModel.setSettings.userViews.contains(.levelPlayer){
-                                        LevelPlayer(
-                                            setInfoModel: setInfoModel,
-                                            columnOpacityController: columnOpacityController,
-                                            cellOpacityController: cellOpacityController,
-                                            gridModel: gridModel,
-                                            showLevelPlayerFullScreen: $showLevelPlayerFullScreen,
-                                            geometry: geometry
+
+                                        RampSliderView(
+                                            label: "Ramp down",
+                                            value: Binding(
+                                                get: { self.rampDown },
+                                                set: { (newVal) in
+                                                    self.rampDown = newVal
+
+                                                    setInfoModel.conductor.rampDown[currentPartID] = Double(newVal)
+                                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = Double(newVal)
+                                                }
+                                            ),
+                                            showsLabel: true,
+                                            isActive: true
                                         )
-                                        .zIndex(showLevelPlayerFullScreen ? 200 : 0)
-                                        .frame(width: geometry.size.width, height: geometry.size.height)
-                                        .onTapGesture {
-                                            presentSettingSheet.toggle()
-                                        }
                                     }
+                                    
                                 }
                                 
-                                //Video
-                                VideoPreviewViewRepresetable(
-                                    setInfoModel: setInfoModel
-                                )
-                                //.frame(width: 180.0, height: 120.0)
-                                .aspectRatio(1.77777, contentMode: .fit)
-                                .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                                .cornerRadius(10.0)
-                                .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
-                            }
-                            Spacer()
+//                                //Video
+//                                VideoPreviewViewRepresetable(
+//                                    setInfoModel: setInfoModel
+//                                )
+//                                //.frame(width: 180.0, height: 120.0)
+//                                .aspectRatio(1.77777, contentMode: .fit)
+//                                .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+//                                .cornerRadius(10.0)
+//                                .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
                         }
-                        Spacer()
                     }
                     .sheet(isPresented: $presentSettingSheet) {
                         SettingsSheetView(

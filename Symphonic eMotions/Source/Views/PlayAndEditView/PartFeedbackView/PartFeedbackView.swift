@@ -179,7 +179,6 @@ struct PartFeedbackView: View {
                         )
                     }
                     
-                    //Ramp speed adjustment sliders
                     VStack{
                         
                         RampSliderView(
@@ -335,8 +334,6 @@ struct RampSliderView: View {
                     Slider(value: $value, in: minValue...maxValue)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * 0.8)
-                        .disabled(!isActive)
-                        .id(isActive)
 
                     // Transform linear value to exponential
                     let expValue = pow(value, 3)

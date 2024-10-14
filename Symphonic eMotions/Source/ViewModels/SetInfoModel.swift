@@ -98,7 +98,7 @@ final class SetInfoModel: ObservableObject {
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
         
-        subscribeToLevels()
+//        subscribeToLevels()
         subscribeToImageDifference()
         subscribeToPartFeedback()
     }
