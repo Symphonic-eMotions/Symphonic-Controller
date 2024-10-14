@@ -6,31 +6,42 @@
 //
 
 import SwiftUI
-import AVFoundation
+import SwiftOSC
+
+import SwiftUI
+import SwiftOSC
 
 struct SetInfoHome: View {
-    
-    @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    
+
+    @State private var sliderValue: Float = 0.0
+    @AppStorage("ipAddress") var ipAddress: String = "192.168.178.22"
+    @AppStorage("pattern") var pattern: String = "/makeMeUnique"
+    @State private var port: UInt16 = 8000
+
     var body: some View {
-        VStack{
-            Spacer().frame(height:70)
-            HStack {
-                
-                Image("LogoColor")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .cornerRadius(10)
-                
-                
-                Text("Symphonic eMotions")
-                    .font(.largeTitle)
-                    .fontWeight(.regular)
-                    .padding(.leading, 40)
-                
-            }
-            Spacer()
+        VStack {
+            TextField("IP-address central DAW", text: $ipAddress)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .keyboardType(.numbersAndPunctuation)
+            
+            TextField("Device Pattren", text: $pattern)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .keyboardType(.numbersAndPunctuation)
+
+            Slider(value: $sliderValue, in: 0...1)
+                .padding()
+                .onChange(of: sliderValue) { newValue in
+                    sendOSCMessage(newValue)
+                }
         }
+    }
+
+    func sendOSCMessage(_ value: Float) {
+        let client = OSCClient(address: ipAddress, port: Int(port))
+        let address = OSCAddressPattern(pattern)
+        let message = OSCMessage(address, value)
+        client.send(message)
     }
 }

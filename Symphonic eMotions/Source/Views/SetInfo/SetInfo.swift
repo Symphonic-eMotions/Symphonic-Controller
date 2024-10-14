@@ -39,8 +39,8 @@ struct SetInfo: View {
             //.home is the page on entering app, also accesible by clicking the Sets header in the side bar
             if sessionDisplay == .pro {
                 SetInfoHome(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay
+//                    setInfoModel: setInfoModel,
+//                    sessionDisplay: $sessionDisplay
                 )
             }
             //Set info is also the navigator to saved files within the set
