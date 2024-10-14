@@ -106,7 +106,15 @@ extension SetInfoModel {
         
         cancellablePartFeddback = self.conductor.forwardRampedPartFeedback.sink { [weak self] value in
             guard let self = self else { return }
+            
             self.partFeedbackState.ramped = Double(value)
+            
+            OSCMessageSender.shared.sendOSCMessage(
+                ipAddress: self.userSettings.ipAddress,
+                port: self.userSettings.port,
+                pattern: self.userSettings.pattern + "/direct",
+                value: Float(value)
+            )
         }
     }
 }
