@@ -36,7 +36,9 @@ class UserSettings: ObservableObject {
     @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/stap1"
     
     @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
-
+    
+    @AppStorage(UserDefaultsKeys.rampUp) var rampUp: Double = 0.0
+    @AppStorage(UserDefaultsKeys.rampDown) var rampDown: Double = 0.0
     
     //Have a observed van for states
     @Published var userCode: UserCode {
@@ -95,5 +97,7 @@ struct UserDefaultsKeys {
     static let pattern = "pattern"
     
     static let calibrationThreshold = "calibrationThreshold"
-
+    
+    static let rampUp = "rampUp"
+    static let rampDown = "rampDown"
 }

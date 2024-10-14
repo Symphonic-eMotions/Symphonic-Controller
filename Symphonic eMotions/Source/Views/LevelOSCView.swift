@@ -94,17 +94,6 @@ struct LevelOSCView: View {
                     }
                 }
                 .zIndex(110)
-                
-                if userSettings.showPartEditor {
-
-                    //Editor below grid editor
-                    PartFeedbackView(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay
-                    )
-                    .environmentObject(fileController)
-                }
-                Spacer()
             }
             .padding(.horizontal)
             .navigationBarTitleDisplayMode(.inline)

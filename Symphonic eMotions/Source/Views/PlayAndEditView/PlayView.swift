@@ -23,9 +23,12 @@ struct PlayView: View {
     
     @State var currentTrackID: String
     @State var currentPartID: String
-    @State var rampUp: Float
-    @State var rampDown: Float
+    @State var rampUp: Double
+    @State var rampDown: Double
     @State var volume: Float
+    
+    @State private var initialRampUp: Double
+    @State private var initialRampDown: Double
     
     init(
         setInfoModel: SetInfoModel,
@@ -55,9 +58,13 @@ struct PlayView: View {
         self.currentPartID = setInfoModel.setSettings.settingsCurrentPartID
         setInfoModel.partFeedback.currentPartID.value = setInfoModel.setSettings.settingsCurrentPartID
         
-        self.rampUp = Float(setInfoModel.setSettings.settingsRampUp)
-        self.rampDown = Float(setInfoModel.setSettings.settingsRampDown)
+        self.rampUp = setInfoModel.setSettings.settingsRampUp
+        self.rampDown = setInfoModel.setSettings.settingsRampDown
         self.volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(setInfoModel.setSettings.settingsVolume)))
+        
+        _initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
+        _initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
+        
     }
     
     var body: some View {
@@ -89,64 +96,67 @@ struct PlayView: View {
                     VStack{
                         HStack {
                                 
-                                //Editor
-                                if userSettings.showPartEditor  {
-                                    EditGridView(setInfoModel: setInfoModel)
-                                }
-                                //PlayView
-                                else {
-                                        
-                                    VStack{
-                                        CalibrationView(
-                                            geometry: geometry,
-                                            userSettings: setInfoModel.userSettings,
-                                            setInfoModel: setInfoModel
-                                        )
-                                        .zIndex(210)
-                                        
-                                        //Display ramped value feedback
-                                        ValueFeedback(value: .init(
-                                            get: {
-                                                let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
-                                                return max(0, min(1, currentBarLevel))
-                                            },
-                                            set: {
-                                                _ in
-                                            }), title: "Ramped value" )
-                                        .frame(height: 28.0)
-                                        
-                                        RampSliderView(
-                                            label: "Ramp up",
-                                            value: Binding(
-                                                get: { self.rampUp },
-                                                set: { (newVal) in
-                                                    self.rampUp = newVal
-                                                    setInfoModel.conductor.rampUp[currentPartID] = Double(newVal)
-                                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = Double(newVal)
-                                                }
-                                            ),
-                                            showsLabel: true,
-                                            isActive: true
-                                        )
-
-                                        RampSliderView(
-                                            label: "Ramp down",
-                                            value: Binding(
-                                                get: { self.rampDown },
-                                                set: { (newVal) in
-                                                    self.rampDown = newVal
-
-                                                    setInfoModel.conductor.rampDown[currentPartID] = Double(newVal)
-                                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = Double(newVal)
-                                                }
-                                            ),
-                                            showsLabel: true,
-                                            isActive: true
-                                        )
-                                    }
+                            //Editor
+                            if userSettings.showPartEditor  {
+                                EditGridView(setInfoModel: setInfoModel)
+                            }
+                            //PlayView
+                            else {
                                     
+                                VStack{
+                                    CalibrationView(
+                                        geometry: geometry,
+                                        userSettings: setInfoModel.userSettings,
+                                        setInfoModel: setInfoModel
+                                    )
+                                    .zIndex(210)
+                                    
+                                    //Display ramped value feedback
+                                    ValueFeedback(value: .init(
+                                        get: {
+                                            let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
+                                            return max(0, min(1, currentBarLevel))
+                                        },
+                                        set: {
+                                            _ in
+                                        }), title: "Ramped value" )
+                                    .frame(height: 28.0)
+                                    
+                                    RampSliderView(
+                                        label: "Ramp up",
+                                        value: Binding<Double>(
+                                            get: { Double(userSettings.rampUp) },
+                                            set: { newValue in
+                                                userSettings.rampUp = Double(newValue)
+                                            }
+                                        ),
+                                        showsLabel: true,
+                                        isActive: true
+                                    )
+                                    .onChange(of: userSettings.rampUp) { newValue in
+                                        setInfoModel.conductor.rampUp[currentPartID] = newValue
+                                        setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = newValue
+                                    }
+
+                                    RampSliderView(
+                                        label: "Ramp down",
+                                        value: Binding<Double>(
+                                            get: { Double(userSettings.rampDown) },
+                                            set: { newValue in
+                                                userSettings.rampDown = Double(newValue)
+                                            }
+                                        ),
+                                        showsLabel: true,
+                                        isActive: true
+                                    )
+                                    .onChange(of: userSettings.rampDown) { newValue in
+                                        setInfoModel.conductor.rampDown[currentPartID] = newValue
+                                        setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
+                                    }
                                 }
                                 
+                            }
+                            
 //                                //Video
 //                                VideoPreviewViewRepresetable(
 //                                    setInfoModel: setInfoModel
@@ -156,6 +166,14 @@ struct PlayView: View {
 //                                .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
 //                                .cornerRadius(10.0)
 //                                .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
+                        }
+                    }
+                    .onAppear {
+                        if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
+                            userSettings.rampUp = initialRampUp
+                        }
+                        if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
+                            userSettings.rampDown = initialRampDown
                         }
                     }
                     .sheet(isPresented: $presentSettingSheet) {
@@ -168,16 +186,16 @@ struct PlayView: View {
                 }
                 .zIndex(110)
                 
-                if userSettings.showPartEditor {
-
-                    //Editor below grid editor
-                    PartFeedbackView(
-                        setInfoModel: setInfoModel,
-                        sessionDisplay: $sessionDisplay
-                    )
-                    .environmentObject(fileController)
-                }
-                Spacer()
+//                if userSettings.showPartEditor {
+//
+//                    //Editor below grid editor
+//                    PartFeedbackView(
+//                        setInfoModel: setInfoModel,
+//                        sessionDisplay: $sessionDisplay
+//                    )
+//                    .environmentObject(fileController)
+//                }
+//                Spacer()
             }
             .padding(.horizontal)
             .navigationBarTitleDisplayMode(.inline)
