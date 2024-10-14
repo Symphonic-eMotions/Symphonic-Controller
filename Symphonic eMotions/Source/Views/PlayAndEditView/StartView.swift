@@ -21,40 +21,38 @@ struct StartView: View {
     
     var body: some View {
         ZStack {
-            Circle()
-            .stroke(Color.primary, lineWidth: 20)
-            .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
-            .overlay(
-                Button(action: {
-//                    if !viewModel.isCountdownActive {
-                        startViewModel.isLocalPlaying.toggle()
-                    
-                        if startViewModel.isLocalPlaying {
-                            startViewModel.startCountdown()
-                        }
+//            Circle()
+//            .stroke(Color.primary, lineWidth: 20)
+//            .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
+//            .overlay(
+//                Button(action: {
+//                    startViewModel.isLocalPlaying.toggle()
+//                
+//                    if startViewModel.isLocalPlaying {
+//                        startViewModel.startCountdown()
 //                    }
-                }) {
-                    
-                    if startViewModel.isLocalPlaying {
-                        Text("\(startViewModel.countdown)")
-                            .font(.system(size: 100))
-                            .foregroundColor(.primary)
-                    } else {
-                        Triangle()
-                            .fill(Color.primary)
-                            .frame(width: 60, height: 60)
-                    }
-                }
-            )
-            .background(Color.white.opacity(0.5))
-            .clipShape(Circle())
-            .onAppear {
-                startViewModel.onCountdownComplete = {
-                    setInfoModel.tapStartAudioEngine()
-                    userSettings.isSetPlaying = true
-                    startViewModel.initalizeModel()
-                }
-            }
+//                }) {
+//                    
+//                    if startViewModel.isLocalPlaying {
+//                        Text("\(startViewModel.countdown)")
+//                            .font(.system(size: 100))
+//                            .foregroundColor(.primary)
+//                    } else {
+//                        Triangle()
+//                            .fill(Color.primary)
+//                            .frame(width: 60, height: 60)
+//                    }
+//                }
+//            )
+//            .background(Color.white.opacity(0.5))
+//            .clipShape(Circle())
+//            .onAppear {
+//                startViewModel.onCountdownComplete = {
+//                    setInfoModel.tapStartAudioEngine()
+//                    userSettings.isSetPlaying = true
+//                    startViewModel.initalizeModel()
+//                }
+//            }
             
             // Kalibratieknop
             VStack {

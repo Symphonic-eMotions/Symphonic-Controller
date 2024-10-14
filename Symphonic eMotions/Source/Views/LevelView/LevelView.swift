@@ -13,7 +13,12 @@ struct LevelView: View {
     
     var body: some View {
         //Horizontal level
-        HStack {
+        VStack {
+            
+            let level = setInfoModel.leveling.currentSetLevelSubject.value / Double(setInfoModel.setInfoState.currentInstrumentsSet.levels.count)
+            
+            Text("Level: \(level)")
+                .padding()
             
             //Progress bars
             HStack {

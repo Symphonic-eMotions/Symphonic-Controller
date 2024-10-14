@@ -11,7 +11,6 @@ struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var sessionDisplay: SessionDisplay
-    // Verwijder sessionDisplaySub
 
     @StateObject var fileController = FileController()
     @StateObject var userSettings = UserSettings()
@@ -50,7 +49,7 @@ struct MainView: View {
             }
             .onChange(of: sessionDisplay) { newValue in
                 switch newValue {
-                case .setInfo, .swiftUI:
+                case .setInfo, .swiftUI, .home:
                     navigationPath.append(newValue)
                 default:
                     break
@@ -90,7 +89,24 @@ struct MainView: View {
                     resetLevels: true
                 )
             }
-
+        case .home:
+            LevelOSCView(
+                setInfoModel: setInfoModel,
+                sessionDisplay: $sessionDisplay
+            )
+            .environmentObject(fileController)
+            .onAppear {
+                viewModel.conductor.levelController(
+                    level: 0,
+                    setSettings: viewModel.mainState.setSettings
+                )
+            }
+            .onDisappear {
+                viewModel.conductor.pauzeEngineAndStopTracks(
+                    setSettings: viewModel.mainState.setSettings,
+                    resetLevels: true
+                )
+            }
         default:
             EmptyView()
         }
@@ -138,6 +154,24 @@ struct MainView: View {
                     userPresets: $userPresets
                 )
                 .environmentObject(fileController)
+            case .home:
+                LevelOSCView(
+                    setInfoModel: setInfoModel,
+                    sessionDisplay: $sessionDisplay
+                )
+                .environmentObject(fileController)
+                .onAppear {
+                    viewModel.conductor.levelController(
+                        level: 0,
+                        setSettings: viewModel.mainState.setSettings
+                    )
+                }
+                .onDisappear {
+                    viewModel.conductor.pauzeEngineAndStopTracks(
+                        setSettings: viewModel.mainState.setSettings,
+                        resetLevels: true
+                    )
+                }
             default:
                 EmptyView()
             }

@@ -41,7 +41,7 @@ struct SetInfo: View {
                 SetInfoHome(
 //                    setInfoModel: setInfoModel,
 //                    sessionDisplay: $sessionDisplay
-                )
+                    userSettings: userSettings)
             }
             //Set info is also the navigator to saved files within the set
             else if sessionDisplay == .setInfo {

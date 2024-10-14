@@ -31,6 +31,11 @@ class UserSettings: ObservableObject {
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "Introductie.json"
     @AppStorage(UserDefaultsKeys.showPartEditor) var showPartEditor: Bool = false
     
+    @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "192.168.178.22"
+    @AppStorage(UserDefaultsKeys.port) var port: Int = 8000
+    @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/makeMeUnique"
+    
+    
     //Have a observed van for states
     @Published var userCode: UserCode {
         didSet {
@@ -82,4 +87,8 @@ struct UserDefaultsKeys {
     
     static let persistance = "persistance"
     static let tempo = "tempo"
+    
+    static let ipAddress = "ipAddress"
+    static let port = "port"
+    static let pattern = "pattern"
 }

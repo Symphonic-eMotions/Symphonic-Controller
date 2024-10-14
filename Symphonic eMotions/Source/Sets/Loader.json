@@ -14,8 +14,164 @@
   "gridRows" : 2,
   "hasTempo" : false,
   "instrumentsConfig" : [
+    {
+      "audioFiles" : [
+        {
+          "fileExtension" : "wav",
+          "fileName" : "Mijn Huis Cello_24_C3",
+          "lengthInBeats" : 24,
+          "source" : "bundle"
+        }
+      ],
+      "effects" : [
+        {
+          "cutoffFrequency" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 3843.134
+          },
+          "effectName" : "lowPassFilter",
+          "resonance" : {
+            "range" : [
+              -20,
+              40
+            ],
+            "value" : -20
+          }
+        },
+        {
+          "dryWetMix" : {
+            "range" : [
+              0,
+              60
+            ],
+            "value" : 33.27835
+          },
+          "effectName" : "delay",
+          "feedback" : {
+            "range" : [
+              -100,
+              100
+            ],
+            "value" : 9.690725
+          },
+          "lowPassCutoff" : {
+            "range" : [
+              10,
+              20000
+            ],
+            "value" : 2462.3813
+          },
+          "time" : {
+            "range" : [
+              0,
+              2
+            ],
+            "value" : 0.70515466
+          }
+        }
+      ],
+      "exsFiles" : [
+        {
+          "exsFileExt" : "exs",
+          "exsFileName" : "trigger"
+        }
+      ],
+      "instrumentColor" : "InstrumentColor800",
+      "instrumentName" : "Cello C3",
+      "instrumentParts" : [
+        {
+          "areaOfInterest" : [
+            1,
+            0,
+            1,
+            0
+          ],
+          "damperTarget" : {
+            "dampMode" : "easeOutCubic",
+            "midiData" : null,
+            "nodeName" : "lowPassFilter",
+            "nodeSettings" : {
+              "minimalLevel" : 0.01,
+              "rampSpeed" : 0.09404990077018738,
+              "rampSpeedDown" : 0.5508637428283691
+            },
+            "nodeType" : "effect",
+            "parameter" : "cutoffFrequency",
+            "parameterInversed" : false,
+            "parameterRange" : [
+              10,
+              20000
+            ],
+            "trackId" : "T1"
+          },
+          "dontDrawVisual" : false,
+          "instrumentPartName" : "Low pass filter"
+        }
+      ],
+      "instrumentType" : "audioBuffer",
+      "instrumentVolume" : 5.6702147,
+      "levels" : [
+        1,
+        0,
+        2
+      ],
+      "midiFiles" : [
+        {
+          "loopLength" : [
+            24
+          ],
+          "loopsToGrid" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "loopsToLevel" : [
+            0,
+            0,
+            0,
+            0
+          ],
+          "midiFileExt" : "mid",
+          "midiFileName" : "trigger"
+        }
+      ],
+      "midiGroup" : [
+        48
+      ],
+      "muted" : false,
+      "noteNumbersClips" : [
+        0,
+        0,
+        0,
+        0
+      ],
+      "noteSource" : "midiFile",
+      "notesSequenceType" : "firstNote",
+      "notesToGrid" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "notesToLevel" : [
+        48,
+        48,
+        48,
+        48
+      ],
+      "startType" : "loopedTransport",
+      "trackId" : "T1",
+      "trackType" : "variationByPosition"
+    }
   ],
   "levelDurations" : [
+    32,
+    32,
+    32,
     1
   ],
   "masterTrackEffects" : [
@@ -24,7 +180,7 @@
   "semVersion" : "2.7.0",
   "smootherVersion": 2,
   "setBPM" : 90.75,
-  "setName" : "Loader",
-  "setPath" : "Loader",
-  "setTimeSignature" : 4
+  "setName" : "Introductie",
+  "setPath" : "Introductie",
+  "setTimeSignature" : 4,
 }

@@ -88,6 +88,12 @@ extension SetInfoModel {
                 let currentLevel = self.leveling.currentSetLevelSubject.value
                 if newLevel != currentLevel {
                     self.leveling.currentSetLevelSubject.send(newLevel)
+                    OSCMessageSender.shared.sendOSCMessage(
+                        ipAddress: self.userSettings.ipAddress,
+                        port: self.userSettings.port,
+                        pattern: self.userSettings.pattern,
+                        value: Float(newLevel/Double(self.setInfoState.currentInstrumentsSet.levels.count))
+                    )
                 }
             }
         }

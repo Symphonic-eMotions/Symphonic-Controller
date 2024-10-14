@@ -84,6 +84,8 @@
 		7C7A07172A3B2161007F7385 /* EditorParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07162A3B2161007F7385 /* EditorParts.swift */; };
 		7C7A07192A3B2DB2007F7385 /* MidiClipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */; };
 		7C7A071B2A3BB6D4007F7385 /* SoundSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */; };
+		7C7AD0452CBCE9F3005F8B26 /* OSCMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AD0442CBCE9F3005F8B26 /* OSCMessageSender.swift */; };
+		7C7AD0472CBCF2B9005F8B26 /* LevelOSCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AD0462CBCF2B9005F8B26 /* LevelOSCView.swift */; };
 		7C7C500D2CBBFF9700DF4BD3 /* SwiftOSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7C500B2CBBFC3900DF4BD3 /* SwiftOSC.framework */; };
 		7C7C500E2CBBFF9700DF4BD3 /* SwiftOSC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7C500B2CBBFC3900DF4BD3 /* SwiftOSC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C7E4FCA2A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */; };
@@ -298,6 +300,8 @@
 		7C7A07162A3B2161007F7385 /* EditorParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorParts.swift; sourceTree = "<group>"; };
 		7C7A07182A3B2DB2007F7385 /* MidiClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiClipsView.swift; sourceTree = "<group>"; };
 		7C7A071A2A3BB6D4007F7385 /* SoundSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSourceView.swift; sourceTree = "<group>"; };
+		7C7AD0442CBCE9F3005F8B26 /* OSCMessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCMessageSender.swift; sourceTree = "<group>"; };
+		7C7AD0462CBCF2B9005F8B26 /* LevelOSCView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelOSCView.swift; path = "Symphonic eMotions/Source/Views/LevelOSCView.swift"; sourceTree = SOURCE_ROOT; };
 		7C7C500B2CBBFC3900DF4BD3 /* SwiftOSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftOSC.framework; sourceTree = "<group>"; };
 		7C7E4FC92A66F0B9007BEF14 /* MasterTrackEffectsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTrackEffectsHelper.swift; sourceTree = "<group>"; };
 		7C7E4FCB2A66FB3A007BEF14 /* TrackEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEffectView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -758,6 +762,7 @@
 			isa = PBXGroup;
 			children = (
 				C06958FA26B4D9E4002EB522 /* PlayView.swift */,
+				7C7AD0462CBCF2B9005F8B26 /* LevelOSCView.swift */,
 				16687D8A27FF1F71006FFD5A /* PlayerControlsView */,
 				7C6A341C28426EDB006F2E95 /* PartFeedbackView */,
 				16632A8227DCC8DD00961765 /* PlayGridView */,
@@ -871,6 +876,7 @@
 				C0C512A127075DDD00DE3393 /* ValueAndRange.swift */,
 				7C8D75912A2A4D0500DF2417 /* FileGroup.swift */,
 				7C32342D2B6A977400D0E371 /* FileCache.swift */,
+				7C7AD0442CBCE9F3005F8B26 /* OSCMessageSender.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1166,6 +1172,7 @@
 				7C7057C12BFE36D200C02DE6 /* Chord.swift in Sources */,
 				7C7E4FE02A69610A007BEF14 /* MixerEffect.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
+				7C7AD0452CBCE9F3005F8B26 /* OSCMessageSender.swift in Sources */,
 				7CFDDD4A28EECE4600B6BD5F /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
 				7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */,
 				7C8D75922A2A4D0500DF2417 /* FileGroup.swift in Sources */,
@@ -1193,6 +1200,7 @@
 				7C9FB76B2A45862800490C59 /* VolumeButtonsView.swift in Sources */,
 				7CDC117D2BA3BC8600CE8C07 /* ProgressBarButton.swift in Sources */,
 				7C041D6A2A0990080031FF54 /* AddToPlaylistView.swift in Sources */,
+				7C7AD0472CBCF2B9005F8B26 /* LevelOSCView.swift in Sources */,
 				7C6A8CF02A4303280056BED3 /* IntroductionView.swift in Sources */,
 				7C9FB76F2A49AEB300490C59 /* MovementView.swift in Sources */,
 				7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */,
