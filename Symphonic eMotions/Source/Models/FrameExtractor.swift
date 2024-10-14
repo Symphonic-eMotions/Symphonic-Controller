@@ -18,7 +18,9 @@ protocol FrameExtractorDelegate: AnyObject {
 
 class FrameExtractor: NSObject {
     
-    static var shared: FrameExtractor { _shared }
+//    static var shared: FrameExtractor { _shared }
+    static let shared = FrameExtractor()
+
     
     private let position = AVCaptureDevice.Position.front
     private let quality = AVCaptureSession.Preset.vga640x480
@@ -30,7 +32,7 @@ class FrameExtractor: NSObject {
     
     private let context = CIContext()
     
-    private var previewLayer: AVCaptureVideoPreviewLayer?
+    let previewLayer: AVCaptureVideoPreviewLayer
     private var imagePreviewView: UIImageView!
     
     weak var delegate: FrameExtractorDelegate?
@@ -51,7 +53,7 @@ class FrameExtractor: NSObject {
     fileprivate override init() {
         
         UIApplication.shared.isIdleTimerDisabled = true
-        
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
         super.init()
         
         checkPermission()
@@ -177,28 +179,6 @@ class FrameExtractor: NSObject {
     private func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> CIImage? {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         return CIImage(cvPixelBuffer: imageBuffer)
-    }
-    
-    func displayPreview(on view: UIView) throws {
-        sessionQueue.async { [weak self] in
-            guard let self = self else { return }
-            if self.previewLayer == nil {
-                self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-                self.previewLayer?.videoGravity = .resizeAspectFill
-            }
-            
-            DispatchQueue.main.async {
-                view.layer.insertSublayer(self.previewLayer!, at: 0)
-                self.previewLayer?.frame = view.frame
-                self.previewLayer?.connection?.videoOrientation = {
-                    switch (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.interfaceOrientation {
-                    case .landscapeRight: return .landscapeRight
-                    case .landscapeLeft: return .landscapeLeft
-                    default: return .portrait
-                    }
-                }()
-            }
-        }
     }
 }
 

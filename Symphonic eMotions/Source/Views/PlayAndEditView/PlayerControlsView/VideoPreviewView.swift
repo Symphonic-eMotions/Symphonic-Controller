@@ -7,35 +7,20 @@
 
 import SwiftUI
 
-struct VideoPreviewViewRepresetable: UIViewRepresentable {
-    
+struct VideoPreviewViewRepresentable: UIViewRepresentable {
     @ObservedObject var setInfoModel: SetInfoModel
-    
-    func makeUIView(context: Context) -> some UIView {
+
+    func makeUIView(context: Context) -> UIView {
         let view = UIView(frame: .zero)
-        try? setInfoModel.frameExtractor.displayPreview(on: view)
+        // Configure the preview layer
+        let previewLayer = setInfoModel.frameExtractor.previewLayer
+        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.frame = view.bounds
+        view.layer.addSublayer(previewLayer)
         return view
     }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-        if setInfoModel.setInfoState.displayMode == .video || setInfoModel.setInfoState.displayMode == .both {
-                try? setInfoModel.frameExtractor.displayPreview(on: uiView)
-        }
-        else if setInfoModel.setInfoState.displayMode == .refresh {
-            let view = UIView(frame: UIScreen.main.bounds)
-            view.backgroundColor = UIColor.black.withAlphaComponent(0)
-            
-            try? setInfoModel.frameExtractor.displayPreview(on: view)
-            
-            setInfoModel.setInfoState.displayMode = .both
-        }
-        else {
-            let view = UIView(frame: UIScreen.main.bounds)
-            view.backgroundColor = UIColor.black.withAlphaComponent(0)
-            
-            try? setInfoModel.frameExtractor.displayPreview(on: view)
-        }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+        setInfoModel.frameExtractor.previewLayer.frame = uiView.bounds
     }
-    
 }

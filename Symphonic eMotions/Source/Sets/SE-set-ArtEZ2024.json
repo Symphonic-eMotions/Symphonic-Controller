@@ -23,11 +23,11 @@
       "exsFiles" : [
         {
           "exsFileExt" : "exs",
-          "exsFileName" : "trigger"
+          "exsFileName" : "EXS808"
         }
       ],
       "instrumentColor" : "InstrumentColor602",
-      "instrumentName" : "Trigger",
+      "instrumentName" : "EXS-808",
       "instrumentParts" : [
         {
           "areaOfInterest" : [
@@ -188,8 +188,8 @@
   "setEffects" : [
 
   ],
-  "setName" : "DataSender",
-  "setPath" : "DataSender",
+  "setName" : "ArtEZ 2024",
+  "setPath" : "Introductie",
   "setTimeSignature" : 4,
   "userViews" : [
     "PlayView"

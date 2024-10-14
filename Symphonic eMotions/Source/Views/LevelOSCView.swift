@@ -72,7 +72,7 @@ struct LevelOSCView: View {
                                 }
                                 
                                 //Video
-                                VideoPreviewViewRepresetable(
+                                VideoPreviewViewRepresentable(
                                     setInfoModel: setInfoModel
                                 )
                                 //.frame(width: 180.0, height: 120.0)
