@@ -633,33 +633,4 @@
   "setName" : "Introductie",
   "setPath" : "Introductie",
   "setTimeSignature" : 4,
-  "skin" : {
-    "instruments" : [
-      {
-        "color" : "Skin0",
-        "image" : "Cello",
-        "name" : "Cello",
-        "shape" : "circle"
-      },
-      {
-        "color" : "Skin1",
-        "image" : "DrumKit",
-        "name" : "Beats",
-        "shape" : "circle"
-      },
-      {
-        "color" : "Skin2",
-        "image" : "Machine",
-        "name" : "Bassline",
-        "shape" : "circle"
-      },
-      {
-        "color" : "InstrumentColor700",
-        "image" : "AudioFile1",
-        "name" : "Synth",
-        "shape" : "circle"
-      }
-    ],
-    "name" : "Introductie v2"
-  }
 }
