@@ -26,38 +26,31 @@ struct CalibrationView: View {
     }
 
     var body: some View {
-        ZStack {
-            // Kalibratieknop
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        if isCalibrating {
-                            setInfoModel.imageDifference.stopCalibration()
-                        } else {
-                            setInfoModel.imageDifference.startCalibration()
-                        }
-                    }) {
-                        Text(isCalibrating ? "Niet bewegen!" : "Kalibreer Stilte")
-                            .padding()
-                            .background(isCalibrating ? Color.red : Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.trailing)
-                            .padding(.bottom)
-                    }
-                    Text("\(calibrationThreshold)")
-                        .padding()
-                        .background(isCalibrating ? Color.red : Color.accentColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding(.trailing)
-                        .padding(.bottom)
+
+        HStack {
+            Button(action: {
+                if isCalibrating {
+                    setInfoModel.imageDifference.stopCalibration()
+                } else {
+                    setInfoModel.imageDifference.startCalibration()
                 }
+            }) {
+                Text(isCalibrating ? "Niet bewegen!" : "Kalibreer Stilte")
+                    .padding()
+                    .background(isCalibrating ? Color.red : Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.trailing)
+                    .padding(.bottom)
             }
+            Text("\(calibrationThreshold)")
+                .padding()
+                .background(isCalibrating ? Color.red : Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding(.trailing)
+                .padding(.bottom)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.clear)
         .onAppear {
             // Kalibratieveranderingen observeren en opslaan

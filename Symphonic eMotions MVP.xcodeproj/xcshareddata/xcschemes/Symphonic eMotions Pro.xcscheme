@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C084FFD226B3115E009A4D0C"
-               BuildableName = "Symphonic eMotions Pro.app"
-               BlueprintName = "Symphonic eMotions Pro"
+               BuildableName = "Symphonic Controller.app"
+               BlueprintName = "Symphonic Controller"
                ReferencedContainer = "container:Symphonic eMotions MVP.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C084FFD226B3115E009A4D0C"
-            BuildableName = "Symphonic eMotions Pro.app"
-            BlueprintName = "Symphonic eMotions Pro"
+            BuildableName = "Symphonic Controller.app"
+            BlueprintName = "Symphonic Controller"
             ReferencedContainer = "container:Symphonic eMotions MVP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C084FFD226B3115E009A4D0C"
-            BuildableName = "Symphonic eMotions Pro.app"
-            BlueprintName = "Symphonic eMotions Pro"
+            BuildableName = "Symphonic Controller.app"
+            BlueprintName = "Symphonic Controller"
             ReferencedContainer = "container:Symphonic eMotions MVP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -87,7 +87,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "Symphonic eMotions Pro"
+      customArchiveName = "Symphonic Controller"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

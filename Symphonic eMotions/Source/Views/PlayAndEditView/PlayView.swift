@@ -30,6 +30,8 @@ struct PlayView: View {
     @State private var initialRampUp: Double
     @State private var initialRampDown: Double
     
+    @State private var selectedPattern: DevicePattern = .stap1 // Default value
+    
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
@@ -65,6 +67,9 @@ struct PlayView: View {
         _initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
         _initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
         
+        if let initialPattern = DevicePattern(pattern: setInfoModel.userSettings.pattern) {
+            self._selectedPattern = State(initialValue: initialPattern)
+        }
     }
     
     var body: some View {
@@ -90,24 +95,49 @@ struct PlayView: View {
             //Video
             GeometryReader { geometry in
                 ZStack{
-//                    VideoPreviewViewRepresentable(
-//                        setInfoModel: setInfoModel
-//                    )
-//                    .aspectRatio(1.77777, contentMode: .fit)
-//                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-//                    .cornerRadius(10.0)
-//                    .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
-//                    
                     VStack{
+                        VideoPreviewViewRepresentable(
+                            setInfoModel: setInfoModel
+                        )
+                        .aspectRatio(1.77777, contentMode: .fit)
+                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                        .cornerRadius(10.0)
+                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
+                        
                         HStack {
                             VStack{
-                                CalibrationView(
-                                    geometry: geometry,
-                                    userSettings: setInfoModel.userSettings,
-                                    setInfoModel: setInfoModel
-                                )
-                                .zIndex(210)
-                                
+                                HStack{
+                                    
+                                    // Picker for Device Pattern
+                                    Picker("Device Pattern", selection: $selectedPattern) {
+                                        ForEach(DevicePattern.allCases, id: \.self) { pattern in
+                                            Text(pattern.rawValue).tag(pattern)
+                                        }
+                                    }
+                                    .pickerStyle(MenuPickerStyle()) // Dropdown style
+                                    .onChange(of: selectedPattern) { newValue in
+                                        userSettings.pattern = newValue.rawValue
+                                        
+                                        // Stuur een OSC-bericht met waarde 0 naar elk patroon
+                                        DevicePattern.allCases.forEach { pattern in
+                                            OSCMessageSender.shared.sendOSCMessage(
+                                                ipAddress: self.userSettings.ipAddress,
+                                                port: self.userSettings.port,
+                                                pattern: pattern.rawValue + "/direct", // Voeg de "/direct" toe
+                                                value: 0.0 // Verzend 0 als de waarde
+                                            )
+                                        }
+                                        
+                                    }
+                                    .padding()
+                                    
+                                    CalibrationView(
+                                        geometry: geometry,
+                                        userSettings: setInfoModel.userSettings,
+                                        setInfoModel: setInfoModel
+                                    )
+                                    .zIndex(210)
+                                }
                                 //Display ramped value feedback
                                 ValueFeedback(value: .init(
                                     get: {

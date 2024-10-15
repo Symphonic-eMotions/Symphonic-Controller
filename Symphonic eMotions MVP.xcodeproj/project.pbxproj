@@ -48,7 +48,7 @@
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
 		7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* BpmView.swift */; };
-		7C6204E12BBFFC1600629DC5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */; };
+		7C597C352CBE67FC00858022 /* DevicePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C597C342CBE67FC00858022 /* DevicePattern.swift */; };
 		7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E22BBFFF8A00629DC5 /* UserView.swift */; };
 		7C6204E52BC06C4100629DC5 /* SelectUserViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */; };
 		7C6228412BB8705E00524647 /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6228402BB8705E00524647 /* GridModel.swift */; };
@@ -266,6 +266,7 @@
 		7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGridSizeView.swift; sourceTree = "<group>"; };
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
+		7C597C342CBE67FC00858022 /* DevicePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePattern.swift; sourceTree = "<group>"; };
 		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserViews.swift; sourceTree = "<group>"; };
 		7C6228402BB8705E00524647 /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
@@ -319,7 +320,6 @@
 		7C8C3D9A28D305DA0051BAC9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7C8C3D9C28D3066F0051BAC9 /* SeMActive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeMActive.swift; sourceTree = "<group>"; };
 		7C8C3D9E28D306D00051BAC9 /* PartFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartFeedbackState.swift; sourceTree = "<group>"; };
-		7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7C8D758B2A28ABBA00DF2417 /* MinimalLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLevelView.swift; sourceTree = "<group>"; };
 		7C8D758D2A28DC2B00DF2417 /* NoteNumberSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberSequenceView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C8D758F2A28E0B900DF2417 /* NotesSequenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSequenceType.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -409,7 +409,7 @@
 		C069591E26B4E77E002EB522 /* AreaValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaValues.swift; sourceTree = "<group>"; };
 		C069592026B4E8FC002EB522 /* PlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGridView.swift; sourceTree = "<group>"; };
 		C069592226B4F2F6002EB522 /* EMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMButton.swift; sourceTree = "<group>"; };
-		C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Symphonic eMotions Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C084FFD326B3115E009A4D0C /* Symphonic Controller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Symphonic Controller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C084FFD626B3115E009A4D0C /* eMotionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eMotionApp.swift; sourceTree = "<group>"; };
 		C084FFDA26B31160009A4D0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C084FFDD26B31160009A4D0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -731,6 +731,7 @@
 			children = (
 				7C9FB77A2A4AED3400490C59 /* UserSettings.swift */,
 				7C8C3D9C28D3066F0051BAC9 /* SeMActive.swift */,
+				7C597C342CBE67FC00858022 /* DevicePattern.swift */,
 			);
 			path = StateObjects;
 			sourceTree = "<group>";
@@ -786,7 +787,7 @@
 		C084FFD426B3115E009A4D0C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */,
+				C084FFD326B3115E009A4D0C /* Symphonic Controller.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -794,7 +795,6 @@
 		C084FFD526B3115E009A4D0C /* Symphonic eMotions */ = {
 			isa = PBXGroup;
 			children = (
-				7C8CBF912BBF32AC001DADCF /* PrivacyInfo.xcprivacy */,
 				7C69ED39295350750009F382 /* .gitignore */,
 				C069590026B4DD0D002EB522 /* Info.plist */,
 				7CD418052A095388006831CE /* Localizable.strings */,
@@ -941,9 +941,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro */ = {
+		C084FFD226B3115E009A4D0C /* Symphonic Controller */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro" */;
+			buildConfigurationList = C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic Controller" */;
 			buildPhases = (
 				C084FFCF26B3115E009A4D0C /* Sources */,
 				C084FFD026B3115E009A4D0C /* Frameworks */,
@@ -954,7 +954,7 @@
 			);
 			dependencies = (
 			);
-			name = "Symphonic eMotions Pro";
+			name = "Symphonic Controller";
 			packageProductDependencies = (
 				C0AFDD082705D254006EF64F /* AudioKit */,
 				7C67D15F270F8B83009122BF /* SoundpipeAudioKit */,
@@ -962,7 +962,7 @@
 				7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */,
 			);
 			productName = eMotion;
-			productReference = C084FFD326B3115E009A4D0C /* Symphonic eMotions Pro.app */;
+			productReference = C084FFD326B3115E009A4D0C /* Symphonic Controller.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1000,7 +1000,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C084FFD226B3115E009A4D0C /* Symphonic eMotions Pro */,
+				C084FFD226B3115E009A4D0C /* Symphonic Controller */,
 			);
 		};
 /* End PBXProject section */
@@ -1013,7 +1013,6 @@
 				7CAB35CB2AD02E8500659002 /* Videos in Resources */,
 				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
-				7C6204E12BBFFC1600629DC5 /* PrivacyInfo.xcprivacy in Resources */,
 				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
 				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
@@ -1206,6 +1205,7 @@
 				7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */,
 				7C29AA1D2A4F4AF30070D901 /* ValueRamper.swift in Sources */,
 				7CB58353292FAD2F000C46FF /* EditGridView.swift in Sources */,
+				7C597C352CBE67FC00858022 /* DevicePattern.swift in Sources */,
 				7CCCBF452BC5F1AE00C78F44 /* OpacityController.swift in Sources */,
 				7C8C3D9F28D306D00051BAC9 /* PartFeedbackState.swift in Sources */,
 				7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */,
@@ -1361,7 +1361,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1372,7 +1372,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
@@ -1380,14 +1380,14 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				MARKETING_VERSION = 1;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.osccontroller";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1406,7 +1406,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Symphonic eMotions/eMotion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Symphonic eMotions/Preview Content\"";
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -1417,7 +1417,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Symphonic eMotions/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic eMotions";
+				INFOPLIST_KEY_CFBundleDisplayName = "Symphonic Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Toegang tot de camera is nodig voor het vinden van beweging. Deze beelden worden niet opgeslagen.";
@@ -1425,14 +1425,14 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.sepro";
+				MARKETING_VERSION = 1;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.symphonic-emotions.osccontroller";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1455,7 +1455,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic eMotions Pro" */ = {
+		C084FFE126B31160009A4D0C /* Build configuration list for PBXNativeTarget "Symphonic Controller" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C084FFE226B31160009A4D0C /* Debug */,
