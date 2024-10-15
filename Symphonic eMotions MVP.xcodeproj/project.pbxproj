@@ -49,6 +49,7 @@
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
 		7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* BpmView.swift */; };
 		7C597C352CBE67FC00858022 /* DevicePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C597C342CBE67FC00858022 /* DevicePattern.swift */; };
+		7C597C372CBE7C4800858022 /* SettingsSmallSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */; };
 		7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E22BBFFF8A00629DC5 /* UserView.swift */; };
 		7C6204E52BC06C4100629DC5 /* SelectUserViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */; };
 		7C6228412BB8705E00524647 /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6228402BB8705E00524647 /* GridModel.swift */; };
@@ -267,6 +268,7 @@
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
 		7C597C342CBE67FC00858022 /* DevicePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePattern.swift; sourceTree = "<group>"; };
+		7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSmallSheetView.swift; sourceTree = "<group>"; };
 		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		7C6204E42BC06C4100629DC5 /* SelectUserViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserViews.swift; sourceTree = "<group>"; };
 		7C6228402BB8705E00524647 /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
@@ -899,6 +901,7 @@
 				7C6702472CA43F58006B7EAA /* MainView.swift */,
 				C084FFEB26B3122C009A4D0C /* MainViewLegacy.swift */,
 				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
+				7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1169,6 +1172,7 @@
 				7C1D32D92BBDB0B2002F31CD /* ColumnView.swift in Sources */,
 				7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */,
 				7C7057C12BFE36D200C02DE6 /* Chord.swift in Sources */,
+				7C597C372CBE7C4800858022 /* SettingsSmallSheetView.swift in Sources */,
 				7C7E4FE02A69610A007BEF14 /* MixerEffect.swift in Sources */,
 				7CFA00A229A74FA2001D8A5D /* ParameterSettings.swift in Sources */,
 				7C7AD0452CBCE9F3005F8B26 /* OSCMessageSender.swift in Sources */,

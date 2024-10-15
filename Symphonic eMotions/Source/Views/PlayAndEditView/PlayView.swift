@@ -76,138 +76,132 @@ struct PlayView: View {
         
         VStack {
             
-            #if targetEnvironment(macCatalyst)
-            Rectangle().frame(height: 25).foregroundColor(Color.clear)
-            #endif
             
 //                if !showLevelPlayerFullScreen {
 //                    LevelView(
 //                        setInfoModel: setInfoModel
 //                    )
-                //Transport buttons
-                PlayerControlsView(
-                    setInfoModel: setInfoModel,
-                    showMasterTrack: $showMasterTrack
-                )
-                .zIndex(100)
+//                //Transport buttons
+//                PlayerControlsView(
+//                    setInfoModel: setInfoModel,
+//                    showMasterTrack: $showMasterTrack
+//                )
+//                .zIndex(100)
 //                }
             
             //Video
             GeometryReader { geometry in
-                ZStack{
-                    VStack{
-                        VideoPreviewViewRepresentable(
-                            setInfoModel: setInfoModel
-                        )
-                        .aspectRatio(1.77777, contentMode: .fit)
-                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                        .cornerRadius(10.0)
-                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
-                        
-                        HStack {
-                            VStack{
-                                HStack{
-                                    
-                                    // Picker for Device Pattern
-                                    Picker("Device Pattern", selection: $selectedPattern) {
-                                        ForEach(DevicePattern.allCases, id: \.self) { pattern in
-                                            Text(pattern.rawValue).tag(pattern)
-                                        }
-                                    }
-                                    .pickerStyle(MenuPickerStyle()) // Dropdown style
-                                    .onChange(of: selectedPattern) { newValue in
-                                        userSettings.pattern = newValue.rawValue
-                                        
-                                        // Stuur een OSC-bericht met waarde 0 naar elk patroon
-                                        DevicePattern.allCases.forEach { pattern in
-                                            OSCMessageSender.shared.sendOSCMessage(
-                                                ipAddress: self.userSettings.ipAddress,
-                                                port: self.userSettings.port,
-                                                pattern: pattern.rawValue + "/direct", // Voeg de "/direct" toe
-                                                value: 0.0 // Verzend 0 als de waarde
-                                            )
-                                        }
-                                        
-                                    }
-                                    .padding()
-                                    
-                                    CalibrationView(
-                                        geometry: geometry,
-                                        userSettings: setInfoModel.userSettings,
-                                        setInfoModel: setInfoModel
-                                    )
-                                    .zIndex(210)
-                                }
-                                //Display ramped value feedback
-                                ValueFeedback(value: .init(
-                                    get: {
-                                        let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
-                                        return max(0, min(1, currentBarLevel))
-                                    },
-                                    set: {
-                                        _ in
-                                    }), title: "Ramped value" )
-                                .frame(height: 28.0)
+                VStack{
+                    VideoPreviewViewRepresentable(
+                        setInfoModel: setInfoModel
+                    )
+                    .aspectRatio(1.77777, contentMode: .fit)
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                    .cornerRadius(10.0)
+                    .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
+                    
+                    HStack {
+                        VStack{
+                            // Picker for Device Pattern
+                            // Calibartaion View
+                            HStack{
                                 
-                                RampSliderView(
-                                    label: "Ramp up",
-                                    value: Binding<Double>(
-                                        get: { Double(userSettings.rampUp) },
-                                        set: { newValue in
-                                            userSettings.rampUp = Double(newValue)
-                                        }
-                                    ),
-                                    showsLabel: true,
-                                    isActive: true
-                                )
-                                .onChange(of: userSettings.rampUp) { newValue in
-                                    setInfoModel.conductor.rampUp[currentPartID] = newValue
-                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = newValue
+                                Picker("Device Pattern", selection: $selectedPattern) {
+                                    ForEach(DevicePattern.allCases, id: \.self) { pattern in
+                                        Text(pattern.rawValue).tag(pattern)
+                                    }
                                 }
+                                .pickerStyle(MenuPickerStyle()) // Dropdown style
+                                .onChange(of: selectedPattern) { newValue in
+                                    userSettings.pattern = newValue.rawValue
+                                    
+                                    // Stuur een OSC-bericht met waarde 0 naar elk patroon
+                                    DevicePattern.allCases.forEach { pattern in
+                                        OSCMessageSender.shared.sendOSCMessage(
+                                            ipAddress: self.userSettings.ipAddress,
+                                            port: self.userSettings.port,
+                                            pattern: pattern.rawValue + "/direct", // Voeg de "/direct" toe
+                                            value: 0.0 // Verzend 0 als de waarde
+                                        )
+                                    }
+                                    
+                                }
+                                .padding()
                                 
-                                RampSliderView(
-                                    label: "Ramp down",
-                                    value: Binding<Double>(
-                                        get: { Double(userSettings.rampDown) },
-                                        set: { newValue in
-                                            userSettings.rampDown = Double(newValue)
-                                        }
-                                    ),
-                                    showsLabel: true,
-                                    isActive: true
+                                CalibrationView(
+                                    geometry: geometry,
+                                    userSettings: setInfoModel.userSettings,
+                                    setInfoModel: setInfoModel
                                 )
-                                .onChange(of: userSettings.rampDown) { newValue in
-                                    setInfoModel.conductor.rampDown[currentPartID] = newValue
-                                    setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
-                                }
+                                
+                                //Settings button
+                                SettingsButtonWithLongPress(
+                                    setInfoModel: setInfoModel
+                                )
                             }
                             
+                            //Display ramped value feedback
+                            ValueFeedback(value: .init(
+                                get: {
+                                    let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
+                                    return max(0, min(1, currentBarLevel))
+                                },
+                                set: {
+                                    _ in
+                                }), title: "Ramped value" )
+                            .frame(height: 28.0)
+                            
+                            RampSliderView(
+                                label: "Ramp up",
+                                value: Binding<Double>(
+                                    get: { Double(userSettings.rampUp) },
+                                    set: { newValue in
+                                        userSettings.rampUp = Double(newValue)
+                                    }
+                                ),
+                                showsLabel: true,
+                                isActive: true
+                            )
+                            .onChange(of: userSettings.rampUp) { newValue in
+                                setInfoModel.conductor.rampUp[currentPartID] = newValue
+                                setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = newValue
+                            }
+                            
+                            RampSliderView(
+                                label: "Ramp down",
+                                value: Binding<Double>(
+                                    get: { Double(userSettings.rampDown) },
+                                    set: { newValue in
+                                        userSettings.rampDown = Double(newValue)
+                                    }
+                                ),
+                                showsLabel: true,
+                                isActive: true
+                            )
+                            .onChange(of: userSettings.rampDown) { newValue in
+                                setInfoModel.conductor.rampDown[currentPartID] = newValue
+                                setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
+                            }
                         }
-                    }
-                    .onAppear {
-                        if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
-                            userSettings.rampUp = initialRampUp
-                        }
-                        if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
-                            userSettings.rampDown = initialRampDown
-                        }
-                    }
-                    .sheet(isPresented: $presentSettingSheet) {
-                        SettingsSheetView(
-                            userSettings: userSettings,
-                            setInfoModel: setInfoModel,
-                            showingSheet: $presentSettingSheet
-                        )
+                        
                     }
                 }
+                .onAppear {
+                    if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
+                        userSettings.rampUp = initialRampUp
+                    }
+                    if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
+                        userSettings.rampDown = initialRampDown
+                    }
+                }
+                .sheet(isPresented: $presentSettingSheet) {
+                    SettingsSheetView(
+                        userSettings: userSettings,
+                        setInfoModel: setInfoModel,
+                        showingSheet: $presentSettingSheet
+                    )
+                }
             }
-            .zIndex(110)
-            
-            
-            
-            
-            
-            
         }
         .padding(.horizontal)
         .navigationBarTitleDisplayMode(.inline)

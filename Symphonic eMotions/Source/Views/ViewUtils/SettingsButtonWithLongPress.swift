@@ -26,7 +26,7 @@ struct SettingsButtonWithLongPress: View {
         }
         .padding(.horizontal)
         .frame(height: 50)
-        .frame(maxWidth: .infinity)
+//        .frame(maxWidth: .infinity)
         .font(.system(size: 17).weight(.semibold))
         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(color))
         .foregroundColor(isSolid ? .white : color)
@@ -42,7 +42,7 @@ struct SettingsButtonWithLongPress: View {
         })
         //Present sheet
         .sheet(isPresented: $presentSettingSheet) {
-            SettingsSheetView(
+            SettingsSmallSheetView(
                 userSettings: userSettings,
                 setInfoModel: setInfoModel, 
                 showingSheet: $presentSettingSheet
