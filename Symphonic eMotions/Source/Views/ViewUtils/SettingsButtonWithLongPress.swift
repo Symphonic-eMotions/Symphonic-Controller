@@ -26,7 +26,6 @@ struct SettingsButtonWithLongPress: View {
         }
         .padding(.horizontal)
         .frame(height: 50)
-//        .frame(maxWidth: .infinity)
         .font(.system(size: 17).weight(.semibold))
         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(color))
         .foregroundColor(isSolid ? .white : color)

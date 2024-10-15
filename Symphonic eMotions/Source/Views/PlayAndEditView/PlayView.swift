@@ -73,84 +73,85 @@ struct PlayView: View {
     }
     
     var body: some View {
-        
         VStack {
+            // Uitgecommentarieerde Video player
+            /*
+            VideoPreviewViewRepresentable(
+                setInfoModel: setInfoModel
+            )
+            .aspectRatio(1.77777, contentMode: .fit)
+            .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+            .cornerRadius(10.0)
+            .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
+            */
             
-            
-//                if !showLevelPlayerFullScreen {
-//                    LevelView(
-//                        setInfoModel: setInfoModel
-//                    )
-//                //Transport buttons
-//                PlayerControlsView(
-//                    setInfoModel: setInfoModel,
-//                    showMasterTrack: $showMasterTrack
-//                )
-//                .zIndex(100)
-//                }
-            
-            //Video
+            // Grid van knoppen
             GeometryReader { geometry in
-                VStack{
-                    VideoPreviewViewRepresentable(
-                        setInfoModel: setInfoModel
-                    )
-                    .aspectRatio(1.77777, contentMode: .fit)
-                    .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-                    .cornerRadius(10.0)
-                    .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
-                    
-                    HStack {
-                        VStack{
-                            // Picker for Device Pattern
-                            // Calibartaion View
-                            HStack{
-                                
-                                Picker("Device Pattern", selection: $selectedPattern) {
-                                    ForEach(DevicePattern.allCases, id: \.self) { pattern in
-                                        Text(pattern.rawValue).tag(pattern)
-                                    }
+                VStack {
+                    let buttonWidth = (geometry.size.width - 40) / 3
+                    let buttonHeight: CGFloat = 110
+
+                    LazyVGrid(
+                        columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
+                        spacing: 10
+                    ) {
+                        ForEach(DevicePattern.allCases, id: \.self) { pattern in
+                            Button(action: {
+                                selectedPattern = pattern
+                                userSettings.pattern = pattern.rawValue
+
+                                // Stuur een OSC-bericht met waarde 0 naar elk patroon
+                                DevicePattern.allCases.forEach { pattern in
+                                    OSCMessageSender.shared.sendOSCMessage(
+                                        ipAddress: self.userSettings.ipAddress,
+                                        port: self.userSettings.port,
+                                        pattern: pattern.rawValue + "/direct",
+                                        value: 0.0
+                                    )
                                 }
-                                .pickerStyle(MenuPickerStyle()) // Dropdown style
-                                .onChange(of: selectedPattern) { newValue in
-                                    userSettings.pattern = newValue.rawValue
-                                    
-                                    // Stuur een OSC-bericht met waarde 0 naar elk patroon
-                                    DevicePattern.allCases.forEach { pattern in
-                                        OSCMessageSender.shared.sendOSCMessage(
-                                            ipAddress: self.userSettings.ipAddress,
-                                            port: self.userSettings.port,
-                                            pattern: pattern.rawValue + "/direct", // Voeg de "/direct" toe
-                                            value: 0.0 // Verzend 0 als de waarde
-                                        )
-                                    }
-                                    
-                                }
-                                .padding()
-                                
-                                CalibrationView(
-                                    geometry: geometry,
-                                    userSettings: setInfoModel.userSettings,
-                                    setInfoModel: setInfoModel
-                                )
-                                
-                                //Settings button
-                                SettingsButtonWithLongPress(
-                                    setInfoModel: setInfoModel
-                                )
+                            }) {
+                                Text(pattern.displayName)
+                                    .font(.title)
+                                    .frame(width: buttonWidth, height: buttonHeight)
+                                    .background(
+                                        selectedPattern == pattern ?
+                                            (pattern == .stap0 ? Color.red : Color.blue)
+                                            : Color.gray
+                                    )
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
                             }
+                        }
+                    }
+                    .frame(maxHeight: buttonHeight * 4 + 30)
+                    .padding()
+                    // Overige content (zoals CalibrationView en sliders)
+                    VStack {
+                        HStack {
+                            CalibrationView(
+                                geometry: geometry,
+                                userSettings: setInfoModel.userSettings,
+                                setInfoModel: setInfoModel
+                            )
                             
-                            //Display ramped value feedback
-                            ValueFeedback(value: .init(
-                                get: {
-                                    let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
-                                    return max(0, min(1, currentBarLevel))
-                                },
-                                set: {
-                                    _ in
-                                }), title: "Ramped value" )
-                            .frame(height: 28.0)
-                            
+                            // Settings button
+                            SettingsButtonWithLongPress(
+                                setInfoModel: setInfoModel
+                            )
+                            .padding(.top, -15)
+                        }
+                        
+                        // Display ramped value feedback
+                        ValueFeedback(value: .init(
+                            get: {
+                                let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
+                                return max(0, min(1, currentBarLevel))
+                            },
+                            set: {
+                                _ in
+                            }), title: "Ramped value" )
+                        .frame(height: 28.0)
+                        HStack{
                             RampSliderView(
                                 label: "Ramp up",
                                 value: Binding<Double>(
@@ -183,8 +184,8 @@ struct PlayView: View {
                                 setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
                             }
                         }
-                        
                     }
+                    .padding(.horizontal)
                 }
                 .onAppear {
                     if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
@@ -193,6 +194,12 @@ struct PlayView: View {
                     if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
                         userSettings.rampDown = initialRampDown
                     }
+
+                    setInfoModel.conductor.rampUp[currentPartID] = userSettings.rampUp
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = userSettings.rampUp
+
+                    setInfoModel.conductor.rampDown[currentPartID] = userSettings.rampDown
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = userSettings.rampDown
                 }
                 .sheet(isPresented: $presentSettingSheet) {
                     SettingsSheetView(
@@ -203,9 +210,7 @@ struct PlayView: View {
                 }
             }
         }
-        .padding(.horizontal)
         .navigationBarTitleDisplayMode(.inline)
-        
     }
 }
 

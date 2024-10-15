@@ -15,7 +15,7 @@ struct CalibrationView: View {
     @State private var calibrationThresholdCancellable: AnyCancellable?
     @State private var isCalibratingCancellable: AnyCancellable?
     @State private var calibrationThreshold: Int
-
+    @State private var hasBeenUsed: Bool = false
     var geometry: GeometryProxy
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
@@ -34,10 +34,14 @@ struct CalibrationView: View {
                 } else {
                     setInfoModel.imageDifference.startCalibration()
                 }
+                hasBeenUsed = true  
             }) {
                 Text(isCalibrating ? "Niet bewegen!" : "Kalibreer Stilte")
                     .padding()
-                    .background(isCalibrating ? Color.red : Color.green)
+                    .background(
+                        isCalibrating ? Color.red :
+                        (hasBeenUsed ? Color.green : Color.orange) // Aangepast
+                    )
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding(.trailing)

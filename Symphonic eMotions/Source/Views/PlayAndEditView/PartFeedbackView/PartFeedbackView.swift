@@ -302,9 +302,9 @@ struct RampSliderView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack{
-                if showsLabel { Text(label) }
+                
                 HStack {
+                    if showsLabel { Text(label) }
                     Slider(value: $value, in: Double(minValue)...Double(maxValue))
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * 0.8)
@@ -312,12 +312,12 @@ struct RampSliderView: View {
                     // Transform linear value to exponential
                     let expValue = pow(value, 3)
                     let displayValue = Float(RangeConverter.valueToRange(range: displayRange, value: Double(expValue)))
-                    Text("\(displayValue, specifier: "\(specifier)")")
-                        .foregroundColor(.white)
-                        .font(.subheadline)
-                        .frame(width: geometry.size.width * 0.2)
+//                    Text("\(displayValue, specifier: "\(specifier)")")
+//                        .foregroundColor(.white)
+//                        .font(.subheadline)
+//                        .frame(width: geometry.size.width * 0.2)
                 }
-            }
+            
         }
         .frame(height: 40.0)
     }
