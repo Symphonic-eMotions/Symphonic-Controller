@@ -8,6 +8,7 @@
 import Foundation
 
 enum DevicePattern: String, CaseIterable {
+    case stap0 = "/off"
     case stap1 = "/stap1"
     case stap2 = "/stap2"
     case stap3 = "/stap3"
@@ -17,6 +18,8 @@ enum DevicePattern: String, CaseIterable {
     case stap7 = "/stap7"
     case stap8 = "/stap8"
     case stap9 = "/stap9"
+    case stap10 = "/stap10"
+    case stap11 = "/stap11"
     
     // Failable initializer om te initialiseren vanuit een string
     init?(pattern: String) {
