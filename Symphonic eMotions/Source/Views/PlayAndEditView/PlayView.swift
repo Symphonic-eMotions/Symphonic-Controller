@@ -22,14 +22,12 @@ struct PlayView: View {
     
     @State var currentTrackID: String
     @State var currentPartID: String
-    @State var rampUp: Double
-    @State var rampDown: Double
-    @State var volume: Float
     
+    @State private var selectedPattern: DevicePattern = .stap1
+    @State private var rampUp: Double = 0.5
+    @State private var rampDown: Double = 0.5
     @State private var initialRampUp: Double
     @State private var initialRampDown: Double
-    
-    @State private var selectedPattern: DevicePattern = .stap1 // Default value
     
     init(
         setInfoModel: SetInfoModel,
@@ -59,16 +57,27 @@ struct PlayView: View {
         self.currentPartID = setInfoModel.setSettings.settingsCurrentPartID
         setInfoModel.partFeedback.currentPartID.value = setInfoModel.setSettings.settingsCurrentPartID
         
-        self.rampUp = setInfoModel.setSettings.settingsRampUp
-        self.rampDown = setInfoModel.setSettings.settingsRampDown
-        self.volume = Float(RangeConverter.rangedToSlider(range: [-90,12], value: Double(setInfoModel.setSettings.settingsVolume)))
-        
-        _initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
-        _initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
-        
+        self._initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
+        self._initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
+
         if let initialPattern = DevicePattern(pattern: setInfoModel.userSettings.pattern) {
             self._selectedPattern = State(initialValue: initialPattern)
+        } else {
+            self._selectedPattern = State(initialValue: .stap1)
         }
+
+        // Initialize rampUp and rampDown using UserSettings, providing defaults
+        let rampUpValue = setInfoModel.userSettings.getRampUp(
+            for: self._selectedPattern.wrappedValue,
+            defaultValue: self._initialRampUp.wrappedValue
+        )
+        self._rampUp = State(initialValue: rampUpValue)
+
+        let rampDownValue = setInfoModel.userSettings.getRampDown(
+            for: self._selectedPattern.wrappedValue,
+            defaultValue: self._initialRampDown.wrappedValue
+        )
+        self._rampDown = State(initialValue: rampDownValue)
     }
     
     var body: some View {
@@ -94,7 +103,19 @@ struct PlayView: View {
                             Button(action: {
                                 selectedPattern = pattern
                                 setInfoModel.userSettings.pattern = pattern.rawValue
+                                
+                                // Update rampUp and rampDown for the new pattern, using defaults if necessary
+                                rampUp = setInfoModel.userSettings.getRampUp(for: selectedPattern, defaultValue: initialRampUp)
+                                rampDown = setInfoModel.userSettings.getRampDown(for: selectedPattern, defaultValue: initialRampDown)
 
+                                // Update conductor and setSettings
+                                setInfoModel.conductor.rampUp[currentPartID] = rampUp
+                                setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = rampUp
+
+                                setInfoModel.conductor.rampDown[currentPartID] = rampDown
+                                setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = rampDown
+
+                                
                                 // Stuur een OSC-bericht met waarde 0 naar elk patroon
                                 DevicePattern.allCases.forEach { pattern in
                                     OSCMessageSender.shared.sendOSCMessage(
@@ -150,34 +171,32 @@ struct PlayView: View {
                         HStack{
                             RampSliderView(
                                 label: "Up",
-                                value: Binding<Double>(
-                                    get: { Double(setInfoModel.userSettings.rampUp) },
-                                    set: { newValue in
-                                        setInfoModel.userSettings.rampUp = Double(newValue)
-                                    }
-                                ),
+                                value: $rampUp,
                                 showsLabel: true,
                                 isActive: true
                             )
-                            .onChange(of: setInfoModel.userSettings.rampUp) { newValue in
+                            .onChange(of: rampUp) { newValue in
+                                // Save to UserSettings
+                                setInfoModel.userSettings.setRampUp(newValue, for: selectedPattern)
+                                
+                                // Update conductor and setSettings
                                 setInfoModel.conductor.rampUp[currentPartID] = newValue
-                                setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = newValue
+                                setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = newValue
                             }
-                            
+
                             RampSliderView(
                                 label: "Down",
-                                value: Binding<Double>(
-                                    get: { Double(setInfoModel.userSettings.rampDown) },
-                                    set: { newValue in
-                                        setInfoModel.userSettings.rampDown = Double(newValue)
-                                    }
-                                ),
+                                value: $rampDown,
                                 showsLabel: true,
                                 isActive: true
                             )
-                            .onChange(of: setInfoModel.userSettings.rampDown) { newValue in
+                            .onChange(of: rampDown) { newValue in
+                                // Save to UserSettings
+                                setInfoModel.userSettings.setRampDown(newValue, for: selectedPattern)
+                                
+                                // Update conductor and setSettings
                                 setInfoModel.conductor.rampDown[currentPartID] = newValue
-                                setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
+                                setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = newValue
                             }
                         }
                     }
@@ -199,18 +218,12 @@ struct PlayView: View {
                     }
                 }
                 .onAppear {
-                    if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
-                        setInfoModel.userSettings.rampUp = initialRampUp
-                    }
-                    if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
-                        setInfoModel.userSettings.rampDown = initialRampDown
-                    }
-
-                    setInfoModel.conductor.rampUp[currentPartID] = setInfoModel.userSettings.rampUp
-                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = setInfoModel.userSettings.rampUp
-
-                    setInfoModel.conductor.rampDown[currentPartID] = setInfoModel.userSettings.rampDown
-                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = setInfoModel.userSettings.rampDown
+                    // Set rampUp and rampDown in conductor and setSettings
+                    setInfoModel.conductor.rampUp[currentPartID] = rampUp
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = rampUp
+                    
+                    setInfoModel.conductor.rampDown[currentPartID] = rampDown
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = rampDown
                 }
                 .sheet(isPresented: $presentSettingSheet) {
                     SettingsSheetView(

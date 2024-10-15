@@ -52,10 +52,6 @@ struct SavedSetsList: View {
                         showDeleteAlert = true
                         deleteUrl = url
                     }
-                    let playlistAction = {
-                        isPlaylistsPresented = true
-                        playlistUrl = url
-                    }
                     let shareAction = {
                         // Setting the share URL
                         shareUrl = IdentifiableURL(url: url)

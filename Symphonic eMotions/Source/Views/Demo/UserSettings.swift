@@ -69,7 +69,34 @@ class UserSettings: ObservableObject {
             self.userCode = .none
         }
     }
-}
+    
+    func getRampUp(for pattern: DevicePattern, defaultValue: Double) -> Double {
+       let key = UserDefaultsKeys.rampUp + "_" + pattern.rawValue
+       if UserDefaults.standard.object(forKey: key) == nil {
+           // If no value is stored, return the default value
+           return defaultValue
+       }
+       return UserDefaults.standard.double(forKey: key)
+   }
+
+   func setRampUp(_ value: Double, for pattern: DevicePattern) {
+       let key = UserDefaultsKeys.rampUp + "_" + pattern.rawValue
+       UserDefaults.standard.set(value, forKey: key)
+   }
+
+   func getRampDown(for pattern: DevicePattern, defaultValue: Double) -> Double {
+       let key = UserDefaultsKeys.rampDown + "_" + pattern.rawValue
+       if UserDefaults.standard.object(forKey: key) == nil {
+           // If no value is stored, return the default value
+           return defaultValue
+       }
+       return UserDefaults.standard.double(forKey: key)
+   }
+
+   func setRampDown(_ value: Double, for pattern: DevicePattern) {
+       let key = UserDefaultsKeys.rampDown + "_" + pattern.rawValue
+       UserDefaults.standard.set(value, forKey: key)
+   }}
 
 struct UserDefaultsKeys {
     

@@ -31,16 +31,6 @@ struct SettingsSmallSheetView: View {
             }
         )
         
-        let levelSpeedBinding = Binding(
-            get: { setInfoModel.setSettings.levelSpeedSet },
-            set: { setInfoModel.setSettings.levelSpeedSet = $0 }
-        )
-        
-        let levelDifficulty = Binding(
-            get: {setInfoModel.setSettings.levelDifficultySet},
-            set: {setInfoModel.setSettings.levelDifficultySet = $0}
-        )
-        
         return GeometryReader { geometry in
             
             ScrollView{
