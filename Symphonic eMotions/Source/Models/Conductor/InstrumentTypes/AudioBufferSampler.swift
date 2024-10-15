@@ -85,8 +85,8 @@ extension Conductor {
             //Remember for next loop
             interval = interval + lengthInBeats
             
-            print("AudioBuffer fileName \(audioFile.fileName)")
-            print("AudioBuffer sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
+//            print("AudioBuffer fileName \(audioFile.fileName)")
+//            print("AudioBuffer sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
             
             //Create midi data
             sequencer.tracks.first?.add(

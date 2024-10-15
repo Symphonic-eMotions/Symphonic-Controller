@@ -34,21 +34,6 @@ struct LevelOSCView: View {
             //video/instrument feedback and instrument part feedback
             VStack {
                 
-                #if targetEnvironment(macCatalyst)
-                Rectangle().frame(height: 25).foregroundColor(Color.clear)
-                #endif
-                
-                LevelView(
-                    setInfoModel: setInfoModel
-                )
-                //Transport buttons
-                PlayerControlsView(
-                    setInfoModel: setInfoModel,
-                    showMasterTrack: $showMasterTrack
-                )
-                .zIndex(100)
-                
-                
                 //Video preview and instrument locations
                 GeometryReader { geometry in
                     VStack{
@@ -57,14 +42,14 @@ struct LevelOSCView: View {
                             Spacer()
                             ZStack{
                                 
-                                if !setInfoModel.userSettings.isSetPlaying {
-                                    CalibrationView(
-                                        geometry: geometry,
-                                        userSettings: setInfoModel.userSettings,
-                                        setInfoModel: setInfoModel
-                                    )
-                                    .zIndex(210)
-                                }
+//                                if !setInfoModel.userSettings.isSetPlaying {
+//                                    CalibrationView(
+//                                        geometry: geometry,
+//                                        userSettings: setInfoModel.userSettings,
+//                                        setInfoModel: setInfoModel
+//                                    )
+//                                    .zIndex(210)
+//                                }
                                 
                                 //Editor
                                 if userSettings.showPartEditor  {
@@ -79,7 +64,7 @@ struct LevelOSCView: View {
                                 .aspectRatio(1.77777, contentMode: .fit)
                                 .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                                 .cornerRadius(10.0)
-                                .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.15 : 1.0)
+                                .opacity( 0.75)
                             }
                             Spacer()
                         }

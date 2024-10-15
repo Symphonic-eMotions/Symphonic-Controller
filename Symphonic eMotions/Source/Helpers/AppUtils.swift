@@ -290,7 +290,7 @@ final class AppUtils {
             //Remove levels higher than after level so we get no new fade ins
             let filteredLevels = trackLoaded.levels.filter { $0 <= maxSetLevelIndex }
             
-            print("setSettings track \(trackLoaded.instrumentName) filteredLevels: \(filteredLevels)")
+//            print("setSettings track \(trackLoaded.instrumentName) filteredLevels: \(filteredLevels)")
             
             let track = TrackSettings(
                 trackId: trackLoaded.id,

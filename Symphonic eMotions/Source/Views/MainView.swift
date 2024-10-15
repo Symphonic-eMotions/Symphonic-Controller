@@ -182,7 +182,7 @@ struct MainView: View {
         // Maak een duidelijke array met items, kwalificeer de enum-waarden volledig
         var items: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = [
             (
-                name: "Home",
+                name: "Activeer camera",
                 setName: "home",
                 fileGroup: .home,
                 sessionDisplay: .home

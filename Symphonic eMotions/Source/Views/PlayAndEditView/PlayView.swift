@@ -74,22 +74,11 @@ struct PlayView: View {
     
     var body: some View {
         VStack {
-            // Uitgecommentarieerde Video player
-            /*
-            VideoPreviewViewRepresentable(
-                setInfoModel: setInfoModel
-            )
-            .aspectRatio(1.77777, contentMode: .fit)
-            .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
-            .cornerRadius(10.0)
-            .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
-            */
-            
             // Grid van knoppen
             GeometryReader { geometry in
                 VStack {
                     let buttonWidth = (geometry.size.width - 40) / 3
-                    let buttonHeight: CGFloat = 110
+                    let buttonHeight: CGFloat = 100
 
                     LazyVGrid(
                         columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
@@ -150,12 +139,12 @@ struct PlayView: View {
                             },
                             set: {
                                 _ in
-                            }), title: "Ramped value" )
+                            }), title: "Beweging" )
                         .frame(height: 28.0)
-                        //Ramps
+                        //Ramp up and Ramp down
                         HStack{
                             RampSliderView(
-                                label: "Ramp up",
+                                label: "Up",
                                 value: Binding<Double>(
                                     get: { Double(userSettings.rampUp) },
                                     set: { newValue in
@@ -171,7 +160,7 @@ struct PlayView: View {
                             }
                             
                             RampSliderView(
-                                label: "Ramp down",
+                                label: "Down",
                                 value: Binding<Double>(
                                     get: { Double(userSettings.rampDown) },
                                     set: { newValue in
