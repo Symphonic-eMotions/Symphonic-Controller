@@ -10,7 +10,6 @@ import AudioKit
 
 struct PlayView: View {
     
-    @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
     @Binding public var sessionDisplay: SessionDisplay
@@ -94,13 +93,13 @@ struct PlayView: View {
                         ForEach(DevicePattern.allCases, id: \.self) { pattern in
                             Button(action: {
                                 selectedPattern = pattern
-                                userSettings.pattern = pattern.rawValue
+                                setInfoModel.userSettings.pattern = pattern.rawValue
 
                                 // Stuur een OSC-bericht met waarde 0 naar elk patroon
                                 DevicePattern.allCases.forEach { pattern in
                                     OSCMessageSender.shared.sendOSCMessage(
-                                        ipAddress: self.userSettings.ipAddress,
-                                        port: self.userSettings.port,
+                                        ipAddress: setInfoModel.userSettings.ipAddress,
+                                        port: setInfoModel.userSettings.port,
                                         pattern: pattern.rawValue + "/direct",
                                         value: 0.0
                                     )
@@ -152,15 +151,15 @@ struct PlayView: View {
                             RampSliderView(
                                 label: "Up",
                                 value: Binding<Double>(
-                                    get: { Double(userSettings.rampUp) },
+                                    get: { Double(setInfoModel.userSettings.rampUp) },
                                     set: { newValue in
-                                        userSettings.rampUp = Double(newValue)
+                                        setInfoModel.userSettings.rampUp = Double(newValue)
                                     }
                                 ),
                                 showsLabel: true,
                                 isActive: true
                             )
-                            .onChange(of: userSettings.rampUp) { newValue in
+                            .onChange(of: setInfoModel.userSettings.rampUp) { newValue in
                                 setInfoModel.conductor.rampUp[currentPartID] = newValue
                                 setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampUp = newValue
                             }
@@ -168,15 +167,15 @@ struct PlayView: View {
                             RampSliderView(
                                 label: "Down",
                                 value: Binding<Double>(
-                                    get: { Double(userSettings.rampDown) },
+                                    get: { Double(setInfoModel.userSettings.rampDown) },
                                     set: { newValue in
-                                        userSettings.rampDown = Double(newValue)
+                                        setInfoModel.userSettings.rampDown = Double(newValue)
                                     }
                                 ),
                                 showsLabel: true,
                                 isActive: true
                             )
-                            .onChange(of: userSettings.rampDown) { newValue in
+                            .onChange(of: setInfoModel.userSettings.rampDown) { newValue in
                                 setInfoModel.conductor.rampDown[currentPartID] = newValue
                                 setInfoModel.setSettings.tracks[currentTrackID]!.parts[currentPartID]!.rampDown = newValue
                             }
@@ -201,21 +200,21 @@ struct PlayView: View {
                 }
                 .onAppear {
                     if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
-                        userSettings.rampUp = initialRampUp
+                        setInfoModel.userSettings.rampUp = initialRampUp
                     }
                     if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampDown) == nil {
-                        userSettings.rampDown = initialRampDown
+                        setInfoModel.userSettings.rampDown = initialRampDown
                     }
 
-                    setInfoModel.conductor.rampUp[currentPartID] = userSettings.rampUp
-                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = userSettings.rampUp
+                    setInfoModel.conductor.rampUp[currentPartID] = setInfoModel.userSettings.rampUp
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = setInfoModel.userSettings.rampUp
 
-                    setInfoModel.conductor.rampDown[currentPartID] = userSettings.rampDown
-                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = userSettings.rampDown
+                    setInfoModel.conductor.rampDown[currentPartID] = setInfoModel.userSettings.rampDown
+                    setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = setInfoModel.userSettings.rampDown
                 }
                 .sheet(isPresented: $presentSettingSheet) {
                     SettingsSheetView(
-                        userSettings: userSettings,
+                        userSettings: setInfoModel.userSettings,
                         setInfoModel: setInfoModel,
                         showingSheet: $presentSettingSheet
                     )
