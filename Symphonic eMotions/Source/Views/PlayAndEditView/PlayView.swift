@@ -77,8 +77,15 @@ struct PlayView: View {
             // Grid van knoppen
             GeometryReader { geometry in
                 VStack {
-                    let buttonWidth = (geometry.size.width - 40) / 3
-                    let buttonHeight: CGFloat = 100
+                    // Safely calculate button dimensions
+                    let totalSpacing: CGFloat = 40
+                    let numberOfButtonsInRow: CGFloat = 3
+                    let availableWidth = max(0, geometry.size.width - totalSpacing)
+                    let buttonWidth = max(0, availableWidth / numberOfButtonsInRow)
+                    let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+
+                    let buttonHeight: CGFloat = isPhone ? 75 : 100
+                    let fontSize = min(max(12, buttonWidth * 0.2), 18) // Adjusted multiplier and max size
 
                     LazyVGrid(
                         columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
@@ -100,16 +107,15 @@ struct PlayView: View {
                                 }
                             }) {
                                 Text(pattern.displayName)
-                                    .font(.title)
-                                    .frame(width: buttonWidth, height: buttonHeight)
-                                    .background(
-                                        selectedPattern == pattern ?
-                                            (pattern == .stap0 ? Color.red : Color.blue)
-                                            : Color.gray
-                                    )
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
+                                .font(.system(size: fontSize))
+                                .frame(width: buttonWidth, height: buttonHeight)
+                                .background(
+                                    selectedPattern == pattern ?
+                                        (pattern == .stap0 ? Color.red : Color.blue)
+                                        : Color.gray
+                                )
+                                .foregroundColor(.white)
+                                .cornerRadius(10)                            }
                         }
                     }
                     .frame(maxHeight: buttonHeight * 4 + 30)

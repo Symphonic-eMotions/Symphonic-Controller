@@ -21,7 +21,7 @@ class TimeBasedEnvelope {
         increaseRate: Double
     ) -> Double {
         let now = DispatchTime.now()
-        let timeElapsed = Double(now.uptimeNanoseconds - lastUpdateTime.uptimeNanoseconds) / 1_000_000_000 // Tijd in seconden
+        let timeElapsed = Double(now.uptimeNanoseconds - lastUpdateTime.uptimeNanoseconds) / 1_000_000_000
         
         // Voeg de verstreken tijd toe aan de accumulator
         accumulatedTime += timeElapsed
@@ -29,7 +29,7 @@ class TimeBasedEnvelope {
         //We update the envelope not as much as the frame rate
         if accumulatedTime >= 0.01 {
             
-            if movement >= previousMovement && movement > 0.15 {
+            if movement >= previousMovement && movement > 0.90 {
                 currentValue += increaseRate
                 accumulatedTime = 0 // Reset de accumulator
             } else {
