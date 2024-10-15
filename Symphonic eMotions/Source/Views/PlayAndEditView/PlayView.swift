@@ -125,8 +125,9 @@ struct PlayView: View {
                     }
                     .frame(maxHeight: buttonHeight * 4 + 30)
                     .padding()
-                    // Overige content (zoals CalibrationView en sliders)
+                    // Overige content (zoals CalibrationView en sliders en optionele camera)
                     VStack {
+                        //Calibration en settings
                         HStack {
                             CalibrationView(
                                 geometry: geometry,
@@ -141,7 +142,7 @@ struct PlayView: View {
                             .padding(.top, -15)
                         }
                         
-                        // Display ramped value feedback
+                        // Visual feedback
                         ValueFeedback(value: .init(
                             get: {
                                 let currentBarLevel = Float(max(0, setInfoModel.partFeedbackState.ramped))
@@ -151,6 +152,7 @@ struct PlayView: View {
                                 _ in
                             }), title: "Ramped value" )
                         .frame(height: 28.0)
+                        //Ramps
                         HStack{
                             RampSliderView(
                                 label: "Ramp up",
@@ -186,6 +188,21 @@ struct PlayView: View {
                         }
                     }
                     .padding(.horizontal)
+                    
+                    // Bepaal of de view in portretmodus is
+                    let isPortrait = geometry.size.height > geometry.size.width
+
+                    // Toon de VideoPreviewViewRepresentable alleen als de view in portretmodus is
+                    if isPortrait {
+                        VideoPreviewViewRepresentable(
+                            setInfoModel: setInfoModel
+                        )
+                        .aspectRatio(1.77777, contentMode: .fit)
+                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
+                        .cornerRadius(10.0)
+                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
+                        .padding()
+                    }
                 }
                 .onAppear {
                     if UserDefaults.standard.object(forKey: UserDefaultsKeys.rampUp) == nil {
