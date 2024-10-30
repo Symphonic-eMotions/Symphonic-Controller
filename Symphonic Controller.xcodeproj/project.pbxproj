@@ -35,6 +35,7 @@
 		7C3234302B6ADF8600D0E371 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C32342F2B6ADF8600D0E371 /* SideBarItemView.swift */; };
 		7C3234322B6ADFB800D0E371 /* SetFileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3234312B6ADFB800D0E371 /* SetFileButtonView.swift */; };
 		7C3234342B6ADFED00D0E371 /* SetFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3234332B6ADFED00D0E371 /* SetFile.swift */; };
+		7C3A91872CD28A7A00C69E5F /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3A91862CD28A7A00C69E5F /* SporthAudioKit */; };
 		7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */; };
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
 		7C3CD115296D952A00A4C522 /* effectsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effectsJson.json */; };
@@ -58,7 +59,6 @@
 		7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C67D15F270F8B83009122BF /* SoundpipeAudioKit */; };
 		7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C67D161270F94C1009122BF /* CostelloReverbEffect.swift */; };
 		7C6801B92875A24A00688C2E /* PhaserEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6801B82875A24A00688C2E /* PhaserEffect.swift */; };
-		7C6801BC2875A51300688C2E /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C6801BB2875A51300688C2E /* SporthAudioKit */; };
 		7C6A34192840F609006F2E95 /* BandPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A34182840F609006F2E95 /* BandPassFilterEffect.swift */; };
 		7C6A341B28425F01006F2E95 /* PartFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A341A28425F01006F2E95 /* PartFeedback.swift */; };
 		7C6A341E28426F06006F2E95 /* PartFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A341D28426F06006F2E95 /* PartFeedbackView.swift */; };
@@ -434,10 +434,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C3A91872CD28A7A00C69E5F /* SporthAudioKit in Frameworks */,
 				7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */,
 				7C7C500D2CBBFF9700DF4BD3 /* SwiftOSC.framework in Frameworks */,
 				7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */,
-				7C6801BC2875A51300688C2E /* SporthAudioKit in Frameworks */,
 				C0AFDD092705D254006EF64F /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -961,8 +961,8 @@
 			packageProductDependencies = (
 				C0AFDD082705D254006EF64F /* AudioKit */,
 				7C67D15F270F8B83009122BF /* SoundpipeAudioKit */,
-				7C6801BB2875A51300688C2E /* SporthAudioKit */,
 				7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */,
+				7C3A91862CD28A7A00C69E5F /* SporthAudioKit */,
 			);
 			productName = eMotion;
 			productReference = C084FFD326B3115E009A4D0C /* Symphonic Controller.app */;
@@ -996,8 +996,8 @@
 			packageReferences = (
 				C0AFDD072705D254006EF64F /* XCRemoteSwiftPackageReference "AudioKit" */,
 				7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
-				7C6801BA2875A51300688C2E /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 				7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				7C3A91852CD28A7A00C69E5F /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 			);
 			productRefGroup = C084FFD426B3115E009A4D0C /* Products */;
 			projectDirPath = "";
@@ -1471,6 +1471,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7C3A91852CD28A7A00C69E5F /* XCRemoteSwiftPackageReference "SporthAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SporthAudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.1;
+			};
+		};
 		7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -1487,14 +1495,6 @@
 				minimumVersion = 5.6.1;
 			};
 		};
-		7C6801BA2875A51300688C2E /* XCRemoteSwiftPackageReference "SporthAudioKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AudioKit/SporthAudioKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.5.1;
-			};
-		};
 		C0AFDD072705D254006EF64F /* XCRemoteSwiftPackageReference "AudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
@@ -1506,6 +1506,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7C3A91862CD28A7A00C69E5F /* SporthAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C3A91852CD28A7A00C69E5F /* XCRemoteSwiftPackageReference "SporthAudioKit" */;
+			productName = SporthAudioKit;
+		};
 		7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */;
@@ -1515,11 +1520,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
 			productName = SoundpipeAudioKit;
-		};
-		7C6801BB2875A51300688C2E /* SporthAudioKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7C6801BA2875A51300688C2E /* XCRemoteSwiftPackageReference "SporthAudioKit" */;
-			productName = SporthAudioKit;
 		};
 		C0AFDD082705D254006EF64F /* AudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
