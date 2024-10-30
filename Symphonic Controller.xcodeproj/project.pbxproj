@@ -983,7 +983,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C084FFCE26B3115E009A4D0C /* Build configuration list for PBXProject "Symphonic eMotions MVP" */;
+			buildConfigurationList = C084FFCE26B3115E009A4D0C /* Build configuration list for PBXProject "Symphonic Controller" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = nl;
 			hasScannedForEncodings = 0;
@@ -1450,7 +1450,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C084FFCE26B3115E009A4D0C /* Build configuration list for PBXProject "Symphonic eMotions MVP" */ = {
+		C084FFCE26B3115E009A4D0C /* Build configuration list for PBXProject "Symphonic Controller" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C084FFDF26B31160009A4D0C /* Debug */,
