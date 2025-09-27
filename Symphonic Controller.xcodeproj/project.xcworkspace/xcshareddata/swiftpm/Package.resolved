@@ -1,5 +1,5 @@
 {
-  "originHash" : "6dcc5e8a1b9de85ceb1591bf230051af5a8c8a7963e67386e7506465ee617b0d",
+  "originHash" : "9c54998feac4ecb3c652218f29688df0e8978d7a1228b8dc6586adf417f9334a",
   "pins" : [
     {
       "identity" : "audiokit",
@@ -53,6 +53,15 @@
       "state" : {
         "revision" : "f504716c27d2e5d4144fa4794b12129301d17729",
         "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swiftosc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Symphonic-eMotions/SwiftOSC.git",
+      "state" : {
+        "revision" : "70da7e07c9c7d8dbc076a043c9cb436895cdc458",
+        "version" : "1.4.5"
       }
     }
   ],

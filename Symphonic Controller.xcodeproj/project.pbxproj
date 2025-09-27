@@ -45,6 +45,7 @@
 		7C4A544E2A59BA9700FB6514 /* SemOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A544D2A59BA9700FB6514 /* SemOne.swift */; };
 		7C4A545D2A5B288E00FB6514 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A545C2A5B288E00FB6514 /* ControllerView.swift */; };
 		7C4A545F2A5DA22100FB6514 /* NoneEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A545E2A5DA22100FB6514 /* NoneEffect.swift */; };
+		7C4BA2C42E87DEDD0067654B /* SwiftOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4BA2C32E87DEDD0067654B /* SwiftOSC */; };
 		7C4EBB9429D3505500958954 /* SavedSetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9329D3505500958954 /* SavedSetsList.swift */; };
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
@@ -433,6 +434,7 @@
 				7C3A91872CD28A7A00C69E5F /* SporthAudioKit in Frameworks */,
 				7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */,
 				7C67D160270F8B83009122BF /* SoundpipeAudioKit in Frameworks */,
+				7C4BA2C42E87DEDD0067654B /* SwiftOSC in Frameworks */,
 				C0AFDD092705D254006EF64F /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -957,6 +959,7 @@
 				7C67D15F270F8B83009122BF /* SoundpipeAudioKit */,
 				7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */,
 				7C3A91862CD28A7A00C69E5F /* SporthAudioKit */,
+				7C4BA2C32E87DEDD0067654B /* SwiftOSC */,
 			);
 			productName = eMotion;
 			productReference = C084FFD326B3115E009A4D0C /* Symphonic Controller.app */;
@@ -992,6 +995,7 @@
 				7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 				7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				7C3A91852CD28A7A00C69E5F /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
+				7C4BA2C22E87DEDD0067654B /* XCRemoteSwiftPackageReference "SwiftOSC" */,
 			);
 			productRefGroup = C084FFD426B3115E009A4D0C /* Products */;
 			projectDirPath = "";
@@ -1481,6 +1485,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		7C4BA2C22E87DEDD0067654B /* XCRemoteSwiftPackageReference "SwiftOSC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Symphonic-eMotions/SwiftOSC.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.5;
+			};
+		};
 		7C67D15E270F8B83009122BF /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit";
@@ -1509,6 +1521,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C3C0EC928DEF92F00EBCD85 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		7C4BA2C32E87DEDD0067654B /* SwiftOSC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C4BA2C22E87DEDD0067654B /* XCRemoteSwiftPackageReference "SwiftOSC" */;
+			productName = SwiftOSC;
 		};
 		7C67D15F270F8B83009122BF /* SoundpipeAudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
