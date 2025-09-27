@@ -69,7 +69,6 @@
 		7C6A8CF82A4481970056BED3 /* IntroductionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A8CF72A4481970056BED3 /* IntroductionTitle.swift */; };
 		7C6A8CFA2A4481BE0056BED3 /* IntroductionSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A8CF92A4481BE0056BED3 /* IntroductionSlider.swift */; };
 		7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FC2A03EF3E006F8CCB /* Sets */; };
-		7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 7C6C11FD2A03EF3F006F8CCB /* Sounds */; };
 		7C700EF82BB4423B00C8F700 /* SetEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C700EF72BB4423B00C8F700 /* SetEffect.swift */; };
 		7C700EFC2BB4624F00C8F700 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C700EFB2BB4624F00C8F700 /* GridView.swift */; };
 		7C7057BB2BFE35C400C02DE6 /* MidiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7057BA2BFE35C400C02DE6 /* MidiView.swift */; };
@@ -122,7 +121,6 @@
 		7C9FB77D2A4B698300490C59 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77C2A4B698300490C59 /* PlaylistView.swift */; };
 		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
 		7CAAD35D2BD39A8E0059E2E4 /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAD35C2BD39A8E0059E2E4 /* CalibrationView.swift */; };
-		7CAB35CB2AD02E8500659002 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 7CAB35CA2AD02E8500659002 /* Videos */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
 		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
 		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
@@ -199,7 +197,6 @@
 		C0AFDD032705BC24006EF64F /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AFDD022705BC24006EF64F /* Effect.swift */; };
 		C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AFDD052705D1CC006EF64F /* Conductor.swift */; };
 		C0AFDD092705D254006EF64F /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = C0AFDD082705D254006EF64F /* AudioKit */; };
-		C0AFDD0E2705F425006EF64F /* Samples in Resources */ = {isa = PBXBuildFile; fileRef = C0AFDD0B2705F425006EF64F /* Samples */; };
 		C0C5129E27075DAA00DE3393 /* LowPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5129D27075DAA00DE3393 /* LowPassFilterEffect.swift */; };
 		C0C512A027075DB800DE3393 /* DelayEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5129F27075DB800DE3393 /* DelayEffect.swift */; };
 		C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C512A127075DDD00DE3393 /* ValueAndRange.swift */; };
@@ -1011,10 +1008,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CAB35CB2AD02E8500659002 /* Videos in Resources */,
-				C0AFDD0E2705F425006EF64F /* Samples in Resources */,
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
-				7C6C11FF2A03EF3F006F8CCB /* Sounds in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
 				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
 				7CB2B9532A0D0E0500876CCD /* person in Resources */,
