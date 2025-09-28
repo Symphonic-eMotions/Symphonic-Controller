@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C084FFD226B3115E009A4D0C"
-               BuildableName = "Symphonic Controller.app"
-               BlueprintName = "Symphonic Controller"
+               BuildableName = "eMotion.app"
+               BlueprintName = "eMotion"
                ReferencedContainer = "container:Symphonic Controller.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C084FFD226B3115E009A4D0C"
-            BuildableName = "Symphonic Controller.app"
-            BlueprintName = "Symphonic Controller"
+            BuildableName = "eMotion.app"
+            BlueprintName = "eMotion"
             ReferencedContainer = "container:Symphonic Controller.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
