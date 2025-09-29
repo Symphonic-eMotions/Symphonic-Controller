@@ -38,7 +38,6 @@
 		7C3A91872CD28A7A00C69E5F /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3A91862CD28A7A00C69E5F /* SporthAudioKit */; };
 		7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */; };
 		7C3C0ECB28DEF92F00EBCD85 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3C0ECA28DEF92F00EBCD85 /* OrderedCollections */; };
-		7C3CD115296D952A00A4C522 /* effectsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3CD114296D952A00A4C522 /* effectsJson.json */; };
 		7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2012A1D23A30049E4ED /* DemoView.swift */; };
 		7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */; };
 		7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C48561D294092D70039B408 /* ExpanderEffect.swift */; };
@@ -122,8 +121,6 @@
 		7C9FB77F2A4B69BD00490C59 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */; };
 		7CAAD35D2BD39A8E0059E2E4 /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAD35C2BD39A8E0059E2E4 /* CalibrationView.swift */; };
 		7CB2B94E2A0CF80300876CCD /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2B94D2A0CF80300876CCD /* CountDown.swift */; };
-		7CB2B9532A0D0E0500876CCD /* person in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9512A0D0E0500876CCD /* person */; };
-		7CB2B9542A0D0E0500876CCD /* minimal in Resources */ = {isa = PBXBuildFile; fileRef = 7CB2B9522A0D0E0500876CCD /* minimal */; };
 		7CB5834B292F9C2A000C46FF /* SessionDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834A292F9C2A000C46FF /* SessionDisplay.swift */; };
 		7CB5834D292F9C44000C46FF /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5834C292F9C44000C46FF /* FileController.swift */; };
 		7CB58351292FACFE000C46FF /* SettingsButtonWithLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */; };
@@ -243,14 +240,12 @@
 		7C2C52992BF0114800E0F2E6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		7C2C529B2BF508FB00E0F2E6 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		7C2DDCB82A04F858001FE14F /* AreaOfInterestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOfInterestView.swift; sourceTree = "<group>"; };
-		7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		7C2EF63628C630D700B75BE2 /* DynamicRangeCompressorEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRangeCompressorEffect.swift; sourceTree = "<group>"; };
 		7C32342D2B6A977400D0E371 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		7C32342F2B6ADF8600D0E371 /* SideBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarItemView.swift; sourceTree = "<group>"; };
 		7C3234312B6ADFB800D0E371 /* SetFileButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFileButtonView.swift; sourceTree = "<group>"; };
 		7C3234332B6ADFED00D0E371 /* SetFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFile.swift; sourceTree = "<group>"; };
 		7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSettings.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C3CD114296D952A00A4C522 /* effectsJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = effectsJson.json; sourceTree = "<group>"; };
 		7C3EC2012A1D23A30049E4ED /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheetView.swift; sourceTree = "<group>"; };
 		7C48561D294092D70039B408 /* ExpanderEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
@@ -261,7 +256,6 @@
 		7C4EBB9529D4A21300958954 /* Extenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenders.swift; sourceTree = "<group>"; };
 		7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGridSizeView.swift; sourceTree = "<group>"; };
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C513EE82B0689F700AAC779 /* Aantekeningen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aantekeningen.swift; sourceTree = "<group>"; };
 		7C597C342CBE67FC00858022 /* DevicePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePattern.swift; sourceTree = "<group>"; };
 		7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSmallSheetView.swift; sourceTree = "<group>"; };
 		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -334,10 +328,7 @@
 		7C9FB77C2A4B698300490C59 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		7C9FB77E2A4B69BD00490C59 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		7CAAD35C2BD39A8E0059E2E4 /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
-		7CAB35CA2AD02E8500659002 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		7CB2B94D2A0CF80300876CCD /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
-		7CB2B9512A0D0E0500876CCD /* person */ = {isa = PBXFileReference; lastKnownFileType = folder; path = person; sourceTree = "<group>"; };
-		7CB2B9522A0D0E0500876CCD /* minimal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = minimal; sourceTree = "<group>"; };
 		7CB5834A292F9C2A000C46FF /* SessionDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDisplay.swift; sourceTree = "<group>"; };
 		7CB5834C292F9C44000C46FF /* FileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		7CB58350292FACFE000C46FF /* SettingsButtonWithLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonWithLongPress.swift; sourceTree = "<group>"; };
@@ -414,7 +405,6 @@
 		C0AFDD002705BC08006EF64F /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C0AFDD022705BC24006EF64F /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		C0AFDD052705D1CC006EF64F /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C0AFDD0B2705F425006EF64F /* Samples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Samples; sourceTree = "<group>"; };
 		C0C5129D27075DAA00DE3393 /* LowPassFilterEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowPassFilterEffect.swift; sourceTree = "<group>"; };
 		C0C5129F27075DB800DE3393 /* DelayEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayEffect.swift; sourceTree = "<group>"; };
 		C0C512A127075DDD00DE3393 /* ValueAndRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueAndRange.swift; sourceTree = "<group>"; };
@@ -479,14 +469,6 @@
 			path = LevelView;
 			sourceTree = "<group>";
 		};
-		7C166AD229544F8E0078C384 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				7C3CD114296D952A00A4C522 /* effectsJson.json */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
 		7C29AA152A4EE6070070D901 /* InstrumentSet */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,14 +482,6 @@
 				7C6204E22BBFFF8A00629DC5 /* UserView.swift */,
 			);
 			path = InstrumentSet;
-			sourceTree = "<group>";
-		};
-		7C2EF60628B8CC7F00B75BE2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7C2EF60728B8CC7F00B75BE2 /* HomeKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7C3EC2002A1D236F0049E4ED /* Demo */ = {
@@ -582,15 +556,6 @@
 				7C4A545C2A5B288E00FB6514 /* ControllerView.swift */,
 			);
 			path = TrackEditor;
-			sourceTree = "<group>";
-		};
-		7CB2B9502A0D0D1500876CCD /* Playlists */ = {
-			isa = PBXGroup;
-			children = (
-				7CB2B9522A0D0E0500876CCD /* minimal */,
-				7CB2B9512A0D0E0500876CCD /* person */,
-			);
-			path = Playlists;
 			sourceTree = "<group>";
 		};
 		7CCBF8FC2A38B75B00360E21 /* Editor */ = {
@@ -771,11 +736,9 @@
 		C084FFCA26B3115E009A4D0C = {
 			isa = PBXGroup;
 			children = (
-				7C513EE82B0689F700AAC779 /* Aantekeningen.swift */,
 				7C166AD0295353690078C384 /* .gitignore */,
 				C084FFD526B3115E009A4D0C /* Symphonic eMotions */,
 				C084FFD426B3115E009A4D0C /* Products */,
-				7C2EF60628B8CC7F00B75BE2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -795,10 +758,6 @@
 				7CD418052A095388006831CE /* Localizable.strings */,
 				7C6C11FC2A03EF3E006F8CCB /* Sets */,
 				7C6C11FD2A03EF3F006F8CCB /* Sounds */,
-				7CAB35CA2AD02E8500659002 /* Videos */,
-				7CB2B9502A0D0D1500876CCD /* Playlists */,
-				7C166AD229544F8E0078C384 /* Library */,
-				C0AFDD0B2705F425006EF64F /* Samples */,
 				C084FFE526B31216009A4D0C /* Source */,
 				C084FFD626B3115E009A4D0C /* eMotionApp.swift */,
 				C084FFE426B3118A009A4D0C /* eMotion.entitlements */,
@@ -1010,12 +969,9 @@
 			files = (
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
-				7CB2B9542A0D0E0500876CCD /* minimal in Resources */,
-				7CB2B9532A0D0E0500876CCD /* person in Resources */,
 				7CD418032A095388006831CE /* Localizable.strings in Resources */,
 				7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
-				7C3CD115296D952A00A4C522 /* effectsJson.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
