@@ -8,31 +8,28 @@
 import Foundation
 
 extension Conductor {
-    
-    internal func levelProgressForController(
+    func levelProgressForController(
         _ controllerLevels: [Int],
         currentLevel: Double
     ) -> Double {
-        
         let currentIntLevel = Int(currentLevel)
         let nextLevelProgress = pow(currentLevel - Double(currentIntLevel), userSettings.levelProgressExponent)
-        
+
         let isActiveInCurrentLevel = controllerLevels.contains(currentIntLevel)
         let isActiveInNextLevel = controllerLevels.contains(currentIntLevel + 1)
-        
-        //Level is on, stays on
+
+        // Level is on, stays on
         if isActiveInCurrentLevel && isActiveInNextLevel {
             return 1.0
         }
-        //Level is off, next level is on so fade in with progress
+        // Level is off, next level is on so fade in with progress
         else if !isActiveInCurrentLevel && isActiveInNextLevel {
             return nextLevelProgress
         }
-        //Level is on, next is off, so fade out with progress
+        // Level is on, next is off, so fade out with progress
         else if isActiveInCurrentLevel && !isActiveInNextLevel {
             return 1.0 - nextLevelProgress
-        }
-        else {
+        } else {
             return 0.0
         }
     }

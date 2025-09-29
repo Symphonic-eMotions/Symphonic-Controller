@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct SeMActive {
-    
-    public enum Playlists: String, CaseIterable {
+    enum Playlists: String, CaseIterable {
         case none
         case minimal
         case person
 //        case group
 //        case nature
-        
+
         var color: Color {
             switch self {
             case .none:

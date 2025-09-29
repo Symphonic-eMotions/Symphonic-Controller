@@ -14,12 +14,12 @@ struct MainView: View {
 
     @StateObject var fileController = FileController()
     @StateObject var userSettings = UserSettings()
-    
+
     @State var isCreator: Bool = false
     @State var userPresets: [URL] = []
     @State var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = []
     @State private var showLevelPlayerFullScreen: Bool = false
-    
+
     // State to manage the navigation path
     @State private var navigationPath = NavigationPath()
 
@@ -37,7 +37,7 @@ struct MainView: View {
                     isCreator = userSettings.userCode == .creator
 //                    updateSidebarItems()
                 }
-                
+
                 // Main content based on the sessionDisplay
                 mainContent
                     .navigationDestination(for: SessionDisplay.self) { destination in
@@ -57,7 +57,7 @@ struct MainView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func destinationView(for destination: SessionDisplay) -> some View {
         switch destination {
@@ -69,7 +69,6 @@ struct MainView: View {
                 userPresets: $userPresets
             )
             .environmentObject(fileController)
-
         case .swiftUI:
             PlayView(
                 setInfoModel: setInfoModel,
@@ -111,7 +110,7 @@ struct MainView: View {
             EmptyView()
         }
     }
-    
+
     private var mainContent: some View {
         Group {
             switch sessionDisplay {
@@ -123,29 +122,28 @@ struct MainView: View {
                 )
                 .environmentObject(fileController)
                 .navigationBarHidden(false)
-                .onAppear{
+                .onAppear {
                     viewModel.conductor.levelController(
                         level: 0,
                         setSettings: viewModel.mainState.setSettings
                     )
                 }
-                .onDisappear{
+                .onDisappear {
                     viewModel.conductor.pauzeEngineAndStopTracks(
                         setSettings: viewModel.mainState.setSettings,
                         resetLevels: true
                     )
                 }
-                
-                //If levels are completed go to count down view
-                //At the moment this is not possible
-                .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
+
+                // If levels are completed go to count down view
+                // At the moment this is not possible
+                .onReceive(viewModel.leveling.currentSetLevelSubject) { currentSetLevel in
                     if viewModel.mainState.setSettings.currentPlaylist != .none {
                         if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {
                             self.sessionDisplay = .countDown
                         }
                     }
                 }
-
             case .setInfo, .pro, .creator:
                 SetInfo(
                     setInfoModel: setInfoModel,
@@ -177,7 +175,7 @@ struct MainView: View {
             }
         }
     }
-    
+
     private func updateSidebarItems() {
         // Maak een duidelijke array met items, kwalificeer de enum-waarden volledig
         var items: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = [
@@ -194,7 +192,7 @@ struct MainView: View {
                 sessionDisplay: .pro
             )
         ]
-        
+
         // Voeg de 'Creator' optie toe indien de gebruiker een creator is
         if isCreator {
             items.append(
@@ -206,9 +204,8 @@ struct MainView: View {
                 )
             )
         }
-        
+
         // Update de sidebarItems state met de nieuwe items
         sidebarItems = items
     }
 }
-

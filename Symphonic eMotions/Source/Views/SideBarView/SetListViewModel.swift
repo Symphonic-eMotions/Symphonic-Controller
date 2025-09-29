@@ -9,17 +9,14 @@ import Foundation
 import SwiftUI
 
 class SetListViewModel: ObservableObject {
-    
     @Published var setFiles: [SetFile] = []
-    
-    lazy private var fileCache: FileCache = {
-        FileCache(setFiles: setFiles)
-    }()
-    
+
+    private lazy var fileCache: FileCache = .init(setFiles: setFiles)
+
     init() {
         loadSetFiles()
     }
-    
+
     func invalidateCache() {
         fileCache.invalidateCache()
         loadSetFiles()
@@ -34,14 +31,14 @@ class SetListViewModel: ObservableObject {
         do {
             let fileURLs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
             let decoder = JSONDecoder()
-            
+
             var unsortedSetFiles: [SetFile] = []
-            
+
             for fileURL in fileURLs where fileURL.pathExtension == "json" {
                 do {
                     let data = try Data(contentsOf: fileURL)
                     let decodedFile = try decoder.decode(InstrumentsSet.self, from: data)
-                    
+
                     unsortedSetFiles.append(
                         SetFile(
                             name: decodedFile.name,
@@ -55,7 +52,7 @@ class SetListViewModel: ObservableObject {
                     print("Error decoding JSON file: \(fileURL) \(error)")
                 }
             }
-            
+
             setFiles = unsortedSetFiles.sorted {
                 if $0.name == "Template" {
                     return true

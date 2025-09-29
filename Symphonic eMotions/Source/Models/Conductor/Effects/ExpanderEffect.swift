@@ -5,19 +5,18 @@
 //  Created by Frans-Jan Wind on 07/12/2022.
 //
 
-import Foundation
 import AudioKit
+import Foundation
 
 class ExpanderEffect: AudioProcessingEffect {
-    
     var expansionRatio: ValueAndRange
     var expansionThreshold: ValueAndRange
     var expanderAttackTime: ValueAndRange
     var expanderReleaseTime: ValueAndRange
     var expanderMasterGain: ValueAndRange
-    
+
     weak var node: Node?
-    
+
     init(
         expansionRatio: ValueAndRange,
         expansionThreshold: ValueAndRange,
@@ -31,7 +30,7 @@ class ExpanderEffect: AudioProcessingEffect {
         self.expanderReleaseTime = expanderReleaseTime
         self.expanderMasterGain = expanderMasterGain
     }
-    
+
     func chain(to input: Node) -> Node {
         let newNode = Expander(
             input,
@@ -41,11 +40,11 @@ class ExpanderEffect: AudioProcessingEffect {
             releaseTime: expanderReleaseTime.value,
             masterGain: expanderMasterGain.value
         )
-        
+
         node = newNode
         return newNode
     }
-    
+
     func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
         switch damperTarget.parameter {
         case "expansionRatio":
@@ -66,12 +65,12 @@ class ExpanderEffect: AudioProcessingEffect {
         default: break
         }
     }
-    
-    func apply<V>(keyPath: WritableKeyPath<Expander, V>, value: V){
+
+    func apply<V>(keyPath: WritableKeyPath<Expander, V>, value: V) {
         var expander = node as? Expander
         expander?[keyPath: keyPath] = value
     }
-    
+
     func valueAndRange(parameter: String) -> ValueAndRange? {
         switch parameter {
         case "expansionRatio":
@@ -84,7 +83,7 @@ class ExpanderEffect: AudioProcessingEffect {
             return expanderReleaseTime
         case "expanderMasterGain":
             return expanderMasterGain
-            default: return nil
+        default: return nil
         }
     }
 }

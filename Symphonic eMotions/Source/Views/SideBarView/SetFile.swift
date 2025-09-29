@@ -18,7 +18,7 @@ struct SetFile: Identifiable, Decodable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case name, url, published, semVersion, fileGroup
     }
-    
+
     func isCompatibleWithVersion() -> ComparisonResult {
         let staticVersion = "2.7.0"
         return AppUtils.compareVersions(version1: semVersion, version2: staticVersion)

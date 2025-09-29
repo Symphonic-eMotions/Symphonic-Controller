@@ -15,7 +15,7 @@ struct ChordEntry: Hashable, Identifiable, Codable {
     var strum: Double
     var durationFactor: Double
     var option: ChordOption
-    
+
     // Custom initializer with default values
     init(
         id: UUID = UUID(),

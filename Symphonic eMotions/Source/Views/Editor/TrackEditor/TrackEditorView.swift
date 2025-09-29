@@ -8,76 +8,72 @@
 import SwiftUI
 
 struct TrackEditorView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var editorParts: [EditorParts]
     @Binding var showEditorPart: EditorParts
     @Binding var isCreator: Bool
     @State var showTrackNameEditor: EditorParts = .none
-    
-    //Set
+
+    // Set
     @Binding var numberOfTracks: Int
-    
-    //Levels
+
+    // Levels
     @Binding var trackLevels: [String: [Int]]
     @Binding var noteNumbersLevels: [String: [Int]]
     @Binding var noteNumbersClips: [String: [Int]]
     @Binding var midiClipsLevels: [String: [Int]]
-    //Obsolete?
+    // Obsolete?
     @Binding var noteNumberLetters: [String: [Int]]
-    
-    //Position
+
+    // Position
     @Binding var gridRow: Int
     @Binding var noteNumbersPositions: [String: [Int]]
     @Binding var midiClipPositions: [String: [Int]]
-    
-    //Note numbers per track
+
+    // Note numbers per track
     @Binding var noteNumbers: [String: [Int]]
     @Binding var notesSequenceType: [String: NotesSequenceType]
-    
-    //Midi cips per track
+
+    // Midi cips per track
     @Binding var midiClips: [String: [Double]]
     @Binding var midiClipLetters: [String: [Int]]
-    
-    //Types per tracks
+
+    // Types per tracks
     @Binding var noteSources: [String: NoteSource]
     @Binding var chordEntries: [String: [ChordEntry]]
     @Binding var startTypes: [String: StartType]
     @Binding var variationTypes: [String: VariationType]
     @Binding var availableVariationTypes: [String: [VariationType]]
     @Binding var instrumentTypes: [String: InstrumentsSet.Track.InstrumentType]
-    
-    //Part variables
+
+    // Part variables
     @Binding var areaOfInterest: [String: [Int]]
     @Binding var minimalLevel: [String: Double]
-    
+
     @Binding var dampMode: [String: InstrumentsSet.Track.Part.DamperTarget.DampMode]
     @Binding var targetTypes: [String: InstrumentsSet.Track.Part.DamperTarget.NodeType]
     @Binding var targetNames: [String: InstrumentsSet.Track.Effect.EffectType]
     @Binding var targetParameters: [String: String]
     @Binding var parametersInversed: [String: Bool]
-    
-    //State
+
+    // State
     @State private var showRemoveConfirmation: Bool = false
-    @State private var trackKeyToRemove: String? = nil
+    @State private var trackKeyToRemove: String?
     @State private var pleaseSave: Bool = false
     @State private var showTrackEffect: Bool = false
     @State private var showChordEntries: Bool = false
-    
+
     var body: some View {
-        
-        //Edit track interface
+        // Edit track interface
         VStack(alignment: .leading) {
-            
-            //Create a clickable row header per track
+            // Create a clickable row header per track
             ForEach(setInfoModel.setSettings.tracks.keys, id: \.self) { key in
-                
                 let track = setInfoModel.setSettings.tracks[key]!
                 let editorPart = EditorParts(rawValue: "track\(track.trackIndex)")
-                
-                //Track navigation header
-                HStack{
-                    Group{
+
+                // Track navigation header
+                HStack {
+                    Group {
                         Image("track")
                             .resizable()
                             .scaledToFit()
@@ -86,8 +82,8 @@ struct TrackEditorView: View {
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
                     }
                     .padding(.leading)
-                    
-                    //Track name editor
+
+                    // Track name editor
                     if showTrackNameEditor == editorPart {
                         TextField(
                             "Track name",
@@ -104,18 +100,17 @@ struct TrackEditorView: View {
                         .padding(.leading)
                         .padding(.trailing)
                     }
-                    //Just the track name
-                    else{
+                    // Just the track name
+                    else {
                         Text("\(track.trackName)")
                             .font(.system(size: 20))
                             .padding()
-                        
+
                         Spacer()
-                        
+
                         if isCreator {
-                            
-                            //Remove track
-                            Button("-"){
+                            // Remove track
+                            Button("-") {
                                 trackKeyToRemove = key
                                 showRemoveConfirmation = true
                             }
@@ -128,17 +123,17 @@ struct TrackEditorView: View {
                                     title: Text("Remove track?"),
                                     message: Text("Are you sure you want to remove this track?"),
                                     primaryButton: .destructive(Text("Remove")) {
-                                        //Get the captured track key from @State
+                                        // Get the captured track key from @State
                                         if let trackKey = trackKeyToRemove {
-                                            //First remove part bindings with track info
+                                            // First remove part bindings with track info
                                             let parts = setInfoModel.setSettings.tracks[trackKey]!.parts
                                             for part in parts {
                                                 areaOfInterest.removeValue(forKey: part.value.partId)
                                                 minimalLevel.removeValue(forKey: part.value.partId)
                                             }
-                                            //Mutate struct for writing to file
+                                            // Mutate struct for writing to file
                                             setInfoModel.setSettings.tracks.removeValue(forKey: trackKey)
-                                            //Mutate bindings
+                                            // Mutate bindings
                                             trackLevels.removeValue(forKey: trackKey)
                                             noteNumbersLevels.removeValue(forKey: trackKey)
                                             midiClipsLevels.removeValue(forKey: trackKey)
@@ -153,10 +148,10 @@ struct TrackEditorView: View {
                                             startTypes.removeValue(forKey: trackKey)
                                             variationTypes.removeValue(forKey: trackKey)
                                             instrumentTypes.removeValue(forKey: trackKey)
-                                            
-                                            //Editor part picker
+
+                                            // Editor part picker
                                             editorParts = setInfoModel.selectableEditorParts()
-                                            
+
                                             numberOfTracks -= 1
                                         }
                                     },
@@ -166,7 +161,7 @@ struct TrackEditorView: View {
                         }
                     }
                 }
-                //Edit track action
+                // Edit track action
                 .onTapGesture {
                     withAnimation {
                         if showEditorPart != editorPart {
@@ -176,19 +171,17 @@ struct TrackEditorView: View {
                         }
                     }
                 }
-                //Edit track name action
-                .onLongPressGesture{
+                // Edit track name action
+                .onLongPressGesture {
                     if showTrackNameEditor == editorPart {
                         showTrackNameEditor = .none
-                    }
-                    else{
+                    } else {
                         showTrackNameEditor = editorPart ?? .none
                     }
                 }
-                
-                //If editor parts is selected OR If navigation header is tapped
+
+                // If editor parts is selected OR If navigation header is tapped
                 if showEditorPart == editorPart || showEditorPart == .levels {
-                    
                     InLevelView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -198,7 +191,6 @@ struct TrackEditorView: View {
                     )
                 }
                 if (showEditorPart == editorPart || showEditorPart == .start) && isCreator {
-                    
                     StartTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -208,7 +200,6 @@ struct TrackEditorView: View {
                     )
                 }
                 if (showEditorPart == editorPart || showEditorPart == .sound) && isCreator {
-                    
                     SoundSourceView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -217,9 +208,8 @@ struct TrackEditorView: View {
                         soundSources: $instrumentTypes
                     )
                 }
-                //Note source also holds effects view
+                // Note source also holds effects view
                 if (showEditorPart == editorPart || showEditorPart == .source) && isCreator {
-                    
                     NoteSourceAndEffectsView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -240,7 +230,6 @@ struct TrackEditorView: View {
                     )
                 }
                 if (showEditorPart == editorPart || showEditorPart == .variation) && isCreator {
-                    
                     VariationTypeView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -250,11 +239,9 @@ struct TrackEditorView: View {
                         variationTypes: $variationTypes,
                         availableVariationTypes: $availableVariationTypes
                     )
-                    
+
                     if noteSources[key] == .midiFile {
-                        
                         if variationTypes[key] == .variationByPosition {
-                            
                             MidiClipsPositionsView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -263,9 +250,7 @@ struct TrackEditorView: View {
                                 midiClipLetters: $midiClipLetters,
                                 midiClipsPositions: $midiClipPositions
                             )
-                        }
-                        else if variationTypes[key] == .variationByLevel {
-                            
+                        } else if variationTypes[key] == .variationByLevel {
                             MidiClipLevelView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -278,7 +263,6 @@ struct TrackEditorView: View {
                         }
                     }
                     if noteSources[key] == .noteNumbers {
-                        
                         if variationTypes[key] == .variationByPosition {
                             NoteNumberPositionsView(
                                 setInfoModel: setInfoModel,
@@ -287,9 +271,7 @@ struct TrackEditorView: View {
                                 noteNumbers: $noteNumbers,
                                 noteNumbersPositions: $noteNumbersPositions
                             )
-                        }
-                        else  if variationTypes[key] == .variationByLevel {
-                            
+                        } else if variationTypes[key] == .variationByLevel {
                             NoteNumberLevelView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -298,8 +280,7 @@ struct TrackEditorView: View {
                                 noteNumbersLevels: $noteNumbersLevels,
                                 noteNumbersClips: $noteNumbersClips
                             )
-                        }
-                        else if variationTypes[key] == .variationSequencial {
+                        } else if variationTypes[key] == .variationSequencial {
                             NoteNumberSequenceView(
                                 setInfoModel: setInfoModel,
                                 currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -318,8 +299,8 @@ struct TrackEditorView: View {
                         showEditorPart: $showEditorPart,
                         areaOfInterest: $areaOfInterest
                     )
-                    
-                    //Dampertarget view
+
+                    // Dampertarget view
                     MinimalLevelView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -327,7 +308,6 @@ struct TrackEditorView: View {
                     )
                 }
                 if (showEditorPart == editorPart || showEditorPart == .controller) && isCreator {
-                    
                     ControllerView(
                         setInfoModel: setInfoModel,
                         currentTrack: setInfoModel.setSettings.tracks[key]!,
@@ -340,40 +320,37 @@ struct TrackEditorView: View {
                         parametersInversed: $parametersInversed
                     )
                 }
-                
+
                 Divider()
-                
-            //End each key in setInfoModel.setSettings.tracks
+
+                // End each key in setInfoModel.setSettings.tracks
             }
         }
-        
+
         if pleaseSave {
             Text("Please save en re-open the set to continue.")
                 .foregroundColor(.red)
         }
-        
-        //New track
-        HStack(){
-            Group{
+
+        // New track
+        HStack {
+            Group {
                 Text("\(numberOfTracks) Tracks")
                     .font(.system(size: 20))
                     .padding(.top, 5)
                     .padding(.leading)
             }
             .frame(height: 45)
-            
+
             Spacer()
-            
+
             if isCreator {
-                
-                Button("Add midi velocity track"){
-                    
-                    if let newTrack = setInfoModel.addTrack(trackType: .midiVelocity){
-                        
-                        //Add track
+                Button("Add midi velocity track") {
+                    if let newTrack = setInfoModel.addTrack(trackType: .midiVelocity) {
+                        // Add track
                         setInfoModel.setSettings.tracks[newTrack.trackId] = newTrack
-                        
-                        //Insert bindings tracks, but better save and reopen
+
+                        // Insert bindings tracks, but better save and reopen
                         trackLevels[newTrack.trackId] = newTrack.levels
                         noteNumbersLevels[newTrack.trackId] = newTrack.notesToLevel
                         midiClipsLevels[newTrack.trackId] = newTrack.loopsToLevel
@@ -382,38 +359,36 @@ struct TrackEditorView: View {
                         noteNumbers[newTrack.trackId] = newTrack.midiGroup
                         notesSequenceType[newTrack.trackId] = newTrack.notesSequenceType
                         let nclips = newTrack.midiGroup
-                        noteNumberLetters[newTrack.trackId] = Array(0..<nclips.count).map{$0}
+                        noteNumberLetters[newTrack.trackId] = Array(0 ..< nclips.count).map { $0 }
                         midiClips[newTrack.trackId] = newTrack.loopLength
                         let mclips = newTrack.loopLength
-                        midiClipLetters[newTrack.trackId] = Array(0..<mclips.count).map{$0}
+                        midiClipLetters[newTrack.trackId] = Array(0 ..< mclips.count).map { $0 }
                         noteSources[newTrack.trackId] = newTrack.noteSource
                         startTypes[newTrack.trackId] = newTrack.startType
                         variationTypes[newTrack.trackId] = newTrack.variationType
-                        availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition]
+                        availableVariationTypes[newTrack.trackId] = [.variationByLevel, .variationByPosition]
                         instrumentTypes[newTrack.trackId] = newTrack.instrumentType
-                        //Insert bindings parts
+                        // Insert bindings parts
                         let part = newTrack.parts.values.first!
                         areaOfInterest[part.partId] = part.areaOfInterest
                         minimalLevel[part.partId] = part.minimalLevel
-                        
+
                         editorParts = setInfoModel.selectableEditorParts()
-                        
+
                         numberOfTracks += 1
-                        
+
                         pleaseSave = true
                     }
                 }
-                
+
                 Spacer()
-                
-                Button("Add stem low pass filter track"){
-                    
-                    if let newTrack = setInfoModel.addTrack(trackType: .stemLpf){
-                        
-                        //Add track
+
+                Button("Add stem low pass filter track") {
+                    if let newTrack = setInfoModel.addTrack(trackType: .stemLpf) {
+                        // Add track
                         setInfoModel.setSettings.tracks[newTrack.trackId] = newTrack
-                        
-                        //Insert bindings tracks, but better save and reopen
+
+                        // Insert bindings tracks, but better save and reopen
                         trackLevels[newTrack.trackId] = newTrack.levels
                         noteNumbersLevels[newTrack.trackId] = newTrack.notesToLevel
                         midiClipsLevels[newTrack.trackId] = newTrack.loopsToLevel
@@ -422,29 +397,29 @@ struct TrackEditorView: View {
                         noteNumbers[newTrack.trackId] = newTrack.midiGroup
                         notesSequenceType[newTrack.trackId] = newTrack.notesSequenceType
                         let nclips = newTrack.midiGroup
-                        noteNumberLetters[newTrack.trackId] = Array(0..<nclips.count).map{$0}
+                        noteNumberLetters[newTrack.trackId] = Array(0 ..< nclips.count).map { $0 }
                         midiClips[newTrack.trackId] = newTrack.loopLength
                         let mclips = newTrack.loopLength
-                        midiClipLetters[newTrack.trackId] = Array(0..<mclips.count).map{$0}
+                        midiClipLetters[newTrack.trackId] = Array(0 ..< mclips.count).map { $0 }
                         noteSources[newTrack.trackId] = newTrack.noteSource
                         startTypes[newTrack.trackId] = newTrack.startType
                         variationTypes[newTrack.trackId] = newTrack.variationType
                         //                    availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition,.variationSequencial]
-                        availableVariationTypes[newTrack.trackId] = [.variationByLevel,.variationByPosition]
+                        availableVariationTypes[newTrack.trackId] = [.variationByLevel, .variationByPosition]
                         instrumentTypes[newTrack.trackId] = newTrack.instrumentType
-                        //Insert bindings parts
+                        // Insert bindings parts
                         let part = newTrack.parts.values.first!
                         areaOfInterest[part.partId] = part.areaOfInterest
                         minimalLevel[part.partId] = part.minimalLevel
-                        
+
                         editorParts = setInfoModel.selectableEditorParts()
-                        
+
                         numberOfTracks += 1
-                        
+
                         pleaseSave = true
                     }
                 }
-                
+
                 Spacer()
             }
         }

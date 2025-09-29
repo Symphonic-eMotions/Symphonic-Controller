@@ -5,11 +5,10 @@
 //  Created by Frans-Jan Wind on 06/10/2022.
 //
 
-import Foundation
 import AudioKit
+import Foundation
 
 class DistortionEffect: AudioProcessingEffect {
-    
     /// Initialize the distortion node
     ///
     /// - parameter input: Input node to process
@@ -29,7 +28,7 @@ class DistortionEffect: AudioProcessingEffect {
     /// - parameter polynomialMix: Polynomial Mix (Percent) ranges from 0 to 100 (Default: 50)
     /// - parameter softClipGain: Soft Clip Gain (decibels) ranges from -80 to 20 (Default: -6)
     /// - parameter finalMix: Final Mix (Percent) ranges from 0 to 100 (Default: 50)
-    
+
     var distDelay: ValueAndRange
     var distDecay: ValueAndRange
     var distDelayMix: ValueAndRange
@@ -46,9 +45,9 @@ class DistortionEffect: AudioProcessingEffect {
     var distPolynomialMix: ValueAndRange
     var distSoftClipGain: ValueAndRange
     var distFinalMix: ValueAndRange
-    
+
     weak var node: Node?
-    
+
     init(
         distDelay: ValueAndRange,
         distDecay: ValueAndRange,
@@ -66,7 +65,7 @@ class DistortionEffect: AudioProcessingEffect {
         distPolynomialMix: ValueAndRange,
         distSoftClipGain: ValueAndRange,
         distFinalMix: ValueAndRange
-    ){
+    ) {
         self.distDelay = distDelay
         self.distDecay = distDecay
         self.distDelayMix = distDelayMix
@@ -84,7 +83,7 @@ class DistortionEffect: AudioProcessingEffect {
         self.distSoftClipGain = distSoftClipGain
         self.distFinalMix = distFinalMix
     }
-    
+
     func chain(to input: Node) -> Node {
         let newNode = Distortion(
             input,
@@ -108,9 +107,8 @@ class DistortionEffect: AudioProcessingEffect {
         node = newNode
         return newNode
     }
-    
+
     func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
-            
         switch damperTarget.parameter {
         case "distDelay":
             let a = RangeConverter.valueToRange(range: distDelay.range, value: value)
@@ -163,13 +161,13 @@ class DistortionEffect: AudioProcessingEffect {
         default: break
         }
     }
-    
+
     func apply<V>(keyPath: WritableKeyPath<Distortion, V>, value: V) {
         var distortion = node as? Distortion
         distortion?[keyPath: keyPath] = value
     }
-    
-    func valueAndRange(parameter: String) -> ValueAndRange?{
+
+    func valueAndRange(parameter: String) -> ValueAndRange? {
         switch parameter {
         case "distDelay":
             return distDelay

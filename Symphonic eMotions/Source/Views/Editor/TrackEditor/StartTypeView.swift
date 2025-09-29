@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct StartTypeView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    //This is a 1 track View
+    // This is a 1 track View
     var trackId: String
-    
-    //Bindings
-    
+
+    // Bindings
+
     @Binding var showEditorPart: EditorParts
     @Binding var startTypes: [String: StartType]
-    
-    //State
+
+    // State
     @State var startType: StartType
-    
+
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
@@ -36,29 +35,24 @@ struct StartTypeView: View {
         _startTypes = startTypes
         _startType = State(initialValue: startTypes[trackId].wrappedValue!)
     }
-    
+
     let columnWidth: CGFloat = 150
     let color: Color = .accentColor
-    
+
     var body: some View {
-        
-        VStack(alignment: .leading){
-            
+        VStack(alignment: .leading) {
             Divider()
-            
-            HStack(){
-                
+
+            HStack {
                 ZStack {
-                    
                     Rectangle()
                         .frame(width: 130, height: 34)
                         .foregroundColor(.clear)
                         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( showEditorPart == .sound ? .clear : color )
-                    
+                        .background(showEditorPart == .sound ? .clear : color)
+
                     Text("Start type")
                         .frame(width: 130, height: 34)
-                    
                 }
                 .frame(width: columnWidth, alignment: .leading)
                 .onTapGesture {
@@ -66,7 +60,7 @@ struct StartTypeView: View {
                         showEditorPart = .start
                     }
                 }
-                
+
                 Picker("Select starting type", selection: $startType) {
                     ForEach(StartType.allCases, id: \.self) { type in
                         Text(type.description).tag(type)
@@ -75,12 +69,11 @@ struct StartTypeView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .onChange(of: startType) { type in
                     withAnimation {
-                        
-                        //Store to file
+                        // Store to file
                         currentTrack.startType = type
-                        //Bindings
+                        // Bindings
                         startTypes[trackId] = type
-                        //State
+                        // State
                         startType = type
                     }
                 }

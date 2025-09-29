@@ -16,7 +16,7 @@ enum Length: String, CaseIterable, Codable {
     case quarter = "1 tel"
     case eighth = "achtste"
     case sixteenth = "zestiende"
-    
+
     var duration: Float32 {
         switch self {
         case .fourWhole:
@@ -37,9 +37,9 @@ enum Length: String, CaseIterable, Codable {
             return 0.25
         }
     }
-    
+
     var maxStrum: Double {
         // maximum strum is 95% of the note length
-        return Double(self.duration) * 0.95
+        return Double(duration) * 0.95
     }
 }

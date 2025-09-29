@@ -9,9 +9,9 @@ import SwiftOSC
 
 class OSCMessageSender {
     static let shared = OSCMessageSender()
-    
+
     private init() {} // Singleton pattern
-    
+
     func sendOSCMessage(ipAddress: String, port: Int, pattern: String, value: Float) {
         let client = OSCClient(address: ipAddress, port: port)
         let address = OSCAddressPattern(pattern)
@@ -19,4 +19,3 @@ class OSCMessageSender {
         client.send(message)
     }
 }
-

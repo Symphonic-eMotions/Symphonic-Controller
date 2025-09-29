@@ -13,13 +13,13 @@ class TrackEffectsViewModel: ObservableObject {
 
     func loadTrackEffectViewObject(trackSettings: TrackSettings) {
         var newTrackEffectViewObject: [TrackEffect] = []
-        
+
         for (_, trackEffectSetting) in trackSettings.effects {
             var parameters: [Parameter] = []
-            
+
             for (_, parameterSetting) in trackEffectSetting.parameters {
                 let parameter = Parameter(
-                    //FIXME: there's no type here
+                    // FIXME: there's no type here
                     type: parameterSetting.name, // You'll need to decide how to map this
                     name: "Used as type: \(parameterSetting.name)",
                     value: parameterSetting.value,
@@ -27,7 +27,7 @@ class TrackEffectsViewModel: ObservableObject {
                 )
                 parameters.append(parameter)
             }
-            
+
             let trackEffect = TrackEffect(
                 effectType: trackEffectSetting.effectType.rawValue,
                 effectName: trackEffectSetting.name,
@@ -35,8 +35,8 @@ class TrackEffectsViewModel: ObservableObject {
             )
             newTrackEffectViewObject.append(trackEffect)
         }
-        
-        self.trackEffectViewObject = newTrackEffectViewObject
+
+        trackEffectViewObject = newTrackEffectViewObject
     }
 
     func loadTrackEffectStateObject() {
@@ -47,6 +47,6 @@ class TrackEffectsViewModel: ObservableObject {
                 parametersPerEffect.append(Array(repeating: 0.0, count: max))
             }
         }
-        self.trackEffectState = parametersPerEffect
+        trackEffectState = parametersPerEffect
     }
 }

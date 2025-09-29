@@ -19,7 +19,6 @@ enum PlayerControlsViewAction {
 }
 
 final class PlayerControlsViewModel: ObservableObject {
-    
     let conductor: Conductor
     let frameExtractor: FrameExtractor
     let leveling: Leveling
@@ -28,7 +27,7 @@ final class PlayerControlsViewModel: ObservableObject {
     let hasTempo: Bool
 
     @Published var playerControlsViewState: PlayerControlsViewState
-    
+
     init(
         playerControlsViewState: PlayerControlsViewState,
         conductor: Conductor,
@@ -46,41 +45,38 @@ final class PlayerControlsViewModel: ObservableObject {
         self.hasTempo = hasTempo
         self.playerControlsAction = playerControlsAction
     }
-    
-    func tapSetTempoPlus(){
-        let currentTempo = self.conductor.setTempo(tempoChange: 5)
-        self.setSettings.bpm = currentTempo
+
+    func tapSetTempoPlus() {
+        let currentTempo = conductor.setTempo(tempoChange: 5)
+        setSettings.bpm = currentTempo
     }
-    
-    func tapSetTempoMin(){
-        let currentTempo = self.conductor.setTempo(tempoChange: -5)
-        self.setSettings.bpm = currentTempo
+
+    func tapSetTempoMin() {
+        let currentTempo = conductor.setTempo(tempoChange: -5)
+        setSettings.bpm = currentTempo
     }
-    
-    func tapSetTempoReset(){
-        
-        let tempo = self.conductor.resetTempo()
-        self.setSettings.bpm = tempo
+
+    func tapSetTempoReset() {
+        let tempo = conductor.resetTempo()
+        setSettings.bpm = tempo
     }
-    
+
     func tapMediaControlButton() {
-        
 //        leveling.pauseLevel = conductor.isConductorPlayingSubject.value
-        
-        
-        //fix for system stop after 12 set changes
-        //If you remove this, video won't be passed through after 12 set changes
-        if self.conductor.isConductorPlayingSubject.value {
-            self.frameExtractor.stopExtracting()
-            self.frameExtractor.startExtracting()
+
+        // fix for system stop after 12 set changes
+        // If you remove this, video won't be passed through after 12 set changes
+        if conductor.isConductorPlayingSubject.value {
+            frameExtractor.stopExtracting()
+            frameExtractor.startExtracting()
         }
-        
+
         conductor.togglePlayEngineAndTracks(
             currentSetLevel: leveling.currentSetLevelSubject.value,
-            setSettings: self.setSettings
+            setSettings: setSettings
         )
     }
-    
+
     func tapDisplayModeChange() {
         switch playerControlsViewState.displayMode {
         case .off:
@@ -96,24 +92,24 @@ final class PlayerControlsViewModel: ObservableObject {
         }
         playerControlsAction(.displayModeChange(playerControlsViewState.displayMode))
     }
-    
+
     func refreshDisplayModeChange() {
-        //FIXME: This is not working? View does not get updated
+        // FIXME: This is not working? View does not get updated
         playerControlsAction(.displayModeChange(.off))
         playerControlsAction(.displayModeChange(playerControlsViewState.displayMode))
     }
-    
+
     func tapSettingsButton() {
         playerControlsViewState.buildSettings.isAdvanced.toggle()
         playerControlsAction(.settingsChange(playerControlsViewState.buildSettings.isAdvanced))
         refreshDisplayModeChange()
     }
-    
+
     func tapMasterFxButton() {
         playerControlsViewState.buildSettings.isMasterTrack.toggle()
         playerControlsAction(.masterTrackViewChange(playerControlsViewState.buildSettings.isMasterTrack))
     }
-    
+
     func tapPartFeedbackButton() {
         playerControlsViewState.buildSettings.instrumentPartEditor.toggle()
         playerControlsAction(.partFeedbackViewChange(playerControlsViewState.buildSettings.instrumentPartEditor))

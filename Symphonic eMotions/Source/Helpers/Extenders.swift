@@ -5,8 +5,8 @@
 //  Created by Frans-Jan Wind on 29/03/2023.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 extension URL {
     init(_ string: String) {
@@ -15,7 +15,7 @@ extension URL {
 }
 
 extension Date {
-   func getFormattedDate(format: String) -> String {
+    func getFormattedDate(format: String) -> String {
         let dateformat = DateFormatter()
         dateformat.dateFormat = format
         return dateformat.string(from: self)
@@ -39,15 +39,15 @@ extension Double {
         inputStart: Double = 0.0,
         inputEnd: Double = 1.0,
         transformationDegree: Double
-        
+
     ) -> Double {
         guard inputStart != inputEnd else {
             print("Error: inputStart and inputEnd cannot be the same.")
             return 0.0
         }
-        
+
         let normalizedValue = (self - inputStart) / (inputEnd - inputStart)
-        
+
         if transformationDegree > 0 {
             // Exponential transformation
             let expTransform = pow(normalizedValue, transformationDegree)
@@ -78,9 +78,9 @@ extension CGFloat {
             print("Error: inputStart and inputEnd cannot be the same.")
             return 0.0
         }
-        
+
         let normalizedValue = (self - inputStart) / (inputEnd - inputStart)
-        
+
         if transformationDegree > 0 {
             // Exponential transformation
             let expTransform = pow(normalizedValue, transformationDegree)

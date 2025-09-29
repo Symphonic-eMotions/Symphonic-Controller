@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct IntroductionSlider: View {
-    
     var label: LocalizedStringKey
     @Binding var value: Double
     var minValue: Double = 0
     var maxValue: Double = 1
     var withPercentage: CGFloat = 0.7
-    
+
     init(
         label: LocalizedStringKey,
         value: Binding<Double>,
@@ -28,34 +27,31 @@ struct IntroductionSlider: View {
         self.maxValue = maxValue
         self.withPercentage = withPercentage
     }
-    
+
     func convertToDistance(value: Double) -> Int {
         return 99 - Int((value * 98).rounded())
     }
+
     func convertToSensitivity(value: Double) -> Int {
         return 1 + Int((value * 99).rounded())
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                
-                Slider(value: $value, in: minValue...maxValue)
+                Slider(value: $value, in: minValue ... maxValue)
                     .foregroundColor(.accentColor)
                     .frame(width: geometry.size.width * withPercentage)
-                
+
                 HStack {
                     Text(label)
                         .font(.system(size: 40))
                         .padding()
-                    
+
                     if label == "Distance" {
-                        
                         Text("\(convertToDistance(value: value))")
                             .font(.system(size: 40))
-                    }
-                    else if label == "Sensitivity"{
-                        
+                    } else if label == "Sensitivity" {
                         Text("\(convertToSensitivity(value: value))")
                             .font(.system(size: 40))
                     }

@@ -5,79 +5,75 @@
 //  Created by Frans-Jan Wind on 19/07/2023.
 //
 
-import SwiftUI
 import OrderedCollections
+import SwiftUI
 
 extension SetInfoModel {
-    
     func selectableEditorParts() -> [EditorParts] {
-        var selectableEditorParts: [EditorParts] = [.none,.set,.levels,.source,.start,.variation,.location]
-        
+        var selectableEditorParts: [EditorParts] = [.none, .set, .levels, .source, .start, .variation, .location]
+
         for track in setSettings.tracks {
             let trackIndex = track.value.trackIndex
             let enumFromString = EditorParts(rawValue: "track\(trackIndex)")
             selectableEditorParts.append(enumFromString ?? .none)
         }
-        
+
         return selectableEditorParts
     }
-    
+
     enum newTrackTypes: String {
         case midiVelocity = "Midi Velocity"
         case stemLpf = "Stem low passed"
     }
-    
-    
+
     func addTrack(trackType: newTrackTypes) -> TrackSettings? {
-        
-        //New track
-        var trackId = "AddedAt\(self.setSettings.tracks.count + 1)"
+        // New track
+        var trackId = "AddedAt\(setSettings.tracks.count + 1)"
         var nameExists = true
         var counter = 0
         while nameExists {
-            if let _ = self.setSettings.tracks[trackId] {
+            if let _ = setSettings.tracks[trackId] {
                 // Track name already exists, modify the trackId
                 counter += 1
-                trackId = "AddedAt\(self.setSettings.tracks.count + counter)"
+                trackId = "AddedAt\(setSettings.tracks.count + counter)"
             } else {
                 // Track name doesn't exist, break the loop
                 nameExists = false
             }
         }
-        
-        //New part
+
+        // New part
         let partId: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
-        //Amount of cells in grid
-        let cells = self.setSettings.gridRows * self.setSettings.gridColumns
-        //Defaut midi note number
-        let noteNumber: Int = 48
-        
-        //New nodeSetting
+        // Amount of cells in grid
+        let cells = setSettings.gridRows * setSettings.gridColumns
+        // Defaut midi note number
+        let noteNumber = 48
+
+        // New nodeSetting
         let newNodeSetting = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
             minimalLevel: 0.1,
             rampSpeed: 0.54,
             rampSpeedDown: 0.27
         )
-        
+
         let newPart: PartSettings
         var effects = OrderedDictionary<Int, TrackEffectsSettings>()
 
         if trackType == .midiVelocity {
-            
-            //New damperTarget
+            // New damperTarget
             let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                 trackId: trackId,
                 nodeType: .sequencer,
                 nodeName: "",
                 parameter: "velocity",
-                parameterRange: [0,1],
+                parameterRange: [0, 1],
                 parameterInversed: false,
                 midiData: nil,
                 nodeSettings: newNodeSetting,
                 dampMode: .easeInCubic
             )
-            
-            //Calculate number of cells and create new Part
+
+            // Calculate number of cells and create new Part
             newPart = PartSettings(
                 partId: partId,
                 partName: "Velocity (aanslag)",
@@ -97,37 +93,35 @@ extension SetInfoModel {
                 targetParameterInstrument: "velocity",
                 targetParameterSequencer: ""
             )
-            
-            
+
             let cutOffParameterSetting = ParameterSettings(
                 index: 0,
                 name: "Cut off frequency",
                 value: 20000,
-                range: [10,20000]
+                range: [10, 20000]
             )
-            
+
             let resoneceParameterSetting = ParameterSettings(
                 index: 1,
                 name: "Resonance",
                 value: -20,
-                range: [-20,20]
+                range: [-20, 20]
             )
-        }
-        else{
-            //New damperTarget
+        } else {
+            // New damperTarget
             let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                 trackId: trackId,
                 nodeType: .effect,
                 nodeName: "lowPassFilter",
                 parameter: "cutoffFrequency",
-                parameterRange: [0,1],
+                parameterRange: [0, 1],
                 parameterInversed: false,
                 midiData: nil,
                 nodeSettings: newNodeSetting,
                 dampMode: .easeInCubic
             )
-            
-            //Calculate number of cells and create new Part
+
+            // Calculate number of cells and create new Part
             newPart = PartSettings(
                 partId: partId,
                 partName: "Low pass filter",
@@ -147,44 +141,41 @@ extension SetInfoModel {
                 targetParameterInstrument: "samplerCC9",
                 targetParameterSequencer: "velocity"
             )
-            
-            
+
             let cutOffParameterSetting = ParameterSettings(
                 index: 0,
                 name: "Cut off frequency",
                 value: 20000,
-                range: [10,20000]
+                range: [10, 20000]
             )
-            
+
             let resoneceParameterSetting = ParameterSettings(
                 index: 1,
                 name: "Resonance",
                 value: -20,
-                range: [-20,20]
+                range: [-20, 20]
             )
-            
+
             var parameters = OrderedDictionary<Int, ParameterSettings>()
             parameters[cutOffParameterSetting.index] = cutOffParameterSetting
             parameters[resoneceParameterSetting.index] = resoneceParameterSetting
-            
+
             let effectSetting = TrackEffectsSettings(
                 index: 0,
                 name: "Low pass filter",
                 effectType: .lowPassFilter,
                 parameters: parameters
             )
-            
+
             effects[0] = effectSetting
         }
-        
-        
-        
-        //Create new Track
+
+        // Create new Track
         let newTrack = TrackSettings(
             trackId: trackId,
             trackIndex: 0,
             trackName: "New \(trackType.rawValue)",
-            noteSource: .midiFile, 
+            noteSource: .midiFile,
             chordEntries: [ChordEntry()],
             startType: .loopedTransport,
             variationType: .variationByPosition,
@@ -200,52 +191,50 @@ extension SetInfoModel {
                 areaOfInterest: Array(repeating: 1, count: cells),
                 cellsToGrid: Array(repeating: noteNumber, count: cells)
             ),
-            notesToLevel: Array(repeating: noteNumber, count: self.setSettings.levels.count),
+            notesToLevel: Array(repeating: noteNumber, count: setSettings.levels.count),
             noteNumbersClips: [],
             notesSequenceType: .nextForward,
             loopLength: [16],
             loopsToLevel: [],
             loopsToGrid: [],
             loopsToGridMapped: [],
-            levels: (0...self.setSettings.levels.count).map { $0 },
+            levels: (0 ... setSettings.levels.count).map { $0 },
             parts: [partId: newPart],
             effects: effects
         )
-        
+
         return newTrack
     }
-    
+
     func addVelocityPart(velocitySensitive: Bool, trackId: String) -> PartSettings? {
-        
         var returnPart: PartSettings?
-        
-        let numberOfParts = self.setSettings.tracks[trackId]?.parts.count ?? 0
-        
+
+        let numberOfParts = setSettings.tracks[trackId]?.parts.count ?? 0
+
         if velocitySensitive {
-            
-            //add velocity part
+            // add velocity part
             let partId: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
-            
+
             let newNodeSetting = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
                 minimalLevel: 0.1,
                 rampSpeed: 0.15,
                 rampSpeedDown: 0.14
             )
-            
+
             let newDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                 trackId: trackId,
                 nodeType: .sequencer,
                 nodeName: "",
                 parameter: "velocity",
-                parameterRange: [0,1],
+                parameterRange: [0, 1],
                 parameterInversed: false,
                 midiData: nil,
                 nodeSettings: newNodeSetting,
                 dampMode: .easeInCubic
             )
-            
-            let cells = self.setSettings.gridRows * self.setSettings.gridColumns
-            
+
+            let cells = setSettings.gridRows * setSettings.gridColumns
+
             let newPart = PartSettings(
                 partId: partId,
                 partName: "Velocity",
@@ -265,17 +254,17 @@ extension SetInfoModel {
                 targetParameterInstrument: "samplerCC9",
                 targetParameterSequencer: "velocity"
             )
-            
+
             returnPart = newPart
         }
-        
+
         return returnPart
     }
-    
+
     func trackNames() -> [String: String] {
         var trackNames: [String: String] = [:]
         for track in setSettings.tracks {
-            //translate EditorPart track name by its enum case (i.e. track15)
+            // translate EditorPart track name by its enum case (i.e. track15)
             trackNames["track\(track.value.trackIndex)"] = track.value.trackName
         }
         return trackNames

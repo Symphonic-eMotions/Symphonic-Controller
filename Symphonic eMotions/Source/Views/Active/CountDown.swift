@@ -8,66 +8,61 @@
 import SwiftUI
 
 struct CountDown: View {
-        
     @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
     @EnvironmentObject var fileController: FileController
     @State private var counter = 5
-    
+
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        
-        VStack{
-            
+        VStack {
             Image("LogoColor")
                 .resizable()
                 .frame(width: 100, height: 100)
                 .cornerRadius(10)
-            
+
             Text(NSLocalizedString("Count down to", comment: ""))
                 .font(.system(size: 40))
                 .padding(.bottom)
-            
+
             Text("\(counter)")
                 .font(.system(size: 80))
                 .onReceive(timer) { _ in
-                    if counter > 1   {
+                    if counter > 1 {
                         counter -= 1
                     } else {
-                        
                         print("NEXT SET, end of count down")
-                        
+
                         if let nextUrl = nextURL(
                             currentURL: setInfoModel.setSettings.currentSetInList,
                             currentPlaylist: setInfoModel.setSettings.currentPlaylist
                         ) {
-                            
                             print("nextURL: \(nextUrl)")
-                            
-                            //Remember playlist before overwriting
+
+                            // Remember playlist before overwriting
                             let thisPlaylist = setInfoModel.setSettings.currentPlaylist
-                            
-                            //Load settngs over current
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl)){
+
+                            // Load settngs over current
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: nextUrl)) {
                                 print("Setting sessionDisplay to .playlist")
                                 sessionDisplay = .playlists
                             }
-                            
-                            //Keep track for next in playlist after loading new set
+
+                            // Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = nextUrl
                             setInfoModel.setSettings.currentPlaylist = thisPlaylist
                         }
                     }
                 }
-            
+
             HStack {
                 Image(systemName: "play.fill")
                     .foregroundColor(.white)
                     .font(.system(size: 30))
-                
+
                 Text(NSLocalizedString("Same song", comment: ""))
                     .foregroundColor(.white)
                     .font(.headline)
@@ -77,25 +72,24 @@ struct CountDown: View {
             .background(Color.accentColor)
             .cornerRadius(10.0)
             .onTapGesture {
-                
-                //Remember playlist before overwriting
+                // Remember playlist before overwriting
                 let thisPlaylist = setInfoModel.setSettings.currentPlaylist
                 let thisSet = setInfoModel.setSettings.currentSetInList
-                
+
                 userSettings.currentUrl = setInfoModel.setSettings.currentSetInList.absoluteString
-                
-                //Load settngs over current
-                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList)){
+
+                // Load settngs over current
+                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: setInfoModel.setSettings.currentSetInList)) {
                     print("Countdown Setting sessionPlaylist to .playlists")
                     sessionDisplay = .playlists
                 }
-                //Keep track for next in playlist after loading new set
+                // Keep track for next in playlist after loading new set
                 setInfoModel.setSettings.currentSetInList = thisSet
                 setInfoModel.setSettings.currentPlaylist = thisPlaylist
             }
         }
     }
-    
+
     func nextURL(currentURL: URL, currentPlaylist: SeMActive.Playlists) -> URL? {
         let fileManager = FileManager.default
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]

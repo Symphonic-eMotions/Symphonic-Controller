@@ -8,22 +8,20 @@
 import Foundation
 
 extension InstrumentsSet.Track.Part {
-    
     struct DamperTarget: Decodable, Equatable {
-        
-        internal enum TargetKeys: String, CodingKey {
+        enum TargetKeys: String, CodingKey {
             case trackId
             case nodeType
             case nodeName
             case parameter
-            //Copy effect range to DamperTarget if it conserns an effect
+            // Copy effect range to DamperTarget if it conserns an effect
             case parameterRange
             case parameterInversed
             case midiData
             case nodeSettings
             case dampMode
         }
-        
+
         var trackId: String
         var nodeType: NodeType
         var nodeName: String
@@ -33,21 +31,21 @@ extension InstrumentsSet.Track.Part {
         var midiData: MidiData?
         var nodeSettings: NodeSettings?
         var dampMode: DampMode?
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: TargetKeys.self)
             trackId = try container.decode(String.self, forKey: .trackId)
             nodeType = try container.decode(NodeType.self, forKey: .nodeType)
             nodeName = try container.decode(String.self, forKey: .nodeName)
             parameter = try container.decode(String.self, forKey: .parameter)
-            parameterRange = [0,1]
+            parameterRange = [0, 1]
             parameterInversed = try container.decodeIfPresent(Bool.self, forKey: .parameterInversed) ?? false
             midiData = try container.decodeIfPresent(MidiData.self, forKey: .midiData)
             nodeSettings = try container.decodeIfPresent(NodeSettings.self, forKey: .nodeSettings)
             dampMode = try container.decodeIfPresent(DampMode.self, forKey: .dampMode)
         }
-        
-        //Master track controller init
+
+        // Master track controller init
         init(
             trackIdString: String,
             nodeNameString: String,
@@ -62,13 +60,13 @@ extension InstrumentsSet.Track.Part {
             nodeType = .master
             parameterInversed = parameterInversedBool
         }
-        
-        //Store to file init
+
+        // Store to file init
         init(
             trackId: String,
-            nodeType: NodeType,         //targetType
-            nodeName: String,           //targetNameEffect
-            parameter: String,          //parameter
+            nodeType: NodeType, // targetType
+            nodeName: String, // targetNameEffect
+            parameter: String, // parameter
             parameterRange: [Double],
             parameterInversed: Bool,
             midiData: MidiData?,
@@ -85,27 +83,25 @@ extension InstrumentsSet.Track.Part {
             self.nodeSettings = nodeSettings
             self.dampMode = dampMode
         }
-        
-        //Place holder for ranges from track effects towards controlling part effects
+
+        // Place holder for ranges from track effects towards controlling part effects
         func getParameterRange() -> [Double] {
-            
-            return [0,100]
+            return [0, 100]
         }
-        
+
         func applyDamp(value: Double) -> Double {
             switch dampMode {
-                case .direct: return value
-                case .easeInCubic: return EaseInCubicDamper().damp(value: value)
-                case .easeInCircular: return EaseInCircularDamper().damp(value: value)
-                case .easeInOutCubic: return EaseInOutCubicDamper().damp(value: value)
-                default: return value
+            case .direct: return value
+            case .easeInCubic: return EaseInCubicDamper().damp(value: value)
+            case .easeInCircular: return EaseInCircularDamper().damp(value: value)
+            case .easeInOutCubic: return EaseInOutCubicDamper().damp(value: value)
+            default: return value
             }
         }
     }
-    
 }
 
-extension InstrumentsSet.Track.Part.DamperTarget: Encodable{
+extension InstrumentsSet.Track.Part.DamperTarget: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: TargetKeys.self)
         try container.encode(trackId, forKey: .trackId)
@@ -121,15 +117,14 @@ extension InstrumentsSet.Track.Part.DamperTarget: Encodable{
 }
 
 extension InstrumentsSet.Track.Part.DamperTarget {
-    
     enum NodeType: String, Codable, CaseIterable {
         case sequencer
         case effect
         case instrument
         case master
-        
+
         var description: String {
-            switch self{
+            switch self {
             case .sequencer:
                 return "Sequencer"
             case .effect:
@@ -144,29 +139,27 @@ extension InstrumentsSet.Track.Part.DamperTarget {
 }
 
 extension InstrumentsSet.Track.Part.DamperTarget {
-    
     struct NodeSettings: Decodable, Equatable {
-        
         private enum NodeSettingKeys: String, CodingKey {
             case minimalLevel
             case rampSpeed
             case rampSpeedDown
             case coolDownTime
         }
-        
+
         var minimalLevel: Double?
-        //Ramp vars
+        // Ramp vars
         var rampSpeed: Double?
         var rampSpeedDown: Double?
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: NodeSettingKeys.self)
-            self.minimalLevel = try container.decodeIfPresent(Double.self, forKey: .minimalLevel)
-            self.rampSpeed = try container.decodeIfPresent(Double.self, forKey: .rampSpeed)
-            self.rampSpeedDown = try container.decodeIfPresent(Double.self, forKey: .rampSpeedDown)
+            minimalLevel = try container.decodeIfPresent(Double.self, forKey: .minimalLevel)
+            rampSpeed = try container.decodeIfPresent(Double.self, forKey: .rampSpeed)
+            rampSpeedDown = try container.decodeIfPresent(Double.self, forKey: .rampSpeedDown)
         }
-        
-        //Init for encoding to file
+
+        // Init for encoding to file
         init(
             minimalLevel: Double?,
             rampSpeed: Double?,
@@ -189,19 +182,16 @@ extension InstrumentsSet.Track.Part.DamperTarget.NodeSettings: Encodable {
 }
 
 extension InstrumentsSet.Track.Part.DamperTarget {
-    
     enum DampMode: String, Codable, Equatable {
-        
         case direct
         case timed
-        
+
         case easeInCubic
         case easeOutCubic
         case easeInOutCubic
-        
+
         case easeInCircular
-        
+
         case timedNegative
     }
-    
 }

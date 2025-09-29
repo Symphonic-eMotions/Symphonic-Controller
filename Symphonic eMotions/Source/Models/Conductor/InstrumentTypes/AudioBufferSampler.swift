@@ -6,61 +6,58 @@
 //
 
 import AudioKit
-import SoundpipeAudioKit
 import AVFAudio
+import SoundpipeAudioKit
 
 extension Conductor {
-    
-    internal func createAudioBufferSamplerChainEffects(
+    func createAudioBufferSamplerChainEffects(
         for track: InstrumentsSet.Track,
         and sequencer: AppleSequencer,
-        currentSetLevel: Double,
-        samplePath: String) -> MIDISampler? {
-        
-        //Get audioFiles config
+        currentSetLevel _: Double,
+        samplePath: String
+    ) -> MIDISampler? {
+        // Get audioFiles config
         guard let audioFiles = track.audioFiles else {
             print("No audio files for track id: \(track.id)")
             return nil
         }
-    
-        //Get ready for user files
+
+        // Get ready for user files
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("Document directory not found")
             return nil
         }
-        
-        //Store files in RAM
+
+        // Store files in RAM
         var avAudioFiles = [AVAudioFile]()
-        
-        //TODO: Solve for looping stems
-        //Create midiSequence in real time based on given midinumber
+
+        // TODO: Solve for looping stems
+        // Create midiSequence in real time based on given midinumber
         var longestLengthInBeats: Double = 1
-            
+
         for audioFile in audioFiles {
-            
             var audioFileURL = URL("noPath")
-            
-            //Load System file
+
+            // Load System file
             if audioFile.source == .bundle {
-                
                 audioFileURL = Bundle.main.url(
                     forResource: audioFile.fileName,
                     withExtension: audioFile.fileExtension,
                     subdirectory: "Samples/\(samplePath)"
                 ) ?? URL("Samples/\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)")
-                
+
             } else {
-                //Load User file
+                // Load User file
                 audioFileURL = documentDirectory.appendingPathComponent(
                     "\(samplePath)/\(audioFile.fileName).\(audioFile.fileExtension)"
                 )
             }
-            
-            //clearRange
+
+            // clearRange
             if audioFile.lengthInBeats > longestLengthInBeats {
                 longestLengthInBeats = audioFile.lengthInBeats
             }
-            
+
             do {
                 let avAudioFile = try AVAudioFile(forReading: audioFileURL)
                 avAudioFiles.append(avAudioFile)
@@ -68,56 +65,55 @@ extension Conductor {
                 print("Error loading audio file at \(audioFileURL): \(error)")
             }
         }
-        
-        //Clear range is the reason there are 2 audioFile loops
+
+        // Clear range is the reason there are 2 audioFile loops
         sequencer.clearRange(start: Duration(beats: 0), duration: Duration(beats: longestLengthInBeats))
-        
-        //Fill sequencer with midi info from file name and setting
+
+        // Fill sequencer with midi info from file name and setting
         var interval: MusicTimeStamp = 0
-            
+
         for audioFile in audioFiles {
-            
             let noteNumber = midiNoteNumberFromFileName(audioFile.fileName) ?? 48
             let lengthInBeats = lengthInBeatsFromFileName(fileName: audioFile.fileName) ?? audioFile.lengthInBeats
-            
-            //position start with 0 adds PREVIOUS value
+
+            // position start with 0 adds PREVIOUS value
             let startTime = interval
-            //Remember for next loop
+            // Remember for next loop
             interval = interval + lengthInBeats
-            
+
 //            print("AudioBuffer fileName \(audioFile.fileName)")
 //            print("AudioBuffer sequencer startTime: \(startTime) noteNumber \(noteNumber) and lengthInBeats \(lengthInBeats)")
-            
-            //Create midi data
+
+            // Create midi data
             sequencer.tracks.first?.add(
                 noteNumber: MIDINoteNumber(noteNumber),
                 velocity: 127,
                 position: Duration(beats: startTime),
-                duration: Duration(beats: (lengthInBeats - 0.0001))
+                duration: Duration(beats: lengthInBeats - 0.0001)
             )
         }
-        
+
         let sampler = MIDISampler(name: track.instrumentName)
         sampler.amplitude = track.volume
-        
-        //No velocity
+
+        // No velocity
         sequencer.setGlobalMIDIOutput(sampler.midiIn)
-        
-        //Connect all effects
+
+        // Connect all effects
         let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
-        //Connect ampplitude envelopes for track fading
+        // Connect ampplitude envelopes for track fading
 //        let ampEnv: Node = setTrackAmpEnvelope(trackId: track.id, startingNode: chainEffects)
-        
+
         mixer.addInput(chainEffects)
-        
-        //This needs to happen as last
+
+        // This needs to happen as last
         do {
             try sampler.loadAudioFiles(avAudioFiles)
 
         } catch {
             print("Error avAudioFiles: \(avAudioFiles)")
         }
-        
+
         return sampler
     }
 }

@@ -22,14 +22,14 @@ struct HomeView: View {
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )
-                
+
             case .page04:
                 MovementView(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )
-                
+
             default:
                 IntroductionView(
                     setInfoModel: setInfoModel,

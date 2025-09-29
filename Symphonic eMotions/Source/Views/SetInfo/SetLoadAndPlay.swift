@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SetLoadAndPlay: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    
+
     var body: some View {
-        
         HStack {
             Image(systemName: "play.fill")
                 .foregroundColor(.white)
@@ -21,6 +19,5 @@ struct SetLoadAndPlay: View {
         .padding()
         .background(Color.accentColor)
         .cornerRadius(10.0)
-        
     }
 }

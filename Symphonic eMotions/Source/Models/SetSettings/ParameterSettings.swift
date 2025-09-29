@@ -8,14 +8,13 @@
 import Foundation
 
 class ParameterSettings: Identifiable {
-    
     var id: Int { index }
     var index: Int
     var name: String
     var value: Double
     var range: [Double]
-    
-    init( index: Int, name: String, value: Double, range: [Double] ) {
+
+    init(index: Int, name: String, value: Double, range: [Double]) {
         self.index = index
         self.name = name
         self.value = value

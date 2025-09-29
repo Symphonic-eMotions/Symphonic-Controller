@@ -6,26 +6,23 @@
 //
 
 import Foundation
-import SwiftUI
 import OrderedCollections
+import SwiftUI
 
 struct InsrtumentColorPicker: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    var color: InstrumentColors = InstrumentColors()
-    //No color
+    var color: InstrumentColors = .init()
+    // No color
     let testColor = Color("InstrumentNoColor")
-    
+
     var body: some View {
-        
         ScrollView(.horizontal) {
-            HStack{
-                ForEach(color.palet, id:\.self) { color in
-                    
+            HStack {
+                ForEach(color.palet, id: \.self) { color in
                     let trackId = setInfoModel.partFeedback.currentTrackID.value
                     let trackColor = setInfoModel.setSettings.tracks[trackId]?.instrumentColor
                     let parts = setInfoModel.setSettings.tracks[trackId]?.parts.values ?? OrderedDictionary<String, PartSettings>().values
-                    
+
                     ZStack {
                         Circle()
                             .foregroundColor(color)
@@ -37,17 +34,16 @@ struct InsrtumentColorPicker: View {
                                 setInfoModel.setSettings.tracks[trackId]?.changeAreaOfInterestColor(newColor: color)
                                 setInfoModel.setInfoState.updateEditView += 1
                                 if color == testColor {
-                                    parts.forEach { part in
+                                    for part in parts {
                                         part.dontDrawVisual = true
                                     }
-                                }
-                                else{
-                                    parts.forEach { part in
+                                } else {
+                                    for part in parts {
                                         part.dontDrawVisual = false
                                     }
                                 }
                             }
-                        
+
                         if color == testColor {
                             Line()
                                 .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
@@ -74,4 +70,3 @@ struct Line: Shape {
         return path
     }
 }
-

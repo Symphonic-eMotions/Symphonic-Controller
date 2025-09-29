@@ -8,42 +8,37 @@
 import SwiftUI
 
 struct LightView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    
-    //Brightness analysis
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+
+    // Brightness analysis
     @ObservedObject var frameExtractorViewModel = FrameExtractorViewModel()
-    @State private var whiteTimer: Timer? = nil
+    @State private var whiteTimer: Timer?
     @State var averageBrightness: Double = 0
     @State var averageBrightnessResult: String = ""
-    @State var image: UIImage = UIImage()
-    
+    @State var image: UIImage = .init()
+
     @State var showCameraPreview: Bool = false
-    
-    internal var testSoundNoteNumbers: [Int] = [36,37]
-    
-    @State var setIsPlaying: Bool = false;
+
+    var testSoundNoteNumbers: [Int] = [36, 37]
+
+    @State var setIsPlaying: Bool = false
     @State var isAbove30: Bool = false
-    
+
     var body: some View {
-        
-        ZStack(alignment: .topLeading){
-            
+        ZStack(alignment: .topLeading) {
             VStack(spacing: 0) {
-                
                 IntroductionImage(
                     imageName: "page03",
                     customWidth: 0.8,
                     customHeight: 0.6
                 )
-                
+
                 Spacer()
-                    
+
                 HStack {
-                    
-                    ZStack{
+                    ZStack {
                         Rectangle()
                             .fill(Color(
                                 red: averageBrightness / 255.0,
@@ -57,11 +52,11 @@ struct LightView: View {
                     }
                     .padding()
                     .onTapGesture {
-                        withAnimation{
+                        withAnimation {
                             showCameraPreview.toggle()
                         }
                     }
-                    
+
                     // Add this Image view for the preview
                     if showCameraPreview {
                         Image(uiImage: image)
@@ -75,19 +70,18 @@ struct LightView: View {
                     self.whiteTimer = Timer.scheduledTimer(
                         withTimeInterval: 0.25,
                         repeats: true
-                    ) { timer in
-                        
-                        //The image to analyse
+                    ) { _ in
+                        // The image to analyse
                         let ciImage = self.frameExtractorViewModel.image ?? CIImage()
-                        
-                        //Do white average calculation here
+
+                        // Do white average calculation here
                         self.averageBrightness = self.frameExtractorViewModel.calculateAverageBrightness(
                             ciImage: ciImage
                         )
-                        let averageBrightnessInt: Int = Int(averageBrightness/2.55)
+                        let averageBrightnessInt = Int(averageBrightness / 2.55)
                         isAbove30 = averageBrightnessInt >= 10
                         averageBrightnessResult = "\(averageBrightnessInt)%"
-                        
+
                         // Convert CIImage to UIImage for preview
                         let context = CIContext(options: nil)
                         if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
@@ -100,23 +94,22 @@ struct LightView: View {
                     self.whiteTimer?.invalidate()
                     self.whiteTimer = nil
                 }
-                
+
                 Spacer()
-                
-                HStack{
-                    
+
+                HStack {
                     Spacer()
-                    
+
                     Text(NSLocalizedString("Enough light", comment: ""))
                         .font(.system(size: 40))
                         .padding()
-                    
+
                     ZStack {
                         Rectangle()
                             .frame(width: 200, height: 60)
                             .foregroundColor(.clear)
                             .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                            .background( !isAbove30 ? Color.gray : Color.accentColor )
+                            .background(!isAbove30 ? Color.gray : Color.accentColor)
 
                         Text(NSLocalizedString("Continue", comment: ""))
                             .font(.system(size: 30))
@@ -124,10 +117,9 @@ struct LightView: View {
                     }
                     .onTapGesture {
                         withAnimation {
-                            
 //                            sessionDisplay = .demo
 //                            sessionDisplaySub = .none
-                            
+
                             sessionDisplay = .home
                             sessionDisplaySub = .page04
                         }
@@ -136,10 +128,10 @@ struct LightView: View {
                     Spacer()
                 }
                 .padding(.bottom)
-                
+
                 Spacer()
             }
-            //Back button
+            // Back button
             ZStack {
                 Image(systemName: "arrowshape.backward")
                     .font(.system(size: 40))
@@ -149,8 +141,8 @@ struct LightView: View {
             .padding(.leading, 20)
             .onTapGesture {
                 withAnimation {
-                    //Paginering
-                    let pages:[SessionDisplay:SessionDisplay] = [.page02:.page01,.page03:.page02,.page04:.page03]
+                    // Paginering
+                    let pages: [SessionDisplay: SessionDisplay] = [.page02: .page01, .page03: .page02, .page04: .page03]
                     if let prevPage = pages[sessionDisplaySub] {
                         sessionDisplaySub = prevPage
                     }

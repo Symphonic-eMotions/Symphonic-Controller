@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 
-//SessionDisplay is used for navigating the SwiftUI view
-//For the editor this same enum is used for SessionDisplaySub navigation
+// SessionDisplay is used for navigating the SwiftUI view
+// For the editor this same enum is used for SessionDisplaySub navigation
 enum SessionDisplay: Hashable, Codable {
-    
     case home
     case demo
     case pro
@@ -32,7 +31,7 @@ enum SessionDisplay: Hashable, Codable {
     case page02
     case page03
     case page04
-    
+
     var title: String {
         switch self {
         case .home:

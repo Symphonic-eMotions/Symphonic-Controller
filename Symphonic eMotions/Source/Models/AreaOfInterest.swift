@@ -9,14 +9,12 @@ import Foundation
 import SwiftUI
 
 class AreaOfInterestColors: ObservableObject {
-    
     let id = UUID()
     var partId: String
     var colors: [Color]
-    
-    init( partId: String, colors: [Color]) {
+
+    init(partId: String, colors: [Color]) {
         self.partId = partId
         self.colors = colors
     }
-    
 }

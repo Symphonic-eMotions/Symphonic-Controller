@@ -5,20 +5,18 @@
 //  Created by Mihai Fratu on 31.07.2021.
 //
 
-import SwiftUI
 import Accelerate
 import AudioToolbox
+import SwiftUI
 
 extension InstrumentsSet {
-    
     struct Track: Identifiable, Decodable {
-        
         static func withJSON(_ fileName: String) -> InstrumentsSet.Track? {
             guard let url = Bundle.main.url(forResource: fileName, withExtension: "json", subdirectory: "Sets") else { return nil }
             guard let data = try? Data(contentsOf: url) else { return nil }
             return try! JSONDecoder().decode(InstrumentsSet.Track.self, from: data)
         }
-        
+
         private enum TrackKeys: String, CodingKey {
             case id
             case trackId
@@ -43,86 +41,84 @@ extension InstrumentsSet {
             case parts = "instrumentParts"
             case levels
         }
-        
+
         var id: String
         var trackId: String
         var muted: Bool? = true
-        //Sound source / generator
+        // Sound source / generator
         let instrumentType: InstrumentType
-        
-        //Midi file or note numbers
+
+        // Midi file or note numbers
         var noteSource: NoteSource?
-        //Chords to create midi files with
+        // Chords to create midi files with
         var chordEntries: [ChordEntry]?
-        //How do notes start playing
+        // How do notes start playing
         var startType: StartType
-        //To be refeactored to NoteVariation
-        //How can we change the note material
+        // To be refeactored to NoteVariation
+        // How can we change the note material
         var variationType: VariationType?
-        
+
         var firstMinimalLevel: Double?
-        
+
         var instrumentName: String
         let instrumentColor: Color
         var volume: Float
-        
+
         var midiFiles: [MidiFile]?
-        
+
         var midiGroup: [Int]?
         var notesToGrid: [Int]?
         var notesToLevel: [Int]?
         var noteNumbersClips: [Int]?
         var notesSequenceType: NotesSequenceType?
-        
+
         let exsFiles: [ExsFile]?
         let audioFiles: [AudioFile]?
         var effects: [Effect]?
 //        var effectRanges: [EffectRanges]?
         var parts: [Part]
         let levels: [Int]
-        
+
         init(from decoder: Decoder) throws {
-            
             let container = try decoder.container(keyedBy: TrackKeys.self)
             id = try container.decode(String.self, forKey: .trackId)
             trackId = try container.decode(String.self, forKey: .trackId)
             instrumentType = try container.decode(InstrumentType.self, forKey: .instrumentType)
-            
+
             noteSource = try container.decodeIfPresent(NoteSource.self, forKey: .noteSource)
             chordEntries = try container.decodeIfPresent([ChordEntry].self, forKey: .chordEntries)
             startType = try container.decode(StartType.self, forKey: .startType)
             variationType = try container.decodeIfPresent(VariationType.self, forKey: .variationType)
-            
+
             muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
             instrumentName = try container.decode(String.self, forKey: .instrumentName)
-            
+
             let instrumentColorString = try container.decodeIfPresent(String.self, forKey: .instrumentColor)
             instrumentColor = Color(instrumentColorString ?? "InstrumentColor000")
-            
+
             volume = try container.decode(Float.self, forKey: .volume)
             midiFiles = try container.decodeIfPresent([MidiFile].self, forKey: .midiFiles)
-            
+
             midiGroup = try container.decodeIfPresent([Int].self, forKey: .midiGroup)
             notesToGrid = try container.decodeIfPresent([Int].self, forKey: .notesToGrid)
             notesToLevel = try container.decodeIfPresent([Int].self, forKey: .notesToLevel)
             noteNumbersClips = try container.decodeIfPresent([Int].self, forKey: .noteNumbersClips)
             notesSequenceType = try container.decodeIfPresent(NotesSequenceType.self, forKey: .notesSequenceType)
-            
+
             exsFiles = try container.decodeIfPresent([ExsFile].self, forKey: .exsFiles)
             audioFiles = try container.decodeIfPresent([AudioFile].self, forKey: .audioFiles)
-            
-            //Have effectsRaw raw present to use as data struct
+
+            // Have effectsRaw raw present to use as data struct
             let effectsRaw = try container.decodeIfPresent([Effect].self, forKey: .effects)
             effects = effectsRaw
-            
-            //Loop through parts to get ranges and overwrite decoded parts
+
+            // Loop through parts to get ranges and overwrite decoded parts
             let partsRaw = try container.decodeIfPresent([Part].self, forKey: .parts) ?? []
             var partWithRange: [Part] = []
             var parIndex = 0
             for var partRaw in partsRaw {
-                
                 effectsRaw?.forEach { effectRaw in
-                    //Next find the correct parameter
+                    // Next find the correct parameter
                     let parameter = partRaw.damperTarget.parameter
                     let valueAndRange = effectRaw.valueAndRanges(parameter: parameter)
                     if valueAndRange?.range != nil {
@@ -136,14 +132,14 @@ extension InstrumentsSet {
                 parIndex += 1
             }
             parts = partWithRange
-            
+
             if firstMinimalLevel == nil {
                 firstMinimalLevel = 0.1
             }
-            
+
             levels = try container.decode([Int].self, forKey: .levels)
         }
-        
+
         init(
             id: String,
             trackId: String,
@@ -190,9 +186,9 @@ extension InstrumentsSet {
             self.effects = effects
             self.parts = parts
             self.levels = levels
-            self.firstMinimalLevel = 0.1 //first part minimal level
+            firstMinimalLevel = 0.1 // first part minimal level
         }
-        
+
         func effect(for effectType: Effect.EffectType) -> Effect? {
             effects?.first { $0.effectType == effectType }
         }
@@ -200,13 +196,12 @@ extension InstrumentsSet {
 }
 
 extension InstrumentsSet.Track: Encodable {
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: TrackKeys.self)
         try container.encode(trackId, forKey: .trackId)
         try container.encode(muted, forKey: .muted)
         try container.encode(instrumentType, forKey: .instrumentType)
-        
+
         try container.encode(noteSource, forKey: .noteSource)
         try container.encode(chordEntries, forKey: .chordEntries)
         try container.encode(startType, forKey: .startType)
@@ -230,7 +225,6 @@ extension InstrumentsSet.Track: Encodable {
 }
 
 extension InstrumentsSet.Track {
-    
     enum InstrumentType: String, Codable, CaseIterable {
         case exsSampler
         case audioBuffer
@@ -238,9 +232,9 @@ extension InstrumentsSet.Track {
         case SemOne
         case pulseWidthSynth
         case phaseSynth
-        
+
         var description: String {
-            switch self{
+            switch self {
             case .exsSampler:
                 return "EXS sampler"
             case .audioBuffer:
@@ -259,26 +253,24 @@ extension InstrumentsSet.Track {
 }
 
 extension InstrumentsSet.Track {
-    
     struct ExsFile: Decodable {
-        
         private enum ExsKeys: String, CodingKey {
             case fileName = "exsFileName"
             case fileExtension = "exsFileExt"
         }
-        
+
         let fileName: String
         let fileExtension: String
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: ExsKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
         }
-        
-        init(fileName: String){
+
+        init(fileName: String) {
             self.fileName = fileName
-            self.fileExtension = "exs"
+            fileExtension = "exs"
         }
     }
 }
@@ -292,7 +284,6 @@ extension InstrumentsSet.Track.ExsFile: Encodable {
 }
 
 extension InstrumentsSet.Track {
-
     struct AudioFile: Decodable, Identifiable {
         private enum AudioFileKeys: String, CodingKey {
             case id
@@ -301,7 +292,7 @@ extension InstrumentsSet.Track {
             case lengthInBeats
             case source
         }
-        
+
         let id: UUID
         let fileName: String
         let fileExtension: String
@@ -309,7 +300,7 @@ extension InstrumentsSet.Track {
         let source: InstrumentsSet.FileSource
 
         init(from decoder: Decoder) throws {
-            self.id = UUID()
+            id = UUID()
             let container = try decoder.container(keyedBy: AudioFileKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
             fileExtension = try container.decode(String.self, forKey: .fileExtension)
@@ -322,8 +313,8 @@ extension InstrumentsSet.Track {
             fileExtension: String,
             lengthInBeats: Double,
             source: InstrumentsSet.FileSource
-        ){
-            self.id = UUID()
+        ) {
+            id = UUID()
             self.fileName = fileName
             self.fileExtension = fileExtension
             self.lengthInBeats = lengthInBeats
@@ -341,4 +332,3 @@ extension InstrumentsSet.Track.AudioFile: Encodable {
         try container.encode(source, forKey: .source)
     }
 }
-

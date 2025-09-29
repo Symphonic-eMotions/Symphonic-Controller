@@ -8,33 +8,31 @@
 import SwiftUI
 
 struct PlaylistView: View {
-    
     @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+
     @EnvironmentObject var fileController: FileController
-    
+
     @ObservedObject var viewModel: PlaylistViewModel
-    
+
     var body: some View {
         ZStack {
-            //Background
+            // Background
             RoundedRectangle(cornerRadius: 20)
                 .fill(viewModel.playlist.color)
-            
-            //Content
+
+            // Content
             VStack(alignment: .leading) {
-                
-                //Playlist name
-                HStack{
+                // Playlist name
+                HStack {
                     Spacer()
                     HStack {
                         Image(systemName: "play.fill")
                             .foregroundColor(.white)
                             .font(.system(size: 30))
-                        
+
                         Text(NSLocalizedString(viewModel.playlist.rawValue, comment: ""))
                             .foregroundColor(.white)
                             .font(.headline)
@@ -44,20 +42,18 @@ struct PlaylistView: View {
                     .background(Color.accentColor)
                     .cornerRadius(10.0)
                     .onTapGesture {
-                        
                         if let url = viewModel.urls.first {
-                            
                             userSettings.currentUrl = url.absoluteString
-                            
+
                             print("Load Header Playlist file \(url.absoluteString)")
-                            
-                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
-                                //Change the View to the selected view
+
+                            setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)) {
+                                // Change the View to the selected view
                                 print("Setting Playlist sessionDisplay to .playlists")
                                 sessionDisplay = .playlists
                             }
-                            
-                            //Keep track for next in playlist after loading new set
+
+                            // Keep track for next in playlist after loading new set
                             setInfoModel.setSettings.currentSetInList = url
                             setInfoModel.setSettings.currentPlaylist = viewModel.playlist
                         }
@@ -65,19 +61,15 @@ struct PlaylistView: View {
                     Spacer()
                 }
                 .padding(.bottom)
-                    
-                //Files in Playlist
+
+                // Files in Playlist
                 ScrollView(.vertical) {
-                    
                     ForEach(viewModel.urls.indices, id: \.self) { index in
-                                        
                         let url = viewModel.urls[index]
-                        
-                        HStack(spacing:15){
-                            
-                            Group{
-                                
-                                //Play this set
+
+                        HStack(spacing: 15) {
+                            Group {
+                                // Play this set
                                 Image(systemName: "play.fill")
                                     .foregroundColor(.white)
                                     .font(.system(size: 18))
@@ -86,21 +78,20 @@ struct PlaylistView: View {
                                     .padding(.horizontal, 5.0)
                                     .background(Color.accentColor)
                                     .cornerRadius(5.0)
-                                    
-                                //The file name and date
+
+                                // The file name and date
                                 let filesName = fileController.setNameCustomName(url: url)
-                                
+
                                 ZStack(alignment: .trailing) {
-                                    
-                                    HStack{
+                                    HStack {
                                         Text(filesName)
                                             .font(.title2)
                                         Spacer()
                                     }
-                                    
-                                    HStack{
+
+                                    HStack {
                                         Spacer()
-                                        //Remove set
+                                        // Remove set
                                         Button("-") {
                                             viewModel.removeSetUrl = url
                                             viewModel.showRemoveConfirmation = true
@@ -114,7 +105,6 @@ struct PlaylistView: View {
                                                 title: Text(NSLocalizedString("Remove Set", comment: "")),
                                                 message: Text(""),
                                                 primaryButton: .destructive(Text("Remove")) {
-                                                    
                                                     if let url = viewModel.removeSetUrl {
                                                         viewModel.deleteUrl(url)
                                                     }
@@ -126,30 +116,28 @@ struct PlaylistView: View {
                                 }
                             }
                             .onTapGesture {
-                                
-                                //App storage
+                                // App storage
                                 userSettings.currentUrl = url.absoluteString
-                                
+
                                 print("Load Playlist file \(url)")
-                                
-                                //Load settngs over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
+
+                                // Load settngs over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)) {
                                     print("Setting sessionDisplay to .playlist")
                                     sessionDisplay = .playlists
                                 }
-                                
-                                //Keep track for next in playlist after loading new set
+
+                                // Keep track for next in playlist after loading new set
                                 setInfoModel.setSettings.currentSetInList = url
                                 setInfoModel.setSettings.currentPlaylist = viewModel.playlist
                             }
                             .onLongPressGesture {
-                                
-                                //Edit file
+                                // Edit file
                                 userSettings.currentUrl = url.absoluteString
-                                
-                                //Load settings over current
-                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)){
-                                    //Change the View
+
+                                // Load settings over current
+                                setInfoModel.tapSavedRow(fileName: fileController.urlToPlayListFileName(url: url)) {
+                                    // Change the View
                                     sessionDisplay = .setInfo
                                     sessionDisplaySub = .playListEditor
                                 }

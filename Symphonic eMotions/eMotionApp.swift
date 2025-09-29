@@ -1,18 +1,17 @@
 //
-//  eMotionApp.swift    
+//  eMotionApp.swift
 //  eMotion
 //
 //  Created by Mihai Fratu on 29.07.2021.
 //
 
-import SwiftUI
+import AudioKit
 import AVFoundation
 import Combine
-import AudioKit
+import SwiftUI
 
 @main
 struct eMotionApp: App {
-    
     init() {
         #if os(iOS)
             do {
@@ -33,18 +32,18 @@ struct eMotionApp: App {
             }
         #endif
     }
-    
-    //We need a set loaded into ram and userSettings
+
+    // We need a set loaded into ram and userSettings
 //    let instrumentSet = AppUtils.loadInstrumentSet(json: "SE-set-default.json")
     let instrumentSet = AppUtils.loadInstrumentSet(json: "Loader.json")
-    
+
 //    @State public var sessionDisplay: SessionDisplay = .home
-    @State public var sessionDisplay: SessionDisplay = .pro
+    @State var sessionDisplay: SessionDisplay = .pro
 //    @State public var sessionDisplaySub: SessionDisplay = .page01
-    @State public var sessionDisplaySub: SessionDisplay = .pro
-    
+    @State var sessionDisplaySub: SessionDisplay = .pro
+
     var startViewModel = StartViewModel()
-    
+
     var body: some Scene {
         WindowGroup {
             MainViewContainer(

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FooterView: View {
-    
     @ObservedObject var userSettings: UserSettings
     @State private var isEditing = false
     @State private var inputUserCode: String = ""
@@ -16,9 +15,8 @@ struct FooterView: View {
 
     var body: some View {
         HStack {
-            
             Spacer()
-            
+
             Image("LogoColor")
                 .resizable()
                 .scaledToFit()
@@ -45,8 +43,7 @@ struct FooterView: View {
                         dismissButton: .default(Text("OK"))
                     )
                 }
-            }
-            else {
+            } else {
                 VStack(alignment: .leading) {
                     Text("Symphonic eMotions")
                         .font(.headline)
@@ -54,11 +51,10 @@ struct FooterView: View {
                         .font(.subheadline)
                 }
             }
-            
+
             Spacer()
         }
         .padding()
         .background(Color.secondary.opacity(0.1))
     }
 }
-

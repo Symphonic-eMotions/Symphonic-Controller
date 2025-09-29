@@ -8,7 +8,6 @@
 import SwiftUI
 
 class PartSettings: Identifiable {
-    
     var partId: String
     var partName: String
     var partNumber: Int
@@ -19,8 +18,8 @@ class PartSettings: Identifiable {
     var areaOfInterestColor: [Color]
     var damperTarget: InstrumentsSet.Track.Part.DamperTarget
     var dontDrawVisual: Bool
-    
-    //Controllers
+
+    // Controllers
     var dampMode: InstrumentsSet.Track.Part.DamperTarget.DampMode
     var targetType: InstrumentsSet.Track.Part.DamperTarget.NodeType
     var targetNameEffect: InstrumentsSet.Track.Effect.EffectType
@@ -28,7 +27,7 @@ class PartSettings: Identifiable {
     var targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys
     var targetParameterInstrument: String
     var targetParameterSequencer: String
-    
+
     init(partId: String,
          partName: String,
          partNumber: Int,
@@ -45,8 +44,7 @@ class PartSettings: Identifiable {
          parametersInversed: Bool,
          targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys,
          targetParameterInstrument: String,
-         targetParameterSequencer: String
-    ){
+         targetParameterSequencer: String) {
         self.partId = partId
         self.partName = partName
         self.partNumber = partNumber
@@ -65,11 +63,11 @@ class PartSettings: Identifiable {
         self.targetParameterInstrument = targetParameterInstrument
         self.targetParameterSequencer = targetParameterSequencer
     }
-    
+
     func interestIndexes(rows: Int, columns: Int) -> [InstrumentsSet.Track.Part.Index] {
         var indexes: [InstrumentsSet.Track.Part.Index] = []
-        for row in 0..<rows {
-            for column in 0..<columns {
+        for row in 0 ..< rows {
+            for column in 0 ..< columns {
                 if areaOfInterest[row * columns + column] == 1 {
                     indexes.append(InstrumentsSet.Track.Part.Index(row: row, column: column))
                 }
@@ -77,8 +75,8 @@ class PartSettings: Identifiable {
         }
         return indexes
     }
-    
+
     func isIndexSelected(row: Int, column: Int, gridRows: Int, gridColumns: Int) -> Bool {
-        self.interestIndexes( rows: gridRows, columns: gridColumns).contains { $0.column == column && $0.row == row }
+        interestIndexes(rows: gridRows, columns: gridColumns).contains { $0.column == column && $0.row == row }
     }
 }

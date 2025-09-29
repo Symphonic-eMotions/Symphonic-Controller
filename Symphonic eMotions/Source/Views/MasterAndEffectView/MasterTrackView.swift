@@ -5,48 +5,41 @@
 //  Created by Frans-Jan Wind on 06/09/2022.
 //
 
-import SwiftUI
 import OrderedCollections
+import SwiftUI
 
 struct MasterTrackView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var showMasterTrack: Bool
-    //@State for slider status
+    // @State for slider status
     @State var masterEffectState: [[Float]] = []
-    
+
     init(
         setInfoModel: SetInfoModel,
         masterEffect: State<[[Float]]>,
         showMasterTrack: Binding<Bool>
-    ){
+    ) {
         self.setInfoModel = setInfoModel
-        self._masterEffectState = masterEffect
-        self._showMasterTrack = showMasterTrack
+        _masterEffectState = masterEffect
+        _showMasterTrack = showMasterTrack
     }
-    
+
     var body: some View {
-        
         return GeometryReader { geometry in
-            
-            VStack{
+            VStack {
                 masterTrackScrollView
                 continueButton(geometry: geometry)
             }
         }
     }
-    
+
     private var masterTrackScrollView: some View {
-        
-        ScrollView (.vertical){
-            
+        ScrollView(.vertical) {
             MasterVolumesView(setInfoModel: setInfoModel)
-            
-            //Struct with effects, contains [struct] with parameters per effect
+
+            // Struct with effects, contains [struct] with parameters per effect
             if let masterTrackStructure = setInfoModel.setInfoState.masterTrackStructure {
-                
-                ForEach( Array(masterTrackStructure.enumerated()), id: \.element ) { index, effect in
-                    
+                ForEach(Array(masterTrackStructure.enumerated()), id: \.element) { index, effect in
                     EffectStackView(
                         effect: effect,
                         index: index,
@@ -58,11 +51,11 @@ struct MasterTrackView: View {
         }
         .padding()
     }
-    
+
     private func continueButton(geometry: GeometryProxy) -> some View {
         EMButton(action: {
             showMasterTrack = false
-            
+
         }, color: .green, isSolid: true) {
             Text(NSLocalizedString("Continue", comment: ""))
         }
@@ -85,7 +78,7 @@ struct EffectStackView: View {
                 Text(effect.effectName)
                     .font(.headline)
                     .padding(.vertical)
-                
+
                 if let parameters = effect.parameters {
                     ForEach(Array(parameters.enumerated()), id: \.element) { i, parameter in
                         EffectParameterView(effect: effect, parameter: parameter, effectIndex: index, parameterIndex: i, masterEffectState: $masterEffectState, setInfoModel: setInfoModel)
@@ -124,7 +117,7 @@ struct EffectParameterView: View {
                         parameter: parameter.name,
                         parameterRange: parameter.range
                     )
-                    
+
                     let range = setInfoModel.setSettings.masterEffects[effectIndex]!.parameters[parameterIndex]!.range
                     setInfoModel.setSettings.masterEffects[effectIndex]!.parameters[parameterIndex]!.value = Double(
                         RangeConverter.valueToRange(range: range, value: Double(newVal))
@@ -136,7 +129,7 @@ struct EffectParameterView: View {
         ).onAppear {
             let rangedValue = setInfoModel.setSettings.masterEffects[effectIndex]!.parameters[parameterIndex]!.value
             let rangedRange = setInfoModel.setSettings.masterEffects[effectIndex]!.parameters[parameterIndex]!.range
-            
+
             masterEffectState[effectIndex][parameterIndex] = RangeConverter.rangedToSlider(
                 range: rangedRange,
                 value: rangedValue
@@ -146,32 +139,30 @@ struct EffectParameterView: View {
 }
 
 struct MasterEffectSliderView: View {
-    
     var label: String
     @Binding var value: Float
     var range: [Double]
     var showsLabel: Bool
-    
+
     init(label: String, value: Binding<Float>, range: [Double], showsLabel: Bool = true) {
         self.label = label
         _value = value
         self.range = range
         self.showsLabel = showsLabel
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
-                
-            ZStack{
+            ZStack {
                 if showsLabel { Text(label) }
                 HStack {
-                    Slider(value: $value, in: 0...1)
+                    Slider(value: $value, in: 0 ... 1)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * 0.8)
-                    
+
                     let valueInRange = RangeConverter.rangeToValue(range: range, value: Double(value))
 //                    let valueInRange = value
-                    
+
                     Text("\(valueInRange, specifier: range[1] >= 1000 ? "%.0f" : "%.2f")")
                         .foregroundColor(.white)
                         .font(.subheadline)

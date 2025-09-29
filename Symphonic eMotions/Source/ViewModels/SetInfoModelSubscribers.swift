@@ -8,13 +8,12 @@
 import Foundation
 
 extension SetInfoModel {
-    
 //    func subscribeToLevels() {
 //        cancellableLevels?.cancel()
 //        //Reset to prevend memory leak
 //        cancellableLevels = nil
 //        cancellableLevels = self.leveling.currentSetLevelSubject.sink { [weak self] value in
-//            
+//
 //            guard let self = self else { return }
 //
 //            let oldLevel = Int(self.setInfoState.currentLevel)
@@ -23,7 +22,7 @@ extension SetInfoModel {
 //
 //            //On level change mute and un-mute tracks accordingly
 //            if oldLevel != currentLevel {
-////                print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
+    ////                print("SINK LEVEL CHANGE \(oldLevel) ---> \(currentLevel)")
 //                if oldLevel > currentLevel {
 //                    for track in self.setSettings.tracks {
 //                        if track.value.instrumentType == .exsSampler {
@@ -31,7 +30,7 @@ extension SetInfoModel {
 //                        }
 //                    }
 //                }
-//                
+//
 //                // Mute and unmutes tracks to level settings
 //                //
 //                // Switch View logic sits in MainView / PlayView.onReceive
@@ -40,19 +39,19 @@ extension SetInfoModel {
 //                    level: Int(currentLevel),
 //                    setSettings: self.setSettings
 //                )
-//                
+//
 //                if(currentLevel == setSettings.levels.count) {
-//                    
+//
 //                    //Reset to level 0
 //                    leveling.currentSetLevelSubject.send(0)
-//                    
+//
 //                    if(currentLevel == setSettings.levels.count) {
 //                        //Reset to level 0
 //                        leveling.currentSetLevelSubject.send(0)
 //
 //                        // Set the same vars as in the isSetPlaying block
 //                        self.onLevelReached?()
-//                        
+//
 //                        self.tapStopAudioEngine()
 //                        userSettings.isSetPlaying = false
 //                    }
@@ -60,20 +59,17 @@ extension SetInfoModel {
 //            }
 //        }
 //    }
-    
+
     func subscribeToImageDifference() {
-        
         cancellableImageDifference?.cancel()
         cancellableImageDifference = nil
-        
-        cancellableImageDifference = self.imageDifference.values.sink { [weak self] values in
-            
+
+        cancellableImageDifference = imageDifference.values.sink { [weak self] values in
             guard let self = self else { return }
 
             DispatchQueue.main.async {
-                
                 self.setInfoState.values = values
-                
+
                 let levelValue = self.conductor.valuesDidChange(
                     // These are the main values for controlling
                     values: values,
@@ -88,27 +84,26 @@ extension SetInfoModel {
 //                let currentLevel = self.leveling.currentSetLevelSubject.value
 //                if newLevel != currentLevel {
 //                    self.leveling.currentSetLevelSubject.send(newLevel)
-////                    OSCMessageSender.shared.sendOSCMessage(
-////                        ipAddress: self.userSettings.ipAddress,
-////                        port: self.userSettings.port,
-////                        pattern: self.userSettings.pattern,
-////                        value: Float(newLevel/Double(self.setInfoState.currentInstrumentsSet.levels.count))
-////                    )
+                ////                    OSCMessageSender.shared.sendOSCMessage(
+                ////                        ipAddress: self.userSettings.ipAddress,
+                ////                        port: self.userSettings.port,
+                ////                        pattern: self.userSettings.pattern,
+                ////                        value: Float(newLevel/Double(self.setInfoState.currentInstrumentsSet.levels.count))
+                ////                    )
 //                }
             }
         }
     }
-    
+
     func subscribeToPartFeedback() {
-        
         cancellablePartFeddback?.cancel()
         cancellablePartFeddback = nil
-        
-        cancellablePartFeddback = self.conductor.forwardRampedPartFeedback.sink { [weak self] value in
+
+        cancellablePartFeddback = conductor.forwardRampedPartFeedback.sink { [weak self] value in
             guard let self = self else { return }
-            
+
             self.partFeedbackState.ramped = Double(value)
-            
+
 //            OSCMessageSender.shared.sendOSCMessage(
 //                ipAddress: self.userSettings.ipAddress,
 //                port: self.userSettings.port,

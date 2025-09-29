@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct InstrumentsSet: Identifiable, Decodable {
-    
     enum FileSource: String, Codable {
         case bundle
         case user
     }
-    
-    //Load Instrument set json file
+
+    // Load Instrument set json file
     static func withJSON(_ fileName: String) -> InstrumentsSet? {
         guard let url = Bundle.main.url(
             forResource: fileName,
@@ -24,68 +23,62 @@ struct InstrumentsSet: Identifiable, Decodable {
         guard let data = try? Data(contentsOf: url) else { return nil }
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
-            
+
 //            print("withJSON Loaded: \(fileName)")
-            
+
             return decoded
-        }
-        catch{
+        } catch {
             print("Unexpected error InstrumentsSet withJSON: \(error).")
             print("In file \(fileName)")
         }
         return nil
     }
 
-    //Reload json from server
+    // Reload json from server
     static func withOnlineJSON(_ url: URL) -> InstrumentsSet? {
-        
         guard let data = try? Data(contentsOf: url) else { return nil }
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
-            
+
 //            print("withOnlineJSON Loaded: \(url.absoluteString)")
-            
+
             return decoded
-        }
-        catch{
+        } catch {
             print("Unexpected error InstrumentsSet withJSON: \(error).")
         }
         return nil
     }
-    
-    //Reload json file from documentsfolder
+
+    // Reload json file from documentsfolder
     static func withFileManagerJSON(_ fileName: String) -> InstrumentsSet? {
-        
-        //Users/fjw/Library/Containers/nl.symphonic-emotions.seproBUILD/Data/Documents/
+        // Users/fjw/Library/Containers/nl.symphonic-emotions.seproBUILD/Data/Documents/
         let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = pathURL[0]
         let jsonFilePath = documentsDirectory.appendingPathComponent(fileName)
-        
+
         guard let data = try? Data(contentsOf: jsonFilePath) else { return nil }
         do {
             let decoded = try JSONDecoder().decode(InstrumentsSet.self, from: data)
-            
+
 //            print("withFileManagerJSON Loaded: \(fileName)")
-            
+
             return decoded
-        }
-        catch{
+        } catch {
             print("Unexpected error InstrumentsSet withFileManagerJSON: \(error).")
             print("In file \(fileName)")
         }
         return nil
     }
-    
-    //This is the write file to documents folder
-    static func writeLoadedSet(setName: String, instrumentSet: InstrumentsSet){
 
+    // This is the write file to documents folder
+    static func writeLoadedSet(setName: String, instrumentSet: InstrumentsSet) {
         let directoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let documentURL = (directoryURL.appendingPathComponent(setName).appendingPathExtension("json"))
-        
+
         print("writeLoadedSet \(String(describing: directoryURL))")
-        
+
         let jsonEncoder = JSONEncoder()
-        jsonEncoder.outputFormatting = [.sortedKeys,.prettyPrinted]
+        jsonEncoder.outputFormatting = [.sortedKeys, .prettyPrinted]
         let data = try? jsonEncoder.encode(instrumentSet)
         do {
             try data?.write(to: documentURL, options: .noFileProtection)
@@ -93,7 +86,7 @@ struct InstrumentsSet: Identifiable, Decodable {
             print("Error...Cannot save data!!!See error:(error.localizedDescription)")
         }
     }
-    
+
     private enum SetKeys: String, CodingKey {
         case name = "setName"
         case customName
@@ -116,7 +109,7 @@ struct InstrumentsSet: Identifiable, Decodable {
         case tracks = "instrumentsConfig"
         case setEffects
     }
-    
+
     var id: String { name }
     let name: String
     let customName: String
@@ -126,24 +119,24 @@ struct InstrumentsSet: Identifiable, Decodable {
     let filesPath: String
     let imagePrefix: String
     var userViews: [UserView]
-    //Sequencer objects variables
+    // Sequencer objects variables
     var bpm: Double
     let hasTempo: Bool
     let timeSignature: Int
-    //Master effect rack group
+    // Master effect rack group
     let masterTrackEffects: [Track.Effect]
-    //The row and colums used in imageDifference
-    internal let rows: Int
-    internal let columns: Int
-    //Level duration keeps the amount of levels with an int
-    //Duration could be refectored to aditional level speed per level
+    // The row and colums used in imageDifference
+    let rows: Int
+    let columns: Int
+    // Level duration keeps the amount of levels with an int
+    // Duration could be refectored to aditional level speed per level
     let levels: [Int]
     let levelSpeedSet: Double
     let levelDifficultySet: Double
     let setEffects: [SetEffect]?
-    //Tracks
+    // Tracks
     var tracks: [Track]
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: SetKeys.self)
         name = try container.decode(String.self, forKey: .name)
@@ -167,8 +160,8 @@ struct InstrumentsSet: Identifiable, Decodable {
         setEffects = try container.decodeIfPresent([SetEffect].self, forKey: .setEffects)
         tracks = try container.decode([Track].self, forKey: .tracks)
     }
-    
-    //Init for writing a copy with live values
+
+    // Init for writing a copy with live values
     init(
         name: String,
         customName: String,
@@ -201,9 +194,9 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.bpm = bpm
         self.hasTempo = hasTempo
         self.timeSignature = timeSignature
-        //TODO: new values from state object
+        // TODO: new values from state object
         self.masterTrackEffects = masterTrackEffects
-        
+
         self.rows = rows
         self.columns = columns
         self.levels = levels
@@ -212,26 +205,25 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.setEffects = setEffects
         self.tracks = tracks
     }
-    
+
     func title() -> String {
-        if self.customName != "" {
-            return self.customName
-        }
-        else{
-            return self.name
+        if customName != "" {
+            return customName
+        } else {
+            return name
         }
     }
-    
-    //For master track effetcs
+
+    // For master track effetcs
     func effect(for effectType: Track.Effect.EffectType) -> Track.Effect? {
         masterTrackEffects.first { $0.effectType == effectType }
     }
-    
+
     func track(for id: String) -> Track? {
         tracks.first { $0.id == id }
     }
-    
-    //For global index
+
+    // For global index
     struct Index {
         let row: Int
         let column: Int

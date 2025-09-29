@@ -8,19 +8,17 @@
 import Foundation
 
 enum VariationType: String, Codable, CaseIterable {
-    
     case variationByLevel
     case variationByPosition
     case variationByIntensity
     case variationSequencial
-    
+
     var description: String {
-        switch self{
+        switch self {
         case .variationByLevel:
             return "Variation by level"
         case .variationByPosition:
             return "Variation by position"
-            
         case .variationByIntensity:
             return "Variation by intensity"
         case .variationSequencial:

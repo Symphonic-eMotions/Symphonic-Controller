@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct ColorType: Identifiable {
-        
     var id = UUID()
     var color: Color
 }

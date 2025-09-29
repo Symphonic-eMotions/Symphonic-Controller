@@ -9,7 +9,6 @@ import Combine
 import OrderedCollections
 
 class Leveling {
-        
-    //This levels up with Area values not instruments
+    // This levels up with Area values not instruments
     var currentSetLevelSubject = CurrentValueSubject<Double, Never>(0)
 }

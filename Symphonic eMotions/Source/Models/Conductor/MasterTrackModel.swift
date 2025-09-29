@@ -28,4 +28,3 @@ struct Parameter: Identifiable, Hashable {
     var value: Double
     var range: [Double]
 }
-

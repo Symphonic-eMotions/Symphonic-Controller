@@ -5,45 +5,41 @@
 //  Created by Frans-Jan Wind on 23/06/2023.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
-//struct VolumeView: UIViewRepresentable {
-//    
+// struct VolumeView: UIViewRepresentable {
+//
 //    func makeUIView(context: Context) -> MPVolumeView {
 //        let volumeView = MPVolumeView(frame: .zero)
 //        return volumeView
 //    }
-//    
+//
 //    func updateUIView(_ uiView: MPVolumeView, context: Context) {
 //        // Handle updates to the UIView
 //    }
-//}
+// }
 
 struct VolumeButtonsView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @State private var sliderValue: Float = AVAudioSession.sharedInstance().outputVolume
-    internal var testSoundNoteNumbers: [Int]
-    
-    var body: some View {
+    var testSoundNoteNumbers: [Int]
 
+    var body: some View {
         VStack {
-            
             HStack(spacing: 20) {
-                
-                //Volume down
+                // Volume down
                 ZStack {
                     Rectangle()
                         .frame(width: 90, height: 90)
                         .foregroundColor(.clear)
                         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( Color.accentColor )
-                    
+                        .background(Color.accentColor)
+
                     Button(action: {
                         self.decreaseVolume()
-                        
-                        //Direct connection Introductie set
+
+                        // Direct connection Introductie set
                         setInfoModel.conductor.playNoteNumbersIntroduction(
                             trackId: "Volume",
                             soundSource: .audioBuffer,
@@ -56,20 +52,19 @@ struct VolumeButtonsView: View {
                             .foregroundColor(.white)
                     }
                 }
-                
-                //Volume up
+
+                // Volume up
                 ZStack {
                     Rectangle()
                         .frame(width: 90, height: 90)
                         .foregroundColor(.clear)
                         .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                        .background( Color.accentColor )
-                    
+                        .background(Color.accentColor)
+
                     Button(action: {
-                        
                         self.increaseVolume()
-                            
-                        //Direct connection Introductie set
+
+                        // Direct connection Introductie set
                         setInfoModel.conductor.playNoteNumbersIntroduction(
                             trackId: "Volume",
                             soundSource: .audioBuffer,
@@ -83,8 +78,8 @@ struct VolumeButtonsView: View {
                             .foregroundColor(.white)
                     }
                 }
-                
-                //Speaker visual
+
+                // Speaker visual
                 SpeakerView(
                     sliderValue: $sliderValue
                 )
@@ -134,4 +129,3 @@ struct SpeakerView: View {
         .font(.system(size: 50))
     }
 }
-

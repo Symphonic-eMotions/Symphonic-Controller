@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct SelectUserViews: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @State private var userViewsLocal: [UserView]
-    
+
     init(setInfoModel: SetInfoModel) {
         self.setInfoModel = setInfoModel
         _userViewsLocal = State(initialValue: setInfoModel.setSettings.userViews)
     }
-    
+
     var body: some View {
         List {
             ForEach(UserView.allCases, id: \.self) { viewType in
@@ -33,7 +32,7 @@ struct SelectUserViews: View {
             }
         }
     }
-    
+
     private func updateUserViews(_ viewType: UserView, newValue: Bool) {
         if newValue {
             if !userViewsLocal.contains(viewType) {
@@ -45,7 +44,6 @@ struct SelectUserViews: View {
         setInfoModel.setSettings.userViews = userViewsLocal // Update de externe bron na wijzigingen
     }
 }
-
 
 struct Checkbox: View {
     var isChecked: Bool
@@ -59,4 +57,3 @@ struct Checkbox: View {
             .foregroundColor(.blue) // Optioneel: Verandert de kleur voor betere zichtbaarheid
     }
 }
-

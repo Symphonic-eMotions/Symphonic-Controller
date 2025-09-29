@@ -9,12 +9,11 @@ import Foundation
 import OrderedCollections
 
 class MasterTrackEffectsSettings: Identifiable {
-    
     var id: Int { index }
     var index: Int
     var name: String
     var parameters: OrderedDictionary<Int, ParameterSettings>
-    
+
     init(
         index: Int,
         name: String,

@@ -8,7 +8,6 @@
 import Foundation
 
 struct EaseInCubicDamper: Damper {
-    
 //    func damp(value: Double) -> Double { value * value * value }
     func damp(value: Double) -> Double { pow(value, 2) }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SVGImageView: View {
-    
     var level: Int
     var imageName: String
     var scale: CGFloat
@@ -16,9 +15,9 @@ struct SVGImageView: View {
 
     var body: some View {
         Image(imageName)
-        .resizable()
-        .scaledToFit()
-        .scaleEffect(scale)
-        .opacity(opacity)
+            .resizable()
+            .scaledToFit()
+            .scaleEffect(scale)
+            .opacity(opacity)
     }
 }

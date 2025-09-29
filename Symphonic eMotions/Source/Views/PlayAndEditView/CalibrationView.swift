@@ -1,11 +1,11 @@
-//  StartView.swift
+//  CalibrationView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 18/04/2024.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct CalibrationView: View {
     @EnvironmentObject var userSettings: UserSettings
@@ -21,12 +21,11 @@ struct CalibrationView: View {
 
     init(geometry: GeometryProxy, userSettings: UserSettings, setInfoModel: SetInfoModel) {
         self.geometry = geometry
-        self._setInfoModel = ObservedObject(wrappedValue: setInfoModel)
-        self._calibrationThreshold = State(initialValue: userSettings.calibrationThreshold)
+        _setInfoModel = ObservedObject(wrappedValue: setInfoModel)
+        _calibrationThreshold = State(initialValue: userSettings.calibrationThreshold)
     }
 
     var body: some View {
-
         HStack {
             Button(action: {
                 if isCalibrating {
@@ -34,13 +33,13 @@ struct CalibrationView: View {
                 } else {
                     setInfoModel.imageDifference.startCalibration()
                 }
-                hasBeenUsed = true  
+                hasBeenUsed = true
             }) {
                 Text(isCalibrating ? "Niet bewegen!" : "Kalibreer Stilte")
                     .padding()
                     .background(
                         isCalibrating ? Color.red :
-                        (hasBeenUsed ? Color.green : Color.orange) // Aangepast
+                            (hasBeenUsed ? Color.green : Color.orange) // Aangepast
                     )
                     .foregroundColor(.white)
                     .cornerRadius(10)
@@ -74,7 +73,7 @@ struct CalibrationView: View {
     }
 }
 
-//struct Triangle: Shape {
+// struct Triangle: Shape {
 //    func path(in rect: CGRect) -> Path {
 //        var path = Path()
 //        path.move(to: CGPoint(x: rect.maxX, y: rect.midY))  // Rechter middenpunt
@@ -83,4 +82,4 @@ struct CalibrationView: View {
 //        path.closeSubpath()
 //        return path
 //    }
-//}
+// }

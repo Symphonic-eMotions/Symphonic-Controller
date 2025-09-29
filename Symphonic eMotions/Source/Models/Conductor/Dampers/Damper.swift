@@ -8,7 +8,5 @@
 import Foundation
 
 protocol Damper {
-    
     func damp(value: Double) -> Double
-    
 }

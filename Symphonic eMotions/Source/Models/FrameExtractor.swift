@@ -1,10 +1,10 @@
 //
 //  FrameExtractor.swift
 
-import UIKit
 import AVFoundation
 import Combine
 import CoreImage.CIFilterBuiltins
+import UIKit
 
 enum CameraError: Error {
     case noCameraAvailable
@@ -17,69 +17,69 @@ protocol FrameExtractorDelegate: AnyObject {
 }
 
 class FrameExtractor: NSObject {
-    
     static let shared = FrameExtractor()
-    
+
     private let position = AVCaptureDevice.Position.front
     private let quality = AVCaptureSession.Preset.vga640x480
-    
+
     private var permissionGranted = false
     private let sessionQueue = DispatchQueue(label: "session queue")
     private let bufferQueue = DispatchQueue(label: "buffer queue")
     private let captureSession = AVCaptureSession()
-    
+
     private let context = CIContext()
-    
+
     let previewLayer: AVCaptureVideoPreviewLayer
     private var imagePreviewView: UIImageView!
-    
+
     weak var delegate: FrameExtractorDelegate?
-    
+
     private var orientation: UIInterfaceOrientation = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.interfaceOrientation ?? .unknown {
         didSet {
             guard oldValue != orientation else { return }
             setConnectionOrientation()
         }
     }
-    
+
     deinit {
         captureSession.stopRunning()
         NotificationCenter.default.removeObserver(self)
     }
-    
-    fileprivate override init() {
+
+    override fileprivate init() {
         UIApplication.shared.isIdleTimerDisabled = true
-        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         super.init()
-        
+
         // Observer toevoegen voor oriëntatieveranderingen
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
-        
+
         checkPermission()
         startExtracting()
     }
-    
+
     @objc private func orientationChanged() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        self.orientation = windowScene.interfaceOrientation
+        orientation = windowScene.interfaceOrientation
     }
-    
-    public func startExtracting() {
+
+    func startExtracting() {
         sessionQueue.async {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                
+
                 self.configureSession()
                 self.captureSession.startRunning()
             }
         }
     }
-    
-    public func stopExtracting() {
+
+    func stopExtracting() {
         captureSession.stopRunning()
     }
-    
+
     // MARK: AVSession configuratie
+
     private func checkPermission() {
         switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized:
@@ -90,7 +90,7 @@ class FrameExtractor: NSObject {
             permissionGranted = false
         }
     }
-    
+
     private func requestPermission() {
         sessionQueue.suspend()
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { [unowned self] granted in
@@ -98,40 +98,40 @@ class FrameExtractor: NSObject {
             self.sessionQueue.resume()
         }
     }
-  
+
     private func configureSession() {
         guard permissionGranted else {
             print("Error: Geen toestemming verleend")
             return
         }
         captureSession.sessionPreset = quality
-        
+
         switch selectCaptureDevice() {
-        case .success(let captureDevice):
+        case let .success(captureDevice):
             do {
                 let captureDeviceInput = try AVCaptureDeviceInput(device: captureDevice)
-                
+
                 guard captureSession.canAddInput(captureDeviceInput) else {
                     print("Error: Kan input niet toevoegen aan captureSession")
                     return
                 }
                 captureSession.addInput(captureDeviceInput)
-                
+
                 let videoOutput = AVCaptureVideoDataOutput()
                 videoOutput.setSampleBufferDelegate(self, queue: bufferQueue)
-                
+
                 guard captureSession.canAddOutput(videoOutput) else {
                     print("Error: Kan output niet toevoegen aan captureSession")
                     return
                 }
                 captureSession.addOutput(videoOutput)
                 setConnectionOrientation()
-                
+
             } catch {
                 print("Error: Kan captureDeviceInput niet initialiseren:", error)
             }
-            
-        case .failure(let error):
+
+        case let .failure(error):
             switch error {
             case .noCameraAvailable:
                 print("Error: Geen camera beschikbaar")
@@ -141,7 +141,7 @@ class FrameExtractor: NSObject {
 
     private func setConnectionOrientation() {
         guard let videoOutput = captureSession.outputs.first else { return }
-        
+
         guard let connection = videoOutput.connection(with: AVMediaType.video) else {
             print("Error: Geen videoOutput verbinding")
             return
@@ -154,7 +154,7 @@ class FrameExtractor: NSObject {
             print("Error: Video mirroring niet ondersteund")
             return
         }
-        
+
         let videoOrientation: AVCaptureVideoOrientation = {
             switch orientation {
             case .portrait: return .portrait
@@ -164,11 +164,11 @@ class FrameExtractor: NSObject {
             default: return .portrait
             }
         }()
-        
+
         connection.videoOrientation = videoOrientation
         connection.automaticallyAdjustsVideoMirroring = false
         connection.isVideoMirrored = position == .front
-        
+
         // Update de oriëntatie van de previewLayer
         DispatchQueue.main.async {
             if let previewConnection = self.previewLayer.connection {
@@ -182,8 +182,8 @@ class FrameExtractor: NSObject {
             }
         }
     }
-    
-    private func selectCaptureDevice() -> Result<AVCaptureDevice, CameraError>  {
+
+    private func selectCaptureDevice() -> Result<AVCaptureDevice, CameraError> {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
             print("builtInWideAngleCamera")
             return .success(device)
@@ -195,8 +195,9 @@ class FrameExtractor: NSObject {
             return .failure(.noCameraAvailable)
         }
     }
-    
+
     // MARK: Sample buffer naar UIImage conversie
+
     private func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> CIImage? {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         return CIImage(cvPixelBuffer: imageBuffer)
@@ -205,9 +206,9 @@ class FrameExtractor: NSObject {
 
 extension FrameExtractor: AVCaptureVideoDataOutputSampleBufferDelegate {
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
+
+    func captureOutput(_: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
         guard let image = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
-        self.delegate?.captured(image: image)
+        delegate?.captured(image: image)
     }
 }

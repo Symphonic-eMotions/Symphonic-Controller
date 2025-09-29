@@ -8,73 +8,70 @@
 import Foundation
 
 extension SetInfoModel {
-    
-    func tapStopAudioEngine(){
+    func tapStopAudioEngine() {
         conductor.pauzeEngineAndStopTracks(
-            setSettings: self.setSettings,
+            setSettings: setSettings,
             resetLevels: false
         )
     }
-    
-    func tapStartAudioEngine(){
-        
-        //Fade in on master play, we need level.currentlevel here
+
+    func tapStartAudioEngine() {
+        // Fade in on master play, we need level.currentlevel here
         conductor.levelController(
             level: Int(leveling.currentSetLevelSubject.value),
-            setSettings: self.setSettings
+            setSettings: setSettings
         )
 
         conductor.playEngineAndTracks(
-            setSettings: self.setSettings,
+            setSettings: setSettings,
             level: Int(leveling.currentSetLevelSubject.value)
         )
-        
-        self.setSettings.isWavePlaying = false
+
+        setSettings.isWavePlaying = false
     }
-    
-    func tapAStartRecordTracks(){
-        //Start playing if not playing
+
+    func tapAStartRecordTracks() {
+        // Start playing if not playing
         if !userSettings.isSetPlaying {
             conductor.playEngineAndTracks(
-                setSettings: self.setSettings,
+                setSettings: setSettings,
                 level: Int(leveling.currentSetLevelSubject.value)
             )
         }
-        
-        //Start recording all tracks separate
+
+        // Start recording all tracks separate
         conductor.startRecordingTracks(
-            setSettings: self.setSettings
+            setSettings: setSettings
         )
     }
-    
-    func tapStopRecordTracks(){
-        //Stop recording
+
+    func tapStopRecordTracks() {
+        // Stop recording
         conductor.stopRecordingTracks(
-            setSettings: self.setSettings
+            setSettings: setSettings
         )
-        
+
         conductor.pauzeEngineAndStopTracks(
-            setSettings: self.setSettings,
+            setSettings: setSettings,
             resetLevels: false
         )
     }
-    
-    func tapSetTempoBPMPlus(){
-        self.setSettings.bpm += 1
-        let _ = self.conductor.setTempo(tempoChange: 5)
+
+    func tapSetTempoBPMPlus() {
+        setSettings.bpm += 1
+        _ = conductor.setTempo(tempoChange: 5)
     }
-    
-    func tapSetTempoBPMMin(){
-        self.setSettings.bpm -= 1
-        let _ = self.conductor.setTempo(tempoChange: -5)
+
+    func tapSetTempoBPMMin() {
+        setSettings.bpm -= 1
+        _ = conductor.setTempo(tempoChange: -5)
     }
-    
-    func tapSetTempoReset(){
-        
-        let tempo = self.conductor.resetTempo()
-        self.setSettings.bpm = tempo
+
+    func tapSetTempoReset() {
+        let tempo = conductor.resetTempo()
+        setSettings.bpm = tempo
     }
-    
+
     func tapDisplayModeChange() {
         switch setInfoState.displayMode {
         case .off:

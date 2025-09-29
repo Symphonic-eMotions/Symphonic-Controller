@@ -5,12 +5,11 @@
 //  Created by Frans-Jan Wind on 16/02/2023.
 //
 
+import AudioKit
 import OrderedCollections
 import SwiftUI
-import AudioKit
 
 class TrackSettings: Identifiable, ObservableObject {
-    
     var trackId: String
     var trackIndex: Int
     var trackName: String
@@ -21,46 +20,46 @@ class TrackSettings: Identifiable, ObservableObject {
     var instrumentType: InstrumentsSet.Track.InstrumentType
     var exsFile: ExsFiles
     var audioFiles: [InstrumentsSet.Track.AudioFile]
-    
+
     var instrumentVolume: Float
     var instrumentColor: Color
-    
+
     var midiGroup: [Int]
     var notesToGrid: [Int]
     var notesToGridMapped: [Int]
     var notesToLevel: [Int]
     var noteNumbersClips: [Int]
     var notesSequenceType: NotesSequenceType
-    
+
     var midiFile: String
     var loopLength: [Double]
     var loopsToLevel: [Int]
     var loopsToGrid: [Int]
     var loopsToGridMapped: [Int]
-    
+
     var levels: [Int]
-    
-    @Published var parts: OrderedDictionary<String, PartSettings> = OrderedDictionary<String, PartSettings>() {
+
+    @Published var parts: OrderedDictionary<String, PartSettings> = .init() {
         didSet {
             objectWillChange.send()
         }
     }
-    
-    //Start point track effects
-    @Published var effects: OrderedDictionary<Int, TrackEffectsSettings> = OrderedDictionary<Int, TrackEffectsSettings>() {
+
+    // Start point track effects
+    @Published var effects: OrderedDictionary<Int, TrackEffectsSettings> = .init() {
         didSet {
             objectWillChange.send()
         }
     }
-    
-    //PlayStatus vars
+
+    // PlayStatus vars
 //    var playThisNote: Int = 0
     var notesArePlaying: [Int] = []
     var currentMaxIndex: Int = 0
     var currentPartMaxIndex: Int = 0
     var currentLoopIndex: Int = 0
     var currentLevel: Int = -1
-    
+
     init(
         trackId: String,
         trackIndex: Int,
@@ -88,7 +87,7 @@ class TrackSettings: Identifiable, ObservableObject {
         levels: [Int],
         parts: OrderedDictionary<String, PartSettings>,
         effects: OrderedDictionary<Int, TrackEffectsSettings>
-    ){
+    ) {
         self.trackId = trackId
         self.trackIndex = trackIndex
         self.trackName = trackName
@@ -116,11 +115,10 @@ class TrackSettings: Identifiable, ObservableObject {
         self.parts = parts
         self.effects = effects
     }
-    
-    func changeAreaOfInterestColor(newColor: Color){
-        for partId in self.parts.keys {
-            self.parts[partId]?.areaOfInterestColor = AppUtils.getPartColors(trackColor: newColor, areaOfInterest: self.parts[partId]!.areaOfInterest)
+
+    func changeAreaOfInterestColor(newColor: Color) {
+        for partId in parts.keys {
+            parts[partId]?.areaOfInterestColor = AppUtils.getPartColors(trackColor: newColor, areaOfInterest: parts[partId]!.areaOfInterest)
         }
     }
-    
 }

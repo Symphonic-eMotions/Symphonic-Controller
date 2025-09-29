@@ -5,23 +5,23 @@
 //  Created by Frans-Jan Wind on 23/02/2023.
 //
 
-import SwiftUI
 import Combine
 import OrderedCollections
+import SwiftUI
 
 struct SetInfoState {
     var currentInstrumentsSet: InstrumentsSet
-    var currentLevel: Double = 0.0 //Leveling
-    
+    var currentLevel: Double = 0.0 // Leveling
+
     var values: [[AreaValues]] = []
-    //SpriteKit
+    // SpriteKit
     var displayOpacity: Float = 0.12
-    //Pro
+    // Pro
     var semActive: SeMActive
     var displayMode: DisplayModes = .both
-    //Part editor
+    // Part editor
     var updateEditView: Int = 0
-    //Master
+    // Master
     var masterTrackStructure: [MasterTrackEffect]?
 }
 
@@ -32,42 +32,41 @@ enum PlayerControlsViewAction {
 }
 
 final class SetInfoModel: ObservableObject {
-    
     var userSettings: UserSettings
     private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var setSettings: SetSettings
     @Binding var imageDifference: ImageDifference
     @Published var setInfoState: SetInfoState
-    let currentInstrumentsSetIsChanged: (InstrumentsSet) -> ()
+    let currentInstrumentsSetIsChanged: (InstrumentsSet) -> Void
     var conductor: Conductor
     let leveling: Leveling
     var onLevelReached: (() -> Void)?
-    
+
     let feedbackPresets: [(button: Int, feedback: Double)] = [
         (0, 0.70), // Meeste feedback
         (1, 0.60),
         (2, 0.50),
-        (3, 0.40)  // Minste feedback
+        (3, 0.40) // Minste feedback
     ]
-    
+
     let sensitivityPreset: [(button: Int, sensitivity: Double)] = [
         (0, 0.70), // Minste gevoeligheid
         (1, 0.80),
         (2, 0.90),
-        (3, 0.95)  // Meeste gevoeligheid
+        (3, 0.95) // Meeste gevoeligheid
     ]
-    
-    //Part editor visual feedback
+
+    // Part editor visual feedback
     let partFeedback: PartFeedback
     @Published var partFeedbackState: PartFeedbackState
     let playerControlsAction: ((PlayerControlsViewAction) -> Void)?
-    
-    //Sink variables
-    internal var cancellableLevels: AnyCancellable? = nil
-    internal var cancellableImageDifference: AnyCancellable? = nil
-    internal var cancellablePartFeddback: AnyCancellable? = nil
-    
+
+    // Sink variables
+    var cancellableLevels: AnyCancellable?
+    var cancellableImageDifference: AnyCancellable?
+    var cancellablePartFeddback: AnyCancellable?
+
     init(
         userSettings: UserSettings = UserSettings.shared,
         setInfoLocalState: Binding<SetInfoLocalState>,
@@ -82,27 +81,27 @@ final class SetInfoModel: ObservableObject {
         playerControlsAction: ((PlayerControlsViewAction) -> Void)? = nil
     ) {
         self.userSettings = userSettings
-        self._setInfoLocalState = setInfoLocalState
-        self._setSettings = setSettings
-        self._imageDifference = imageDifference
+        _setInfoLocalState = setInfoLocalState
+        _setSettings = setSettings
+        _imageDifference = imageDifference
         self.setInfoState = setInfoState
         self.currentInstrumentsSetIsChanged = currentInstrumentsSetIsChanged
         self.conductor = conductor
         self.leveling = leveling
-        
+
         self.partFeedback = partFeedback
         self.partFeedbackState = partFeedbackState
-        
+
         self.playerControlsAction = playerControlsAction
-        
+
         frameExtractor = FrameExtractor.shared
         frameExtractor.delegate = self
-        
+
 //        subscribeToLevels()
         subscribeToImageDifference()
         subscribeToPartFeedback()
     }
-    
+
     func buttonToFeedback(id: Int) -> Double {
         for preset in feedbackPresets {
             if preset.button == id {
@@ -111,8 +110,8 @@ final class SetInfoModel: ObservableObject {
         }
         return 0.5
     }
-    
-    //ImageDifference feedbcak
+
+    // ImageDifference feedbcak
     func feedbackToButton(feedback: Double) -> Int {
         for preset in feedbackPresets {
             if preset.feedback == feedback {
@@ -121,8 +120,8 @@ final class SetInfoModel: ObservableObject {
         }
         return 1
     }
-    
-    //ImageDifference Sensitivity
+
+    // ImageDifference Sensitivity
     func buttonToSensitivity(id: Int) -> Double {
         for preset in sensitivityPreset {
             if preset.button == id {
@@ -131,37 +130,37 @@ final class SetInfoModel: ObservableObject {
         }
         return 0.5
     }
-    
-    //TODO: random cell colors
-    func colorForCell(row: Int, column: Int) -> Color {
+
+    // TODO: random cell colors
+    func colorForCell(row _: Int, column _: Int) -> Color {
         // Genereer een willekeurige kleur voor de rand van de cel
         Color(
-            red: Double.random(in: 0...1),
-            green: Double.random(in: 0...1),
-            blue: Double.random(in: 0...1)
+            red: Double.random(in: 0 ... 1),
+            green: Double.random(in: 0 ... 1),
+            blue: Double.random(in: 0 ... 1)
         )
     }
-    
-    //Multi purpose scale function
+
+    // Multi purpose scale function
     func scale(
         input: Double,
         fromInputRange: (Double, Double),
-        toOutputRange: (Double, Double)) -> Double {
+        toOutputRange: (Double, Double)
+    ) -> Double {
         let (A, B) = fromInputRange
         let (C, D) = toOutputRange
-        
+
         // Translate the input range to [0, 1]
         let normalizedInput = (input - A) / (B - A)
-        
+
         // Translate from [0, 1] to the output range
         let output = C + (D - C) * normalizedInput
-        
+
         return output
     }
 }
 
 extension SetInfoModel: FrameExtractorDelegate {
-    
     func captured(image: CIImage) {
         guard userSettings.isCapturingRunning else { return }
         imageDifference.updateImageData(image: image)

@@ -8,21 +8,20 @@
 import SwiftUI
 
 class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
-    
-    @Published var image: CIImage? = nil
-    
-    let frameExtractor: FrameExtractor = FrameExtractor.shared
-        
+    @Published var image: CIImage?
+
+    let frameExtractor: FrameExtractor = .shared
+
     init() {
-        self.frameExtractor.delegate = self
+        frameExtractor.delegate = self
     }
-    
+
     func captured(image: CIImage) {
         DispatchQueue.main.async {
             self.image = image
         }
     }
-    
+
 //    let frameExtractor: FrameExtractor
 //
 //    init() {
@@ -35,41 +34,39 @@ class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
 //            self.image = image
 //        }
 //    }
-    
+
     func calculateAverageBrightness(ciImage: CIImage) -> Double {
         // Create a 1x1 bitmap image context for sampling from the image
         let context = CIContext(options: nil)
         let pixelSize = CGSize(width: 1, height: 1)
-        
-        let outputImage = ciImage.transformed(by: CGAffineTransform(scaleX: 1/ciImage.extent.size.width, y: 1/ciImage.extent.size.height))
-        
+
+        let outputImage = ciImage.transformed(by: CGAffineTransform(scaleX: 1 / ciImage.extent.size.width, y: 1 / ciImage.extent.size.height))
+
         guard let cgImage = context.createCGImage(outputImage, from: CGRect(origin: .zero, size: pixelSize)) else {
             return 0.0
         }
-        
+
         // Create a 1x1 pixel bitmap context and render the CGImage into it
         let bitmapData = calloc(1, 4)
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue)
         let bitmapContext = CGContext(data: bitmapData, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitmapInfo.rawValue)
-        
+
         bitmapContext?.draw(cgImage, in: CGRect(x: 0, y: 0, width: 1, height: 1))
-        
+
         // Calculate the average brightness from the pixel data
         let pixelData = bitmapData!.assumingMemoryBound(to: UInt8.self)
         let red = Double(pixelData[0])
         let green = Double(pixelData[1])
         let blue = Double(pixelData[2])
-        
+
         // Clean up
         free(bitmapData)
-        
+
         // Return the average brightness (assuming RGB values are in the range 0-255)
         return (red + green + blue) / 3.0
     }
 }
-    
-    
-    
+
 //
 //    func calculateAvgWhiteValue(_ image: CIImage) -> Double {
 //        // Convert image to grayscale
@@ -106,4 +103,3 @@ class FrameExtractorViewModel: FrameExtractorDelegate, ObservableObject {
 //        let avgValue = Double(sum) / Double(totalPixels)
 //        return avgValue
 //    }
-

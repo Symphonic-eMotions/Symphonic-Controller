@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct DontPlayGridView: View{
-    
+struct DontPlayGridView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 7.0)
-            .fill(Color.black)
-            .overlay(RoundedRectangle(cornerRadius: 7.0).stroke(Color("GridBorderColor")))
-            .cornerRadius(7.0)
+                .fill(Color.black)
+                .overlay(RoundedRectangle(cornerRadius: 7.0).stroke(Color("GridBorderColor")))
+                .cornerRadius(7.0)
             Image("LogoGrey")
         }.aspectRatio(1.77777, contentMode: .fit)
     }

@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct Dial: View {
-    @Binding public var value: Double
-    public var minValue: Double = 0
-    public var maxValue: Double = .greatestFiniteMagnitude
-    public var divisor: Double = 1
-    public var stepping: Double = 1
+    @Binding var value: Double
+    var minValue: Double = 0
+    var maxValue: Double = .greatestFiniteMagnitude
+    var divisor: Double = 1
+    var stepping: Double = 1
     @State private var dialAngle: Angle = .zero
     @State private var dialShadowAngle: Angle = .zero
     @State private var dialReleaseAngle: Angle = .zero
@@ -43,7 +43,7 @@ struct Dial: View {
             Color(UIColor.systemGray5),
             Color(UIColor.systemGray4),
             Color(UIColor.systemGray3),
-            Color(UIColor.systemGray2),
+            Color(UIColor.systemGray2)
         ]
         return AngularGradient(
             gradient: Gradient(colors: spectrum),
@@ -54,7 +54,7 @@ struct Dial: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack() {
+            ZStack {
                 Circle()
                     .fill(metallicGradient)
                     .rotationEffect(.init(degrees: 90), anchor: .center)

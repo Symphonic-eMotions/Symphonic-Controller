@@ -18,7 +18,7 @@ enum EditorParts: String, CaseIterable {
     case location
     case effects
     case controller
-    //Lets be compatible with 16 tracks
+    // Lets be compatible with 16 tracks
     case track0
     case track1
     case track2
@@ -35,7 +35,7 @@ enum EditorParts: String, CaseIterable {
     case track13
     case track14
     case track15
-    
+
     var title: String {
         switch self {
         case .none:

@@ -8,40 +8,39 @@
 import SwiftUI
 
 struct MidiClipsView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var currentTrack: TrackSettings
-    //This is a 1 track View
+    // This is a 1 track View
     @State var trackId: String
     @Binding var soundSources: [String: InstrumentsSet.Track.InstrumentType]
-    
-    //Bindings
-    @Binding var midiClips: [String:[Double]]
-    @Binding var midiClipLetters: [String:[Int]]
-    @Binding var midiClipsLevels: [String:[Int]]
-    @Binding var midiClipspositions: [String:[Int]]
-    
-    //Sate
+
+    // Bindings
+    @Binding var midiClips: [String: [Double]]
+    @Binding var midiClipLetters: [String: [Int]]
+    @Binding var midiClipsLevels: [String: [Int]]
+    @Binding var midiClipspositions: [String: [Int]]
+
+    // Sate
     @State var isPlaying: [Bool]
     @State var clipLength: Int
     @State private var infoVisibility: [String: Bool] = [:]
-    
-    //Midi files
+
+    // Midi files
     @State var importing = false
     @State var isNewMidi: Bool = false
-    
+
     let columnWidth: CGFloat = 150
-    
+
     init(
         setInfoModel: SetInfoModel,
         currentTrack: TrackSettings,
         trackId: String,
         soundSources: Binding<[String: InstrumentsSet.Track.InstrumentType]>,
-        midiClips: Binding<[String:[Double]]>,
-        midiClipLetters: Binding<[String:[Int]]>,
-        midiClipsLevels: Binding<[String:[Int]]>,
-        midiClipspositions: Binding<[String:[Int]]>
-    ){
+        midiClips: Binding<[String: [Double]]>,
+        midiClipLetters: Binding<[String: [Int]]>,
+        midiClipsLevels: Binding<[String: [Int]]>,
+        midiClipspositions: Binding<[String: [Int]]>
+    ) {
         self.setInfoModel = setInfoModel
         self.currentTrack = currentTrack
         self.trackId = trackId
@@ -58,38 +57,35 @@ struct MidiClipsView: View {
         )
         _clipLength = State(initialValue: Int(currentTrack.loopLength.first ?? 16))
     }
-    
+
     private func toggleInfoVisibility(for key: String) {
         infoVisibility[key, default: false].toggle()
     }
-    
+
     var body: some View {
-        
-        //MIDI file
-        HStack(){
-            
+        // MIDI file
+        HStack {
             Text("MIDI File")
                 .frame(width: columnWidth, alignment: .leading)
-            
-            HStack (spacing: 30) {
-                VStack{
-                    HStack{
-                        //Current midi file loaded
+
+            HStack(spacing: 30) {
+                VStack {
+                    HStack {
+                        // Current midi file loaded
                         Text(currentTrack.midiFile == "trigger" ? "Automatic sample as stem midi" : currentTrack.midiFile)
                             .padding()
-                        
-                        //Notice we need to reload engine
+
+                        // Notice we need to reload engine
                         if isNewMidi {
                             Text(NSLocalizedString("Save and reopen", comment: ""))
                                 .foregroundStyle(.red)
-                        }
-                        else{
-                            //Button replace midi file
-                            Button(action: {importing.toggle()}, label: {
+                        } else {
+                            // Button replace midi file
+                            Button(action: { importing.toggle() }, label: {
                                 Text("Replace current MIDI with file")
                             })
                         }
-                        //Info about where to keep the midi files
+                        // Info about where to keep the midi files
                         Button(action: {
                             toggleInfoVisibility(for: "addMidi")
                         }) {
@@ -99,16 +95,12 @@ struct MidiClipsView: View {
                         }
                         .padding()
                     }
-                    
-                        
+
                     if infoVisibility["addMidi", default: false] {
-                        
                         if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
                             Text("Keep midi files in \"\(displayName)/\(setInfoModel.setSettings.filesPath)/\"")
                         }
                     }
-                    
-                    
                 }
             }
             .fileImporter(isPresented: $importing, allowedContentTypes: [.midi]) { file in
@@ -116,103 +108,97 @@ struct MidiClipsView: View {
                     let fileUrl: URL = try file.get()
                     let folderAndFileName = "\(setInfoModel.setSettings.filesPath)/\(fileUrl.lastPathComponent)"
                     let fileName = "\(fileUrl.lastPathComponent)"
-                    
+
                     // define destination URL in your app's documents directory
                     let documentsDirectory = try FileManager.default.url(
                         for: .documentDirectory,
-                         in: .userDomainMask,
-                         appropriateFor: nil,
-                         create: false
+                        in: .userDomainMask,
+                        appropriateFor: nil,
+                        create: false
                     )
                     let destinationUrl = documentsDirectory.appendingPathComponent(folderAndFileName)
-                    
+
                     // Ensure that file exists at the destination URL
                     guard FileManager.default.fileExists(atPath: destinationUrl.path) else {
                         throw NSError(domain: NSCocoaErrorDomain,
                                       code: NSFileReadNoSuchFileError,
                                       userInfo: [NSFilePathErrorKey: destinationUrl.path])
                     }
-                    
+
                     // Load the MIDI file into the sequencer
                     setInfoModel.conductor.trackSequencers[trackId]?.loadMIDIFile(fromURL: destinationUrl)
                     setInfoModel.conductor.trackSequencersMemory[trackId]?.loadMIDIFile(fromURL: destinationUrl)
-                    
+
                     setInfoModel.setSettings.tracks[trackId]?.midiFile = fileName
-                    
+
                     isNewMidi = true
-                    
+
                     print("Loaded MIDI file: \(fileName)")
-                    
-                } catch{
-                    
+
+                } catch {
                     isNewMidi = false
-                    
-                    print ("MidiClipsView error reading: \(error.localizedDescription)")
+
+                    print("MidiClipsView error reading: \(error.localizedDescription)")
                 }
             }
         }
-        
-        //MIDI clip length
-        HStack(){
-            
+
+        // MIDI clip length
+        HStack {
             Text("MIDI Clip length")
                 .frame(width: columnWidth, alignment: .leading)
-            
+
             TextField("Cliplength", text: Binding(
-                get:{ String(clipLength) },
-                set:{ if let value = Double($0) {
-                    //State
+                get: { String(clipLength) },
+                set: { if let value = Double($0) {
+                    // State
                     clipLength = Int(value)
-                    //Save to file
+                    // Save to file
                     currentTrack.loopLength = Array(repeating: value, count: currentTrack.loopLength.count)
                 }}
             ))
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 50, height: 25)
-            
+
             Text("beats")
                 .frame(width: columnWidth, alignment: .leading)
         }
-        
-        //MIDI clips in file
-        HStack() {
-            
-            HStack{
-                
+
+        // MIDI clips in file
+        HStack {
+            HStack {
                 Text("MIDI clips")
                     .frame(width: columnWidth, alignment: .leading)
             }
-            
-            HStack{
-                
-                //Remove clip button
+
+            HStack {
+                // Remove clip button
                 Button("-") {
                     if (midiClips.count) > 1 {
-                        
                         let oldClip: Int = midiClipLetters[trackId]!.last!
-                        //Mutate in file databse
+                        // Mutate in file databse
                         currentTrack.loopLength.removeLast()
-                        //Binding structure
+                        // Binding structure
                         midiClipLetters[trackId]!.removeLast()
                         midiClips[trackId]!.removeLast()
-                        //Midiclip player
+                        // Midiclip player
                         isPlaying.removeLast()
-                        
-                        //Replace clip in level
+
+                        // Replace clip in level
                         for (i, m) in currentTrack.loopsToLevel.enumerated() {
                             if m == oldClip {
-                                //Store to file
+                                // Store to file
                                 currentTrack.loopsToLevel[i] = currentTrack.loopsToLevel.first!
-                                //Binding
+                                // Binding
                                 midiClipsLevels[trackId]![i] = currentTrack.loopsToLevel.first!
                             }
                         }
-                        //Remove clip from midi clip grid
+                        // Remove clip from midi clip grid
                         for (i, m) in currentTrack.loopsToGrid.enumerated() {
                             if m == oldClip {
-                                //Store to file
+                                // Store to file
                                 currentTrack.loopsToGrid[i] = currentTrack.loopsToGrid.first!
-                                //Binding
+                                // Binding
                                 midiClipspositions[trackId]![i] = currentTrack.loopsToGrid.first!
                             }
                         }
@@ -220,20 +206,19 @@ struct MidiClipsView: View {
                 }
                 .disabled(midiClips.count == 1)
                 .font(.system(size: 45))
-                
-                //Add clip button
+
+                // Add clip button
                 Button("+") {
-                    
                     currentTrack.loopLength.append(16)
-                    //Binding structure
+                    // Binding structure
                     midiClipLetters[trackId]!.append(midiClipLetters[trackId]!.count)
                     midiClips[trackId]!.append(16)
                     isPlaying.append(false)
                 }
                 .font(.system(size: 45))
             }
-            
-            ForEach(0..<(midiClipLetters[trackId]?.count ?? 0), id: \.self) { index in
+
+            ForEach(0 ..< (midiClipLetters[trackId]?.count ?? 0), id: \.self) { index in
                 VStack {
                     let clipLetter: String = AppUtils.letterForNumber(index) ?? "-"
                     Text("\(clipLetter)")

@@ -7,8 +7,7 @@
 
 import Foundation
 
-final class RangeConverter {
-    
+enum RangeConverter {
     /// Converts a value by raising it to a specified exponent, potentially inverting it,
     /// and then scaling and shifting it to fit within a target range.
     ///
@@ -21,7 +20,7 @@ final class RangeConverter {
     static func valueToRange(range: [Double], value: Double, exponent: Int = 0, inverted: Bool = false) -> Double {
         // Compute the value raised to the specified exponent
         var expValue = value
-        for _ in 0..<exponent {
+        for _ in 0 ..< exponent {
             expValue *= value
         }
 
@@ -32,10 +31,10 @@ final class RangeConverter {
 
         // Scale and shift the value to fit within the target range
         let convertedValue = expValue * (range[1] - range[0]) + range[0]
-        
+
         return convertedValue
     }
-    
+
     /// Converts a normalized value from the range [0, 1] to its original range.
     ///
     /// - Parameters:
@@ -45,10 +44,10 @@ final class RangeConverter {
     static func rangeToValue(range: [Double], value: Double) -> Double {
         // Compute the value within the target range
         let convertedValue = value * (range[1] - range[0]) + range[0]
-        
+
         return convertedValue
     }
-    
+
     /// Converts a value from a given range to a normalized slider range of [0, 1].
     ///
     /// - Parameters:
@@ -58,11 +57,10 @@ final class RangeConverter {
     static func rangedToSlider(range: [Double], value: Double) -> Float {
         // Calculate the reciprocal of the total range span
         let rangePart: Double = 1 / (range[1] - range[0])
-        
+
         // Compute the normalized value
         let normalizedValue = (value - range[0]) * rangePart
-        
+
         return Float(normalizedValue)
     }
 }
-

@@ -9,13 +9,12 @@ import Foundation
 import OrderedCollections
 
 class TrackEffectsSettings: Identifiable {
-    
     var id: Int { index }
     var index: Int
     var name: String
     var effectType: InstrumentsSet.Track.Effect.EffectType
     var parameters: OrderedDictionary<Int, ParameterSettings>
-    
+
     init(
         index: Int,
         name: String,
@@ -27,11 +26,11 @@ class TrackEffectsSettings: Identifiable {
         self.effectType = effectType
         self.parameters = parameters
     }
-    
+
     static func effectValueRanges(effectType: InstrumentsSet.Track.Effect.EffectType) -> [ValueAndRange] {
-            let ite = InstrumentsSet.Track.Effect()
-            let valueAndRange = ite.effectParameterValues(effectType: effectType)
-            
-            return valueAndRange
-        }
+        let ite = InstrumentsSet.Track.Effect()
+        let valueAndRange = ite.effectParameterValues(effectType: effectType)
+
+        return valueAndRange
+    }
 }

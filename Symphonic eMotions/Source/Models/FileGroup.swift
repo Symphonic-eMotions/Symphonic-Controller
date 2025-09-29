@@ -9,22 +9,21 @@
 import Foundation
 
 enum FileGroup: Hashable, Codable {
-    
-    //Template is used as ID for Creator mode
+    // Template is used as ID for Creator mode
     case template
-    
-    //The try it out lay out
+
+    // The try it out lay out
     case home
-    //not yet used
+    // not yet used
     case demo
-    //Pro sets
+    // Pro sets
     case pro
     case art
     case none
-    
-    //Extra features as applaus
+
+    // Extra features as applaus
     case playlists
-    
+
     var title: String {
         switch self {
         case .template:

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SetFileButtonView: View {
-    
     @EnvironmentObject var userSettings: UserSettings
     let setFile: SetFile
     @Binding var selectedSet: SetFile?
@@ -21,7 +20,7 @@ struct SetFileButtonView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Spacer()
-                    HStack{
+                    HStack {
                         Text(setFile.name)
                             .foregroundColor(selectedSet == setFile ? .white : .primary)
                             .font(.headline)
@@ -33,20 +32,19 @@ struct SetFileButtonView: View {
             }
             .padding(.vertical, 4.0)
             .padding(.leading, 4.0)
-            .background( showDisabled ? Color.red.opacity(0.5) : (selectedSet == setFile ? Color.accentColor : .secondary))
+            .background(showDisabled ? Color.red.opacity(0.5) : (selectedSet == setFile ? Color.accentColor : .secondary))
             .cornerRadius(10.0)
         }
         .onTapGesture {
-            
             userSettings.isCapturingRunning = false
-            
+
             selectedSet = setFile
             setInfoModel.tapStopAudioEngine()
-            
+
             setInfoLocalState.setName = setFile.name
             setInfoLocalState.setConfig = setFile.url.lastPathComponent
             setInfoLocalState.setURL = setFile.url.absoluteString
-            
+
             sessionDisplay = .setInfo
         }
     }

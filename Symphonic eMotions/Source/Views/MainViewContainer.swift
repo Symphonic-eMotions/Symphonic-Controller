@@ -5,18 +5,16 @@
 //  Created by Frans-Jan Wind on 03/07/2023.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct MainViewContainer: View {
-    
     @ObservedObject var viewModel: MainViewModel
-    @Binding public var sessionDisplay: SessionDisplay
-    //Set info page vars from navigation
+    @Binding var sessionDisplay: SessionDisplay
+    // Set info page vars from navigation
     @State var setInfoLocalState = SetInfoLocalState()
-    
+
     var body: some View {
-                
         MainView(
             viewModel: viewModel,
             setInfoModel: SetInfoModel(
@@ -28,7 +26,7 @@ struct MainViewContainer: View {
                     semActive: viewModel.mainState.semActive,
                     masterTrackStructure: MasterTrackEffectsHelper.masterTrackViewObject(
                         instrumentSet: viewModel.mainState.currentInstrumentsSet,
-                        setSettings:  viewModel.mainState.setSettings
+                        setSettings: viewModel.mainState.setSettings
                     )
                 ),
                 currentInstrumentsSetIsChanged: { instrumentsSet in

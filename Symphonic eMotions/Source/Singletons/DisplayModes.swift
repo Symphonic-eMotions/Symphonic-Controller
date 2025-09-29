@@ -14,7 +14,7 @@ enum DisplayModes {
     case instruments
     case both
     case refresh
-    
+
     var title: String {
         switch self {
         case .off:
@@ -29,7 +29,7 @@ enum DisplayModes {
             return "Refresh"
         }
     }
-    
+
     var icon: Image {
         switch self {
         case .off:

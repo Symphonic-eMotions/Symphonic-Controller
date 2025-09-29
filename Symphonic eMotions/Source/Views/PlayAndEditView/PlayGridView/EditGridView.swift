@@ -7,29 +7,27 @@
 import SwiftUI
 
 struct EditGridView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    
+
     var body: some View {
         VStack {
-            
-            ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.rows, id: \.self) { row in
+            ForEach(0 ..< setInfoModel.setInfoState.currentInstrumentsSet.rows, id: \.self) { row in
                 HStack {
-                    ForEach(0..<setInfoModel.setInfoState.currentInstrumentsSet.columns, id: \.self) { column in
+                    ForEach(0 ..< setInfoModel.setInfoState.currentInstrumentsSet.columns, id: \.self) { column in
                         ZStack {
                             RoundedRectangle(cornerRadius: 7.0)
-                            .fill(
-                                setInfoModel.partColor(
+                                .fill(
+                                    setInfoModel.partColor(
+                                        row: row,
+                                        column: column
+                                    )
+                                )
+                                .overlay(RoundedRectangle(cornerRadius: 7.0).stroke(Color("GridBorderColor")))
+                                .cornerRadius(7.0)
+                                .hueRotation(.degrees(setInfoModel.partDegree(
                                     row: row,
                                     column: column
-                                )
-                            )
-                            .overlay(RoundedRectangle(cornerRadius: 7.0).stroke(Color("GridBorderColor")))
-                            .cornerRadius(7.0)
-                            .hueRotation(.degrees(setInfoModel.partDegree(
-                                row: row,
-                                column: column
-                            )))
+                                )))
                         }
 
                         .onTapGesture {

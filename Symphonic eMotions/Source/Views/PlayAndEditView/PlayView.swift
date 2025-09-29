@@ -5,41 +5,40 @@
 //  Created by Mihai Fratu on 29.07.2021.
 //
 
-import SwiftUI
 import AudioKit
+import SwiftUI
 
 struct PlayView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @EnvironmentObject var fileController: FileController
-    @Binding public var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplay: SessionDisplay
     @StateObject private var columnOpacityController: ColumnOpacityController
     @StateObject private var cellOpacityController: CellOpacityController
     @StateObject private var gridModel: GridModel
     @State private var presentSettingSheet = false
     @State private var showMasterTrack: Bool = false
-    @Binding public var showLevelPlayerFullScreen: Bool
-    
+    @Binding var showLevelPlayerFullScreen: Bool
+
     @State var currentTrackID: String
     @State var currentPartID: String
-    
+
     @State private var selectedPattern: DevicePattern = .stap1
     @State private var rampUp: Double = 0.5
     @State private var rampDown: Double = 0.5
     @State private var initialRampUp: Double
     @State private var initialRampDown: Double
-    
+
     init(
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         showLevelPlayerFullScreen: Binding<Bool>
-    ){
+    ) {
         self.setInfoModel = setInfoModel
-        self._columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(count:(setInfoModel.setInfoState.currentInstrumentsSet.columns))
+        _columnOpacityController = StateObject(wrappedValue: ColumnOpacityController(count: setInfoModel.setInfoState.currentInstrumentsSet.columns)
         )
-        self._cellOpacityController = StateObject(wrappedValue: CellOpacityController(count:(setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns))
+        _cellOpacityController = StateObject(wrappedValue: CellOpacityController(count: setInfoModel.setInfoState.currentInstrumentsSet.rows * setInfoModel.setInfoState.currentInstrumentsSet.columns)
         )
-        self._gridModel = StateObject(wrappedValue:
+        _gridModel = StateObject(wrappedValue:
             GridModel(
                 levelCount: setInfoModel.setSettings.levels.count,
                 levelSubject: setInfoModel.leveling.currentSetLevelSubject,
@@ -47,39 +46,39 @@ struct PlayView: View {
                 gridColumns: setInfoModel.setInfoState.currentInstrumentsSet.columns
             )
         )
-        self._sessionDisplay = sessionDisplay
-        self._showLevelPlayerFullScreen = showLevelPlayerFullScreen
-        
-        //Set the first track active in the editor
-        self.currentTrackID = setInfoModel.setSettings.settingsCurrentTrackID
+        _sessionDisplay = sessionDisplay
+        _showLevelPlayerFullScreen = showLevelPlayerFullScreen
+
+        // Set the first track active in the editor
+        currentTrackID = setInfoModel.setSettings.settingsCurrentTrackID
         setInfoModel.partFeedback.currentTrackID.value = setInfoModel.setSettings.settingsCurrentTrackID
-        
-        self.currentPartID = setInfoModel.setSettings.settingsCurrentPartID
+
+        currentPartID = setInfoModel.setSettings.settingsCurrentPartID
         setInfoModel.partFeedback.currentPartID.value = setInfoModel.setSettings.settingsCurrentPartID
-        
-        self._initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
-        self._initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
+
+        _initialRampUp = State(initialValue: setInfoModel.setSettings.settingsRampUp)
+        _initialRampDown = State(initialValue: setInfoModel.setSettings.settingsRampDown)
 
         if let initialPattern = DevicePattern(pattern: setInfoModel.userSettings.pattern) {
-            self._selectedPattern = State(initialValue: initialPattern)
+            _selectedPattern = State(initialValue: initialPattern)
         } else {
-            self._selectedPattern = State(initialValue: .stap1)
+            _selectedPattern = State(initialValue: .stap1)
         }
 
         // Initialize rampUp and rampDown using UserSettings, providing defaults
         let rampUpValue = setInfoModel.userSettings.getRampUp(
-            for: self._selectedPattern.wrappedValue,
-            defaultValue: self._initialRampUp.wrappedValue
+            for: _selectedPattern.wrappedValue,
+            defaultValue: _initialRampUp.wrappedValue
         )
-        self._rampUp = State(initialValue: rampUpValue)
+        _rampUp = State(initialValue: rampUpValue)
 
         let rampDownValue = setInfoModel.userSettings.getRampDown(
-            for: self._selectedPattern.wrappedValue,
-            defaultValue: self._initialRampDown.wrappedValue
+            for: _selectedPattern.wrappedValue,
+            defaultValue: _initialRampDown.wrappedValue
         )
-        self._rampDown = State(initialValue: rampDownValue)
+        _rampDown = State(initialValue: rampDownValue)
     }
-    
+
     var body: some View {
         VStack {
             // Grid van knoppen
@@ -103,7 +102,7 @@ struct PlayView: View {
                             Button(action: {
                                 selectedPattern = pattern
                                 setInfoModel.userSettings.pattern = pattern.rawValue
-                                
+
                                 // Update rampUp and rampDown for the new pattern, using defaults if necessary
                                 rampUp = setInfoModel.userSettings.getRampUp(for: selectedPattern, defaultValue: initialRampUp)
                                 rampDown = setInfoModel.userSettings.getRampDown(for: selectedPattern, defaultValue: initialRampDown)
@@ -115,9 +114,8 @@ struct PlayView: View {
                                 setInfoModel.conductor.rampDown[currentPartID] = rampDown
                                 setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = rampDown
 
-                                
                                 // Stuur een OSC-bericht met waarde 0 naar elk patroon
-                                DevicePattern.allCases.forEach { pattern in
+                                for pattern in DevicePattern.allCases {
                                     OSCMessageSender.shared.sendOSCMessage(
                                         ipAddress: setInfoModel.userSettings.ipAddress,
                                         port: setInfoModel.userSettings.port,
@@ -127,36 +125,37 @@ struct PlayView: View {
                                 }
                             }) {
                                 Text(pattern.displayName)
-                                .font(.system(size: fontSize))
-                                .frame(width: buttonWidth, height: buttonHeight)
-                                .background(
-                                    selectedPattern == pattern ?
-                                        (pattern == .stap0 ? Color.red : Color.blue)
-                                        : Color.gray
-                                )
-                                .foregroundColor(.white)
-                                .cornerRadius(10)                            }
+                                    .font(.system(size: fontSize))
+                                    .frame(width: buttonWidth, height: buttonHeight)
+                                    .background(
+                                        selectedPattern == pattern ?
+                                            (pattern == .stap0 ? Color.red : Color.blue)
+                                            : Color.gray
+                                    )
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
                         }
                     }
                     .frame(maxHeight: buttonHeight * 4 + 30)
                     .padding()
                     // Overige content (zoals CalibrationView en sliders en optionele camera)
                     VStack {
-                        //Calibration en settings
+                        // Calibration en settings
                         HStack {
                             CalibrationView(
                                 geometry: geometry,
                                 userSettings: setInfoModel.userSettings,
                                 setInfoModel: setInfoModel
                             )
-                            
+
                             // Settings button
                             SettingsButtonWithLongPress(
                                 setInfoModel: setInfoModel
                             )
                             .padding(.top, -15)
                         }
-                        
+
                         // Visual feedback
                         ValueFeedback(value: .init(
                             get: {
@@ -165,10 +164,11 @@ struct PlayView: View {
                             },
                             set: {
                                 _ in
-                            }), title: "Beweging" )
-                        .frame(height: 28.0)
-                        //Ramp up and Ramp down
-                        HStack{
+                            }
+                        ), title: "Beweging")
+                            .frame(height: 28.0)
+                        // Ramp up and Ramp down
+                        HStack {
                             RampSliderView(
                                 label: "Up",
                                 value: $rampUp,
@@ -178,7 +178,7 @@ struct PlayView: View {
                             .onChange(of: rampUp) { newValue in
                                 // Save to UserSettings
                                 setInfoModel.userSettings.setRampUp(newValue, for: selectedPattern)
-                                
+
                                 // Update conductor and setSettings
                                 setInfoModel.conductor.rampUp[currentPartID] = newValue
                                 setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = newValue
@@ -193,7 +193,7 @@ struct PlayView: View {
                             .onChange(of: rampDown) { newValue in
                                 // Save to UserSettings
                                 setInfoModel.userSettings.setRampDown(newValue, for: selectedPattern)
-                                
+
                                 // Update conductor and setSettings
                                 setInfoModel.conductor.rampDown[currentPartID] = newValue
                                 setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = newValue
@@ -201,7 +201,7 @@ struct PlayView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     // Bepaal of de view in portretmodus is
                     let isPortrait = geometry.size.height > geometry.size.width
 
@@ -213,7 +213,7 @@ struct PlayView: View {
                         .aspectRatio(1.77777, contentMode: .fit)
                         .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.secondary))
                         .cornerRadius(10.0)
-                        .opacity( setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
+                        .opacity(setInfoModel.setInfoState.displayMode == .both ? 0.30 : 1.0)
                         .padding()
                     }
                 }
@@ -221,7 +221,7 @@ struct PlayView: View {
                     // Set rampUp and rampDown in conductor and setSettings
                     setInfoModel.conductor.rampUp[currentPartID] = rampUp
                     setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampUp = rampUp
-                    
+
                     setInfoModel.conductor.rampDown[currentPartID] = rampDown
                     setInfoModel.setSettings.tracks[currentTrackID]?.parts[currentPartID]?.rampDown = rampDown
                 }
@@ -239,14 +239,13 @@ struct PlayView: View {
 }
 
 struct SliderView: View {
-    
     var label: LocalizedStringKey
     @Binding var value: Float
     var minValue: Float = 0
     var maxValue: Float = 1
     var showsSeparator: Bool
     var withPercentage: CGFloat = 0.7
-    
+
     init(
         label: LocalizedStringKey,
         value: Binding<Float>,
@@ -262,7 +261,7 @@ struct SliderView: View {
         self.showsSeparator = showsSeparator
         self.withPercentage = withPercentage
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -275,14 +274,13 @@ struct SliderView: View {
                             .font(.subheadline)
                     }
                     Spacer()
-                    
-                    Slider(value: $value, in: minValue...maxValue)
+
+                    Slider(value: $value, in: minValue ... maxValue)
                         .foregroundColor(.accentColor)
                         .frame(width: geometry.size.width * withPercentage)
-                
                 }
                 .padding(.horizontal)
-                
+
                 if showsSeparator {
                     Rectangle()
                         .fill(Color.secondary)

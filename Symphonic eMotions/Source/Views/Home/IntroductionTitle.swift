@@ -8,39 +8,36 @@
 import SwiftUI
 
 struct IntroductionTitle: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    
-    public var localizedString: String
-    public var nextPage: SessionDisplay
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+
+    var localizedString: String
+    var nextPage: SessionDisplay
     var introductionNoteNumbers: [Int]
-    
+
     var body: some View {
-        
-        HStack{
-            
+        HStack {
             Spacer()
-            
+
             Text(NSLocalizedString(localizedString, comment: ""))
                 .font(.system(size: 40))
                 .padding()
-            
+
             ZStack {
                 Rectangle()
                     .frame(width: 200, height: 60)
                     .foregroundColor(.clear)
                     .overlay(RoundedRectangle(cornerRadius: 8.0).stroke(.white))
-                    .background( Color.accentColor )
-                
+                    .background(Color.accentColor)
+
                 Text(NSLocalizedString("Continue", comment: ""))
                     .font(.system(size: 30))
                     .padding()
             }
             .onTapGesture {
                 withAnimation {
-                    //Shut down audio test notes
+                    // Shut down audio test notes
                     if nextPage == .page03 {
                         setInfoModel.conductor.playNoteNumbersIntroduction(
                             trackId: "Volume",
@@ -49,11 +46,10 @@ struct IntroductionTitle: View {
                             noteOn: true
                         )
                     }
-                    //At the end of the introduction go to the demo
+                    // At the end of the introduction go to the demo
                     if nextPage == .demo {
                         sessionDisplay = .demo
-                    }
-                    else {
+                    } else {
                         sessionDisplaySub = nextPage
                     }
                 }

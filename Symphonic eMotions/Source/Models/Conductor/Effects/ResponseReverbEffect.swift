@@ -7,27 +7,25 @@
 
 import AudioKit
 
+import AudioKitEX
 import AVFoundation
+import CSoundpipeAudioKit
 import SoundpipeAudioKit
 import SwiftUI
-import AudioKitEX
-import CSoundpipeAudioKit
 
 class ResponseReverbEffect: AudioProcessingEffect {
-    
     var respReverbDuration: ValueAndRange
     let respDryWetMixer: ValueAndRange
-    
+
     weak var nodeOne: Node?
     weak var node: Node?
-    
+
     init(respReverbDuration: ValueAndRange,
-         respDryWetMixer: ValueAndRange
-    ) {
+         respDryWetMixer: ValueAndRange) {
         self.respReverbDuration = respReverbDuration
         self.respDryWetMixer = respDryWetMixer
     }
-    
+
     func chain(to input: Node) -> Node {
         let verb = FlatFrequencyResponseReverb(
             input,
@@ -38,24 +36,24 @@ class ResponseReverbEffect: AudioProcessingEffect {
         node = mix
         return mix
     }
-    
+
     func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
         switch damperTarget.parameter {
         case "reverbDuration":
             let rd = RangeConverter.valueToRange(range: respReverbDuration.range, value: value, exponent: 1)
-            (nodeOne as? FlatFrequencyResponseReverb)?.reverbDuration = AUValue( rd )
+            (nodeOne as? FlatFrequencyResponseReverb)?.reverbDuration = AUValue(rd)
         case "dryWetMixer":
             let b = RangeConverter.valueToRange(range: respDryWetMixer.range, value: value)
-            (node as? DryWetMixer)?.balance = AUValue( b )
+            (node as? DryWetMixer)?.balance = AUValue(b)
         default: break
         }
     }
-    
+
     func apply<V>(keyPath: WritableKeyPath<FlatFrequencyResponseReverb, V>, value: V) {
         var lowPassFilter = node as? FlatFrequencyResponseReverb
         lowPassFilter?[keyPath: keyPath] = value
     }
-    
+
     func valueAndRange(parameter: String) -> ValueAndRange? {
         switch parameter {
         case "reverbDuration":
@@ -66,4 +64,3 @@ class ResponseReverbEffect: AudioProcessingEffect {
         }
     }
 }
-

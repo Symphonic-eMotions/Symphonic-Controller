@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct PlayListsView: View {
-        
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+
     @EnvironmentObject var fileController: FileController
 
     var body: some View {
@@ -22,7 +21,7 @@ struct PlayListsView: View {
                 sessionDisplay: $sessionDisplay,
                 sessionDisplaySub: $sessionDisplaySub,
                 viewModel: PlaylistViewModel(
-                    playlist: SeMActive.Playlists.minimal, 
+                    playlist: SeMActive.Playlists.minimal,
                     sessionDisplay: sessionDisplay
                 )
             )
@@ -32,7 +31,8 @@ struct PlayListsView: View {
                 sessionDisplaySub: $sessionDisplaySub,
                 viewModel: PlaylistViewModel(
                     playlist: SeMActive.Playlists.person,
-                    sessionDisplay: sessionDisplay)
+                    sessionDisplay: sessionDisplay
+                )
             )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -40,5 +40,3 @@ struct PlayListsView: View {
         .padding(10)
     }
 }
-
-

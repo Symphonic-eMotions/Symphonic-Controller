@@ -8,25 +8,23 @@
 import Foundation
 
 extension InstrumentsSet.Track {
-    
     struct MidiFile: Decodable {
-        
         private enum MidiKeys: String, CodingKey {
             case fileName = "midiFileName"
             case fileExtension = "midiFileExt"
             case loopLength
             case loopsToLevel
             case loopsToGrid
-            //case scoreParts
+            // case scoreParts
         }
-        
+
         let fileName: String
         let fileExtension: String
         var loopLength: [Double]
         var loopsToLevel: [Int]
         var loopsToGrid: [Int]
-        //let scoreParts: Int
-        
+        // let scoreParts: Int
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: MidiKeys.self)
             fileName = try container.decode(String.self, forKey: .fileName)
@@ -35,7 +33,7 @@ extension InstrumentsSet.Track {
             loopsToLevel = try container.decodeIfPresent([Int].self, forKey: .loopsToLevel) ?? []
             loopsToGrid = try container.decodeIfPresent([Int].self, forKey: .loopsToGrid) ?? []
         }
-        
+
         init(
             fileName: String,
             fileExtension: String,
@@ -62,5 +60,3 @@ extension InstrumentsSet.Track.MidiFile: Encodable {
         try container.encode(loopsToGrid, forKey: .loopsToGrid)
     }
 }
-
-

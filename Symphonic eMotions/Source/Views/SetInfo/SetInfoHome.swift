@@ -5,11 +5,10 @@
 //  Created by Frans-Jan Wind on 23/02/2023.
 //
 
-import SwiftUI
 import SwiftOSC
+import SwiftUI
 
 struct SetInfoHome: View {
-    
     @ObservedObject var userSettings: UserSettings
 
     init(userSettings: UserSettings) {
@@ -23,7 +22,6 @@ struct SetInfoHome: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
                 .keyboardType(.numbersAndPunctuation)
-            
         }
     }
 }

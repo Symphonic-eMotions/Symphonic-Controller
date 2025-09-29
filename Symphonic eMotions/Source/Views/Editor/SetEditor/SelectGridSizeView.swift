@@ -1,5 +1,5 @@
 //
-//  SelectGrid.swift
+//  SelectGridSizeView.swift
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 31/03/2023.
@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-//Set the grid size of this variation
+// Set the grid size of this variation
 struct SelectGridSizeView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @State var localGridRow: Int
     @State var showConfirmationAlert = false
-    
+
     var body: some View {
-        
-        HStack{
+        HStack {
             Picker(
                 "Skins",
                 selection: Binding(
@@ -26,7 +24,7 @@ struct SelectGridSizeView: View {
                     set: { value in
                         localGridRow = value
                         showConfirmationAlert = true
-                        
+
 //                        setInfoModel.setSettings.gridRows = value
 //                        setInfoModel.setSettings.gridColumns = value
 //                        //Reset all grid related arrays
@@ -34,7 +32,7 @@ struct SelectGridSizeView: View {
                     }
                 )
             ) {
-                ForEach( 2...4, id: \.self){
+                ForEach(2 ... 4, id: \.self) {
                     Text("Grid \($0) x \($0)")
                 }
             }

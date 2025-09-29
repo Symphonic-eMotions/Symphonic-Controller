@@ -13,41 +13,37 @@ struct IdentifiableURL: Identifiable {
 }
 
 struct SavedSetsList: View {
-    
     @AppStorage(UserDefaultsKeys.currentUrl) var currentUrl: String = "SavedSetsList"
-    
+
     @ObservedObject var setInfoModel: SetInfoModel
-    @Binding public var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplay: SessionDisplay
     @EnvironmentObject var fileController: FileController
     @Binding var userPresets: [URL]
     @State private var isSharePresented: Bool = false
     @State private var isPlaylistsPresented: Bool = false
-    
+
     @State private var showDeleteAlert = false
-    @State private var deleteUrl: URL = URL("empty")
-    @State private var playlistUrl: URL = URL("empty")
+    @State private var deleteUrl: URL = .init("empty")
+    @State private var playlistUrl: URL = .init("empty")
     @State private var shareUrl: IdentifiableURL?
-    
+
     var body: some View {
-        
-        VStack(alignment: .leading){
-            
-            HStack{
+        VStack(alignment: .leading) {
+            HStack {
                 Text(NSLocalizedString("User sets", comment: ""))
                     .padding(.leading)
                     .font(.title)
                 Spacer()
             }
-            //User files documents folder
-            ForEach( userPresets, id: \.self ){ url in
-                
-                //Loop through filtered files in Documents folder
+            // User files documents folder
+            ForEach(userPresets, id: \.self) { url in
+                // Loop through filtered files in Documents folder
                 if fileController.isURLInGroup(
                     url: url,
                     name: setInfoModel.setInfoLocalState.setName
                 ) {
                     // Create a closure to capture the current URL and return the button
-                    //The same for adding to playlist and share
+                    // The same for adding to playlist and share
                     let deleteAction = {
                         showDeleteAlert = true
                         deleteUrl = url
@@ -56,12 +52,12 @@ struct SavedSetsList: View {
                         // Setting the share URL
                         shareUrl = IdentifiableURL(url: url)
                     }
-                    
-                    //The file name and date
+
+                    // The file name and date
                     let filesName = fileController.fileNameOrCustomName(
                         url: url, fileName: fileController.nameFromUrl(url: url)
                     )
-                    
+
                     VStack(alignment: .leading, spacing: 8) { // Verlaag de spacing voor minder ruimte tussen tekst en knoppen
                         // De bestandsnaam en datum
                         VStack(alignment: .leading, spacing: 2) { // Kleine spacing tussen de tekstregels
@@ -73,7 +69,7 @@ struct SavedSetsList: View {
                                 .font(.subheadline)
                         }
                         .layoutPriority(1)
-                        
+
                         // HStack met knoppen
                         HStack(spacing: 10) { // Pas de spacing aan indien nodig
                             // Play this set
@@ -86,7 +82,7 @@ struct SavedSetsList: View {
                                 .cornerRadius(5.0)
                                 .onTapGesture {
                                     currentUrl = url.absoluteString
-                                    //Load settngs over current
+                                    // Load settngs over current
                                     setInfoModel.tapSavedRow(
                                         fileName: fileController.urlToFileName(
                                             url: url
@@ -95,7 +91,7 @@ struct SavedSetsList: View {
                                     setInfoModel.userSettings.isCapturingRunning = true
                                     sessionDisplay = .swiftUI
                                 }
-                            
+
                             // Edit this set
                             Image(systemName: "square.and.pencil")
                                 .foregroundColor(.white)
@@ -106,14 +102,14 @@ struct SavedSetsList: View {
                                 .cornerRadius(5.0)
                                 .onTapGesture {
                                     currentUrl = url.absoluteString
-                                                                    
-                                    //Load settngs over current
+
+                                    // Load settngs over current
                                     setInfoModel.tapSavedRow(fileName: fileController.urlToFileName(url: url))
-                                    
-                                    //Change the View
+
+                                    // Change the View
 //                                    sessionDisplaySub = .setEditor
                                 }
-                            
+
                             // Sharing
                             Button(action: shareAction) {
                                 Image(systemName: "square.and.arrow.up")
@@ -130,9 +126,9 @@ struct SavedSetsList: View {
                             }) { identifiableUrl in
                                 ActivityViewController(activityItems: [identifiableUrl.url as NSURL])
                             }
-                            
+
                             Spacer() // Zorgt ervoor dat de knoppen aan de linkerkant blijven en de Delete-knop aan de rechterkant
-                            
+
                             // Delete-knop
                             Button(action: deleteAction) {
                                 Image(systemName: "trash")
@@ -164,27 +160,23 @@ struct SavedSetsList: View {
                     .padding(.vertical, 10)
                     // Voeg een Divider toe om sets van elkaar te scheiden
                     Divider()
-
-
                 }
-            } //End Foreach userPresets -> url
-            
+            } // End Foreach userPresets -> url
         }
-        .onAppear{
+        .onAppear {
             userPresets = fileController.addDirectoryURLsToController()
         }
     }
 }
 
 struct ActivityViewController: UIViewControllerRepresentable {
-
     var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
+    var applicationActivities: [UIActivity]?
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+    func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
 }

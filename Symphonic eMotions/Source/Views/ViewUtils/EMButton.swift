@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct EMButton<Content: View>: View {
-    
     var action: () -> Void
     var color: Color
     var isSolid: Bool = true
     var maxWidth: CGFloat? = .infinity
     var height: CGFloat? = 50.0
     @ViewBuilder var label: () -> Content
-    
+
     var body: some View {
         Button(action: action, label: {
             label()
@@ -32,14 +31,13 @@ struct EMButton<Content: View>: View {
 }
 
 struct EMButtonBig<Content: View>: View {
-    
     var action: () -> Void
     var color: Color
     var isSolid: Bool = true
     var maxWidth: CGFloat? = .infinity
     var height: CGFloat? = 50.0
     @ViewBuilder var label: () -> Content
-    
+
     var body: some View {
         Button(action: action, label: {
             label()

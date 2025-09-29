@@ -1,56 +1,51 @@
 //
-//  MainView.swift
+//  MainViewLegacy.swift
 //  MainView
 //
 //  Created by Mihai Fratu on 29.07.2021.
 //
 
-import UIKit
-import SwiftUI
 import AVFoundation
+import SwiftUI
+import UIKit
 
 struct MainViewLegacy: View {
-        
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
-    //Highest lvel View control
-    @Binding public var sessionDisplay: SessionDisplay
-    @Binding public var sessionDisplaySub: SessionDisplay
-    
-    
-    //Keep track of local saved SeM setting files
+    // Highest lvel View control
+    @Binding var sessionDisplay: SessionDisplay
+    @Binding var sessionDisplaySub: SessionDisplay
+
+    // Keep track of local saved SeM setting files
     @StateObject var fileController = FileController()
     @StateObject var userSettings = UserSettings()
-    
+
     @State var isCreator: Bool = false
     @State var userPresets: [URL] = []
     @State var templatePresets: [URL] = []
-    
+
     // Initialize sidebarItems as @State
     @State var sidebarItems: [(name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)] = []
     @State private var showLevelPlayerFullScreen: Bool = false
-    
+
     init(
         viewModel: MainViewModel,
         setInfoModel: SetInfoModel,
         sessionDisplay: Binding<SessionDisplay>,
         sessionDisplaySub: Binding<SessionDisplay>
     ) {
-        
         self.viewModel = viewModel
         self.setInfoModel = setInfoModel
-        self._sessionDisplay = sessionDisplay
-        self._sessionDisplaySub = sessionDisplaySub
-        
-        //Create Playlists if needed
+        _sessionDisplay = sessionDisplay
+        _sessionDisplaySub = sessionDisplaySub
+
+        // Create Playlists if needed
         AppUtils.createPlayListFolders(resetPlaylist: true)
     }
-    
+
     var body: some View {
-        
-        //Playlist full screen count down
+        // Playlist full screen count down
         if sessionDisplay == .countDown {
-            
             CountDown(
                 setInfoModel: setInfoModel,
                 sessionDisplay: $sessionDisplay,
@@ -58,11 +53,10 @@ struct MainViewLegacy: View {
             )
             .environmentObject(fileController)
         }
-        
-        //Introdcution
+
+        // Introdcution
         if sessionDisplay == .home {
-            
-            //Light measurment
+            // Light measurment
             if sessionDisplaySub == .page03 {
                 LightView(
                     setInfoModel: setInfoModel,
@@ -70,15 +64,14 @@ struct MainViewLegacy: View {
                     sessionDisplaySub: $sessionDisplaySub
                 )
             }
-            //Movement settings
+            // Movement settings
             else if sessionDisplaySub == .page04 {
                 MovementView(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sessionDisplaySub: $sessionDisplaySub
                 )
-            }
-            else {
+            } else {
                 IntroductionView(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
@@ -86,69 +79,66 @@ struct MainViewLegacy: View {
                 )
             }
         }
-        
-        //SwiftUI Interface with Part editor
-        else if [.swiftUI,.setInfo,.pro,.demo,.creator,.playlists].contains(sessionDisplay) {
-            
+
+        // SwiftUI Interface with Part editor
+        else if [.swiftUI, .setInfo, .pro, .demo, .creator, .playlists].contains(sessionDisplay) {
             NavigationView {
-                
-                //Set Navigation
+                // Set Navigation
                 SideBarView(
                     setInfoModel: setInfoModel,
                     sessionDisplay: $sessionDisplay,
                     sidebarItems: $sidebarItems
                 )
-                //TODO: Hide SideBar on fullscreen
+                // TODO: Hide SideBar on fullscreen
 //                .navigationBarHidden(showLevelPlayerFullScreen)
                 .environmentObject(fileController)
                 .onAppear {
                     // Update `isCreator` based on the `userCode`
                     isCreator = userSettings.userCode == .creator
-                    
-                    //Main navigation
+
+                    // Main navigation
                     var items = [
                         (name: "Home", setName: "home", fileGroup: FileGroup.home, sessionDisplay: SessionDisplay.home),
 //                        (name: "Active", setName: "playlists", fileGroup: FileGroup.playlists, sessionDisplay: SessionDisplay.playlists),
                         (name: "Pro", setName: "pro", fileGroup: FileGroup.pro, sessionDisplay: SessionDisplay.pro)
                     ]
-                    
-                    //Add creator navigation item
+
+                    // Add creator navigation item
                     if isCreator {
                         items.append((name: "Creator", setName: "creator", fileGroup: FileGroup.template, sessionDisplay: SessionDisplay.creator))
                     }
-                    
+
                     sidebarItems = items
                 }
-                
-                //SeM Pro interface with interaction editor
-                //LevelPlayer with userViews
+
+                // SeM Pro interface with interaction editor
+                // LevelPlayer with userViews
                 if sessionDisplay == .swiftUI {
-                    
-                    ZStack{
+                    ZStack {
                         PlayView(
-                            setInfoModel: setInfoModel, 
+                            setInfoModel: setInfoModel,
                             sessionDisplay: $sessionDisplay,
                             showLevelPlayerFullScreen: $showLevelPlayerFullScreen
                         )
                         .environmentObject(fileController)
                         .navigationBarHidden(false)
-                        .onAppear{
+                        .onAppear {
                             viewModel.conductor.levelController(
                                 level: 0,
                                 setSettings: viewModel.mainState.setSettings
                             )
                         }
-                        .onDisappear{
+                        .onDisappear {
                             sessionDisplaySub = .stopped
                             viewModel.conductor.pauzeEngineAndStopTracks(
                                 setSettings: viewModel.mainState.setSettings,
                                 resetLevels: true
                             )
                         }
-                        
-                        //If levels are completed go to count down view
-                        //At the moment this is not possible
-                        .onReceive(viewModel.leveling.currentSetLevelSubject){ currentSetLevel in
+
+                        // If levels are completed go to count down view
+                        // At the moment this is not possible
+                        .onReceive(viewModel.leveling.currentSetLevelSubject) { currentSetLevel in
                             if viewModel.mainState.setSettings.currentPlaylist != .none {
                                 if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {
                                     self.sessionDisplay = .countDown
@@ -156,19 +146,15 @@ struct MainViewLegacy: View {
                             }
                         }
                     }
-                }
-                
-                else if sessionDisplay == .demo {
+                } else if sessionDisplay == .demo {
                     DemoView(
-                        setInfoModel: setInfoModel, 
+                        setInfoModel: setInfoModel,
                         userSettings: userSettings,
                         sessionDisplay: $sessionDisplay,
                         sessionDisplaySub: $sessionDisplaySub
                     )
                     .environmentObject(fileController)
-                }
-                
-                else if sessionDisplay == .playlists {
+                } else if sessionDisplay == .playlists {
                     PlayListsView(
                         setInfoModel: setInfoModel,
                         sessionDisplay: $sessionDisplay,
@@ -176,10 +162,9 @@ struct MainViewLegacy: View {
                     )
                     .environmentObject(fileController)
                 }
-                
-                //Selected set info View
-                else if [.setInfo,.pro,.creator].contains(sessionDisplay) {
-                    
+
+                // Selected set info View
+                else if [.setInfo, .pro, .creator].contains(sessionDisplay) {
                     SetInfo(
                         setInfoModel: setInfoModel,
                         isCreator: $isCreator,
@@ -191,25 +176,23 @@ struct MainViewLegacy: View {
             }
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
         }
-            
 
         ChangeView(
             sessionDisplay: $sessionDisplay,
             sessionDisplaySub: $sessionDisplaySub
         )
         .onAppear {
-                // This prints the initial values of sessionDisplay and sessionDisplaySub when the view appears
-                print("Initial sessionDisplay: \(sessionDisplay)")
-                print("Initial sessionDisplaySub: \(sessionDisplaySub)")
-            }
-            .onChange(of: sessionDisplay) { newValue in
-                // This prints the updated value of sessionDisplay whenever it changes
-                print("Updated sessionDisplay: \(newValue)")
-            }
-            .onChange(of: sessionDisplaySub) { newValue in
-                // This prints the updated value of sessionDisplaySub whenever it changes
-                print("Updated sessionDisplaySub: \(newValue)")
-            }
+            // This prints the initial values of sessionDisplay and sessionDisplaySub when the view appears
+            print("Initial sessionDisplay: \(sessionDisplay)")
+            print("Initial sessionDisplaySub: \(sessionDisplaySub)")
+        }
+        .onChange(of: sessionDisplay) { newValue in
+            // This prints the updated value of sessionDisplay whenever it changes
+            print("Updated sessionDisplay: \(newValue)")
+        }
+        .onChange(of: sessionDisplaySub) { newValue in
+            // This prints the updated value of sessionDisplaySub whenever it changes
+            print("Updated sessionDisplaySub: \(newValue)")
+        }
     }
 }
-

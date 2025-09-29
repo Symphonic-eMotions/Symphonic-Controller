@@ -5,30 +5,28 @@
 //  Created by Mihai Fratu on 31.07.2021.
 //
 
-import Foundation
-import SwiftUI
 import AudioKit
-import OrderedCollections
 import AVFAudio
+import Foundation
+import OrderedCollections
+import SwiftUI
 
-final class AppUtils {
-    
+enum AppUtils {
     enum InstrumentError: Error {
         case loadFailed(String)
     }
-    
+
     private static let appStorage = UserDefaults.standard
-    static var setUrl: String  {
+    static var setUrl: String {
         appStorage.string(forKey: "currentUrl") ?? "AppUtils"
     }
-    
+
     static func documentDirectory() -> URL {
-      let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-      return documentsDirectory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return documentsDirectory
     }
-    
+
     static func copyOverwriteFile(from sourceURL: URL, to destinationURL: URL) throws {
-        
         let fileManager = FileManager.default
 
         // Check if the source file exists
@@ -50,37 +48,36 @@ final class AppUtils {
         // Copy the file from source to destination
         try fileManager.copyItem(at: sourceURL, to: destinationURL)
     }
-    
-    //MARK: Instrument Set Loading
+
+    // MARK: Instrument Set Loading
+
     static func loadInstrumentSet(json: String) -> InstrumentsSet {
-        
         guard let instrumentSet = InstrumentsSet.withJSON(json) else {
-            
             print("Error loading instrument set from JSON: \(json)")
-            
-            //The name "No Set" is used to prevent loading
+
+            // The name "No Set" is used to prevent loading
             return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", fileGroup: .none, filesPath: "", imagePrefix: "", userViews: [.playView], bpm: 120, hasTempo: true, timeSignature: 4, masterTrackEffects: [], rows: 1, columns: 1, levels: [0], levelSpeedSet: 0.5, levelDifficultySet: 0.5, setEffects: [], tracks: [])
         }
         return instrumentSet
     }
-    
+
     static func loadURLServerInstrumentSet(urlServer: String) -> InstrumentsSet? {
-        
         let urlServerURL = URL(string: urlServer)
-        
+
         let instrumentSet = InstrumentsSet.withOnlineJSON(urlServerURL!)
-        
+
         return instrumentSet ?? nil
     }
-    
+
     static func loadSavedInstrumentSet(fileName: String) throws -> InstrumentsSet {
         guard let instrumentSet = InstrumentsSet.withFileManagerJSON(fileName) else {
             throw InstrumentError.loadFailed("Failed to load instrument set from \(fileName)")
         }
         return instrumentSet
     }
-    
-    //MARK: Playists
+
+    // MARK: Playists
+
     static func createPlayListFolders(resetPlaylist: Bool) {
         let fileManager = FileManager.default
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -90,7 +87,7 @@ final class AppUtils {
         let bundleURL = Bundle.main.bundleURL
 
         let lists = SeMActive.Playlists.allCases
-        let filteredPlaylists = lists.filter({ $0 != .none }) // Filtering out the 'none' case
+        let filteredPlaylists = lists.filter { $0 != .none } // Filtering out the 'none' case
 
         // Loop through filtered playlists
         for playlist in filteredPlaylists {
@@ -111,7 +108,7 @@ final class AppUtils {
                     for item in playlistContent {
                         let destinationURL = playlistURL.appendingPathComponent(item.lastPathComponent)
 
-                        if fileManager.fileExists(atPath: destinationURL.path) && resetPlaylist {
+                        if fileManager.fileExists(atPath: destinationURL.path), resetPlaylist {
                             do {
                                 try fileManager.removeItem(at: destinationURL)
                             } catch {
@@ -134,7 +131,6 @@ final class AppUtils {
         }
     }
 
-    
     static func semVersionString() -> String {
         var infoString = ""
 
@@ -179,34 +175,32 @@ final class AppUtils {
 
         return .orderedSame
     }
-    
-    //MARK: Set setSetings
+
+    // MARK: Set setSetings
+
     // - Structure to load InstrumentsSet to mutuate and save
     static func setSettings(
         instrumentSet: InstrumentsSet
     ) -> SetSettings {
-        
-        let masterEffects: OrderedDictionary<Int,MasterTrackEffectsSettings> = MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
-                
+        let masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings> = MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
+
         let setLevels: [Int] = instrumentSet.levels
         let maxSetLevelIndex = setLevels.count
-        
-        var trackIndex: Int = 0
-        var tracks: OrderedDictionary<String,TrackSettings> = [:]
+
+        var trackIndex = 0
+        var tracks: OrderedDictionary<String, TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
-        //How big is this grid
+        // How big is this grid
         let cells = instrumentSet.columns * instrumentSet.rows
-        //Keep track of partNumber for variations track/instrument Color...
-        var partNumber: Int = 0
-        //Loop trhough the loaded tracks
+        // Keep track of partNumber for variations track/instrument Color...
+        var partNumber = 0
+        // Loop trhough the loaded tracks
         for trackLoaded in tracksLoaded {
-            
-            //First set parts of this track
+            // First set parts of this track
             partNumber = 0
             var parts: OrderedDictionary<String, PartSettings> = [:]
             let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
             for partLoaded in trackLoaded.parts {
-                
                 let part = PartSettings(
                     partId: partLoaded.id,
                     partName: partLoaded.instrumentPartName,
@@ -215,7 +209,7 @@ final class AppUtils {
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
                     minimalLevel: partLoaded.damperTarget.nodeSettings!.minimalLevel ?? 0.1,
                     areaOfInterest: partLoaded.areaOfInterest,
-                    areaOfInterestColor: self.getPartColors(
+                    areaOfInterestColor: getPartColors(
                         trackColor: trackLoaded.instrumentColor,
                         areaOfInterest: partLoaded.areaOfInterest
                     ),
@@ -231,45 +225,45 @@ final class AppUtils {
                     targetParameterInstrument: partLoaded.damperTarget.parameter,
                     targetParameterSequencer: partLoaded.damperTarget.parameter
                 )
-                
+
                 parts[partLoaded.id] = part
                 partNumber += 1
             }
-            //Midi clips from file mapping
-            var loopsToLevel:[Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
+            // Midi clips from file mapping
+            var loopsToLevel: [Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
             if loopsToLevel.count != instrumentSet.levels.count {
-                //We've got another amount of levels, correct
+                // We've got another amount of levels, correct
                 loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
             }
-            
-            var loopsToGrid:[Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
+
+            var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
             if loopsToGrid.count != cells {
-                //We have a another amount of cells, correct
+                // We have a another amount of cells, correct
                 loopsToGrid = Array(repeating: 0, count: cells)
             }
-            
-            //Note numbers from interface mapping
-            //Default to Midi note C2 -> 48
-            let c2: Int = 48
-            var midiGroup:[Int] = trackLoaded.midiGroup ?? [c2]
-            //Cannot be empty for midi file source
+
+            // Note numbers from interface mapping
+            // Default to Midi note C2 -> 48
+            let c2 = 48
+            var midiGroup: [Int] = trackLoaded.midiGroup ?? [c2]
+            // Cannot be empty for midi file source
             if midiGroup.count == 0 { midiGroup = [c2] }
-            var notesToLevel:[Int] = trackLoaded.notesToLevel ?? []
+            var notesToLevel: [Int] = trackLoaded.notesToLevel ?? []
             if notesToLevel.count != instrumentSet.levels.count {
                 notesToLevel = Array(repeating: midiGroup.min()!, count: instrumentSet.levels.count)
             }
-            
-            var noteNumbersClips:[Int] = trackLoaded.noteNumbersClips ?? []
+
+            var noteNumbersClips: [Int] = trackLoaded.noteNumbersClips ?? []
             if noteNumbersClips.count != instrumentSet.levels.count {
                 noteNumbersClips = Array(repeating: 0, count: instrumentSet.levels.count)
             }
-            
-            var notesToGrid:[Int] = trackLoaded.notesToGrid ?? []
+
+            var notesToGrid: [Int] = trackLoaded.notesToGrid ?? []
             if notesToGrid.count != cells {
-                //We have a another amount of cells, reset
+                // We have a another amount of cells, reset
                 notesToGrid = Array(repeating: midiGroup.min()!, count: cells)
             }
-            
+
             var exsFile: ExsFiles = .trigger
             if let loaded = trackLoaded.exsFiles, !loaded.isEmpty {
                 if let fileName = loaded.first?.fileName {
@@ -284,19 +278,19 @@ final class AppUtils {
             } else {
                 print("trackLoaded.exsFiles is nil of leeg")
             }
-            
-            let effects: OrderedDictionary<Int,TrackEffectsSettings> = TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)
-            
-            //Remove levels higher than after level so we get no new fade ins
+
+            let effects: OrderedDictionary<Int, TrackEffectsSettings> = TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)
+
+            // Remove levels higher than after level so we get no new fade ins
             let filteredLevels = trackLoaded.levels.filter { $0 <= maxSetLevelIndex }
-            
+
 //            print("setSettings track \(trackLoaded.instrumentName) filteredLevels: \(filteredLevels)")
-            
+
             let track = TrackSettings(
                 trackId: trackLoaded.id,
                 trackIndex: trackIndex,
                 trackName: trackLoaded.instrumentName,
-                noteSource: trackLoaded.noteSource ?? .midiFile, 
+                noteSource: trackLoaded.noteSource ?? .midiFile,
                 chordEntries: trackLoaded.chordEntries ?? [],
                 startType: trackLoaded.startType,
                 variationType: trackLoaded.variationType ?? .variationByPosition,
@@ -314,7 +308,7 @@ final class AppUtils {
                 ),
                 notesToLevel: notesToLevel,
                 noteNumbersClips: noteNumbersClips,
-                notesSequenceType:  trackLoaded.notesSequenceType ?? .firstNote,
+                notesSequenceType: trackLoaded.notesSequenceType ?? .firstNote,
                 loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,
@@ -326,11 +320,11 @@ final class AppUtils {
                 parts: parts,
                 effects: effects
             )
-            
+
             tracks[trackLoaded.id] = track
             trackIndex += 1
         }
-        
+
         let setSettings = SetSettings(
             setName: instrumentSet.name,
             setPath: instrumentSet.filesPath,
@@ -340,7 +334,7 @@ final class AppUtils {
             filesPath: instrumentSet.filesPath,
             imagePrefix: instrumentSet.imagePrefix,
             setURL: URL(setUrl),
-            hasTempo: instrumentSet.hasTempo, 
+            hasTempo: instrumentSet.hasTempo,
             userViews: instrumentSet.userViews,
             rows: instrumentSet.rows,
             columns: instrumentSet.columns,
@@ -352,43 +346,43 @@ final class AppUtils {
             tracks: tracks,
             semVersion: instrumentSet.semVersion ?? "1.0.0"
         )
-        
+
         return setSettings
     }
-    
-    //MARK: crate folder for track recording
-    static func createAvAudioFile (
+
+    // MARK: crate folder for track recording
+
+    static func createAvAudioFile(
         set: InstrumentsSet,
         trackName: String
     ) throws -> AVAudioFile {
-        
         let fileManager = FileManager.default
-        
+
         // Base documents path
         let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
+
         // Create subfolders
-        let setName = ( set.customName != "" ) ? set.customName : set.name
+        let setName = (set.customName != "") ? set.customName : set.name
         let mainFolderName = "Recordings"
         let subFolderName = "\(setName)"
-        
+
         // Full folder path
         let mainFolderPath = documentsPath.appendingPathComponent(mainFolderName)
         let subFolderPath = mainFolderPath.appendingPathComponent(subFolderName)
-        
+
         // Create main folder if it doesn't exist
         if !fileManager.fileExists(atPath: mainFolderPath.path) {
             try fileManager.createDirectory(at: mainFolderPath, withIntermediateDirectories: true, attributes: nil)
         }
-        
+
         // Create subfolder if it doesn't exist
         if !fileManager.fileExists(atPath: subFolderPath.path) {
             try fileManager.createDirectory(at: subFolderPath, withIntermediateDirectories: true, attributes: nil)
         }
-        
+
         // Output file within the subfolder
         let outputFile = subFolderPath.appendingPathComponent("\(trackName).aac")
-        
+
         // File settings
         let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -396,125 +390,115 @@ final class AppUtils {
             AVNumberOfChannelsKey: 2,
             AVLinearPCMBitDepthKey: 16
         ]
-        
+
         do {
             // File to write recording to
             let avAudioFile = try AVAudioFile(forWriting: outputFile, settings: settings)
             return avAudioFile
-            
+
         } catch {
             print("Error creating record file \(trackName)")
             throw error // Propagate the error upwards
         }
     }
 
+    // MARK: Write Instrument Set
 
-    
-    //MARK: Write Instrument Set
-    //Write set settings to file structure and return used file name
+    // Write set settings to file structure and return used file name
     static func createWorkingFile(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
         duplicateLastTrack: Bool,
         asNewFile: Bool
     ) -> String {
-        
         var fileName: String!
-        
-        //Write over last opened file.
+
+        // Write over last opened file.
         if !asNewFile {
-            
-            //Strip extension .json
+            // Strip extension .json
             let noExtension = setSettings.setURL.deletingPathExtension()
             let parentDirectoryName = noExtension.deletingLastPathComponent().lastPathComponent
-            //Save to playlist
+            // Save to playlist
             if SeMActive.Playlists(rawValue: parentDirectoryName) != nil {
                 fileName = "\(parentDirectoryName)/\(noExtension.lastPathComponent)"
-            }
-            else{
+            } else {
                 fileName = noExtension.lastPathComponent
             }
         }
-        //New file name
-        else{
+        // New file name
+        else {
             let setName = instrumentSet.name
             let timestammp = NSDate().timeIntervalSince1970
             fileName = setName + "-timestamp-\(timestammp)"
         }
-        
+
         let storeInstrumentSet: InstrumentsSet = createInstrumentSet(
             setSettings: setSettings,
             instrumentSet: instrumentSet,
             duplicateLastTrack: duplicateLastTrack
         )
         InstrumentsSet.writeLoadedSet(setName: fileName, instrumentSet: storeInstrumentSet)
-        
+
         return fileName
     }
 
-    //Instrument set from current state
+    // Instrument set from current state
     static func createInstrumentSet(
         setSettings: SetSettings,
         instrumentSet: InstrumentsSet,
-        duplicateLastTrack: Bool
+        duplicateLastTrack _: Bool
     ) -> InstrumentsSet {
-        
-        //Get modified master track effect settings and store them in encodable format
-        //Modified data store in: setSettings.masterEffects
+        // Get modified master track effect settings and store them in encodable format
+        // Modified data store in: setSettings.masterEffects
         let currentMasterEffects: [InstrumentsSet.Track.Effect] = instrumentSet.masterTrackEffects
         var modifiedMasterEffects: [InstrumentsSet.Track.Effect] = []
         for (effectIndex, currentMasterEffect) in currentMasterEffects.enumerated() {
-            
             let effectType: InstrumentsSet.Track.Effect.EffectType = currentMasterEffect.effectType
             var parameters: [ValueAndRange] = []
-            
+
             let trackEffect = InstrumentsSet.Track.Effect()
             let effectTypeHolder = trackEffect.effectVars(effectType: effectType)
-            let parameterStrings: [String] = effectTypeHolder.map{$0.rawValue}
+            let parameterStrings: [String] = effectTypeHolder.map { $0.rawValue }
             for (parameterIndex, parameterString) in parameterStrings.enumerated() {
                 let loadedValueAndRange = currentMasterEffect.valueAndRanges(parameter: parameterString)!
                 let loadedRange = loadedValueAndRange.range
                 let storedValue = setSettings.masterEffects[effectIndex]?.parameters[parameterIndex]!.value
-                parameters.append( ValueAndRange(value: AUValue( storedValue! ), range: loadedRange) )
+                parameters.append(ValueAndRange(value: AUValue(storedValue!), range: loadedRange))
             }
-            
+
             let modifiedMasterEffect = InstrumentsSet.Track.Effect(effectType: effectType, parameters: parameters)
             modifiedMasterEffects.append(modifiedMasterEffect)
         }
-        
-        //Replace loaded data with modified data within tracks
+
+        // Replace loaded data with modified data within tracks
         // - rampSpeed (InstrumentsSet.Track.Part.DamperTarget.NodeSettings.rampSpeed)
         // - rampSpeedDown (InstrumentsSet.Track.Part.DamperTarget.NodeSettings.rampSpeedDown)
         // - volume (InstrumentsSet.Track.volume)
         // - instrumentColor (InstrumentsSet.Track.instrumentColor)
         // - areaOfInterest (InstrumentsSet.Track.Part.areaOfInterest
         var storeTracks: [InstrumentsSet.Track] = []
-        
-        //Problem! this needs to be generated from setSettings:
-        
-        //New
+
+        // Problem! this needs to be generated from setSettings:
+
+        // New
         for track in setSettings.tracks {
-            
             var storeParts: [InstrumentsSet.Track.Part] = []
             for part in track.value.parts {
-                
                 let storeNodeSettings = InstrumentsSet.Track.Part.DamperTarget.NodeSettings(
                     minimalLevel: part.value.minimalLevel,
                     rampSpeed: part.value.rampUp,
                     rampSpeedDown: part.value.rampDown
                 )
-                
-                var parameter: String = "";
+
+                var parameter = ""
                 if part.value.targetType == .effect {
                     parameter = part.value.targetParameterEffect.rawValue
-                }
-                else if part.value.targetType == .instrument {
+                } else if part.value.targetType == .instrument {
                     parameter = part.value.targetParameterInstrument
-                }
-                else if part.value.targetType == .sequencer {
+                } else if part.value.targetType == .sequencer {
                     parameter = part.value.targetParameterSequencer
                 }
-                
+
                 let storeDamperTarget = InstrumentsSet.Track.Part.DamperTarget(
                     trackId: part.value.damperTarget.trackId,
                     nodeType: part.value.targetType,
@@ -526,10 +510,10 @@ final class AppUtils {
                     nodeSettings: storeNodeSettings,
                     dampMode: part.value.damperTarget.dampMode
                 )
-                
+
 //                print("SAVING DAMPER TARGET")
 //                print(storeDamperTarget)
-                
+
                 let storePart = InstrumentsSet.Track.Part(
                     instrumentPartName: part.value.partName,
                     areaOfInterest: part.value.areaOfInterest,
@@ -538,29 +522,29 @@ final class AppUtils {
                 )
                 storeParts.append(storePart)
             }
-            
-            //Fix is length don't match current level length
+
+            // Fix is length don't match current level length
             let loopsToLevel = adjustArray(target: track.value.loopsToLevel, example: setSettings.levels)
-            
+
             let notesToLevel = adjustArray(target: track.value.notesToLevel, example: setSettings.levels)
-            
+
             let midiFiles = [InstrumentsSet.Track.MidiFile(
                 fileName: track.value.midiFile,
                 fileExtension: "mid",
                 loopLength: track.value.loopLength,
-                //Fix length anomalies
+                // Fix length anomalies
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: track.value.loopsToGrid
             )]
-            
+
             let effects: [InstrumentsSet.Track.Effect] = TrackEffectsHelper.trackEffectInstrumentsSet(trackSetttings: track.value)
-            
+
             let storeTrack = InstrumentsSet.Track(
                 id: track.value.trackId,
                 trackId: track.value.trackId,
                 muted: false,
                 instrumentType: track.value.instrumentType,
-                noteSource: track.value.noteSource, 
+                noteSource: track.value.noteSource,
                 chordEntries: track.value.chordEntries,
                 startType: track.value.startType,
                 variationType: track.value.variationType,
@@ -582,18 +566,18 @@ final class AppUtils {
             )
             storeTracks.append(storeTrack)
         }
-        
+
         var semVersion = "1.0.0"
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
            let versionNumber = appVersion.split(separator: " ").last {
             semVersion = "\(versionNumber)"
         }
-        
+
         let storeInstrumentSet = InstrumentsSet(
             name: instrumentSet.name,
             customName: setSettings.customName,
-            published: setSettings.published, 
-            semVersion: semVersion, 
+            published: setSettings.published,
+            semVersion: semVersion,
             fileGroup: setSettings.fileGroup,
             filesPath: setSettings.filesPath,
             imagePrefix: setSettings.imagePrefix,
@@ -601,19 +585,19 @@ final class AppUtils {
             bpm: setSettings.bpm,
             hasTempo: setSettings.hasTempo,
             timeSignature: instrumentSet.timeSignature,
-            masterTrackEffects: modifiedMasterEffects, //MasterTrack effects editor values
+            masterTrackEffects: modifiedMasterEffects, // MasterTrack effects editor values
             rows: setSettings.gridRows,
             columns: setSettings.gridColumns,
-            levels: setSettings.levels, 
+            levels: setSettings.levels,
             levelSpeedSet: setSettings.levelSpeedSet,
             levelDifficultySet: setSettings.levelDifficultySet,
             setEffects: instrumentSet.setEffects ?? [],
             tracks: storeTracks
         )
-            
+
         return storeInstrumentSet
     }
-    
+
     static func adjustArray(target: [Int], example: [Int]) -> [Int] {
         var result = target
         if result.count > example.count {
@@ -627,9 +611,8 @@ final class AppUtils {
         }
         return result
     }
-    
+
     static func adjustArrayLevels(target: [Int], example: [Int]) -> [Int] {
-        
         var result = target
 
         if result.count < example.count {
@@ -643,15 +626,16 @@ final class AppUtils {
 
         return result
     }
-    
-    //MARK: editor
+
+    // MARK: editor
+
     static func letterForNumber(_ number: Int) -> String? {
         guard let scalarValue = UnicodeScalar(number + 65) else {
             return nil
         }
         return String(scalarValue)
     }
-    
+
     static func midiNoteName(for noteNumber: Int) -> String {
         let noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         let octave = (noteNumber / 12) - 1
@@ -659,7 +643,7 @@ final class AppUtils {
         let noteName = noteNames[noteIndex]
         return "\(noteName)\(octave)"
     }
-    
+
     // Collect clip number from selected instrument cells
     static func areaOfInterestGridMapped(
         areaOfInterest: [Int],
@@ -667,24 +651,22 @@ final class AppUtils {
     ) -> [Int] {
         var cellsToGridMapped: [Int] = []
         for (index, value) in areaOfInterest.enumerated() {
-            if value == 1 && index < cellsToGrid.count {
+            if value == 1, index < cellsToGrid.count {
                 cellsToGridMapped.append(cellsToGrid[index])
             }
         }
         return cellsToGridMapped
     }
-    
-    //Part editor SwiftUI interface
-    static func getPartColors( trackColor: Color, areaOfInterest: [Int]) -> [Color]{
-        
+
+    // Part editor SwiftUI interface
+    static func getPartColors(trackColor: Color, areaOfInterest: [Int]) -> [Color] {
         var areaOfInterestColor: [Color] = []
         for i in areaOfInterest {
-            if i == 1 { areaOfInterestColor.append(trackColor) }
-            else { areaOfInterestColor.append(.black.opacity(0.01)) }
+            if i == 1 { areaOfInterestColor.append(trackColor) } else { areaOfInterestColor.append(.black.opacity(0.01)) }
         }
         return areaOfInterestColor
     }
-    
+
     static func getIndexes(areaOfInterest: [Int]) -> [Int] {
         return areaOfInterest.enumerated().compactMap { $0.element == 1 ? $0.offset : nil }
     }

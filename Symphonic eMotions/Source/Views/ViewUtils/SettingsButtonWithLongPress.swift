@@ -1,5 +1,5 @@
 //
-//  EMButton.swift
+//  SettingsButtonWithLongPress.swift
 //  EMButton
 //
 //  Created by Mihai Fratu on 31.07.2021.
@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct SettingsButtonWithLongPress: View {
-    
     @EnvironmentObject var userSettings: UserSettings
     @ObservedObject var setInfoModel: SetInfoModel
-    
+
     let color: Color = .accentColor
     var isSolid: Bool = false
-    
+
     @State private var presentSettingSheet = false
-    
+
     var body: some View {
-        
         Button(action: {
             // ignore
         }) {
@@ -31,21 +29,20 @@ struct SettingsButtonWithLongPress: View {
         .foregroundColor(isSolid ? .white : color)
         .background(isSolid ? color : .clear)
         .cornerRadius(8.0)
-        //Activate Track and Part editor
+        // Activate Track and Part editor
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in
             userSettings.showPartEditor.toggle()
         })
-        //Show the settings sheet
+        // Show the settings sheet
         .simultaneousGesture(TapGesture().onEnded {
             presentSettingSheet.toggle()
         })
-        //Present sheet
+        // Present sheet
         .sheet(isPresented: $presentSettingSheet) {
             SettingsSmallSheetView(
                 userSettings: userSettings,
-                setInfoModel: setInfoModel, 
+                setInfoModel: setInfoModel,
                 showingSheet: $presentSettingSheet
-                
             )
         }
     }

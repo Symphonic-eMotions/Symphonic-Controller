@@ -8,7 +8,6 @@
 import Foundation
 
 class FileCache {
-    
     private var cache: [String: [SetFile]] = [:]
     private let queue = DispatchQueue(label: "nl.symphonic-emotions.fileCacheQueue")
     private var setFiles: [SetFile]
@@ -16,7 +15,7 @@ class FileCache {
     init(setFiles: [SetFile]) {
         self.setFiles = setFiles
     }
-    
+
     func getSetFiles(for group: FileGroup, with compareView: SessionDisplay) -> [SetFile] {
         let cacheKey = "\(group.hashValue)-\(compareView.hashValue)"
         return queue.sync {
@@ -29,7 +28,7 @@ class FileCache {
             }
         }
     }
-    
+
     func invalidateCache(for group: FileGroup? = nil, with compareView: SessionDisplay? = nil) {
         queue.async {
             if let group = group, let compareView = compareView {
@@ -40,19 +39,17 @@ class FileCache {
             }
         }
     }
-    
-    private func fetchSetFiles(for group: FileGroup, with compareView: SessionDisplay) -> [SetFile] {
 
+    private func fetchSetFiles(for group: FileGroup, with _: SessionDisplay) -> [SetFile] {
         return setFiles.filter { setFile in
-            
             // Check if the file belongs to the specified group
             let isPartOfGroup = setFile.fileGroup == group
 
             // Check if the file is published
             let isPublished = setFile.published
-            
+
             // Return true if both conditions are met
-            return ( isPartOfGroup && isPublished )
+            return isPartOfGroup && isPublished
         }
     }
 }

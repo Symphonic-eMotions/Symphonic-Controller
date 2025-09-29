@@ -8,24 +8,20 @@
 import SwiftUI
 
 struct BpmView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
-    
+
     var body: some View {
-        
-        HStack{
-            
+        HStack {
             Text("\(Int(setInfoModel.setSettings.bpm))")
                 .frame(width: 40)
                 .padding(.leading)
-            
-            Slider(value: $setInfoModel.setSettings.bpm, in: 40...200, step: 1)
+
+            Slider(value: $setInfoModel.setSettings.bpm, in: 40 ... 200, step: 1)
                 .padding()
         }
-        
+
 //        if !setInfoModel.setInfoState.currentInstrumentsSet.hasTempo {
 //            Text("Fixed tempo set (Stems)")
 //        }
     }
 }
-

@@ -11,9 +11,8 @@ struct SidebarItemView: View {
     let item: (name: String, setName: String, fileGroup: FileGroup, sessionDisplay: SessionDisplay)
     let active: Bool
     @Binding var showDisabled: Bool
-    
+
     var body: some View {
-        
         HStack {
             VStack(alignment: .leading) {
                 Spacer()

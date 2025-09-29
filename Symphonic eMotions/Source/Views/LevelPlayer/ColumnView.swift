@@ -8,25 +8,23 @@
 import SwiftUI
 
 struct ColumnView: View {
-    
     @ObservedObject var setInfoModel: SetInfoModel
     @ObservedObject var columnOpacityController: ColumnOpacityController
-    
+
     let rows: Int
     let columns: Int
     let width: CGFloat
     let height: CGFloat
-    
+
     var body: some View {
-        
-        let columnsGridItem: [GridItem] = Array(repeating: .init(.flexible(), spacing: 20), count: self.columns)
-        let totalHorizontalSpacing = CGFloat(self.columns - 1) * 20
-        let columnWidth = (width - totalHorizontalSpacing - 40) / CGFloat(self.columns)
-        
+        let columnsGridItem: [GridItem] = Array(repeating: .init(.flexible(), spacing: 20), count: columns)
+        let totalHorizontalSpacing = CGFloat(columns - 1) * 20
+        let columnWidth = (width - totalHorizontalSpacing - 40) / CGFloat(columns)
+
         LazyVGrid(columns: columnsGridItem, spacing: 20) {
-            ForEach(0..<self.columns, id: \.self) { columnIndex in
+            ForEach(0 ..< self.columns, id: \.self) { columnIndex in
                 let color: Color = [.green, .yellow, .orange, .purple][columnIndex % 4]
-                
+
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(color, lineWidth: 2)
                     .background(color.opacity(0.2))
@@ -45,9 +43,9 @@ struct ColumnView: View {
         }
         .frame(width: width, height: height) // Gebruik de externe afmetingen voor het bepalen van de grootte van de ColumnView
     }
-    
+
     // Helperfunctie om de kolomindex te berekenen
-    func columnIndex(forCellIndex cellIndex: Int, inGridWithRows rows: Int, columns: Int) -> Int {
+    func columnIndex(forCellIndex cellIndex: Int, inGridWithRows _: Int, columns: Int) -> Int {
         if cellIndex == -1 {
             return -1
         }

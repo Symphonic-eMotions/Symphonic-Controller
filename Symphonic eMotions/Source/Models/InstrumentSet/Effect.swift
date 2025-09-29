@@ -5,8 +5,8 @@
 //  Created by Mihai Fratu on 30.09.2021.
 //
 
-import Foundation
 import AudioKit
+import Foundation
 import SoundpipeAudioKit
 
 protocol AudioProcessingEffect {
@@ -94,8 +94,8 @@ extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
             .volume
         ]
     }
-    
-    public var description: String {
+
+    var description: String {
         switch self {
         case .effectType:
             return "Effect Type"
@@ -235,32 +235,29 @@ extension InstrumentsSet.Track.Effect.EffectKeys: CaseIterable {
     }
 }
 
-
 extension InstrumentsSet.Track {
-    
     enum Effect: Decodable {
-        
-        public enum EffectKeys: String, CodingKey {
+        enum EffectKeys: String, CodingKey {
             case effectType = "effectName"
-            //BandPassFilter
+            // BandPassFilter
             case centerFrequency
             case bandwidth
-            //CostelloReverb
+            // CostelloReverb
             case cutoffFrequencyCostello
             case feedbackCostello
             case dryWetMixer
-            //Compressor effect
+            // Compressor effect
             case threshold
             case headRoom
             case attackTime
             case releaseTime
             case masterGain
-            //Delay effect
+            // Delay effect
             case time
             case feedback
             case lowPassCutoff
             case dryWetMix
-            //Distortion
+            // Distortion
             case distDelay
             case distDecay
             case distDelayMix
@@ -277,24 +274,24 @@ extension InstrumentsSet.Track {
             case distPolynomialMix
             case distSoftClipGain
             case distFinalMix
-            //DynamicRangeCompressor
+            // DynamicRangeCompressor
             case drcAttackDuration
             case drcReleaseDuration
             case drcRatio
             case drcTreshold
-            //Expander
+            // Expander
             case expansionRatio
             case expansionThreshold
             case expanderAttackTime
             case expanderReleaseTime
             case expanderMasterGain
-            //HighPassFilter
+            // HighPassFilter
             case hpfCutoffFrequency
             case hpfResonance
-            //LowPassFilter
+            // LowPassFilter
             case cutoffFrequency
             case resonance
-            //Phaser
+            // Phaser
             case phaserNotchMinimumFrequency
             case phaserNotchMaximumFrequency
             case phaserNotchWidth
@@ -305,26 +302,26 @@ extension InstrumentsSet.Track {
             case phaserInverted
             case phaserLfoBPM
             case phaserDryWetMixer
-            //PeakingParametricEqualizer
+            // PeakingParametricEqualizer
             case ppefCenterFrequency
             case ppefGain
             case ppefQ
-            //ResponseReverb
+            // ResponseReverb
             case respReverbDuration
             case respDryWetMixer
-            //Reverb
+            // Reverb
             case reverbDryWetMix
             case reverbPreset
-            //TanhDistortion
+            // TanhDistortion
             case pregain
             case postgain
             case positiveShapeParameter
             case negativeShapeParameter
             case dryWetTanh
-            //MixerEffect
+            // MixerEffect
             case volume
         }
-        
+
         case bandPassFilter(BandPassFilterEffect)
         case costelloReverb(CostelloReverbEffect)
         case compressor(CompressorEffect)
@@ -341,8 +338,8 @@ extension InstrumentsSet.Track {
         case reverb(Reverbeffect)
         case tanhDistortion(TanhDistortionEffect)
         case none(NoneEffect)
-        
-        //Init for encoding
+
+        // Init for encoding
         init(
             effectType: EffectType,
             parameters: [ValueAndRange]
@@ -398,7 +395,7 @@ extension InstrumentsSet.Track {
                 self = .dynamicRangeCompressor(DynamicRangeCompressorEffect(
                     drcAttackDuration: parameters[0],
                     drcReleaseDuration: parameters[1],
-                    drcRatio: parameters[2], 
+                    drcRatio: parameters[2],
                     drcTreshold: parameters[3]
                 ))
             case .expander:
@@ -463,25 +460,23 @@ extension InstrumentsSet.Track {
                 self = .none(NoneEffect())
             }
         }
-        
+
         init(from decoder: Decoder) throws {
-            
             let container = try decoder.container(keyedBy: EffectKeys.self)
             let effectType = try container.decode(Effect.EffectType.self, forKey: .effectType)
-            
+
             switch effectType {
-            
             case .bandPassFilter:
                 let centerFrequency = try container.decode(ValueAndRange.self, forKey: .centerFrequency)
                 let bandwidth = try container.decode(ValueAndRange.self, forKey: .bandwidth)
                 self = .bandPassFilter(BandPassFilterEffect(centerFrequency: centerFrequency, bandwidth: bandwidth))
-                
+
             case .costelloReverb:
                 let feedbackCostello = try container.decode(ValueAndRange.self, forKey: .feedbackCostello)
                 let cutoffFrequencyCostello = try container.decode(ValueAndRange.self, forKey: .cutoffFrequencyCostello)
                 let dryWetMixer = try container.decode(ValueAndRange.self, forKey: .dryWetMixer)
                 self = .costelloReverb(CostelloReverbEffect(feedback: feedbackCostello, cutoffFrequency: cutoffFrequencyCostello, dryWetMixer: dryWetMixer))
-            
+
             case .compressor:
                 let threshold = try container.decode(ValueAndRange.self, forKey: .threshold)
                 let headRoom = try container.decode(ValueAndRange.self, forKey: .headRoom)
@@ -489,14 +484,14 @@ extension InstrumentsSet.Track {
                 let releaseTime = try container.decode(ValueAndRange.self, forKey: .releaseTime)
                 let masterGain = try container.decode(ValueAndRange.self, forKey: .masterGain)
                 self = .compressor(CompressorEffect(threshold: threshold, headRoom: headRoom, attackTime: attackTime, releaseTime: releaseTime, masterGain: masterGain))
-            
+
             case .delay:
                 let time = try container.decode(ValueAndRange.self, forKey: .time)
                 let feedback = try container.decode(ValueAndRange.self, forKey: .feedback)
                 let lowPassCutoff = try container.decode(ValueAndRange.self, forKey: .lowPassCutoff)
                 let dryWetMix = try container.decode(ValueAndRange.self, forKey: .dryWetMix)
                 self = .delay(DelayEffect(time: time, feedback: feedback, lowPassCutoff: lowPassCutoff, dryWetMix: dryWetMix))
-            
+
             case .distortion:
                 let distDelay = try container.decode(ValueAndRange.self, forKey: .distDelay)
                 let distDecay = try container.decode(ValueAndRange.self, forKey: .distDecay)
@@ -515,14 +510,14 @@ extension InstrumentsSet.Track {
                 let distSoftClipGain = try container.decode(ValueAndRange.self, forKey: .distSoftClipGain)
                 let distFinalMix = try container.decode(ValueAndRange.self, forKey: .distFinalMix)
                 self = .distortion(DistortionEffect(distDelay: distDelay, distDecay: distDecay, distDelayMix: distDelayMix, distRingModFreq1: distRingModFreq1, distRingModFreq2: distRingModFreq2, distRingModBalance: distRingModBalance, distRingModMix: distRingModMix, distDecimation: distDecimation, distRounding: distRounding, distDecimationMix: distDecimationMix, distLinearTerm: distLinearTerm, distSquaredTerm: distSquaredTerm, distCubicTerm: distCubicTerm, distPolynomialMix: distPolynomialMix, distSoftClipGain: distSoftClipGain, distFinalMix: distFinalMix))
-                
+
             case .dynamicRangeCompressor:
                 let drcAttackDuration = try container.decode(ValueAndRange.self, forKey: .drcAttackDuration)
                 let drcReleaseDuration = try container.decode(ValueAndRange.self, forKey: .drcReleaseDuration)
                 let drcRatio = try container.decode(ValueAndRange.self, forKey: .drcRatio)
                 let drcTreshold = try container.decode(ValueAndRange.self, forKey: .drcTreshold)
                 self = .dynamicRangeCompressor(DynamicRangeCompressorEffect(drcAttackDuration: drcAttackDuration, drcReleaseDuration: drcReleaseDuration, drcRatio: drcRatio, drcTreshold: drcTreshold))
-            
+
             case .expander:
                 let expansionRatio = try container.decode(ValueAndRange.self, forKey: .expansionRatio)
                 let expansionThreshold = try container.decode(ValueAndRange.self, forKey: .expansionThreshold)
@@ -530,21 +525,21 @@ extension InstrumentsSet.Track {
                 let expanderReleaseTime = try container.decode(ValueAndRange.self, forKey: .expanderReleaseTime)
                 let expanderMasterGain = try container.decode(ValueAndRange.self, forKey: .expanderMasterGain)
                 self = .expander(ExpanderEffect(expansionRatio: expansionRatio, expansionThreshold: expansionThreshold, expanderAttackTime: expanderAttackTime, expanderReleaseTime: expanderReleaseTime, expanderMasterGain: expanderMasterGain))
-                
+
             case .highPassFilter:
                 let hpfCutoffFrequency = try container.decode(ValueAndRange.self, forKey: .hpfCutoffFrequency)
                 let hpfResonance = try container.decode(ValueAndRange.self, forKey: .hpfResonance)
                 self = .highPassFilter(HighPassFiltereffect(hpfCutoffFrequency: hpfCutoffFrequency, hpfResonance: hpfResonance))
-                
+
             case .lowPassFilter:
                 let cutOffFrequency = try container.decode(ValueAndRange.self, forKey: .cutoffFrequency)
                 let resonance = try container.decode(ValueAndRange.self, forKey: .resonance)
                 self = .lowPassFilter(LowPassFilterEffect(cutOffFrequency: cutOffFrequency, resonance: resonance))
-            
+
             case .mixer:
                 let volume = try container.decode(ValueAndRange.self, forKey: .volume)
                 self = .mixer(MixerEffect(volume: volume))
-                
+
             case .phaser:
                 let phaserNotchMinimumFrequency = try container.decode(ValueAndRange.self, forKey: .phaserNotchMinimumFrequency)
                 let phaserNotchMaximumFrequency = try container.decode(ValueAndRange.self, forKey: .phaserNotchMaximumFrequency)
@@ -557,23 +552,23 @@ extension InstrumentsSet.Track {
                 let phaserLfoBPM = try container.decode(ValueAndRange.self, forKey: .phaserLfoBPM)
                 let phaserDryWetMixer = try container.decode(ValueAndRange.self, forKey: .phaserDryWetMixer)
                 self = .phaser(PhaserEffect(phaserNotchMinimumFrequency: phaserNotchMinimumFrequency, phaserNotchMaximumFrequency: phaserNotchMaximumFrequency, phaserNotchWidth: phaserNotchWidth, phaserNotchFrequency: phaserNotchFrequency, phaserVibratoMode: phaserVibratoMode, phaserDepth: phaserDepth, phaserFeedback: phaserFeedback, phaserInverted: phaserInverted, phaserLfoBPM: phaserLfoBPM, phaserDryWetMixer: phaserDryWetMixer))
-            
+
             case .peakingParametricEqualizerFilter:
                 let ppefCenterFrequency = try container.decode(ValueAndRange.self, forKey: .ppefCenterFrequency)
                 let ppefGain = try container.decode(ValueAndRange.self, forKey: .pregain)
                 let ppefQ = try container.decode(ValueAndRange.self, forKey: .ppefQ)
                 self = .peakingParametricEqualizerFilter(PeakingParametricEqualizerFilterEffect(ppefCenterFrequency: ppefCenterFrequency, ppefGain: ppefGain, ppefQ: ppefQ))
-            
+
             case .responseReverb:
                 let respReverbDuration = try container.decode(ValueAndRange.self, forKey: .respReverbDuration)
                 let respDryWetMixer = try container.decode(ValueAndRange.self, forKey: .respDryWetMixer)
                 self = .responseReverb(ResponseReverbEffect(respReverbDuration: respReverbDuration, respDryWetMixer: respDryWetMixer))
-                
+
             case .reverb:
                 let reverbDryWetMix = try container.decode(ValueAndRange.self, forKey: .reverbDryWetMix)
                 let reverbPreset = try container.decode(ValueAndRange.self, forKey: .reverbPreset)
                 self = .reverb(Reverbeffect(reverbDryWetMix: reverbDryWetMix, reverbPreset: reverbPreset))
-                
+
             case .tanhDistortion:
                 let pregain = try container.decode(ValueAndRange.self, forKey: .pregain)
                 let postgain = try container.decode(ValueAndRange.self, forKey: .postgain)
@@ -581,11 +576,12 @@ extension InstrumentsSet.Track {
                 let negativeShapeParameter = try container.decode(ValueAndRange.self, forKey: .negativeShapeParameter)
                 let dryWetTanh = try container.decode(ValueAndRange.self, forKey: .dryWetTanh)
                 self = .tanhDistortion(TanhDistortionEffect(pregain: pregain, postgain: postgain, positiveShapeParameter: positiveShapeParameter, negativeShapeParameter: negativeShapeParameter, dryWetTanh: dryWetTanh))
+
             case .none:
                 self = .none(NoneEffect())
             }
         }
-    
+
         var effectType: EffectType {
             switch self {
             case .bandPassFilter: return .bandPassFilter
@@ -606,44 +602,44 @@ extension InstrumentsSet.Track {
             case .none: return .none
             }
         }
-        
+
         var effect: AudioProcessingEffect {
             switch self {
-                case .bandPassFilter(let effect):
-                    return effect
-                case .costelloReverb(let effect):
-                    return effect
-                case .compressor(let effect):
-                    return effect
-                case .delay(let effect):
-                    return effect
-                case .distortion(let effect):
-                    return effect
-                case .dynamicRangeCompressor(let effect):
-                    return effect
-                case .expander(let effect):
-                    return effect
-                case .highPassFilter(let effect):
-                    return effect
-                case .lowPassFilter(let effect):
-                    return effect
-                case .mixer(let effect):
-                    return effect
-                case .phaser(let effect):
-                    return effect
-                case .peakingParametricEqualizerFilter(let effect):
-                    return effect
-                case .responseReverb(let effect):
-                    return effect
-                case .reverb(let effect):
-                    return effect
-                case .tanhDistortion(let effect):
-                    return effect
-                case .none(let effect):
-                    return effect
+            case let .bandPassFilter(effect):
+                return effect
+            case let .costelloReverb(effect):
+                return effect
+            case let .compressor(effect):
+                return effect
+            case let .delay(effect):
+                return effect
+            case let .distortion(effect):
+                return effect
+            case let .dynamicRangeCompressor(effect):
+                return effect
+            case let .expander(effect):
+                return effect
+            case let .highPassFilter(effect):
+                return effect
+            case let .lowPassFilter(effect):
+                return effect
+            case let .mixer(effect):
+                return effect
+            case let .phaser(effect):
+                return effect
+            case let .peakingParametricEqualizerFilter(effect):
+                return effect
+            case let .responseReverb(effect):
+                return effect
+            case let .reverb(effect):
+                return effect
+            case let .tanhDistortion(effect):
+                return effect
+            case let .none(effect):
+                return effect
             }
         }
-        
+
         func effectVars(effectType: EffectType) -> [EffectKeys] {
             switch effectType {
             case .bandPassFilter:
@@ -680,8 +676,8 @@ extension InstrumentsSet.Track {
                 return []
             }
         }
-        
-        //Obsolete due to EffectKeys init mapping??
+
+        // Obsolete due to EffectKeys init mapping??
 //        func effectParameterValue( parameterType: EffectKeys ) -> ValueAndRange {
 //            switch parameterType {
 //            case .effectType:
@@ -835,22 +831,21 @@ extension InstrumentsSet.Track {
 //                return ValueAndRange(value: 0.69, range: [0, 1]) // Volume typically between 0 (mute) and 1 (max)
 //            }
 //        }
-        
-        
+
         func effectParameterValues(effectType: EffectType) -> [ValueAndRange] {
             switch effectType {
             case .bandPassFilter:
                 // Parameters: centerFrequency, bandwidth
                 return [
                     ValueAndRange(value: 5000, range: [20, 22050]), // Frequency usually in Hz
-                    ValueAndRange(value: 600, range: [100, 12000])  // Bandwidth usually in Hz
+                    ValueAndRange(value: 600, range: [100, 12000]) // Bandwidth usually in Hz
                 ]
             case .costelloReverb:
                 // Parameters: feedbackCostello, cutoffFrequencyCostello, dryWetMixer
                 return [
                     ValueAndRange(value: 0.5, range: [0, 1]), // Feedback usually between 0-1
                     ValueAndRange(value: 20000, range: [12, 20000]), // Frequency usually in Hz
-                    ValueAndRange(value: 0.5, range: [0, 1])  // dryWetMixer usually between 0-1
+                    ValueAndRange(value: 0.5, range: [0, 1]) // dryWetMixer usually between 0-1
                 ]
             case .compressor:
                 // Parameters: threshold, headRoom, attackTime, releaseTime, masterGain
@@ -859,7 +854,7 @@ extension InstrumentsSet.Track {
                     ValueAndRange(value: 4, range: [0.1, 40]), // HeadRoom usually between 0-1
                     ValueAndRange(value: 0.001, range: [0.0001, 0.2]), // AttackTime usually between 0-1 seconds
                     ValueAndRange(value: 0.05, range: [0.01, 0.2]), // ReleaseTime usually between 0-1 seconds
-                    ValueAndRange(value: 10, range: [-40, 40])  // MasterGain usually in dB
+                    ValueAndRange(value: 10, range: [-40, 40]) // MasterGain usually in dB
                 ]
             case .delay:
                 // Parameters: time, feedback, lowPassCutoff, dryWetMix
@@ -886,7 +881,7 @@ extension InstrumentsSet.Track {
                     ValueAndRange(value: 50, range: [0, 100]), // distCubicTerm
                     ValueAndRange(value: 50, range: [0, 100]), // distPolynomialMix
                     ValueAndRange(value: -6, range: [-80, 20]), // distSoftClipGain
-                    ValueAndRange(value: 50, range: [0, 100]), // distFinalMix
+                    ValueAndRange(value: 50, range: [0, 100]) // distFinalMix
                 ]
             case .dynamicRangeCompressor:
                 // Parameters: drcAttackDuration, drcReleaseDuration, drcRatio, drcThreshold
@@ -909,7 +904,7 @@ extension InstrumentsSet.Track {
                 // Parameters: hpfCutoffFrequency, hpfResonance
                 return [
                     ValueAndRange(value: 20, range: [20, 22050]), // CutoffFrequency typically in Hz
-                    ValueAndRange(value:-20, range: [-20, 40]) // Resonance typically between 0-1
+                    ValueAndRange(value: -20, range: [-20, 40]) // Resonance typically between 0-1
                 ]
             case .lowPassFilter:
                 // Parameters: cutoffFrequency, resonance
@@ -927,16 +922,16 @@ extension InstrumentsSet.Track {
                 // phaserNotchFrequency, phaserVibratoMode, phaserDepth, phaserFeedback, phaserInverted,
                 // phaserLfoBPM, phaserDryWetMixer
                 return [
-                    ValueAndRange(value: 100, range: [20, 5000]), //phaserNotchMinimumFrequency
-                    ValueAndRange(value: 1800, range: [20, 10000]), //phaserNotchMaximumFrequency
-                    ValueAndRange(value: 1000, range: [10, 5000]), //phaserNotchWidth
-                    ValueAndRange(value: 1.5, range: [1.1, 4.0]), //phaserNotchFrequency
-                    ValueAndRange(value: 1, range: [0, 1]), //phaserVibratoMode
-                    ValueAndRange(value: 1, range: [0, 1]), //phaserDepth
-                    ValueAndRange(value: 0, range: [0, 1]), //phaserFeedback
-                    ValueAndRange(value: 0, range: [0, 1]), //phaserInverted
-                    ValueAndRange(value: 30, range: [24, 360]), //phaserLfoBPM
-                    ValueAndRange(value: 0.5, range: [0, 1]) //phaserDryWetMixer
+                    ValueAndRange(value: 100, range: [20, 5000]), // phaserNotchMinimumFrequency
+                    ValueAndRange(value: 1800, range: [20, 10000]), // phaserNotchMaximumFrequency
+                    ValueAndRange(value: 1000, range: [10, 5000]), // phaserNotchWidth
+                    ValueAndRange(value: 1.5, range: [1.1, 4.0]), // phaserNotchFrequency
+                    ValueAndRange(value: 1, range: [0, 1]), // phaserVibratoMode
+                    ValueAndRange(value: 1, range: [0, 1]), // phaserDepth
+                    ValueAndRange(value: 0, range: [0, 1]), // phaserFeedback
+                    ValueAndRange(value: 0, range: [0, 1]), // phaserInverted
+                    ValueAndRange(value: 30, range: [24, 360]), // phaserLfoBPM
+                    ValueAndRange(value: 0.5, range: [0, 1]) // phaserDryWetMixer
                 ]
             case .peakingParametricEqualizerFilter:
                 // Parameters: ppefCenterFrequency, ppefGain, ppefQ
@@ -971,20 +966,18 @@ extension InstrumentsSet.Track {
             }
         }
 
-        
         func valueAndRanges(parameter: String) -> ValueAndRange? {
-            
             return effect.valueAndRange(parameter: parameter)
         }
-        
+
         func chain(to input: Node) -> Node {
             return effect.chain(to: input)
         }
-        
+
         func apply(value: Double, with damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
             effect.apply(value: value, with: damperTarget)
         }
-        
+
         func targetAndApply(
             value: Double,
             nodeName: String,
@@ -1003,9 +996,8 @@ extension InstrumentsSet.Track {
     }
 }
 
-//Effect names
+// Effect names
 extension InstrumentsSet.Track.Effect {
-    
     enum EffectType: String, Codable, CaseIterable {
         case none
         case bandPassFilter
@@ -1023,7 +1015,7 @@ extension InstrumentsSet.Track.Effect {
         case responseReverb
         case reverb
         case tanhDistortion
-        
+
         var description: String {
             switch self {
             case .none:
@@ -1061,45 +1053,41 @@ extension InstrumentsSet.Track.Effect {
             }
         }
     }
-
 }
 
-//Write to disk
+// Write to disk
 extension InstrumentsSet.Track.Effect: Encodable {
-
     func encode(to encoder: Encoder) throws {
-        
         var container = encoder.container(keyedBy: EffectKeys.self)
 
         switch self {
-            
-        case .bandPassFilter(let effect):
+        case let .bandPassFilter(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.centerFrequency, forKey: .centerFrequency)
             try container.encode(effect.bandwidth, forKey: .bandwidth)
-        
-        case .costelloReverb(let effect):
+
+        case let .costelloReverb(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.feedback, forKey: .feedbackCostello)
             try container.encode(effect.cutoffFrequency, forKey: .cutoffFrequencyCostello)
             try container.encode(effect.dryWetMixer, forKey: .dryWetMixer)
-            
-        case .compressor(let effect):
+
+        case let .compressor(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.threshold, forKey: .threshold)
             try container.encode(effect.headRoom, forKey: .headRoom)
             try container.encode(effect.attackTime, forKey: .attackTime)
             try container.encode(effect.releaseTime, forKey: .releaseTime)
             try container.encode(effect.masterGain, forKey: .masterGain)
-        
-        case .delay(let effect):
+
+        case let .delay(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.time, forKey: .time)
             try container.encode(effect.feedback, forKey: .feedback)
             try container.encode(effect.lowPassCutoff, forKey: .lowPassCutoff)
             try container.encode(effect.dryWetMix, forKey: .dryWetMix)
-            
-        case .distortion(let effect):
+
+        case let .distortion(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.distDelay, forKey: .distDelay)
             try container.encode(effect.distDecay, forKey: .distDecay)
@@ -1117,37 +1105,37 @@ extension InstrumentsSet.Track.Effect: Encodable {
             try container.encode(effect.distPolynomialMix, forKey: .distPolynomialMix)
             try container.encode(effect.distSoftClipGain, forKey: .distSoftClipGain)
             try container.encode(effect.distFinalMix, forKey: .distFinalMix)
-        
-        case .dynamicRangeCompressor(let effect):
+
+        case let .dynamicRangeCompressor(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.drcAttackDuration, forKey: .drcAttackDuration)
             try container.encode(effect.drcReleaseDuration, forKey: .drcReleaseDuration)
             try container.encode(effect.drcRatio, forKey: .drcRatio)
             try container.encode(effect.drcTreshold, forKey: .drcTreshold)
-        
-        case .expander(let effect):
+
+        case let .expander(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.expansionRatio, forKey: .expansionRatio)
             try container.encode(effect.expansionThreshold, forKey: .expansionThreshold)
             try container.encode(effect.expanderAttackTime, forKey: .expanderAttackTime)
             try container.encode(effect.expanderReleaseTime, forKey: .expanderReleaseTime)
             try container.encode(effect.expanderMasterGain, forKey: .expanderMasterGain)
-        
-        case .highPassFilter(let effect):
+
+        case let .highPassFilter(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.hpfCutoffFrequency, forKey: .hpfCutoffFrequency)
             try container.encode(effect.hpfResonance, forKey: .hpfResonance)
-            
-        case .lowPassFilter(let effect):
+
+        case let .lowPassFilter(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.cutOffFrequency, forKey: .cutoffFrequency)
             try container.encode(effect.resonance, forKey: .resonance)
-        
-        case .mixer(let effect):
+
+        case let .mixer(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.volume, forKey: .volume)
-            
-        case .phaser(let effect):
+
+        case let .phaser(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.phaserNotchMinimumFrequency, forKey: .phaserNotchMinimumFrequency)
             try container.encode(effect.phaserNotchMaximumFrequency, forKey: .phaserNotchMaximumFrequency)
@@ -1159,38 +1147,35 @@ extension InstrumentsSet.Track.Effect: Encodable {
             try container.encode(effect.phaserInverted, forKey: .phaserInverted)
             try container.encode(effect.phaserLfoBPM, forKey: .phaserLfoBPM)
             try container.encode(effect.phaserDryWetMixer, forKey: .phaserDryWetMixer)
-            
-        case .peakingParametricEqualizerFilter(let effect):
+
+        case let .peakingParametricEqualizerFilter(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.ppefCenterFrequency, forKey: .ppefCenterFrequency)
             try container.encode(effect.ppefQ, forKey: .ppefQ)
             try container.encode(effect.ppefGain, forKey: .ppefGain)
-            
-        case .responseReverb(let effect):
+
+        case let .responseReverb(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.respReverbDuration, forKey: .respReverbDuration)
             try container.encode(effect.respDryWetMixer, forKey: .respDryWetMixer)
-        
-        case .reverb(let effect):
+
+        case let .reverb(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.reverbDryWetMix, forKey: .reverbDryWetMix)
             try container.encode(effect.reverbPreset, forKey: .reverbPreset)
-                                 
-        case .tanhDistortion(let effect):
+
+        case let .tanhDistortion(effect):
             try container.encode(effectType, forKey: .effectType)
             try container.encode(effect.pregain, forKey: .pregain)
             try container.encode(effect.postgain, forKey: .postgain)
             try container.encode(effect.positiveShapeParameter, forKey: .positiveShapeParameter)
             try container.encode(effect.negativeShapeParameter, forKey: .negativeShapeParameter)
             try container.encode(effect.dryWetTanh, forKey: .dryWetTanh)
-        
-        case .none(_):
+
+        case .none:
             try container.encode(effectType, forKey: .effectType)
-        
 //        default:
 //            fatalError("Not implemented!")
-        
         }
     }
 }
-
