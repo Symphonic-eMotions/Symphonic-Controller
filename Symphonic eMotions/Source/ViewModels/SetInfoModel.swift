@@ -160,9 +160,19 @@ final class SetInfoModel: ObservableObject {
     }
 }
 
+//extension SetInfoModel: FrameExtractorDelegate {
+//    func captured(image: CIImage) {
+//        guard userSettings.isCapturingRunning else { return }
+//        imageDifference.updateImageData(image: image)
+//    }
+//}
+
 extension SetInfoModel: FrameExtractorDelegate {
     func captured(image: CIImage) {
-        guard userSettings.isCapturingRunning else { return }
-        imageDifference.updateImageData(image: image)
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            guard self.userSettings.isCapturingRunning else { return }
+            self.imageDifference.updateImageData(image: image)
+        }
     }
 }
