@@ -207,6 +207,7 @@ enum AppUtils {
                     partNumber: partNumber,
                     rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
                     rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
+                    oscTarget: partLoaded.oscTarget,
                     minimalLevel: partLoaded.damperTarget.nodeSettings!.minimalLevel ?? 0.1,
                     areaOfInterest: partLoaded.areaOfInterest,
                     areaOfInterestColor: getPartColors(
@@ -518,7 +519,8 @@ enum AppUtils {
                     instrumentPartName: part.value.partName,
                     areaOfInterest: part.value.areaOfInterest,
                     dontDrawVisual: part.value.dontDrawVisual,
-                    damperTarget: storeDamperTarget
+                    damperTarget: storeDamperTarget,
+                    oscTarget: part.value.oscTarget
                 )
                 storeParts.append(storePart)
             }

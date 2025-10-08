@@ -145,6 +145,8 @@
 		7CDC117E2BA3BC8600CE8C07 /* LevelPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */; };
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
+		7CF3DCB22E959E3700F223BE /* OSCTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DCB12E959E3700F223BE /* OSCTarget.swift */; };
+		7CF3DCB42E95B5C100F223BE /* valuesDidChangeToOSC.swift in Resources */ = {isa = PBXBuildFile; fileRef = 7CF3DCB32E95B5C100F223BE /* valuesDidChangeToOSC.swift */; };
 		7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */; };
 		7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */; };
 		7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */; };
@@ -354,6 +356,8 @@
 		7CDC117A2BA3BC8600CE8C07 /* LevelPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelPlayer.swift; sourceTree = "<group>"; };
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
+		7CF3DCB12E959E3700F223BE /* OSCTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCTarget.swift; sourceTree = "<group>"; };
+		7CF3DCB32E95B5C100F223BE /* valuesDidChangeToOSC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = valuesDidChangeToOSC.swift; sourceTree = "<group>"; };
 		7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberPositionsView.swift; sourceTree = "<group>"; };
 		7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseWidthSynth.swift; sourceTree = "<group>"; };
 		7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseSynth.swift; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 				C0C5129C27075D9500DE3393 /* Effects */,
 				C0AFDD052705D1CC006EF64F /* Conductor.swift */,
 				7CF50F2829ED458A0016BAF4 /* ValuesDidChange.swift */,
+				7CF3DCB32E95B5C100F223BE /* valuesDidChangeToOSC.swift */,
 				7C0C9F322B8D441900DBD142 /* TimeBasedEnvelope.swift */,
 				7C0C9F382B9874BF00DBD142 /* LevelProgressController.swift */,
 				7C0C9F362B8FDF6700DBD142 /* AmplitudeController.swift */,
@@ -674,6 +679,7 @@
 		7CFA009B29A74F62001D8A5D /* SetSettings */ = {
 			isa = PBXGroup;
 			children = (
+				7CF3DCB12E959E3700F223BE /* OSCTarget.swift */,
 				7C3C0EC728DDEAA100EBCD85 /* SetSettings.swift */,
 				7CFA009C29A74FA1001D8A5D /* TrackSettings.swift */,
 				7CFA009D29A74FA1001D8A5D /* PartSettings.swift */,
@@ -969,6 +975,7 @@
 			files = (
 				C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */,
 				7C6C11FE2A03EF3F006F8CCB /* Sets in Resources */,
+				7CF3DCB42E95B5C100F223BE /* valuesDidChangeToOSC.swift in Resources */,
 				7CD418032A095388006831CE /* Localizable.strings in Resources */,
 				7C9FB7752A49E90A00490C59 /* AmoebaShader.fsh in Resources */,
 				C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */,
@@ -1116,6 +1123,7 @@
 				7C3C0EC828DDEAA100EBCD85 /* SetSettings.swift in Sources */,
 				7C7502EC29C07C4D00F55CA3 /* EditorView.swift in Sources */,
 				7C4A545D2A5B288E00FB6514 /* ControllerView.swift in Sources */,
+				7CF3DCB22E959E3700F223BE /* OSCTarget.swift in Sources */,
 				7CC2555C2A27865900ACA903 /* ChangeView.swift in Sources */,
 				7C1D32D92BBDB0B2002F31CD /* ColumnView.swift in Sources */,
 				7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */,

@@ -15,6 +15,7 @@ extension InstrumentsSet.Track {
             case areaOfInterest
             case dontDrawVisual
             case damperTarget
+            case oscTarget
         }
 
         let id: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
@@ -27,6 +28,8 @@ extension InstrumentsSet.Track {
         var dontDrawVisual: Bool?
 
         var damperTarget: DamperTarget
+        
+        var oscTarget: OSCTarget
 
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: PartKeys.self)
@@ -34,18 +37,22 @@ extension InstrumentsSet.Track {
             areaOfInterest = try container.decode([Int].self, forKey: .areaOfInterest)
             dontDrawVisual = try container.decodeIfPresent(Bool.self, forKey: .dontDrawVisual) ?? false
             damperTarget = try container.decode(DamperTarget.self, forKey: .damperTarget)
+            oscTarget = try container.decode(OSCTarget.self, forKey: .oscTarget)
         }
 
         init(
             instrumentPartName: String,
             areaOfInterest: [Int],
             dontDrawVisual: Bool?,
-            damperTarget: DamperTarget
+            damperTarget: DamperTarget,
+            oscTarget: OSCTarget
+            
         ) {
             self.instrumentPartName = instrumentPartName
             self.areaOfInterest = areaOfInterest
             self.dontDrawVisual = dontDrawVisual
             self.damperTarget = damperTarget
+            self.oscTarget = oscTarget
         }
 
         func indexes(for set: InstrumentsSet) -> [Index] {
@@ -67,16 +74,6 @@ extension InstrumentsSet.Track {
             }
             areaOfInterest = newAreaOfInterest
         }
-
-        mutating func toggleIndex(index: Index, in set: InstrumentsSet) {
-            var newIndexes = indexes(for: set)
-            if let index = newIndexes.firstIndex(where: { $0.column == index.column && $0.row == index.row }) {
-                newIndexes.remove(at: index)
-            } else {
-                newIndexes.append(index)
-            }
-            self.set(indexes: newIndexes, for: set)
-        }
     }
 }
 
@@ -96,11 +93,6 @@ extension InstrumentsSet.Track.Part {
         let column: Int
     }
 }
-
-// struct FullIndex{
-//    let row: Int
-//    let column: Int
-// }
 
 extension InstrumentsSet.Track.Part.DamperTarget {
     struct MidiData: Decodable, Equatable {

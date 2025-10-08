@@ -86,6 +86,19 @@ extension Conductor {
         // An actual instrument, not a sequencer loaded for copy reference
         if length == "loopSequenceFromMIDIfile" {
             switch track.instrumentType {
+            case .osc:
+                // Geen AudioKit-onderdelen nodig: deze track wordt via OSC aangestuurd.
+                // Eventueel kun je hier logging of initialisatie toevoegen:
+                print("OSC track \(track.id) – skipping AudioKit setup")
+
+                // Als je wilt dat deze track later nog toegankelijk is voor OSC-updates:
+                trackSequencers[track.id] = nil
+                trackSamplers[track.id] = nil
+                trackInstruments[track.id] = nil
+
+                // Omdat er geen sequencer of audio nodes zijn, geef gewoon nil terug:
+                return nil
+                
             case .exsSampler:
                 // Create EXS sampler
                 trackSamplers[track.id] = createExsSamplerChainEffects(for: track, and: sequencer)
