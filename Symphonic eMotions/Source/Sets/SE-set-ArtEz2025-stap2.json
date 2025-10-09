@@ -30,7 +30,7 @@
             "parameter": "/stap2/part1",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "T1"
+            "trackId": "stap2"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part 1"
@@ -50,7 +50,7 @@
             "parameter": "/stap2/part2",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "T1"
+            "trackId": "stap2"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part 2"
@@ -70,7 +70,7 @@
             "parameter": "/stap2/part3",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "T1"
+            "trackId": "stap2"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part 3"
@@ -90,7 +90,7 @@
             "parameter": "/stap2/part4",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "T1"
+            "trackId": "stap2"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part 4"
@@ -106,7 +106,7 @@
       "notesToGrid": [],
       "notesToLevel": [],
       "startType": "loopedTransport",
-      "trackId": "T1",
+      "trackId": "stap2",
       "trackType": "variationByPosition"
     }
   ],

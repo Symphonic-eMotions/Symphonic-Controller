@@ -9,156 +9,126 @@ import Accelerate
 import AudioKit
 
 extension Conductor {
+
     func valuesDidChange(
-        // Values for movement calculations
         values: [[AreaValues]],
-        // Dynamic area's of interest
         setSettings: SetSettings,
-        // Is track present in current level
         currentSetLevel: Double,
-        // Do we want to show this part in part feedback visualisation
         partFeedbackTrackID _: String,
         partFeedbackPartID _: String
     ) -> Double {
-        // Levels are updated with movement
+        // Levels updaten (ongewijzigd)
         var localCurrentSetLevel: Double = currentSetLevel
-        
-        // Flatten the 2D list and compute the sum, count and maximum in a single pass
-        var sum = 0.0
-        var count = 0
+
+        var sum = 0.0, count = 0
         var scaledValues: [Double] = []
+        scaledValues.reserveCapacity(values.count * (values.first?.count ?? 0))
+
         var maxScaledValue: Double = -1
-        for areaValues in values {
-            for value in areaValues {
-                sum += value.average
+        for row in values {
+            for v in row {
+                sum += v.average
                 count += 1
-                scaledValues.append(value.scaledValue)
-                if value.scaledValue > maxScaledValue {
-                    maxScaledValue = value.scaledValue
-                }
+                let s = v.scaledValue
+                scaledValues.append(s)
+                if s > maxScaledValue { maxScaledValue = s }
             }
         }
-        
-        // Compute average
-        let averageForLevelUpdate = sum / Double(count)
-        
-        // Increment AND decrement level
+
+        let averageForLevelUpdate = sum / Double(max(count, 1))
+
         localCurrentSetLevel = adjustCurrentSetLevel(
             setSettings: setSettings,
             currentSetLevel: currentSetLevel,
             averageMovement: averageForLevelUpdate
         )
-        
-        // Find the maximum index (used for variation by position)
-        let maxIndexTuple = vDSP.indexOfMaximum(scaledValues)
-        let maxIndex = Int(maxIndexTuple.0)
-        
-        // LevelPlayer - Update maxIndex in SetSettings
-        DispatchQueue.main.async {
-            if averageForLevelUpdate < 0.08 {
-                setSettings.maxIndex = -1
-            } else {
-                setSettings.maxIndex = maxIndex
+
+        let maxIndex = Int(vDSP.indexOfMaximum(scaledValues).0)
+
+        // Alleen updaten als het verandert (minder main-thread churn)
+        let newMax = (averageForLevelUpdate < 0.08) ? -1 : maxIndex
+        if setSettings.maxIndex != newMax {
+            DispatchQueue.main.async {
+                setSettings.maxIndex = newMax
             }
         }
-        
-        // Iterate through all tracks and their parts
+
+        // ✅ OSC: één message per track, met alle part-waarden als floats
+        let ip = userSettings.ipAddress
+        let port = userSettings.port
+        guard !ip.isEmpty, (1...65535).contains(port) else {
+            print("Conductor: geen geldige OSC endpoint (ip=\(ip), port=\(port))")
+            return localCurrentSetLevel
+        }
+
         var trackNr = 0
-        var partNr = 0
         for (_, track) in setSettings.tracks {
-            partNr = 0
-            
+            // 1) Bepaal pattern
+            let trackAddr = "/\(track.trackId)"
+            // 2) Verzamel per part de genormaliseerde waarde (in volgorde)
+            var floatArgs: [Float] = []
+            floatArgs.reserveCapacity(track.parts.count)
+
+            var partNr = 0
             for (partIndex, part) in track.parts {
-                // Map area-of-interest indices -> values (safe bounds)
-                let interestIndexes = part.interestIndexes(rows: setSettings.gridRows, columns: setSettings.gridColumns)
-                let valuesMapped = interestIndexes.compactMap { index -> (current: Double, previous: Double)? in
-                    if index.row >= 0, index.row < values.count,
-                       index.column >= 0, index.column < values[index.row].count {
-                        return (
-                            current: values[index.row][index.column].scaledValue,
-                            previous: values[index.row][index.column].previousScaledValue
-                        )
-                    } else {
-                        return nil
-                    }
+                // AOI → waardes (bounds-safe)
+                let idxs = part.interestIndexes(rows: setSettings.gridRows, columns: setSettings.gridColumns)
+                let mapped = idxs.compactMap { idx -> (cur: Double, prev: Double)? in
+                    guard idx.row >= 0, idx.row < values.count,
+                          idx.column >= 0, idx.column < values[idx.row].count else { return nil }
+                    return (values[idx.row][idx.column].scaledValue,
+                            values[idx.row][idx.column].previousScaledValue)
                 }
-                
-                let currentValues = valuesMapped.map { $0.current }
-                let previousValues = valuesMapped.map { $0.previous }
-                
-                // Highest value in this part
-                let maxIndexPartTuple = vDSP.indexOfMaximum(currentValues)
-                let maxIndexPart = Int(maxIndexPartTuple.0)
-                var value = maxIndexPartTuple.1.isNaN ? 0 : maxIndexPartTuple.1
-                let previousValue = previousValues.indices.contains(maxIndexPart) ? previousValues[maxIndexPart] : 0
-                
-                // Timed movement envelope (replaces ramps/damps)
-                if let envelope = timeBasedEnvelopes[partIndex] {
-                    let customDecreaseRate = (rampDown[partIndex] ?? 0.5) * 0.1
-                    let customIncreaseRate = (rampUp[partIndex] ?? 0.5) * 0.1
-                    
-                    value = envelope.updateEnvelope(
+
+                let currents = mapped.map { $0.cur }
+                let previous = mapped.map { $0.prev }
+
+                let maxTuple = vDSP.indexOfMaximum(currents)
+                let peakIdx  = Int(maxTuple.0)
+                var value    = maxTuple.1.isNaN ? 0 : maxTuple.1
+                let prevVal  = previous.indices.contains(peakIdx) ? previous[peakIdx] : 0
+
+                if let env = timeBasedEnvelopes[partIndex] {
+                    let dec = (rampDown[partIndex] ?? 0.5) * 0.1
+                    let inc = (rampUp[partIndex] ?? 0.5) * 0.1
+                    value = env.updateEnvelope(
                         withMovement: value,
-                        previousMovement: previousValue,
-                        decreaseRate: customDecreaseRate,
-                        increaseRate: customIncreaseRate
+                        previousMovement: prevVal,
+                        decreaseRate: dec,
+                        increaseRate: inc
                     )
-                    
-                    // 🔁 Nieuw: stuur ALTIJD per track/part door naar OSC-variant
-                    // (IP/poort en pattern mapping gebeuren in valuesDidChangeToOSC)
-                    self.valuesDidChangeToOSC(
-                        part: part,
-                        normalizedValue: Float(value)
-                    )
-                    
-                    // Behoud je bestaande part feedback voor de "eerste" (zoals voorheen)
+
+                    // normaliseren [0,1] (+ invert indien nodig)
+                    let clamped = max(0, min(1, value))
+                    let norm = part.parametersInversed ? (1 - clamped) : clamped
+                    floatArgs.append(Float(norm))
+
+                    // behoud je bestaande feedback voor eerste track/part
                     if trackNr == 0 && partNr == 0 {
                         forwardPartFeedback(ramped: value)
                     }
+                } else {
+                    // Geen envelope -> beschouw als 0 om arity consistent te houden
+                    floatArgs.append(0)
                 }
-                
                 partNr += 1
             }
+
+            // 3) Verstuur één message: /stapX [f f f f ...]
+            if !floatArgs.isEmpty {
+                OSCMessageSender.shared.sendOSCMessage(
+                    ipAddress: ip,
+                    port: port,
+                    pattern: trackAddr,
+                    values: floatArgs
+                )
+                // Debug:
+                 print("OSC \(ip) \(trackAddr) \(floatArgs)")
+            }
+
             trackNr += 1
         }
-        
-        return localCurrentSetLevel
-    }
-    
-    func valuesDidChangeToOSC(
-        part: PartSettings,
-        normalizedValue: Float
-    ) {
-        let pattern = part.damperTarget.parameter // String. example "/stap/part1"
-        guard pattern.isEmpty == false else {
-            print("Conductor: leeg OSC pattern voor partId: \(part.partId) partName: \(part.partName)")
-            return
-        }
-        
-        // 5) Waarde mappen [0,1] → range (optioneel inverse)
-        let clamped = max(0, min(1, normalizedValue))
-        let inverted = part.parametersInversed
-        
-        let norm = inverted ? (1 - clamped) : clamped
-        let mappedValue: Float
-        mappedValue = norm
-        
-        let ip = userSettings.ipAddress
-        let port = userSettings.port
 
-        guard !ip.isEmpty, (1...65535).contains(port) else {
-            print("Conductor: geen geldige OSC IP/port in userSettings (ip=\(ip), port=\(port))")
-            return
-        }
-        
-        print("OSC \(ip) \(part.partName) \(pattern) \(mappedValue)")
-        
-        OSCMessageSender.shared.sendOSCMessage(
-            ipAddress: ip,
-            port: port,
-            pattern: pattern,
-            value: mappedValue
-        )
-        
+        return localCurrentSetLevel
     }
 }
