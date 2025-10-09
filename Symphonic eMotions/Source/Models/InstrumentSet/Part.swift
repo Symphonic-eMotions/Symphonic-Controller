@@ -15,7 +15,6 @@ extension InstrumentsSet.Track {
             case areaOfInterest
             case dontDrawVisual
             case damperTarget
-            case oscTarget
         }
 
         let id: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
@@ -29,15 +28,12 @@ extension InstrumentsSet.Track {
 
         var damperTarget: DamperTarget
         
-        var oscTarget: OSCTarget
-
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: PartKeys.self)
             instrumentPartName = try container.decode(String.self, forKey: .instrumentPartName)
             areaOfInterest = try container.decode([Int].self, forKey: .areaOfInterest)
             dontDrawVisual = try container.decodeIfPresent(Bool.self, forKey: .dontDrawVisual) ?? false
             damperTarget = try container.decode(DamperTarget.self, forKey: .damperTarget)
-            oscTarget = try container.decode(OSCTarget.self, forKey: .oscTarget)
         }
 
         init(
@@ -45,14 +41,12 @@ extension InstrumentsSet.Track {
             areaOfInterest: [Int],
             dontDrawVisual: Bool?,
             damperTarget: DamperTarget,
-            oscTarget: OSCTarget
             
         ) {
             self.instrumentPartName = instrumentPartName
             self.areaOfInterest = areaOfInterest
             self.dontDrawVisual = dontDrawVisual
             self.damperTarget = damperTarget
-            self.oscTarget = oscTarget
         }
 
         func indexes(for set: InstrumentsSet) -> [Index] {

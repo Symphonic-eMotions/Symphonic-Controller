@@ -13,7 +13,6 @@ class PartSettings: Identifiable {
     var partNumber: Int
     var rampUp: Double
     var rampDown: Double
-    var oscTarget: OSCTarget
     var minimalLevel: Double
     var areaOfInterest: [Int]
     var areaOfInterestColor: [Color]
@@ -34,7 +33,6 @@ class PartSettings: Identifiable {
          partNumber: Int,
          rampUp: Double,
          rampDown: Double,
-         oscTarget: OSCTarget,
          minimalLevel: Double,
          areaOfInterest: [Int],
          areaOfInterestColor: [Color],
@@ -52,7 +50,6 @@ class PartSettings: Identifiable {
         self.partNumber = partNumber
         self.rampUp = rampUp
         self.rampDown = rampDown
-        self.oscTarget = oscTarget
         self.minimalLevel = minimalLevel
         self.areaOfInterest = areaOfInterest
         self.areaOfInterestColor = areaOfInterestColor

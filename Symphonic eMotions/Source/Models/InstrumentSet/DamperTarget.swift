@@ -122,6 +122,7 @@ extension InstrumentsSet.Track.Part.DamperTarget {
         case effect
         case instrument
         case master
+        case osc
 
         var description: String {
             switch self {
@@ -133,6 +134,8 @@ extension InstrumentsSet.Track.Part.DamperTarget {
                 return "Instrument"
             case .master:
                 return "Master"
+            case .osc:
+                return "OSC target node"
             }
         }
     }

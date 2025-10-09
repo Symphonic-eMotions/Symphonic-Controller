@@ -144,12 +144,15 @@ extension Conductor {
         let mappedValue: Float
         mappedValue = norm
         
-        guard let ip = UserDefaults.standard.string(forKey: "oscIPAddress"),
-              let port = UserDefaults.standard.integer(forKey: "oscPort") as Int?,
-              port > 0 else {
-            print("Conductor: geen geldige OSC IP/port in UserDefaults")
+        let ip = userSettings.ipAddress
+        let port = userSettings.port
+
+        guard !ip.isEmpty, (1...65535).contains(port) else {
+            print("Conductor: geen geldige OSC IP/port in userSettings (ip=\(ip), port=\(port))")
             return
         }
+        
+        print("OSC \(ip) \(part) \(pattern) \(mappedValue)")
         
         OSCMessageSender.shared.sendOSCMessage(
             ipAddress: ip,

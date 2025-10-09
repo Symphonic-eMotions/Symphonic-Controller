@@ -30,9 +30,6 @@ extension Conductor {
         if let sampler = trackSamplers[track.trackId] {
             let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: 0, channel: 1)
             sampler.scheduleMIDIEvent(event: noteOff, offset: UInt64(0))
-        } else {
-            // Handle the case when track.trackId is not found in trackSamplers
-            print("Error: Track ID \(track.trackId) not found in trackSamplers")
         }
     }
 

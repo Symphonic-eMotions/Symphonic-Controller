@@ -65,6 +65,9 @@ extension Conductor {
             forwardEffect(value: value, for: damperTarget)
         case .master:
             return
+        case .osc:
+            // We hebben voor een compleet eigen ValuesDidChenge gekozen ipv een eigen forwarder
+            return
         }
     }
 

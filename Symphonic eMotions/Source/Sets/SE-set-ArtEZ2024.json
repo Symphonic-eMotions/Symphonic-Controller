@@ -50,8 +50,8 @@
               "rampSpeed" : 0.9251439571380615,
               "rampSpeedDown" : 0.6717850565910339
             },
-            "nodeType" : "sequencer",
-            "parameter" : "velocity",
+            "nodeType" : "osc",
+            "parameter" : "/stap1/direct",
             "parameterInversed" : false,
             "parameterRange" : [
               0,

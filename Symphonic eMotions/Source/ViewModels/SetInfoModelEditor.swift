@@ -80,7 +80,6 @@ extension SetInfoModel {
                 partNumber: 1,
                 rampUp: newNodeSetting.rampSpeed!,
                 rampDown: newNodeSetting.rampSpeedDown!,
-                oscTarget: OSCTarget(),
                 minimalLevel: newNodeSetting.minimalLevel!,
                 areaOfInterest: Array(repeating: 1, count: cells),
                 areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
@@ -93,20 +92,6 @@ extension SetInfoModel {
                 targetParameterEffect: .effectType,
                 targetParameterInstrument: "velocity",
                 targetParameterSequencer: ""
-            )
-
-            let cutOffParameterSetting = ParameterSettings(
-                index: 0,
-                name: "Cut off frequency",
-                value: 20000,
-                range: [10, 20000]
-            )
-
-            let resoneceParameterSetting = ParameterSettings(
-                index: 1,
-                name: "Resonance",
-                value: -20,
-                range: [-20, 20]
             )
         } else {
             // New damperTarget
@@ -129,7 +114,6 @@ extension SetInfoModel {
                 partNumber: 1,
                 rampUp: newNodeSetting.rampSpeed!,
                 rampDown: newNodeSetting.rampSpeedDown!,
-                oscTarget: OSCTarget(),
                 minimalLevel: newNodeSetting.minimalLevel!,
                 areaOfInterest: Array(repeating: 1, count: cells),
                 areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),
@@ -243,7 +227,6 @@ extension SetInfoModel {
                 partNumber: numberOfParts + 1,
                 rampUp: newNodeSetting.rampSpeed!,
                 rampDown: newNodeSetting.rampSpeedDown!,
-                oscTarget: OSCTarget(),
                 minimalLevel: newNodeSetting.minimalLevel!,
                 areaOfInterest: Array(repeating: 1, count: cells),
                 areaOfInterestColor: Array(repeating: Color("InstrumentColor000"), count: cells),

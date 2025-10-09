@@ -182,7 +182,8 @@ enum AppUtils {
     static func setSettings(
         instrumentSet: InstrumentsSet
     ) -> SetSettings {
-        let masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings> = MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
+        let masterEffects: OrderedDictionary<Int, MasterTrackEffectsSettings> =
+            MasterTrackEffectsHelper.masterTrackSettings(instrumentSet: instrumentSet)
 
         let setLevels: [Int] = instrumentSet.levels
         let maxSetLevelIndex = setLevels.count
@@ -190,25 +191,38 @@ enum AppUtils {
         var trackIndex = 0
         var tracks: OrderedDictionary<String, TrackSettings> = [:]
         let tracksLoaded = instrumentSet.tracks
+
         // How big is this grid
         let cells = instrumentSet.columns * instrumentSet.rows
+
         // Keep track of partNumber for variations track/instrument Color...
         var partNumber = 0
-        // Loop trhough the loaded tracks
+
+        // Loop through the loaded tracks
         for trackLoaded in tracksLoaded {
             // First set parts of this track
             partNumber = 0
             var parts: OrderedDictionary<String, PartSettings> = [:]
-            let firstAreaOfInterest: [Int] = trackLoaded.parts.first!.areaOfInterest
+
+            // CHANGED: veilige fallback wanneer er geen parts zijn
+            let firstAreaOfInterest: [Int] =
+                trackLoaded.parts.first?.areaOfInterest
+                ?? Array(repeating: 0, count: cells)
+
             for partLoaded in trackLoaded.parts {
+                // CHANGED: nodeSettings optioneel afhandelen met defaults
+                let node = partLoaded.damperTarget.nodeSettings
+                let rampUp   = node?.rampSpeed      ?? 0.1
+                let rampDown = node?.rampSpeedDown  ?? 0.1
+                let minimal  = node?.minimalLevel   ?? 0.1
+
                 let part = PartSettings(
                     partId: partLoaded.id,
                     partName: partLoaded.instrumentPartName,
                     partNumber: partNumber,
-                    rampUp: partLoaded.damperTarget.nodeSettings!.rampSpeed!,
-                    rampDown: partLoaded.damperTarget.nodeSettings!.rampSpeedDown!,
-                    oscTarget: partLoaded.oscTarget,
-                    minimalLevel: partLoaded.damperTarget.nodeSettings!.minimalLevel ?? 0.1,
+                    rampUp: rampUp,                       // CHANGED
+                    rampDown: rampDown,                   // CHANGED
+                    minimalLevel: minimal,                // CHANGED
                     areaOfInterest: partLoaded.areaOfInterest,
                     areaOfInterestColor: getPartColors(
                         trackColor: trackLoaded.instrumentColor,
@@ -219,10 +233,12 @@ enum AppUtils {
                     dampMode: partLoaded.damperTarget.dampMode ?? .easeInCubic,
                     targetType: partLoaded.damperTarget.nodeType,
                     targetNameEffect: InstrumentsSet.Track.Effect.EffectType(
-                        rawValue: partLoaded.damperTarget.nodeName) ?? .none,
+                        rawValue: partLoaded.damperTarget.nodeName
+                    ) ?? .none,
                     parametersInversed: partLoaded.damperTarget.parameterInversed,
                     targetParameterEffect: InstrumentsSet.Track.Effect.EffectKeys(
-                        rawValue: partLoaded.damperTarget.parameter) ?? .effectType,
+                        rawValue: partLoaded.damperTarget.parameter
+                    ) ?? .effectType,
                     targetParameterInstrument: partLoaded.damperTarget.parameter,
                     targetParameterSequencer: partLoaded.damperTarget.parameter
                 )
@@ -230,8 +246,18 @@ enum AppUtils {
                 parts[partLoaded.id] = part
                 partNumber += 1
             }
+
             // Midi clips from file mapping
-            var loopsToLevel: [Int] = trackLoaded.midiFiles?.first!.loopsToLevel ?? []
+            let levelCount = instrumentSet.levels.count
+            var loopsToLevel: [Int] = {
+                if let loops = trackLoaded.midiFiles?.first?.loopsToLevel, !loops.isEmpty {
+                    return loops
+                } else {
+                    // Domein-default: 1 loop per level (pas aan als 0 of [] logischer is)
+                    return Array(repeating: 1, count: levelCount)
+                }
+            }()
+
             if loopsToLevel.count != instrumentSet.levels.count {
                 // We've got another amount of levels, correct
                 loopsToLevel = Array(repeating: 0, count: instrumentSet.levels.count)
@@ -239,7 +265,7 @@ enum AppUtils {
 
             var loopsToGrid: [Int] = trackLoaded.midiFiles?.first?.loopsToGrid ?? []
             if loopsToGrid.count != cells {
-                // We have a another amount of cells, correct
+                // We have another amount of cells, correct
                 loopsToGrid = Array(repeating: 0, count: cells)
             }
 
@@ -247,11 +273,13 @@ enum AppUtils {
             // Default to Midi note C2 -> 48
             let c2 = 48
             var midiGroup: [Int] = trackLoaded.midiGroup ?? [c2]
-            // Cannot be empty for midi file source
-            if midiGroup.count == 0 { midiGroup = [c2] }
+            if midiGroup.isEmpty { midiGroup = [c2] } // CHANGED
+
             var notesToLevel: [Int] = trackLoaded.notesToLevel ?? []
             if notesToLevel.count != instrumentSet.levels.count {
-                notesToLevel = Array(repeating: midiGroup.min()!, count: instrumentSet.levels.count)
+                // CHANGED: geen min() force-unwrap
+                let fallbackNote = midiGroup.min() ?? c2
+                notesToLevel = Array(repeating: fallbackNote, count: instrumentSet.levels.count)
             }
 
             var noteNumbersClips: [Int] = trackLoaded.noteNumbersClips ?? []
@@ -261,10 +289,13 @@ enum AppUtils {
 
             var notesToGrid: [Int] = trackLoaded.notesToGrid ?? []
             if notesToGrid.count != cells {
-                // We have a another amount of cells, reset
-                notesToGrid = Array(repeating: midiGroup.min()!, count: cells)
+                // We have another amount of cells, reset
+                // CHANGED: geen min() force-unwrap
+                let fallbackNote = midiGroup.min() ?? c2
+                notesToGrid = Array(repeating: fallbackNote, count: cells)
             }
 
+            // EXS file
             var exsFile: ExsFiles = .trigger
             if let loaded = trackLoaded.exsFiles, !loaded.isEmpty {
                 if let fileName = loaded.first?.fileName {
@@ -280,12 +311,15 @@ enum AppUtils {
                 print("trackLoaded.exsFiles is nil of leeg")
             }
 
-            let effects: OrderedDictionary<Int, TrackEffectsSettings> = TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)
+            let effects: OrderedDictionary<Int, TrackEffectsSettings> =
+                TrackEffectsHelper.trackEfectsSettings(track: trackLoaded)
 
             // Remove levels higher than after level so we get no new fade ins
             let filteredLevels = trackLoaded.levels.filter { $0 <= maxSetLevelIndex }
 
-//            print("setSettings track \(trackLoaded.instrumentName) filteredLevels: \(filteredLevels)")
+            // CHANGED: veilige defaults voor midi-bestand en loopLength
+            let midiFileName: String = trackLoaded.midiFiles?.first?.fileName ?? ""
+            let loopLength: [Double] = trackLoaded.midiFiles?.first?.loopLength ?? []
 
             let track = TrackSettings(
                 trackId: trackLoaded.id,
@@ -300,7 +334,7 @@ enum AppUtils {
                 audioFiles: trackLoaded.audioFiles ?? [],
                 instrumentVolume: trackLoaded.volume,
                 instrumentColor: trackLoaded.instrumentColor,
-                midiFile: trackLoaded.midiFiles!.first!.fileName,
+                midiFile: midiFileName,
                 midiGroup: midiGroup,
                 notesToGrid: notesToGrid,
                 notesToGridMapped: AppUtils.areaOfInterestGridMapped(
@@ -310,7 +344,7 @@ enum AppUtils {
                 notesToLevel: notesToLevel,
                 noteNumbersClips: noteNumbersClips,
                 notesSequenceType: trackLoaded.notesSequenceType ?? .firstNote,
-                loopLength: (trackLoaded.midiFiles?.first!.loopLength)!,
+                loopLength: loopLength,
                 loopsToLevel: loopsToLevel,
                 loopsToGrid: loopsToGrid,
                 loopsToGridMapped: AppUtils.areaOfInterestGridMapped(
@@ -334,7 +368,7 @@ enum AppUtils {
             fileGroup: instrumentSet.fileGroup ?? .none,
             filesPath: instrumentSet.filesPath,
             imagePrefix: instrumentSet.imagePrefix,
-            setURL: URL(setUrl),
+            setURL: URL(setUrl), // laat staan als dit een eigen init is
             hasTempo: instrumentSet.hasTempo,
             userViews: instrumentSet.userViews,
             rows: instrumentSet.rows,
@@ -519,8 +553,7 @@ enum AppUtils {
                     instrumentPartName: part.value.partName,
                     areaOfInterest: part.value.areaOfInterest,
                     dontDrawVisual: part.value.dontDrawVisual,
-                    damperTarget: storeDamperTarget,
-                    oscTarget: part.value.oscTarget
+                    damperTarget: storeDamperTarget
                 )
                 storeParts.append(storePart)
             }

@@ -86,7 +86,7 @@ extension Conductor {
         // An actual instrument, not a sequencer loaded for copy reference
         if length == "loopSequenceFromMIDIfile" {
             switch track.instrumentType {
-            case .osc:
+            case .oscTrack:
                 // Geen AudioKit-onderdelen nodig: deze track wordt via OSC aangestuurd.
                 // Eventueel kun je hier logging of initialisatie toevoegen:
                 print("OSC track \(track.id) – skipping AudioKit setup")

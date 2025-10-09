@@ -226,7 +226,7 @@ extension InstrumentsSet.Track: Encodable {
 
 extension InstrumentsSet.Track {
     enum InstrumentType: String, Codable, CaseIterable {
-        case osc
+        case oscTrack
         case exsSampler
         case audioBuffer
         case audioBufferTimed
@@ -236,8 +236,8 @@ extension InstrumentsSet.Track {
 
         var description: String {
             switch self {
-            case .osc:
-                return "OSC Target"
+            case .oscTrack:
+                return "OSC Target track"
             case .exsSampler:
                 return "EXS sampler"
             case .audioBuffer:
