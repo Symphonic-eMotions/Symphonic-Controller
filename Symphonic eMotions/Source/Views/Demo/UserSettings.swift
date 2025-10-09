@@ -32,6 +32,7 @@ class UserSettings: ObservableObject {
 
     @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "172.20.10.99"
     @AppStorage(UserDefaultsKeys.port) var port: Int = 8000
+    //Deprecated, clean up ramps in UserSettings
     @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/stap1"
 
     @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0

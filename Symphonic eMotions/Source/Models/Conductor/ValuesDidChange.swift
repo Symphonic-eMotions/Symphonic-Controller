@@ -129,8 +129,7 @@ extension Conductor {
         part: PartSettings,
         normalizedValue: Float
     ) {
-        // 4) Bepaal OSC-pattern (bijv. "/instrumentX/partY")
-        let pattern = part.damperTarget.parameter // verwacht String zoals "/instrA/part1"
+        let pattern = part.damperTarget.parameter // String. example "/stap/part1"
         guard pattern.isEmpty == false else {
             print("Conductor: leeg OSC pattern voor partId: \(part.partId) partName: \(part.partName)")
             return
@@ -152,7 +151,7 @@ extension Conductor {
             return
         }
         
-        print("OSC \(ip) \(part) \(pattern) \(mappedValue)")
+        print("OSC \(ip) \(part.partName) \(pattern) \(mappedValue)")
         
         OSCMessageSender.shared.sendOSCMessage(
             ipAddress: ip,

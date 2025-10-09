@@ -27,7 +27,7 @@
               "rampSpeedDown": 0.1
             },
             "nodeType": "osc",
-            "parameter": "/Loader/part1",
+            "parameter": "/stap1/part1",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
             "trackId": "T1"
@@ -53,7 +53,7 @@
   "levelDifficultySet": 0.5,
   "levelDurations": [16, 16, 16, 16],
   "masterTrackEffects": [],
-  "published": flase,
+  "published": false,
   "semVersion": "2.8.5",
   "setBPM": 120,
   "setEffects": [],

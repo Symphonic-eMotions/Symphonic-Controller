@@ -1,0 +1,124 @@
+{
+  "customName": "",
+  "fileGroup": {
+    "pro": {}
+  },
+  "gridColumns": 2,
+  "gridRows": 2,
+  "hasTempo": true,
+  "imagePrefix": "Introductie",
+  "instrumentsConfig": [
+    {
+      "audioFiles": [],
+      "effects": [],
+      "exsFiles": [],
+      "instrumentColor": "InstrumentColor101",
+      "instrumentName": "Stap 1",
+      "instrumentParts": [
+        {
+          "areaOfInterest": [1, 0, 0, 0],
+          "damperTarget": {
+            "dampMode": "easeInCubic",
+            "midiData": null,
+            "nodeName": "",
+            "nodeSettings": {
+              "minimalLevel": 0.0,
+              "rampSpeed": 0.1,
+              "rampSpeedDown": 0.1
+            },
+            "nodeType": "osc",
+            "parameter": "/stap1/part1",
+            "parameterInversed": false,
+            "parameterRange": [0.0, 1.0],
+            "trackId": "T1"
+          },
+          "dontDrawVisual": false,
+          "instrumentPartName": "Part 1"
+        },
+        {
+          "areaOfInterest": [0, 1, 0, 0],
+          "damperTarget": {
+            "dampMode": "easeInCubic",
+            "midiData": null,
+            "nodeName": "",
+            "nodeSettings": {
+              "minimalLevel": 0.0,
+              "rampSpeed": 0.1,
+              "rampSpeedDown": 0.1
+            },
+            "nodeType": "osc",
+            "parameter": "/stap1/part2",
+            "parameterInversed": false,
+            "parameterRange": [0.0, 1.0],
+            "trackId": "T1"
+          },
+          "dontDrawVisual": false,
+          "instrumentPartName": "Part 2"
+        },
+        {
+          "areaOfInterest": [0, 0, 1, 0],
+          "damperTarget": {
+            "dampMode": "easeInCubic",
+            "midiData": null,
+            "nodeName": "",
+            "nodeSettings": {
+              "minimalLevel": 0.0,
+              "rampSpeed": 0.1,
+              "rampSpeedDown": 0.1
+            },
+            "nodeType": "osc",
+            "parameter": "/stap1/part3",
+            "parameterInversed": false,
+            "parameterRange": [0.0, 1.0],
+            "trackId": "T1"
+          },
+          "dontDrawVisual": false,
+          "instrumentPartName": "Part 3"
+        },
+        {
+          "areaOfInterest": [0, 0, 0, 1],
+          "damperTarget": {
+            "dampMode": "easeInCubic",
+            "midiData": null,
+            "nodeName": "",
+            "nodeSettings": {
+              "minimalLevel": 0.0,
+              "rampSpeed": 0.1,
+              "rampSpeedDown": 0.1
+            },
+            "nodeType": "osc",
+            "parameter": "/stap1/part4",
+            "parameterInversed": false,
+            "parameterRange": [0.0, 1.0],
+            "trackId": "T1"
+          },
+          "dontDrawVisual": false,
+          "instrumentPartName": "Part 4"
+        }
+      ],
+      "instrumentType": "oscTrack",
+      "instrumentVolume": 0.0,
+      "levels": [],
+      "midiFiles": [],
+      "midiGroup": [],
+      "muted": false,
+      "noteNumbersClips": [],
+      "notesToGrid": [],
+      "notesToLevel": [],
+      "startType": "loopedTransport",
+      "trackId": "T1",
+      "trackType": "variationByPosition"
+    }
+  ],
+  "levelDifficultySet": 0.5,
+  "levelDurations": [16, 16, 16, 16],
+  "masterTrackEffects": [],
+  "published": true,
+  "semVersion": "2.8.5",
+  "setBPM": 120,
+  "setEffects": [],
+  "setName": "ArtEZ 2025 Stap 1",
+  "setPath": "artez2025demo",
+  "setTimeSignature": 4,
+  "userViews": ["PlayView"]
+}
