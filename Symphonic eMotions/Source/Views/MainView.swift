@@ -70,42 +70,46 @@ struct MainView: View {
             )
             .environmentObject(fileController)
         case .swiftUI:
-            PlayView(
-                setInfoModel: setInfoModel,
-                sessionDisplay: $sessionDisplay,
-                showLevelPlayerFullScreen: $showLevelPlayerFullScreen
-            )
-            .environmentObject(fileController)
-            .onAppear {
-                viewModel.conductor.levelController(
-                    level: 0,
-                    setSettings: viewModel.mainState.setSettings
-                )
-            }
-            .onDisappear {
-                viewModel.conductor.pauzeEngineAndStopTracks(
-                    setSettings: viewModel.mainState.setSettings,
-                    resetLevels: true
-                )
-            }
+            
+            PlayOverlayView(setInfoModel: setInfoModel)
+            
+//            PlayView(
+//                setInfoModel: setInfoModel,
+//                sessionDisplay: $sessionDisplay,
+//                showLevelPlayerFullScreen: $showLevelPlayerFullScreen
+//            )
+//            .environmentObject(fileController)
+//            .onAppear {
+//                viewModel.conductor.levelController(
+//                    level: 0,
+//                    setSettings: viewModel.mainState.setSettings
+//                )
+//            }
+//            .onDisappear {
+//                viewModel.conductor.pauzeEngineAndStopTracks(
+//                    setSettings: viewModel.mainState.setSettings,
+//                    resetLevels: true
+//                )
+//            }
         case .home:
-            LevelOSCView(
-                setInfoModel: setInfoModel,
-                sessionDisplay: $sessionDisplay
-            )
-            .environmentObject(fileController)
-            .onAppear {
-                viewModel.conductor.levelController(
-                    level: 0,
-                    setSettings: viewModel.mainState.setSettings
-                )
-            }
-            .onDisappear {
-                viewModel.conductor.pauzeEngineAndStopTracks(
-                    setSettings: viewModel.mainState.setSettings,
-                    resetLevels: true
-                )
-            }
+            EmptyView()
+//            LevelOSCView(
+//                setInfoModel: setInfoModel,
+//                sessionDisplay: $sessionDisplay
+//            )
+//            .environmentObject(fileController)
+//            .onAppear {
+//                viewModel.conductor.levelController(
+//                    level: 0,
+//                    setSettings: viewModel.mainState.setSettings
+//                )
+//            }
+//            .onDisappear {
+//                viewModel.conductor.pauzeEngineAndStopTracks(
+//                    setSettings: viewModel.mainState.setSettings,
+//                    resetLevels: true
+//                )
+//            }
         default:
             EmptyView()
         }

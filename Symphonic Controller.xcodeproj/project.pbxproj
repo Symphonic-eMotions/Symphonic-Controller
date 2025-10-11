@@ -146,6 +146,9 @@
 		7CE5435627FB34D700F92540 /* DisplayModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435527FB34D700F92540 /* DisplayModes.swift */; };
 		7CE5435827FB8EB200F92540 /* DontPlayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */; };
 		7CF3DCB22E959E3700F223BE /* OSCTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DCB12E959E3700F223BE /* OSCTarget.swift */; };
+		7CF3DCB72E99B9FA00F223BE /* PlayOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DCB62E99B9FA00F223BE /* PlayOverlayView.swift */; };
+		7CF3DCB92E99BA3000F223BE /* HeatmapGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DCB82E99BA3000F223BE /* HeatmapGrid.swift */; };
+		7CF3DCBB2E99BA5300F223BE /* AOIOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DCBA2E99BA5300F223BE /* AOIOverlay.swift */; };
 		7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */; };
 		7CF50F2129ED39550016BAF4 /* PulseWidthSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */; };
 		7CF50F2329ED3F030016BAF4 /* PhaseSynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */; };
@@ -356,6 +359,9 @@
 		7CE5435527FB34D700F92540 /* DisplayModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModes.swift; sourceTree = "<group>"; };
 		7CE5435727FB8EB200F92540 /* DontPlayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontPlayGridView.swift; sourceTree = "<group>"; };
 		7CF3DCB12E959E3700F223BE /* OSCTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCTarget.swift; sourceTree = "<group>"; };
+		7CF3DCB62E99B9FA00F223BE /* PlayOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayOverlayView.swift; sourceTree = "<group>"; };
+		7CF3DCB82E99BA3000F223BE /* HeatmapGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapGrid.swift; sourceTree = "<group>"; };
+		7CF3DCBA2E99BA5300F223BE /* AOIOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AOIOverlay.swift; sourceTree = "<group>"; };
 		7CF50F1D29E888200016BAF4 /* NoteNumberPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNumberPositionsView.swift; sourceTree = "<group>"; };
 		7CF50F2029ED39550016BAF4 /* PulseWidthSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseWidthSynth.swift; sourceTree = "<group>"; };
 		7CF50F2229ED3F030016BAF4 /* PhaseSynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseSynth.swift; sourceTree = "<group>"; };
@@ -621,6 +627,16 @@
 			path = LevelPlayer;
 			sourceTree = "<group>";
 		};
+		7CF3DCB52E99B9F000F223BE /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				7CF3DCBA2E99BA5300F223BE /* AOIOverlay.swift */,
+				7CF3DCB82E99BA3000F223BE /* HeatmapGrid.swift */,
+				7CF3DCB62E99B9FA00F223BE /* PlayOverlayView.swift */,
+			);
+			path = OSC;
+			sourceTree = "<group>";
+		};
 		7CF50F1F29ED392B0016BAF4 /* InstrumentTypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,6 +857,7 @@
 		C084FFEA26B31216009A4D0C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7CF3DCB52E99B9F000F223BE /* OSC */,
 				7CFA00AA29A75A1C001D8A5D /* ViewUtils */,
 				16935F9F27E36DDE00BF5EDB /* SideBarView */,
 				7C6A8CEE2A4303060056BED3 /* Home */,
@@ -1039,6 +1056,7 @@
 				7CCCBF472BC5F1D400C78F44 /* CellOpacityController.swift in Sources */,
 				7C29AA1B2A4F4AB70070D901 /* ValueDamper.swift in Sources */,
 				C0C512A827075EAE00DE3393 /* EaseInCubicDamper.swift in Sources */,
+				7CF3DCB72E99B9FA00F223BE /* PlayOverlayView.swift in Sources */,
 				C02E54E226B50920003D503E /* AppUtils.swift in Sources */,
 				7C7E4FD62A683D63007BEF14 /* SetInfoModelSetLoading.swift in Sources */,
 				7C9123AA2A3290D500C1DB94 /* AudioBufferTimePitch.swift in Sources */,
@@ -1109,6 +1127,7 @@
 				C0AFDD012705BC08006EF64F /* Part.swift in Sources */,
 				7C67D162270F94C1009122BF /* CostelloReverbEffect.swift in Sources */,
 				7C6A8CF62A4481750056BED3 /* IntroductionImage.swift in Sources */,
+				7CF3DCBB2E99BA5300F223BE /* AOIOverlay.swift in Sources */,
 				7CF50F1E29E888200016BAF4 /* NoteNumberPositionsView.swift in Sources */,
 				7CB58364292FAEB1000C46FF /* InstrumentColors.swift in Sources */,
 				7CF50F5329EEBECD0016BAF4 /* NoteNumberLevelView.swift in Sources */,
@@ -1166,6 +1185,7 @@
 				7C8C3D9F28D306D00051BAC9 /* PartFeedbackState.swift in Sources */,
 				7C798D40272C38E000A4736E /* TanhDistortionEffect.swift in Sources */,
 				7CF50F4929ED7D210016BAF4 /* VariationType.swift in Sources */,
+				7CF3DCB92E99BA3000F223BE /* HeatmapGrid.swift in Sources */,
 				7CF50F5529EF165B0016BAF4 /* StartTypeView.swift in Sources */,
 				7C8C3D9D28D3066F0051BAC9 /* SeMActive.swift in Sources */,
 				7C6A8CFA2A4481BE0056BED3 /* IntroductionSlider.swift in Sources */,

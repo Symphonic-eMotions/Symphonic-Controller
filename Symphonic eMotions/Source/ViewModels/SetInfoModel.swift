@@ -35,9 +35,19 @@ final class SetInfoModel: ObservableObject {
     var userSettings: UserSettings
     private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
-    @Binding var setSettings: SetSettings
     @Binding var imageDifference: ImageDifference
     @Published var setInfoState: SetInfoState
+    
+    //Toegang speciaal voor PlayOverlayView->AOIOverlay
+    @Binding var setSettings: SetSettings
+    var setSettingsValue: SetSettings {
+        get { _setSettings.wrappedValue }
+        set { _setSettings.wrappedValue = newValue }
+    }
+    var tracksValue: OrderedDictionary<String, TrackSettings> {
+        setSettingsValue.tracks
+    }
+    
     let currentInstrumentsSetIsChanged: (InstrumentsSet) -> Void
     var conductor: Conductor
     let leveling: Leveling
@@ -159,13 +169,6 @@ final class SetInfoModel: ObservableObject {
         return output
     }
 }
-
-//extension SetInfoModel: FrameExtractorDelegate {
-//    func captured(image: CIImage) {
-//        guard userSettings.isCapturingRunning else { return }
-//        imageDifference.updateImageData(image: image)
-//    }
-//}
 
 extension SetInfoModel: FrameExtractorDelegate {
     func captured(image: CIImage) {

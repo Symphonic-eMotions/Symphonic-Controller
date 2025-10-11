@@ -3,7 +3,7 @@
 //  Symphonic eMotions Pro
 //
 //  Created by Frans-Jan Wind on 14/10/2024.
-//  Updated by Frans-Jan Wind on 9/10/2024
+//  Updated by Frans-Jan Wind on 9/10/2025
 //
 
 import SwiftOSC
@@ -30,19 +30,7 @@ class OSCMessageSender {
         client(for: ipAddress, port: port).send(message)
     }
 
-//    /// 🧺 Nieuw: stuur een bundle met meerdere messages tegelijk
-//    func sendOSCBundle(ipAddress: String,
-//                       port: Int,
-//                       messages: [(pattern: String, value: Float)]) {
-//        guard !messages.isEmpty else { return }
-//        let elements = messages.map { (pattern, value) in
-//            OSCMessage(OSCAddressPattern(pattern), value)
-//        }
-//        let bundle = OSCBundle(elements)
-//        client(for: ipAddress, port: port).send(bundle)
-//    }
-
-    /// 📦 Alternatief: één message met meerdere floats
+    /// 📦  één message met meerdere floats
     func sendOSCMessage(ipAddress: String,
                         port: Int,
                         pattern: String,

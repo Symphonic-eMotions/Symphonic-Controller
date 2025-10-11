@@ -13,7 +13,7 @@
       "effects": [],
       "exsFiles": [],
       "instrumentColor": "InstrumentColor101",
-      "instrumentName": "Instrument A",
+      "instrumentName": "Loader instrument",
       "instrumentParts": [
         {
           "areaOfInterest": [1, 0, 1, 0],
@@ -30,7 +30,7 @@
             "parameter": "/stap1/part1",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "T1"
+            "trackId": "stap1"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part A1"
@@ -46,7 +46,7 @@
       "notesToGrid": [],
       "notesToLevel": [],
       "startType": "loopedTransport",
-      "trackId": "T1",
+      "trackId": "stap1",
       "trackType": "variationByPosition"
     }
   ],
@@ -57,8 +57,8 @@
   "semVersion": "2.8.5",
   "setBPM": 120,
   "setEffects": [],
-  "setName": "ArtEZ 2025 Demo",
-  "setPath": "artez2025demo",
+  "setName": "Loader",
+  "setPath": "",
   "setTimeSignature": 4,
   "userViews": ["PlayView"]
 }
