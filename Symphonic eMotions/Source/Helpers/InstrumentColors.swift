@@ -5,88 +5,56 @@
 //  Created by Frans-Jan Wind on 21/10/2022.
 //
 
-import Foundation
 import SwiftUI
 
 struct InstrumentColors {
-    var palet: [Color] = [
-        Color("InstrumentNoColor"),
-        Color("InstrumentColor000"),
-        Color("InstrumentColor001"),
-        Color("InstrumentColor002"),
-        Color("InstrumentColor100"),
-        Color("InstrumentColor200"),
-        Color("InstrumentColor300"),
-        Color("InstrumentColor400"),
-        Color("InstrumentColor500"),
-        Color("InstrumentColor600"),
-        Color("InstrumentColor601"),
-        Color("InstrumentColor602"),
-        Color("InstrumentColor700"),
-        Color("InstrumentColor701"),
-        Color("InstrumentColor702"),
-        Color("InstrumentColor800"),
-        Color("InstrumentColor801"),
-        Color("InstrumentColor802")
-    ]
-
-    func name(color: Color) -> String {
-        switch color {
-        case Color("InstrumentNoColor"):
-            return "InstrumentNoColor"
-
-        case Color("InstrumentColor000"):
-            return "InstrumentColor000"
-
-        case Color("InstrumentColor001"):
-            return "InstrumentColor001"
-
-        case Color("InstrumentColor002"):
-            return "InstrumentColor002"
-
-        case Color("InstrumentColor100"):
-            return "InstrumentColor100"
-
-        case Color("InstrumentColor200"):
-            return "InstrumentColor200"
-
-        case Color("InstrumentColor300"):
-            return "InstrumentColor300"
-
-        case Color("InstrumentColor400"):
-            return "InstrumentColor400"
-
-        case Color("InstrumentColor500"):
-            return "InstrumentColor500"
-
-        case Color("InstrumentColor600"):
-            return "InstrumentColor600"
-
-        case Color("InstrumentColor601"):
-            return "InstrumentColor601"
-
-        case Color("InstrumentColor602"):
-            return "InstrumentColor602"
-
-        case Color("InstrumentColor700"):
-            return "InstrumentColor700"
-
-        case Color("InstrumentColor701"):
-            return "InstrumentColor701"
-
-        case Color("InstrumentColor702"):
-            return "InstrumentColor702"
-
-        case Color("InstrumentColor800"):
-            return "InstrumentColor800"
-
-        case Color("InstrumentColor801"):
-            return "InstrumentColor800"
-
-        case Color("InstrumentColor802"):
-            return "InstrumentColor802"
-
-        default: return "InstrumentColor000"
+    /// Bundle-veilige named lookup
+    static func named(_ name: String, in bundle: Bundle = .main) -> Color? {
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        if let ui = UIColor(named: name, in: bundle, compatibleWith: nil) {
+            return Color(ui)
         }
+        #elseif os(macOS)
+        if let ns = NSColor(named: NSColor.Name(name), bundle: bundle) {
+            return Color(ns)
+        }
+        #endif
+        return nil
+    }
+
+    /// Afleiden van part-kleur-naam: "InstrumentColor201" + partIndex(0-based) → 201/202/203/204
+    static func partName(from baseName: String, partIndex: Int) -> String? {
+        guard !baseName.isEmpty, baseName.last?.isNumber == true else { return nil }
+        return String(baseName.dropLast()) + String(partIndex + 1)
+    }
+
+    /// (Optioneel) fallbackkleur – eenvoudige variatie op basis van partIndex
+    static func fallback(from base: Color, partIndex: Int) -> Color {
+        let mix = Double((partIndex % 3) + 1) * 0.15
+        return base.opacity(1.0).blend(with: .white, amount: mix)
+    }
+}
+
+// kleine helper om te blenden zonder afhankelijkheden
+private extension Color {
+    func blend(with other: Color, amount: Double) -> Color {
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        let a = UIColor(self), b = UIColor(other)
+        var r1: CGFloat = 0, g1: CGFloat = 0, b1v: CGFloat = 0, a1: CGFloat = 0
+        var r2: CGFloat = 0, g2: CGFloat = 0, b2v: CGFloat = 0, a2: CGFloat = 0
+        a.getRed(&r1, green: &g1, blue: &b1v, alpha: &a1); b.getRed(&r2, green: &g2, blue: &b2v, alpha: &a2)
+        return Color(UIColor(red: r1*(1-amount)+r2*amount,
+                             green: g1*(1-amount)+g2*amount,
+                             blue: b1v*(1-amount)+b2v*amount,
+                             alpha: a1*(1-amount)+a2*amount))
+        #else
+        let a = NSColor(self).usingColorSpace(.sRGB) ?? .black
+        let b = NSColor(other).usingColorSpace(.sRGB) ?? .white
+        let r = a.redComponent*(1-amount) + b.redComponent*amount
+        let g = a.greenComponent*(1-amount) + b.greenComponent*amount
+        let bl = a.blueComponent*(1-amount) + b.blueComponent*amount
+        let al = a.alphaComponent*(1-amount) + b.alphaComponent*amount
+        return Color(NSColor(srgbRed: r, green: g, blue: bl, alpha: al))
+        #endif
     }
 }

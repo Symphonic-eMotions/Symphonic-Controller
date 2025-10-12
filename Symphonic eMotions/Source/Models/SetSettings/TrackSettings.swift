@@ -22,8 +22,10 @@ class TrackSettings: Identifiable, ObservableObject {
     var audioFiles: [InstrumentsSet.Track.AudioFile]
 
     var instrumentVolume: Float
-    var instrumentColor: Color
-
+    var instrumentColorName: String
+    var instrumentColor: Color {
+        InstrumentColors.named(instrumentColorName) ?? .gray
+    }
     var midiGroup: [Int]
     var notesToGrid: [Int]
     var notesToGridMapped: [Int]
@@ -72,7 +74,7 @@ class TrackSettings: Identifiable, ObservableObject {
         exsFile: ExsFiles,
         audioFiles: [InstrumentsSet.Track.AudioFile],
         instrumentVolume: Float,
-        instrumentColor: Color,
+        colorName: String,
         midiFile: String,
         midiGroup: [Int],
         notesToGrid: [Int],
@@ -99,7 +101,7 @@ class TrackSettings: Identifiable, ObservableObject {
         self.exsFile = exsFile
         self.audioFiles = audioFiles
         self.instrumentVolume = instrumentVolume
-        self.instrumentColor = instrumentColor
+        self.instrumentColorName = colorName
         self.midiFile = midiFile
         self.midiGroup = midiGroup
         self.notesToGrid = notesToGrid

@@ -32,8 +32,6 @@ class UserSettings: ObservableObject {
 
     @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "172.20.10.99"
     @AppStorage(UserDefaultsKeys.port) var port: Int = 8000
-    //Deprecated, clean up ramps in UserSettings
-    @AppStorage(UserDefaultsKeys.pattern) var pattern: String = "/stap1"
 
     @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
 
@@ -88,7 +86,6 @@ enum UserDefaultsKeys {
 
     static let ipAddress = "ipAddress"
     static let port = "port"
-    static let pattern = "pattern"
 
     static let calibrationThreshold = "calibrationThreshold"
 }
@@ -97,7 +94,7 @@ extension UserDefaultsKeys {
     static let rampUpPartPrefix   = "rampUp.part."
     static let rampDownPartPrefix = "rampDown.part."
 
-    // Legacy (alleen partId): blijft voor migratie
+    // Legacy (alleen partId): blijft voor migratie (Deprecated)
     static func legacyRampUpKey(_ partId: String) -> String { rampUpPartPrefix + partId }
     static func legacyRampDownKey(_ partId: String) -> String { rampDownPartPrefix + partId }
 
@@ -116,18 +113,15 @@ extension UserSettings {
         let newKey = UserDefaultsKeys.rampUpKey(trackId: trackId, partId: partId)
         if let _ = UserDefaults.standard.object(forKey: newKey) {
             let v = UserDefaults.standard.double(forKey: newKey)
-            DebugLog.d("READ up \(newKey) = \(v)")
             return v
         }
         // migratie: legacy key zonder track
         let legacyKey = UserDefaultsKeys.legacyRampUpKey(partId)
         if let _ = UserDefaults.standard.object(forKey: legacyKey) {
             let v = UserDefaults.standard.double(forKey: legacyKey)
-            DebugLog.d("MIGRATE up \(legacyKey) -> \(newKey) = \(v)")
             UserDefaults.standard.set(v, forKey: newKey)
             return v
         }
-        DebugLog.d("READ up \(newKey) (default) = \(defaultValue)")
         return defaultValue
     }
 
@@ -135,41 +129,36 @@ extension UserSettings {
         let newKey = UserDefaultsKeys.rampDownKey(trackId: trackId, partId: partId)
         if let _ = UserDefaults.standard.object(forKey: newKey) {
             let v = UserDefaults.standard.double(forKey: newKey)
-            DebugLog.d("READ down \(newKey) = \(v)")
             return v
         }
         // migratie: legacy key zonder track
         let legacyKey = UserDefaultsKeys.legacyRampDownKey(partId)
         if let _ = UserDefaults.standard.object(forKey: legacyKey) {
             let v = UserDefaults.standard.double(forKey: legacyKey)
-            DebugLog.d("MIGRATE down \(legacyKey) -> \(newKey) = \(v)")
             UserDefaults.standard.set(v, forKey: newKey)
             return v
         }
-        DebugLog.d("READ down \(newKey) (default) = \(defaultValue)")
         return defaultValue
     }
 
     // WRITE
     func setRampUp(_ value: Double, forTrack trackId: String, part partId: String) {
         let key = UserDefaultsKeys.rampUpKey(trackId: trackId, partId: partId)
-        DebugLog.d("WRITE up \(key) = \(value)")
         UserDefaults.standard.set(value, forKey: key)
     }
 
     func setRampDown(_ value: Double, forTrack trackId: String, part partId: String) {
         let key = UserDefaultsKeys.rampDownKey(trackId: trackId, partId: partId)
-        DebugLog.d("WRITE down \(key) = \(value)")
         UserDefaults.standard.set(value, forKey: key)
     }
 }
 
 enum DebugLog {
-    static var ramps = true // zet op false als je klaar bent
+    static var doDebug = true // zet op false als je klaar bent
 
     static func d(_ msg: @autoclosure () -> String) {
-        guard ramps else { return }
-        print("🛠️ [Ramps] \(msg())")
+        guard doDebug else { return }
+        print("🛠️ [Debug] \(msg())")
     }
 }
 

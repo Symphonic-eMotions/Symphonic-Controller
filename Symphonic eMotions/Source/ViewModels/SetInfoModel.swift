@@ -52,12 +52,12 @@ extension SetInfoModel {
         if let down { userSettings.setRampDown(down, forTrack: trackId, part: partId) }
 
         // 2) Conductor cache
-        if let up   { conductor.rampUp[key]   = up;   DebugLog.d("CACHE up   \(key) = \(up)") }
-        if let down { conductor.rampDown[key] = down; DebugLog.d("CACHE down \(key) = \(down)") }
+        if let up   { conductor.rampUp[key]   = up }
+        if let down { conductor.rampDown[key] = down }
 
         // 3) SetSettings (voor UI/serialisatie)
-        var ss = setSettingsValue
-        if var track = ss.tracks[trackId], var part = track.parts[partId] {
+        let ss = setSettingsValue
+        if let track = ss.tracks[trackId], let part = track.parts[partId] {
             if let up   { part.rampUp = up }
             if let down { part.rampDown = down }
             track.parts[partId] = part
@@ -75,12 +75,10 @@ extension SetInfoModel {
                 let key = RampKey.part(trackId, partId)
                 conductor.rampUp[key]   = up
                 conductor.rampDown[key] = down
-                DebugLog.d("PRIME \(key) up=\(up) down=\(down)")
             }
         }
     }
 }
-
 
 final class SetInfoModel: ObservableObject {
     var userSettings: UserSettings

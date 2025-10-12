@@ -169,7 +169,7 @@ extension SetInfoModel {
             exsFile: ExsFiles(rawValue: "trigger")!,
             audioFiles: [],
             instrumentVolume: 0,
-            instrumentColor: Color("InstrumentColor000"),
+            colorName: "InstrumentColor100",
             midiFile: "trigger",
             midiGroup: [noteNumber],
             notesToGrid: Array(repeating: noteNumber, count: cells),

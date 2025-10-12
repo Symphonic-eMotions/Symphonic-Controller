@@ -269,53 +269,53 @@ struct ValueFeedback: View {
     }
 }
 
-struct RampSliderView: View {
-    var label: String
-    @Binding var value: Double
-    var minValue: Float = 0
-    var maxValue: Float = 1
-    var displayRange: [Double]
-    var specifier: String
-    var showsLabel: Bool
-    var isActive: Bool
-
-    init(
-        label: String,
-        value: Binding<Double>,
-        minValue: Float = 0,
-        maxValue: Float = 1,
-        displayRange: [Double] = [0, 1],
-        specifier: String = "%.4f",
-        showsLabel: Bool = true,
-        isActive: Bool = true
-    ) {
-        self.label = label
-        _value = value
-        self.minValue = minValue
-        self.maxValue = maxValue
-        self.displayRange = displayRange
-        self.specifier = specifier
-        self.showsLabel = showsLabel
-        self.isActive = isActive
-    }
-
-    var body: some View {
-        GeometryReader { geometry in
-            HStack {
-                if showsLabel { Text(label) }
-                Slider(value: $value, in: Double(minValue) ... Double(maxValue))
-                    .foregroundColor(.accentColor)
-                    .frame(width: geometry.size.width * 0.8)
-
-                // Transform linear value to exponential
-                let expValue = pow(value, 3)
-                let displayValue = Float(RangeConverter.valueToRange(range: displayRange, value: Double(expValue)))
-//                    Text("\(displayValue, specifier: "\(specifier)")")
-//                        .foregroundColor(.white)
-//                        .font(.subheadline)
-//                        .frame(width: geometry.size.width * 0.2)
-            }
-        }
-        .frame(height: 40.0)
-    }
-}
+//struct RampSliderView: View {
+//    var label: String
+//    @Binding var value: Double
+//    var minValue: Float = 0
+//    var maxValue: Float = 1
+//    var displayRange: [Double]
+//    var specifier: String
+//    var showsLabel: Bool
+//    var isActive: Bool
+//
+//    init(
+//        label: String,
+//        value: Binding<Double>,
+//        minValue: Float = 0,
+//        maxValue: Float = 1,
+//        displayRange: [Double] = [0, 1],
+//        specifier: String = "%.4f",
+//        showsLabel: Bool = true,
+//        isActive: Bool = true
+//    ) {
+//        self.label = label
+//        _value = value
+//        self.minValue = minValue
+//        self.maxValue = maxValue
+//        self.displayRange = displayRange
+//        self.specifier = specifier
+//        self.showsLabel = showsLabel
+//        self.isActive = isActive
+//    }
+//
+//    var body: some View {
+//        GeometryReader { geometry in
+//            HStack {
+//                if showsLabel { Text(label) }
+//                Slider(value: $value, in: Double(minValue) ... Double(maxValue))
+//                    .foregroundColor(.accentColor)
+//                    .frame(width: geometry.size.width * 0.8)
+//
+//                // Transform linear value to exponential
+//                let expValue = pow(value, 3)
+//                let displayValue = Float(RangeConverter.valueToRange(range: displayRange, value: Double(expValue)))
+////                    Text("\(displayValue, specifier: "\(specifier)")")
+////                        .foregroundColor(.white)
+////                        .font(.subheadline)
+////                        .frame(width: geometry.size.width * 0.2)
+//            }
+//        }
+//        .frame(height: 40.0)
+//    }
+//}

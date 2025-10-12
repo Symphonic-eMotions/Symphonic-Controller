@@ -61,7 +61,13 @@ extension InstrumentsSet {
         var firstMinimalLevel: Double?
 
         var instrumentName: String
-        let instrumentColor: Color
+        // bewaar de NAAM uit JSON
+        let instrumentColorName: String
+
+        // leid de Color er computed uit af (voor UI)
+        var instrumentColor: Color {
+            InstrumentColors.named(instrumentColorName) ?? Color("InstrumentColor100")
+        }
         var volume: Float
 
         var midiFiles: [MidiFile]?
@@ -94,7 +100,7 @@ extension InstrumentsSet {
             instrumentName = try container.decode(String.self, forKey: .instrumentName)
 
             let instrumentColorString = try container.decodeIfPresent(String.self, forKey: .instrumentColor)
-            instrumentColor = Color(instrumentColorString ?? "InstrumentColor000")
+            instrumentColorName = try container.decodeIfPresent(String.self, forKey: .instrumentColor) ?? "InstrumentColor100"
 
             volume = try container.decode(Float.self, forKey: .volume)
             midiFiles = try container.decodeIfPresent([MidiFile].self, forKey: .midiFiles)
@@ -150,7 +156,7 @@ extension InstrumentsSet {
             startType: StartType,
             variationType: VariationType,
             instrumentName: String,
-            instrumentColor: Color,
+            instrumentColorName: String,
             volume: Float,
             midiFiles: [MidiFile]?,
             midiGroup: [Int]?,
@@ -173,7 +179,7 @@ extension InstrumentsSet {
             self.startType = startType
             self.variationType = variationType
             self.instrumentName = instrumentName
-            self.instrumentColor = instrumentColor
+            self.instrumentColorName = instrumentColorName
             self.volume = volume
             self.midiFiles = midiFiles
             self.midiGroup = midiGroup
@@ -207,8 +213,7 @@ extension InstrumentsSet.Track: Encodable {
         try container.encode(startType, forKey: .startType)
         try container.encode(variationType, forKey: .variationType)
         try container.encode(instrumentName, forKey: .instrumentName)
-        let instrumentColors = InstrumentColors()
-        try container.encode(instrumentColors.name(color: instrumentColor), forKey: .instrumentColor)
+        try container.encode(instrumentColorName, forKey: .instrumentColor)
         try container.encode(volume, forKey: .volume)
         try container.encode(midiFiles, forKey: .midiFiles)
         try container.encode(midiGroup, forKey: .midiGroup)
