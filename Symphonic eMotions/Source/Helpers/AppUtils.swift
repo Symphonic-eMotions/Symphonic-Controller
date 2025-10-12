@@ -550,6 +550,7 @@ enum AppUtils {
 //                print(storeDamperTarget)
 
                 let storePart = InstrumentsSet.Track.Part(
+                    id: part.value.partId,
                     instrumentPartName: part.value.partName,
                     areaOfInterest: part.value.areaOfInterest,
                     dontDrawVisual: part.value.dontDrawVisual,

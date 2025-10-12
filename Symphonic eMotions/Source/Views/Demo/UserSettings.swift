@@ -37,9 +37,6 @@ class UserSettings: ObservableObject {
 
     @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
 
-    @AppStorage(UserDefaultsKeys.rampUp) var rampUp: Double = 0.0
-    @AppStorage(UserDefaultsKeys.rampDown) var rampDown: Double = 0.0
-
     // Have a observed van for states
     @Published var userCode: UserCode {
         didSet {
@@ -69,34 +66,6 @@ class UserSettings: ObservableObject {
             userCode = .none
         }
     }
-
-    func getRampUp(for pattern: DevicePattern, defaultValue: Double) -> Double {
-        let key = UserDefaultsKeys.rampUp + "_" + pattern.rawValue
-        if UserDefaults.standard.object(forKey: key) == nil {
-            // If no value is stored, return the default value
-            return defaultValue
-        }
-        return UserDefaults.standard.double(forKey: key)
-    }
-
-    func setRampUp(_ value: Double, for pattern: DevicePattern) {
-        let key = UserDefaultsKeys.rampUp + "_" + pattern.rawValue
-        UserDefaults.standard.set(value, forKey: key)
-    }
-
-    func getRampDown(for pattern: DevicePattern, defaultValue: Double) -> Double {
-        let key = UserDefaultsKeys.rampDown + "_" + pattern.rawValue
-        if UserDefaults.standard.object(forKey: key) == nil {
-            // If no value is stored, return the default value
-            return defaultValue
-        }
-        return UserDefaults.standard.double(forKey: key)
-    }
-
-    func setRampDown(_ value: Double, for pattern: DevicePattern) {
-        let key = UserDefaultsKeys.rampDown + "_" + pattern.rawValue
-        UserDefaults.standard.set(value, forKey: key)
-    }
 }
 
 enum UserDefaultsKeys {
@@ -105,9 +74,7 @@ enum UserDefaultsKeys {
     static let isSetPlaying = "isSetPlaying"
     static let isCapturingRunning = "isCapturingRunning"
 
-//    static let levelSpeed = "levelSpeed"
     static let levelProgressExponent = "levelProgressExponent"
-//    static let levelDifficulty = "levelDifficulty"
 
     static let videoFeedback = "videoFeedback"
     static let sensitivitySession = "sensitivitySession"
@@ -124,7 +91,88 @@ enum UserDefaultsKeys {
     static let pattern = "pattern"
 
     static let calibrationThreshold = "calibrationThreshold"
+}
 
-    static let rampUp = "rampUp"
-    static let rampDown = "rampDown"
+extension UserDefaultsKeys {
+    static let rampUpPartPrefix   = "rampUp.part."
+    static let rampDownPartPrefix = "rampDown.part."
+
+    // Legacy (alleen partId): blijft voor migratie
+    static func legacyRampUpKey(_ partId: String) -> String { rampUpPartPrefix + partId }
+    static func legacyRampDownKey(_ partId: String) -> String { rampDownPartPrefix + partId }
+
+    // Nieuw (trackId#partId)
+    static func rampUpKey(trackId: String, partId: String) -> String {
+        rampUpPartPrefix + RampKey.part(trackId, partId)
+    }
+    static func rampDownKey(trackId: String, partId: String) -> String {
+        rampDownPartPrefix + RampKey.part(trackId, partId)
+    }
+}
+
+extension UserSettings {
+    // READ
+    func rampUp(forTrack trackId: String, part partId: String, default defaultValue: Double) -> Double {
+        let newKey = UserDefaultsKeys.rampUpKey(trackId: trackId, partId: partId)
+        if let _ = UserDefaults.standard.object(forKey: newKey) {
+            let v = UserDefaults.standard.double(forKey: newKey)
+            DebugLog.d("READ up \(newKey) = \(v)")
+            return v
+        }
+        // migratie: legacy key zonder track
+        let legacyKey = UserDefaultsKeys.legacyRampUpKey(partId)
+        if let _ = UserDefaults.standard.object(forKey: legacyKey) {
+            let v = UserDefaults.standard.double(forKey: legacyKey)
+            DebugLog.d("MIGRATE up \(legacyKey) -> \(newKey) = \(v)")
+            UserDefaults.standard.set(v, forKey: newKey)
+            return v
+        }
+        DebugLog.d("READ up \(newKey) (default) = \(defaultValue)")
+        return defaultValue
+    }
+
+    func rampDown(forTrack trackId: String, part partId: String, default defaultValue: Double) -> Double {
+        let newKey = UserDefaultsKeys.rampDownKey(trackId: trackId, partId: partId)
+        if let _ = UserDefaults.standard.object(forKey: newKey) {
+            let v = UserDefaults.standard.double(forKey: newKey)
+            DebugLog.d("READ down \(newKey) = \(v)")
+            return v
+        }
+        // migratie: legacy key zonder track
+        let legacyKey = UserDefaultsKeys.legacyRampDownKey(partId)
+        if let _ = UserDefaults.standard.object(forKey: legacyKey) {
+            let v = UserDefaults.standard.double(forKey: legacyKey)
+            DebugLog.d("MIGRATE down \(legacyKey) -> \(newKey) = \(v)")
+            UserDefaults.standard.set(v, forKey: newKey)
+            return v
+        }
+        DebugLog.d("READ down \(newKey) (default) = \(defaultValue)")
+        return defaultValue
+    }
+
+    // WRITE
+    func setRampUp(_ value: Double, forTrack trackId: String, part partId: String) {
+        let key = UserDefaultsKeys.rampUpKey(trackId: trackId, partId: partId)
+        DebugLog.d("WRITE up \(key) = \(value)")
+        UserDefaults.standard.set(value, forKey: key)
+    }
+
+    func setRampDown(_ value: Double, forTrack trackId: String, part partId: String) {
+        let key = UserDefaultsKeys.rampDownKey(trackId: trackId, partId: partId)
+        DebugLog.d("WRITE down \(key) = \(value)")
+        UserDefaults.standard.set(value, forKey: key)
+    }
+}
+
+enum DebugLog {
+    static var ramps = true // zet op false als je klaar bent
+
+    static func d(_ msg: @autoclosure () -> String) {
+        guard ramps else { return }
+        print("🛠️ [Ramps] \(msg())")
+    }
+}
+
+enum RampKey {
+    static func part(_ trackId: String, _ partId: String) -> String { "\(trackId)#\(partId)" }
 }

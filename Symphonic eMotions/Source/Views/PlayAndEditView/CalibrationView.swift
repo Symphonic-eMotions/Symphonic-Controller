@@ -16,11 +16,9 @@ struct CalibrationView: View {
     @State private var isCalibratingCancellable: AnyCancellable?
     @State private var calibrationThreshold: Int
     @State private var hasBeenUsed: Bool = false
-    var geometry: GeometryProxy
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
-    init(geometry: GeometryProxy, userSettings: UserSettings, setInfoModel: SetInfoModel) {
-        self.geometry = geometry
+    init(userSettings: UserSettings, setInfoModel: SetInfoModel) {
         _setInfoModel = ObservedObject(wrappedValue: setInfoModel)
         _calibrationThreshold = State(initialValue: userSettings.calibrationThreshold)
     }
@@ -72,14 +70,3 @@ struct CalibrationView: View {
         }
     }
 }
-
-// struct Triangle: Shape {
-//    func path(in rect: CGRect) -> Path {
-//        var path = Path()
-//        path.move(to: CGPoint(x: rect.maxX, y: rect.midY))  // Rechter middenpunt
-//        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))  // Linker bovenpunt
-//        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))  // Linker onderpunt
-//        path.closeSubpath()
-//        return path
-//    }
-// }

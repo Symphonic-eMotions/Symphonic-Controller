@@ -11,13 +11,14 @@ import Foundation
 extension InstrumentsSet.Track {
     struct Part: Identifiable, Decodable, Equatable {
         private enum PartKeys: String, CodingKey {
+            case id
             case instrumentPartName
             case areaOfInterest
             case dontDrawVisual
             case damperTarget
         }
 
-        let id: String = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        let id: String
         var instrumentPartName: String
 
         // All movement calculations are done on update of areaOfInterest
@@ -34,19 +35,52 @@ extension InstrumentsSet.Track {
             areaOfInterest = try container.decode([Int].self, forKey: .areaOfInterest)
             dontDrawVisual = try container.decodeIfPresent(Bool.self, forKey: .dontDrawVisual) ?? false
             damperTarget = try container.decode(DamperTarget.self, forKey: .damperTarget)
+            
+            // 1) JSON id als die bestaat
+            if let jsonId = try container.decodeIfPresent(String.self, forKey: .id), !jsonId.isEmpty {
+                id = jsonId
+            } else {
+                // 2) anders: deterministische key uit damperTarget
+                id = Part.makeStableId(from: instrumentPartName, damperTarget: damperTarget)
+            }
         }
 
         init(
+            id: String,
             instrumentPartName: String,
             areaOfInterest: [Int],
             dontDrawVisual: Bool?,
             damperTarget: DamperTarget,
             
         ) {
+            self.id = id
             self.instrumentPartName = instrumentPartName
             self.areaOfInterest = areaOfInterest
             self.dontDrawVisual = dontDrawVisual
             self.damperTarget = damperTarget
+        }
+        
+        // Handige helper voor deterministische sleutel
+        static func makeStableId(from name: String, damperTarget: DamperTarget) -> String {
+            // Neem zaken die in jouw domain uniek blijven:
+            let node = [
+                damperTarget.nodeType.rawValue,
+                damperTarget.nodeName,
+                damperTarget.parameter,
+                String(damperTarget.parameterInversed)
+            ].joined(separator: "|")
+            
+            // MIDI groep (als relevant voor uniekheid)
+            let midi = damperTarget.midiData?.group.map(String.init).joined(separator: ",") ?? "_"
+            
+            // part-naam kan spaties hebben → normaliseer (spaties zijn op zich oké in UserDefaults keys,
+            // maar normaliseren voorkomt edge cases)
+            let normName = name.lowercased().replacingOccurrences(of: "\\s+", with: "_", options: .regularExpression)
+            
+            // Eindkey: deterministisch en leesbaar
+            let raw = "\(normName)#\(node)#\(midi)"
+            // Eventueel extra cleanup
+            return raw.replacingOccurrences(of: "[^a-zA-Z0-9_#|,.-]", with: "_", options: .regularExpression)
         }
 
         func indexes(for set: InstrumentsSet) -> [Index] {
@@ -74,6 +108,7 @@ extension InstrumentsSet.Track {
 extension InstrumentsSet.Track.Part: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PartKeys.self)
+        try container.encode(id, forKey: .id)
         try container.encode(instrumentPartName, forKey: .instrumentPartName)
         try container.encode(areaOfInterest, forKey: .areaOfInterest)
         try container.encode(dontDrawVisual, forKey: .dontDrawVisual)

@@ -87,7 +87,7 @@ struct LevelsView: View {
 
                 Button("+") {
                     setInfoModel.setSettings.levels.append(1)
-                    _ = print(setInfoModel.setSettings.levels.count)
+//                    print(setInfoModel.setSettings.levels.count)
                     levels.append(1)
 
                     // We do not auto include new level into $trackLevels

@@ -49,6 +49,7 @@
 		7C4EBB9629D4A21300958954 /* Extenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9529D4A21300958954 /* Extenders.swift */; };
 		7C4EBB9829D7879F00958954 /* SelectGridSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */; };
 		7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4EBB9B29D83BCB00958954 /* BpmView.swift */; };
+		7C53FE5E2E9B85330002A1F7 /* PartControlsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C53FE5D2E9B85330002A1F7 /* PartControlsPane.swift */; };
 		7C597C352CBE67FC00858022 /* DevicePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C597C342CBE67FC00858022 /* DevicePattern.swift */; };
 		7C597C372CBE7C4800858022 /* SettingsSmallSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */; };
 		7C6204E32BBFFF8A00629DC5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6204E22BBFFF8A00629DC5 /* UserView.swift */; };
@@ -193,7 +194,6 @@
 		C084FFD726B3115E009A4D0C /* eMotionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C084FFD626B3115E009A4D0C /* eMotionApp.swift */; };
 		C084FFDB26B31160009A4D0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C084FFDA26B31160009A4D0C /* Assets.xcassets */; };
 		C084FFDE26B31160009A4D0C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C084FFDD26B31160009A4D0C /* Preview Assets.xcassets */; };
-		C084FFEC26B3122C009A4D0C /* MainViewLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C084FFEB26B3122C009A4D0C /* MainViewLegacy.swift */; };
 		C0AFDD012705BC08006EF64F /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AFDD002705BC08006EF64F /* Part.swift */; };
 		C0AFDD032705BC24006EF64F /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AFDD022705BC24006EF64F /* Effect.swift */; };
 		C0AFDD062705D1CC006EF64F /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AFDD052705D1CC006EF64F /* Conductor.swift */; };
@@ -260,6 +260,7 @@
 		7C4EBB9529D4A21300958954 /* Extenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenders.swift; sourceTree = "<group>"; };
 		7C4EBB9729D7879F00958954 /* SelectGridSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGridSizeView.swift; sourceTree = "<group>"; };
 		7C4EBB9B29D83BCB00958954 /* BpmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BpmView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C53FE5D2E9B85330002A1F7 /* PartControlsPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartControlsPane.swift; sourceTree = "<group>"; };
 		7C597C342CBE67FC00858022 /* DevicePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePattern.swift; sourceTree = "<group>"; };
 		7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSmallSheetView.swift; sourceTree = "<group>"; };
 		7C6204E22BBFFF8A00629DC5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -409,7 +410,6 @@
 		C084FFDA26B31160009A4D0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C084FFDD26B31160009A4D0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C084FFE426B3118A009A4D0C /* eMotion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = eMotion.entitlements; sourceTree = "<group>"; };
-		C084FFEB26B3122C009A4D0C /* MainViewLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewLegacy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0AFDD002705BC08006EF64F /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C0AFDD022705BC24006EF64F /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		C0AFDD052705D1CC006EF64F /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -630,6 +630,7 @@
 		7CF3DCB52E99B9F000F223BE /* OSC */ = {
 			isa = PBXGroup;
 			children = (
+				7C53FE5D2E9B85330002A1F7 /* PartControlsPane.swift */,
 				7CF3DCBA2E99BA5300F223BE /* AOIOverlay.swift */,
 				7CF3DCB82E99BA3000F223BE /* HeatmapGrid.swift */,
 				7CF3DCB62E99B9FA00F223BE /* PlayOverlayView.swift */,
@@ -871,7 +872,6 @@
 				7CCDE10228E2C61300343920 /* MasterAndEffectView */,
 				7CD7DCD32A52CE7D00A8E1FE /* MainViewContainer.swift */,
 				7C6702472CA43F58006B7EAA /* MainView.swift */,
-				C084FFEB26B3122C009A4D0C /* MainViewLegacy.swift */,
 				7C3EC2052A1FA3230049E4ED /* SettingsSheetView.swift */,
 				7C597C362CBE7C4800858022 /* SettingsSmallSheetView.swift */,
 			);
@@ -1019,7 +1019,6 @@
 				7C3EC2062A1FA3230049E4ED /* SettingsSheetView.swift in Sources */,
 				7C4EBB9C29D83BCC00958954 /* BpmView.swift in Sources */,
 				7C7756F828C798BD00E73B14 /* Dial.swift in Sources */,
-				C084FFEC26B3122C009A4D0C /* MainViewLegacy.swift in Sources */,
 				C06958FF26B4DB1E002EB522 /* FrameExtractor.swift in Sources */,
 				7C7E4FDE2A69376D007BEF14 /* DamperTarget.swift in Sources */,
 				7C7057BF2BFE361000C02DE6 /* ChordEntry.swift in Sources */,
@@ -1070,6 +1069,7 @@
 				7C7E4FDA2A683E52007BEF14 /* SetInfoModelSubscribers.swift in Sources */,
 				7C9FB7792A4AECCD00490C59 /* FooterView.swift in Sources */,
 				C0C512A227075DDD00DE3393 /* ValueAndRange.swift in Sources */,
+				7C53FE5E2E9B85330002A1F7 /* PartControlsPane.swift in Sources */,
 				7C48561E294092D70039B408 /* ExpanderEffect.swift in Sources */,
 				7C9FB7772A4AE95C00490C59 /* SetListViewModel.swift in Sources */,
 				7C3EC2022A1D23A30049E4ED /* DemoView.swift in Sources */,

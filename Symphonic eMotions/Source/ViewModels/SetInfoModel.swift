@@ -31,8 +31,60 @@ enum PlayerControlsViewAction {
     case partFeedbackViewChange(Bool)
 }
 
+extension SetInfoModel {
+    func currentRamps(for trackId: String, partId: String) -> (up: Double, down: Double) {
+        let partFallbackUp   = setSettingsValue.tracks[trackId]?.parts[partId]?.rampUp
+        let partFallbackDown = setSettingsValue.tracks[trackId]?.parts[partId]?.rampDown
+
+        let defaultUp   = partFallbackUp   ?? conductor.rampUp[RampKey.part(trackId, partId)]   ?? 0.5
+        let defaultDown = partFallbackDown ?? conductor.rampDown[RampKey.part(trackId, partId)] ?? 0.5
+
+        let up   = userSettings.rampUp(forTrack: trackId, part: partId, default: defaultUp)
+        let down = userSettings.rampDown(forTrack: trackId, part: partId, default: defaultDown)
+        return (up, down)
+    }
+
+    func updateRamp(for trackId: String, partId: String, up: Double? = nil, down: Double? = nil) {
+        let key = RampKey.part(trackId, partId)
+
+        // 1) Persist
+        if let up   { userSettings.setRampUp(up, forTrack: trackId, part: partId) }
+        if let down { userSettings.setRampDown(down, forTrack: trackId, part: partId) }
+
+        // 2) Conductor cache
+        if let up   { conductor.rampUp[key]   = up;   DebugLog.d("CACHE up   \(key) = \(up)") }
+        if let down { conductor.rampDown[key] = down; DebugLog.d("CACHE down \(key) = \(down)") }
+
+        // 3) SetSettings (voor UI/serialisatie)
+        var ss = setSettingsValue
+        if var track = ss.tracks[trackId], var part = track.parts[partId] {
+            if let up   { part.rampUp = up }
+            if let down { part.rampDown = down }
+            track.parts[partId] = part
+            ss.tracks[trackId] = track
+            setSettingsValue = ss
+        }
+    }
+
+    func primeRampsFromDefaults() {
+        let ss = setSettingsValue
+        for (trackId, track) in ss.tracks {
+            for (partId, part) in track.parts {
+                let up   = userSettings.rampUp(forTrack: trackId, part: partId, default: part.rampUp)
+                let down = userSettings.rampDown(forTrack: trackId, part: partId, default: part.rampDown)
+                let key = RampKey.part(trackId, partId)
+                conductor.rampUp[key]   = up
+                conductor.rampDown[key] = down
+                DebugLog.d("PRIME \(key) up=\(up) down=\(down)")
+            }
+        }
+    }
+}
+
+
 final class SetInfoModel: ObservableObject {
     var userSettings: UserSettings
+    private var didPrimeRamps = false
     private(set) var frameExtractor: FrameExtractor
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var imageDifference: ImageDifference
@@ -110,6 +162,15 @@ final class SetInfoModel: ObservableObject {
 //        subscribeToLevels()
         subscribeToImageDifference()
         subscribeToPartFeedback()
+        
+        // Prime per-part ramps direct:
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if !self.didPrimeRamps {
+                self.primeRampsFromDefaults()
+                self.didPrimeRamps = true
+            }
+        }
     }
 
     func buttonToFeedback(id: Int) -> Double {

@@ -7,13 +7,19 @@
 
 import SwiftUI
 
+private struct PartSelection: Identifiable, Equatable {
+    let trackId: String
+    let partId: String
+    var id: String { "\(trackId)#\(partId)" }
+}
+
 struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var setInfoModel: SetInfoModel
     @Binding var sessionDisplay: SessionDisplay
 
     @StateObject var fileController = FileController()
-    @StateObject var userSettings = UserSettings()
+    @StateObject var userSettings = UserSettings.shared
 
     @State var isCreator: Bool = false
     @State var userPresets: [URL] = []
@@ -35,7 +41,6 @@ struct MainView: View {
                 .environmentObject(fileController)
                 .onAppear {
                     isCreator = userSettings.userCode == .creator
-//                    updateSidebarItems()
                 }
 
                 // Main content based on the sessionDisplay
@@ -71,45 +76,23 @@ struct MainView: View {
             .environmentObject(fileController)
         case .swiftUI:
             
-            PlayOverlayView(setInfoModel: setInfoModel)
-            
-//            PlayView(
-//                setInfoModel: setInfoModel,
-//                sessionDisplay: $sessionDisplay,
-//                showLevelPlayerFullScreen: $showLevelPlayerFullScreen
-//            )
-//            .environmentObject(fileController)
-//            .onAppear {
-//                viewModel.conductor.levelController(
-//                    level: 0,
-//                    setSettings: viewModel.mainState.setSettings
-//                )
-//            }
-//            .onDisappear {
-//                viewModel.conductor.pauzeEngineAndStopTracks(
-//                    setSettings: viewModel.mainState.setSettings,
-//                    resetLevels: true
-//                )
-//            }
+            VStack(spacing: 12) {
+                PartControlsPane(setInfoModel: setInfoModel)   // ⬅︎ knoppen + inline editor + feedback
+                PlayOverlayView(setInfoModel: setInfoModel) // jouw bestaande overlay
+                // Calibration en settings
+                HStack {
+                    CalibrationView(
+                        userSettings: setInfoModel.userSettings,
+                        setInfoModel: setInfoModel
+                    )
+                    // Settings button
+                    SettingsButtonWithLongPress(
+                        setInfoModel: setInfoModel
+                    )
+                }
+            }
         case .home:
             EmptyView()
-//            LevelOSCView(
-//                setInfoModel: setInfoModel,
-//                sessionDisplay: $sessionDisplay
-//            )
-//            .environmentObject(fileController)
-//            .onAppear {
-//                viewModel.conductor.levelController(
-//                    level: 0,
-//                    setSettings: viewModel.mainState.setSettings
-//                )
-//            }
-//            .onDisappear {
-//                viewModel.conductor.pauzeEngineAndStopTracks(
-//                    setSettings: viewModel.mainState.setSettings,
-//                    resetLevels: true
-//                )
-//            }
         default:
             EmptyView()
         }
@@ -119,35 +102,7 @@ struct MainView: View {
         Group {
             switch sessionDisplay {
             case .swiftUI:
-                PlayView(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay,
-                    showLevelPlayerFullScreen: $showLevelPlayerFullScreen
-                )
-                .environmentObject(fileController)
-                .navigationBarHidden(false)
-                .onAppear {
-                    viewModel.conductor.levelController(
-                        level: 0,
-                        setSettings: viewModel.mainState.setSettings
-                    )
-                }
-                .onDisappear {
-                    viewModel.conductor.pauzeEngineAndStopTracks(
-                        setSettings: viewModel.mainState.setSettings,
-                        resetLevels: true
-                    )
-                }
-
-                // If levels are completed go to count down view
-                // At the moment this is not possible
-                .onReceive(viewModel.leveling.currentSetLevelSubject) { currentSetLevel in
-                    if viewModel.mainState.setSettings.currentPlaylist != .none {
-                        if currentSetLevel >= Double(viewModel.mainState.setSettings.levels.count) {
-                            self.sessionDisplay = .countDown
-                        }
-                    }
-                }
+                EmptyView()
             case .setInfo, .pro, .creator:
                 SetInfo(
                     setInfoModel: setInfoModel,
@@ -157,23 +112,7 @@ struct MainView: View {
                 )
                 .environmentObject(fileController)
             case .home:
-                LevelOSCView(
-                    setInfoModel: setInfoModel,
-                    sessionDisplay: $sessionDisplay
-                )
-                .environmentObject(fileController)
-                .onAppear {
-                    viewModel.conductor.levelController(
-                        level: 0,
-                        setSettings: viewModel.mainState.setSettings
-                    )
-                }
-                .onDisappear {
-                    viewModel.conductor.pauzeEngineAndStopTracks(
-                        setSettings: viewModel.mainState.setSettings,
-                        resetLevels: true
-                    )
-                }
+                EmptyView();
             default:
                 EmptyView()
             }
@@ -213,3 +152,4 @@ struct MainView: View {
         sidebarItems = items
     }
 }
+

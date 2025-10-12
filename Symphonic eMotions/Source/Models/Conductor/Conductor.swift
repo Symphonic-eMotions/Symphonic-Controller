@@ -83,11 +83,6 @@ final class Conductor: HasAudioEngine {
     var effectSamplers: [UUID: MIDISampler]?
     var effectTypeToUUIDs: [EffectType: [UUID]] = [:]
     var rewindIsPlaying: UUID?
-//    internal var effectAmpEnvs: [UUID: AmplitudeEnvelope]?
-
-    // Amplitude enelopes for muting tracks for levels
-    // TODO: init of these needs to be at 0 (-90Db)
-//    private var trackAmpEnvelopes: [String: AmplitudeEnvelope] = [:]
 
     // Intermediair for sending data back to interface, visual feedback
     var forwardRampedPartFeedback = CurrentValueSubject<Double, Never>(0)
@@ -97,12 +92,12 @@ final class Conductor: HasAudioEngine {
 
     // Play diffrent samples in introduction volume control:
     var lastNoteNumber: Int?
-
-    // Debug var
-    var lastRounded: [String: Double] = [:]
-
+    
+    //OSC part ramp editor
+    @Published var latestPartValues: [String: Double] = [:]
+    internal var smoothedPartValues: [String: Double] = [:]    // interne smoothing-state
+    
     // MARK: Init
-
     init(
         userSettings: UserSettings = UserSettings.shared,
         set: InstrumentsSet
@@ -124,7 +119,6 @@ final class Conductor: HasAudioEngine {
         soundModuleParam01 = [:]
         soundModuleParam02 = [:]
         soundModuleVolume = [:]
-//        trackAmpEnvelopes = [:]
         rampUp = [:]
         rampDown = [:]
         volume = [:]
@@ -141,10 +135,7 @@ final class Conductor: HasAudioEngine {
         effectSamplers = [:]
         effectTypeToUUIDs = [:]
         rewindIsPlaying = nil
-//        effectAmpEnvs = [:]
 
-        // Debug var
-        lastRounded = [:]
     }
 
     // Function which is called when switching between sets
@@ -219,11 +210,6 @@ final class Conductor: HasAudioEngine {
                 trackSequencersCallbackers.removeValue(forKey: track.id)
                 trackSequencersCallbackers[track.id] = nil
             }
-
-//            if( trackAmpEnvelopes[track.id] != nil ) {
-//                trackAmpEnvelopes.removeValue(forKey: track.id)
-//                trackAmpEnvelopes[track.id] = nil
-//            }
         }
 
         if let effectSetsDict = effectSamplers {
@@ -251,14 +237,9 @@ final class Conductor: HasAudioEngine {
                 // Cleanup and release resources
                 sampler.destroyEndpoint()
             }
-//            if( trackAmpEnvelopes[track.id] != nil ) {
-//                trackAmpEnvelopes.removeValue(forKey: track.id)
-//                trackAmpEnvelopes[track.id] = nil
-//            }
             effectSamplers = [:]
             effectTypeToUUIDs = [:]
             rewindIsPlaying = nil
-//            effectAmpEnvs = [:]
         }
 
         mixer.removeAllInputs()
@@ -340,14 +321,6 @@ final class Conductor: HasAudioEngine {
             // In level after level open trackAmpEnvelope 1 level early
             // OR replace with amplitudeControllers
             amplitudeControllers[track.id] = AmplitudeController()
-
-//            //Turn tracks off so things will be quiet to start off with
-//            if let trackAmpEnvelope = trackAmpEnvelopes[track.id] {
-//                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//                trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
-//            } else {
-//                print("trackAmpEnvelopes[track.id] is nil")
-//            }
         }
     }
 
@@ -415,14 +388,6 @@ final class Conductor: HasAudioEngine {
 
             setEffectSamplers[setEffect.id] = sampler
 
-//            let envelope = AmplitudeEnvelope(sampler)
-//            envelope.attackDuration = AUValue(setEffect.adsrEnvelope.attack)
-//            envelope.decayDuration = AUValue(setEffect.adsrEnvelope.decay)
-//            envelope.sustainLevel = AUValue(setEffect.adsrEnvelope.sustain)
-//            envelope.releaseDuration = AUValue(setEffect.adsrEnvelope.release)
-//
-//            effectAmpEnvs?[setEffect.id] = envelope
-
             mixerMaster.addInput(sampler)
 
             // This needs to happen as last
@@ -456,8 +421,6 @@ final class Conductor: HasAudioEngine {
             return nil
         }
 
-//        effectAmpEnvs?[uuid]?.start()
-
         let noteNumber = 60
         let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
         sampler.scheduleMIDIEvent(event: noteOn, offset: UInt64(0))
@@ -469,8 +432,6 @@ final class Conductor: HasAudioEngine {
         guard let sampler = effectSamplers?[uuid] else {
             return
         }
-
-//        effectAmpEnvs?[uuid]?.stop()
 
         let noteNumber = 60
         let noteOff = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(0), channel: 1)
@@ -506,9 +467,6 @@ final class Conductor: HasAudioEngine {
                 trackSequencers[trackId]?.preroll()
             } else {
                 playEngineUIEffect()
-
-//                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-//                trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: envOn)
 
                 velocities[trackId] = 1.0
 
@@ -562,9 +520,6 @@ final class Conductor: HasAudioEngine {
         if !noteOn {
             playEngineUIEffect()
 
-//            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-//            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
-
             let noteOn = MIDIEvent(noteOn: MIDINoteNumber(noteNumber), velocity: MIDIVelocity(127), channel: 1)
 
             if [.exsSampler, .audioBuffer, .audioBufferTimed].contains(soundSource) {
@@ -593,9 +548,6 @@ final class Conductor: HasAudioEngine {
     ) {
         if !noteOn {
             playEngineUIEffect()
-
-//            let trackOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-//            trackAmpEnvelopes[trackId]!.scheduleMIDIEvent(event: trackOn)
 
             // Get any but the last played note
             let filteredNotes = noteNumbers.filter { $0 != self.lastNoteNumber }
@@ -684,32 +636,6 @@ final class Conductor: HasAudioEngine {
                     levelNoteNumberVariation(in: selectedLevel, on: track.value)
                 }
             }
-
-            // TODO: Switch level type switch of is nieuwe methode superieur?
-
-//            //UN-Mute if track is within level
-//            if track.value.levels.contains(selectedLevel)
-//            {
-//                let envOn = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 127, channel: 1)
-//                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
-//                    trackAmpEnvelope.scheduleMIDIEvent(event: envOn)
-//                }
-//                else{
-//                    print("ERROR: un mute \(track.value.trackId) not found")
-//                }
-//
-//            }
-//            //Mute all other occasions is after last level
-//            else {
-//
-//                let envOff = MIDIEvent(noteOn: MIDINoteNumber(64), velocity: 0, channel: 1)
-//                if let trackAmpEnvelope = trackAmpEnvelopes[track.value.trackId] {
-//                    trackAmpEnvelope.scheduleMIDIEvent(event: envOff)
-//                }
-//                else{
-//                    print("mute \(track.value.trackId) not found")
-//                }
-//            }
         }
     }
 
@@ -841,22 +767,7 @@ final class Conductor: HasAudioEngine {
         return finalNode as Node
     }
 
-    // MARK: Add track amplitude envelopes
-
-//    internal func setTrackAmpEnvelope(trackId: String, startingNode: Node) -> Node{
-//
-//        //Add Amplitude envelope for
-//        trackAmpEnvelopes[trackId] = AmplitudeEnvelope(startingNode)
-//        trackAmpEnvelopes[trackId]!.attackDuration = 0.4
-//        trackAmpEnvelopes[trackId]!.decayDuration = 0.01
-//        trackAmpEnvelopes[trackId]!.sustainLevel = 1.0
-//        trackAmpEnvelopes[trackId]!.releaseDuration = 0.4
-//
-//        return trackAmpEnvelopes[trackId]! as Node
-//    }
-
     // MARK: Chain master track
-
     private func chainMasterEffects(
         for effects: [InstrumentsSet.Track.Effect],
         startingNode: Node
