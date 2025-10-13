@@ -24,43 +24,49 @@ struct PartControlsPane: View {
     var body: some View {
         VStack(spacing: 10) {
 
-            // 1) Knoppen per part (horizontaal)
+            // 1) Knoppen per part (horizontaal) + "Stil" links
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(Array(tracks), id: \.key) { (trackId, track) in
-                        let parts = Array(track.parts)
-                        HStack(spacing: 6) {
-                            ForEach(parts, id: \.key) { (partId, part) in
-                                Button {
+                HStack(spacing: 10) {
+
+                    // 🔴 Stil-knop
+                    MuteButton(setInfoModel: setInfoModel) {
+                        if setInfoModel.isMuted {
+                            setInfoModel.unmuteStreams()
+                        } else {
+                            setInfoModel.muteAllStreams()
+                            withAnimation { active = nil }
+                        }
+                    }
+
+                    // 🟢 Parts
+                    ForEach(tracks.elements, id: \.key) { trackElement in
+                        let trackId: String = trackElement.key
+                        let track: TrackSettings = trackElement.value
+
+                        HStack(spacing: 8) {
+                            ForEach(track.parts.elements, id: \.key) { partElement in
+                                let partId: String = partElement.key
+                                let part = partElement.value
+                                let selected: Bool = (active?.partId == partId && active?.trackId == trackId && !setInfoModel.isMuted)
+
+                                PartButton(
+                                    title: part.partName,
+                                    color: track.instrumentColor,
+                                    isSelected: selected
+                                ) {
+                                    if setInfoModel.isMuted { setInfoModel.unmuteStreams() }
+
                                     // selecteer + init sliders
-                                    active = PartSelection(trackId: trackId, partId: partId)
+                                    let sel = PartSelection(trackId: trackId, partId: partId)
+                                    active = sel
 
                                     let curr = setInfoModel.currentRamps(for: trackId, partId: partId)
-                                    
                                     suppressSliderWrites = true
-                                    
                                     rampUp = curr.up
                                     rampDown = curr.down
-                                    
-                                    // kleine defer om programmatic set af te ronden
                                     DispatchQueue.main.async { suppressSliderWrites = false }
-                                    
-                                    DebugLog.d("UI SELECT \(trackId)#\(partId) set sliders up=\(curr.up) down=\(curr.down)")
 
-                                    
-                                } label: {
-                                    HStack(spacing: 6) {
-                                        Circle()
-                                            .fill(track.instrumentColor)
-                                            .frame(width: 10, height: 10)
-                                        Text(part.partName)
-                                            .font(.footnote.weight(.medium))
-                                            .lineLimit(1)
-                                    }
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 8)
-                                    .background(active?.partId == partId ? .thinMaterial : .ultraThinMaterial)
-                                    .clipShape(Capsule())
+                                    DebugLog.d("UI SELECT \(trackId)#\(partId) set sliders up=\(curr.up) down=\(curr.down)")
                                 }
                             }
                         }
@@ -69,22 +75,21 @@ struct PartControlsPane: View {
                 .padding(.horizontal)
             }
 
-            // 2) Inline editor + feedback (toon alleen wanneer er een selectie is)
-            if let selection = active {
+            // 2) Inline editor + feedback (alleen tonen als er een selectie is en NIET gemute)
+            if let selection = active, !setInfoModel.isMuted {
                 editorCard(selection: selection)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
         .onAppear {
             guard active == nil else { return }
-            guard let (firstTrackId, firstTrack) = tracks.elements.first,
-                  let (firstPartId, _) = firstTrack.parts.elements.first else { return }
+            guard let firstTrack = tracks.elements.first,
+                  let firstPart  = firstTrack.value.parts.elements.first else { return }
 
-            let sel = PartSelection(trackId: firstTrackId, partId: firstPartId)
+            let sel = PartSelection(trackId: firstTrack.key, partId: firstPart.key)
             active = sel
 
             let curr = setInfoModel.currentRamps(for: sel.trackId, partId: sel.partId)
-
             suppressSliderWrites = true
             rampUp = curr.up
             rampDown = curr.down
@@ -92,6 +97,7 @@ struct PartControlsPane: View {
         }
     }
 
+    
     @ViewBuilder
     private func editorCard(selection: PartSelection) -> some View {
         let trackId = selection.trackId
@@ -160,4 +166,65 @@ private struct PartSelection: Identifiable, Equatable {
     let trackId: String
     let partId: String
     var id: String { "\(trackId)#\(partId)" }
+}
+
+private struct MuteButton: View {
+    @ObservedObject var setInfoModel: SetInfoModel
+    let action: () -> Void
+
+    private var bgStyle: AnyShapeStyle {
+        setInfoModel.isMuted ? AnyShapeStyle(Color.red) : AnyShapeStyle(.ultraThinMaterial)
+    }
+
+    var body: some View {
+        Button(action: action) {
+            Text("Stil")
+                .font(.callout.weight(.semibold))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .frame(minHeight: 36)
+                .background(bgStyle, in: Capsule())
+                .foregroundStyle(setInfoModel.isMuted ? Color.white : Color.primary)
+                .overlay(
+                    Capsule()
+                        .strokeBorder(setInfoModel.isMuted ? Color.red.opacity(0.7) : Color.secondary.opacity(0.2), lineWidth: 1)
+                )
+        }
+        .accessibilityIdentifier("muteAllButton")
+        .buttonStyle(.plain)
+    }
+}
+
+private struct PartButton: View {
+    let title: String
+    let color: Color
+    let isSelected: Bool
+    let action: () -> Void
+
+    private var bgStyle: AnyShapeStyle {
+        isSelected ? AnyShapeStyle(Color.green) : AnyShapeStyle(.ultraThinMaterial)
+    }
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(color)
+                    .frame(width: 14, height: 14)
+                Text(title)
+                    .font(.callout.weight(.semibold))
+                    .lineLimit(1)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .frame(minHeight: 36)
+            .background(bgStyle, in: Capsule())
+            .foregroundStyle(isSelected ? Color.white : Color.primary)
+            .overlay(
+                Capsule()
+                    .strokeBorder(isSelected ? Color.green.opacity(0.7) : Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
 }

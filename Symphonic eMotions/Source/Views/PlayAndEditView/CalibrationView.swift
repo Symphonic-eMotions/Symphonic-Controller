@@ -8,65 +8,103 @@ import Combine
 import SwiftUI
 
 struct CalibrationView: View {
-    @EnvironmentObject var userSettings: UserSettings
-    @EnvironmentObject var startViewModel: StartViewModel
+    
     @ObservedObject var setInfoModel: SetInfoModel
+    
     @State private var isCalibrating: Bool = false
+    @State private var calibrationThreshold: Int = 0
     @State private var calibrationThresholdCancellable: AnyCancellable?
     @State private var isCalibratingCancellable: AnyCancellable?
-    @State private var calibrationThreshold: Int
-    @State private var hasBeenUsed: Bool = false
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-
-    init(userSettings: UserSettings, setInfoModel: SetInfoModel) {
-        _setInfoModel = ObservedObject(wrappedValue: setInfoModel)
-        _calibrationThreshold = State(initialValue: userSettings.calibrationThreshold)
-    }
-
+    
+    @State private var isCalibratingMax: Bool = false
+    @State private var calibrationMaxThreshold: Int = 0
+    @State private var calibrationMaxThresholdCancellable: AnyCancellable?
+    @State private var isCalibratingMaxCancellable: AnyCancellable?
+    
     var body: some View {
-        HStack {
-            Button(action: {
-                if isCalibrating {
-                    setInfoModel.imageDifference.stopCalibration()
-                } else {
-                    setInfoModel.imageDifference.startCalibration()
+        
+        VStack{
+            Text("Calibration")
+            HStack {
+                // Minimum
+                HStack{
+                    Button(action: {
+                        if isCalibrating {
+                            setInfoModel.imageDifference.stopCalibration()
+                        } else {
+                            setInfoModel.imageDifference.startCalibration()
+                        }
+                    }) {
+                        Text(isCalibrating ? "Stilstaan!" : "Stilte")
+                            .padding()
+                            .background(isCalibrating ? Color.red : Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.trailing)
+                            .padding(.bottom)
+                    }
+                    Text("\(calibrationThreshold)")
+                        .padding()
+                        .background(isCalibrating ? Color.red : Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.trailing)
+                        .padding(.bottom)
                 }
-                hasBeenUsed = true
-            }) {
-                Text(isCalibrating ? "Niet bewegen!" : "Kalibreer Stilte")
-                    .padding()
-                    .background(
-                        isCalibrating ? Color.red :
-                            (hasBeenUsed ? Color.green : Color.orange) // Aangepast
-                    )
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .padding(.trailing)
-                    .padding(.bottom)
+                .onAppear {
+                    calibrationThresholdCancellable = setInfoModel.imageDifference.calibrationThreshold
+                        .receive(on: RunLoop.main)
+                        .sink { newThreshold in
+                            self.calibrationThreshold = newThreshold
+                            setInfoModel.userSettings.calibrationMin = newThreshold
+                        }
+                    isCalibratingCancellable = setInfoModel.imageDifference.$isCalibrating
+                        .receive(on: RunLoop.main)
+                        .sink { isCalibrating in
+                            self.isCalibrating = isCalibrating
+                        }
+                }
+                
+                // Maximum
+                HStack{
+                    Button(action: {
+                        if isCalibratingMax {
+                            setInfoModel.imageDifference.stopCalibrationMax()
+                        } else {
+                            setInfoModel.imageDifference.startCalibrationMax()
+                        }
+                    }) {
+                        Text(isCalibratingMax ? "Bewegeeg!" : "Beweging")
+                            .padding()
+                            .background(isCalibratingMax ? Color.red : Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.trailing)
+                            .padding(.bottom)
+                    }
+                    Text("\(calibrationMaxThreshold)")
+                        .padding()
+                        .background(isCalibratingMax ? Color.red : Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.trailing)
+                        .padding(.bottom)
+                }
+                .onAppear {
+                    calibrationMaxThresholdCancellable = setInfoModel.imageDifference.calibrationMaxCeiling
+                        .receive(on: RunLoop.main)
+                        .sink { newThresholdMax in
+                            self.calibrationMaxThreshold = newThresholdMax
+                            setInfoModel.userSettings.calibrationMax = newThresholdMax
+                        }
+                    isCalibratingMaxCancellable = setInfoModel.imageDifference.$isCalibratingMax
+                        .receive(on: RunLoop.main)
+                        .sink { isCalibratingMax in
+                            self.isCalibratingMax = isCalibratingMax
+                        }
+                }
+                
             }
-            Text("\(calibrationThreshold)")
-                .padding()
-                .background(isCalibrating ? Color.red : Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding(.trailing)
-                .padding(.bottom)
-        }
-        .background(Color.clear)
-        .onAppear {
-            // Kalibratieveranderingen observeren en opslaan
-            calibrationThresholdCancellable = setInfoModel.imageDifference.$calibrationThreshold
-                .receive(on: RunLoop.main)
-                .sink { newThreshold in
-                    self.calibrationThreshold = newThreshold
-                    // Sla de nieuwe waarde op in de @AppStorage variabele
-                    userSettings.calibrationThreshold = newThreshold
-                }
-            isCalibratingCancellable = setInfoModel.imageDifference.$isCalibrating
-                .receive(on: RunLoop.main)
-                .sink { isCalibrating in
-                    self.isCalibrating = isCalibrating
-                }
         }
     }
 }

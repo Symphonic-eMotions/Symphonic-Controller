@@ -25,11 +25,22 @@ class ImageDifference: ObservableObject {
     var feedback = CurrentValueSubject<Float, Never>(0.50)
 
     // Nieuwe variabelen voor kalibratie
+//    private var calibrationValues: [Int] = []
+//    @Published var calibrationThreshold: Int = 0
+//    @Published var isCalibrating: Bool = false
+//    private let calibrationSamples: Int = 100 // Aantal samples voor kalibratie
+    
+    var calibrationThreshold = CurrentValueSubject<Int, Never>(UserSettings.shared.calibrationMin)
+    var calibrationMaxCeiling = CurrentValueSubject<Int, Never>(UserSettings.shared.calibrationMax)
+
     private var calibrationValues: [Int] = []
-    @Published var calibrationThreshold: Int = 0
     @Published var isCalibrating: Bool = false
     private let calibrationSamples: Int = 100 // Aantal samples voor kalibratie
-
+    
+    private var calibrationMaxValues: [Int] = []
+    @Published var isCalibratingMax: Bool = false
+    private let calibrationMaxSamples: Int = 100 // Aantal samples voor kalibratie
+    
     private init(rowCount: Int, columnCount: Int, maxValue: Int = 50, feedback: Float = 0.50) {
         self.rowCount = CGFloat(rowCount)
         self.columnCount = CGFloat(columnCount)
@@ -50,16 +61,27 @@ class ImageDifference: ObservableObject {
         isCalibrating = true
         resetCalibrationValues()
     }
-
+    func startCalibrationMax() {
+        isCalibratingMax = true
+        resetCalibrationMaxValues()
+    }
+    
     func stopCalibration() {
         isCalibrating = false
-        calibrationThreshold = calculateThreshold(from: calibrationValues)
+        calibrationThreshold.value = calculateThreshold(from: calibrationValues)
+    }
+    func stopCalibrationMax() {
+        isCalibratingMax = false
+        calibrationMaxCeiling.value = calculateThreshold(from: calibrationMaxValues)
     }
 
     private func resetCalibrationValues() {
-        print("resetCalibrationValues CALLED")
         calibrationValues.removeAll()
-        calibrationThreshold = 0
+        calibrationThreshold.value = 0
+    }
+    private func resetCalibrationMaxValues() {
+        calibrationMaxValues.removeAll()
+        calibrationMaxCeiling.value = 0
     }
 
     private func calculateThreshold(from values: [Int]) -> Int {
@@ -126,17 +148,28 @@ class ImageDifference: ObservableObject {
 
                 // Kalibratie mode: verzamel waardes
                 if isCalibrating {
+                    
                     calibrationValues.append(diff)
                     if calibrationValues.count >= calibrationSamples {
                         stopCalibration()
                     }
+                } else if isCalibratingMax {
+                    
+                    calibrationMaxValues.append(diff)
+                    if calibrationMaxValues.count >= calibrationMaxSamples {
+                        stopCalibrationMax()
+                    }
                 } else {
                     // Normale mode: pas drempelwaarde toe
-                    let filteredDiff = max(0, diff - calibrationThreshold)
-
+                    let filteredDiff = max(0, diff - calibrationThreshold.value)
+                    
                     let columnInvert = Int(column * -1 + (Int(columnCount) - 1))
                     let previousValues = tempAreaValues[columnInvert][row]
-                    tempAreaValues[columnInvert][row] = previousValues.withNewRawValue(filteredDiff, maxValue: maxValueSubject.value, feedback: feedback.value)
+                    tempAreaValues[columnInvert][row] = previousValues.withNewRawValue(
+                        filteredDiff,
+                        maxValue: calibrationMaxCeiling.value,
+                        feedback: self.feedback.value
+                    )
                 }
             }
         }

@@ -17,6 +17,11 @@ extension Conductor {
         partFeedbackTrackID _: String,
         partFeedbackPartID _: String
     ) -> Double {
+        
+        if isOSCMuted {
+            return currentSetLevel
+        }
+        
         // 1) Level-berekening (zoals voorheen)
         var localCurrentSetLevel = currentSetLevel
 

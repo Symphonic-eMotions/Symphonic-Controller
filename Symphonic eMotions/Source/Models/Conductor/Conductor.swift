@@ -18,11 +18,10 @@ protocol HasAudioEngine {
 }
 
 final class Conductor: HasAudioEngine {
+    
+    var isOSCMuted: Bool = false
+    
     var userSettings: UserSettings
-
-    var autoSound: AVAudioPlayer!
-
-    // MARK: Var declarations
 
     // Audiokit AudioEngine. One engine is running at all times
     // Gets pauzed on set change
@@ -137,6 +136,33 @@ final class Conductor: HasAudioEngine {
         rewindIsPlaying = nil
 
     }
+    
+    func muteAllAndSendZeros(setSettings: SetSettings) {
+            isOSCMuted = true
+
+            let ip = userSettings.ipAddress
+            let port = userSettings.port
+            guard !ip.isEmpty, (1...65535).contains(port) else {
+                print("Conductor: geen geldige OSC endpoint (ip=\(ip), port=\(port))")
+                return
+            }
+
+            for (_, track) in setSettings.tracks {
+                let addr = track.trackId.hasPrefix("/") ? track.trackId : "/\(track.trackId)"
+                let zeros = Array<Float>(repeating: 0, count: track.parts.count)
+                OSCMessageSender.shared.sendOSCMessage(
+                    ipAddress: ip,
+                    port: port,
+                    pattern: addr,
+                    values: zeros
+                )
+            }
+        }
+
+        func unmute() {
+            isOSCMuted = false
+        }
+
 
     // Function which is called when switching between sets
     func currentConductorInstrumentsSetChanged(
@@ -613,11 +639,6 @@ final class Conductor: HasAudioEngine {
             )
 
             userSettings.isSetPlaying = false
-
-            if setSettings.fileGroup == .playlists {
-                let sounds = ["Applause01", "Applause02", "Applause03"]
-                playInterfaceSounds(sounds: sounds, volume: 0.17)
-            }
         }
 
         // Is track in level playing logic
@@ -637,35 +658,6 @@ final class Conductor: HasAudioEngine {
                 }
             }
         }
-    }
-
-    func playInterfaceSounds(sounds: [String], volume: Float) {
-        if let randomSound = sounds.randomElement() {
-            //            print("Random sound selected: \(randomSound)")
-            if let path = Bundle.main.path(forResource: "Samples/" + randomSound, ofType: "wav") {
-                //                print("Path exists: \(path)")
-                let url = URL(fileURLWithPath: path)
-                //                print("URL is valid: \(url)")
-                do {
-                    autoSound = try AVAudioPlayer(contentsOf: url)
-                    autoSound?.delegate = autoSound as? any AVAudioPlayerDelegate
-                    autoSound?.volume = volume
-                    autoSound?.prepareToPlay()
-                    autoSound?.play()
-
-                } catch {
-                    print("Error: could not play sound: \(error)")
-                }
-            } else {
-                print("Failed to get path for resource.")
-            }
-        } else {
-            print("Failed to select random sound.")
-        }
-    }
-
-    func stopInterfaceSounds() {
-        autoSound?.stop()
     }
 
     func setTempo(tempoChange: Double) -> Double {

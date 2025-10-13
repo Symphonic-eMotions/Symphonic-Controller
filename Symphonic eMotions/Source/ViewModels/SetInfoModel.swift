@@ -87,6 +87,7 @@ final class SetInfoModel: ObservableObject {
     @Binding var setInfoLocalState: SetInfoLocalState
     @Binding var imageDifference: ImageDifference
     @Published var setInfoState: SetInfoState
+    @Published var isMuted: Bool = false
     
     //Toegang speciaal voor PlayOverlayView->AOIOverlay
     @Binding var setSettings: SetSettings
@@ -169,6 +170,16 @@ final class SetInfoModel: ObservableObject {
                 self.didPrimeRamps = true
             }
         }
+    }
+    
+    func muteAllStreams() {
+        isMuted = true
+        conductor.muteAllAndSendZeros(setSettings: setSettingsValue)
+    }
+
+    func unmuteStreams() {
+        isMuted = false
+        conductor.unmute()
     }
 
     func buttonToFeedback(id: Int) -> Double {

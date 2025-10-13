@@ -32,8 +32,11 @@ class UserSettings: ObservableObject {
 
     @AppStorage(UserDefaultsKeys.ipAddress) var ipAddress: String = "172.20.10.99"
     @AppStorage(UserDefaultsKeys.port) var port: Int = 8000
-
-    @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
+    
+    @AppStorage(UserDefaultsKeys.calibrationMin) var calibrationMin: Int = 0
+    @AppStorage(UserDefaultsKeys.calibrationMax) var calibrationMax: Int = 255
+    
+//    @AppStorage(UserDefaultsKeys.calibrationThreshold) var calibrationThreshold: Int = 0
 
     // Have a observed van for states
     @Published var userCode: UserCode {
@@ -75,6 +78,9 @@ enum UserDefaultsKeys {
     static let levelProgressExponent = "levelProgressExponent"
 
     static let videoFeedback = "videoFeedback"
+    static let calibrationMin = "calibrationMin"
+    static let calibrationMax = "calibrationMax"
+    
     static let sensitivitySession = "sensitivitySession"
     static let sensitivityDeviation = "sensitivityDeviation"
 
@@ -87,7 +93,7 @@ enum UserDefaultsKeys {
     static let ipAddress = "ipAddress"
     static let port = "port"
 
-    static let calibrationThreshold = "calibrationThreshold"
+//    static let calibrationThreshold = "calibrationThreshold"
 }
 
 extension UserDefaultsKeys {
@@ -154,7 +160,7 @@ extension UserSettings {
 }
 
 enum DebugLog {
-    static var doDebug = true // zet op false als je klaar bent
+    static var doDebug = false // zet op false als je klaar bent
 
     static func d(_ msg: @autoclosure () -> String) {
         guard doDebug else { return }

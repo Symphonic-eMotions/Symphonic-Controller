@@ -75,21 +75,11 @@ struct MainView: View {
             )
             .environmentObject(fileController)
         case .swiftUI:
-            
             VStack(spacing: 12) {
-                PartControlsPane(setInfoModel: setInfoModel)   // ⬅︎ knoppen + inline editor + feedback
-                PlayOverlayView(setInfoModel: setInfoModel) // jouw bestaande overlay
-                // Calibration en settings
-                HStack {
-                    CalibrationView(
-                        userSettings: setInfoModel.userSettings,
-                        setInfoModel: setInfoModel
-                    )
-                    // Settings button
-                    SettingsButtonWithLongPress(
-                        setInfoModel: setInfoModel
-                    )
-                }
+                PartControlsPane(setInfoModel: setInfoModel)
+                PlayOverlayView(setInfoModel: setInfoModel)
+                CalibrationView(setInfoModel: setInfoModel)
+                SettingsButtonWithLongPress(setInfoModel: setInfoModel)
             }
         case .home:
             EmptyView()
