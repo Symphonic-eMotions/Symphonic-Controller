@@ -16,7 +16,7 @@
       "instrumentName": "Stap 1",
       "instrumentParts": [
         {
-          "areaOfInterest": [1, 0, 1, 0],
+          "areaOfInterest": [1, 1, 1, 1],
           "damperTarget": {
             "dampMode": "easeInCubic",
             "midiData": null,
@@ -36,7 +36,7 @@
           "instrumentPartName": "Part 1"
         },
         {
-          "areaOfInterest": [1, 0, 0, 0],
+          "areaOfInterest": [1, 0, 1, 0],
           "damperTarget": {
             "dampMode": "easeInCubic",
             "midiData": null,
@@ -76,7 +76,7 @@
           "instrumentPartName": "Part 3"
         },
         {
-          "areaOfInterest": [0, 1, 0, 0],
+          "areaOfInterest": [0, 0, 0, 0],
           "damperTarget": {
             "dampMode": "easeInCubic",
             "midiData": null,

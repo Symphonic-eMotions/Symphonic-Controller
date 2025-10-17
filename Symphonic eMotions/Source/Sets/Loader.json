@@ -27,10 +27,10 @@
               "rampSpeedDown": 0.1
             },
             "nodeType": "osc",
-            "parameter": "/stap1/part1",
+            "parameter": "/stap0/part1",
             "parameterInversed": false,
             "parameterRange": [0.0, 1.0],
-            "trackId": "stap1"
+            "trackId": "stap0"
           },
           "dontDrawVisual": false,
           "instrumentPartName": "Part A1"
@@ -46,7 +46,7 @@
       "notesToGrid": [],
       "notesToLevel": [],
       "startType": "loopedTransport",
-      "trackId": "stap1",
+      "trackId": "stap0",
       "trackType": "variationByPosition"
     }
   ],

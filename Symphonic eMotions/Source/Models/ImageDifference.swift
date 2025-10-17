@@ -23,12 +23,9 @@ class ImageDifference: ObservableObject {
     var sensitivityDeviationSubject = CurrentValueSubject<Float, Never>(0.99)
     var maxValueSubject = CurrentValueSubject<Int, Never>(50)
     var feedback = CurrentValueSubject<Float, Never>(0.50)
-
-    // Nieuwe variabelen voor kalibratie
-//    private var calibrationValues: [Int] = []
-//    @Published var calibrationThreshold: Int = 0
-//    @Published var isCalibrating: Bool = false
-//    private let calibrationSamples: Int = 100 // Aantal samples voor kalibratie
+    
+    private let diffMin = 0
+    private let diffMax = 255
     
     var calibrationThreshold = CurrentValueSubject<Int, Never>(UserSettings.shared.calibrationMin)
     var calibrationMaxCeiling = CurrentValueSubject<Int, Never>(UserSettings.shared.calibrationMax)
@@ -68,21 +65,46 @@ class ImageDifference: ObservableObject {
     
     func stopCalibration() {
         isCalibrating = false
-        calibrationThreshold.value = calculateThreshold(from: calibrationValues)
+        let computed = calculateThreshold(from: calibrationValues)
+        setCalibrationThreshold(computed)
     }
+
     func stopCalibrationMax() {
         isCalibratingMax = false
-        calibrationMaxCeiling.value = calculateThreshold(from: calibrationMaxValues)
+        let computed = calculateThreshold(from: calibrationMaxValues)
+        setCalibrationMaxCeiling(computed)
     }
 
     private func resetCalibrationValues() {
         calibrationValues.removeAll()
-        calibrationThreshold.value = 0
+        setCalibrationThreshold(0)
     }
+
     private func resetCalibrationMaxValues() {
         calibrationMaxValues.removeAll()
-        calibrationMaxCeiling.value = 0
+        setCalibrationMaxCeiling(0)
     }
+    
+    func setCalibrationThreshold(_ newValue: Int) {
+        // Clamp naar 0...255 en niet boven huidige max
+        let clampedToRange = max(diffMin, min(newValue, diffMax))
+        // Zorg dat min niet hoger is dan max
+        let finalMin = min(clampedToRange, calibrationMaxCeiling.value)
+
+        calibrationThreshold.send(finalMin)
+        UserSettings.shared.calibrationMin = finalMin
+    }
+
+    func setCalibrationMaxCeiling(_ newValue: Int) {
+        // Clamp naar 0...255
+        let clampedToRange = max(diffMin, min(newValue, diffMax))
+        // Zorg dat max niet lager is dan min
+        let finalMax = max(clampedToRange, calibrationThreshold.value)
+
+        calibrationMaxCeiling.send(finalMax)
+        UserSettings.shared.calibrationMax = finalMax
+    }
+
 
     private func calculateThreshold(from values: [Int]) -> Int {
         guard !values.isEmpty else { return 0 }
